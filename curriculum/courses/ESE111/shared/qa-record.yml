@@ -6,7 +6,8 @@ record_status: open
 opened_on: 2026-07-14
 closed_on: null
 baseline:
-  commit: pending-epic-e3-control-commit
+  commit: pending-post-E4-exact-review-baseline
+  latest_completed_epic_commit: 39c9d83
   package_inventory: package-inventory.yml
   claim_register: claims.yml
   restricted_references: restricted-refs/artifacts.yml
@@ -14,7 +15,7 @@ baseline:
 lifecycle_evidence:
   technically_verified: pending; protocol at pilots/technical-verification.yml and authoring oracle only
   staff_piloted: pending; physical matrix, blind fault, and rehearsal controls under pilots/
-  formative_learner_usability_pilot: pending-authority-consent-and-en-fr-learners
+  formative_learner_usability_pilot: pending; preregistration, participant-information draft, observation instrument, parity analysis, and revision/release controls are under pilots/ but authority, consent, and EN/FR learners are absent
   cohort_piloted: not-applicable-to-pilot-ready-target-but-required-before-stable
 facets:
   technical: {status: pending, reviewer: null, evidence: authoring-oracle-only}

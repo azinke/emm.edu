@@ -29,6 +29,15 @@ class EvidenceGateTests(unittest.TestCase):
         task.update(status="complete", reviewer="pilot-lead", evidence=[{"id": "fake", "provenance": "prepared"}])
         self.assertTrue(any("non-physical provenance" in error for error in validate(record)))
 
+    def test_learner_task_requires_authority_and_consent_metadata(self):
+        record = copy.deepcopy(self.baseline)
+        task = record["e4_tasks"]["M04-E4-T02"]
+        task.update(status="complete", reviewer="authorized-observer", evidence=[{"id": "deidentified-session", "provenance": "deidentified-human-participant"}])
+        self.assertTrue(any("authorized consented learner evidence" in error for error in validate(record)))
+
+        task["evidence"][0].update(consent_status="authorized-and-recorded", authority_record="AUTH-001")
+        self.assertFalse(any("M04-E4-T02" in error for error in validate(record)))
+
     def test_release_requires_every_task_and_facet(self):
         record = copy.deepcopy(self.baseline)
         record["release_decision"] = "approved"

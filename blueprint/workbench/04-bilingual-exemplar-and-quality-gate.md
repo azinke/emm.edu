@@ -106,6 +106,36 @@ waived.
 - [ ] **M04-E4-T04 [REV]** Revise both editions, expected ranges, professor notes, hints, and timing from evidence.
 - [ ] **M04-E4-T05 [REL]** Tag exemplar release and publish its QA record and known limitations.
 
+### E4 control implementation record — 2026-07-14
+
+The learner-pilot controls under
+[`shared/pilots/`](../../curriculum/courses/ESE111/shared/pilots/) now preregister
+matched EN-dominant and FR-dominant formative routes, a bounded 6-per-route sample
+rationale, qualitative stopping and hard-ceiling rules, readiness/access accounting,
+conjunctive safety and reasoning thresholds, and explicit prohibitions on efficacy,
+causal language-effect, demographic, or small-sample equivalence claims. A paired
+participant-information draft states voluntariness, withdrawal, privacy, access,
+burden, and stop conditions, but is visibly unusable until the deploying authority
+inserts and approves accountable contacts and the consent/data route.
+
+The observation instrument records committed predictions, representation/model
+work, wiring and instrument choices, discussion, uncertainty, debugging, prompt
+level, cognitive-load indicators, time, and design transfer without treating group
+work as individual competence. The frozen parity plan uses counts, individual
+values, conservative wording-versus-concept adjudication, and controlled item-slot
+review; it forbids significance, DIF, causal, or powered-equivalence claims at the
+planned scale. The paired-revision/release control links every change to evidence,
+reopens affected pilots, distinguishes simulated from physical expected ranges,
+requires production-effort metrics and known limitations, and prohibits a tag
+until every task/facet is accepted by the independent release authority.
+
+All E4 boxes remain open: no human-participant authority has approved recruitment
+or consent; no consented learners, observers, controlled items, or pilot records
+exist; therefore there is no parity result or evidence-based revision to claim.
+The evidence gate now rejects learner-task completion without deidentified human
+provenance, an authority record, and recorded authorized consent. No release tag
+was created.
+
 ## Hands-on and real-life safeguard
 
 Students must confront at least one measurement that disagrees with the ideal calculation because of tolerance or meter/loading effects. The design extension must change a real requirement—brightness balance, sensor threshold, current budget, or fault tolerance—and require post-change verification.

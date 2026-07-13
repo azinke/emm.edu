@@ -12,6 +12,7 @@ import yaml
 
 
 PHYSICAL_TASKS = {"M04-E3-T02", "M04-E3-T03", "M04-E3-T04", "M04-E4-T01", "M04-E4-T02", "M04-E4-T03"}
+LEARNER_TASKS = {"M04-E4-T01", "M04-E4-T02", "M04-E4-T03"}
 APPROVED_FACETS = {"approved", "approved-with-conditions"}
 
 
@@ -43,6 +44,16 @@ def validate(record: dict[str, Any]) -> list[str]:
                     provenance = str(item.get("provenance", "")) if isinstance(item, dict) else ""
                     if provenance in {"simulation", "prepared", "prepared-synthetic-non-personal"}:
                         errors.append(f"{task_id} uses non-physical provenance {provenance}")
+            if task_id in LEARNER_TASKS:
+                valid_human_record = any(
+                    isinstance(item, dict)
+                    and item.get("provenance") == "deidentified-human-participant"
+                    and item.get("consent_status") == "authorized-and-recorded"
+                    and item.get("authority_record")
+                    for item in evidence
+                )
+                if not valid_human_record:
+                    errors.append(f"{task_id} complete without authorized consented learner evidence")
     decision = record.get("release_decision")
     if decision == "approved":
         incomplete = sorted(task_id for task_id, task in all_tasks.items() if task.get("status") != "complete")

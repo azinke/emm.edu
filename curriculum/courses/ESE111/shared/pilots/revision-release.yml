@@ -1,0 +1,40 @@
+record_id: ESE111-CH04-E4-REVISION-RELEASE
+version: 0.1.0
+status: control-ready-no-learner-evidence-no-release
+revision_inputs: [physical_pilot, blind_fault, second_instructor_rehearsal, qualified_reviews, learner_observation, parity_analysis, build_and_output_QA]
+defect_severity:
+  critical: unsafe/wrong claim or answer; consent/privacy breach; inaccessible essential action; restricted leak; different EN/FR construct or threshold; unreproducible physical evidence
+  high: repeated wording, timing, prompt, apparatus, or recovery defect that blocks an essential action for a route
+  medium: localized friction with an effective approved workaround that preserves the construct
+  low: editorial/usability improvement with no decision, safety, access, or parity impact
+disposition_fields: [defect_id, source_evidence, severity, affected_routes_and_assets, root_cause, correction, owner, due, verification, reviewer, residual_risk, status]
+paired_revision_rule:
+  - revise the semantic contract first, then both editions even when a symptom appeared in one route
+  - preserve original evidence and link every changed claim, value, figure, prompt, expected range, hint, timing, note, and rubric consequence
+  - rerun technical computation and all affected source/render, restricted-boundary, accessibility, and parity checks
+  - never manufacture physical expected ranges from simulation or prepared data; use accepted physical records only
+  - a hint change must preserve the personal action and prompt-level interpretation; an easier translation cannot silently lower the cognitive threshold
+revision_targets:
+  editions: [chapter, slides, exploration, pset, lab, practical, project]
+  instructor: [minute_plan, board_plan, demonstration, expected_ranges, fault_tree, recovery, differentiation, prompts]
+  shared: [design_brief, outcomes, claims, model, schema, rubric, figure, prepared_fallback, pilot_protocols]
+  operations: [setup_and_reset_time, consumables, apparatus_substitution, offline_bundle, access_routes]
+verification_after_revision:
+  no_critical_defects: independent authorities accept closure against exact evidence
+  regression: model, QA, canonical, smoke, builds, outputs, schema/data, and controlled-artifact integrity pass in frozen environments
+  rerun_rule: technical/safety/construct changes reopen physical and learner evidence; language-only claims require both language reviewers and targeted learner rerun unless authority documents why existing evidence remains applicable
+  metrics: record authoring, review, build, setup, teaching, reset, translation, defect, and rerun effort to update later milestone estimates
+known_limitations_record:
+  required: [sample_and_matching, consent_and_authority, apparatus_and_environment, language_routes, access_routes, physical_ranges, prompt_dependence, missing_data, build_environment, restricted_artifacts, context_boundary, review_expiry]
+  style: concrete scope and consequence; no generic disclaimer can hide an open critical defect
+release_gate:
+  prerequisites:
+    - every applicable E1-E4 task has attributable accepted evidence or a formally approved non-applicability decision where the master permits it
+    - all technical, safety, language, accessibility, license, build, apparatus, and approval facets are approved for the exact baseline
+    - zero open critical defects; accepted residual defects have owner, due date, consequence, and release-authority decision
+    - paired outputs, offline bundle, QA record, provenance, restricted references, and measured production effort are published without restricted payloads
+  authority: independent release authority, not author or automation
+  tag_pattern: exemplar/ESE111-CH04-vMAJOR.MINOR.PATCH
+  tag_action_now: prohibited
+  post_tag: publish checksums, QA record, known limitations, review-due dates, and rollback/supersession route
+result: pending

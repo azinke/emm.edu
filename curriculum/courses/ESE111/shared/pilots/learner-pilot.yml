@@ -1,0 +1,54 @@
+record_id: ESE111-CH04-E4-LEARNER-PILOT
+version: 0.1.0
+status: protocol-ready-no-recruitment
+purpose: formative usability and parity pilot of the exact paired unit; not a powered efficacy, equivalence, or demographic comparison study
+authorization_gate:
+  required_before_contact: deploying institution decision on human-participant oversight, consent, privacy, safeguarding, accessibility, compensation, recording, and laboratory participation
+  exact_baseline: immutable commit/archive plus rendered EN and FR products, apparatus revision, instructor route, and observation forms
+  unresolved: authority, named pilot lead, approved apparatus, data controller, contacts, retention period, and compensation are all pending
+  prohibited_now: [recruitment, consent collection, learner observation, audio_or_video_recording, pilot_data_entry]
+groups:
+  routes:
+    - {id: EN-dominant, working_language: en, target_readiness: ESE111 entry profile, intended_n: 6, ceiling_n: 8}
+    - {id: FR-dominant, working_language: fr, target_readiness: ESE111 entry profile, intended_n: 6, ceiling_n: 8}
+  rationale: two small matched routes can expose blocking wording, access, timing, and reasoning-path defects while keeping burden proportionate; counts are not adequate for population or language-equivalence inference
+  matching_variables: [prerequisite_diagnostic_band, prior_circuit_exposure_band, safe_DMM_experience, access_route_requested, session_mode, apparatus_path]
+  inclusion: target-readiness learner; understands the approved information route; freely consents; may request an adaptation without losing eligibility
+  exclusion: author/instructor coercive relationship not mitigated; current assessment conflict; consent not valid; activity outside approved safety/access route
+  minors_rule: exclude unless the deploying authority approves a specific assent and guardian-consent route
+  access_representation: invite approved access needs without diagnosis collection; log only the functional adaptation requested and whether it preserved the construct
+sampling_and_stopping:
+  recruitment_method: authority-approved invitation separated from grading and teaching power; no convenience claim of representativeness
+  minimum_interpretive_set: at least 4 usable sessions per language route with matched readiness bands, including approved access-route evidence where feasible
+  qualitative_stop: after the minimum set, stop before the ceiling only when two consecutive usable sessions in each route add no new critical/high-severity usability theme and every observation domain has been exercised
+  hard_stop: stop at 8 per route; unmet thresholds become an evidence limitation, not permission for opportunistic recruitment
+  no_saturation_claim: the stopping rule controls revision effort and does not establish theoretical saturation, effectiveness, or equivalence
+session_contract:
+  duration_target_min: 180
+  segments: [information_and_consent, prerequisite_check, prediction, model, approved_setup, measurement, blind_or_public_diagnostic_variant, redesign_transfer, short_interview, debrief]
+  instructor_rule: use the exact language route and approved prompt ladder; prompts are timestamped and never silently upgraded into independent performance
+  individual_evidence: reference choice, safety stop, first meter action, one equation, one diagnostic update, design acceptance, and short defense are captured per learner
+  team_evidence: discussion may be observed but cannot replace individual attribution
+predefined_acceptance_and_revision_triggers:
+  conjunctive_safety: zero unauthorized energization, prohibited current-input use, unhandled stop condition, or unowned incident/near-miss
+  essential_comprehension: every usable participant identifies COM as the declared reference and states at least one valid stop condition after the approved support route
+  reasoning_path: at least 5 of the intended 6 in each route reach a signed KCL/KVL model and a discriminating diagnostic update with no more than the predefined neutral prompts
+  design_transfer: at least 4 of 6 in each route reject a nominal-only pass and apply the uncertainty guard band to the redesign decision
+  burden: median active time per route within 15 percent of the preregistered target; any individual overrun above 30 percent receives a cause and access review
+  parity_trigger: a route difference greater than one learner on any essential action, or repeated language-specific prompt, triggers wording/concept adjudication; it is not a statistical language-effect claim
+  accessibility: every approved adaptation preserves the same safety, reasoning, measurement, and design decisions; otherwise the route is a critical defect
+  critical_defect: any unsafe ambiguity, wrong technical conclusion, consent/privacy breach, inaccessible required action, hidden answer exposure, or language route with a lower acceptance rule stops the pilot and blocks release
+data_and_consent:
+  participant_information: participant-information.yml
+  observation_instrument: learner-observation.yml
+  identifiers: assign study code; keep contact/consent key separate from learning records; do not place names in teaching evidence
+  minimization: collect language route, readiness bands, functional access route, observations, timings, prompt levels, rubric decisions, and voluntary comments only
+  recording_default: no audio, video, screen, or setup image containing a participant unless separately approved and consented
+  withdrawal: apply the authority-approved withdrawal and deletion deadline without academic penalty
+  incident_route: stop activity, protect the person, preserve only required incident evidence, notify the named authority, and do not resume on author discretion
+outputs:
+  - deidentified session records with consent/authority reference and exact baseline
+  - sampling/accounting table including withdrawals and unusable sessions without identity
+  - defect log with severity, language route, construct, owner, due date, and disposition
+  - explicit limitations forbidding effectiveness, demographic, representativeness, and equivalence claims
+result: pending

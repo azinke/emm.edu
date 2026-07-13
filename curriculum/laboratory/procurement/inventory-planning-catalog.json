@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "status": "planning-baseline",
+  "items": [
+    {"id":"KIT-PPE","name_en":"eye protection and hand-tool set","name_fr":"lunettes de protection et outils manuels","class":"personal","family":"personal-foundation","ratio":1,"spare_fraction":0.10,"deliberate_fault_reserve":0},
+    {"id":"KIT-PROTOTYPE","name_en":"breadboard, leads, and passive kit","name_fr":"plaque d'essai, cordons et composants passifs","class":"personal","family":"personal-foundation","ratio":1,"spare_fraction":0.50,"deliberate_fault_reserve":0},
+    {"id":"BOARD-FOUNDATION","name_en":"foundation MCU board and USB data cable","name_fr":"carte microcontrôleur initiale et câble USB données","class":"personal","family":"personal-foundation","ratio":1,"spare_fraction":0.15,"deliberate_fault_reserve":0},
+    {"id":"KIT-ANALOG","name_en":"analog and metrology progression kit","name_fr":"kit de progression analogique et métrologique","class":"pair","family":"pair-progression","ratio":2,"spare_fraction":0.15,"deliberate_fault_reserve":1},
+    {"id":"KIT-DIGITAL","name_en":"professional MCU, interfaces, and debug kit","name_fr":"kit microcontrôleur professionnel, interfaces et débogage","class":"pair","family":"pair-progression","ratio":2,"spare_fraction":0.15,"deliberate_fault_reserve":1},
+    {"id":"KIT-FPGA","name_en":"qualified FPGA progression kit","name_fr":"kit de progression FPGA qualifié","class":"pair","family":"pair-progression","ratio":2,"spare_fraction":0.15,"deliberate_fault_reserve":1},
+    {"id":"DMM","name_en":"checked digital multimeter","name_fr":"multimètre numérique contrôlé","class":"simultaneous-personal","family":"shared-bench","ratio":1,"spare_fraction":0.15,"deliberate_fault_reserve":1},
+    {"id":"SCOPE","name_en":"oscilloscope with compensated probes","name_fr":"oscilloscope avec sondes compensées","class":"simultaneous-pair","family":"shared-bench","ratio":2,"spare_fraction":0.15,"deliberate_fault_reserve":1},
+    {"id":"PSU","name_en":"current-limited bench supply","name_fr":"alimentation de laboratoire limitée en courant","class":"simultaneous-pair","family":"shared-bench","ratio":2,"spare_fraction":0.15,"deliberate_fault_reserve":1},
+    {"id":"GENERATOR","name_en":"function generator","name_fr":"générateur de fonctions","class":"shared","family":"shared-bench","ratio":4,"spare_fraction":0.15,"deliberate_fault_reserve":1},
+    {"id":"SOLDER","name_en":"grounded soldering station and extraction point","name_fr":"station de soudage mise à la terre et point d'extraction","class":"simultaneous-pair","family":"shared-bench","ratio":2,"spare_fraction":0.15,"deliberate_fault_reserve":1},
+    {"id":"REF-SET","name_en":"locked precision reference set","name_fr":"ensemble de références de précision sous contrôle","class":"shared","family":"advanced-shared","ratio":12,"spare_fraction":0.10,"deliberate_fault_reserve":0},
+    {"id":"COMPUTER","name_en":"lowest-supported offline student computer","name_fr":"ordinateur étudiant minimal pris en charge hors ligne","class":"simultaneous-personal","family":"computing","ratio":1,"spare_fraction":0.15,"deliberate_fault_reserve":0},
+    {"id":"FAULT-DC","name_en":"deliberate-fault DC station","name_fr":"poste continu à pannes didactiques","class":"simultaneous-pair","family":"deliberate-fault","ratio":2,"spare_fraction":0.15,"deliberate_fault_reserve":2},
+    {"id":"ROOM-SAFETY","name_en":"qualified room safety infrastructure set","name_fr":"ensemble d'infrastructure de sécurité du local qualifié","class":"room","family":"infrastructure","ratio":1,"spare_fraction":0,"deliberate_fault_reserve":0}
+  ]
+}
+

@@ -123,6 +123,53 @@ learner authorization, or deployment result.
   development host is not promoted to minimum-profile evidence. **Owners:** toolchain
   owner, IT/loan-fleet owner, and learner-device reviewer.
 
+### E3 — Inventory and bench build-out
+
+- The [inventory and procurement control set](../../curriculum/laboratory/procurement/README.md)
+  defines personal, pair, progression, simultaneous/shared, advanced, consumable,
+  deliberate-fault, and spare classes; actual-cohort input; upward-rounded quantity
+  formulas; the master-document spare floors; accessible EN/FR high-contrast stock
+  states; and acceptance review.
+- The procurement register includes functional specification, manufacturer/MPN and
+  revision, substitutes, source/channel, source-currency and XOF landed-cost fields,
+  exchange source/date, tax/duty/freight, quote validity, lead time, lifecycle,
+  storage, inspection/test, calibration/function-check, repair, disposal, quantity,
+  stock floor, reorder trigger, evidence, owner, and reviewer. Its sole example row
+  is unambiguously `EXAMPLE-DO-NOT-PROCURE` and contains no invented price.
+- Incoming quarantine, identity/counterfeit screening, function/calibration checks,
+  tip/probe/fuse replacement, battery handling, repair release, consumable control,
+  and known-good/student-use/quarantine/deliberate-fault segregation are specified.
+  Minimal and standard bench specifications include safe current-limit/fault-energy,
+  probe-compensation, grounded-scope, motor/power, cross-coupling, accessibility,
+  and daily-release tests.
+- Reproducible pack contracts cover a fused low-voltage cable, protected MCU I/O
+  fixture, deliberate-fault DC network, enclosure/harness sample, and cable tester,
+  with editable sources, provenance, travelers, seeded-defect tests, revision,
+  repair, license, and technician build/inspect/repair/revise qualification criteria.
+- The total-cost model includes computers, landed acquisition, facilities, calibration,
+  consumables, power backup, storage, staff/technician/IT/accessibility time, spares,
+  repair, replacement, partner access, risk, and disposal, plus per-student schedule
+  capacity and stock-floor/reorder formulas for minimal/standard/advanced paths.
+- `plan_lab_inventory.py` rejects non-approved cohort inputs by default and calculates
+  quantities only when given a reviewed cohort record (or an explicit non-evidence
+  scenario flag). Four unit tests cover rounding, spare/reserve/stock arithmetic,
+  planning-scenario rejection, and invalid capacity. The documented 24-learner input
+  remains a planning scenario and is not a Benin procurement claim.
+- **Open M03-E3-T01/T02/T07 evidence:** approve the actual cohort/section/timetable;
+  qualify exact MPNs and substitutes; obtain two-channel dated quotes and landed XOF
+  costs; populate serviceable stock, lifecycle, lead time, staff/time, disposal, and
+  access data; then approve the funded TCO and order quantities. **Owners:** laboratory
+  director, procurement/finance, course owners, and timetable owner.
+- **Open M03-E3-T03/T04/T05 evidence:** receive, label, segregate, inspect, function-
+  check/calibrate, assemble, and physically verify the named stock and benches;
+  disposition every defect and retain signed raw records. **Owners:** technician,
+  safety officer, laboratory director, and metrology owner.
+- **Open M03-E3-T06 evidence:** complete editable fabrication files and physical
+  qualification for each pack revision, execute repeat builds and seeded-defect
+  tests, and authorize named technicians from attributable performance. A pack
+  contract is not a released design or human qualification. **Owners:** fixture
+  engineer, technician qualification assessor, safety officer, and release manager.
+
 ## Hands-on and real-life safeguard
 
 Qualification uses authentic loads, sensors, noise, wiring mistakes, brownouts, temperature, and replacement parts—not only “blink.” Each reference platform must expose enough of the system for learners to measure and debug. Reject a cheaper board if undocumented behavior, fragile connectors, cloud dependency, counterfeit risk, or lack of debug makes practical learning unreliable.

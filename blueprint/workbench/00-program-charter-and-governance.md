@@ -13,7 +13,7 @@
 - [x] **M00-E1-T02 [DEC]** Approve mission, learner profiles, four-year/240-ECTS reference path, optional bridge, possible exit points, and deployment modes.
 - [x] **M00-E1-T03 [DEC]** Approve or formally disposition each PEO, PLO, competence level, and G1–G9 program competence gate for observability and deployment relevance.
 - [x] **M00-E1-T04 [DEC]** Ratify every master §1.1 invariant, including claim accuracy/currency, the full hands-on cycle, personal physical evidence, EN/FR parity, energy-aware safety, ethics/security/sustainability/accessibility/manufacturability, offline access, editable source, vendor neutrality, context evidence, equivalent standard, and truthful origin claims.
-- [ ] **M00-E1-T05 [DEC]** Record accepted deviations from the master with rationale, owner, effect on dependencies, and review trigger.
+- [x] **M00-E1-T05 [DEC]** Record accepted deviations from the master with rationale, owner, effect on dependencies, and review trigger.
 - [ ] **M00-E1-T06 [DEC]** Adopt the universal-core/deployment-profile contract, V0–V4 local product-authority ladder, and cross-language/equipment/site moderation rule; local paths may not lower mastery.
 
 ### E1 decision records
@@ -129,6 +129,18 @@ Every gate specification must define mastery cut, authorized variants and resour
 | INV-12 Origin and local-value claims are truthful | manufacture, contribution, and origin statements match actual design, production, test, service, control, current law, and documented imported dependencies | V0–V4 contribution/provenance dossier, organizations/locations, make/buy record, repeat evidence sized to the claim, approved exact wording | aspiration presented as provenance, opaque assembly presented as design authority, or claim above reproducible evidence/current law |
 
 Any learner, staff member, reviewer, or partner may call an immediate pause for an INV-03, INV-04, or INV-05 concern without grading or employment retaliation. The laboratory owner or field authority controls physical restart; the appropriate independent technical, language, accessibility, ethics/data, or release authority closes other invariant blockers. Schedule, cost, cohort pressure, equipment scarcity, and translation lag are not waiver rationales: the response is remediation, an equivalent validated route, rescheduling, narrower truthful claims, or non-release.
+
+#### M00-E1-T05 — Master deviation register
+
+**Decision:** no deviation from Course Master Document v0.2.0 is accepted in this baseline.
+
+| Deviation ID | Master reference and proposed difference | Rationale and evidence | Accountable owner and approver | Dependency effect and compensating control | Review trigger | Status |
+|---|---|---|---|---|---|---|
+| DEV-000 | none | the E1 baseline adopts the master without modification | program director; program board approval | none; all downstream work uses the master IDs, thresholds, and dependency rules | any change request, failed feasibility/pilot evidence, new binding rule, or annual program review | closed—no accepted deviations |
+
+Future deviations are recorded before dependent work proceeds. Each entry must identify affected outcomes, prerequisites, gates, courses, projects, language editions, apparatus paths, deployment packs, safety/ethics/access controls, assessments, schedules, budgets, releases, and public claims; “no effect” requires a rationale. It also records alternatives considered, time limit, compensating evidence, consultation, independent approver, and closure decision. An approved local mapping or substitution already permitted by the universal/deployment contract is not a deviation when it passes equivalence review. A separately named derived program is not a deviation from the 240-ECTS reference profile when it publishes its own authorized contract and makes no equivalence claim.
+
+No entry may waive a §1.1 invariant. If evidence shows an invariant itself must change, work remains blocked until the master is revised through controlled program governance, all dependent artifacts and public claims are impact-assessed, and the revised contract is ratified.
 
 ## Epic E2 — Establish authority and responsibilities
 

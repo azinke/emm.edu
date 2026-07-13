@@ -11,10 +11,10 @@ paired_with: ESE111-CH04-SLIDES-en
 version: 0.1.0
 lifecycle: drafting
 format: revealjs
-outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -48,11 +48,11 @@ opposé. Faites émerger « négatif=faux » et « COM=terre de protection ».
 
 ![Réseau contrôlé à deux nœuds.](../../shared/figures/ese111-ch04-network.svg){fig-alt="Une source de 6 V alimente R1 vers TP-A ; R2 relie TP-A à COM ; R3 relie TP-A à TP-B ; R4 relie TP-B à COM."}
 
-Classez sans calcul : (V_A), (V_B), 0 V. (I_1=I_2) ?
+Classez sans calcul : $V_A$, $V_B$, 0 V. $I_1=I_2$ ?
 
 ::: notes
-9–15 min. Vote puis explication en binôme. Attendu (V_A>V_B>0) et
-(I_1=I_2+I_3). Notez l'idée « courant consommé ». Le SVG statique et sa
+9–15 min. Vote puis explication en binôme. Attendu $V_A>V_B>0$ et
+$I_1=I_2+I_3$. Notez l'idée « courant consommé ». Le SVG statique et sa
 description remplacent l'animation.
 :::
 
@@ -75,7 +75,7 @@ Demandez quelle branche manquerait avec seulement deux termes. Vocabulaire :
 \frac{V_B-V_A}{33\,000}+\frac{V_B}{15\,000}=0
 \]
 
-Donc (V_A=3,2V_B).
+Donc $V_A=3,2V_B$.
 
 ::: notes
 25–31 min. Réarrangement individuel. Un facteur 2,2 révèle souvent l'inversion
@@ -84,12 +84,12 @@ Donc (V_A=3,2V_B).
 
 ## Une estimation rejette un beau résultat faux
 
-- (I_1<6/10\text{ kΩ}=0,6\text{ mA})
-- (0<V_B<V_A<6\text{ V})
-- (V_B\) vaut environ un tiers de (V_A)
+- $I_1<6/10\text{ kΩ}=0,6\text{ mA}$
+- $0<V_B<V_A<6\text{ V}$
+- $V_B$ vaut environ un tiers de $V_A$
 
 ::: notes
-31–36 min. Faites rejeter une solution où (V_B>V_A). L'estimation est une porte
+31–36 min. Faites rejeter une solution où $V_B>V_A$. L'estimation est une porte
 de décision, pas une décoration.
 :::
 
@@ -97,11 +97,11 @@ de décision, pas une décoration.
 
 | Résultat | Nominal |
 |---|---:|
-| (V_A) | 3,608 V |
-| (V_B) | 1,128 V |
-| (I_1) | 239,18 µA |
-| (I_2) | 164,01 µA |
-| (I_3=I_4) | 75,17 µA |
+| $V_A$ | 3,608 V |
+| $V_B$ | 1,128 V |
+| $I_1$ | 239,18 µA |
+| $I_2$ | 164,01 µA |
+| $I_3=I_4$ | 75,17 µA |
 
 Vérifiez deux nœuds, deux mailles et la puissance.
 
@@ -123,30 +123,31 @@ implique-t-elle tension nulle ? » Restez bref sur l'électromagnétisme ultéri
 ## Un voltmètre est une branche, pas un spectateur
 
 Sans charge : 1,1276 V  
-Avec 1 MΩ : 1,1154 V et (I_M=1,115\ \mu\text{A})
+Avec 1 MΩ : 1,1154 V et $I_M=1,115\ \mu\text{A}$
 
 ::: notes
 50–60 min. Démonstration physique seulement après approbation ; sinon paire calculée
-et ligne préparée. Vote : plus/moins/égal. Ajoutez (I_M) au bilan. Ne généralisez
+et ligne préparée. Vote : plus/moins/égal. Ajoutez $I_M$ au bilan. Ne généralisez
 jamais 1 ou 10 MΩ à un appareil non vérifié.
 :::
 
 ## Un résidu est une question, pas une trace à effacer
 
 \[
-r=\text{mesuré}-\text{prévu},\qquad z=r/u_c
+r=\text{mesuré}-\text{prévu},\qquad U=k u_c,\qquad |r|\le U\ ?
 \]
 
 Que vérifier si le résidu dépasse la borne déclarée ?
 
 ::: notes
 60–67 min. Classez source, R réelle, charge, référence, contact et topologie.
-(z) est une échelle introductive explicite, pas un test universel. Gardez les échecs.
+Exigez le facteur de couverture $k$ avec toute incertitude élargie $U$. Ce contrôle
+de compatibilité n'est pas un test universel. Gardez les échecs.
 :::
 
 ## Le meilleur essai sépare les hypothèses avant remplacement
 
-Symptôme : (V_B\approx0), (V_A) plausible.
+Symptôme : $V_B\approx0$, $V_A$ plausible.
 
 - H1 : R3 ouverte
 - H2 : R4 court-circuitée/trop faible
@@ -161,7 +162,7 @@ branche hors tension. Ne révélez pas la variante de pilote.
 
 ## La preuve change R4 ; la vérification change l'affirmation
 
-(1,40\le V_B\le1,52\text{ V}), (I_S\le0,25\text{ mA}).
+$1,40\le V_B\le1,52\text{ V}$, $I_S\le0,25\text{ mA}$.
 
 Choisissez 18, 22, 27 ou 33 kΩ. Le nominal ne suffit pas.
 

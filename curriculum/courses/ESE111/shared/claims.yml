@@ -48,13 +48,13 @@ claims:
     importance: major
     verification_route: derivation
     evidence:
-      derivation_or_test: independent loop equations and power-balance assertion in model/kirchhoff_model.py
+      derivation_or_test: two explicit KVL loop residuals plus an independent power-balance assertion in model/kirchhoff_model.py and test_kirchhoff_model.py
       primary_source: null
       independent_checker: pending-qualified-reviewer
       checked_on: null
       result: executable authoring oracle passes; independent disposition pending
     assumptions_and_domain: no significant time-varying magnetic flux linked by the modeled loop; polarities and traversal direction are declared
-    expected_range: numerical power residual below 1e-12 W in the analytical oracle; physical loop residual judged against propagated uncertainty
+    expected_range: both numerical KVL residuals below 1e-12 V and power residual below 1e-12 W in the analytical oracle; physical loop residual judged against declared propagated uncertainty
     affected_assets:
       en: [ESE111-CH04-CH-en, ESE111-CH04-PSET01-en, ESE111-CH04-LAB01-en]
       fr: [ESE111-CH04-CH-fr, ESE111-CH04-PSET01-fr, ESE111-CH04-LAB01-fr]
@@ -80,7 +80,7 @@ claims:
       checked_on: null
       result: analytical contract complete; component-lot verification pending
     assumptions_and_domain: quasi-static resistor behavior, negligible self-heating, measured resistance represented at the test condition
-    expected_range: each nominal resistor within plus or minus 1 percent before use; all predicted dissipation below 1 mW
+    expected_range: each nominal resistor within plus or minus 1 percent before use; each resistor remains below 1 mW only in the healthy declared baseline/redesign topologies and stated parameter corners
     affected_assets:
       en: [ESE111-CH04-CH-en, ESE111-CH04-LAB01-en]
       fr: [ESE111-CH04-CH-fr, ESE111-CH04-LAB01-fr]
@@ -91,7 +91,7 @@ claims:
     review_due: null
     review_trigger: component family, lot, value, power, or temperature condition change
     status: proposed
-    limitations_to_publish: nominal marking is not measured resistance and 1 percent tolerance is not total experiment uncertainty
+    limitations_to_publish: nominal marking is not measured resistance; 1 percent tolerance is not total experiment uncertainty; the separate hard-short safety case is outside the sub-1 mW dissipation claim
   - claim_id: ESE111-CH04-CLM-004
     wording:
       en: A voltmeter with finite input resistance adds a branch and can lower the voltage it is intended to observe.
@@ -222,4 +222,3 @@ claims:
     review_trigger: bibliographic contradiction or revised historical wording
     status: proposed
     limitations_to_publish: do not turn attribution into a priority, nationality, or lone-inventor claim
-

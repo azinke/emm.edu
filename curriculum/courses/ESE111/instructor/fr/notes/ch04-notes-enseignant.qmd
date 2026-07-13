@@ -11,10 +11,10 @@ paired_with: ESE111-CH04-NOTES-en
 version: 0.1.0
 lifecycle: drafting
 access: staff
-outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -49,9 +49,9 @@ variantes et pannes aveugles restent derrière les références opaques.
 
 ## Questions et réponses attendues
 
-- Prévision : (V_A>V_B>0), (I_1=I_2+I_3). Demandez où une charge pourrait s'accumuler.
+- Prévision : $V_A>V_B>0$, $I_1=I_2+I_3$. Demandez où une charge pourrait s'accumuler.
 - Estimation : courant <0,6 mA, nœuds entre rails ; rejeter une sortie impossible.
-- Charge : (R_M) finie baisse B et ajoute (I_M). Demandez une réfutation possible.
+- Charge : $R_M$ finie baisse B et ajoute $I_M$. Demandez une réfutation possible.
 - Diagnostic : un bon essai sépare des hypothèses ; remplacer n'est pas observer.
 - Transfert : augmenter R4 monte B mais change courant et marge. Simulation propose,
   essai physique vérifie.
@@ -60,7 +60,7 @@ variantes et pannes aveugles restent derrière les références opaques.
 
 | Modèle | Déclencheur | Preuve | Parcours |
 |---|---|---|---|
-| courant consommé | (I_1=I_2) ? | inventaire signé A | REM-signs/model |
+| courant consommé | $I_1=I_2$ ? | inventaire signé A | REM-signs/model |
 | tension en un point | omettre COM | même branche, autre référence | REM-reference |
 | loi des mailles = tensions égales | distracteur égalité | somme signée | exemple effacé |
 | négatif = faux | inverser une flèche | même physique, signe opposé | REM-signs |

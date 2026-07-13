@@ -29,12 +29,12 @@ technical_contract:
 Réalisez ce diagnostic sans pénalité. Indiquez votre confiance de 0 (réponse au
 hasard) à 3 (certitude). Le résultat choisit un soutien ; il ne vous exclut pas.
 
-1. Convertissez (75\ \mu\text{A}) en ampères et en milliampères.
+1. Convertissez $75\ \mu\text{A}$ en ampères et en milliampères.
 2. Une résistance de 10 kΩ présente 2,00 V de sa borne gauche vers sa borne
    droite. Calculez le courant dans le sens de référence gauche-droite.
 3. Sur une résistance à deux bornes, dessinez une flèche de courant et une
    polarité compatibles avec la convention récepteur.
-4. Résolvez (3x-y=7) et (x+y=5).
+4. Résolvez $3x-y=7$ et $x+y=5$.
 5. Expliquez pourquoi « la tension en A vaut 3 V » est incomplet sans référence.
 6. Choisissez les bornes et la fonction sûres du multimètre pour mesurer une
    tension continue. Pourquoi l'entrée courant est-elle exclue ?
@@ -45,13 +45,13 @@ hasard) à 3 (certitude). Le résultat choisit un soutien ; il ne vous exclut pa
 
 ## Auto-correction et orientation
 
-- Q1 : (75\ \mu\text{A}=75\times10^{-6}\text{ A}=0,075\text{ mA}). En cas
+- Q1 : $75\ \mu\text{A}=75\times10^{-6}\text{ A}=0,075\text{ mA}$. En cas
   d'hésitation sur les préfixes, suivez **REM-units**.
-- Q2 : (I=V/R=0,200\text{ mA}), positif dans le sens déclaré. Si les préfixes
+- Q2 : $I=V/R=0,200\text{ mA}$, positif dans le sens déclaré. Si les préfixes
   ou le sens manquent, suivez **REM-units** et **REM-signs**.
 - Q3 : le courant entre par la borne positive. Une autre référence convient si
   l'équation et l'interprétation restent cohérentes. Sinon : **REM-signs**.
-- Q4 : (x=3), (y=2). Si l'élimination n'est pas disponible, suivez
+- Q4 : $x=3$, $y=2$. Si l'élimination n'est pas disponible, suivez
   **REM-algebra** avant la dérivation à deux nœuds.
 - Q5 : une tension est une différence entre deux nœuds ; nommez COM ou une autre
   référence. Sinon : **REM-reference**.

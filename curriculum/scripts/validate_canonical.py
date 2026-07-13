@@ -113,9 +113,11 @@ def parse_date(value: Any, label: str, errors: list[str]) -> date | None:
 
 def validate_outcomes(doc: dict, errors: list[str]) -> tuple[set[str], set[str], set[str]]:
     peos, plos, cos = records(doc, "peos"), records(doc, "plos"), records(doc, "course_outcomes")
+    unit_outcomes = records(doc, "unit_outcomes")
     peo_ids = check_unique(peos, "id", "PEO", errors)
     plo_ids = check_unique(plos, "id", "PLO", errors)
     co_ids = check_unique(cos, "id", "course outcome", errors)
+    unit_outcome_ids = check_unique(unit_outcomes, "id", "unit outcome", errors)
     if peo_ids != {f"PEO-{n}" for n in range(1, 6)}:
         errors.append("outcomes: expected complete PEO-1 through PEO-5 set")
     if plo_ids != {f"PLO-{n:02d}" for n in range(1, 15)}:
@@ -144,7 +146,21 @@ def validate_outcomes(doc: dict, errors: list[str]) -> tuple[set[str], set[str],
                 errors.append(f"{outcome.get('id')}: unknown outcome mapping {target}")
         if not outcome.get("evidence"):
             errors.append(f"{outcome.get('id')}: missing evidence mapping")
-    return peo_ids, plo_ids, co_ids
+    for outcome in unit_outcomes:
+        check_status(outcome.get("status"), outcome.get("id", "unit outcome"), errors)
+        if not outcome.get("unit_id") or not outcome.get("course_id"):
+            errors.append(f"{outcome.get('id')}: missing unit/course traceability")
+        mappings = outcome.get("maps_to", [])
+        if not mappings:
+            errors.append(f"{outcome.get('id')}: missing mappings")
+        for target in mappings:
+            if target not in plo_ids | co_ids:
+                errors.append(f"{outcome.get('id')}: unknown outcome mapping {target}")
+        if not outcome.get("evidence") or not outcome.get("assessment_points"):
+            errors.append(f"{outcome.get('id')}: missing evidence or assessment mapping")
+        if not outcome.get("source_record"):
+            errors.append(f"{outcome.get('id')}: missing source record")
+    return peo_ids, plo_ids, co_ids | unit_outcome_ids
 
 
 def validate_graph(doc: dict, course_ids: set[str], errors: list[str]) -> set[str]:

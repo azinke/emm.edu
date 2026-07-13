@@ -31,24 +31,31 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["sequence", "quantity", "from_node", "to_node", "value", "unit", "resolution", "expanded_uncertainty", "provenance"],
+        "required": ["sequence", "quantity", "from_node", "to_node", "value", "unit", "resolution", "expanded_uncertainty", "coverage_factor", "uncertainty_basis", "provenance"],
         "properties": {
           "sequence": {"type": "integer", "minimum": 1},
           "quantity": {"enum": ["voltage", "resistance", "current-derived", "continuity"]},
           "from_node": {"enum": ["VS", "TP-A", "TP-B", "COM", "R1", "R2", "R3", "R4"]},
           "to_node": {"enum": ["VS", "TP-A", "TP-B", "COM", "R1", "R2", "R3", "R4"]},
-          "value": {"type": "number"},
+          "value": {"type": ["number", "boolean"]},
           "unit": {"enum": ["V", "A", "ohm", "boolean"]},
           "resolution": {"type": "number", "minimum": 0},
           "expanded_uncertainty": {"type": "number", "minimum": 0},
+          "coverage_factor": {"type": "number", "minimum": 1},
+          "uncertainty_basis": {"type": "string", "minLength": 1},
           "provenance": {"type": "string", "minLength": 1},
           "anomaly_retained": {"type": "boolean"},
           "note": {"type": "string"}
         },
+        "oneOf": [
+          {"properties": {"quantity": {"const": "voltage"}, "unit": {"const": "V"}, "value": {"type": "number"}}},
+          {"properties": {"quantity": {"const": "resistance"}, "unit": {"const": "ohm"}, "value": {"type": "number"}}},
+          {"properties": {"quantity": {"const": "current-derived"}, "unit": {"const": "A"}, "value": {"type": "number"}}},
+          {"properties": {"quantity": {"const": "continuity"}, "unit": {"const": "boolean"}, "value": {"type": "boolean"}}}
+        ],
         "additionalProperties": false
       }
     }
   },
   "additionalProperties": false
 }
-

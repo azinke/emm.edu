@@ -70,6 +70,34 @@ to that controlled store. Public opaque references expose none of those contents
 - [ ] **M04-E3-T04 [TEST]** Rehearse lecture/demo timing, equipment failure, power interruption, absent internet, and recovery.
 - [ ] **M04-E3-T05 [REV]** Complete technical, lab safety, accessibility, license, and instructor-usability reviews.
 
+### E3 control implementation record — 2026-07-14
+
+The repository now provides an independent-recomputation/source/build protocol,
+a primary/substitute × minimal/standard physical-pilot matrix, strict raw-data and
+golden-data provenance rules, blind-fault custody and redacted reporting controls,
+a timed second-instructor/failure-recovery rehearsal, and five independent review
+briefs under [`shared/pilots/`](../../curriculum/courses/ESE111/shared/pilots/).
+An executable evidence gate rejects completion without attributable evidence,
+rejects prepared/simulated data as a physical pilot, and rejects release approval
+while a task or facet is pending.
+
+All E3 boxes remain open. Automated authoring checks cannot close T01 without a
+qualified reviewer and controlled answer views; no approved exact apparatus has
+produced T02 physical/golden data; no blind instructors have executed T03; no
+second instructor has rehearsed T04; and none of the named independent authorities
+has approved T05. The protocols name the exact evidence required to close each task.
+
+The E3 authoring audit independently recomputed the published nominal and corner
+values, then triggered corrections before this control commit: valid inline math
+plus a rendered regression, explicit KVL residuals, reproducible prepared data,
+expanded-uncertainty/coverage semantics with guard bands, a Boolean continuity
+schema, stable unit-outcome traceability, and an unclipped convention-labeled
+schematic. Pandoc produced all 24 HTML documents and both static slide decks, and
+the rendered-output gate passed. Full PDF/Quarto evidence remains open because the
+frozen host lacks Quarto, `footnote.sty`, and `rsvg-convert`; partial PDFs also
+fail the embedded-font gate, and build warnings remain failures rather than being
+waived.
+
 ## Epic E4 — Learner and parity pilot
 
 - [ ] **M04-E4-T01 [TEST]** Pilot with consented small EN-dominant and FR-dominant learner groups representing target readiness and access needs; predefine sample rationale, qualitative stopping rule, and acceptance thresholds.

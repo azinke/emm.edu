@@ -10,12 +10,12 @@ language: en
 paired_with: ESE111-CH04-PROJ-fr
 version: 0.1.0
 lifecycle: drafting
-outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
 estimated_student_time_min: 90
 safety_level: L1
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -38,7 +38,7 @@ is permitted. No mains, battery modification, radio, hot work, or data collectio
 ## Requirements and acceptance
 
 - RQ1: named nodes, references, branch values, and current arrows are unambiguous.
-- RQ2: a technician can reproduce baseline (V_A,V_B) and uncertainty decisions.
+- RQ2: a technician can reproduce baseline $V_A,V_B$ and uncertainty decisions.
 - RQ3: the diagnostic tree separates at least an open and a wrong-value branch.
 - RQ4: the change meets TP-B=1.40–1.52 V and source current ≤0.25 mA.
 - RQ5: setup, stop, reset, component recovery, and unresolved limitations are explicit.

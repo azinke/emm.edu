@@ -1,0 +1,32 @@
+record_id: ESE111-CH04-E3-PHYSICAL-PILOT
+version: 0.1.0
+status: protocol-ready-no-runs
+authority_required: deploying safety authority plus physical pilot lead
+matrix:
+  - {configuration_id: primary-minimal, component_route: primary, apparatus_path: minimal, result: pending, raw_record: null}
+  - {configuration_id: substitute-minimal, component_route: substitute, apparatus_path: minimal, result: pending, raw_record: null}
+  - {configuration_id: primary-standard, component_route: primary, apparatus_path: standard, result: pending, raw_record: null}
+  - {configuration_id: substitute-standard, component_route: substitute, apparatus_path: standard, result: pending, raw_record: null}
+configuration_record_required:
+  - exact source, DMM/channel, lead, breadboard, component manufacturer/part/lot, and substitute identity
+  - function-check/calibration status, DMM mode/range/input resistance/accuracy, source setting/current limit/ripple
+  - measured R1-R4 values, rating, tolerance, ambient note, topology revision, setup photo ID, inspector and checkpoint
+  - OS/tool version for any acquisition, raw-file checksum, timestamps, anomalies, interruptions, reset and consumables time
+run_sequence:
+  - complete and authorize the activity risk assessment; verify supervision and emergency/stop route
+  - predict from measured component/source values before revealing readings
+  - inspect de-energized; energize; record VS, TP-A, TP-B and settings without selecting results
+  - derive currents and KCL/KVL/power residuals with an uncertainty budget and meter loading
+  - run both public fault classes through the controlled blind protocol
+  - restore baseline, replace R4 using the learner design decision, inspect, and physically rerun both acceptance requirements
+  - isolate, verify zero, recover components, reset, checksum, and independently inspect the record
+physical_range_rule: calculate a preregistered screening range from measured components and exact instrument models, compare all unedited repeated readings, and apply the guard band V_B-U_V >= 1.40 V, V_B+U_V <= 1.52 V, I_S+U_I <= 0.25 mA with recorded coverage factors; publish a realistic expected interval only after accepted physical runs
+golden_data_rule: label data golden only after independent acceptance of configuration, provenance, raw integrity, uncertainty, repeatability, and intended use; simulation/prepared data is never golden
+substitute_equivalence:
+  required: same construct, personal actions, decision threshold, safety stop, uncertainty competence, fault discrimination, reasonable burden, and accessible route
+  fail_if: substitute hides loading, automates learner decisions, changes fault signature without revised notes, or requires an unapproved safety envelope
+acceptance:
+  each_matrix_cell: at least one accepted baseline, both fault classes, corrected rerun, redesign rerun, and recovery with no open critical defect
+  reproducibility: second operator reproduces the decision from the controlled record without author coaching
+  safety: zero unowned incident/near-miss and every stop handled according to the approved procedure
+result: pending

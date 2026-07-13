@@ -22,6 +22,8 @@ class Result:
     i_meter_a: float
     kcl_a_residual_a: float
     kcl_b_residual_a: float
+    kvl_source_r1_r2_residual_v: float
+    kvl_r2_r3_r4_residual_v: float
     power_balance_residual_w: float
 
 
@@ -51,11 +53,16 @@ def solve(source_v: float = 6.0, r1: float = 10_000.0, r2: float = 22_000.0,
     im = 0.0 if meter_b_ohm is None else tp_b / meter_b_ohm
     kcl_a = i1 - i2 - i3
     kcl_b = i3 - i4 - im
+    kvl_source_r1_r2 = source_v - i1 * r1 - i2 * r2
+    kvl_r2_r3_r4 = i2 * r2 - i3 * r3 - i4 * r4
     supplied = source_v * i1
     dissipated = i1 * i1 * r1 + i2 * i2 * r2 + i3 * i3 * r3 + i4 * i4 * r4
     if meter_b_ohm is not None:
         dissipated += im * im * meter_b_ohm
-    return Result(source_v, tp_a, tp_b, i1, i2, i3, i4, im, kcl_a, kcl_b, supplied - dissipated)
+    return Result(
+        source_v, tp_a, tp_b, i1, i2, i3, i4, im, kcl_a, kcl_b,
+        kvl_source_r1_r2, kvl_r2_r3_r4, supplied - dissipated,
+    )
 
 
 def corner_ranges(r4_nominal: float) -> dict[str, list[float]]:

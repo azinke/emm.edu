@@ -1,0 +1,27 @@
+record_id: ESE111-CH04-E3-REVIEWS
+version: 0.1.0
+status: review-pack-ready-no-approvals
+exact_baseline: commit-and-archive-pending
+reviews:
+  technical:
+    reviewer_qualification: DC-circuit and measurement competence; not the author
+    checks: [claims, derivations, values, signs, units, model limits, tolerance, source versions, answer keys, EN-FR contract]
+    status: pending
+  lab_safety:
+    reviewer_qualification: deploying institutional safety authority familiar with exact apparatus and supervision
+    checks: [risk assessment, source/protection, fault bounds, leads/meters, inspection, stops, substitutions, emergency, cleanup, accessibility]
+    status: pending
+  accessibility:
+    reviewer_qualification: accessibility reviewer plus representative route users where authorized
+    checks: [semantic headings, keyboard, print, contrast, non-color encoding, alt-long descriptions, math, tables, manipulation assistance, time]
+    status: pending
+  license:
+    reviewer_qualification: release/licensing reviewer independent of source creator
+    checks: [originality, claim sources, manual link terms, SVG/data/code SPDX, tool-output provenance, restricted boundary]
+    status: pending
+  instructor_usability:
+    reviewer_qualification: second instructor not involved in authoring and qualified for the activity
+    checks: [prep, minute plan, board cues, expected responses, fault tree, ranges, reset, recovery, language cautions, large-class route]
+    status: pending
+acceptance: each reviewer names exact baseline, evidence, defects, conditions, expiry/reopen trigger, and decision; no majority vote overrides a rejected safety or technical facet
+result: pending

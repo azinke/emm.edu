@@ -10,12 +10,12 @@ language: en
 paired_with: ESE111-CH04-DEMO-fr
 version: 0.1.0
 lifecycle: drafting
-outcomes: [ESE111-CO01, PLO-01, PLO-07, PLO-08]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CO01, PLO-01, PLO-07, PLO-08]
 estimated_student_time_min: 10
 safety_level: L1
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -56,7 +56,7 @@ declared uncertainty; otherwise stop and investigate rather than force the story
 ## Static and failure fallback
 
 Use the slide's two calculated values, the PREP-A row, and a board drawing of
-(R_M) from B to COM. Learners still calculate (I_M), add it to KCL-B, and name
+$R_M$ from B to COM. Learners still calculate $I_M$, add it to KCL-B, and name
 a disconfirming test. This route survives absent internet, power interruption,
 missing instrument, unstable contact, projector failure (print), and an inaccessible
 view (spoken text/table). It teaches analysis but makes no physical competence claim.

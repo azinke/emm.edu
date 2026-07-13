@@ -11,10 +11,10 @@ paired_with: ESE111-CH04-SLIDES-fr
 version: 0.1.0
 lifecycle: drafting
 format: revealjs
-outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -50,11 +50,11 @@ opposite to the declared arrow/polarity. Surface “negative equals wrong” and
 
 ![Controlled two-node network.](../../shared/figures/ese111-ch04-network.svg){fig-alt="A 6 V source feeds R1 to TP-A; R2 connects TP-A to COM; R3 connects TP-A to TP-B; R4 connects TP-B to COM."}
 
-Rank without calculation: (V_A), (V_B), 0 V. Is (I_1=I_2)?
+Rank without calculation: $V_A$, $V_B$, 0 V. Is $I_1=I_2$?
 
 ::: notes
-9–15 min. Poll first, pair explanation second. Expected (V_A>V_B>0), and
-(I_1=I_2+I_3). Record the current-consumed misconception. Static SVG and its
+9–15 min. Poll first, pair explanation second. Expected $V_A>V_B>0$, and
+$I_1=I_2+I_3$. Record the current-consumed misconception. Static SVG and its
 text reading replace animation.
 :::
 
@@ -79,7 +79,7 @@ caution: use *courant électrique*, *nœud*, *branche*; symbols do not change.
 \frac{V_B-V_A}{33\,000}+\frac{V_B}{15\,000}=0
 \]
 
-Therefore (V_A=3.2V_B).
+Therefore $V_A=3.2V_B$.
 
 ::: notes
 25–31 min. Learners complete the rearrangement individually. A wrong factor of
@@ -90,12 +90,12 @@ Therefore (V_A=3.2V_B).
 
 Before solving:
 
-- (I_1<6/10\text{ kΩ}=0.6\text{ mA})
-- (0<V_B<V_A<6\text{ V})
-- (V_B\) is roughly one third of (V_A)
+- $I_1<6/10\text{ kΩ}=0.6\text{ mA}$
+- $0<V_B<V_A<6\text{ V}$
+- $V_B$ is roughly one third of $V_A$
 
 ::: notes
-31–36 min. Ask learners to test two offered calculator results, one with (V_B>V_A).
+31–36 min. Ask learners to test two offered calculator results, one with $V_B>V_A$.
 The estimate is a decision gate, not decorative arithmetic.
 :::
 
@@ -103,11 +103,11 @@ The estimate is a decision gate, not decorative arithmetic.
 
 | Result | Nominal |
 |---|---:|
-| (V_A) | 3.608 V |
-| (V_B) | 1.128 V |
-| (I_1) | 239.18 µA |
-| (I_2) | 164.01 µA |
-| (I_3=I_4) | 75.17 µA |
+| $V_A$ | 3.608 V |
+| $V_B$ | 1.128 V |
+| $I_1$ | 239.18 µA |
+| $I_2$ | 164.01 µA |
+| $I_3=I_4$ | 75.17 µA |
 
 Check both nodes, two loops, and power.
 
@@ -130,31 +130,32 @@ do not expand into later-course electromagnetics.
 ## A voltmeter is another branch, not a spectator
 
 Unloaded TP-B: 1.1276 V  
-With 1 MΩ at TP-B: 1.1154 V and (I_M=1.115\ \mu\text{A})
+With 1 MΩ at TP-B: 1.1154 V and $I_M=1.115\ \mu\text{A}$
 
 ::: notes
 50–60 min. Run the physical demo only after approval; otherwise show the static
 calculated pair and prepared-data row. Prediction poll: higher/lower/same. Add
-(I_M) to KCL-B. Never generalize 1 or 10 MΩ to an unverified meter.
+$I_M$ to KCL-B. Never generalize 1 or 10 MΩ to an unverified meter.
 :::
 
 ## A residual is a question, not a mark to erase
 
 \[
-r=\text{measured}-\text{predicted},\qquad z=r/u_c
+r=\text{measured}-\text{predicted},\qquad U=k u_c,\qquad |r|\le U\ ?
 \]
 
 What should be checked when the residual exceeds its declared bound?
 
 ::: notes
 60–67 min. Learners rank source, actual R, meter loading, reference, contact, and
-topology. Explain that (z) is a transparent introductory scale, not a universal
-hypothesis test. Negative data remains in the record.
+topology. Require the recorded coverage factor $k$ whenever expanded uncertainty
+$U$ is used. This compatibility check is not a universal hypothesis test. Negative
+data remains in the record.
 :::
 
 ## The best next test separates hypotheses before replacement
 
-Symptom: (V_B\approx0), (V_A) plausible.
+Symptom: $V_B\approx0$, $V_A$ plausible.
 
 - H1: R3 open
 - H2: R4 short/too low
@@ -170,7 +171,7 @@ not reveal the controlled pilot variant.
 
 ## Evidence changes R4, then verification changes the claim
 
-New requirements: (1.40\le V_B\le1.52\text{ V}), (I_S\le0.25\text{ mA}).
+New requirements: $1.40\le V_B\le1.52\text{ V}$, $I_S\le0.25\text{ mA}$.
 
 Choose 18, 22, 27, or 33 kΩ. Nominal success is not enough.
 
@@ -194,4 +195,3 @@ branch named but no equation → REM-loading; “bad law/meter” without test �
 unsafe mode → REM-dmm before lab. Collect responses. Static PDF/HTML, the board
 sequence, and prepared table are the no-power/no-internet fallback.
 :::
-

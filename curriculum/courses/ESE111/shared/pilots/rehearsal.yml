@@ -1,0 +1,37 @@
+record_id: ESE111-CH04-E3-REHEARSAL
+version: 0.1.0
+status: protocol-ready-no-rehearsal
+second_instructor_requirement: prepared instructor other than the author, qualified for the approved L1 activity and intended language route
+baseline_sequence:
+  planned_min: 90
+  setup_min: 15
+  reset_min: 5
+  evidence: actual segment times, overrun/idle causes, learner-response opportunities, board state, demo state, exit classification, and preparation burden
+scenarios:
+  - id: normal-live
+    inject: none
+    recover: execute complete prediction-model-demo-diagnosis-design-exit arc
+    accept: 85-95 minutes without cutting any must-not-cut construct
+  - id: equipment-failure
+    inject: unstable/missing second channel or failed lead discovered by function check
+    recover: stop, isolate, preserve configuration, use calculated/prepared loading pair, record qualification defect
+    accept: no live substitution or hidden skip; same model and decision evidence continues
+  - id: current-limit-or-unexpected-reading
+    inject: source limit indication or reading outside approved envelope
+    recover: STOP, output off, isolate, verify zero, quarantine and move to static route
+    accept: instructor prioritizes safety over completing the spectacle
+  - id: power-interruption
+    inject: room power loss during the demo
+    recover: isolate source, verify state when power returns, do not auto-resume; use board/print path
+    accept: learners can state what evidence was lost and where restart would occur
+  - id: absent-internet
+    inject: network unavailable from start
+    recover: local QMD/HTML/PDF-or-print, SVG, Python, prepared CSV, and glossary only
+    accept: no required remote request and no reduction in reasoning threshold
+  - id: projector-or-access-route
+    inject: display unavailable or visual detail inaccessible
+    recover: board sequence, printed text/table, spoken schematic, keyboard/oral response
+    accept: same prediction, equation, diagnostic, and design choices captured
+record_fields: [instructor, qualification, language_route, configuration, scenario, actual_times, recovery_steps, safety_actions, evidence_preserved, deviations, workload, defects, owner_due, rerun]
+acceptance: all scenarios rehearsed; second instructor can teach and recover without author coaching; zero open critical technical/safety/access defect
+result: pending

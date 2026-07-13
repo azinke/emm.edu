@@ -10,7 +10,7 @@ language: fr
 paired_with: ESE111-CH04-CH-en
 version: 0.1.0
 lifecycle: drafting
-outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
 prerequisites: []
 context_ids: []
 claim_register: ../../shared/claims.yml
@@ -19,7 +19,7 @@ estimated_student_time_min: 150
 safety_level: L1
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -64,9 +64,9 @@ multimètre ne sont pas assurés, suivez la remédiation correspondante.
 
 Sans calculer, notez :
 
-1. (V_A) ou (V_B) : laquelle est la plus grande, et pourquoi ?
-2. (I_1) est-il supérieur à (I_2) ? Où va la différence ?
-3. Si R3 est ouverte, prévoyez qualitativement (V_A) et (V_B).
+1. $V_A$ ou $V_B$ : laquelle est la plus grande, et pourquoi ?
+2. $I_1$ est-il supérieur à $I_2$ ? Où va la différence ?
+3. Si R3 est ouverte, prévoyez qualitativement $V_A$ et $V_B$.
 4. Déclarez nœud de référence, flèches, hypothèses et confiance.
 
 Même fausse, une prévision est utile : elle rend visible le modèle à éprouver.
@@ -77,12 +77,12 @@ Même fausse, une prévision est utile : elle rend visible le modèle à éprouv
 
 Un **nœud** est un ensemble de conducteurs considéré au même potentiel dans le
 modèle concentré. Une **branche** relie deux nœuds par un ou plusieurs éléments et
-porte un courant de branche. Déclarons COM à (0\text{ V}) ; c'est une référence
+porte un courant de branche. Déclarons COM à $0\text{ V}$ ; c'est une référence
 de signal, pas la terre de protection. Une tension est toujours une différence :
-(V_A=V(\text{TP-A})-V(\text{COM})).
+$V_A=V(\text{TP-A})-V(\text{COM})$.
 
-Choisissez les flèches avant le calcul. Ici (I_1) va de VS vers A, (I_2) de A
-vers COM, (I_3) de A vers B et (I_4) de B vers COM. Un résultat négatif indique
+Choisissez les flèches avant le calcul. Ici $I_1$ va de VS vers A, $I_2$ de A
+vers COM, $I_3$ de A vers B et $I_4$ de B vers COM. Un résultat négatif indique
 un sens réel opposé ; il n'invalide pas l'algèbre.
 
 La loi des nœuds est l'inventaire du courant électrique :
@@ -91,8 +91,8 @@ La loi des nœuds est l'inventaire du courant électrique :
 \sum i_k=0.
 \]
 
-En comptant positivement ce qui entre en TP-A : (I_1-I_2-I_3=0). En TP-B :
-(I_3-I_4=0) avant de brancher le multimètre. Un nœud ne consomme pas le courant.
+En comptant positivement ce qui entre en TP-A : $I_1-I_2-I_3=0$. En TP-B :
+$I_3-I_4=0$ avant de brancher le multimètre. Un nœud ne consomme pas le courant.
 
 La loi des mailles impose le bilan des tensions :
 
@@ -100,13 +100,13 @@ La loi des mailles impose le bilan des tensions :
 \sum v_k=0.
 \]
 
-Dans la maille source–R1–R2 : (V_S-I_1R_1-I_2R_2=0). Dans la maille
-A–R3–R4–R2 : (-I_3R_3-I_4R_4+I_2R_2=0). Les signes viennent du parcours et
+Dans la maille source–R1–R2 : $V_S-I_1R_1-I_2R_2=0$. Dans la maille
+A–R3–R4–R2 : $-I_3R_3-I_4R_4+I_2R_2=0$. Les signes viennent du parcours et
 des polarités choisis, non d'une récitation « élévation/chute ».
 
 ### Développer le modèle à deux nœuds
 
-Employons (i=(v_\text{départ}-v_\text{arrivée})/R). En écrivant les courants
+Employons $i=(v_\text{départ}-v_\text{arrivée})/R$. En écrivant les courants
 sortant de chaque nœud inconnu :
 
 \[
@@ -121,24 +121,24 @@ sortant de chaque nœud inconnu :
 Ce sont des équations de nœud limitées à ce cas, avant la méthode matricielle
 systématique étudiée plus tard. Chaque terme reste relié à une branche physique.
 
-La deuxième équation donne (V_A=3,2V_B). Par substitution,
-(V_A=3,6082\text{ V}) et (V_B=1,1276\text{ V}).
+La deuxième équation donne $V_A=3,2V_B$. Par substitution,
+$V_A=3,6082\text{ V}$ et $V_B=1,1276\text{ V}$.
 
 | Grandeur | Résultat nominal |
 |---|---:|
-| (I_1=(6-V_A)/10\text{ kΩ}) | 239,18 µA |
-| (I_2=V_A/22\text{ kΩ}) | 164,01 µA |
-| (I_3=(V_A-V_B)/33\text{ kΩ}) | 75,17 µA |
-| (I_4=V_B/15\text{ kΩ}) | 75,17 µA |
+| $I_1=(6-V_A)/10\text{ kΩ}$ | 239,18 µA |
+| $I_2=V_A/22\text{ kΩ}$ | 164,01 µA |
+| $I_3=(V_A-V_B)/33\text{ kΩ}$ | 75,17 µA |
+| $I_4=V_B/15\text{ kΩ}$ | 75,17 µA |
 
-Contrôlez : (164,01+75,17=239,18\ \mu\text{A}), et la puissance fournie
-(6I_1=1,435\text{ mW}) égale la somme idéale dissipée. Un affichage de
+Contrôlez : $164,01+75,17=239,18\ \mu\text{A}$, et la puissance fournie
+$6I_1=1,435\text{ mW}$ égale la somme idéale dissipée. Un affichage de
 calculatrice sans contrôle indépendant reste fragile.
 
 ### Estimer → calculer → vérifier → interpréter
 
 La source voit au moins 10 kΩ : le courant est donc inférieur à
-(6/10\text{ kΩ}=0,6\text{ mA}). TP-A et TP-B doivent rester entre 0 V et 6 V.
+$6/10\text{ kΩ}=0,6\text{ mA}$. TP-A et TP-B doivent rester entre 0 V et 6 V.
 TP-B vaut environ un tiers de TP-A à cause de la chaîne 33 kΩ–15 kΩ. La solution
 exacte respecte ces trois bornes.
 
@@ -166,11 +166,11 @@ A rejoint COM par R2 ; A rejoint B par R3 ; B rejoint COM par R4.
 La voie minimale emploie un multimètre de résistance d'entrée connue ; la voie
 standard ajoute une seconde voie de tension. Suivez le TP autorisé. Prévoyez,
 inspectez hors tension, réglez 6,0 V et au plus 20 mA sortie coupée, puis mesurez
-(V_S), (V_A) et (V_B) par rapport à COM. Déduisez les courants des différences
+$V_S$, $V_A$ et $V_B$ par rapport à COM. Déduisez les courants des différences
 de tension et résistances mesurées ; l'entrée courant est hors périmètre.
 
-Un instrument idéal ne prélève rien. Un voltmètre réel de résistance (R_M)
-ajoute (I_M=V_B/R_M). Le modèle nominal sans instrument donne 1,1276 V. Avec
+Un instrument idéal ne prélève rien. Un voltmètre réel de résistance $R_M$
+ajoute $I_M=V_B/R_M$. Le modèle nominal sans instrument donne 1,1276 V. Avec
 1 MΩ, il donne 1,1154 V et 1,115 µA. Si le bilan en B omet cette branche, un
 courant semble manquer. La loi n'a pas échoué : le modèle était incomplet.
 
@@ -182,11 +182,11 @@ Calculez un résidu signé
 r_V=V_\text{mesuré}-V_\text{prévu}
 \]
 
-et un résidu normalisé (z=r_V/u_c), où (u_c) est l'incertitude combinée
-déclarée. Ce n'est pas un test statistique universel : c'est une échelle explicite.
-Si (|z|\le1), la lecture est compatible avec la comparaison à une borne déclarée.
-Sinon, vérifiez source, résistances réelles, entrée du multimètre, référence,
-contacts et topologie.
+Construisez une incertitude-type composée $u_c$ à partir des contributions
+déclarées. Pour publier une incertitude élargie, notez le facteur de couverture et
+utilisez $U=k u_c$. L'unité emploie le contrôle explicite $|r_V|\le U$ ; ce n'est
+pas un test statistique universel. Si la borne est dépassée, vérifiez source,
+résistances réelles, entrée du multimètre, référence, contacts et topologie.
 
 Calculez le résidu de la loi des nœuds avec ses signes et conservez-le. S'il dépasse
 nettement l'incertitude propagée, il signale peut-être une branche d'instrument
@@ -196,10 +196,10 @@ oubliée, une référence fausse, une transcription ou une panne réelle.
 
 | Symptôme | Hypothèses | Prochain essai | Interprétation |
 |---|---|---|---|
-| (V_B\approx0) | R3 ouverte ; R4 court-circuitée ; mauvais COM | continuité/valeur de R3 hors tension | R3 ouverte isole B, maintenu près de COM par R4 |
-| (V_B) trop élevée | R4 ouverte/forte ; R3 faible ; source haute | mesurer R4 hors tension après la source | une R4 forte réduit la liaison à COM |
+| $V_B\approx0$ | R3 ouverte ; R4 court-circuitée ; mauvais COM | continuité/valeur de R3 hors tension | R3 ouverte isole B, maintenu près de COM par R4 |
+| $V_B$ trop élevée | R4 ouverte/forte ; R3 faible ; source haute | mesurer R4 hors tension après la source | une R4 forte réduit la liaison à COM |
 | deux nœuds bas | source basse ; R1 forte ; dérivation parasite | mesurer VS en charge, puis R1 | sépare alimentation et branche |
-| manque d'environ 1 µA en B pendant la mesure | calcul ; fuite ; charge du multimètre | ajouter (R_M), retirer et remettre la pointe | l'effet lié à la pointe soutient la charge |
+| manque d'environ 1 µA en B pendant la mesure | calcul ; fuite ; charge du multimètre | ajouter $R_M$, retirer et remettre la pointe | l'effet lié à la pointe soutient la charge |
 
 Ne changez qu'une chose à la fois. Notez observation → hypothèses classées →
 résultats attendus → essai choisi → mise à jour. Remplacez seulement après preuve.
@@ -212,9 +212,11 @@ seulement R4, parmi 18 kΩ, 22 kΩ, 27 kΩ et 33 kΩ, avec un courant de source 
 
 Le modèle aux coins comprend source ±0,5 %, quatre tolérances indépendantes ±1 %
 et instruments de 1 MΩ/10 MΩ. Avec R4=22 kΩ, il prévoit
-(1,4126\le V_B\le1,4992\text{ V}) et moins de 0,238 mA. C'est un argument simulé,
-pas une vérification. Réalisez la modification autorisée, réinspectez et acceptez
-ou refusez avec les mesures physiques enregistrées.
+$1,4126\le V_B\le1,4992\text{ V}$ et moins de 0,238 mA. C'est un argument simulé,
+pas une vérification. Réalisez la modification autorisée, réinspectez et appliquez
+une bande de garde : les intervalles complets $[V_B-U_V,V_B+U_V]$ et
+$[I_S-U_I,I_S+U_I]$ doivent rester dans 1,40–1,52 V et sous 0,25 mA. Un intervalle
+qui coupe une limite est indécis, pas réussi.
 
 ## Pratique professionnelle
 

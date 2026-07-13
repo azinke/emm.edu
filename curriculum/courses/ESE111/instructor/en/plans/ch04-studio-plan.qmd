@@ -11,10 +11,10 @@ paired_with: ESE111-CH04-PLAN-fr
 version: 0.1.0
 lifecycle: drafting
 duration_min: 90
-outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -50,7 +50,7 @@ the individual reasoning threshold.
 | 15–31 | Understand | supply terms and eliminate | board equation + faded step | term lacks branch → trace schematic physically |
 | 31–45 | Understand | reject result by estimate; check solution | bounds, KCL, loops, power | calculator-only → require independent check |
 | 45–50 | Understand | name a model limit | one-sentence transfer | earth/COM confusion → explicit contrast |
-| 50–60 | Experiment | predict loading; inspect static/live result | before/after pair | “bad meter” → add (R_M) rather than blame |
+| 50–60 | Experiment | predict loading; inspect static/live result | before/after pair | “bad meter” → add $R_M$ rather than blame |
 | 60–67 | Analyze | rank residual causes | mini uncertainty table | deletes anomaly → preserve original row |
 | 67–76 | Analyze | choose test and predicted outcomes | fault decision vote | replacement/no outcomes → REM-debug |
 | 76–84 | Design | choose R4 with margin | four-candidate trade study | nominal only → add corner/loading condition |
@@ -61,7 +61,7 @@ the individual reasoning threshold.
 Use four persistent zones. (1) Draw topology and text-only reading; name VS, A, B,
 COM. (2) Add arrows/polarities and the estimate box. (3) Build KCL-A and KCL-B one
 branch at a time, solve, then retain KCL/KVL/power checks. (4) Draw a residual table,
-add (R_M) as a visibly new branch, then finish with the fault hypotheses and R4
+add $R_M$ as a visibly new branch, then finish with the fault hypotheses and R4
 requirements. Do not erase the prediction; mark what evidence changed it.
 
 ## Essential versus compressible

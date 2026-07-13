@@ -11,10 +11,10 @@ paired_with: ESE111-CH04-NOTES-fr
 version: 0.1.0
 lifecycle: drafting
 access: staff
-outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -52,10 +52,10 @@ must be resolved through their opaque references, never copied into public notes
 
 ## Questions and expected responses
 
-- Prediction: (V_A>V_B>0); (I_1=I_2+I_3). Ask “where could charge accumulate?”
+- Prediction: $V_A>V_B>0$; $I_1=I_2+I_3$. Ask “where could charge accumulate?”
   before telling.
 - Estimate: current <0.6 mA, nodes inside rails. Reject an impossible solver output.
-- Loading: attaching finite (R_M) lowers B and adds (I_M). Ask which measurement
+- Loading: attaching finite $R_M$ lowers B and adds $I_M$. Ask which measurement
   could disconfirm loading rather than calling the meter “bad.”
 - Diagnosis: a test is good only if outcomes separate hypotheses; replacement is
   not an observation.
@@ -66,7 +66,7 @@ must be resolved through their opaque references, never copied into public notes
 
 | Model | Elicit | Distinguishing evidence | Route |
 |---|---|---|---|
-| current is used up | ask whether (I_1=I_2) | signed TP-A inventory | REM-signs/model |
+| current is used up | ask whether $I_1=I_2$ | signed TP-A inventory | REM-signs/model |
 | voltage belongs to a point | omit COM in a statement | report same branch under another reference | REM-reference |
 | KVL means equal voltages | offer equal-drop distractor | signed loop sum | faded loop example |
 | negative means wrong | reverse one arrow | same physics, negative result | REM-signs |

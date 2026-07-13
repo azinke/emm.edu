@@ -52,6 +52,20 @@ class QualityFixtureTests(unittest.TestCase):
             self.assertFalse(any(f.code == "GLOSSARY002" for f in qa_content.validate_document(en, root, set(), term_ids, avoided, policy)))
             self.assertTrue(any(f.code == "GLOSSARY002" for f in qa_content.validate_document(fr, root, set(), term_ids, avoided, policy)))
 
+    def test_parenthesized_tex_is_rejected_but_delimited_math_passes(self) -> None:
+        policy = {"restricted_path_tokens": [], "restricted_markers": []}
+        bad = qa_content.Document(Path("bad.qmd"), Path("courses/FIX/en/bad.qmd"), {}, "Compare (V_A) and (V_B).", "en", "bad")
+        good = qa_content.Document(Path("good.qmd"), Path("courses/FIX/en/good.qmd"), {}, "Compare $V_A$ and $V_B$.", "en", "good")
+        self.assertTrue(any(f.code == "MATH001" for f in qa_content.validate_document(bad, Path("."), set(), set(), [], policy)))
+        self.assertFalse(any(f.code == "MATH001" for f in qa_content.validate_document(good, Path("."), set(), set(), [], policy)))
+
+    def test_fragmented_inline_math_is_rejected_but_nested_tex_passes(self) -> None:
+        policy = {"restricted_path_tokens": [], "restricted_markers": []}
+        bad = qa_content.Document(Path("bad.qmd"), Path("courses/FIX/en/bad.qmd"), {}, r"$V_A=V$\text{TP-A}$-V$\text{COM}$$", "en", "bad")
+        good = qa_content.Document(Path("good.qmd"), Path("courses/FIX/en/good.qmd"), {}, r"$V_A=V(\text{TP-A})-V(\text{COM})$", "en", "good")
+        self.assertTrue(any(f.code == "MATH002" for f in qa_content.validate_document(bad, Path("."), set(), set(), [], policy)))
+        self.assertFalse(any(f.code.startswith("MATH") for f in qa_content.validate_document(good, Path("."), set(), set(), [], policy)))
+
 
 class SmokeInterfaceTests(unittest.TestCase):
     def test_all_five_interfaces_execute(self) -> None:

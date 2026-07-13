@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://emm.edu/schemas/outcome.schema.json",
-  "title": "Program and course outcomes",
+  "title": "Program, course, and unit outcomes",
   "type": "object",
   "required": [
     "schema_version",
@@ -11,6 +11,7 @@
     "peos",
     "plos",
     "course_outcomes",
+    "unit_outcomes",
     "graduation_rule"
   ],
   "properties": {
@@ -232,6 +233,73 @@
           },
           "assessment_points": {
             "type": "array"
+          },
+          "status": {
+            "$ref": "#/$defs/status"
+          }
+        }
+      }
+    },
+    "unit_outcomes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "unit_id",
+          "course_id",
+          "definition",
+          "progression_level",
+          "maps_to",
+          "evidence",
+          "assessment_points",
+          "source_record",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "unit_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "course_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "definition": {
+            "type": [
+              "object",
+              "string"
+            ]
+          },
+          "progression_level": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "maps_to": {
+            "type": "array"
+          },
+          "evidence": {
+            "type": "array"
+          },
+          "assessment_points": {
+            "type": "array"
+          },
+          "source_record": {
+            "type": [
+              "string",
+              "object",
+              "array",
+              "number",
+              "boolean",
+              "null"
+            ]
           },
           "status": {
             "$ref": "#/$defs/status"

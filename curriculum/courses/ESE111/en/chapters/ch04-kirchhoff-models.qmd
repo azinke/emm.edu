@@ -10,7 +10,7 @@ language: en
 paired_with: ESE111-CH04-CH-fr
 version: 0.1.0
 lifecycle: drafting
-outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
 prerequisites: []
 context_ids: []
 claim_register: ../../shared/claims.yml
@@ -19,7 +19,7 @@ estimated_student_time_min: 150
 safety_level: L1
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -63,9 +63,9 @@ short remediation route before energizing.
 
 Without calculating, record:
 
-1. Which is larger, (V_A) or (V_B)? Give a physical reason.
-2. Is (I_1) larger than (I_2)? Where can the difference go?
-3. If R3 opens, predict (V_A) and (V_B) qualitatively.
+1. Which is larger, $V_A$ or $V_B$? Give a physical reason.
+2. Is $I_1$ larger than $I_2$? Where can the difference go?
+3. If R3 opens, predict $V_A$ and $V_B$ qualitatively.
 4. State your reference node, arrow directions, assumptions, and confidence.
 
 A prediction is useful even when wrong: it exposes the model you are about to test.
@@ -76,11 +76,11 @@ A prediction is useful even when wrong: it exposes the model you are about to te
 
 A **node** is a set of conductors treated as one potential in the lumped model. A
 **branch** connects two nodes through one or more elements and carries one branch
-current. Declare COM as (0\text{ V}); this is a signal reference, not protective
-earth. Voltage is always a difference: (V_A=V(\text{TP-A})-V(\text{COM})).
+current. Declare COM as $0\text{ V}$; this is a signal reference, not protective
+earth. Voltage is always a difference: $V_A=V(\text{TP-A})-V(\text{COM})$.
 
-Choose current arrows before solving. Here (I_1) points VS→A, (I_2) A→COM,
-(I_3) A→B, and (I_4) B→COM. A negative result would mean the actual direction
+Choose current arrows before solving. Here $I_1$ points VS→A, $I_2$ A→COM,
+$I_3$ A→B, and $I_4$ B→COM. A negative result would mean the actual direction
 is opposite; it would not make the algebra invalid.
 
 Kirchhoff's current law (KCL) is the node inventory:
@@ -89,8 +89,8 @@ Kirchhoff's current law (KCL) is the node inventory:
 \sum i_k=0.
 \]
 
-With “entering TP-A” positive, (I_1-I_2-I_3=0). At TP-B,
-(I_3-I_4=0) before a meter is attached. Current is not consumed at a node.
+With “entering TP-A” positive, $I_1-I_2-I_3=0$. At TP-B,
+$I_3-I_4=0$ before a meter is attached. Current is not consumed at a node.
 
 Kirchhoff's voltage law (KVL) is loop accounting:
 
@@ -98,13 +98,13 @@ Kirchhoff's voltage law (KVL) is loop accounting:
 \sum v_k=0.
 \]
 
-For the source–R1–R2 loop, (V_S-I_1R_1-I_2R_2=0). For the A–R3–R4–R2
-loop, (-I_3R_3-I_4R_4+I_2R_2=0). Signs come from the chosen traversal and
+For the source–R1–R2 loop, $V_S-I_1R_1-I_2R_2=0$. For the A–R3–R4–R2
+loop, $-I_3R_3-I_4R_4+I_2R_2=0$. Signs come from the chosen traversal and
 polarity, not from memorizing “rise” and “drop” labels.
 
 ### Derive the two-node model
 
-Use the resistor relation (i=(v_\text{from}-v_\text{to})/R). Writing currents
+Use the resistor relation $i=(v_\text{from}-v_\text{to})/R$. Writing currents
 leaving each unknown node gives
 
 \[
@@ -119,24 +119,24 @@ leaving each unknown node gives
 These are bounded node equations, not yet the full systematic matrix method taught
 later. Their value is traceability: every term names a physical branch.
 
-From the TP-B equation, (V_A=3.2V_B). Substitution gives
-(V_A=3.6082\text{ V}) and (V_B=1.1276\text{ V}). Then
+From the TP-B equation, $V_A=3.2V_B$. Substitution gives
+$V_A=3.6082\text{ V}$ and $V_B=1.1276\text{ V}$. Then
 
 | Quantity | Nominal result |
 |---|---:|
-| (I_1=(6-V_A)/10\text{ kΩ}) | 239.18 µA |
-| (I_2=V_A/22\text{ kΩ}) | 164.01 µA |
-| (I_3=(V_A-V_B)/33\text{ kΩ}) | 75.17 µA |
-| (I_4=V_B/15\text{ kΩ}) | 75.17 µA |
+| $I_1=(6-V_A)/10\text{ kΩ}$ | 239.18 µA |
+| $I_2=V_A/22\text{ kΩ}$ | 164.01 µA |
+| $I_3=(V_A-V_B)/33\text{ kΩ}$ | 75.17 µA |
+| $I_4=V_B/15\text{ kΩ}$ | 75.17 µA |
 
-Check before trusting: (164.01+75.17=239.18\ \mu\text{A}), and supplied
-power (6I_1=1.435\text{ mW}) agrees with the four ideal resistor powers. A
+Check before trusting: $164.01+75.17=239.18\ \mu\text{A}$, and supplied
+power $6I_1=1.435\text{ mW}$ agrees with the four ideal resistor powers. A
 calculator output without these independent checks is fragile.
 
 ### Estimate → calculate → sanity-check → interpret
 
 An estimate should precede the equations. The source sees at least 10 kΩ, so
-current must be below (6/10\text{ kΩ}=0.6\text{ mA}). TP-A and TP-B lie between
+current must be below $6/10\text{ kΩ}=0.6\text{ mA}$. TP-A and TP-B lie between
 0 V and 6 V for this passive network. TP-B should be near one third of TP-A because
 R3 and R4 form a 33 kΩ–15 kΩ path. The exact solution fits all three bounds.
 
@@ -164,12 +164,12 @@ as: VS through R1 to A; A through R2 to COM; A through R3 to B; B through R4 to 
 The minimal path uses one known-input-resistance DMM; the standard path adds a
 second voltage channel. Use only the approved L1 setup and the full lab procedure.
 Predict first, inspect with power off, set 6.0 V and no more than 20 mA with output
-off, and measure (V_S), (V_A), and (V_B) relative to COM. Infer branch
+off, and measure $V_S$, $V_A$, and $V_B$ relative to COM. Infer branch
 currents from measured voltage differences and measured resistor values; the
 current jack is outside this unit.
 
 An ideal instrument draws no current. A real voltmeter with input resistance
-(R_M) adds (I_M=V_B/R_M) at TP-B. The nominal unloaded model predicts
+$R_M$ adds $I_M=V_B/R_M$ at TP-B. The nominal unloaded model predicts
 1.1276 V. A 1 MΩ meter model predicts 1.1154 V and draws 1.115 µA. If you calculate
 KCL at B but omit that branch, the residual looks like missing current. The meter
 did not “make the law fail”; the model omitted an element.
@@ -182,11 +182,11 @@ For each quantity compute a signed residual
 r_V=V_\text{measured}-V_\text{predicted}
 \]
 
-and a normalized residual (z=r_V/u_c), where (u_c) is the declared combined
-uncertainty for that comparison. Do not treat (z) as a universal statistical
-test in this introductory lab; use it as a transparent scale. If (|z|\le1), the
-reading is consistent with the stated one-bound comparison. If larger, check the
-source, actual resistance, meter input, node reference, contacts, and topology.
+Build a combined standard uncertainty $u_c$ from the declared contributors. When
+reporting expanded uncertainty, record its coverage factor and use $U=k u_c$.
+This unit uses the transparent compatibility check $|r_V|\le U$; it is not a
+universal statistical test. If the bound is exceeded, check the source, actual
+resistance, meter input, node reference, contacts, and topology.
 
 At each node calculate the KCL residual with signs. Retain it even when inconvenient.
 A residual much larger than propagated resolution is evidence: it may expose an
@@ -196,10 +196,10 @@ unmodeled meter branch, wrong reference, transcription error, or real fault.
 
 | Symptom | Competing hypotheses | Best next test | Interpretation |
 |---|---|---|---|
-| (V_B\approx0) | R3 open; R4 short; wrong COM | de-energized R3 continuity/value | open R3 isolates B while R4 holds it near COM |
-| (V_B) too high | R4 open/high; R3 low; source high | measure R4 de-energized after confirming source | a high/open R4 reduces the path to COM |
+| $V_B\approx0$ | R3 open; R4 short; wrong COM | de-energized R3 continuity/value | open R3 isolates B while R4 holds it near COM |
+| $V_B$ too high | R4 open/high; R3 low; source high | measure R4 de-energized after confirming source | a high/open R4 reduces the path to COM |
 | both nodes low | source low; R1 high; unintended shunt | measure VS under load, then R1 | separates supply from branch causes |
-| KCL-B misses about 1 µA only while probing | arithmetic; leakage; meter loading | recompute with (R_M) and remove/repeat probe | change tied to probe supports loading |
+| KCL-B misses about 1 µA only while probing | arithmetic; leakage; meter loading | recompute with $R_M$ and remove/repeat probe | change tied to probe supports loading |
 
 Change one thing at a time. Record observation → ranked hypotheses → predicted
 test outcomes → chosen test → update. Replace a part only after evidence supports it.
@@ -213,9 +213,11 @@ COM, so TP-B should rise.
 
 The analytical corner model includes source ±0.5%, four independent resistor
 tolerances of ±1%, and 1 MΩ/10 MΩ meter paths. With R4=22 kΩ it predicts
-(1.4126\le V_B\le1.4992\text{ V}) and source current below 0.238 mA. That is a
+$1.4126\le V_B\le1.4992\text{ V}$ and source current below 0.238 mA. That is a
 simulated design argument, not verification. Build the approved change, repeat the
-inspection, and use recorded physical readings to accept or reject it.
+inspection, and apply a guard band: the full intervals $[V_B-U_V,V_B+U_V]$ and
+$[I_S-U_I,I_S+U_I]$ must remain inside 1.40–1.52 V and at or below 0.25 mA.
+An interval crossing a limit is inconclusive, not a pass.
 
 ## Professional practice
 
@@ -253,4 +255,3 @@ sensor-interface diagnosis.
 References and evidence are controlled in `shared/claims.yml`; the deterministic
 oracle and its tests are in `shared/model/`. Physical ranges and approvals remain
 pending the declared pilots.
-

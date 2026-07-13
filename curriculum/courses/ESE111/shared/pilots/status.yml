@@ -1,0 +1,52 @@
+record_id: ESE111-CH04-PILOT-STATUS
+version: 0.1.0
+unit_lifecycle: drafting
+record_status: controls-ready-evidence-pending
+evidence_rule: A protocol, simulation, prepared dataset, author check, or AI audit is not independent qualified review, physical pilot, instructor rehearsal, or learner evidence.
+e3_tasks:
+  M04-E3-T01:
+    status: pending
+    required_evidence: [independent_recomputation, units_notation_schematic_review, primary_source_version_review, tolerance_simulation_review, applicable_build_results, restricted_view_integrity_check]
+    evidence: []
+    reviewer: pending-qualified-technical-reviewer-not-author
+    blockers: [production-restricted-store-absent, independent-qualified-reviewer-absent, full-Quarto-and-PDF-build-open]
+  M04-E3-T02:
+    status: pending
+    required_evidence: [primary-minimal, substitute-minimal, primary-standard, substitute-standard]
+    evidence: []
+    reviewer: pending-physical-pilot-lead
+    blockers: [approved-exact-apparatus-absent, physical-runs-not-performed]
+  M04-E3-T03:
+    status: pending
+    required_evidence: [blind-open-class-run, blind-incorrect-value-class-run, diagnostic-distinction, custodian-reset-record]
+    evidence: []
+    reviewer: pending-lab-pilot-custodian
+    blockers: [restricted-fault-schedule-absent, pilot-instructors-absent]
+  M04-E3-T04:
+    status: pending
+    required_evidence: [second-instructor-full-rehearsal, equipment-failure-recovery, power-loss-recovery, offline-recovery, timing-record]
+    evidence: []
+    reviewer: pending-second-instructor
+    blockers: [second-instructor-absent, qualified-live-demo-absent]
+  M04-E3-T05:
+    status: pending
+    required_evidence: [technical, safety, accessibility, license, instructor-usability]
+    evidence: []
+    reviewer: pending-independent-release-review-team
+    blockers: [named-qualified-reviewers-absent, upstream-evidence-incomplete]
+e4_tasks:
+  M04-E4-T01: {status: pending, evidence: [], reviewer: pending-authorized-pilot-lead}
+  M04-E4-T02: {status: pending, evidence: [], reviewer: pending-authorized-observer}
+  M04-E4-T03: {status: pending, evidence: [], reviewer: pending-bilingual-assessment-reviewer}
+  M04-E4-T04: {status: pending, evidence: [], reviewer: pending-paired-edition-owners}
+  M04-E4-T05: {status: pending, evidence: [], reviewer: pending-independent-release-authority}
+facets:
+  technical: pending
+  safety: pending
+  language: pending
+  accessibility: pending
+  license: pending
+  build: pending
+  apparatus: pending
+  approval: pending
+release_decision: deferred

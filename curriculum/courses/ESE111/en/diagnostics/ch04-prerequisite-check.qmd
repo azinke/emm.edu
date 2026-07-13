@@ -29,12 +29,12 @@ technical_contract:
 Complete this without penalty. Record confidence from 0 (guess) to 3 (certain).
 The result chooses support; it does not exclude you from the unit.
 
-1. Convert (75\ \mu\text{A}) to amperes and milliamperes.
+1. Convert $75\ \mu\text{A}$ to amperes and milliamperes.
 2. A 10 kΩ resistor has 2.00 V from its left terminal to its right. Calculate the
    current in the left-to-right reference direction.
 3. On a blank two-terminal resistor, draw one current arrow and a compatible
    voltage polarity for the passive sign convention.
-4. Solve (3x-y=7) and (x+y=5).
+4. Solve $3x-y=7$ and $x+y=5$.
 5. Explain why “the voltage at A is 3 V” is incomplete until a reference is named.
 6. Choose the safe DMM sockets and function for a DC voltage measurement. State
    why the current socket is not used.
@@ -45,14 +45,14 @@ The result chooses support; it does not exclude you from the unit.
 
 ## Self-check and route
 
-- Q1: (75\ \mu\text{A}=75\times10^{-6}\text{ A}=0.075\text{ mA}). If either
+- Q1: $75\ \mu\text{A}=75\times10^{-6}\text{ A}=0.075\text{ mA}$. If either
   prefix was uncertain, take route **REM-units**.
-- Q2: (I=V/R=0.200\text{ mA}), positive in the declared direction. If you used
+- Q2: $I=V/R=0.200\text{ mA}$, positive in the declared direction. If you used
   unmatched prefixes or omitted direction, take **REM-units** and **REM-signs**.
 - Q3: current enters the terminal marked positive. Other reference choices are
   allowed if the equation and interpretation remain consistent. Otherwise take
   **REM-signs**.
-- Q4: (x=3), (y=2). If elimination was not available from memory, take
+- Q4: $x=3$, $y=2$. If elimination was not available from memory, take
   **REM-algebra** before the two-node derivation.
 - Q5: voltage is a difference between two nodes; name COM or another reference.
   If not, take **REM-reference**.

@@ -151,13 +151,16 @@ def outcomes() -> dict:
     for cid, semester, _, title_en, title_fr, result, plos in COURSES:
         level = min(4, 1 + ((semester - 1) // 2))
         coid = f"{cid}-CO01"
+        definition_fr = f"Produire et défendre le résultat pratique central du cours « {title_fr} » avec des preuves traçables."
+        if cid == "ESE111":
+            definition_fr = "Produire et défendre le résultat pratique central du cours : caractériser et diagnostiquer une interface de capteur."
         course_outcomes.append({
             "id": coid,
             "course_id": cid,
             "semester": semester,
             "definition": {
                 "en": f"Produce and defend the course's core practical result: {result}.",
-                "fr": f"Produire et défendre le résultat pratique central du cours « {title_fr} » avec des preuves traçables.",
+                "fr": definition_fr,
             },
             "progression_level": level,
             "maps_to": plos,
@@ -165,6 +168,52 @@ def outcomes() -> dict:
             "assessment_points": [f"{cid}-COURSE-END"],
             "status": "approved-baseline",
         })
+    unit_outcomes = [
+        {
+            "id": "ESE111-CH04-LO01", "unit_id": "ESE111-CH04", "course_id": "ESE111",
+            "definition": {
+                "en": "Assign references and use KCL, KVL, and resistor relations to predict every named node voltage and branch current.",
+                "fr": "Choisir les références et utiliser les lois des nœuds, des mailles et des résistances pour prévoir chaque tension de nœud et chaque courant de branche nommé.",
+            },
+            "progression_level": 2, "maps_to": ["ESE111-CO01", "PLO-01"],
+            "evidence": ["signed equations", "units", "solved values", "independent KCL/KVL/power checks"],
+            "assessment_points": ["ESE111-CH04-PSET01", "ESE111-CH04-PRACT01"],
+            "source_record": "curriculum/courses/ESE111/shared/design-brief.yml", "status": "brief",
+        },
+        {
+            "id": "ESE111-CH04-LO02", "unit_id": "ESE111-CH04", "course_id": "ESE111",
+            "definition": {
+                "en": "Measure source and node voltages safely, state instrument and component uncertainty, and quantify model-to-measurement residuals.",
+                "fr": "Mesurer en sécurité la source et les tensions de nœud, déclarer les incertitudes des instruments et composants, puis quantifier les écarts entre modèle et mesure.",
+            },
+            "progression_level": 2, "maps_to": ["ESE111-CO01", "PLO-07"],
+            "evidence": ["individual instrument decisions", "raw readings", "expanded uncertainty and coverage factor", "guard-banded decisions"],
+            "assessment_points": ["ESE111-CH04-LAB01", "ESE111-CH04-PRACT01"],
+            "source_record": "curriculum/courses/ESE111/shared/design-brief.yml", "status": "brief",
+        },
+        {
+            "id": "ESE111-CH04-LO03", "unit_id": "ESE111-CH04", "course_id": "ESE111",
+            "definition": {
+                "en": "Localize an open or wrong-value branch using ranked hypotheses and one discriminating measurement at a time.",
+                "fr": "Localiser une branche ouverte ou de valeur incorrecte en classant les hypothèses et en choisissant une mesure discriminante à la fois.",
+            },
+            "progression_level": 2, "maps_to": ["ESE111-CO01", "PLO-08"],
+            "evidence": ["observe-hypothesize-test-update log", "discriminating test", "post-correction rerun"],
+            "assessment_points": ["ESE111-CH04-LAB01", "ESE111-CH04-PRACT01"],
+            "source_record": "curriculum/courses/ESE111/shared/design-brief.yml", "status": "brief",
+        },
+        {
+            "id": "ESE111-CH04-LO04", "unit_id": "ESE111-CH04", "course_id": "ESE111",
+            "definition": {
+                "en": "Redesign branch R4 so TP-B meets its voltage window without exceeding the source-current budget, then verify the change.",
+                "fr": "Redimensionner la branche R4 afin que TP-B respecte sa fenêtre de tension sans dépasser le budget de courant de la source, puis vérifier la modification.",
+            },
+            "progression_level": 2, "maps_to": ["ESE111-CO01", "PLO-01", "PLO-07"],
+            "evidence": ["trade study", "selected standard value", "predicted range", "guard-banded verification", "limitation"],
+            "assessment_points": ["ESE111-CH04-PSET01", "ESE111-CH04-LAB01"],
+            "source_record": "curriculum/courses/ESE111/shared/design-brief.yml", "status": "brief",
+        },
+    ]
     return {
         "schema_version": "1.0.0", "version": VERSION, "status": "approved-baseline",
         "source": source_metadata(),
@@ -181,6 +230,7 @@ def outcomes() -> dict:
             for pid, en, fr, evidence, minimum in PLOS
         ],
         "course_outcomes": course_outcomes,
+        "unit_outcomes": unit_outcomes,
         "graduation_rule": {"all_plos_minimum": 3, "level_4_required": ["PLO-07", "PLO-08", "PLO-11"], "level_4_technical_elective_count": 2},
     }
 
@@ -339,8 +389,8 @@ def ese111_ch04_claim_records() -> list[dict]:
     }
     return [
         {"id": "ESE111-CH04-CLM-001", "wording": "In the declared lumped steady-state model, the algebraic sum of branch currents at a node is zero.", "claim_class": "concept-stable", "verification_method": "derivation and executable KCL residual checks", "source": register_source, "assumptions_and_domain": "lumped steady-state DC network with declared directions", "affected_assets": ["curriculum/courses/ESE111/shared/model/kirchhoff_model.py"], "reviewer": "pending-qualified-technical-reviewer", "last_reviewed": None, "review_due": None, "trigger": "model-domain or topology change; failed balance", "context_ids": [], "status": "pending"},
-        {"id": "ESE111-CH04-CLM-002", "wording": "The signed voltage changes around a closed loop sum to zero under the declared lumped steady-state model.", "claim_class": "concept-stable", "verification_method": "derivation and executable power-balance checks", "source": register_source, "assumptions_and_domain": "lumped steady-state DC loop with negligible linked time-varying flux", "affected_assets": ["curriculum/courses/ESE111/shared/model/kirchhoff_model.py"], "reviewer": "pending-qualified-technical-reviewer", "last_reviewed": None, "review_due": None, "trigger": "model-domain change or failed physical loop balance", "context_ids": [], "status": "pending"},
-        {"id": "ESE111-CH04-CLM-003", "wording": "Each teaching resistor is modeled by v equals R times i only within its characterized operating range.", "claim_class": "concept-stable", "verification_method": "parameter, limiting-case, tolerance, and power review", "source": register_source, "assumptions_and_domain": "quasi-static behavior with negligible self-heating", "affected_assets": ["curriculum/courses/ESE111/shared/model/parameters.yml"], "reviewer": "pending-qualified-technical-reviewer", "last_reviewed": None, "review_due": None, "trigger": "component, power, or temperature change", "context_ids": [], "status": "pending"},
+        {"id": "ESE111-CH04-CLM-002", "wording": "The signed voltage changes around a closed loop sum to zero under the declared lumped steady-state model.", "claim_class": "concept-stable", "verification_method": "derivation, two executable KVL loop residuals, and an independent power-balance check", "source": register_source, "assumptions_and_domain": "lumped steady-state DC loop with negligible linked time-varying flux", "affected_assets": ["curriculum/courses/ESE111/shared/model/kirchhoff_model.py"], "reviewer": "pending-qualified-technical-reviewer", "last_reviewed": None, "review_due": None, "trigger": "model-domain change or failed physical loop balance", "context_ids": [], "status": "pending"},
+        {"id": "ESE111-CH04-CLM-003", "wording": "Each teaching resistor is modeled by v equals R times i only within its characterized operating range.", "claim_class": "concept-stable", "verification_method": "parameter, limiting-case, tolerance, and power review", "source": register_source, "assumptions_and_domain": "healthy declared baseline/redesign topology and parameter corners, quasi-static behavior, and negligible self-heating; the separate hard-short safety bound is outside the sub-1 mW claim", "affected_assets": ["curriculum/courses/ESE111/shared/model/parameters.yml"], "reviewer": "pending-qualified-technical-reviewer", "last_reviewed": None, "review_due": None, "trigger": "component, power, topology, fault, or temperature change", "context_ids": [], "status": "pending"},
         {"id": "ESE111-CH04-CLM-004", "wording": "A voltmeter with finite input resistance adds a branch and can lower the voltage it is intended to observe.", "claim_class": "platform-bound", "verification_method": "analytical loading model plus exact apparatus manual review", "source": {"type": "manufacturer-manual", "id": "Fluke-12-PN-2063508", "version": "2004-09", "retrieved": "2026-07-14", "url": "https://assets.fluke.com/manuals/12______umeng0100.pdf"}, "assumptions_and_domain": "declared DC voltage mode and input resistance", "affected_assets": ["curriculum/courses/ESE111/shared/model/kirchhoff_model.py"], "reviewer": "pending-qualified-technical-reviewer", "last_reviewed": None, "review_due": "2027-07-14", "trigger": "meter, mode, range, or manual change", "context_ids": [], "status": "pending"},
         {"id": "ESE111-CH04-CLM-005", "wording": "The activity is designed inside the program's draft L1 envelope at no more than 6.1 V and a configured 20 mA source limit.", "claim_class": "standard-bound", "verification_method": "energy calculation and local safety-authority review", "source": {"type": "primary-program-source", "id": "ESE-SAF-TC-001", "version": "0.1.0", "retrieved": "2026-07-14", "path": "curriculum/laboratory/safety/shared/technical-contract.md"}, "assumptions_and_domain": "approved protected DC source and declared resistor network", "affected_assets": ["curriculum/courses/ESE111/shared/design-brief.yml"], "reviewer": "pending-local-safety-authority", "last_reviewed": None, "review_due": "2027-07-14", "trigger": "local rule, source, energy, supervision, or incident change", "context_ids": [], "status": "pending"},
         {"id": "ESE111-CH04-CLM-006", "wording": "For the declared parameter corners and meter paths, 22 kOhm at R4 meets the TP-B window and source-current budget in simulation.", "claim_class": "concept-stable", "verification_method": "exhaustive deterministic corner enumeration", "source": register_source, "assumptions_and_domain": "declared source, resistor, and meter corners; simulation only", "affected_assets": ["curriculum/courses/ESE111/shared/model/kirchhoff_model.py", "curriculum/courses/ESE111/shared/model/parameters.yml"], "reviewer": "pending-qualified-technical-reviewer", "last_reviewed": None, "review_due": None, "trigger": "source, resistor, meter, topology, or requirement change", "context_ids": [], "status": "pending"},
@@ -400,7 +450,7 @@ def course_manifests() -> tuple[dict, dict]:
         })
     units = {"schema_version": "1.0.0", "version": VERSION, "status": "draft", "units": [{
         "semantic_id": "ESE111-CH04", "course_id": "ESE111", "title": {"en": "Kirchhoff Models", "fr": "Modèles de Kirchhoff"}, "editions": ["en", "fr"], "status": "draft",
-        "owners": {"technical": "ESE111-technical-owner", "language": "bilingual-technical-editor"}, "outcomes": ["ESE111-CO01", "PLO-01", "PLO-02", "PLO-07", "PLO-08"], "prerequisites": [],
+        "owners": {"technical": "ESE111-technical-owner", "language": "bilingual-technical-editor"}, "outcomes": ["ESE111-CH04-LO01", "ESE111-CH04-LO02", "ESE111-CH04-LO03", "ESE111-CH04-LO04", "ESE111-CO01", "PLO-01", "PLO-02", "PLO-07", "PLO-08"], "prerequisites": [],
         "resource_applicability": {rtype: {"decision": "required", "reason": "paired vertical exemplar contract"} for rtype in RESOURCE_TYPES},
         "hands_on_contract": {"real_life_question": "How can measured node voltages and branch currents reveal whether an unfamiliar low-voltage network matches its schematic?", "prediction": "predict signs and approximate magnitudes before calculation or measurement", "student_action": "construct or inspect an approved network and make individual instrument decisions", "physical_or_data_evidence": "schematic, raw voltage/current table, uncertainty, and KCL/KVL residuals", "fault_or_anomaly": "one documented wiring or measurement fault with hypothesis-led localization", "design_decision": "select test points and a measurement sequence that controls risk and loading", "acceptance_test": "independently reconcile the physical network, schematic, equations, and measurements within stated uncertainty"},
         "apparatus_paths": {"minimal": "DMM, current-limited low-voltage source, passive network", "standard": "minimal plus bench supply and oscilloscope", "advanced": "standard plus automated acquisition; same individual evidence threshold"},
@@ -489,7 +539,7 @@ def schemas() -> dict[str, dict]:
         "course-manifest": schema("course-manifest", ["schema_version", "version", "status", "courses"], {"courses": arr(["id", "semantic_id", "title", "semester", "credits_ects", "editions", "status", "owners", "outcomes", "prerequisites", "unit_ids", "resource_applicability", "apparatus_paths", "offline_required", "localization_layer", "context_ids", "claim_register_ids", "contribution_record_ids", "last_parity_review", "license"])}, title="Canonical course manifests"),
         "unit-manifest": schema("unit-manifest", ["schema_version", "version", "status", "units"], {"units": arr(["semantic_id", "course_id", "title", "editions", "status", "owners", "outcomes", "prerequisites", "resource_applicability", "hands_on_contract", "apparatus_paths", "platform_binding", "localization_layer", "context_ids", "claim_register_ids", "contribution_record_ids", "last_parity_review", "license"])}, title="Canonical vertical-unit manifests"),
         "backlog": schema("backlog", ["schema_version", "version", "generated_from", "items"], {"generated_from": {"type": "array"}, "generated_at": {"type": "string"}, "generation_rule": {"type": "string", "minLength": 1}, "items": arr(["id", "manifest_id", "manifest_kind", "resource", "applicability", "edition_children", "approval_facets", "apparatus_paths", "pilots", "defect_disposition", "evidence_links", "approver", "status"])}, title="Generated canonical child backlog"),
-        "outcome": schema("outcome", ["schema_version", "version", "status", "progression_levels", "peos", "plos", "course_outcomes", "graduation_rule"], {"progression_levels": arr(["level", "name", "definition", "typical_evidence"]), "peos": arr(["id", "name", "definition", "time_horizon_years", "maps_to", "evidence_sources", "status"]), "plos": arr(["id", "definition", "graduation_evidence", "minimum_level", "graduation_confirmation", "mapped_peos", "status"]), "course_outcomes": arr(["id", "course_id", "semester", "definition", "progression_level", "maps_to", "evidence", "assessment_points", "status"]), "graduation_rule": {"type": "object"}, "source": {"type": "object"}}, title="Program and course outcomes"),
+        "outcome": schema("outcome", ["schema_version", "version", "status", "progression_levels", "peos", "plos", "course_outcomes", "unit_outcomes", "graduation_rule"], {"progression_levels": arr(["level", "name", "definition", "typical_evidence"]), "peos": arr(["id", "name", "definition", "time_horizon_years", "maps_to", "evidence_sources", "status"]), "plos": arr(["id", "definition", "graduation_evidence", "minimum_level", "graduation_confirmation", "mapped_peos", "status"]), "course_outcomes": arr(["id", "course_id", "semester", "definition", "progression_level", "maps_to", "evidence", "assessment_points", "status"]), "unit_outcomes": arr(["id", "unit_id", "course_id", "definition", "progression_level", "maps_to", "evidence", "assessment_points", "source_record", "status"]), "graduation_rule": {"type": "object"}, "source": {"type": "object"}}, title="Program, course, and unit outcomes"),
         "prerequisite-graph": schema("prerequisite-graph", ["schema_version", "version", "status", "nodes", "requires", "co_requires", "unlocks", "root_policy", "validation_policy"], {"nodes": arr(["id", "kind", "title", "remediation"]), "requires": arr(["from", "to", "relation"]), "co_requires": arr(["from", "to", "constraint"]), "unlocks": arr(["from", "to", "relation"]), "root_policy": {"type": "object"}, "validation_policy": {"type": "object"}, "source": {"type": "object"}}, title="Course, project, unit, and competence dependency graph"),
         "termbase": schema("termbase", ["schema_version", "version", "status", "terms"], {"terms": arr(["id", "concept_id", "domain", "definition", "terms", "avoided_terms", "acronym_policy", "example", "usage_note", "reviewer", "status", "source_section"]), "source": {"type": "object"}}, title="Controlled bilingual terminology"),
     }

@@ -497,7 +497,7 @@
       "semester": 1,
       "definition": {
         "en": "Produce and defend the course's core practical result: characterize and debug a sensor interface.",
-        "fr": "Produire et défendre le résultat pratique central du cours « Circuits continus et mesure » avec des preuves traçables."
+        "fr": "Produire et défendre le résultat pratique central du cours : caractériser et diagnostiquer une interface de capteur."
       },
       "progression_level": 1,
       "maps_to": [
@@ -1596,6 +1596,113 @@
         "SEM402-COURSE-END"
       ],
       "status": "approved-baseline"
+    }
+  ],
+  "unit_outcomes": [
+    {
+      "id": "ESE111-CH04-LO01",
+      "unit_id": "ESE111-CH04",
+      "course_id": "ESE111",
+      "definition": {
+        "en": "Assign references and use KCL, KVL, and resistor relations to predict every named node voltage and branch current.",
+        "fr": "Choisir les références et utiliser les lois des nœuds, des mailles et des résistances pour prévoir chaque tension de nœud et chaque courant de branche nommé."
+      },
+      "progression_level": 2,
+      "maps_to": [
+        "ESE111-CO01",
+        "PLO-01"
+      ],
+      "evidence": [
+        "signed equations",
+        "units",
+        "solved values",
+        "independent KCL/KVL/power checks"
+      ],
+      "assessment_points": [
+        "ESE111-CH04-PSET01",
+        "ESE111-CH04-PRACT01"
+      ],
+      "source_record": "curriculum/courses/ESE111/shared/design-brief.yml",
+      "status": "brief"
+    },
+    {
+      "id": "ESE111-CH04-LO02",
+      "unit_id": "ESE111-CH04",
+      "course_id": "ESE111",
+      "definition": {
+        "en": "Measure source and node voltages safely, state instrument and component uncertainty, and quantify model-to-measurement residuals.",
+        "fr": "Mesurer en sécurité la source et les tensions de nœud, déclarer les incertitudes des instruments et composants, puis quantifier les écarts entre modèle et mesure."
+      },
+      "progression_level": 2,
+      "maps_to": [
+        "ESE111-CO01",
+        "PLO-07"
+      ],
+      "evidence": [
+        "individual instrument decisions",
+        "raw readings",
+        "expanded uncertainty and coverage factor",
+        "guard-banded decisions"
+      ],
+      "assessment_points": [
+        "ESE111-CH04-LAB01",
+        "ESE111-CH04-PRACT01"
+      ],
+      "source_record": "curriculum/courses/ESE111/shared/design-brief.yml",
+      "status": "brief"
+    },
+    {
+      "id": "ESE111-CH04-LO03",
+      "unit_id": "ESE111-CH04",
+      "course_id": "ESE111",
+      "definition": {
+        "en": "Localize an open or wrong-value branch using ranked hypotheses and one discriminating measurement at a time.",
+        "fr": "Localiser une branche ouverte ou de valeur incorrecte en classant les hypothèses et en choisissant une mesure discriminante à la fois."
+      },
+      "progression_level": 2,
+      "maps_to": [
+        "ESE111-CO01",
+        "PLO-08"
+      ],
+      "evidence": [
+        "observe-hypothesize-test-update log",
+        "discriminating test",
+        "post-correction rerun"
+      ],
+      "assessment_points": [
+        "ESE111-CH04-LAB01",
+        "ESE111-CH04-PRACT01"
+      ],
+      "source_record": "curriculum/courses/ESE111/shared/design-brief.yml",
+      "status": "brief"
+    },
+    {
+      "id": "ESE111-CH04-LO04",
+      "unit_id": "ESE111-CH04",
+      "course_id": "ESE111",
+      "definition": {
+        "en": "Redesign branch R4 so TP-B meets its voltage window without exceeding the source-current budget, then verify the change.",
+        "fr": "Redimensionner la branche R4 afin que TP-B respecte sa fenêtre de tension sans dépasser le budget de courant de la source, puis vérifier la modification."
+      },
+      "progression_level": 2,
+      "maps_to": [
+        "ESE111-CO01",
+        "PLO-01",
+        "PLO-07"
+      ],
+      "evidence": [
+        "trade study",
+        "selected standard value",
+        "predicted range",
+        "guard-banded verification",
+        "limitation"
+      ],
+      "assessment_points": [
+        "ESE111-CH04-PSET01",
+        "ESE111-CH04-LAB01"
+      ],
+      "source_record": "curriculum/courses/ESE111/shared/design-brief.yml",
+      "status": "brief"
     }
   ],
   "graduation_rule": {

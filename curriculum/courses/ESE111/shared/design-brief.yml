@@ -35,7 +35,7 @@ outcomes:
     statement:
       en: Measure source and node voltages safely, state instrument and component uncertainty, and quantify model-to-measurement residuals.
       fr: Mesurer en sécurité la source et les tensions de nœud, déclarer les incertitudes des instruments et composants, puis quantifier les écarts entre modèle et mesure.
-    evidence: individual instrument decisions, raw readings, uncertainty statement, and normalized residuals
+    evidence: individual instrument decisions, raw readings, expanded uncertainty with coverage factor, residuals, and guard-banded decisions
   - id: ESE111-CH04-LO03
     maps_to: [ESE111-CO01, PLO-08]
     statement:
@@ -129,19 +129,20 @@ context:
     en: Use the same resistor network as a generic repair-training fixture; the threshold, current-budget, fault, measurement, and verification decisions are unchanged.
     fr: Utilisez le même réseau résistif comme maquette générique de formation à la réparation ; le seuil, le budget de courant, la panne, la mesure et la vérification restent inchangés.
 assessment_acceptance:
-  mastery_level: 3
+  rubric_mastery_level: 3
+  progression_target: 2
   required_actions:
     - predict signs and approximate magnitudes before calculation
     - solve the two-node model with units and verify KCL plus power balance
     - personally choose reference, DMM function/range, and safe test-point sequence
-    - quantify disagreement using absolute and normalized residuals
+    - quantify disagreement using signed residuals and a declared expanded uncertainty with coverage factor
     - localize a seeded open or wrong-value branch without random replacement
     - select a standard R4 value and verify TP-B and source-current requirements after change
   thresholds:
     model: all node voltages and branch currents within 1 percent of the independent oracle for the assigned parameters
-    measurement: raw values retained; uncertainty is traceable; discrepancies beyond the combined declared bound are investigated
+    measurement: raw values retained; expanded uncertainty U and coverage factor k are traceable; discrepancies beyond U are investigated
     debugging: root-cause claim supported by a discriminating test and a successful post-correction rerun
-    design: 1.40 V <= measured TP-B <= 1.52 V and measured source current <= 0.25 mA under the recorded test condition
+    design: the full measured intervals [TP-B minus U, TP-B plus U] and [source current minus U, source current plus U] remain inside 1.40–1.52 V and at or below 0.25 mA under the recorded test condition
     safety: all conjunctive stop, inspection, and authorized-energy rules satisfied
 evidence_and_dependencies:
   entry_evidence: [individual prediction, prerequisite diagnostic, setup inspection]
@@ -163,4 +164,3 @@ review_gate:
   safety: pending-local-safety-authority-and-physical-pilot
   language: pending-fluent-EN-and-FR-pedagogical-review
   reason: authoring checks cannot substitute for the independent authorities required by the lifecycle
-

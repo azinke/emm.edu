@@ -10,10 +10,10 @@ language: en
 paired_with: ESE111-CH04-REM-fr
 version: 0.1.0
 lifecycle: drafting
-outcomes: [ESE111-CO01, PLO-01, PLO-07, PLO-08]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-07, PLO-08]
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -34,7 +34,7 @@ technical_contract:
 | REM-dmm | wrong socket/function or unsafe uncertainty | de-energized meter simulator/checklist with teach-back | all conjunctive safety choices correct |
 | REM-board | breadboard topology uncertain | map hidden rows using de-energized continuity | accurate node map and false-short check |
 | REM-uncertainty | tolerance equals total uncertainty | separate tolerance, resolution, accuracy, repeatability, loading | defensible comparison statement |
-| REM-loading | KCL residual omits instrument | draw (R_M), recompute B, remove in the limit | missing current explained and bounded |
+| REM-loading | KCL residual omits instrument | draw $R_M$, recompute B, remove in the limit | missing current explained and bounded |
 | REM-debug | replaces without hypothesis | work a symptom table with predicted test outcomes | one discriminating test defended |
 
 Reattempt only the affected rubric evidence with changed values; unsafe or

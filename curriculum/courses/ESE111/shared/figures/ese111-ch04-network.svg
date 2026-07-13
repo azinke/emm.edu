@@ -22,14 +22,15 @@
   <line x1="790" y1="110" x2="790" y2="175" stroke="black" stroke-width="4"/>
   <polyline points="790,175 770,195 810,215 770,235 810,255 770,275 790,295" fill="none" stroke="black" stroke-width="4"/>
   <line x1="790" y1="295" x2="790" y2="370" stroke="black" stroke-width="4"/>
-  <text x="815" y="225" font-family="sans-serif" font-size="22">R4 15 kΩ baseline</text>
-  <text x="815" y="255" font-family="sans-serif" font-size="22">22 kΩ redesign</text>
+  <text x="815" y="225" font-family="sans-serif" font-size="18">R4 = 15 kΩ</text>
+  <text x="815" y="250" font-family="sans-serif" font-size="18">redesign: 22 kΩ</text>
   <line x1="120" y1="370" x2="840" y2="370" stroke="black" stroke-width="4"/>
   <line x1="120" y1="110" x2="120" y2="185" stroke="black" stroke-width="4"/>
   <line x1="90" y1="205" x2="150" y2="205" stroke="black" stroke-width="4"/>
   <line x1="105" y1="230" x2="135" y2="230" stroke="black" stroke-width="4"/>
   <line x1="120" y1="230" x2="120" y2="370" stroke="black" stroke-width="4"/>
   <text x="90" y="415" font-family="sans-serif" font-size="22">COM: declared 0 V reference</text>
+  <text x="500" y="415" font-family="sans-serif" font-size="16">Symbol note: ANSI zigzag; recognize IEC rectangle</text>
   <defs><marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="black"/></marker></defs>
   <line x1="205" y1="145" x2="330" y2="145" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
   <text x="245" y="175" font-family="sans-serif" font-size="20">I1</text>
@@ -40,4 +41,3 @@
   <line x1="750" y1="185" x2="750" y2="280" stroke="black" stroke-width="2" marker-end="url(#arrow)"/>
   <text x="715" y="285" font-family="sans-serif" font-size="20">I4</text>
 </svg>
-

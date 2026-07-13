@@ -10,12 +10,12 @@ language: en
 paired_with: ESE111-CH04-LAB01-fr
 version: 0.1.0
 lifecycle: drafting
-outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
 estimated_student_time_min: 150
 safety_level: L1
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -52,7 +52,7 @@ apparatus path, supervision, and instructor authorization are approved.
   instructor. Only the authorized instructor may release the setup after a stop.
 
 Maximum credible circuit current after a hard short beyond R1 is about
-(6.1\text{ V}/9.9\text{ kΩ}<0.62\text{ mA}), but that calculation neither
+$6.1\text{ V}/9.9\text{ kΩ}<0.62\text{ mA}$, but that calculation neither
 authorizes the source nor replaces its protective limit and inspection.
 
 ## Apparatus paths and architecture
@@ -76,7 +76,7 @@ and a new review. The advanced path is not declared for this pilot.
 Before seeing any result, submit:
 
 1. arrows/polarities and an order-of-magnitude bound for all currents;
-2. nominal (V_A,V_B) and both node equations;
+2. nominal $V_A,V_B$ and both node equations;
 3. expected qualitative signatures for an open branch and a wrong-value branch;
 4. safe DMM socket/function/range, reference, and test-point order;
 5. predicted direction of TP-B change when R4 increases.
@@ -110,7 +110,7 @@ With output off and zero energy verified, learner and verifier initial each line
    basis, uncertainty, and sequence before moving the probe.
 6. Repeat the same complete record for TP-A and TP-B.
 7. Switch output off and verify de-energized state.
-8. Infer (I_1\ldots I_4) from measured node differences and measured resistance.
+8. Infer $I_1\ldots I_4$ from measured node differences and measured resistance.
 9. Calculate signed KCL residuals at A and B, two loop residuals, and power balance.
 10. Add the meter input branch; recompute B and decide whether disagreement is
     consistent with the stated uncertainty or needs investigation.
@@ -126,7 +126,7 @@ With output off and zero energy verified, learner and verifier initial each line
 16. Isolate, install the selected R4, repeat inspection and measurements, and accept
     or reject both requirements from physical evidence.
 
-| Seq. | State/configuration | From→to | Raw value/unit | Range/resolution | Expanded uncertainty/basis | Prediction | Residual | Decision/anomaly |
+| Seq. | State/configuration | From→to | Raw value/unit | Range/resolution | Expanded uncertainty $U$ / coverage $k$ / basis | Prediction | Residual | Decision/anomaly |
 |---:|---|---|---|---|---|---|---|---|
 | 1 | baseline | VS→COM | | | | | | |
 | 2 | baseline | TP-A→COM | | | | | | |
@@ -150,9 +150,12 @@ Exact insertion, randomization, and reset details belong to
 
 ## Design acceptance and limitations
 
-Pass the redesign only if recorded physical evidence shows (1.40\le V_B\le1.52\)
-V and derived/measured source current ≤0.25 mA under the stated source, component,
-meter, ambient, and uncertainty condition. A simulated 22 kΩ pass is the leading
+Pass the redesign only if recorded physical evidence and its expanded uncertainty
+show $V_B-U_V\ge1.40\text{ V}$, $V_B+U_V\le1.52\text{ V}$, and
+$I_S+U_I\le0.25\text{ mA}$ under the stated source, component, meter, ambient,
+coverage-factor, and uncertainty condition. If an interval crosses a limit, report
+the result as inconclusive and improve the evidence; do not round it into a pass.
+A simulated 22 kΩ pass is the leading
 candidate, not the result. Record any residual risk: contact instability, meter
 input uncertainty, temperature, substitute values, or margin too small.
 
@@ -164,4 +167,3 @@ Archive raw and derived data separately with configuration and checksum. Each le
 answers: “Which one measurement changed your diagnosis or design, and why would a
 different result have changed it again?” The common 28-point rubric and targeted
 reassessment route apply; safety and honest provenance are conjunctive.
-

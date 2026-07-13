@@ -10,12 +10,12 @@ language: fr
 paired_with: ESE111-CH04-LAB01-en
 version: 0.1.0
 lifecycle: drafting
-outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
 estimated_student_time_min: 150
 safety_level: L1
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -52,7 +52,7 @@ l'analyse de risque, du matériel, de la supervision et de l'autorisation enseig
   l'enseignant autorisé libère le montage après arrêt.
 
 Le court-circuit après R1 reste théoriquement sous
-(6,1\text{ V}/9,9\text{ kΩ}<0,62\text{ mA}). Ce calcul n'autorise ni la source
+$6,1\text{ V}/9,9\text{ kΩ}<0,62\text{ mA}$. Ce calcul n'autorise ni la source
 ni l'activité et ne remplace pas les protections.
 
 ## Voies matérielles et architecture
@@ -106,7 +106,7 @@ Sortie coupée et zéro énergie vérifié, apprenant et vérificateur paraphent
    incertitude et ordre avant de déplacer la pointe.
 6. Répétez pour TP-A et TP-B.
 7. Coupez la sortie et vérifiez l'absence d'énergie.
-8. Déduisez (I_1\ldots I_4) des différences et résistances mesurées.
+8. Déduisez $I_1\ldots I_4$ des différences et résistances mesurées.
 9. Calculez résidus aux deux nœuds, deux mailles et bilan de puissance.
 10. Ajoutez la branche d'entrée du multimètre et décidez si l'écart est compatible.
 11. L'enseignant applique hors tension une panne réversible contrôlée ; seule la
@@ -118,7 +118,7 @@ Sortie coupée et zéro énergie vérifié, apprenant et vérificateur paraphent
 15. Comparez les candidates R4 avec marge pour 1,40–1,52 V et ≤0,25 mA.
 16. Isolez, montez R4 choisie, inspectez, mesurez et acceptez/refusez les deux exigences.
 
-| N° | État | De→vers | Valeur brute/unité | Calibre/résolution | Incertitude élargie/base | Prévision | Résidu | Décision/anomalie |
+| N° | État | De→vers | Valeur brute/unité | Calibre/résolution | Incertitude élargie $U$ / couverture $k$ / base | Prévision | Résidu | Décision/anomalie |
 |---:|---|---|---|---|---|---|---|---|
 | 1 | initial | VS→COM | | | | | | |
 | 2 | initial | TP-A→COM | | | | | | |
@@ -141,9 +141,12 @@ L'insertion exacte, la randomisation et la remise à zéro portent la référenc
 
 ## Acceptation et limites
 
-Acceptez uniquement si la preuve physique enregistrée montre
-(1,40\le V_B\le1,52\text{ V}) et un courant de source ≤0,25 mA, avec source,
-composants, instrument, ambiance et incertitude déclarés. La réussite simulée de
+Acceptez uniquement si la preuve physique et son incertitude élargie montrent
+$V_B-U_V\ge1,40\text{ V}$, $V_B+U_V\le1,52\text{ V}$ et
+$I_S+U_I\le0,25\text{ mA}$, avec source, composants, instrument, ambiance,
+facteur de couverture et base d'incertitude déclarés. Si un intervalle coupe une
+limite, concluez « indécis » et améliorez la preuve ; ne l'arrondissez pas en
+réussite. La réussite simulée de
 22 kΩ est une candidate, pas le résultat. Consignez contact instable, entrée mal
 connue, température, substitution ou marge insuffisante.
 
@@ -155,4 +158,3 @@ Archivez séparément données brutes et dérivées. Chacun répond : « Quelle 
 changé votre diagnostic ou conception, et quel autre résultat aurait changé votre
 décision ? » Le barème 28 points et la remédiation ciblée s'appliquent ; sécurité
 et provenance honnête sont obligatoires.
-

@@ -10,12 +10,12 @@ language: en
 paired_with: ESE111-CH04-PRACT01-fr
 version: 0.1.0
 lifecycle: drafting
-outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
 estimated_student_time_min: 25
 safety_level: L1
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -47,12 +47,14 @@ fault, reset data, and examiner anchors are controlled by
 2. Declare COM, one current arrow, and an estimate for the assigned node.
 3. Choose DMM sockets, function, range, and the single first test point that best
    protects the model decision; explain the choice before acting.
-4. Record the raw reading and uncertainty basis. Compare it with the assigned
-   prediction using a signed residual.
+4. Record the raw reading, expanded uncertainty $U$, coverage factor $k$, and
+   uncertainty basis. Compare it with the assigned prediction using a signed
+   residual and apply the stated guard band to any limit decision.
 5. Rank the offered hypotheses, choose a discriminating next test, and predict its
    outcomes. The examiner may supply the result rather than permit a topology change.
 6. Select one standard branch value that meets the assigned node window and current
-   budget. State how you would verify it and one remaining limitation.
+   budget. State how you would verify the full uncertainty interval, and name one
+   remaining limitation.
 7. Give a two-minute defense linking observation → model → diagnosis → decision.
 
 Unsafe connection, energizing without authorization, current-input use, changing
@@ -67,4 +69,3 @@ model/measurement/debugging, and no safety or integrity failure. The examiner us
 standardized non-coaching prompts and records timing, evidence, anomaly, and any
 access route. A bilingual sample is double-marked during calibration. Appeals and
 defective-task dispositions preserve the same construct and safety threshold.
-

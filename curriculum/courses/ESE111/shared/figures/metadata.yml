@@ -11,10 +11,10 @@ used_by: [ESE111-CH04-CH, ESE111-CH04-SLIDES, ESE111-CH04-LAB01, ESE111-CH04-PSE
 technical_contract:
   outcomes: [ESE111-CO01, PLO-01, PLO-07, PLO-08]
   claim_ids: [ESE111-CH04-CLM-001, ESE111-CH04-CLM-002, ESE111-CH04-CLM-003]
-  configuration: IEC-style rectangular resistor convention represented by zigzag solely for broad tool portability; named nodes and arrows govern interpretation
+  configuration: ANSI-style zigzag resistor symbols with an explicit convention note; learners are also expected to recognize the IEC rectangular convention; named nodes and arrows govern interpretation
   expected_output: R1 feeds TP-A; R2 returns TP-A to COM; R3 feeds TP-B; R4 returns TP-B to COM
   verification: source SVG text inspection plus numerical topology test
-  limitations: ideal topology; wiring parasitics, breadboard geometry, source resistance, and meter branch are not drawn
+  limitations: ideal topology; IEC rectangular symbols, wiring parasitics, breadboard geometry, source resistance, and meter branch are not drawn
 figure_accessibility:
   visual_type: schematic
   convention: reference designators, written values, named nodes, and arrow direction; no meaning depends on color

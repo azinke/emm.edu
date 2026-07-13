@@ -10,12 +10,12 @@ language: fr
 paired_with: ESE111-CH04-EXP01-en
 version: 0.1.0
 lifecycle: drafting
-outcomes: [ESE111-CO01, PLO-01, PLO-07]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CO01, PLO-01, PLO-07]
 estimated_student_time_min: 35
 safety_level: L1
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -36,9 +36,9 @@ et comparez sans instrument, 10 MΩ, 1 MΩ et 100 kΩ en TP-B. Notez TP-B, coura
 multimètre et résidu au nœud B quand cette branche est volontairement omise. Tracez
 ou tabulez la résistance d'entrée sur une échelle logarithmique et indiquez la provenance.
 
-1. Quelle grandeur varie de façon monotone ? Quelle limite apparaît pour (R_M\to\infty) ?
+1. Quelle grandeur varie de façon monotone ? Quelle limite apparaît pour $R_M\to\infty$ ?
 2. Pourquoi le résidu sans branche égale-t-il le courant du multimètre, hors arrondi ?
-3. À quelle valeur de (R_M) la charge dépasse-t-elle 1 % de TP-B sans instrument ?
+3. À quelle valeur de $R_M$ la charge dépasse-t-elle 1 % de TP-B sans instrument ?
 4. Plus de chiffres affichés réduiraient-ils la charge ? Quelle spécification compte ?
 5. Concevez une modification de la *voie de mesure*, pas du réseau, réduisant la
    charge. Donnez son essai d'acceptation.

@@ -19,6 +19,9 @@ LINK_RE = re.compile(r"(?<!!)\[[^]]*\]\(([^)\s]+)(?:\s+['\"][^'\"]*['\"])?\)")
 IMAGE_RE = re.compile(r"!\[([^]]*)\]\(([^)\s]+)(?:\s+['\"]([^'\"]*)['\"])?\)(\{[^}]*\})?")
 TERM_RE = re.compile(r"\[term:([A-Za-z0-9_.:-]+)\]")
 REMOTE_RE = re.compile(r"^(?:https?|ftp)://", re.I)
+SUSPICIOUS_PAREN_MATH_RE = re.compile(
+    r"\([^\n)]*(?:[A-Za-z]_[A-Za-z0-9]|=|\\(?:text|le|ge|mu|approx|to|ldots|times|sqrt|frac|cdot|pm))[^\n)]*\)"
+)
 
 
 @dataclass(frozen=True)
@@ -173,6 +176,24 @@ def validate_document(document: Document, root: Path, outcome_ids: set[str], ter
         if term_id not in term_ids:
             findings.append(Finding("GLOSSARY001", path_label, f"unknown glossary ID {term_id}"))
     searchable = re.sub(r"```.*?```", "", document.body, flags=re.S)
+    prose_without_math = re.sub(r"\\\[.*?\\\]", "", searchable, flags=re.S)
+    prose_without_math = re.sub(r"\$\$.*?\$\$", "", prose_without_math, flags=re.S)
+    prose_without_math = re.sub(r"\$[^$\n]+\$", "", prose_without_math)
+    for match in SUSPICIOUS_PAREN_MATH_RE.finditer(prose_without_math):
+        findings.append(Finding("MATH001", path_label, f"probable inline math lacks delimiters: {match.group(0)!r}"))
+    for line in searchable.splitlines():
+        if "$" not in line:
+            continue
+        segments = line.split("$")
+        if len(segments) % 2 == 0:
+            findings.append(Finding("MATH002", path_label, f"unbalanced inline math delimiter in {line!r}"))
+            continue
+        math_segments = segments[1::2]
+        prose_between_math = segments[2:-1:2]
+        if any(not segment.strip() or re.search(r"(?:[=+\-*/]|\\(?:le|ge|approx|to))\s*$|^\s*[=+*/]", segment) for segment in math_segments):
+            findings.append(Finding("MATH002", path_label, f"fragmented inline math in {line!r}"))
+        elif any(re.search(r"[A-Za-z]_[A-Za-z0-9]|\\(?:text|le|ge|mu|approx|to|ldots|times|sqrt|frac|cdot|pm)", segment) for segment in prose_between_math):
+            findings.append(Finding("MATH002", path_label, f"TeX escaped from inline math in {line!r}"))
     for term_id, avoided_language, phrase in avoided:
         if avoided_language is not None and document.language != avoided_language:
             continue

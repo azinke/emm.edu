@@ -1,0 +1,46 @@
+record_id: ESE111-CH04-E3-TECH-VERIFY
+version: 0.1.0
+status: protocol-ready-review-pending
+scope: exact 0.1.0 paired package, shared assets, and separately controlled artifacts
+authoring_oracle:
+  command: python3 -m unittest discover -s curriculum/courses/ESE111/shared/model -p test_*.py -v
+  method: two-by-two conductance equations plus exhaustive declared corner enumeration
+  provenance: authoring automation, not independent review
+independent_recomputation:
+  reviewer_requirement: person other than author with DC-circuit and measurement competence
+  independence_rule: use a separately implemented hand, spreadsheet, or circuit-solver method before comparing with the repository oracle
+  values_to_recompute:
+    nominal_unloaded: {tp_a_v: 3.608200456, tp_b_v: 1.127562642, i_r1_a: 0.0002391799544, i_r2_a: 0.0001640091116, i_r3_a: 0.0000751708428, i_r4_a: 0.0000751708428, supplied_power_w: 0.001435079727}
+    nominal_1Mohm_meter: {tp_a_v: 3.606104307, tp_b_v: 1.115404982, meter_current_a: 0.000001115405}
+    baseline_corners: {tp_a_v: [3.559404957, 3.654879811], tp_b_v: [1.087826891, 1.154741864], source_current_a: [0.0002356488, 0.0002430146]}
+    redesign_22k_corners: {tp_a_v: [3.616396366, 3.713235813], tp_b_v: [1.412586410, 1.499186424], source_current_a: [0.0002299036, 0.0002372241]}
+  required_checks:
+    - KCL residual at each node including the meter branch where attached
+    - two independent KVL loop residuals and sign convention
+    - source power versus resistor and meter dissipation
+    - open-branch and incorrect-value limiting behavior without revealing a live pilot variant
+    - source, resistance, meter-input, and design-threshold corners
+    - expanded-uncertainty coverage factors and guard-banded physical acceptance intervals
+    - units, significant figures, decimal localization, node/reference labels, arrows, and schematic-text equivalence
+source_and_claim_review:
+  register: ../claims.yml
+  exact_sources:
+    - {claim: ESE111-CH04-CLM-004, source: Fluke 12 Users Manual PN 2063508 revision September 2004, check: DC voltage input impedance and low-impedance conditions; do not generalize}
+    - {claim: ESE111-CH04-CLM-005, source: ESE-SAF-TC-001 version 0.1.0 draft, check: distinguish authoring envelope from institutional authorization}
+    - {claim: ESE111-CH04-CLM-007, source: DOI 10.1002/andp.18451400402, check: narrow bibliographic attribution only}
+  trigger: any source, component, meter, safety contract, topology, equation, range, requirement, or wording correction reopens paired review
+build_and_boundary:
+  required_commands:
+    - python3 curriculum/scripts/qa_content.py --offline
+    - python3 curriculum/scripts/run_smoke_hooks.py
+    - python3 curriculum/scripts/build_publications.py --engine quarto --offline
+    - python3 curriculum/scripts/build_publications.py --engine pandoc --offline
+    - python3 curriculum/scripts/check_outputs.py
+  current_authoring_result: Pandoc HTML and static slides pass; Quarto is absent and Pandoc PDF lacks footnote.sty on the current host
+  restricted_check: verify separately controlled solution, MCQs, explanations, keys, practical variants, and fault schedule against public digests without exposing payload
+acceptance:
+  - all independently recomputed values agree within declared numerical rounding
+  - zero unresolved wrong answer, unit/sign/topology, unsafe instruction, source mismatch, parity mismatch, or restricted leak
+  - every residual or tolerance claim names its assumptions and provenance
+  - qualified reviewer signs exact commit/archive and any correction reruns all affected checks
+result: pending

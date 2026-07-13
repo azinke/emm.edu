@@ -10,12 +10,12 @@ language: fr
 paired_with: ESE111-CH04-PSET01-en
 version: 0.1.0
 lifecycle: drafting
-outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
 estimated_student_time_min: 120
 allowed_resources: [chapter, calculator, deterministic model after hand setup, approved bilingual glossary]
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -38,19 +38,19 @@ et panne. Vous pouvez demander un indice après un premier essai, en consignant 
 
 ## A. Fondements et estimation (F)
 
-1. Sans système d'équations, encadrez (V_A), (V_B) et (I_1). Pourquoi
-   (V_A>V_B>0) dans le réseau passif sain ?
+1. Sans système d'équations, encadrez $V_A$, $V_B$ et $I_1$. Pourquoi
+   $V_A>V_B>0$ dans le réseau passif sain ?
 2. Écrivez la loi des nœuds en TP-A avec les flèches publiées. Inversez seulement
-   (I_3) puis réécrivez la même affirmation physique.
-3. Un solveur donne (I_3=-82\ \mu\text{A}). Interprétez le signe. Quand la
+   $I_3$ puis réécrivez la même affirmation physique.
+3. Un solveur donne $I_3=-82\ \mu\text{A}$. Interprétez le signe. Quand la
    valeur absolue, et non le signe, deviendrait-elle invraisemblable ?
 
 ## B. Modélisation et dérivation (M)
 
 4. Déduisez les deux équations à partir des courants de branche, puis calculez
-   (V_A,V_B,I_1\ldots I_4). Vérifiez les deux nœuds, deux mailles indépendantes
+   $V_A,V_B,I_1\ldots I_4$. Vérifiez les deux nœuds, deux mailles indépendantes
    et la puissance. Interprétez chaque résidu d'arrondi non nul.
-5. Recalculez avec R3 ouverte. Justifiez le passage de (1/R_3) vers zéro comme
+5. Recalculez avec R3 ouverte. Justifiez le passage de $1/R_3$ vers zéro comme
    une limite. Quelle mesure sépare le mieux cette panne d'une R4 trop faible ?
 
 ## C. Navigation dans une source primaire (D)
@@ -63,13 +63,13 @@ et panne. Vous pouvez demander un indice après un premier essai, en consignant 
 
 ## D. Simulation/code et interprétation (S)
 
-7. Avant l'exécution, classez (V_A,V_B,I_1,I_2), puis lancez :
+7. Avant l'exécution, classez $V_A,V_B,I_1,I_2$, puis lancez :
 
    ```text
    python3 curriculum/courses/ESE111/shared/model/kirchhoff_model.py
    ```
 
-   Retrouvez une valeur nominale à la main. Qu'établissent les cinq essais ? Nommez
+   Retrouvez une valeur nominale à la main. Qu'établissent les six essais ? Nommez
    trois faits physiques qu'ils n'établissent pas. Passez seulement la résistance
    d'entrée à 1 MΩ et expliquez la branche créée en TP-B.
 
@@ -79,7 +79,9 @@ et panne. Vous pouvez demander un indice après un premier essai, en consignant 
    R1=9,98 kΩ, R2=22,10 kΩ, R3=32,90 kΩ, R4=14,92 kΩ ; entrée 1 MΩ. Étiquetez
    toute sortie **données synthétiques non personnelles préparées**. Calculez les
    courants et résidus avec et sans la branche du multimètre. Comparez aux
-   incertitudes élargies déclarées et indiquez ce qui reste inconnu.
+   incertitudes élargies illustratives déclarées ($k=2$) et indiquez ce qui reste
+   inconnu. Expliquez pourquoi ces valeurs préparées de $U$ n'établissent pas
+   l'incertitude d'un futur essai physique.
 9. PREP-B est un modèle de branche ouverte, pas une preuve matérielle. Classez
    trois explications. Quel essai hors tension discrimine efficacement R3 ouverte ?
    Annoncez les résultats possibles avant de choisir.
@@ -94,7 +96,7 @@ et panne. Vous pouvez demander un indice après un premier essai, en consignant 
 ## G. Conception ouverte sous contraintes (O)
 
 11. Modifiez uniquement R4. Comparez 18 kΩ, 22 kΩ, 27 kΩ et 33 kΩ à
-    (1,40\le V_B\le1,52\text{ V}) et (I_S\le0,25\text{ mA}). Fournissez
+    $1,40\le V_B\le1,52\text{ V}$ et $I_S\le0,25\text{ mA}$. Fournissez
     valeurs nominales, sensibilité tolérance/charge, choix normalisé, séquence
     d'essai et limite restante. Une réussite nominale sans marge n'est pas une vérification.
 

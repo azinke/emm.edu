@@ -76,7 +76,7 @@
       "id": "ESE111-CH04-CLM-002",
       "wording": "The signed voltage changes around a closed loop sum to zero under the declared lumped steady-state model.",
       "claim_class": "concept-stable",
-      "verification_method": "derivation and executable power-balance checks",
+      "verification_method": "derivation, two executable KVL loop residuals, and an independent power-balance check",
       "source": {
         "type": "unit-claim-register",
         "id": "ESE111-CH04-CLAIMS",
@@ -107,14 +107,14 @@
         "retrieved": "2026-07-14",
         "path": "curriculum/courses/ESE111/shared/claims.yml"
       },
-      "assumptions_and_domain": "quasi-static behavior with negligible self-heating",
+      "assumptions_and_domain": "healthy declared baseline/redesign topology and parameter corners, quasi-static behavior, and negligible self-heating; the separate hard-short safety bound is outside the sub-1 mW claim",
       "affected_assets": [
         "curriculum/courses/ESE111/shared/model/parameters.yml"
       ],
       "reviewer": "pending-qualified-technical-reviewer",
       "last_reviewed": null,
       "review_due": null,
-      "trigger": "component, power, or temperature change",
+      "trigger": "component, power, topology, fault, or temperature change",
       "context_ids": [],
       "status": "pending"
     },

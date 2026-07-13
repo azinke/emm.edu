@@ -10,12 +10,12 @@ language: en
 paired_with: ESE111-CH04-PSET01-fr
 version: 0.1.0
 lifecycle: drafting
-outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
 estimated_student_time_min: 120
 allowed_resources: [chapter, calculator, deterministic model after hand setup, approved bilingual glossary]
 license: CC-BY-SA-4.0
 technical_contract:
-  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  outcomes: [ESE111-CH04-LO01, ESE111-CH04-LO02, ESE111-CH04-LO03, ESE111-CH04-LO04, ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
   equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
   values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
   safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
@@ -40,19 +40,19 @@ requested after an initial attempt; record which hint changed your approach.
 
 ## A. Foundations and estimation (F)
 
-1. Without simultaneous equations, bound (V_A), (V_B), and (I_1). Explain
-   why (V_A>V_B>0) for the healthy passive network.
-2. Write KCL at TP-A using the published arrows. Now reverse only the (I_3)
+1. Without simultaneous equations, bound $V_A$, $V_B$, and $I_1$. Explain
+   why $V_A>V_B>0$ for the healthy passive network.
+2. Write KCL at TP-A using the published arrows. Now reverse only the $I_3$
    arrow and rewrite the equation without changing the physical claim.
-3. A solver returns (I_3=-82\ \mu\text{A}). What does the sign mean? Name one
+3. A solver returns $I_3=-82\ \mu\text{A}$. What does the sign mean? Name one
    situation in which the magnitude, not merely the sign, would be implausible.
 
 ## B. Modeling and derivation (M)
 
 4. Derive the two node equations from branch currents; do not begin from a memorized
-   matrix. Solve for (V_A,V_B,I_1\ldots I_4). Check KCL at both nodes, KVL around
+   matrix. Solve for $V_A,V_B,I_1\ldots I_4$. Check KCL at both nodes, KVL around
    two independent loops, and power balance. Interpret every nonzero rounding residual.
-5. Re-solve after R3 becomes open. Do not replace (1/R_3) with zero without
+5. Re-solve after R3 becomes open. Do not replace $1/R_3$ with zero without
    explaining the limiting model. Predict which measurement most clearly separates
    that fault from R4 being a low value.
 
@@ -66,13 +66,13 @@ requested after an initial attempt; record which hint changed your approach.
 
 ## D. Simulation/code and interpretation (S)
 
-7. Before execution, write the expected order of (V_A,V_B,I_1,I_2). Then run:
+7. Before execution, write the expected order of $V_A,V_B,I_1,I_2$. Then run:
 
    ```text
    python3 curriculum/courses/ESE111/shared/model/kirchhoff_model.py
    ```
 
-   Reproduce one nominal value by hand. Explain what the five unit tests establish
+   Reproduce one nominal value by hand. Explain what the six unit tests establish
    and name three physical facts they cannot establish. Change only meter input
    resistance to 1 MΩ and explain the new TP-B current branch.
 
@@ -82,7 +82,9 @@ requested after an initial attempt; record which hint changed your approach.
    are R1=9.98 kΩ, R2=22.10 kΩ, R3=32.90 kΩ, R4=14.92 kΩ and the meter input is
    1 MΩ. Label every output **prepared synthetic non-personal data**. Calculate
    branch currents and KCL residuals with and without the meter branch. Compare
-   residuals with the declared expanded uncertainties and state what remains unknown.
+   residuals with the declared illustrative expanded uncertainties ($k=2$), and
+   state what remains unknown. Explain why prepared $U$ values cannot establish
+   the uncertainty of a future physical run.
 9. PREP-B is a seeded open-branch *model*, not hardware evidence. Rank at least
    three explanations for its table. Which de-energized test would most efficiently
    discriminate an open R3? State the possible outcomes before selecting it.
@@ -97,7 +99,7 @@ requested after an initial attempt; record which hint changed your approach.
 ## G. Open design under constraints (O)
 
 11. Change only R4. Compare 18 kΩ, 22 kΩ, 27 kΩ, and 33 kΩ against
-    (1.40\le V_B\le1.52\text{ V}) and (I_S\le0.25\text{ mA}). Include nominal
+    $1.40\le V_B\le1.52\text{ V}$ and $I_S\le0.25\text{ mA}$. Include nominal
     values, tolerance/loading sensitivity, a selected standard part, test sequence,
     and remaining limitation. A nominal pass without margin is not verification.
 
@@ -120,4 +122,3 @@ requested after an initial attempt; record which hint changed your approach.
 The reasoning key, accepted alternatives, diagnostic errors, grading notes, and
 numerical variant checks are referenced by `RST-ESE111-CH04-PSET-SOL-001`. They
 must exist in the separately controlled store before this task can close.
-

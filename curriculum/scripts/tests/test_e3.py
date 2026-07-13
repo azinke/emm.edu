@@ -33,6 +33,25 @@ class QualityFixtureTests(unittest.TestCase):
             "seeded answer-key parity defect was not detected",
         )
 
+    def test_localized_avoided_term_does_not_reject_the_other_language(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            termbase = root / "i18n" / "termbase.yml"
+            termbase.parent.mkdir(parents=True)
+            termbase.write_text(
+                "terms:\n"
+                "  - id: ee.voltage\n"
+                "    avoided_terms:\n"
+                "      - fr: voltage\n",
+                encoding="utf-8",
+            )
+            term_ids, avoided = qa_content.termbase_data(root)
+            en = qa_content.Document(root / "en.md", Path("courses/FIX/en/en.md"), {}, "voltage", "en", "pair")
+            fr = qa_content.Document(root / "fr.md", Path("courses/FIX/fr/fr.md"), {}, "voltage", "fr", "pair")
+            policy = {"restricted_path_tokens": [], "restricted_markers": []}
+            self.assertFalse(any(f.code == "GLOSSARY002" for f in qa_content.validate_document(en, root, set(), term_ids, avoided, policy)))
+            self.assertTrue(any(f.code == "GLOSSARY002" for f in qa_content.validate_document(fr, root, set(), term_ids, avoided, policy)))
+
 
 class SmokeInterfaceTests(unittest.TestCase):
     def test_all_five_interfaces_execute(self) -> None:

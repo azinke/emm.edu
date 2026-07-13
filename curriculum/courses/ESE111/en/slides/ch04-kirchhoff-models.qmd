@@ -1,0 +1,197 @@
+---
+artifact_id: ESE111-CH04-SLIDES
+pair_id: ESE111-CH04-SLIDES
+lang: en
+pair_revision: 0.1.0
+semantic_id: ESE111-CH04-SLIDES
+id: ESE111-CH04-SLIDES-en
+resource_type: slides
+language: en
+paired_with: ESE111-CH04-SLIDES-fr
+version: 0.1.0
+lifecycle: drafting
+format: revealjs
+outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+license: CC-BY-SA-4.0
+technical_contract:
+  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
+  values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
+  safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
+  expected_ranges: {baseline_tp_b_simulated_v: [1.087, 1.155], redesign_tp_b_simulated_v: [1.412, 1.500], source_current_simulated_a: [0.000229, 0.000244]}
+  rubric_total: 28
+  answer_key_digest: pending-restricted-store
+  figure_ids: [ESE111-CH04-FIG-001]
+---
+
+# One suspicious reading can test an entire network
+
+At TP-B, a technician expects about 1.13 V but reads nearly 0 V. Replace R4,
+rebuild the model, or test something else first?
+
+::: notes
+0–4 min. Silent individual choice with reason and confidence; accept paper, raised
+card, keyboard poll, or partner-mediated response. Do not reveal a fault. Ask which
+possible result would reverse the choice. The local lamp context is not approved;
+describe this as a generic repair fixture.
+:::
+
+## Voltage needs two nodes; current needs a chosen direction
+
+Draw COM, one voltage polarity, and one current arrow. What would a negative result mean?
+
+::: notes
+4–9 min. Retrieval. Expected: voltage difference relative to COM; negative means
+opposite to the declared arrow/polarity. Surface “negative equals wrong” and
+“COM equals protective earth.” Keep original prediction visible.
+:::
+
+## Prediction is evidence before it is an answer
+
+![Controlled two-node network.](../../shared/figures/ese111-ch04-network.svg){fig-alt="A 6 V source feeds R1 to TP-A; R2 connects TP-A to COM; R3 connects TP-A to TP-B; R4 connects TP-B to COM."}
+
+Rank without calculation: (V_A), (V_B), 0 V. Is (I_1=I_2)?
+
+::: notes
+9–15 min. Poll first, pair explanation second. Expected (V_A>V_B>0), and
+(I_1=I_2+I_3). Record the current-consumed misconception. Static SVG and its
+text reading replace animation.
+:::
+
+## A node equation is a physical inventory
+
+At TP-A:
+
+\[
+\frac{V_A-6}{10\,000}+\frac{V_A}{22\,000}+
+\frac{V_A-V_B}{33\,000}=0
+\]
+
+::: notes
+15–25 min. Build each term on the board only after a learner names the branch and
+direction. Ask what branch would be missing if the equation had two terms. French
+caution: use *courant électrique*, *nœud*, *branche*; symbols do not change.
+:::
+
+## The second node closes the model
+
+\[
+\frac{V_B-V_A}{33\,000}+\frac{V_B}{15\,000}=0
+\]
+
+Therefore (V_A=3.2V_B).
+
+::: notes
+25–31 min. Learners complete the rearrangement individually. A wrong factor of
+2.2 often reveals inversion of 33/15. Ask for a limiting check when R4 becomes very small.
+:::
+
+## An estimate can reject a polished wrong answer
+
+Before solving:
+
+- (I_1<6/10\text{ kΩ}=0.6\text{ mA})
+- (0<V_B<V_A<6\text{ V})
+- (V_B\) is roughly one third of (V_A)
+
+::: notes
+31–36 min. Ask learners to test two offered calculator results, one with (V_B>V_A).
+The estimate is a decision gate, not decorative arithmetic.
+:::
+
+## Three independent checks make the solution defensible
+
+| Result | Nominal |
+|---|---:|
+| (V_A) | 3.608 V |
+| (V_B) | 1.128 V |
+| (I_1) | 239.18 µA |
+| (I_2) | 164.01 µA |
+| (I_3=I_4) | 75.17 µA |
+
+Check both nodes, two loops, and power.
+
+::: notes
+36–45 min. Fade the worked calculation: learners supply one missing current and
+one KCL equality. Power is an independent sanity check. Retain units throughout.
+:::
+
+## The model is useful because its limits are explicit
+
+Steady DC, lumped nodes, ohmic resistors, stable temperature, regulated source,
+and represented instruments.
+
+::: notes
+45–50 min. Ask “Which assumption fails first at high frequency?” and “Does an
+open branch necessarily have zero voltage?” Keep the field-model limitation short;
+do not expand into later-course electromagnetics.
+:::
+
+## A voltmeter is another branch, not a spectator
+
+Unloaded TP-B: 1.1276 V  
+With 1 MΩ at TP-B: 1.1154 V and (I_M=1.115\ \mu\text{A})
+
+::: notes
+50–60 min. Run the physical demo only after approval; otherwise show the static
+calculated pair and prepared-data row. Prediction poll: higher/lower/same. Add
+(I_M) to KCL-B. Never generalize 1 or 10 MΩ to an unverified meter.
+:::
+
+## A residual is a question, not a mark to erase
+
+\[
+r=\text{measured}-\text{predicted},\qquad z=r/u_c
+\]
+
+What should be checked when the residual exceeds its declared bound?
+
+::: notes
+60–67 min. Learners rank source, actual R, meter loading, reference, contact, and
+topology. Explain that (z) is a transparent introductory scale, not a universal
+hypothesis test. Negative data remains in the record.
+:::
+
+## The best next test separates hypotheses before replacement
+
+Symptom: (V_B\approx0), (V_A) plausible.
+
+- H1: R3 open
+- H2: R4 short/too low
+- H3: wrong COM
+
+Choose one safe test and predict all three outcomes.
+
+::: notes
+67–76 min. Require outcome predictions before vote. Preferred sequence begins with
+source/reference confirmation and a de-energized discriminating branch test. Do
+not reveal the controlled pilot variant.
+:::
+
+## Evidence changes R4, then verification changes the claim
+
+New requirements: (1.40\le V_B\le1.52\text{ V}), (I_S\le0.25\text{ mA}).
+
+Choose 18, 22, 27, or 33 kΩ. Nominal success is not enough.
+
+::: notes
+76–84 min. Groups choose, state margin and loading assumption, then compare with
+the simulated 22 kΩ corner range 1.412–1.500 V. Emphasize that only the authorized
+post-change physical test verifies hardware.
+:::
+
+## Exit evidence chooses the next learning route
+
+A 1 MΩ meter reads TP-B=1.115 V versus 1.128 V unloaded. Name:
+
+1. the first model revision;
+2. one disconfirming measurement;
+3. one claim you still cannot make.
+
+::: notes
+84–90 min. Classify individually: correct new branch + discriminating check → lab;
+branch named but no equation → REM-loading; “bad law/meter” without test → REM-debug;
+unsafe mode → REM-dmm before lab. Collect responses. Static PDF/HTML, the board
+sequence, and prepared table are the no-power/no-internet fallback.
+:::
+

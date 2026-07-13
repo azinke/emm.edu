@@ -1,0 +1,48 @@
+---
+artifact_id: ESE111-CH04-EXP01
+pair_id: ESE111-CH04-EXP01
+lang: fr
+pair_revision: 0.1.0
+semantic_id: ESE111-CH04-EXP01
+id: ESE111-CH04-EXP01-fr
+resource_type: guided-exploration
+language: fr
+paired_with: ESE111-CH04-EXP01-en
+version: 0.1.0
+lifecycle: drafting
+outcomes: [ESE111-CO01, PLO-01, PLO-07]
+estimated_student_time_min: 35
+safety_level: L1
+license: CC-BY-SA-4.0
+technical_contract:
+  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
+  values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
+  safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
+  expected_ranges: {baseline_tp_b_simulated_v: [1.087, 1.155], redesign_tp_b_simulated_v: [1.412, 1.500], source_current_simulated_a: [0.000229, 0.000244]}
+  rubric_total: 28
+  answer_key_digest: public-formative-key-v0.1.0
+  figure_ids: [ESE111-CH04-FIG-001]
+---
+
+# Exploration — Observer TP-B peut-il modifier TP-B ?
+
+Prévoyez si un voltmètre de résistance finie augmente, diminue ou conserve TP-B.
+Donnez un mécanisme. Cette exploration de 35 minutes peut employer le réseau
+autorisé ou le modèle ; seule la voie physique prouve la connexion de la pointe.
+
+Appliquez l'enveloppe et les arrêts LAB04. Dans le modèle, gardez toutes les valeurs
+et comparez sans instrument, 10 MΩ, 1 MΩ et 100 kΩ en TP-B. Notez TP-B, courant du
+multimètre et résidu au nœud B quand cette branche est volontairement omise. Tracez
+ou tabulez la résistance d'entrée sur une échelle logarithmique et indiquez la provenance.
+
+1. Quelle grandeur varie de façon monotone ? Quelle limite apparaît pour (R_M\to\infty) ?
+2. Pourquoi le résidu sans branche égale-t-il le courant du multimètre, hors arrondi ?
+3. À quelle valeur de (R_M) la charge dépasse-t-elle 1 % de TP-B sans instrument ?
+4. Plus de chiffres affichés réduiraient-ils la charge ? Quelle spécification compte ?
+5. Concevez une modification de la *voie de mesure*, pas du réseau, réduisant la
+   charge. Donnez son essai d'acceptation.
+
+Les observations nominales attendues sont 1,1276 V sans instrument et 1,1154 V
+à 1 MΩ. Ce sont des calculs, pas des données de pilote matériel. Remettez prévision,
+configuration, tableau récupérable, équation, décision de charge et limite.

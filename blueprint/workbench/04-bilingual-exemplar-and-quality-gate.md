@@ -36,12 +36,31 @@ terminology. Authoring checks and automated tests do not impersonate those roles
 
 ## Epic E2 — Complete teaching package
 
-- [ ] **M04-E2-T01 [MAT]** Author natural EN and FR chapters following Discover → Understand → Experiment → Analyze → Design.
-- [ ] **M04-E2-T02 [MAT]** Create claim-titled slides, speaker notes, prediction poll, board plan, demonstration, and static fallback.
+- [x] **M04-E2-T01 [MAT]** Author natural EN and FR chapters following Discover → Understand → Experiment → Analyze → Design.
+- [x] **M04-E2-T02 [MAT]** Create claim-titled slides, speaker notes, prediction poll, board plan, demonstration, and static fallback.
 - [ ] **M04-E2-T03 [MAT]** Create pset with estimation, nodal/Kirchhoff modeling, simulation, datasheet/measurement, fault diagnosis, and design; create restricted solutions.
-- [ ] **M04-E2-T04 [MAT]** Create guided lab in minimal and standard paths with setup inspection, raw-data table, uncertainty, seeded open/incorrect-value fault, and redesign.
+- [x] **M04-E2-T04 [MAT]** Create guided lab in minimal and standard paths with setup inspection, raw-data table, uncertainty, seeded open/incorrect-value fault, and redesign.
 - [ ] **M04-E2-T05 [MAT]** Create 8–12 independently reviewed pilot-ready MCQs across levels with plausible misconceptions and explanations in both languages; publish a post-pilot item-analysis plan for growing the mature bank to 20+ without filler.
-- [ ] **M04-E2-T06 [MAT]** Create professor notes, remediation, enrichment, editable figures, alt/long descriptions, and low-bandwidth files.
+- [x] **M04-E2-T06 [MAT]** Create professor notes, remediation, enrichment, editable figures, alt/long descriptions, and low-bandwidth files.
+
+### E2 implementation record — 2026-07-14
+
+The paired package now contains a unit guide, prerequisite diagnostic, natural EN
+and FR chapter editions, claim-titled slides with speaker notes, lecture/board
+plan, loading demonstration and static recovery, guided exploration, all-category
+problem set, two-path laboratory, public practical construct, repair-handoff design
+clinic, professor notes, remediation/enrichment, accessible source figure,
+reference artifacts, prepared analysis fallback, contribution boundary, open QA
+record, and an offline/low-bandwidth inventory. Artifact IDs and the shared
+technical contract are structurally paired; calculated and prepared values retain
+their provenance.
+
+T03 remains open: the public problem set is complete, but M02-E4-T02 has not
+configured the separately permissioned production store, so the current worked
+solution cannot lawfully be created or committed here. T05 remains open: the
+ten-item bilingual construct and post-pilot growth/analysis plan exist, but actual
+pilot items, keys, explanations, independent reviews, and later statistics belong
+to that controlled store. Public opaque references expose none of those contents.
 
 ## Epic E3 — Technical and physical pilot
 

@@ -1,0 +1,8 @@
+dataset_id,dataset_version,record_class,provenance,run_id,sequence,quantity,from_node,to_node,value,unit,resolution,expanded_uncertainty,anomaly_retained,note,spdx_license
+ESE111-CH04-DATA-01,0.1.0,prepared-synthetic-non-personal,deterministic_model_plus_declared_rounding,PREP-A,1,voltage,VS,COM,5.981,V,0.001,0.008,false,analysis_only,CC-BY-SA-4.0
+ESE111-CH04-DATA-01,0.1.0,prepared-synthetic-non-personal,deterministic_model_plus_declared_rounding,PREP-A,2,voltage,TP-A,COM,3.602,V,0.001,0.006,false,analysis_only,CC-BY-SA-4.0
+ESE111-CH04-DATA-01,0.1.0,prepared-synthetic-non-personal,deterministic_model_plus_declared_rounding,PREP-A,3,voltage,TP-B,COM,1.113,V,0.001,0.003,false,includes_1_Mohm_meter_loading,CC-BY-SA-4.0
+ESE111-CH04-DATA-01,0.1.0,prepared-synthetic-non-personal,deterministic_model_plus_declared_rounding,PREP-B,1,voltage,VS,COM,5.981,V,0.001,0.008,false,analysis_only,CC-BY-SA-4.0
+ESE111-CH04-DATA-01,0.1.0,prepared-synthetic-non-personal,deterministic_model_plus_declared_rounding,PREP-B,2,voltage,TP-A,COM,3.761,V,0.001,0.006,true,seeded_open_branch_model_not_physical,CC-BY-SA-4.0
+ESE111-CH04-DATA-01,0.1.0,prepared-synthetic-non-personal,deterministic_model_plus_declared_rounding,PREP-B,3,voltage,TP-B,COM,0.003,V,0.001,0.003,true,seeded_open_branch_model_not_physical,CC-BY-SA-4.0
+

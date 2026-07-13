@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
 """Deterministic two-node oracle for the ESE111 Chapter 4 network."""
 
 from __future__ import annotations
@@ -86,4 +87,3 @@ if __name__ == "__main__":
     parser.add_argument("--compact", action="store_true")
     args = parser.parse_args()
     print(json.dumps(report(), indent=None if args.compact else 2, sort_keys=True))
-

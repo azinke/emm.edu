@@ -1,0 +1,33 @@
+qa_record_id: ESE111-CH04-QA-001
+scope_id: ESE111-CH04
+version_under_review: 0.1.0
+target_lifecycle: pilot-ready
+record_status: open
+opened_on: 2026-07-14
+closed_on: null
+baseline:
+  commit: pending-epic-e2-commit
+  package_inventory: package-inventory.yml
+  claim_register: claims.yml
+  restricted_references: restricted-refs/artifacts.yml
+  context_profile: universal-core-portable-fixture-only
+lifecycle_evidence:
+  technically_verified: pending-independent-recomputation-and-review
+  staff_piloted: pending-second-instructor-and-physical-paths
+  formative_learner_usability_pilot: pending-authority-consent-and-en-fr-learners
+  cohort_piloted: not-applicable-to-pilot-ready-target-but-required-before-stable
+facets:
+  technical: {status: pending, reviewer: null, evidence: authoring-oracle-only}
+  safety: {status: pending, reviewer: null, evidence: draft-L1-envelope-only}
+  language: {status: pending, reviewer: null, evidence: paired-authoring-only}
+  accessibility: {status: pending, reviewer: null, evidence: source-level-routes-only}
+  license: {status: pending, reviewer: null, evidence: original-contribution-record-needs-review}
+  build: {status: pending, reviewer: null, evidence: Pandoc fallback produced 24 paired HTML pages plus 2 static slide decks and output QA passed; printable PDF failed because the frozen host lacks footnote.sty; Quarto is absent, so the full release build remains open}
+  apparatus: {status: pending, reviewer: null, evidence: M03-paths-not-physically-piloted}
+  approval: {status: pending, reviewer: null, evidence: no-release-authority-decision}
+open_blockers:
+  - {id: M04-BLK-CTX, severity: critical, condition: approved measurable M01 context absent, workaround: portable universal fixture for drafting only}
+  - {id: M04-BLK-RST, severity: critical, condition: production restricted store and artifacts absent, affects: [worked solution, reviewed MCQ bank, practical variants, blind fault schedule]}
+  - {id: M04-BLK-PHY, severity: critical, condition: exact minimal and standard apparatus paths not physically piloted}
+  - {id: M04-BLK-HUM, severity: critical, condition: independent reviewers, second instructor, and consented EN/FR learners absent}
+release_decision: deferred; lifecycle remains drafting and no release tag is authorized

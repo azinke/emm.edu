@@ -1,0 +1,52 @@
+---
+artifact_id: ESE111-CH04-EXP01
+pair_id: ESE111-CH04-EXP01
+lang: en
+pair_revision: 0.1.0
+semantic_id: ESE111-CH04-EXP01
+id: ESE111-CH04-EXP01-en
+resource_type: guided-exploration
+language: en
+paired_with: ESE111-CH04-EXP01-fr
+version: 0.1.0
+lifecycle: drafting
+outcomes: [ESE111-CO01, PLO-01, PLO-07]
+estimated_student_time_min: 35
+safety_level: L1
+license: CC-BY-SA-4.0
+technical_contract:
+  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
+  values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
+  safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
+  expected_ranges: {baseline_tp_b_simulated_v: [1.087, 1.155], redesign_tp_b_simulated_v: [1.412, 1.500], source_current_simulated_a: [0.000229, 0.000244]}
+  rubric_total: 28
+  answer_key_digest: public-formative-key-v0.1.0
+  figure_ids: [ESE111-CH04-FIG-001]
+---
+
+# Exploration — Can observing TP-B change TP-B?
+
+Predict whether a finite-resistance voltmeter raises, lowers, or leaves TP-B
+unchanged. Give a mechanism, not a guess. This 35-minute exploration may use the
+authorized physical network or the deterministic model; only the physical route
+can evidence probe connection.
+
+Use the LAB04 safety envelope and stop conditions. In the model, hold every value
+fixed and compare no meter, 10 MΩ, 1 MΩ, and 100 kΩ at TP-B. Record TP-B, meter
+current, and the KCL-B residual when meter current is deliberately omitted. Plot or
+tabulate input resistance on a logarithmic scale; label provenance.
+
+Questions progress from description to transfer:
+
+1. What changed monotonically, and what limiting value appears as (R_M\to\infty)?
+2. Why does the omitted-branch KCL residual equal meter current apart from rounding?
+3. At what (R_M) does loading exceed 1% of the unloaded TP-B value?
+4. Would adding display digits reduce loading? Which specification matters instead?
+5. Design one change to the *measurement route*, not the network, that reduces
+   loading while preserving the question. State its acceptance test.
+
+The expected nominal observations are 1.1276 V unloaded and 1.1154 V at 1 MΩ.
+Those are analytical values, not apparatus pilot data. Submit prediction, command/
+configuration, recoverable table, one equation, loading decision, and one limit.
+

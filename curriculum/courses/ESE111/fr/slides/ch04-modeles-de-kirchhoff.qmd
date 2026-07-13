@@ -1,0 +1,185 @@
+---
+artifact_id: ESE111-CH04-SLIDES
+pair_id: ESE111-CH04-SLIDES
+lang: fr
+pair_revision: 0.1.0
+semantic_id: ESE111-CH04-SLIDES
+id: ESE111-CH04-SLIDES-fr
+resource_type: slides
+language: fr
+paired_with: ESE111-CH04-SLIDES-en
+version: 0.1.0
+lifecycle: drafting
+format: revealjs
+outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+license: CC-BY-SA-4.0
+technical_contract:
+  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
+  values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
+  safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
+  expected_ranges: {baseline_tp_b_simulated_v: [1.087, 1.155], redesign_tp_b_simulated_v: [1.412, 1.500], source_current_simulated_a: [0.000229, 0.000244]}
+  rubric_total: 28
+  answer_key_digest: pending-restricted-store
+  figure_ids: [ESE111-CH04-FIG-001]
+---
+
+# Une mesure suspecte peut éprouver tout un réseau
+
+En TP-B, 1,13 V était attendu mais la lecture approche 0 V. Remplacer R4,
+reconstruire le modèle ou commencer par un autre essai ?
+
+::: notes
+0–4 min. Choix individuel silencieux, raison et confiance ; papier, carte, clavier
+ou réponse médiée. Ne révélez aucune panne. Demandez quel résultat inverserait le
+choix. Présentez une maquette générique, le contexte local n'étant pas approuvé.
+:::
+
+## Une tension exige deux nœuds ; un courant exige un sens
+
+Dessinez COM, une polarité et une flèche. Que signifierait un résultat négatif ?
+
+::: notes
+4–9 min. Rappel. Attendu : différence par rapport à COM ; signe négatif = sens
+opposé. Faites émerger « négatif=faux » et « COM=terre de protection ».
+:::
+
+## La prévision devient une preuve avant de devenir une réponse
+
+![Réseau contrôlé à deux nœuds.](../../shared/figures/ese111-ch04-network.svg){fig-alt="Une source de 6 V alimente R1 vers TP-A ; R2 relie TP-A à COM ; R3 relie TP-A à TP-B ; R4 relie TP-B à COM."}
+
+Classez sans calcul : (V_A), (V_B), 0 V. (I_1=I_2) ?
+
+::: notes
+9–15 min. Vote puis explication en binôme. Attendu (V_A>V_B>0) et
+(I_1=I_2+I_3). Notez l'idée « courant consommé ». Le SVG statique et sa
+description remplacent l'animation.
+:::
+
+## Une équation de nœud est un inventaire physique
+
+\[
+\frac{V_A-6}{10\,000}+\frac{V_A}{22\,000}+
+\frac{V_A-V_B}{33\,000}=0
+\]
+
+::: notes
+15–25 min. Construisez chaque terme après identification de la branche et du sens.
+Demandez quelle branche manquerait avec seulement deux termes. Vocabulaire :
+*courant électrique*, *nœud*, *branche* ; symboles inchangés.
+:::
+
+## Le deuxième nœud ferme le modèle
+
+\[
+\frac{V_B-V_A}{33\,000}+\frac{V_B}{15\,000}=0
+\]
+
+Donc (V_A=3,2V_B).
+
+::: notes
+25–31 min. Réarrangement individuel. Un facteur 2,2 révèle souvent l'inversion
+33/15. Demandez la limite quand R4 devient très petite.
+:::
+
+## Une estimation rejette un beau résultat faux
+
+- (I_1<6/10\text{ kΩ}=0,6\text{ mA})
+- (0<V_B<V_A<6\text{ V})
+- (V_B\) vaut environ un tiers de (V_A)
+
+::: notes
+31–36 min. Faites rejeter une solution où (V_B>V_A). L'estimation est une porte
+de décision, pas une décoration.
+:::
+
+## Trois contrôles indépendants rendent la solution défendable
+
+| Résultat | Nominal |
+|---|---:|
+| (V_A) | 3,608 V |
+| (V_B) | 1,128 V |
+| (I_1) | 239,18 µA |
+| (I_2) | 164,01 µA |
+| (I_3=I_4) | 75,17 µA |
+
+Vérifiez deux nœuds, deux mailles et la puissance.
+
+::: notes
+36–45 min. Effacez progressivement l'aide : un courant et une égalité à compléter.
+La puissance est indépendante. Gardez les unités.
+:::
+
+## Le modèle est utile parce que ses limites sont explicites
+
+Régime continu établi, nœuds concentrés, composants ohmiques, température stable,
+source régulée et instruments représentés.
+
+::: notes
+45–50 min. « Quelle hypothèse cède à haute fréquence ? » et « branche ouverte
+implique-t-elle tension nulle ? » Restez bref sur l'électromagnétisme ultérieur.
+:::
+
+## Un voltmètre est une branche, pas un spectateur
+
+Sans charge : 1,1276 V  
+Avec 1 MΩ : 1,1154 V et (I_M=1,115\ \mu\text{A})
+
+::: notes
+50–60 min. Démonstration physique seulement après approbation ; sinon paire calculée
+et ligne préparée. Vote : plus/moins/égal. Ajoutez (I_M) au bilan. Ne généralisez
+jamais 1 ou 10 MΩ à un appareil non vérifié.
+:::
+
+## Un résidu est une question, pas une trace à effacer
+
+\[
+r=\text{mesuré}-\text{prévu},\qquad z=r/u_c
+\]
+
+Que vérifier si le résidu dépasse la borne déclarée ?
+
+::: notes
+60–67 min. Classez source, R réelle, charge, référence, contact et topologie.
+(z) est une échelle introductive explicite, pas un test universel. Gardez les échecs.
+:::
+
+## Le meilleur essai sépare les hypothèses avant remplacement
+
+Symptôme : (V_B\approx0), (V_A) plausible.
+
+- H1 : R3 ouverte
+- H2 : R4 court-circuitée/trop faible
+- H3 : mauvais COM
+
+Choisissez un essai sûr et prévoyez trois issues.
+
+::: notes
+67–76 min. Exigez les issues avant le vote. Commencez par source/référence puis
+branche hors tension. Ne révélez pas la variante de pilote.
+:::
+
+## La preuve change R4 ; la vérification change l'affirmation
+
+(1,40\le V_B\le1,52\text{ V}), (I_S\le0,25\text{ mA}).
+
+Choisissez 18, 22, 27 ou 33 kΩ. Le nominal ne suffit pas.
+
+::: notes
+76–84 min. Choix en groupes, marge et charge. Comparez à 1,412–1,500 V pour
+22 kΩ simulée. Seul l'essai physique autorisé vérifie le matériel.
+:::
+
+## Le billet de sortie choisit la suite
+
+Avec 1 MΩ, TP-B=1,115 V contre 1,128 V sans charge. Donnez :
+
+1. la première correction du modèle ;
+2. une mesure qui peut la réfuter ;
+3. une affirmation encore interdite.
+
+::: notes
+84–90 min. Branche + contrôle → TP ; branche sans équation → REM-loading ;
+« mauvaise loi » sans essai → REM-debug ; mode dangereux → REM-dmm. Recueillez.
+PDF/HTML statique, tableau préparé et plan tableau assurent le repli hors ligne.
+:::

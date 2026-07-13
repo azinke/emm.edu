@@ -1,0 +1,167 @@
+---
+artifact_id: ESE111-CH04-LAB01
+pair_id: ESE111-CH04-LAB01
+lang: en
+pair_revision: 0.1.0
+semantic_id: ESE111-CH04-LAB01
+id: ESE111-CH04-LAB01-en
+resource_type: laboratory
+language: en
+paired_with: ESE111-CH04-LAB01-fr
+version: 0.1.0
+lifecycle: drafting
+outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+estimated_student_time_min: 150
+safety_level: L1
+license: CC-BY-SA-4.0
+technical_contract:
+  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
+  values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
+  safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
+  expected_ranges: {baseline_tp_b_simulated_v: [1.087, 1.155], redesign_tp_b_simulated_v: [1.412, 1.500], source_current_simulated_a: [0.000229, 0.000244]}
+  rubric_total: 28
+  answer_key_digest: pending-restricted-store
+  figure_ids: [ESE111-CH04-FIG-001]
+---
+
+# Laboratory LAB04 — Does the physical network match its schematic?
+
+## Outcomes and operating envelope
+
+In 150 minutes, pairs rotate builder, instrument lead, analyst, and verifier roles.
+Each learner must personally direct or perform one inspection, choose a voltage
+test sequence and DMM setting, record raw readings, update a fault hypothesis, and
+defend the redesign. Manipulation assistance is allowed when it preserves those
+decisions. Prerequisites are the readiness check and G1, or direct instructor
+control before G1. This activity assesses a low-energy DC resistor network; it
+does not assess DMM current mode, soldering, a real lamp, or a sensor product.
+
+This source is a draft. Do not energize it until the local activity risk assessment,
+apparatus path, supervision, and instructor authorization are approved.
+
+## Safety and stop-work conditions
+
+- Approved protected DC source only; 0–6.1 V, configured current limit ≤20 mA.
+- Leads remain in COM and V/Ω. The current input is not permitted.
+- Source output off and circuit verified de-energized for wiring or resistance work.
+- Before first power and after any topology change, complete the inspection below.
+- Stop for a damaged lead/part, uncertain node, unstable or unexpected reading,
+  source limit indication, heat, odor, smoke, or any value beyond the approved range.
+- Say **STOP**; switch output off if safe; do not touch until isolated; notify the
+  instructor. Only the authorized instructor may release the setup after a stop.
+
+Maximum credible circuit current after a hard short beyond R1 is about
+(6.1\text{ V}/9.9\text{ kΩ}<0.62\text{ mA}), but that calculation neither
+authorizes the source nor replaces its protective limit and inspection.
+
+## Apparatus paths and architecture
+
+| Required evidence | Minimal path | Standard path | Equivalence boundary |
+|---|---|---|---|
+| source condition | approved current-limited source plus DMM | bench supply display cross-checked by DMM | learner records actual VS and configured limit |
+| three node readings | one function-checked DMM, sequential | two DMMs or DMM plus approved scope for a static cross-check | learner chooses COM, function, range, order; screenshots alone do not pass |
+| loading estimate | exact manual input resistance | exact manuals for both channels | same branch model and uncertainty decision |
+| personal physical evidence | construct/inspect, connect, read, diagnose, redesign | identical | automation or a second channel cannot make the decisions |
+
+Components: breadboard, R1=10 kΩ, R2=22 kΩ, R3=33 kΩ, baseline R4=15 kΩ,
+redesign candidates 18/22/27/33 kΩ, all proposed 1%; labeled leads. Substitution
+requires the same topology, measured resistance, rating margin, predicted range,
+and a new review. The advanced path is not declared for this pilot.
+
+![LAB04 controlled schematic.](../../shared/figures/ese111-ch04-network.svg){fig-alt="A 6 V source feeds R1 to TP-A; R2 connects TP-A to COM; R3 connects TP-A to TP-B; R4 connects TP-B to COM."}
+
+## Pre-lab prediction
+
+Before seeing any result, submit:
+
+1. arrows/polarities and an order-of-magnitude bound for all currents;
+2. nominal (V_A,V_B) and both node equations;
+3. expected qualitative signatures for an open branch and a wrong-value branch;
+4. safe DMM socket/function/range, reference, and test-point order;
+5. predicted direction of TP-B change when R4 increases.
+
+The simulation screening bounds are 3.559–3.655 V at TP-A and 1.087–1.155 V at
+TP-B for the baseline across declared source/resistor corners and 1/10 MΩ meter
+models. These are not physical pilot ranges; staff must replace the pending range
+record with measured expected intervals before ordinary teaching.
+
+## Setup inspection checkpoint
+
+With output off and zero energy verified, learner and verifier initial each line:
+
+- [ ] activity revision, source ID, DMM ID, meter input resistance, and function-check record captured;
+- [ ] leads undamaged and inserted in COM and V/Ω; DC-voltage function selected;
+- [ ] supply output off, set to 6.0 V, current limit no more than 20 mA;
+- [ ] breadboard continuity mapped; VS, TP-A, TP-B, and COM labeled;
+- [ ] R1–R4 values measured out of circuit or otherwise isolated and recorded;
+- [ ] topology traced against the controlled schematic; no unintended VS–COM short;
+- [ ] resistor ratings and hard-short bound checked; work area clear;
+- [ ] instructor checkpoint ID recorded before energization.
+
+## Procedure and raw record
+
+1. Create a run record conforming to `shared/data/raw-data.schema.json`; select
+   `physical-measurement`, never `simulation` or `prepared`.
+2. Record the individual pre-lab prediction without editing it after the reveal.
+3. Build the baseline with output off and obtain the inspection checkpoint.
+4. Energize without touching the network; observe supply state for five seconds.
+5. Measure VS relative to COM; record sign, raw display, range, resolution, accuracy
+   basis, uncertainty, and sequence before moving the probe.
+6. Repeat the same complete record for TP-A and TP-B.
+7. Switch output off and verify de-energized state.
+8. Infer (I_1\ldots I_4) from measured node differences and measured resistance.
+9. Calculate signed KCL residuals at A and B, two loop residuals, and power balance.
+10. Add the meter input branch; recompute B and decide whether disagreement is
+    consistent with the stated uncertainty or needs investigation.
+11. Ask the instructor to apply one controlled reversible fault while the setup is
+    isolated; the public schedule reveals only `open-branch` or `incorrect-value-branch`.
+12. Re-energize only after a new checkpoint, then record symptoms without replacing parts.
+13. Rank at least three hypotheses and choose one test whose possible outcomes
+    distinguish at least two; obtain approval, isolate, run it, and update the table.
+14. After evidence supports a root cause, authorize/carry out the correction and
+    rerun the baseline acceptance measurements.
+15. Compare R4 candidates; select one with margin for TP-B=1.40–1.52 V and source
+    current ≤0.25 mA, not merely a nominal pass.
+16. Isolate, install the selected R4, repeat inspection and measurements, and accept
+    or reject both requirements from physical evidence.
+
+| Seq. | State/configuration | From→to | Raw value/unit | Range/resolution | Expanded uncertainty/basis | Prediction | Residual | Decision/anomaly |
+|---:|---|---|---|---|---|---|---|---|
+| 1 | baseline | VS→COM | | | | | | |
+| 2 | baseline | TP-A→COM | | | | | | |
+| 3 | baseline | TP-B→COM | | | | | | |
+| 4 | fault present | selected test | | | | | | retained |
+| 5 | corrected | TP-B→COM | | | | | | |
+| 6 | redesign | TP-B→COM | | | | | | accept/reject |
+
+## Diagnostic tree
+
+Start with VS under load. If wrong, isolate source/configuration before the network.
+If VS is sound, compare A and B with predicted signatures. Near-zero B with a
+plausible A prioritizes an open link or shunt at B; high B prioritizes a weak/open
+return branch or wrong value. De-energized resistance/continuity at the selected
+branch is safer and more discriminating than random replacement. If all nodes are
+close but residuals shift with probe connection, model the meter. At every branch,
+state what result would reverse your ranking.
+
+Exact insertion, randomization, and reset details belong to
+`RST-ESE111-CH04-FAULT-001`, outside public history.
+
+## Design acceptance and limitations
+
+Pass the redesign only if recorded physical evidence shows (1.40\le V_B\le1.52\)
+V and derived/measured source current ≤0.25 mA under the stated source, component,
+meter, ambient, and uncertainty condition. A simulated 22 kΩ pass is the leading
+candidate, not the result. Record any residual risk: contact instability, meter
+input uncertainty, temperature, substitute values, or margin too small.
+
+## Closeout and individual check
+
+Switch output off, isolate, verify zero, remove leads, return reusable resistors by
+value, quarantine damaged or suspect parts, and follow the local e-waste record.
+Archive raw and derived data separately with configuration and checksum. Each learner
+answers: “Which one measurement changed your diagnosis or design, and why would a
+different result have changed it again?” The common 28-point rubric and targeted
+reassessment route apply; safety and honest provenance are conjunctive.
+

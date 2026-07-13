@@ -1,0 +1,54 @@
+---
+artifact_id: ESE111-CH04-REM
+pair_id: ESE111-CH04-REM
+lang: fr
+pair_revision: 0.1.0
+semantic_id: ESE111-CH04-REM
+id: ESE111-CH04-REM-fr
+resource_type: remediation-enrichment-map
+language: fr
+paired_with: ESE111-CH04-REM-en
+version: 0.1.0
+lifecycle: drafting
+outcomes: [ESE111-CO01, PLO-01, PLO-07, PLO-08]
+license: CC-BY-SA-4.0
+technical_contract:
+  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
+  values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
+  safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
+  expected_ranges: {baseline_tp_b_simulated_v: [1.087, 1.155], redesign_tp_b_simulated_v: [1.412, 1.500], source_current_simulated_a: [0.000229, 0.000244]}
+  rubric_total: 28
+  answer_key_digest: public-formative-key-v0.1.0
+  figure_ids: [ESE111-CH04-FIG-001]
+---
+
+# Carte de remédiation et d'approfondissement
+
+| Parcours | Indice déclencheur | Action de 15–25 min | Preuve de sortie |
+|---|---|---|---|
+| REM-units | erreur de préfixe/unité | six conversions V/mV et A/mA/µA, contrôle dimensionnel | 5/6 et explication |
+| REM-algebra | élimination impossible | un système graphique et deux par élimination liés aux branches | système nouveau résolu |
+| REM-signs | flèches inversées pour rendre positif | garder une flèche volontairement opposée | signe négatif interprété |
+| REM-reference | « tension en un point » | trois différences avec deux références | invariance de branche expliquée |
+| REM-dmm | borne/fonction dangereuse | simulateur/check-list hors tension et reformulation | tous les choix sûrs exacts |
+| REM-board | topologie de plaque incertaine | cartographier des lignes cachées par continuité | carte exacte et faux court-circuit contrôlé |
+| REM-uncertainty | tolérance = incertitude totale | séparer tolérance, résolution, précision, répétabilité, charge | comparaison défendable |
+| REM-loading | instrument omis du bilan | dessiner (R_M), recalculer, passer à la limite | courant manquant expliqué |
+| REM-debug | remplacement sans hypothèse | tableau symptômes/issues prévues | essai discriminant défendu |
+
+La nouvelle tentative ne porte que sur la preuve affectée, avec d'autres valeurs.
+Preuve dangereuse ou fabriquée suit la procédure formelle. Une adaptation change
+la représentation ou la manipulation, jamais le raisonnement, la sécurité ni la
+décision individuelle.
+
+## Approfondissement
+
+- Prouvez l'unicité de la solution à résistances positives par déterminant ou énergie.
+- Écrivez sans dépendance un sélecteur de R4 dans la série E24, testé contre l'oracle.
+- Calculez la résistance d'entrée limitant la charge à 0,1 %, puis discutez fuite
+  et contacts devenus dominants.
+- Concevez une stratégie de trois essais minimisant le pire cas pour R2 ouverte,
+  R3 ouverte, mauvaise R4, mauvaise source et mauvais COM.
+- Comparez méthode nodale systématique et réduction de Thévenin pour le diagnostic.
+

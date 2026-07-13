@@ -1,0 +1,96 @@
+---
+artifact_id: ESE111-CH04-GUIDE
+pair_id: ESE111-CH04-GUIDE
+lang: en
+pair_revision: 0.1.0
+semantic_id: ESE111-CH04-GUIDE
+id: ESE111-CH04-GUIDE-en
+resource_type: course-syllabus
+language: en
+paired_with: ESE111-CH04-GUIDE-fr
+version: 0.1.0
+lifecycle: drafting
+outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+prerequisites: []
+estimated_student_time_min: 635
+safety_level: L1
+license: CC-BY-SA-4.0
+technical_contract: &contract
+  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
+  values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
+  safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
+  expected_ranges: {baseline_tp_b_simulated_v: [1.087, 1.155], redesign_tp_b_simulated_v: [1.412, 1.500], source_current_simulated_a: [0.000229, 0.000244]}
+  rubric_total: 28
+  answer_key_digest: pending-restricted-store
+  figure_ids: [ESE111-CH04-FIG-001]
+---
+
+# Chapter 4 unit guide — Kirchhoff models
+
+This vertical unit turns a schematic into a prediction, a physical test, a fault
+diagnosis, and a verified design change. It is a draft authoring baseline, not an
+authorized activity: the deploying institution must approve the apparatus,
+supervision, and safety record before learners energize it.
+
+## What you will be able to do
+
+By the end, you will assign references, solve the two-node network, make safe
+voltage measurements, quantify disagreement, localize an open or wrong-value
+branch, and redesign R4 so TP-B is between 1.40 V and 1.52 V while source current
+stays at or below 0.25 mA. A correct number alone is insufficient; the required
+evidence is a reproducible chain from assumption to acceptance test.
+
+## Sequence and workload
+
+| Resource | Suggested order | Typical time | Evidence |
+|---|---:|---:|---|
+| Prerequisite diagnostic | 1 | 25 min | targeted remediation choice |
+| Chapter and retrieval | 2 | 150 min | prediction and worked model |
+| Interactive studio/demo | 3 | 90 min | reasoning checkpoints and exit ticket |
+| Problem set | 4 | 120 min | individual calculations and design trade study |
+| Guided laboratory | 5 | 150 min | inspected setup, raw readings, fault log, redesign result |
+| Practical check | 6 | 25 min | individual model–measure–debug defense |
+| Reflection/remediation | 7 | 75 min | corrected evidence or enrichment extension |
+
+## Evidence, feedback, and mastery
+
+The common 28-point rubric allocates four points each to requirements, modeling,
+implementation, measurement, debugging, communication, and responsibility.
+Mastery requires at least 20 points, Level 3 performance in model, measurement,
+and debugging, and no safety or integrity failure. Feedback follows the
+diagnostic, studio exit ticket, problem set, and lab checkpoint. Reassessment
+uses changed values and a different reversible fault.
+
+Students may work in English or French at the same technical threshold. The
+schematic, parameters, points, safety rules, and allowed resources are identical.
+Technical meaning and evidence are assessed, not accent or nonessential grammar.
+
+## Safety and access
+
+Use only an approved protected source, no more than 6.1 V, configured to no more
+than 20 mA. Keep the output off while changing the circuit. The DMM leads stay in
+COM and V/Ω; current-input use is outside this unit. Stop on damage, unstable or
+unexpected values, current-limit indication, heat, odor, or any uncertainty about
+the configuration. Before G1, the instructor controls every energization.
+
+Equivalent access may provide manipulation assistance when dexterity is not the
+construct, but the learner still directs the wiring, selects settings/test points,
+interprets raw evidence, and defends the diagnosis. Print, keyboard, offline,
+high-contrast SVG, and tabular routes carry the same decisions.
+
+## Required materials and offline route
+
+The minimal route uses the approved source, one function-checked DMM with known
+input resistance, a breadboard, 1% resistors, and leads. The standard route adds a
+bench supply and a second voltage channel. Downloaded sources, the editable SVG,
+the deterministic Python model, and static data fallback require no internet.
+Prepared or simulated data supports analysis only; it cannot certify personal
+construction, instrument use, or physical debugging.
+
+## Current limitations
+
+The context candidate, physical apparatus paths, second-instructor rehearsal,
+learner pilots, and independent EN/FR reviews are still pending. Until those gates
+close, use this package only for controlled review and authorized formative work.
+

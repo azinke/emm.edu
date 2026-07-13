@@ -1,0 +1,66 @@
+---
+artifact_id: ESE111-CH04-PRACT01
+pair_id: ESE111-CH04-PRACT01
+lang: fr
+pair_revision: 0.1.0
+semantic_id: ESE111-CH04-PRACT01
+id: ESE111-CH04-PRACT01-fr
+resource_type: practical-design-assessment
+language: fr
+paired_with: ESE111-CH04-PRACT01-en
+version: 0.1.0
+lifecycle: drafting
+outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+estimated_student_time_min: 25
+safety_level: L1
+license: CC-BY-SA-4.0
+technical_contract:
+  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
+  values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
+  safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
+  expected_ranges: {baseline_tp_b_simulated_v: [1.087, 1.155], redesign_tp_b_simulated_v: [1.412, 1.500], source_current_simulated_a: [0.000229, 0.000244]}
+  rubric_total: 28
+  answer_key_digest: pending-restricted-store
+  figure_ids: [ESE111-CH04-FIG-001]
+---
+
+# Épreuve PRACT01 — Réconcilier, diagnostiquer et modifier une branche
+
+## Objet et conditions
+
+En 25 minutes, prévoyez seul un état borné, prenez une décision de mesure sûre,
+mettez à jour une hypothèse de panne et choisissez une valeur contre deux exigences.
+Vous pouvez travailler en français ou anglais avec glossaire, calculatrice, schéma
+et notice approuvés. Collaboration, notes cachées et réponses générées non déclarées
+sont interdites. La réévaluation change paramètres et panne pour tester le transfert.
+
+Cette forme publique présente le construit et sert à l'entraînement. Valeurs
+actuelles, clé de montage, panne, remise à zéro et ancres examinateur sont contrôlées
+par `RST-ESE111-CH04-PRACT-001` et ne doivent pas être déduites de l'exemple de cours.
+
+## Actions du candidat
+
+1. Inspectez hors tension, déclarez limites et arrêts, puis demandez le contrôle.
+2. Déclarez COM, une flèche de courant et une estimation du nœud attribué.
+3. Choisissez bornes, fonction, calibre et premier point d'essai ; justifiez avant d'agir.
+4. Notez la lecture brute et la base d'incertitude, puis calculez le résidu signé.
+5. Classez les hypothèses, choisissez un essai discriminant et prévoyez ses issues.
+   L'examinateur peut donner le résultat plutôt que permettre une modification.
+6. Choisissez une valeur normalisée satisfaisant fenêtre et budget, proposez la
+   vérification et une limite restante.
+7. Défendez en deux minutes observation → modèle → diagnostic → décision.
+
+Connexion dangereuse, mise sous tension sans autorisation, entrée courant,
+modification sous tension ou preuve fabriquée arrêtent l'épreuve et déclenchent la
+remédiation et la voie d'appel publiées.
+
+## Barème et décision
+
+Quatre points pour exigences, modèle, réalisation, mesure, diagnostic,
+communication et responsabilité : 28. Il faut au moins 20, le niveau 3 en modèle,
+mesure et diagnostic, sans faute de sécurité/intégrité. L'examinateur utilise des
+relances standardisées non directives et note durée, preuve, anomalie et adaptation.
+Un échantillon bilingue est doublement corrigé. Appels et tâche défectueuse
+préservent le même construit et le même seuil de sécurité.
+

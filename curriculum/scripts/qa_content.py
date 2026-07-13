@@ -137,27 +137,27 @@ def rubric_findings(document: Document) -> list[Finding]:
     return findings
 
 
-def termbase_data(root: Path) -> tuple[set[str], list[tuple[str, str]]]:
+def termbase_data(root: Path) -> tuple[set[str], list[tuple[str, str | None, str]]]:
     path = root / "i18n" / "termbase.yml"
     if not path.exists():
         return set(), []
     data = load_yaml(path) or {}
     ids = flatten_ids(data)
-    avoided: list[tuple[str, str]] = []
+    avoided: list[tuple[str, str | None, str]] = []
     for term in data.get("terms", []) if isinstance(data, dict) else []:
         if not isinstance(term, dict):
             continue
         for value in term.get("avoided_terms", term.get("avoid", [])) or []:
             if isinstance(value, str):
-                avoided.append((str(term.get("id", "unknown")), value))
+                avoided.append((str(term.get("id", "unknown")), None, value))
             elif isinstance(value, dict):
-                for localized in value.values():
+                for language, localized in value.items():
                     if isinstance(localized, str):
-                        avoided.append((str(term.get("id", "unknown")), localized))
+                        avoided.append((str(term.get("id", "unknown")), str(language), localized))
     return ids, avoided
 
 
-def validate_document(document: Document, root: Path, outcome_ids: set[str], term_ids: set[str], avoided: list[tuple[str, str]], policy: dict[str, Any]) -> list[Finding]:
+def validate_document(document: Document, root: Path, outcome_ids: set[str], term_ids: set[str], avoided: list[tuple[str, str | None, str]], policy: dict[str, Any]) -> list[Finding]:
     findings: list[Finding] = []
     path_label = str(document.relative)
     metadata = document.metadata
@@ -173,7 +173,9 @@ def validate_document(document: Document, root: Path, outcome_ids: set[str], ter
         if term_id not in term_ids:
             findings.append(Finding("GLOSSARY001", path_label, f"unknown glossary ID {term_id}"))
     searchable = re.sub(r"```.*?```", "", document.body, flags=re.S)
-    for term_id, phrase in avoided:
+    for term_id, avoided_language, phrase in avoided:
+        if avoided_language is not None and document.language != avoided_language:
+            continue
         if phrase and re.search(rf"\b{re.escape(phrase)}\b", searchable, flags=re.I):
             findings.append(Finding("GLOSSARY002", path_label, f"avoided term {phrase!r} from {term_id}"))
     findings.extend(rubric_findings(document))

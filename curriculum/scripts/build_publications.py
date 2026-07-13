@@ -37,8 +37,16 @@ def destination(root: Path, language: str, format_name: str, source: Path, suffi
     return root / "build" / language / format_name / without_language.with_suffix(suffix)
 
 
-def pandoc_command(source: Path, output: Path, language: str, format_name: str) -> list[str]:
-    common = ["pandoc", str(source), "--standalone", "--metadata", f"lang={language}", "--fail-if-warnings"]
+def pandoc_command(source: Path, output: Path, language: str, format_name: str, root: Path) -> list[str]:
+    source_text = source.read_text(encoding="utf-8")
+    heading = re.search(r"^#\s+(.+)$", source_text, re.M)
+    fallback_title = heading.group(1).strip() if heading else source.stem.replace("-", " ").title()
+    common = [
+        "pandoc", str(source), "--from", "markdown+tex_math_single_backslash",
+        "--standalone", "--metadata", f"lang={language}", "--metadata", f"title={fallback_title}",
+        "--resource-path", os.pathsep.join((str(source.parent), str(root))),
+        "--fail-if-warnings",
+    ]
     if format_name == "html":
         return common + ["--to", "html5", "--embed-resources", "--mathml", "--output", str(output)]
     if format_name == "slides":
@@ -71,7 +79,7 @@ def build_pandoc(root: Path, languages: list[str], formats: list[str], report: l
                 suffix = ".pdf" if format_name == "pdf" else ".html"
                 output = destination(root, language, format_name, source, suffix)
                 output.parent.mkdir(parents=True, exist_ok=True)
-                result = run_command(pandoc_command(source, output, language, format_name), cwd=root, env=env)
+                result = run_command(pandoc_command(source, output, language, format_name, root), cwd=root, env=env)
                 report.append({"engine": "pandoc", "language": language, "format": format_name, "source": str(source.relative_to(root)), "output": str(output.relative_to(root)), **result.__dict__})
                 if result.returncode:
                     failures += 1

@@ -1,0 +1,73 @@
+---
+artifact_id: ESE111-CH04-PLAN
+pair_id: ESE111-CH04-PLAN
+lang: fr
+pair_revision: 0.1.0
+semantic_id: ESE111-CH04-PLAN
+id: ESE111-CH04-PLAN-fr
+resource_type: lecture-studio-plan
+language: fr
+paired_with: ESE111-CH04-PLAN-en
+version: 0.1.0
+lifecycle: drafting
+duration_min: 90
+outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+license: CC-BY-SA-4.0
+technical_contract:
+  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
+  values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
+  safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
+  expected_ranges: {baseline_tp_b_simulated_v: [1.087, 1.155], redesign_tp_b_simulated_v: [1.412, 1.500], source_current_simulated_a: [0.000229, 0.000244]}
+  rubric_total: 28
+  answer_key_digest: pending-restricted-store
+  figure_ids: [ESE111-CH04-FIG-001]
+---
+
+# Plan d'atelier — Chaque branche doit apparaître dans la preuve
+
+## Intention et préparation
+
+Faire évoluer « courant consommé / mesure passive / remplacement au hasard » vers
+bilan signé, instrument-branche et essai guidé par hypothèse. Recueillez prévision,
+deux étapes de dérivation, décision de démonstration, vote de diagnostic, choix de
+R4 et billet individuel.
+
+Avant la séance : relisez chapitre/registre/modèle ; imprimez diapositives, schéma,
+tableau préparé et billets ; testez la voie statique. Une démonstration en direct
+exige pilote physique, approbation L1, contrôles fonctionnels, 15 min de montage,
+5 min de remise à zéro et supervision approuvée. Sinon, utilisez le repli calculé.
+Offrez réponses papier, clavier, orale et médiée sans réduire le raisonnement individuel.
+
+## Déroulé
+
+| Min | Phase | Action apprenant | Preuve | Si la preuve montre… |
+|---:|---|---|---|---|
+| 0–4 | Découvrir | choisir le premier geste | prévision + confiance | remplacement → conserver pour comparaison |
+| 4–9 | Rappel | référence, polarité, flèche | croquis individuel | lacune sûre → REM-dmm/reference |
+| 9–15 | Découvrir | classer nœuds/courants | vote puis binôme | « consommé » → demander accumulation |
+| 15–31 | Comprendre | fournir termes, éliminer | équation tableau | branche absente → suivre le schéma |
+| 31–45 | Comprendre | rejeter par estimation, contrôler | bornes, nœuds, mailles, puissance | calculatrice seule → contrôle indépendant |
+| 45–50 | Comprendre | nommer une limite | transfert en une phrase | confusion COM/terre → contraste explicite |
+| 50–60 | Expérimenter | prévoir charge, lire résultat | paire avant/après | « appareil mauvais » → ajouter (R_M) |
+| 60–67 | Analyser | classer causes de résidu | mini-tableau | anomalie supprimée → garder l'original |
+| 67–76 | Analyser | essai + issues prévues | vote panne | remplacement → REM-debug |
+| 76–84 | Concevoir | choisir R4 avec marge | étude quatre valeurs | nominal seul → coins/charge |
+| 84–90 | Sortie | modèle, réfutation, limite | billet individuel | orienter selon carte |
+
+## Plan du tableau
+
+Quatre zones persistantes : (1) topologie et lecture textuelle, VS/A/B/COM ;
+(2) flèches, polarités et estimation ; (3) lois des deux nœuds branche par branche,
+solution puis contrôles ; (4) tableau de résidus, nouvelle branche (R_M),
+hypothèses de panne et exigences R4. N'effacez pas la prévision : indiquez quelle
+preuve l'a modifiée.
+
+## Indispensable et compressible
+
+Ne coupez jamais prévision, références/signes, branche→équation, branche instrument,
+essai discriminant, acceptation, sécurité ou billet. Si nécessaire, fournissez
+l'arithmétique et réduisez histoire, calculs répétés et approfondissement. Après la
+séance, consignez durée réelle, participation, obstacles, formulation ambiguë,
+panne de matériel, distribution de sortie et modifications attribuées.
+

@@ -1,0 +1,14 @@
+record_id: ESE111-CH04-CONTRIB
+version: 0.1.0
+status: draft-no-origin-claim
+scope: ESE111 Chapter 4 repair-handoff teaching fixture
+original_contributions:
+  - {domain: pedagogical-design, evidence: paired EN/FR source files, owner: EMM curriculum authors}
+  - {domain: analytical-model, evidence: shared/model/kirchhoff_model.py and tests, owner: EMM curriculum authors}
+  - {domain: schematic, evidence: shared/figures/ese111-ch04-network.svg, owner: EMM curriculum authors}
+dependencies:
+  - {item: Python 3 standard library, origin: external open-source toolchain, role: executable analytical oracle}
+  - {item: named physical source, meter, breadboard, and resistor lots, origin: deployment-defined and unqualified, role: future physical pilot}
+permitted_claim: Original bilingual teaching fixture and analysis authored in this repository; no geographic product-origin, local manufacture, or local sourcing claim is supported.
+review_trigger: any third-party contribution, deployment-specific statement, media import, or physical product claim
+license_targets: {prose_and_data: CC-BY-SA-4.0, code: MIT}

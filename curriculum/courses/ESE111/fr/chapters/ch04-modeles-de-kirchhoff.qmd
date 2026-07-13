@@ -1,0 +1,252 @@
+---
+artifact_id: ESE111-CH04-CH
+pair_id: ESE111-CH04-CH
+lang: fr
+pair_revision: 0.1.0
+semantic_id: ESE111-CH04-CH
+id: ESE111-CH04-CH-fr
+resource_type: chapter
+language: fr
+paired_with: ESE111-CH04-CH-en
+version: 0.1.0
+lifecycle: drafting
+outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+prerequisites: []
+context_ids: []
+claim_register: ../../shared/claims.yml
+glossary_terms: [ee.voltage, ee.current, ee.resistor, ee.node, ee.branch, ee.uncertainty]
+estimated_student_time_min: 150
+safety_level: L1
+license: CC-BY-SA-4.0
+technical_contract:
+  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
+  values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
+  safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
+  expected_ranges: {baseline_tp_b_simulated_v: [1.087, 1.155], redesign_tp_b_simulated_v: [1.412, 1.500], source_current_simulated_a: [0.000229, 0.000244]}
+  rubric_total: 28
+  answer_key_digest: pending-restricted-store
+  figure_ids: [ESE111-CH04-FIG-001]
+---
+
+# Les modèles de Kirchhoff rendent chaque connexion vérifiable
+
+## Pourquoi est-ce important ?
+
+Un réparateur ne rencontre presque jamais un appareil parfait. Le schéma peut être
+incomplet, une branche ouverte ou la valeur montée différente du marquage. Mesurer
+un seul point puis remplacer le composant le plus suspect détruit souvent des
+indices. Une meilleure question est : *que doit-on vérifier à chaque connexion si
+le réseau physique correspond au modèle ?*
+
+Les règles étudiées sont historiquement associées à l'article publié par Gustav
+Kirchhoff en 1845 (affirmation `ESE111-CH04-CLM-007`). L'enjeu pédagogique n'est
+pas le nom ni la date, mais la méthode : déclarer les références, conserver les
+grandeurs et éprouver les limites du modèle.
+
+Le chapitre emploie une maquette générique basse tension. Le contexte local de
+lampe n'est pas encore approuvé ; nous n'affirmons donc rien sur le Bénin, des
+usagers, la disponibilité ou l'éclairement réel. La maquette conserve la décision
+d'ingénierie : trouver la branche incohérente, puis modifier un seuil sans dépasser
+le budget de courant.
+
+## Acquis, prérequis et rappel
+
+Vous prévoirez et résoudrez les tensions de nœud et courants de branche, mesurerez
+et quantifierez les écarts, diagnostiquerez une branche ouverte ou de mauvaise
+valeur et redimensionnerez R4. Réalisez d'abord le diagnostic. Si l'algèbre, les
+préfixes SI, les sens de référence, la continuité de la plaque ou la mesure sûre au
+multimètre ne sont pas assurés, suivez la remédiation correspondante.
+
+## Découvrir — s'engager avant de calculer
+
+![Réseau contrôlé à deux nœuds.](../../shared/figures/ese111-ch04-network.svg){fig-alt="Une source de 6 V alimente R1 vers TP-A ; R2 relie TP-A à COM ; R3 relie TP-A à TP-B ; R4 relie TP-B à COM."}
+
+Sans calculer, notez :
+
+1. (V_A) ou (V_B) : laquelle est la plus grande, et pourquoi ?
+2. (I_1) est-il supérieur à (I_2) ? Où va la différence ?
+3. Si R3 est ouverte, prévoyez qualitativement (V_A) et (V_B).
+4. Déclarez nœud de référence, flèches, hypothèses et confiance.
+
+Même fausse, une prévision est utile : elle rend visible le modèle à éprouver.
+
+## Comprendre
+
+### Modèle mental : inventaire aux nœuds et bilan des mailles
+
+Un **nœud** est un ensemble de conducteurs considéré au même potentiel dans le
+modèle concentré. Une **branche** relie deux nœuds par un ou plusieurs éléments et
+porte un courant de branche. Déclarons COM à (0\text{ V}) ; c'est une référence
+de signal, pas la terre de protection. Une tension est toujours une différence :
+(V_A=V(\text{TP-A})-V(\text{COM})).
+
+Choisissez les flèches avant le calcul. Ici (I_1) va de VS vers A, (I_2) de A
+vers COM, (I_3) de A vers B et (I_4) de B vers COM. Un résultat négatif indique
+un sens réel opposé ; il n'invalide pas l'algèbre.
+
+La loi des nœuds est l'inventaire du courant électrique :
+
+\[
+\sum i_k=0.
+\]
+
+En comptant positivement ce qui entre en TP-A : (I_1-I_2-I_3=0). En TP-B :
+(I_3-I_4=0) avant de brancher le multimètre. Un nœud ne consomme pas le courant.
+
+La loi des mailles impose le bilan des tensions :
+
+\[
+\sum v_k=0.
+\]
+
+Dans la maille source–R1–R2 : (V_S-I_1R_1-I_2R_2=0). Dans la maille
+A–R3–R4–R2 : (-I_3R_3-I_4R_4+I_2R_2=0). Les signes viennent du parcours et
+des polarités choisis, non d'une récitation « élévation/chute ».
+
+### Développer le modèle à deux nœuds
+
+Employons (i=(v_\text{départ}-v_\text{arrivée})/R). En écrivant les courants
+sortant de chaque nœud inconnu :
+
+\[
+\frac{V_A-6}{10\,000}+\frac{V_A}{22\,000}
+  +\frac{V_A-V_B}{33\,000}=0,
+\]
+
+\[
+\frac{V_B-V_A}{33\,000}+\frac{V_B}{15\,000}=0.
+\]
+
+Ce sont des équations de nœud limitées à ce cas, avant la méthode matricielle
+systématique étudiée plus tard. Chaque terme reste relié à une branche physique.
+
+La deuxième équation donne (V_A=3,2V_B). Par substitution,
+(V_A=3,6082\text{ V}) et (V_B=1,1276\text{ V}).
+
+| Grandeur | Résultat nominal |
+|---|---:|
+| (I_1=(6-V_A)/10\text{ kΩ}) | 239,18 µA |
+| (I_2=V_A/22\text{ kΩ}) | 164,01 µA |
+| (I_3=(V_A-V_B)/33\text{ kΩ}) | 75,17 µA |
+| (I_4=V_B/15\text{ kΩ}) | 75,17 µA |
+
+Contrôlez : (164,01+75,17=239,18\ \mu\text{A}), et la puissance fournie
+(6I_1=1,435\text{ mW}) égale la somme idéale dissipée. Un affichage de
+calculatrice sans contrôle indépendant reste fragile.
+
+### Estimer → calculer → vérifier → interpréter
+
+La source voit au moins 10 kΩ : le courant est donc inférieur à
+(6/10\text{ kΩ}=0,6\text{ mA}). TP-A et TP-B doivent rester entre 0 V et 6 V.
+TP-B vaut environ un tiers de TP-A à cause de la chaîne 33 kΩ–15 kΩ. La solution
+exacte respecte ces trois bornes.
+
+### Domaine de validité
+
+Le modèle suppose un régime continu établi, des nœuds concentrés, des fils idéaux,
+des composants approximativement ohmiques, une température stable et une source
+régulée. La loi des nœuds reste un bilan de charge, mais une charge peut s'accumuler
+pendant un transitoire. La loi simple des mailles demande de la prudence si un flux
+magnétique variable traverse la boucle. Résistance de contact, tolérance, échauffement,
+fuite et charge de l'instrument comptent dès qu'ils approchent la marge de décision.
+
+## Visualiser — un réseau, plusieurs représentations
+
+Traduisez dans les deux sens :
+
+`plaque physique → schéma à nœuds nommés → références → équations → prévision numérique → tableau brut`.
+
+Si deux représentations divergent, ne choisissez pas la plus séduisante : trouvez
+la première interface défaillante. En lecture textuelle : VS traverse R1 vers A ;
+A rejoint COM par R2 ; A rejoint B par R3 ; B rejoint COM par R4.
+
+## Expérimenter — la mesure modifie le modèle
+
+La voie minimale emploie un multimètre de résistance d'entrée connue ; la voie
+standard ajoute une seconde voie de tension. Suivez le TP autorisé. Prévoyez,
+inspectez hors tension, réglez 6,0 V et au plus 20 mA sortie coupée, puis mesurez
+(V_S), (V_A) et (V_B) par rapport à COM. Déduisez les courants des différences
+de tension et résistances mesurées ; l'entrée courant est hors périmètre.
+
+Un instrument idéal ne prélève rien. Un voltmètre réel de résistance (R_M)
+ajoute (I_M=V_B/R_M). Le modèle nominal sans instrument donne 1,1276 V. Avec
+1 MΩ, il donne 1,1154 V et 1,115 µA. Si le bilan en B omet cette branche, un
+courant semble manquer. La loi n'a pas échoué : le modèle était incomplet.
+
+## Analyser — transformer l'écart en décision
+
+Calculez un résidu signé
+
+\[
+r_V=V_\text{mesuré}-V_\text{prévu}
+\]
+
+et un résidu normalisé (z=r_V/u_c), où (u_c) est l'incertitude combinée
+déclarée. Ce n'est pas un test statistique universel : c'est une échelle explicite.
+Si (|z|\le1), la lecture est compatible avec la comparaison à une borne déclarée.
+Sinon, vérifiez source, résistances réelles, entrée du multimètre, référence,
+contacts et topologie.
+
+Calculez le résidu de la loi des nœuds avec ses signes et conservez-le. S'il dépasse
+nettement l'incertitude propagée, il signale peut-être une branche d'instrument
+oubliée, une référence fausse, une transcription ou une panne réelle.
+
+### Diagnostiquer par discrimination
+
+| Symptôme | Hypothèses | Prochain essai | Interprétation |
+|---|---|---|---|
+| (V_B\approx0) | R3 ouverte ; R4 court-circuitée ; mauvais COM | continuité/valeur de R3 hors tension | R3 ouverte isole B, maintenu près de COM par R4 |
+| (V_B) trop élevée | R4 ouverte/forte ; R3 faible ; source haute | mesurer R4 hors tension après la source | une R4 forte réduit la liaison à COM |
+| deux nœuds bas | source basse ; R1 forte ; dérivation parasite | mesurer VS en charge, puis R1 | sépare alimentation et branche |
+| manque d'environ 1 µA en B pendant la mesure | calcul ; fuite ; charge du multimètre | ajouter (R_M), retirer et remettre la pointe | l'effet lié à la pointe soutient la charge |
+
+Ne changez qu'une chose à la fois. Notez observation → hypothèses classées →
+résultats attendus → essai choisi → mise à jour. Remplacez seulement après preuve.
+
+## Concevoir — une exigence réelle change
+
+La valeur initiale de TP-B est sous la nouvelle fenêtre 1,40–1,52 V. Modifiez
+seulement R4, parmi 18 kΩ, 22 kΩ, 27 kΩ et 33 kΩ, avec un courant de source au plus
+0,25 mA. D'abord, estimez : augmenter R4 affaiblit le rappel vers COM, donc TP-B monte.
+
+Le modèle aux coins comprend source ±0,5 %, quatre tolérances indépendantes ±1 %
+et instruments de 1 MΩ/10 MΩ. Avec R4=22 kΩ, il prévoit
+(1,4126\le V_B\le1,4992\text{ V}) et moins de 0,238 mA. C'est un argument simulé,
+pas une vérification. Réalisez la modification autorisée, réinspectez et acceptez
+ou refusez avec les mesures physiques enregistrées.
+
+## Pratique professionnelle
+
+Consultez la notice exacte du multimètre pour la résistance d'entrée et la
+précision du mode/calibre ; « tous les multimètres font 10 MΩ » est indéfendable.
+Consignez lot, valeurs mesurées, identifiants source/instrument, configuration,
+données brutes, incertitude et versions. Récupérez les résistances réutilisables et
+traitez les pièces endommagées selon la filière locale. La maquette démontre une
+méthode, pas la performance ni l'origine locale d'un produit réel.
+
+## Idées fausses et rappel
+
+- « Le courant est consommé » : faites l'inventaire signé en TP-A.
+- « Toutes les tensions d'une maille sont égales » : leur somme signée est contrainte.
+- « Négatif signifie faux » : interprétez par rapport à la flèche choisie.
+- « Masse signifie terre » : COM est ici une simple référence de signal.
+- « Plus de chiffres signifie plus juste » : distinguez résolution, précision,
+  répétabilité, tolérance et limites du modèle.
+- « La simulation vérifie le matériel » : elle vérifie le modèle implémenté.
+
+Billet de sortie : TP-B mesuré vaut 1,115 V, la prévision sans charge 1,128 V et
+la résistance d'entrée 1 MΩ. Proposez la première correction du modèle et une
+mesure susceptible de la réfuter. Si vous ne reliez pas la nouvelle branche à
+l'équation de nœud, faites la remédiation « charge » avant le TP.
+
+## Synthèse et dépendances
+
+Les modèles de Kirchhoff sont une comptabilité rigoureuse avec références déclarées.
+Ils deviennent des preuves d'ingénierie après estimation, unités, contrôles,
+incertitude, mesures et examen des anomalies. Cette unité prépare les diviseurs et
+la charge des capteurs, l'analyse nodale formelle, Thévenin, l'incertitude et le
+diagnostic de l'interface capteur de M1.
+
+Les sources sont contrôlées dans `shared/claims.yml`, et l'oracle déterministe dans
+`shared/model/`. Les plages physiques et approbations attendent encore les pilotes.

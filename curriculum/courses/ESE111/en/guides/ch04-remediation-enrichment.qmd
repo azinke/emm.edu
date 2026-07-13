@@ -1,0 +1,57 @@
+---
+artifact_id: ESE111-CH04-REM
+pair_id: ESE111-CH04-REM
+lang: en
+pair_revision: 0.1.0
+semantic_id: ESE111-CH04-REM
+id: ESE111-CH04-REM-en
+resource_type: remediation-enrichment-map
+language: en
+paired_with: ESE111-CH04-REM-fr
+version: 0.1.0
+lifecycle: drafting
+outcomes: [ESE111-CO01, PLO-01, PLO-07, PLO-08]
+license: CC-BY-SA-4.0
+technical_contract:
+  outcomes: [ESE111-CO01, PLO-01, PLO-02, PLO-07, PLO-08]
+  equations: [KCL signed current sum equals zero, KVL signed loop voltage sum equals zero, v equals R times i, power equals v times i]
+  values: {source_v: 6.0, r1_ohm: 10000, r2_ohm: 22000, r3_ohm: 33000, r4_baseline_ohm: 15000, r4_redesign_ohm: 22000}
+  safety_limits: {source_max_v: 6.1, current_limit_max_a: 0.02, dmm_current_input_permitted: false}
+  expected_ranges: {baseline_tp_b_simulated_v: [1.087, 1.155], redesign_tp_b_simulated_v: [1.412, 1.500], source_current_simulated_a: [0.000229, 0.000244]}
+  rubric_total: 28
+  answer_key_digest: public-formative-key-v0.1.0
+  figure_ids: [ESE111-CH04-FIG-001]
+---
+
+# Remediation and enrichment map
+
+| Route | Trigger evidence | 15–25 minute action | Exit evidence |
+|---|---|---|---|
+| REM-units | prefix/unit error | convert six mixed V/mV and A/mA/µA pairs; verify dimensions | 5/6 correct plus explanation |
+| REM-algebra | cannot eliminate two unknowns | solve one graphical and two elimination systems tied to branches | set up and solve an unseen pair |
+| REM-signs | changes arrows to force positive | keep a deliberately reversed arrow through solution | correct negative interpretation |
+| REM-reference | reports “voltage at a point” | report three differences under two reference choices | invariant branch voltage explained |
+| REM-dmm | wrong socket/function or unsafe uncertainty | de-energized meter simulator/checklist with teach-back | all conjunctive safety choices correct |
+| REM-board | breadboard topology uncertain | map hidden rows using de-energized continuity | accurate node map and false-short check |
+| REM-uncertainty | tolerance equals total uncertainty | separate tolerance, resolution, accuracy, repeatability, loading | defensible comparison statement |
+| REM-loading | KCL residual omits instrument | draw (R_M), recompute B, remove in the limit | missing current explained and bounded |
+| REM-debug | replaces without hypothesis | work a symptom table with predicted test outcomes | one discriminating test defended |
+
+Reattempt only the affected rubric evidence with changed values; unsafe or
+fabricated evidence follows the formal gate/integrity route. Access adaptations
+may change representation or manipulation, not the reasoning, safety, or individual
+decision threshold.
+
+## Enrichment
+
+- Prove uniqueness of the positive-resistance two-node solution using matrix
+  determinant or energy reasoning.
+- Write a dependency-free script that selects R4 from an E24 list under corners,
+  then test it against the supplied oracle.
+- Find the meter resistance needed to keep loading below 0.1% and explain why
+  input bias, leakage, and contact effects may then dominate.
+- Design a three-test diagnostic strategy minimizing worst-case tests for open R2,
+  open R3, wrong R4, wrong source, and wrong COM; defend its decision tree.
+- Compare systematic nodal analysis with a Thévenin reduction, identifying which
+  representation best supports service diagnosis.
+

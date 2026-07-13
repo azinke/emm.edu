@@ -12,12 +12,12 @@
 ## Epic E1 — Laboratory safety system
 
 - [ ] **M03-E1-T01 [SPEC]** Publish L0–L4 authorization, supervision ratios, PPE, stop-work, energization, cleanup, incident, near-miss, quarantine, and waste procedures in EN/FR.
-- [ ] **M03-E1-T02 [SPEC]** Define energy-aware limits: voltage plus current/fault power, capacitor/battery stored energy and chemistry, fusing, conductor/probe ratings, accessible temperature, rotating energy, chemicals/coatings, oscilloscope grounding/measurement category, RF exposure, and field conditions; retain current-limited extra-low-voltage core work and institution-controlled higher hazards.
-- [ ] **M03-E1-T03 [MAT]** Create safety induction, quizzes, practical stations, instructor calibration, remediation, and authorization records.
+- [x] **M03-E1-T02 [SPEC]** Define energy-aware limits: voltage plus current/fault power, capacitor/battery stored energy and chemistry, fusing, conductor/probe ratings, accessible temperature, rotating energy, chemicals/coatings, oscilloscope grounding/measurement category, RF exposure, and field conditions; retain current-limited extra-low-voltage core work and institution-controlled higher hazards.
+- [x] **M03-E1-T03 [MAT]** Create safety induction, quizzes, practical stations, instructor calibration, remediation, and authorization records.
 - [ ] **M03-E1-T04 [HW]** Inspect RCD/GFCI, emergency isolation, fire response, first aid, ventilation/fume extraction, ESD, storage, exits, accessibility, and signage.
 - [ ] **M03-E1-T05 [TEST]** Run incident-response and damaged-battery/equipment quarantine drills.
-- [ ] **M03-E1-T06 [SPEC]** Require activity-specific risk assessment and safety-authority approval for each new lab domain, with authorization expiry/requalification, emergency response, accessible safe methods, and stop conditions.
-- [ ] **M03-E1-T07 [SPEC]** Crosswalk practice to program gates: G1 is required for independent L1 energization, while pre-G1 practice is limited to direct-supervised instructor-controlled stations; solder training may begin at L2 after task briefing under direct supervision, while G3 certifies independent progression rather than first exposure; allow formally assessed prior equivalent competence to challenge a gate without waiving its evidence threshold.
+- [x] **M03-E1-T06 [SPEC]** Require activity-specific risk assessment and safety-authority approval for each new lab domain, with authorization expiry/requalification, emergency response, accessible safe methods, and stop conditions.
+- [x] **M03-E1-T07 [SPEC]** Crosswalk practice to program gates: G1 is required for independent L1 energization, while pre-G1 practice is limited to direct-supervised instructor-controlled stations; solder training may begin at L2 after task briefing under direct supervision, while G3 certifies independent progression rather than first exposure; allow formally assessed prior equivalent competence to challenge a gate without waiving its evidence threshold.
 
 ## Epic E2 — Platform capability qualification
 
@@ -47,6 +47,45 @@
 - [ ] **M03-E4-T05 [REV]** Obtain safety and instructor usability approval.
 - [ ] **M03-E4-T06 [TEST]** Set and test minimum per-student physical-access entitlement; prepared data can preserve an analysis lesson but missed personal construction/measurement/debug evidence is rescheduled.
 - [ ] **M03-E4-T07 [SPEC]** Define later safety requalification prerequisites for S2 device/soldering, S3 precision/FPGA, S4 PCB/power, S5 RF/security, and S6 field activities.
+
+## Implementation and verification record — 2026-07-14
+
+**Evidence rule:** a checked item has committed repository evidence for the stated
+specification, material, decision, or test result. A procedure, template, planning
+scenario, synthetic dataset, or development-host run is not represented as a
+physical inspection, procurement, human qualification, institutional approval,
+learner authorization, or deployment result.
+
+### E1 — Laboratory safety system
+
+- The paired [English safety manual](../../curriculum/laboratory/safety/en/safety-manual.md)
+  and [French safety manual](../../curriculum/laboratory/safety/fr/manuel-de-securite.md)
+  share one language-neutral technical contract. The manual covers L0–L4,
+  supervision, PPE, stop work, energization, cleanup, incidents, near misses,
+  damaged-equipment/battery quarantine, waste, emergency response, and accessible
+  safe participation. It remains draft until named technical, language, safety,
+  and institutional authorities approve and publish it; therefore T01 is open.
+- The technical contract defines task-specific voltage, current/fault-power,
+  capacitor/battery energy and chemistry, fuse/conductor/probe, temperature,
+  rotation, chemical/coating, grounded-scope/category, RF, and field-condition
+  controls. Planning caps are explicitly not a safe harbor and require local
+  safety-authority review against the applicable rules.
+- Paired induction packages provide formative questions, practical stations,
+  assessor calibration, conjunctive pass rules, remediation, accessible methods,
+  expiry/requalification, and prior-equivalence challenge rules. Controlled blank
+  records cover activity approval, individual authorization, facility inspection,
+  drills, events, quarantine, and waste.
+- `curriculum/data/safety.yml` now exposes L0–L4 and the G1/G3 relationships instead
+  of the earlier simplified L0–L2 draft. Canonical validation, offline content/output
+  QA, publication build, JSON parsing, EN/FR structural checks, and `git diff --check`
+  passed during implementation.
+- **Open M03-E1-T04 evidence:** a competent person must inspect the named facility,
+  test applicable RCD/GFCI and emergency systems by the adopted method, disposition
+  every defect, and sign the record. **Owners:** laboratory director and safety officer.
+- **Open M03-E1-T05 evidence:** trained participants must execute and debrief both
+  incident-response and damaged-battery/equipment quarantine drills in the named
+  facility, including accessibility, communications, timing, observed actions,
+  corrective owners, and a successful effectiveness check. **Owner:** safety officer.
 
 ## Hands-on and real-life safeguard
 

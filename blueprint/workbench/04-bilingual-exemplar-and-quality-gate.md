@@ -1,0 +1,65 @@
+# M04 — Bilingual Exemplar and Quality Gate
+
+**Goal:** produce and pilot one complete EN/FR unit—ESE111 Chapter 4, Kirchhoff Models—to prove technical, pedagogical, laboratory, assessment, accessibility, and publishing workflows.
+
+**Indicative duration:** 8–12 weeks  
+**Primary owners:** exemplar course author, lab instructor, EN/FR editors, assessment and accessibility reviewers  
+**Depends on:** M02–M03  
+**Authoring entry:** draft M02 templates/build smoke test and the specific M03-approved exemplar bench/safety route exist\
+**Release gate:** the M02 production workflow and M03 exemplar equipment/safety paths are approved, versioned baselines\
+**Exit unlocks:** scaled course production
+
+## Epic E1 — Unit design brief
+
+- [ ] **M04-E1-T01 [SPEC]** Define outcomes, prerequisites, misconceptions, vocabulary, model limits, safety, evidence, and downstream dependencies.
+- [ ] **M04-E1-T02 [SPEC]** Select an approved, versioned M01 context brief such as diagnosing a repairable low-voltage lighting or sensor network; provide a portable alternative that preserves the engineering decision.
+- [ ] **M04-E1-T03 [SPEC]** Write measurable acceptance: students predict, solve, measure, quantify disagreement, localize a seeded fault, redesign one branch, and verify the changed result.
+- [ ] **M04-E1-T04 [MAT]** Create shared schematics, parameter sets, simulations, raw-data schema, rubrics, and expected ranges.
+- [ ] **M04-E1-T05 [REV]** Review construct, workload, safety, and EN/FR terminology before prose expands.
+- [ ] **M04-E1-T06 [SPEC]** Instantiate the unit manifest and claim/source register, classifying every derivation, component behavior, instrument limit, historical/context statement, and version-bound source.
+
+## Epic E2 — Complete teaching package
+
+- [ ] **M04-E2-T01 [MAT]** Author natural EN and FR chapters following Discover → Understand → Experiment → Analyze → Design.
+- [ ] **M04-E2-T02 [MAT]** Create claim-titled slides, speaker notes, prediction poll, board plan, demonstration, and static fallback.
+- [ ] **M04-E2-T03 [MAT]** Create pset with estimation, nodal/Kirchhoff modeling, simulation, datasheet/measurement, fault diagnosis, and design; create restricted solutions.
+- [ ] **M04-E2-T04 [MAT]** Create guided lab in minimal and standard paths with setup inspection, raw-data table, uncertainty, seeded open/incorrect-value fault, and redesign.
+- [ ] **M04-E2-T05 [MAT]** Create 8–12 independently reviewed pilot-ready MCQs across levels with plausible misconceptions and explanations in both languages; publish a post-pilot item-analysis plan for growing the mature bank to 20+ without filler.
+- [ ] **M04-E2-T06 [MAT]** Create professor notes, remediation, enrichment, editable figures, alt/long descriptions, and low-bandwidth files.
+
+## Epic E3 — Technical and physical pilot
+
+- [ ] **M04-E3-T01 [TEST]** Independently recompute every circuit, inspect units/notation/schematics and primary-source versions, simulate tolerances, compile/run applicable assets, and verify answer keys/restricted views.
+- [ ] **M04-E3-T02 [TEST]** Run lab with primary and substitute components on minimal and standard equipment; record golden raw data and realistic ranges.
+- [ ] **M04-E3-T03 [TEST]** Seed faults without telling pilot instructors; verify the diagnostic tree distinguishes them.
+- [ ] **M04-E3-T04 [TEST]** Rehearse lecture/demo timing, equipment failure, power interruption, absent internet, and recovery.
+- [ ] **M04-E3-T05 [REV]** Complete technical, lab safety, accessibility, license, and instructor-usability reviews.
+
+## Epic E4 — Learner and parity pilot
+
+- [ ] **M04-E4-T01 [TEST]** Pilot with consented small EN-dominant and FR-dominant learner groups representing target readiness and access needs; predefine sample rationale, qualitative stopping rule, and acceptance thresholds.
+- [ ] **M04-E4-T02 [TEST]** Observe predictions, wiring, instrument use, discussion, debugging, cognitive load, time, and design transfer.
+- [ ] **M04-E4-T03 [TEST]** Compare learning and item behavior by language without overinterpreting small samples; log wording versus conceptual issues.
+- [ ] **M04-E4-T04 [REV]** Revise both editions, expected ranges, professor notes, hints, and timing from evidence.
+- [ ] **M04-E4-T05 [REL]** Tag exemplar release and publish its QA record and known limitations.
+
+## Hands-on and real-life safeguard
+
+Students must confront at least one measurement that disagrees with the ideal calculation because of tolerance or meter/loading effects. The design extension must change a real requirement—brightness balance, sensor threshold, current budget, or fault tolerance—and require post-change verification.
+
+## Required deliverables
+
+- Approved applicability/unit manifest and claim/source register
+- Paired EN/FR teaching/source pack with restricted artifacts referenced separately
+- Independent technical/safety/accessibility/license/build review record
+- Minimal/standard physical data plus second-instructor and learner-pilot evidence
+- Defect disposition, QA record, release tag, offline outputs, and measured production effort
+
+## Exit criteria
+
+- [ ] Every applicable unit resource in §13.1 is represented; non-applicability is approved rather than manufactured as filler.
+- [ ] Both language editions pass the same technical and cognitive threshold.
+- [ ] A second instructor can teach the unit and recover the demo using the notes.
+- [ ] The physical lab produces reproducible evidence on both equipment paths.
+- [ ] Production metrics from the exemplar update later milestone estimates.
+- [ ] Independent release authority approves zero open critical defects and time-bounded owners for accepted residual defects.

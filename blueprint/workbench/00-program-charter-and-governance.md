@@ -10,7 +10,7 @@
 ## Epic E1 — Ratify the program contract
 
 - [x] **M00-E1-T01 [DEC]** Convene faculty, laboratory, bilingual, student, industry/community, accessibility, IT, library/IP, and institutional representatives.
-- [ ] **M00-E1-T02 [DEC]** Approve mission, learner profiles, four-year/240-ECTS reference path, optional bridge, possible exit points, and deployment modes.
+- [x] **M00-E1-T02 [DEC]** Approve mission, learner profiles, four-year/240-ECTS reference path, optional bridge, possible exit points, and deployment modes.
 - [ ] **M00-E1-T03 [DEC]** Approve or formally disposition each PEO, PLO, competence level, and G1–G9 program competence gate for observability and deployment relevance.
 - [ ] **M00-E1-T04 [DEC]** Ratify every master §1.1 invariant, including claim accuracy/currency, the full hands-on cycle, personal physical evidence, EN/FR parity, energy-aware safety, ethics/security/sustainability/accessibility/manufacturability, offline access, editable source, vendor neutrality, context evidence, equivalent standard, and truthful origin claims.
 - [ ] **M00-E1-T05 [DEC]** Record accepted deviations from the master with rationale, owner, effect on dependencies, and review trigger.
@@ -36,6 +36,25 @@
 | Institutional and regulatory liaison | award authority, credits, policy, ethics, and jurisdiction mapping | explicit approval, not-applicable rationale, or owned blocking action |
 
 The program director circulates the master document, this charter, the decision agenda, and known deviations before review. Quorum for an E1 ratification decision requires the three primary owners and a disposition from every required seat; silence is not consent. A seat may approve, approve with an owned condition, reject with rationale, or declare not applicable with rationale. Conflicts and absent dispositions remain blockers in the decision register. Personal data, live assessments, partner-confidential material, and sensitive incident records stay outside the public repository.
+
+#### M00-E1-T02 — Program identity, pathways, and recognition
+
+**Decision:** approved as the program-design baseline on 2026-07-13, subject to the institutional and jurisdiction mappings required by the master. The approved mission is to prepare learners to conceive, analyze, implement, verify, manufacture, deploy, and responsibly maintain electronic systems under real technical, economic, environmental, and social constraints. The paired French mission in master §2.1 is coequal; neither wording may be changed independently.
+
+| Contract element | Approved baseline | Boundary or release condition |
+|---|---|---|
+| Learner entry | secondary-school algebra, elementary trigonometry, scientific notation, and basic physical science; prior programming, soldering, or electronics is not assumed | admission and support policy must be mapped locally; diagnostic evidence is for placement, not exclusion |
+| Language profile | entry may be through English or French, with progressive professional reading competence in both | core instructions and evidence routes remain coequal; language support cannot lower a technical threshold |
+| Access profile | learners may require disability accommodations, intermittent-internet routes, device or equipment loans, timetable support, or targeted remediation | an accommodation changes access, not the assessed construct, unless a documented program-level exception is approved |
+| Reference award path | eight semesters, 30 ECTS-equivalent credits per semester, 240 total, with all PLOs and G1–G9 at their stated exit levels | “Bachelor,” “Licence,” “engineer,” and other protected terms require the deploying institution's documented authority |
+| Optional bridge | a 4–6 week, low-stakes diagnostic-led bridge in mathematics, units, technical language, digital practice, safe tools, and learning routines | learners demonstrating mastery may bypass it; completion never reduces later outcomes or gates |
+| Four-year university mode | local general-education, accreditation, internship, and credit mapping around the full universal contract | all PLOs are required at the master §4.3 graduation levels |
+| Three-year derived mode | separately named, locally authorized 180-credit or locally mapped profile | requires its own retained outcomes, gates, credit table, internship, progression, and award contract; it may not imply equivalence to the 240-credit profile |
+| Modular technical-school mode | semesters or coherent clusters may support stackable recognition | no module is awarded without its required practical gate and individual evidence |
+| Supported self-study mode | offline-capable theory, simulation, safe practical alternatives, and remote evidence review | no unsupervised L3/L4 hazards, human-participant research, or safety-critical deployment; unavailable core physical competence must be provided safely or not certified |
+| Re-entry and transfer | prior evidence is reviewed against current outcomes and gates | diagnostics and targeted bridge/remediation replace automatic repetition or unverified credit claims |
+
+Possible recognition points are approved for planning at the ends of S1, S2, S4, S6, and S8 exactly as bounded in master §16.5. These are evidence checkpoints, not automatic awards: their public names and legal status remain pending institutional and national approval. Only the end-S8 reference path claims the full program outcome set. A deployment must publish which profile it offers, the outcomes and gates it certifies, its local credit conversion, and the authoritative approval record before enrollment or advertising.
 
 ## Epic E2 — Establish authority and responsibilities
 

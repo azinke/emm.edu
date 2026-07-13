@@ -11,12 +11,28 @@
 
 ## Epic E1 — Unit design brief
 
-- [ ] **M04-E1-T01 [SPEC]** Define outcomes, prerequisites, misconceptions, vocabulary, model limits, safety, evidence, and downstream dependencies.
+- [x] **M04-E1-T01 [SPEC]** Define outcomes, prerequisites, misconceptions, vocabulary, model limits, safety, evidence, and downstream dependencies.
 - [ ] **M04-E1-T02 [SPEC]** Select an approved, versioned M01 context brief such as diagnosing a repairable low-voltage lighting or sensor network; provide a portable alternative that preserves the engineering decision.
-- [ ] **M04-E1-T03 [SPEC]** Write measurable acceptance: students predict, solve, measure, quantify disagreement, localize a seeded fault, redesign one branch, and verify the changed result.
-- [ ] **M04-E1-T04 [MAT]** Create shared schematics, parameter sets, simulations, raw-data schema, rubrics, and expected ranges.
+- [x] **M04-E1-T03 [SPEC]** Write measurable acceptance: students predict, solve, measure, quantify disagreement, localize a seeded fault, redesign one branch, and verify the changed result.
+- [x] **M04-E1-T04 [MAT]** Create shared schematics, parameter sets, simulations, raw-data schema, rubrics, and expected ranges.
 - [ ] **M04-E1-T05 [REV]** Review construct, workload, safety, and EN/FR terminology before prose expands.
-- [ ] **M04-E1-T06 [SPEC]** Instantiate the unit manifest and claim/source register, classifying every derivation, component behavior, instrument limit, historical/context statement, and version-bound source.
+- [x] **M04-E1-T06 [SPEC]** Instantiate the unit manifest and claim/source register, classifying every derivation, component behavior, instrument limit, historical/context statement, and version-bound source.
+
+### E1 implementation record — 2026-07-14
+
+The versioned design contract, parameter set, analytical oracle, exhaustive
+tolerance/meter corner model, raw-data schema, rubric, editable accessible
+schematic, artifact metadata, unit manifest, and claim/source register are under
+[`curriculum/courses/ESE111/shared/`](../../curriculum/courses/ESE111/shared/).
+The model deliberately labels calculated bounds as simulation, not physical
+expected ranges or golden data.
+
+T02 remains open because `CTX-BJ-ENERGY-001` is at `review`, not approved, and
+M01-E2-T04 has not produced an approved measurable context brief. Draft teaching
+uses the design brief's deployment-neutral repair fixture; it makes no Benin,
+stakeholder, availability, or origin claim. T05 remains open until reviewers
+independent of the author accept construct, workload, safety, and natural EN/FR
+terminology. Authoring checks and automated tests do not impersonate those roles.
 
 ## Epic E2 — Complete teaching package
 

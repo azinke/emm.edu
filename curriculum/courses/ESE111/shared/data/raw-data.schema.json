@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://emm.edu/schemas/ESE111-CH04-raw-data.schema.json",
+  "title": "ESE111 Chapter 4 recoverable raw observation",
+  "type": "object",
+  "required": ["unit_id", "record_class", "run_id", "apparatus_path", "configuration", "observations"],
+  "properties": {
+    "unit_id": {"const": "ESE111-CH04"},
+    "record_class": {"enum": ["physical-measurement", "prepared-synthetic-non-personal", "simulation"]},
+    "run_id": {"type": "string", "minLength": 1},
+    "recorded_at": {"type": ["string", "null"], "format": "date-time"},
+    "apparatus_path": {"enum": ["minimal", "standard", "advanced", "not-applicable"]},
+    "configuration": {
+      "type": "object",
+      "required": ["source_id", "meter_id", "meter_input_resistance_ohm", "source_setting_v", "current_limit_a", "component_lot", "topology_revision"],
+      "properties": {
+        "source_id": {"type": "string"},
+        "meter_id": {"type": "string"},
+        "meter_input_resistance_ohm": {"type": "number", "exclusiveMinimum": 0},
+        "source_setting_v": {"type": "number", "minimum": 0, "maximum": 6.1},
+        "current_limit_a": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.02},
+        "component_lot": {"type": "string"},
+        "topology_revision": {"const": "ESE111-CH04-NET-01"},
+        "function_check_record": {"type": "string"},
+        "ambient_note": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "observations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["sequence", "quantity", "from_node", "to_node", "value", "unit", "resolution", "expanded_uncertainty", "provenance"],
+        "properties": {
+          "sequence": {"type": "integer", "minimum": 1},
+          "quantity": {"enum": ["voltage", "resistance", "current-derived", "continuity"]},
+          "from_node": {"enum": ["VS", "TP-A", "TP-B", "COM", "R1", "R2", "R3", "R4"]},
+          "to_node": {"enum": ["VS", "TP-A", "TP-B", "COM", "R1", "R2", "R3", "R4"]},
+          "value": {"type": "number"},
+          "unit": {"enum": ["V", "A", "ohm", "boolean"]},
+          "resolution": {"type": "number", "minimum": 0},
+          "expanded_uncertainty": {"type": "number", "minimum": 0},
+          "provenance": {"type": "string", "minLength": 1},
+          "anomaly_retained": {"type": "boolean"},
+          "note": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
+

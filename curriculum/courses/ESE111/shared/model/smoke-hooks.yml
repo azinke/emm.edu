@@ -1,0 +1,19 @@
+contract_version: 1.0.0
+hooks:
+  - id: ESE111-CH04-NUMERICAL-ORACLE
+    kind: numerical
+    command: [python3, -m, unittest, discover, -s, "{manifest_dir}", -p, "test_*.py"]
+    working_directory: "{manifest_dir}"
+    requires: [python3]
+    timeout_seconds: 30
+    network: false
+    required: true
+  - id: ESE111-CH04-SIMULATION-REPORT
+    kind: simulation
+    command: [python3, "{manifest_dir}/kirchhoff_model.py", --compact]
+    working_directory: "{manifest_dir}"
+    requires: [python3]
+    timeout_seconds: 30
+    network: false
+    required: true
+

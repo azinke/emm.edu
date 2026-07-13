@@ -14,7 +14,7 @@
         "en",
         "fr"
       ],
-      "status": "brief",
+      "status": "draft",
       "owners": {
         "technical": "ESE111-technical-owner",
         "language": "bilingual-technical-editor"
@@ -22,6 +22,7 @@
       "outcomes": [
         "ESE111-CO01",
         "PLO-01",
+        "PLO-02",
         "PLO-07",
         "PLO-08"
       ],
@@ -126,7 +127,13 @@
       "localization_layer": "universal-core",
       "context_ids": [],
       "claim_register_ids": [
-        "CLM-CTX-001"
+        "ESE111-CH04-CLM-001",
+        "ESE111-CH04-CLM-002",
+        "ESE111-CH04-CLM-003",
+        "ESE111-CH04-CLM-004",
+        "ESE111-CH04-CLM-005",
+        "ESE111-CH04-CLM-006",
+        "ESE111-CH04-CLM-007"
       ],
       "claim_review_due": null,
       "contribution_record_ids": [],

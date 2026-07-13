@@ -1,0 +1,225 @@
+register_id: ESE111-CH04-CLAIMS
+scope_id: ESE111-CH04
+resource_type: claim-register
+version: 0.1.0
+lifecycle: drafting
+owner: ESE111-technical-owner
+paired_assets:
+  en: [ESE111-CH04-CH-en, ESE111-CH04-LAB01-en, ESE111-CH04-PSET01-en]
+  fr: [ESE111-CH04-CH-fr, ESE111-CH04-LAB01-fr, ESE111-CH04-PSET01-fr]
+classification_policy:
+  derivation: concept-stable claims must show equations, assumptions, units, and an executable independent oracle
+  component_behavior: platform-bound behavior requires the exact datasheet/manual revision and operating conditions
+  instrument_limit: platform-bound limits require function identification, mode/range, input model, accuracy, and review on substitution
+  historical_context: contextual statements require a citable source and are omitted when they do not change understanding
+  version_bound: standards, safety rules, software, and named products require version, retrieval date, owner, and review trigger
+claims:
+  - claim_id: ESE111-CH04-CLM-001
+    wording:
+      en: In the declared lumped steady-state model, the algebraic sum of branch currents at a node is zero.
+      fr: Dans le modèle concentré en régime permanent déclaré, la somme algébrique des courants de branche en un nœud est nulle.
+    claim_class: concept-stable
+    importance: major
+    verification_route: derivation
+    evidence:
+      derivation_or_test: design-brief.yml model domain; model/kirchhoff_model.py and test_kirchhoff_model.py KCL assertions
+      primary_source: null
+      independent_checker: pending-qualified-reviewer
+      checked_on: null
+      result: executable authoring oracle passes; independent disposition pending
+    assumptions_and_domain: charge accumulation at each modeled node is negligible over the observation interval; branch directions are declared
+    expected_range: numerical residual below 1e-12 A in the analytical oracle; physical residual judged against propagated measurement uncertainty
+    affected_assets:
+      en: [ESE111-CH04-CH-en, ESE111-CH04-SLIDES-en, ESE111-CH04-LAB01-en]
+      fr: [ESE111-CH04-CH-fr, ESE111-CH04-SLIDES-fr, ESE111-CH04-LAB01-fr]
+      shared: [ESE111-CH04-MODEL-01, ESE111-CH04-FIG-001]
+    context_ids: []
+    reviewer: pending-qualified-technical-reviewer
+    reviewed_on: null
+    review_due: null
+    review_trigger: model-domain or topology change; failed numerical or physical balance
+    status: proposed
+    limitations_to_publish: this does not assert zero instantaneous charge density or replace electromagnetic-field analysis
+  - claim_id: ESE111-CH04-CLM-002
+    wording:
+      en: The signed voltage changes around a closed loop sum to zero under the declared lumped steady-state model.
+      fr: Les variations algébriques de tension le long d'une maille fermée ont une somme nulle dans le modèle concentré en régime permanent déclaré.
+    claim_class: concept-stable
+    importance: major
+    verification_route: derivation
+    evidence:
+      derivation_or_test: independent loop equations and power-balance assertion in model/kirchhoff_model.py
+      primary_source: null
+      independent_checker: pending-qualified-reviewer
+      checked_on: null
+      result: executable authoring oracle passes; independent disposition pending
+    assumptions_and_domain: no significant time-varying magnetic flux linked by the modeled loop; polarities and traversal direction are declared
+    expected_range: numerical power residual below 1e-12 W in the analytical oracle; physical loop residual judged against propagated uncertainty
+    affected_assets:
+      en: [ESE111-CH04-CH-en, ESE111-CH04-PSET01-en, ESE111-CH04-LAB01-en]
+      fr: [ESE111-CH04-CH-fr, ESE111-CH04-PSET01-fr, ESE111-CH04-LAB01-fr]
+      shared: [ESE111-CH04-MODEL-01]
+    context_ids: []
+    reviewer: pending-qualified-technical-reviewer
+    reviewed_on: null
+    review_due: null
+    review_trigger: model-domain change; time-varying field or physical loop residual outside uncertainty
+    status: proposed
+    limitations_to_publish: do not extend the result uncritically to large or high-frequency loops
+  - claim_id: ESE111-CH04-CLM-003
+    wording:
+      en: Each teaching resistor is modeled by v equals R times i only within its characterized operating range.
+      fr: Chaque résistance pédagogique est modélisée par v égale R fois i uniquement dans sa plage de fonctionnement caractérisée.
+    claim_class: concept-stable
+    importance: major
+    verification_route: independent-recomputation
+    evidence:
+      derivation_or_test: parameters.yml plus nominal, tolerance-corner, limiting-case, and power calculations
+      primary_source: component lot evidence must be inserted by the physical pilot
+      independent_checker: pending-qualified-reviewer
+      checked_on: null
+      result: analytical contract complete; component-lot verification pending
+    assumptions_and_domain: quasi-static resistor behavior, negligible self-heating, measured resistance represented at the test condition
+    expected_range: each nominal resistor within plus or minus 1 percent before use; all predicted dissipation below 1 mW
+    affected_assets:
+      en: [ESE111-CH04-CH-en, ESE111-CH04-LAB01-en]
+      fr: [ESE111-CH04-CH-fr, ESE111-CH04-LAB01-fr]
+      shared: [ESE111-CH04-PARAM-01]
+    context_ids: []
+    reviewer: pending-qualified-technical-reviewer
+    reviewed_on: null
+    review_due: null
+    review_trigger: component family, lot, value, power, or temperature condition change
+    status: proposed
+    limitations_to_publish: nominal marking is not measured resistance and 1 percent tolerance is not total experiment uncertainty
+  - claim_id: ESE111-CH04-CLM-004
+    wording:
+      en: A voltmeter with finite input resistance adds a branch and can lower the voltage it is intended to observe.
+      fr: Un voltmètre de résistance d'entrée finie ajoute une branche et peut abaisser la tension qu'il doit observer.
+    claim_class: platform-bound
+    importance: major
+    verification_route: primary-source
+    evidence:
+      derivation_or_test: model/kirchhoff_model.py compares unloaded, 1 MOhm, and 10 MOhm cases
+      primary_source:
+        title: Fluke 12 Multimeter Users Manual
+        issuer_or_author: Fluke Corporation
+        identifier: PN 2063508
+        edition_version_revision: January 2003 Revision 1, September 2004
+        publication_date: 2004-09-01
+        locator: page 7 and specification page 27; DC voltage input greater than 10 MOhm
+        url: https://assets.fluke.com/manuals/12______umeng0100.pdf
+        retrieved_on: 2026-07-14
+        license_or_access_terms: manufacturer manual; link only, no archived copy
+      independent_checker: pending-qualified-reviewer
+      checked_on: null
+      result: source supports one illustrative meter, not all DMMs; actual pilot meters must be checked separately
+    assumptions_and_domain: DC voltage mode; meter is represented by stated input resistance; no autoranging transient or contact error modeled
+    expected_range: declared 1 MOhm and 10 MOhm simulations; physical range pending apparatus qualification
+    affected_assets:
+      en: [ESE111-CH04-CH-en, ESE111-CH04-DEMO-en, ESE111-CH04-LAB01-en]
+      fr: [ESE111-CH04-CH-fr, ESE111-CH04-DEMO-fr, ESE111-CH04-LAB01-fr]
+      shared: [ESE111-CH04-MODEL-01]
+    context_ids: []
+    reviewer: pending-qualified-technical-reviewer
+    reviewed_on: null
+    review_due: 2027-07-14
+    review_trigger: meter substitution, mode/range change, manual revision, or measured loading outside prediction
+    status: proposed
+    limitations_to_publish: never generalize the example input resistance to an unverified meter
+  - claim_id: ESE111-CH04-CLM-005
+    wording:
+      en: The activity is designed inside the program's draft L1 envelope at no more than 6.1 V and a configured 20 mA source limit.
+      fr: L'activité est conçue dans l'enveloppe L1 provisoire du programme, avec au plus 6,1 V et une limitation de source réglée à 20 mA.
+    claim_class: standard-bound
+    importance: major
+    verification_route: primary-source
+    evidence:
+      derivation_or_test: design-brief.yml fault bound and ESE-SAF-TC-001 pre-energization sequence
+      primary_source:
+        title: Shared laboratory safety technical contract
+        issuer_or_author: EMM curriculum program
+        identifier: ESE-SAF-TC-001
+        edition_version_revision: 0.1.0 draft
+        publication_date: 2026-07-13
+        locator: curriculum/laboratory/safety/shared/technical-contract.md
+        retrieved_on: 2026-07-14
+        license_or_access_terms: CC-BY-SA-4.0
+      independent_checker: pending-local-safety-authority
+      checked_on: null
+      result: authoring bound established; activity approval and physical verification pending
+    assumptions_and_domain: protected institution-approved DC source; no current-jack use; declared resistor network only
+    expected_range: source 0 to 6.1 V, configured current limit no more than 20 mA, hard-short-after-R1 current below 0.62 mA
+    affected_assets:
+      en: [ESE111-CH04-LAB01-en, ESE111-CH04-DEMO-en]
+      fr: [ESE111-CH04-LAB01-fr, ESE111-CH04-DEMO-fr]
+      shared: [ESE111-CH04-BRIEF]
+    context_ids: []
+    reviewer: pending-local-safety-authority
+    reviewed_on: null
+    review_due: 2027-07-14
+    review_trigger: local rule, source, energy, component, wiring, supervision, incident, or activity change
+    status: proposed
+    limitations_to_publish: draft program limits are not institutional activity approval or a regulatory compliance claim
+  - claim_id: ESE111-CH04-CLM-006
+    wording:
+      en: For the declared parameter corners and meter paths, replacing R4 with 22 kOhm makes TP-B 1.412 to 1.500 V while source current remains below 0.238 mA.
+      fr: Pour les coins de paramètres et les voies de mesure déclarés, le remplacement de R4 par 22 kOhm place TP-B entre 1,412 et 1,500 V, avec un courant de source inférieur à 0,238 mA.
+    claim_class: concept-stable
+    importance: major
+    verification_route: independent-recomputation
+    evidence:
+      derivation_or_test: model/kirchhoff_model.py exhaustive 64-corner enumeration and test_redesign_meets_requirement_at_declared_corners
+      primary_source: null
+      independent_checker: pending-qualified-reviewer
+      checked_on: null
+      result: executable authoring oracle passes; independent recomputation pending
+    assumptions_and_domain: source plus or minus 0.5 percent; all resistors independently plus or minus 1 percent; DC meter input 1 or 10 MOhm; no contact or temperature error
+    expected_range: TP-B 1.412 to 1.500 V and source current 0.229 to 0.238 mA in simulation
+    affected_assets:
+      en: [ESE111-CH04-CH-en, ESE111-CH04-PSET01-en, ESE111-CH04-LAB01-en]
+      fr: [ESE111-CH04-CH-fr, ESE111-CH04-PSET01-fr, ESE111-CH04-LAB01-fr]
+      shared: [ESE111-CH04-MODEL-01, ESE111-CH04-PARAM-01]
+    context_ids: []
+    reviewer: pending-qualified-technical-reviewer
+    reviewed_on: null
+    review_due: null
+    review_trigger: any source, resistor, meter, topology, or requirement change
+    status: proposed
+    limitations_to_publish: simulated bounds are not physical expected ranges or golden data
+  - claim_id: ESE111-CH04-CLM-007
+    wording:
+      en: Kirchhoff's 1845 paper is the historical source associated with the circuit rules used in this unit.
+      fr: L'article de Kirchhoff publié en 1845 est la source historique associée aux règles de circuit utilisées dans cette unité.
+    claim_class: contextual-empirical
+    importance: supporting
+    verification_route: primary-source
+    evidence:
+      derivation_or_test: bibliographic verification only; the historical note carries no technical derivation
+      primary_source:
+        title: Ueber den Durchgang eines elektrischen Stromes durch eine Ebene, insbesondere durch eine kreisförmige
+        issuer_or_author: Gustav Robert Kirchhoff; Annalen der Physik
+        identifier: DOI 10.1002/andp.18451400402
+        edition_version_revision: volume 140, issue 4
+        publication_date: 1845-01-01
+        locator: DOI bibliographic record
+        url: https://doi.org/10.1002/andp.18451400402
+        retrieved_on: 2026-07-14
+        license_or_access_terms: bibliographic citation; article access subject to publisher terms
+      independent_checker: pending-history-source-review
+      checked_on: null
+      result: title, author, venue, year, and DOI matched; interpretation of priority remains deliberately narrow
+    assumptions_and_domain: historical attribution only
+    expected_range: not applicable
+    affected_assets:
+      en: [ESE111-CH04-CH-en]
+      fr: [ESE111-CH04-CH-fr]
+      shared: []
+    context_ids: []
+    reviewer: pending-source-and-license-reviewer
+    reviewed_on: null
+    review_due: 2031-07-14
+    review_trigger: bibliographic contradiction or revised historical wording
+    status: proposed
+    limitations_to_publish: do not turn attribution into a priority, nationality, or lone-inventor claim
+

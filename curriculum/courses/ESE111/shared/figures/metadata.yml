@@ -1,0 +1,45 @@
+artifact_id: ESE111-CH04-FIG-001
+semantic_id: ESE111-CH04-FIG-001
+resource_type: figure-metadata
+artifact_kind: figure
+title: Two-node Kirchhoff network
+version: 0.1.0
+lifecycle: drafting
+authoritative_source: figures/ese111-ch04-network.svg
+language_scope: shared
+used_by: [ESE111-CH04-CH, ESE111-CH04-SLIDES, ESE111-CH04-LAB01, ESE111-CH04-PSET01]
+technical_contract:
+  outcomes: [ESE111-CO01, PLO-01, PLO-07, PLO-08]
+  claim_ids: [ESE111-CH04-CLM-001, ESE111-CH04-CLM-002, ESE111-CH04-CLM-003]
+  configuration: IEC-style rectangular resistor convention represented by zigzag solely for broad tool portability; named nodes and arrows govern interpretation
+  expected_output: R1 feeds TP-A; R2 returns TP-A to COM; R3 feeds TP-B; R4 returns TP-B to COM
+  verification: source SVG text inspection plus numerical topology test
+  limitations: ideal topology; wiring parasitics, breadboard geometry, source resistance, and meter branch are not drawn
+figure_accessibility:
+  visual_type: schematic
+  convention: reference designators, written values, named nodes, and arrow direction; no meaning depends on color
+  caption_en: Controlled two-node network with the baseline and redesign values of R4.
+  caption_fr: Réseau contrôlé à deux nœuds indiquant les valeurs initiale et redimensionnée de R4.
+  alt_text_en: A 6 V source feeds R1 to TP-A; R2 connects TP-A to COM; R3 connects TP-A to TP-B; R4 connects TP-B to COM.
+  alt_text_fr: Une source de 6 V alimente R1 vers TP-A ; R2 relie TP-A à COM ; R3 relie TP-A à TP-B ; R4 relie TP-B à COM.
+  long_description_en: Read left to right from the 6 V source through 10 kOhm R1 to TP-A. From TP-A, 22 kOhm R2 goes down to COM and 33 kOhm R3 goes right to TP-B. From TP-B, R4 goes down to COM; it is 15 kOhm initially and 22 kOhm after redesign. I1 and I3 point right; I2 and I4 point toward COM.
+  long_description_fr: Lisez de gauche à droite depuis la source de 6 V, à travers R1 de 10 kOhm, jusqu'à TP-A. Depuis TP-A, R2 de 22 kOhm descend vers COM et R3 de 33 kOhm va vers TP-B. Depuis TP-B, R4 descend vers COM ; sa valeur initiale est 15 kOhm et sa valeur redimensionnée 22 kOhm. I1 et I3 sont orientés vers la droite ; I2 et I4 vers COM.
+  color_independent_encoding: labels, topology, arrows, line placement, and text values
+  scales_units_test_points: VS, TP-A, TP-B, COM; voltage in V, resistance in kOhm
+  provenance_mode: ideal
+provenance_and_license:
+  creator: EMM curriculum authoring team
+  source_url_or_record: ESE111-CH04 technical contract
+  source_version_or_edition: 0.1.0
+  retrieved_on: 2026-07-14
+  original_or_adapted: original
+  modifications: none
+  license: CC-BY-SA-4.0
+  attribution_text: EMM curriculum, ESE111 Chapter 4, CC BY-SA 4.0
+  permission_evidence: original repository contribution policy
+  archival_copy_permitted: true
+reviews:
+  technical: {status: pending, reviewer: null, date: null, evidence: null}
+  language: {status: pending, reviewer: null, date: null, evidence: null}
+  accessibility: {status: pending, reviewer: null, date: null, evidence: null}
+  license: {status: pending, reviewer: null, date: null, evidence: null}

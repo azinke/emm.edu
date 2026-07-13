@@ -48,6 +48,168 @@
       "trigger": "program-major-revision",
       "context_ids": [],
       "status": "approved"
+    },
+    {
+      "id": "ESE111-CH04-CLM-001",
+      "wording": "In the declared lumped steady-state model, the algebraic sum of branch currents at a node is zero.",
+      "claim_class": "concept-stable",
+      "verification_method": "derivation and executable KCL residual checks",
+      "source": {
+        "type": "unit-claim-register",
+        "id": "ESE111-CH04-CLAIMS",
+        "version": "0.1.0",
+        "retrieved": "2026-07-14",
+        "path": "curriculum/courses/ESE111/shared/claims.yml"
+      },
+      "assumptions_and_domain": "lumped steady-state DC network with declared directions",
+      "affected_assets": [
+        "curriculum/courses/ESE111/shared/model/kirchhoff_model.py"
+      ],
+      "reviewer": "pending-qualified-technical-reviewer",
+      "last_reviewed": null,
+      "review_due": null,
+      "trigger": "model-domain or topology change; failed balance",
+      "context_ids": [],
+      "status": "pending"
+    },
+    {
+      "id": "ESE111-CH04-CLM-002",
+      "wording": "The signed voltage changes around a closed loop sum to zero under the declared lumped steady-state model.",
+      "claim_class": "concept-stable",
+      "verification_method": "derivation and executable power-balance checks",
+      "source": {
+        "type": "unit-claim-register",
+        "id": "ESE111-CH04-CLAIMS",
+        "version": "0.1.0",
+        "retrieved": "2026-07-14",
+        "path": "curriculum/courses/ESE111/shared/claims.yml"
+      },
+      "assumptions_and_domain": "lumped steady-state DC loop with negligible linked time-varying flux",
+      "affected_assets": [
+        "curriculum/courses/ESE111/shared/model/kirchhoff_model.py"
+      ],
+      "reviewer": "pending-qualified-technical-reviewer",
+      "last_reviewed": null,
+      "review_due": null,
+      "trigger": "model-domain change or failed physical loop balance",
+      "context_ids": [],
+      "status": "pending"
+    },
+    {
+      "id": "ESE111-CH04-CLM-003",
+      "wording": "Each teaching resistor is modeled by v equals R times i only within its characterized operating range.",
+      "claim_class": "concept-stable",
+      "verification_method": "parameter, limiting-case, tolerance, and power review",
+      "source": {
+        "type": "unit-claim-register",
+        "id": "ESE111-CH04-CLAIMS",
+        "version": "0.1.0",
+        "retrieved": "2026-07-14",
+        "path": "curriculum/courses/ESE111/shared/claims.yml"
+      },
+      "assumptions_and_domain": "quasi-static behavior with negligible self-heating",
+      "affected_assets": [
+        "curriculum/courses/ESE111/shared/model/parameters.yml"
+      ],
+      "reviewer": "pending-qualified-technical-reviewer",
+      "last_reviewed": null,
+      "review_due": null,
+      "trigger": "component, power, or temperature change",
+      "context_ids": [],
+      "status": "pending"
+    },
+    {
+      "id": "ESE111-CH04-CLM-004",
+      "wording": "A voltmeter with finite input resistance adds a branch and can lower the voltage it is intended to observe.",
+      "claim_class": "platform-bound",
+      "verification_method": "analytical loading model plus exact apparatus manual review",
+      "source": {
+        "type": "manufacturer-manual",
+        "id": "Fluke-12-PN-2063508",
+        "version": "2004-09",
+        "retrieved": "2026-07-14",
+        "url": "https://assets.fluke.com/manuals/12______umeng0100.pdf"
+      },
+      "assumptions_and_domain": "declared DC voltage mode and input resistance",
+      "affected_assets": [
+        "curriculum/courses/ESE111/shared/model/kirchhoff_model.py"
+      ],
+      "reviewer": "pending-qualified-technical-reviewer",
+      "last_reviewed": null,
+      "review_due": "2027-07-14",
+      "trigger": "meter, mode, range, or manual change",
+      "context_ids": [],
+      "status": "pending"
+    },
+    {
+      "id": "ESE111-CH04-CLM-005",
+      "wording": "The activity is designed inside the program's draft L1 envelope at no more than 6.1 V and a configured 20 mA source limit.",
+      "claim_class": "standard-bound",
+      "verification_method": "energy calculation and local safety-authority review",
+      "source": {
+        "type": "primary-program-source",
+        "id": "ESE-SAF-TC-001",
+        "version": "0.1.0",
+        "retrieved": "2026-07-14",
+        "path": "curriculum/laboratory/safety/shared/technical-contract.md"
+      },
+      "assumptions_and_domain": "approved protected DC source and declared resistor network",
+      "affected_assets": [
+        "curriculum/courses/ESE111/shared/design-brief.yml"
+      ],
+      "reviewer": "pending-local-safety-authority",
+      "last_reviewed": null,
+      "review_due": "2027-07-14",
+      "trigger": "local rule, source, energy, supervision, or incident change",
+      "context_ids": [],
+      "status": "pending"
+    },
+    {
+      "id": "ESE111-CH04-CLM-006",
+      "wording": "For the declared parameter corners and meter paths, 22 kOhm at R4 meets the TP-B window and source-current budget in simulation.",
+      "claim_class": "concept-stable",
+      "verification_method": "exhaustive deterministic corner enumeration",
+      "source": {
+        "type": "unit-claim-register",
+        "id": "ESE111-CH04-CLAIMS",
+        "version": "0.1.0",
+        "retrieved": "2026-07-14",
+        "path": "curriculum/courses/ESE111/shared/claims.yml"
+      },
+      "assumptions_and_domain": "declared source, resistor, and meter corners; simulation only",
+      "affected_assets": [
+        "curriculum/courses/ESE111/shared/model/kirchhoff_model.py",
+        "curriculum/courses/ESE111/shared/model/parameters.yml"
+      ],
+      "reviewer": "pending-qualified-technical-reviewer",
+      "last_reviewed": null,
+      "review_due": null,
+      "trigger": "source, resistor, meter, topology, or requirement change",
+      "context_ids": [],
+      "status": "pending"
+    },
+    {
+      "id": "ESE111-CH04-CLM-007",
+      "wording": "Kirchhoff's 1845 paper is the historical source associated with the circuit rules used in this unit.",
+      "claim_class": "contextual-empirical",
+      "verification_method": "primary bibliographic record review",
+      "source": {
+        "type": "primary-publication",
+        "id": "doi:10.1002/andp.18451400402",
+        "version": "1845",
+        "retrieved": "2026-07-14",
+        "url": "https://doi.org/10.1002/andp.18451400402"
+      },
+      "assumptions_and_domain": "narrow historical attribution, not a technical proof or priority claim",
+      "affected_assets": [
+        "curriculum/courses/ESE111/shared/claims.yml"
+      ],
+      "reviewer": "pending-source-and-license-reviewer",
+      "last_reviewed": null,
+      "review_due": "2031-07-14",
+      "trigger": "bibliographic contradiction or changed historical wording",
+      "context_ids": [],
+      "status": "pending"
     }
   ]
 }

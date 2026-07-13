@@ -1,0 +1,17 @@
+dataset_id,dataset_version,record_class,provenance,run_id,record_index,time_s,stimulus_v,response_v,declared_rounding_v,scenario_tau_s,anomaly_label,spdx_license
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-A,1,0.000,3.300,0.000,0.005,0.100,none,CC-BY-SA-4.0
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-A,2,0.020,3.300,0.598,0.005,0.100,none,CC-BY-SA-4.0
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-A,3,0.040,3.300,1.088,0.005,0.100,none,CC-BY-SA-4.0
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-A,4,0.060,3.300,1.489,0.005,0.100,none,CC-BY-SA-4.0
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-A,5,0.080,3.300,1.817,0.005,0.100,none,CC-BY-SA-4.0
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-A,6,0.100,3.300,2.086,0.005,0.100,none,CC-BY-SA-4.0
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-A,7,0.150,3.300,2.564,0.005,0.100,none,CC-BY-SA-4.0
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-A,8,0.200,3.300,2.853,0.005,0.100,none,CC-BY-SA-4.0
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-A,9,0.300,3.300,3.136,0.005,0.100,none,CC-BY-SA-4.0
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-A,10,0.500,3.300,3.278,0.005,0.100,none,CC-BY-SA-4.0
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-B,1,0.000,3.300,0.000,0.005,0.047,seeded_lower_capacitance,CC-BY-SA-4.0
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-B,2,0.020,3.300,1.144,0.005,0.047,seeded_lower_capacitance,CC-BY-SA-4.0
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-B,3,0.040,3.300,1.891,0.005,0.047,seeded_lower_capacitance,CC-BY-SA-4.0
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-B,4,0.060,3.300,2.380,0.005,0.047,seeded_lower_capacitance,CC-BY-SA-4.0
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-B,5,0.100,3.300,2.907,0.005,0.047,seeded_lower_capacitance,CC-BY-SA-4.0
+M03-E4-DATA-RC,0.1.0,prepared_synthetic_non_personal,exponential_model_no_physical_apparatus,RC-B,6,0.200,3.300,3.253,0.005,0.047,seeded_lower_capacitance,CC-BY-SA-4.0

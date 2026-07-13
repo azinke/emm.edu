@@ -1,0 +1,15 @@
+dataset_id,dataset_version,record_class,provenance,run_id,record_index,reference_c,sensor_output_mv,declared_rounding_mv,repeat_index,anomaly_label,spdx_license
+M03-E4-DATA-SENSOR,0.1.0,prepared_synthetic_non_personal,linear_model_no_sensor_or_reference,SENS-A,1,10.0,601,1,1,none,CC-BY-SA-4.0
+M03-E4-DATA-SENSOR,0.1.0,prepared_synthetic_non_personal,linear_model_no_sensor_or_reference,SENS-A,2,10.0,599,1,2,none,CC-BY-SA-4.0
+M03-E4-DATA-SENSOR,0.1.0,prepared_synthetic_non_personal,linear_model_no_sensor_or_reference,SENS-A,3,15.0,650,1,1,none,CC-BY-SA-4.0
+M03-E4-DATA-SENSOR,0.1.0,prepared_synthetic_non_personal,linear_model_no_sensor_or_reference,SENS-A,4,15.0,652,1,2,none,CC-BY-SA-4.0
+M03-E4-DATA-SENSOR,0.1.0,prepared_synthetic_non_personal,linear_model_no_sensor_or_reference,SENS-A,5,20.0,699,1,1,none,CC-BY-SA-4.0
+M03-E4-DATA-SENSOR,0.1.0,prepared_synthetic_non_personal,linear_model_no_sensor_or_reference,SENS-A,6,20.0,701,1,2,none,CC-BY-SA-4.0
+M03-E4-DATA-SENSOR,0.1.0,prepared_synthetic_non_personal,linear_model_no_sensor_or_reference,SENS-A,7,25.0,750,1,1,none,CC-BY-SA-4.0
+M03-E4-DATA-SENSOR,0.1.0,prepared_synthetic_non_personal,linear_model_no_sensor_or_reference,SENS-A,8,25.0,749,1,2,none,CC-BY-SA-4.0
+M03-E4-DATA-SENSOR,0.1.0,prepared_synthetic_non_personal,linear_model_no_sensor_or_reference,SENS-A,9,30.0,751,1,1,seeded_displaced_point,CC-BY-SA-4.0
+M03-E4-DATA-SENSOR,0.1.0,prepared_synthetic_non_personal,linear_model_no_sensor_or_reference,SENS-A,10,30.0,752,1,2,seeded_displaced_point,CC-BY-SA-4.0
+M03-E4-DATA-SENSOR,0.1.0,prepared_synthetic_non_personal,linear_model_no_sensor_or_reference,SENS-A,11,35.0,851,1,1,none,CC-BY-SA-4.0
+M03-E4-DATA-SENSOR,0.1.0,prepared_synthetic_non_personal,linear_model_no_sensor_or_reference,SENS-A,12,35.0,849,1,2,none,CC-BY-SA-4.0
+M03-E4-DATA-SENSOR,0.1.0,prepared_synthetic_non_personal,linear_model_no_sensor_or_reference,SENS-A,13,40.0,900,1,1,none,CC-BY-SA-4.0
+M03-E4-DATA-SENSOR,0.1.0,prepared_synthetic_non_personal,linear_model_no_sensor_or_reference,SENS-A,14,40.0,902,1,2,none,CC-BY-SA-4.0

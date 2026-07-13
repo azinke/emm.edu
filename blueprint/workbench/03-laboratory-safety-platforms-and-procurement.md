@@ -43,10 +43,10 @@
 - [ ] **M03-E4-T01 [TEST]** Define minimal, standard, and advanced apparatus for core phenomena and identify outcomes that require physical access.
 - [ ] **M03-E4-T02 [HW]** Develop safe MCU-based stimulus/acquisition and prepared raw datasets for rotation or accessibility, without misrepresenting them as personal measurement.
 - [ ] **M03-E4-T03 [TEST]** Compare evidence quality and uncertainty across paths on at least DC networks, RC response, sensor calibration, digital timing, and MCU debugging.
-- [ ] **M03-E4-T04 [MAT]** Create bench setup maps, equipment quick guides, troubleshooting cards, and check-in/out procedure.
+- [x] **M03-E4-T04 [MAT]** Create bench setup maps, equipment quick guides, troubleshooting cards, and check-in/out procedure.
 - [ ] **M03-E4-T05 [REV]** Obtain safety and instructor usability approval.
 - [ ] **M03-E4-T06 [TEST]** Set and test minimum per-student physical-access entitlement; prepared data can preserve an analysis lesson but missed personal construction/measurement/debug evidence is rescheduled.
-- [ ] **M03-E4-T07 [SPEC]** Define later safety requalification prerequisites for S2 device/soldering, S3 precision/FPGA, S4 PCB/power, S5 RF/security, and S6 field activities.
+- [x] **M03-E4-T07 [SPEC]** Define later safety requalification prerequisites for S2 device/soldering, S3 precision/FPGA, S4 PCB/power, S5 RF/security, and S6 field activities.
 
 ## Implementation and verification record — 2026-07-14
 
@@ -169,6 +169,47 @@ learner authorization, or deployment result.
   tests, and authorize named technicians from attributable performance. A pack
   contract is not a released design or human qualification. **Owners:** fixture
   engineer, technician qualification assessor, safety officer, and release manager.
+
+### E4 — Three-path laboratory validation
+
+- The [equipment-path pack](../../curriculum/laboratory/equipment-paths/README.md)
+  defines minimal, standard, and advanced configurations for DC networks, RC
+  response, sensor calibration, digital timing, and MCU debugging. Every construct
+  identifies the personal physical construction, connection, configuration,
+  measurement, recovery, and fault-localization evidence that prepared data cannot
+  certify. Because no physical path pilot has run, T01 remains open.
+- The safe MCU stimulus/acquisition artifact is a design-only 3.3 V fixture and
+  fail-safe firmware contract. Five prepared CSV datasets are openly identified in
+  every row as synthetic/non-personal and produced without physical apparatus; they
+  support analysis continuity only. Physical construction, characterization,
+  firmware implementation, independent review, and approval remain open under T02.
+- Paired EN/FR operations materials provide bench maps, quick guides, troubleshooting
+  cards, and issue/return controls. They use the same safety and evidence contract
+  and do not turn advanced automation into a higher core threshold.
+- The proposed entitlement reserves one 75-minute active-learner block for each of
+  five physical constructs plus one remediation/reassessment block; it defines
+  attributable pair-role rotation, accessibility, missed-evidence rescheduling,
+  a failure reserve, and a capacity formula. The illustrative 24-learner calculation
+  is not a deployment result, so T06 remains open until a real timetable and pilot pass.
+- S2–S6 requalification specifications require current prerequisite gates, altered
+  practical checks, exact task envelopes, expiry/suspension triggers, incident/
+  quarantine response, and separate institutional, radio/legal, ethics, site, and
+  partner approvals. No learner authorization is inferred.
+- The pending-only approval record captures five-construct path results, raw ranges,
+  uncertainty, completion/reset time, anomalies, physical actions, stops, access,
+  capacity, technical/safety/usability/accessibility/EN/FR review, defects, limits,
+  expiry, and re-pilot triggers. CSV/YAML parsing, offline QA, EN/FR review structure,
+  provenance checks, and `git diff --check` pass.
+- **Open M03-E4-T03/T05 evidence:** physically run all five constructs on each claimed
+  path, compare uncertainty and evidence quality against one common mastery decision,
+  disposition defects, rehearse EN/FR/access routes, and obtain independent safety
+  and instructor-usability approval. **Owners:** laboratory lead, safety authority,
+  second instructor, metrology owner, accessibility reviewer, and bilingual reviewers.
+- **Open M03-E4-T06 evidence:** freeze the actual cohort/timetable/room/staff/equipment,
+  pass the capacity calculation with at least 20% failure/remediation reserve, and
+  confirm setup/reset and personal completion times in a physical pilot. Missed
+  personal evidence is rescheduled even when prepared data preserves analysis.
+  **Owners:** timetable owner, laboratory lead, course owners, and accessibility lead.
 
 ## Hands-on and real-life safeguard
 

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://emm.edu/schemas/jurisdiction.schema.json",
+  "title": "Jurisdiction mapping",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "authoritative_sources",
+    "areas",
+    "verification_status",
+    "reviewer",
+    "review_due"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "authoritative_sources": {
+      "type": "array"
+    },
+    "areas": {
+      "type": "array",
+      "minItems": 1
+    },
+    "verification_status": {
+      "enum": [
+        "pending-authoritative-local-review",
+        "review",
+        "approved",
+        "expired"
+      ]
+    },
+    "reviewer": {
+      "type": "string"
+    },
+    "review_due": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "additionalProperties": false
+}

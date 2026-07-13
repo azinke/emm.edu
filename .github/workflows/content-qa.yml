@@ -1,0 +1,63 @@
+name: content-qa
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * 2"
+
+permissions:
+  contents: read
+
+jobs:
+  offline-static-and-seeded-tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Install from frozen requirements
+        run: pip install -r curriculum/environments/requirements.lock
+      - name: Validate policy and seeded failures without network
+        run: python3 -m unittest discover -s curriculum/scripts/tests -v
+      - name: Audit tracked public history for restricted material
+        run: python3 curriculum/scripts/audit_public_history.py
+      - name: Validate public sources
+        run: python3 curriculum/scripts/qa_content.py --offline
+      - name: Run declared smoke hooks
+        run: python3 curriculum/scripts/run_smoke_hooks.py
+
+  quarto-publication:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: "1.7.33"
+      - name: Install the declared PDF engine before the offline render phase
+        run: quarto install tinytex --no-prompt --update-path
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -r curriculum/environments/requirements.lock
+      - name: Build separate offline-capable editions and formats
+        run: python3 curriculum/scripts/build_publications.py --engine quarto --offline
+      - name: Enforce rendering, print, and size policy
+        run: python3 curriculum/scripts/check_outputs.py
+
+  external-link-health:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -r curriculum/environments/requirements.lock
+      - name: Probe registered links without changing the archive
+        run: python3 curriculum/scripts/check_external_links.py

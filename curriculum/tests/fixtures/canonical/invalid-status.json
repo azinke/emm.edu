@@ -1,0 +1,6 @@
+{
+  "document": "course-manifests.yml",
+  "pointer": "/courses/0/status",
+  "value": "looks-good",
+  "expect": "invalid status"
+}

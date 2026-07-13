@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0.0",
+  "version": "1.0.0",
+  "id": "DP-BJ-2026-07",
+  "country_code": "BJ",
+  "name": "Benin reference deployment evidence queue",
+  "effective_date": "2026-07-13",
+  "review_due": "2026-10-13",
+  "status": "mapping-in-progress",
+  "release_eligible": false,
+  "universal_contract": {
+    "outcome_set": "outcomes.yml@1.0.0",
+    "prerequisite_graph": "prerequisite-graph.yml@1.0.0",
+    "threshold_changes_permitted": false
+  },
+  "jurisdictions": [
+    {
+      "id": "JUR-BJ-PENDING",
+      "name": "Benin national and applicable regional/institutional mappings",
+      "authoritative_sources": [],
+      "areas": [
+        "higher-education",
+        "credits-and-award",
+        "electrical",
+        "occupational",
+        "fire",
+        "chemical",
+        "battery",
+        "RF-telecommunications",
+        "e-waste",
+        "environment",
+        "data-protection",
+        "human-participant",
+        "product",
+        "import",
+        "product-origin"
+      ],
+      "verification_status": "pending-authoritative-local-review",
+      "reviewer": "deploying-institution-authority",
+      "review_due": "2026-10-13"
+    }
+  ],
+  "languages": [
+    "fr",
+    "en"
+  ],
+  "currency": "XOF",
+  "context_ids": [
+    "CTX-BJ-ENERGY-001"
+  ],
+  "facility_ids": [
+    "FAC-BJ-PENDING-001"
+  ],
+  "supplier_ids": [
+    "SUP-BJ-PENDING-001"
+  ],
+  "manufacturing_capability_ids": [
+    "CAP-BJ-PENDING-001"
+  ],
+  "required_evidence_gaps": [
+    "regulator and institutional mappings",
+    "grid and climate primary data",
+    "supplier quotes and landed costs",
+    "facility and computing baseline",
+    "manufacturing/service ecosystem",
+    "product-origin rules"
+  ],
+  "claim_ids": [
+    "CLM-CTX-001"
+  ],
+  "approvers": {
+    "institutional": null,
+    "regulatory": null,
+    "program": "program-board-pending"
+  }
+}

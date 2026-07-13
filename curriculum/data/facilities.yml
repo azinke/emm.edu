@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "version": "1.0.0",
+  "status": "draft",
+  "facilities": [
+    {
+      "id": "FAC-BJ-PENDING-001",
+      "profile_id": "DP-BJ-2026-07",
+      "name": "deployment laboratory qualification record",
+      "location": "to be named by deploying institution",
+      "capabilities": [],
+      "capacity_learners": null,
+      "safety_authorizations": [],
+      "equipment_ids": [],
+      "accessibility_routes": [],
+      "partner_routes": [],
+      "evidence_ids": [],
+      "review_date": "2026-07-13",
+      "review_due": "2026-10-13",
+      "status": "qualification-pending"
+    }
+  ]
+}

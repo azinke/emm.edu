@@ -1,0 +1,29 @@
+---
+artifact_id: FIX-U01
+pair_id: FIX-U01
+lang: en
+pair_revision: 1
+glossary_terms: [TERM-UNKNOWN]
+technical_contract:
+  outcomes: [CO-FIXTURE-1]
+  equations: ["V = I R"]
+  values: {R1: "1 kΩ"}
+  safety_limits: {voltage_max: "12 V"}
+  expected_ranges: {current: "9-11 mA"}
+  rubric_total: 10
+  answer_key_digest: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  figure_ids: [FIG-FIX-1]
+rubric:
+  total: 10
+  rows:
+    - {id: reasoning, points: 4}
+    - {id: evidence, points: 5}
+---
+
+# Seeded QA failure
+
+This uses the avoided phrase potential force. RESTRICTED-SOLUTION: 42.
+
+![](missing.svg)
+
+[Broken link](missing.md) and [unregistered source](https://example.invalid/source).

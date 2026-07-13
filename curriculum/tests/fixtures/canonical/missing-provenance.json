@@ -1,0 +1,6 @@
+{
+  "document": "local-value-ladder.yml",
+  "pointer": "/contribution_records/0/permitted_claim",
+  "value": "Made in Benin",
+  "expect": "geographic origin claim missing context and jurisdiction provenance"
+}

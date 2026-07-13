@@ -1,4 +1,204 @@
-version: 0.1.0
-status: scaffold
-projects: []
-dependencies: []
+{
+  "schema_version": "1.0.0",
+  "version": "1.0.0",
+  "status": "approved-baseline",
+  "projects": [
+    {
+      "id": "M1",
+      "semester": 1,
+      "title": {
+        "en": "Solar study-lamp monitor",
+        "fr": "Solar study-lamp monitor"
+      },
+      "integration_burden": "measurement, calibration, energy, technical explanation",
+      "target_contribution_level": "V0",
+      "required_gates": [
+        "G1",
+        "G2"
+      ],
+      "individual_evidence_required": true,
+      "status": "approved-baseline"
+    },
+    {
+      "id": "M2",
+      "semester": 2,
+      "title": {
+        "en": "Calibrated environmental monitor",
+        "fr": "Calibrated environmental monitor"
+      },
+      "integration_burden": "transistor interface, filtering, scaffolded MCU C, calibration",
+      "target_contribution_level": "V1",
+      "required_gates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "individual_evidence_required": true,
+      "status": "approved-baseline"
+    },
+    {
+      "id": "M3",
+      "semester": 3,
+      "title": {
+        "en": "Precision instrument",
+        "fr": "Precision instrument"
+      },
+      "integration_burden": "op-amps, noise, ADC, metrology",
+      "target_contribution_level": "V2",
+      "required_gates": [
+        "G1",
+        "G2",
+        "G4",
+        "G5"
+      ],
+      "individual_evidence_required": true,
+      "status": "approved-baseline"
+    },
+    {
+      "id": "M4",
+      "semester": 4,
+      "title": {
+        "en": "Custom-PCB resilient data logger",
+        "fr": "Custom-PCB resilient data logger"
+      },
+      "integration_burden": "MCU, power, PCB, EMC, DFM, firmware",
+      "target_contribution_level": "V2",
+      "required_gates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6"
+      ],
+      "individual_evidence_required": true,
+      "status": "approved-baseline"
+    },
+    {
+      "id": "M5",
+      "semester": 5,
+      "title": {
+        "en": "Secure connected node",
+        "fr": "Secure connected node"
+      },
+      "integration_burden": "concurrency, threat model, FPGA integration, reliability",
+      "target_contribution_level": "V3",
+      "required_gates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7"
+      ],
+      "individual_evidence_required": true,
+      "status": "approved-baseline"
+    },
+    {
+      "id": "M6",
+      "semester": 6,
+      "title": {
+        "en": "Context-responsive field system",
+        "fr": "Context-responsive field system"
+      },
+      "integration_burden": "stakeholders, Linux/edge, field reliability, service",
+      "target_contribution_level": "V3",
+      "required_gates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8"
+      ],
+      "individual_evidence_required": true,
+      "status": "approved-baseline"
+    },
+    {
+      "id": "M7",
+      "semester": 7,
+      "title": {
+        "en": "Capstone engineering prototype",
+        "fr": "Capstone engineering prototype"
+      },
+      "integration_burden": "research, standards, economics, complex interfaces",
+      "target_contribution_level": "V3",
+      "required_gates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8"
+      ],
+      "individual_evidence_required": true,
+      "status": "approved-baseline"
+    },
+    {
+      "id": "M8",
+      "semester": 8,
+      "title": {
+        "en": "Qualified capstone release",
+        "fr": "Qualified capstone release"
+      },
+      "integration_burden": "verification coverage, manufacture, maintenance, defense",
+      "target_contribution_level": "V4",
+      "required_gates": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "G9"
+      ],
+      "individual_evidence_required": true,
+      "status": "approved-baseline"
+    }
+  ],
+  "dependencies": [
+    {
+      "from": "M1",
+      "to": "M2",
+      "relation": "requires"
+    },
+    {
+      "from": "M2",
+      "to": "M3",
+      "relation": "requires"
+    },
+    {
+      "from": "M3",
+      "to": "M4",
+      "relation": "requires"
+    },
+    {
+      "from": "M4",
+      "to": "M5",
+      "relation": "requires"
+    },
+    {
+      "from": "M5",
+      "to": "M6",
+      "relation": "requires"
+    },
+    {
+      "from": "M6",
+      "to": "M7",
+      "relation": "requires"
+    },
+    {
+      "from": "M7",
+      "to": "M8",
+      "relation": "requires"
+    }
+  ]
+}

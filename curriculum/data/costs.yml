@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "version": "1.0.0",
+  "status": "draft",
+  "costs": [
+    {
+      "id": "COST-BJ-PENDING-001",
+      "profile_id": "DP-BJ-2026-07",
+      "item_id": "COMP-DMM",
+      "supplier_id": "SUP-BJ-PENDING-001",
+      "quantity": 1,
+      "source_amount": null,
+      "source_currency": null,
+      "landed_amount": null,
+      "deployment_currency": "XOF",
+      "exchange_rate": null,
+      "quoted_on": null,
+      "valid_until": null,
+      "included_costs": [],
+      "status": "quote-required"
+    }
+  ]
+}

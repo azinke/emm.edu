@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "version": "1.0.0",
+  "status": "draft",
+  "claims": [
+    {
+      "id": "CLM-PLAT-001",
+      "wording": "Named teaching platforms remain suitable only while they satisfy the capability scorecard and frozen cohort toolchain.",
+      "claim_class": "platform-bound",
+      "verification_method": "annual capability, supply, lifecycle, offline-tool, and substitute review",
+      "source": {
+        "type": "primary-program-source",
+        "id": "ESE-CMD-001",
+        "version": "0.2.0",
+        "retrieved": "2026-07-13",
+        "path": "blueprint/COURSE_MASTER_DOCUMENT.md"
+      },
+      "assumptions_and_domain": "curriculum platform selection; not a product certification claim",
+      "affected_assets": [
+        "curriculum/data/platform-matrix.yml"
+      ],
+      "reviewer": "platform-lead",
+      "last_reviewed": "2026-07-13",
+      "review_due": "2027-07-13",
+      "trigger": "supply, lifecycle, security, toolchain, or local cost change",
+      "context_ids": [],
+      "status": "review"
+    },
+    {
+      "id": "CLM-CTX-001",
+      "wording": "The deployment profile is a dated overlay and does not lower universal outcome, safety, reasoning, or individual-evidence thresholds.",
+      "claim_class": "concept-stable",
+      "verification_method": "schema and parity review",
+      "source": {
+        "type": "primary-program-source",
+        "id": "ESE-CMD-001",
+        "version": "0.2.0",
+        "retrieved": "2026-07-13",
+        "path": "blueprint/COURSE_MASTER_DOCUMENT.md"
+      },
+      "assumptions_and_domain": "all deployments",
+      "affected_assets": [
+        "curriculum/data/deployment-profiles/benin-2026-07.yml"
+      ],
+      "reviewer": "learning-content-architect",
+      "last_reviewed": "2026-07-13",
+      "review_due": null,
+      "trigger": "program-major-revision",
+      "context_ids": [],
+      "status": "approved"
+    }
+  ]
+}

@@ -1,5 +1,2117 @@
-version: 0.1.0
-status: scaffold
-nodes: []
-edges: []
-gates: []
+{
+  "schema_version": "1.0.0",
+  "version": "1.0.0",
+  "status": "approved-baseline",
+  "source": {
+    "document_id": "ESE-CMD-001",
+    "version": "0.2.0",
+    "review_date": "2026-07-13",
+    "path": "blueprint/COURSE_MASTER_DOCUMENT.md",
+    "sha256": "aff727baed3abee055d22c00ff454f76f28f2e274e7cd1d4bc7f500dbbe69b4a"
+  },
+  "nodes": [
+    {
+      "id": "ESE101",
+      "kind": "course",
+      "semester": 1,
+      "title": {
+        "en": "Engineering Practice, Safety and Prototyping",
+        "fr": "Pratique, sécurité et prototypage"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "MAT101",
+      "kind": "course",
+      "semester": 1,
+      "title": {
+        "en": "Engineering Mathematics I",
+        "fr": "Mathématiques I"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "PHY101",
+      "kind": "course",
+      "semester": 1,
+      "title": {
+        "en": "Physics I: Mechanics, Energy and Thermal Science",
+        "fr": "Physique I"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "CSC101",
+      "kind": "course",
+      "semester": 1,
+      "title": {
+        "en": "Programming and Computational Thinking",
+        "fr": "Programmation"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE111",
+      "kind": "course",
+      "semester": 1,
+      "title": {
+        "en": "DC Circuits and Measurement",
+        "fr": "Circuits continus et mesure"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "COM101",
+      "kind": "course",
+      "semester": 1,
+      "title": {
+        "en": "Bilingual Technical Communication I",
+        "fr": "Communication technique bilingue I"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "MAT102",
+      "kind": "course",
+      "semester": 2,
+      "title": {
+        "en": "Engineering Mathematics II",
+        "fr": "Mathématiques II"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "PHY102",
+      "kind": "course",
+      "semester": 2,
+      "title": {
+        "en": "Physics II: Fields, Waves and Materials",
+        "fr": "Physique II"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE121",
+      "kind": "course",
+      "semester": 2,
+      "title": {
+        "en": "AC Circuits, Transients and Signals",
+        "fr": "Circuits alternatifs, transitoires et signaux"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE122",
+      "kind": "course",
+      "semester": 2,
+      "title": {
+        "en": "Electronic Devices I",
+        "fr": "Composants électroniques I"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "CSC102",
+      "kind": "course",
+      "semester": 2,
+      "title": {
+        "en": "C Programming and Data Structures",
+        "fr": "Langage C et structures de données"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "DES102",
+      "kind": "course",
+      "semester": 2,
+      "title": {
+        "en": "Human-Centered and Sustainable Design",
+        "fr": "Conception centrée usager et durable"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "MAT201",
+      "kind": "course",
+      "semester": 3,
+      "title": {
+        "en": "Differential Equations, Probability and Numerical Methods",
+        "fr": "Équations différentielles, probabilités et calcul numérique"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE211",
+      "kind": "course",
+      "semester": 3,
+      "title": {
+        "en": "Analog Electronics",
+        "fr": "Électronique analogique"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE212",
+      "kind": "course",
+      "semester": 3,
+      "title": {
+        "en": "Digital Logic and HDL",
+        "fr": "Logique numérique et HDL"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE213",
+      "kind": "course",
+      "semester": 3,
+      "title": {
+        "en": "Signals and Systems",
+        "fr": "Signaux et systèmes"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE214",
+      "kind": "course",
+      "semester": 3,
+      "title": {
+        "en": "Instrumentation and Metrology",
+        "fr": "Instrumentation et métrologie"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "PRJ201",
+      "kind": "course",
+      "semester": 3,
+      "title": {
+        "en": "Integrated Design Studio I",
+        "fr": "Atelier de conception intégrée I"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE221",
+      "kind": "course",
+      "semester": 4,
+      "title": {
+        "en": "Embedded Systems I",
+        "fr": "Systèmes embarqués I"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE222",
+      "kind": "course",
+      "semester": 4,
+      "title": {
+        "en": "Feedback and Control",
+        "fr": "Automatique"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE223",
+      "kind": "course",
+      "semester": 4,
+      "title": {
+        "en": "Communications and Data Networks",
+        "fr": "Communications et réseaux"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE224",
+      "kind": "course",
+      "semester": 4,
+      "title": {
+        "en": "Power Electronics and Energy Systems",
+        "fr": "Électronique de puissance et énergie"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE225",
+      "kind": "course",
+      "semester": 4,
+      "title": {
+        "en": "PCB Design, EMC and Manufacturing",
+        "fr": "Conception de PCB, CEM et fabrication"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "PRJ202",
+      "kind": "course",
+      "semester": 4,
+      "title": {
+        "en": "Integrated Design Studio II",
+        "fr": "Atelier de conception intégrée II"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE311",
+      "kind": "course",
+      "semester": 5,
+      "title": {
+        "en": "Embedded Systems II: RTOS, Concurrency and Security",
+        "fr": "RTOS, concurrence et sécurité"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE312",
+      "kind": "course",
+      "semester": 5,
+      "title": {
+        "en": "Computer Architecture and FPGA Systems",
+        "fr": "Architecture et systèmes FPGA"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE313",
+      "kind": "course",
+      "semester": 5,
+      "title": {
+        "en": "Mixed-Signal Systems and Data Conversion",
+        "fr": "Systèmes mixtes et conversion de données"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE314",
+      "kind": "course",
+      "semester": 5,
+      "title": {
+        "en": "RF, Wireless and Antennas",
+        "fr": "RF, radio et antennes"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE315",
+      "kind": "course",
+      "semester": 5,
+      "title": {
+        "en": "Engineering Statistics, Reliability and Test",
+        "fr": "Statistiques, fiabilité et test"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "PRJ301",
+      "kind": "course",
+      "semester": 5,
+      "title": {
+        "en": "Product Engineering Sprint",
+        "fr": "Sprint d'ingénierie produit"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE321",
+      "kind": "course",
+      "semester": 6,
+      "title": {
+        "en": "Digital Signal Processing",
+        "fr": "Traitement numérique du signal"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE322",
+      "kind": "course",
+      "semester": 6,
+      "title": {
+        "en": "Drives, Renewable Energy and Advanced Control",
+        "fr": "Entraînements, énergies renouvelables et commande avancée"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE323",
+      "kind": "course",
+      "semester": 6,
+      "title": {
+        "en": "Embedded Linux and Edge Networking",
+        "fr": "Linux embarqué et réseaux périphériques"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE324",
+      "kind": "course",
+      "semester": 6,
+      "title": {
+        "en": "Semiconductor and Integrated-Circuit Fundamentals",
+        "fr": "Semi-conducteurs et circuits intégrés"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE325",
+      "kind": "course",
+      "semester": 6,
+      "title": {
+        "en": "Systems Safety, Cybersecurity and Compliance",
+        "fr": "Sûreté, cybersécurité et conformité"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "PRJ302",
+      "kind": "course",
+      "semester": 6,
+      "title": {
+        "en": "Community Field Engineering",
+        "fr": "Ingénierie de terrain communautaire"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "RES401",
+      "kind": "course",
+      "semester": 7,
+      "title": {
+        "en": "Research Methods, Standards, Ethics and IP",
+        "fr": "Recherche, normes, éthique et PI"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ESE401",
+      "kind": "course",
+      "semester": 7,
+      "title": {
+        "en": "Secure Hardware–Software Co-design",
+        "fr": "Co-conception matériel–logiciel sécurisée"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ELE4A",
+      "kind": "course",
+      "semester": 7,
+      "title": {
+        "en": "Technical Elective A",
+        "fr": "Option technique A"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ELE4B",
+      "kind": "course",
+      "semester": 7,
+      "title": {
+        "en": "Technical Elective B",
+        "fr": "Option technique B"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "CAP401",
+      "kind": "course",
+      "semester": 7,
+      "title": {
+        "en": "Capstone I: Discovery through Engineering Validation",
+        "fr": "Projet de fin d'études I"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ENT401",
+      "kind": "course",
+      "semester": 7,
+      "title": {
+        "en": "Enterprise, Manufacturing and Product Lifecycle",
+        "fr": "Entrepreneuriat, fabrication et cycle de vie"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "CAP402",
+      "kind": "course",
+      "semester": 8,
+      "title": {
+        "en": "Capstone II: Verification, Field Trial and Handover",
+        "fr": "Projet de fin d'études II"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "IND402",
+      "kind": "course",
+      "semester": 8,
+      "title": {
+        "en": "Internship or Applied Engineering Clinic",
+        "fr": "Stage ou clinique d'ingénierie"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "ELE4C",
+      "kind": "course",
+      "semester": 8,
+      "title": {
+        "en": "Technical Elective C",
+        "fr": "Option technique C"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "SEM402",
+      "kind": "course",
+      "semester": 8,
+      "title": {
+        "en": "Emerging Technology and Professional Seminar",
+        "fr": "Technologies émergentes et séminaire professionnel"
+      },
+      "remediation": "diagnostic, mapped bridge evidence, and reassessment before dependent work"
+    },
+    {
+      "id": "M1",
+      "kind": "project",
+      "semester": 1,
+      "title": {
+        "en": "Solar study-lamp monitor",
+        "fr": "Solar study-lamp monitor"
+      },
+      "remediation": "owned project recovery plan with retained individual evidence"
+    },
+    {
+      "id": "M2",
+      "kind": "project",
+      "semester": 2,
+      "title": {
+        "en": "Calibrated environmental monitor",
+        "fr": "Calibrated environmental monitor"
+      },
+      "remediation": "owned project recovery plan with retained individual evidence"
+    },
+    {
+      "id": "M3",
+      "kind": "project",
+      "semester": 3,
+      "title": {
+        "en": "Precision instrument",
+        "fr": "Precision instrument"
+      },
+      "remediation": "owned project recovery plan with retained individual evidence"
+    },
+    {
+      "id": "M4",
+      "kind": "project",
+      "semester": 4,
+      "title": {
+        "en": "Custom-PCB resilient data logger",
+        "fr": "Custom-PCB resilient data logger"
+      },
+      "remediation": "owned project recovery plan with retained individual evidence"
+    },
+    {
+      "id": "M5",
+      "kind": "project",
+      "semester": 5,
+      "title": {
+        "en": "Secure connected node",
+        "fr": "Secure connected node"
+      },
+      "remediation": "owned project recovery plan with retained individual evidence"
+    },
+    {
+      "id": "M6",
+      "kind": "project",
+      "semester": 6,
+      "title": {
+        "en": "Context-responsive field system",
+        "fr": "Context-responsive field system"
+      },
+      "remediation": "owned project recovery plan with retained individual evidence"
+    },
+    {
+      "id": "M7",
+      "kind": "project",
+      "semester": 7,
+      "title": {
+        "en": "Capstone engineering prototype",
+        "fr": "Capstone engineering prototype"
+      },
+      "remediation": "owned project recovery plan with retained individual evidence"
+    },
+    {
+      "id": "M8",
+      "kind": "project",
+      "semester": 8,
+      "title": {
+        "en": "Qualified capstone release",
+        "fr": "Qualified capstone release"
+      },
+      "remediation": "owned project recovery plan with retained individual evidence"
+    },
+    {
+      "id": "PRJ302-G8-MODULE",
+      "kind": "unit",
+      "semester": 6,
+      "title": {
+        "en": "Early field-readiness module",
+        "fr": "Module préalable de préparation au terrain"
+      },
+      "remediation": "repeat consent, field-safety, privacy, communications, incident, and rollback cases"
+    },
+    {
+      "id": "G1",
+      "kind": "gate",
+      "title": {
+        "en": "Safe bench user",
+        "fr": "Safe bench user"
+      },
+      "timing": "S1 week 4",
+      "requires": [
+        "ESE101"
+      ],
+      "unlocks": [
+        "ESE121",
+        "ESE122"
+      ],
+      "remediation": "repeat supervised safety demonstration and stop-condition oral check",
+      "individual_evidence_required": true
+    },
+    {
+      "id": "G2",
+      "kind": "gate",
+      "title": {
+        "en": "Fundamental measurement and uncertainty",
+        "fr": "Fundamental measurement and uncertainty"
+      },
+      "timing": "end S1",
+      "requires": [
+        "ESE111",
+        "M1"
+      ],
+      "unlocks": [
+        "M2",
+        "ESE121"
+      ],
+      "remediation": "repeat individual measurement practical with uncertainty feedback",
+      "individual_evidence_required": true
+    },
+    {
+      "id": "G3",
+      "kind": "gate",
+      "title": {
+        "en": "Soldering and rework",
+        "fr": "Soldering and rework"
+      },
+      "timing": "end S2",
+      "requires": [
+        "ESE101",
+        "ESE122"
+      ],
+      "unlocks": [
+        "M3",
+        "ESE225"
+      ],
+      "remediation": "supervised rework clinic followed by inspected individual sample",
+      "individual_evidence_required": true
+    },
+    {
+      "id": "G4",
+      "kind": "gate",
+      "title": {
+        "en": "C programming and source control",
+        "fr": "C programming and source control"
+      },
+      "timing": "before ESE221",
+      "requires": [
+        "CSC102"
+      ],
+      "unlocks": [
+        "ESE221",
+        "M2"
+      ],
+      "remediation": "C/version-control bridge and individually defended test commit",
+      "individual_evidence_required": true
+    },
+    {
+      "id": "G5",
+      "kind": "gate",
+      "title": {
+        "en": "Analog/digital fault localization",
+        "fr": "Analog/digital fault localization"
+      },
+      "timing": "end S3",
+      "requires": [
+        "ESE211",
+        "ESE212",
+        "ESE214",
+        "M3"
+      ],
+      "unlocks": [
+        "M4",
+        "ESE225"
+      ],
+      "remediation": "targeted fault dojo and timed individual reassessment",
+      "individual_evidence_required": true
+    },
+    {
+      "id": "G6",
+      "kind": "gate",
+      "title": {
+        "en": "PCB release and safe bring-up",
+        "fr": "PCB release and safe bring-up"
+      },
+      "timing": "end S4",
+      "requires": [
+        "ESE225",
+        "PRJ202",
+        "M4"
+      ],
+      "unlocks": [
+        "M5",
+        "ESE311"
+      ],
+      "remediation": "correct release defects, rerun ERC/DRC, and repeat safe bring-up review",
+      "individual_evidence_required": true
+    },
+    {
+      "id": "G7",
+      "kind": "gate",
+      "title": {
+        "en": "Embedded timing/concurrency debug",
+        "fr": "Embedded timing/concurrency debug"
+      },
+      "timing": "end S5",
+      "requires": [
+        "ESE311",
+        "M5"
+      ],
+      "unlocks": [
+        "M6",
+        "PRJ302"
+      ],
+      "remediation": "timing/concurrency remediation practical with trace evidence",
+      "individual_evidence_required": true
+    },
+    {
+      "id": "G8",
+      "kind": "gate",
+      "title": {
+        "en": "Field readiness and deployment ethics",
+        "fr": "Field readiness and deployment ethics"
+      },
+      "timing": "before stakeholder research or M6 field activity",
+      "requires": [
+        "PRJ302-G8-MODULE",
+        "ESE325",
+        "G1",
+        "G7"
+      ],
+      "unlocks": [
+        "M6",
+        "CAP401"
+      ],
+      "remediation": "repeat consent, ethics, field-safety, privacy, incident, and rollback scenarios; institutional approval remains separate",
+      "individual_evidence_required": true
+    },
+    {
+      "id": "G9",
+      "kind": "gate",
+      "title": {
+        "en": "Independent system defense",
+        "fr": "Independent system defense"
+      },
+      "timing": "capstone",
+      "requires": [
+        "CAP402",
+        "M8"
+      ],
+      "unlocks": [],
+      "remediation": "owned evidence-gap plan and a new individual defense; team evidence cannot substitute",
+      "individual_evidence_required": true
+    }
+  ],
+  "requires": [
+    {
+      "from": "MAT101",
+      "to": "MAT102",
+      "relation": "requires"
+    },
+    {
+      "from": "PHY101",
+      "to": "PHY102",
+      "relation": "requires"
+    },
+    {
+      "from": "MAT101",
+      "to": "PHY102",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE111",
+      "to": "ESE121",
+      "relation": "requires"
+    },
+    {
+      "from": "G1",
+      "to": "ESE121",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE111",
+      "to": "ESE122",
+      "relation": "requires"
+    },
+    {
+      "from": "G1",
+      "to": "ESE122",
+      "relation": "requires"
+    },
+    {
+      "from": "CSC101",
+      "to": "CSC102",
+      "relation": "requires"
+    },
+    {
+      "from": "MAT102",
+      "to": "MAT201",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE121",
+      "to": "ESE211",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE122",
+      "to": "ESE211",
+      "relation": "requires"
+    },
+    {
+      "from": "MAT102",
+      "to": "ESE211",
+      "relation": "requires"
+    },
+    {
+      "from": "CSC102",
+      "to": "ESE212",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE121",
+      "to": "ESE213",
+      "relation": "requires"
+    },
+    {
+      "from": "MAT102",
+      "to": "ESE213",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE111",
+      "to": "ESE214",
+      "relation": "requires"
+    },
+    {
+      "from": "MAT102",
+      "to": "ESE214",
+      "relation": "requires"
+    },
+    {
+      "from": "M2",
+      "to": "PRJ201",
+      "relation": "requires"
+    },
+    {
+      "from": "G4",
+      "to": "PRJ201",
+      "relation": "requires"
+    },
+    {
+      "from": "CSC102",
+      "to": "ESE221",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE122",
+      "to": "ESE221",
+      "relation": "requires"
+    },
+    {
+      "from": "G4",
+      "to": "ESE221",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE121",
+      "to": "ESE222",
+      "relation": "requires"
+    },
+    {
+      "from": "MAT201",
+      "to": "ESE222",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE121",
+      "to": "ESE223",
+      "relation": "requires"
+    },
+    {
+      "from": "CSC102",
+      "to": "ESE223",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE122",
+      "to": "ESE224",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE121",
+      "to": "ESE224",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE211",
+      "to": "ESE225",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE212",
+      "to": "ESE225",
+      "relation": "requires"
+    },
+    {
+      "from": "G3",
+      "to": "ESE225",
+      "relation": "requires"
+    },
+    {
+      "from": "PRJ201",
+      "to": "PRJ202",
+      "relation": "requires"
+    },
+    {
+      "from": "M3",
+      "to": "PRJ202",
+      "relation": "requires"
+    },
+    {
+      "from": "G5",
+      "to": "PRJ202",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE221",
+      "to": "ESE311",
+      "relation": "requires"
+    },
+    {
+      "from": "G6",
+      "to": "ESE311",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE212",
+      "to": "ESE312",
+      "relation": "requires"
+    },
+    {
+      "from": "CSC102",
+      "to": "ESE312",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE211",
+      "to": "ESE313",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE213",
+      "to": "ESE313",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE214",
+      "to": "ESE313",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE213",
+      "to": "ESE314",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE223",
+      "to": "ESE314",
+      "relation": "requires"
+    },
+    {
+      "from": "MAT201",
+      "to": "ESE315",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE214",
+      "to": "ESE315",
+      "relation": "requires"
+    },
+    {
+      "from": "M4",
+      "to": "PRJ301",
+      "relation": "requires"
+    },
+    {
+      "from": "G6",
+      "to": "PRJ301",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE213",
+      "to": "ESE321",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE221",
+      "to": "ESE321",
+      "relation": "requires"
+    },
+    {
+      "from": "MAT201",
+      "to": "ESE321",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE222",
+      "to": "ESE322",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE224",
+      "to": "ESE322",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE221",
+      "to": "ESE323",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE223",
+      "to": "ESE323",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE212",
+      "to": "ESE324",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE211",
+      "to": "ESE324",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE225",
+      "to": "ESE325",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE311",
+      "to": "ESE325",
+      "relation": "requires"
+    },
+    {
+      "from": "M4",
+      "to": "PRJ302",
+      "relation": "requires"
+    },
+    {
+      "from": "M5",
+      "to": "PRJ302",
+      "relation": "requires"
+    },
+    {
+      "from": "G7",
+      "to": "PRJ302",
+      "relation": "requires"
+    },
+    {
+      "from": "PRJ302",
+      "to": "PRJ302-G8-MODULE",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE325",
+      "to": "PRJ302-G8-MODULE",
+      "relation": "requires"
+    },
+    {
+      "from": "M6",
+      "to": "RES401",
+      "relation": "requires"
+    },
+    {
+      "from": "G8",
+      "to": "RES401",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE311",
+      "to": "ESE401",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE312",
+      "to": "ESE401",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE325",
+      "to": "ESE401",
+      "relation": "requires"
+    },
+    {
+      "from": "M6",
+      "to": "ELE4A",
+      "relation": "requires"
+    },
+    {
+      "from": "M6",
+      "to": "ELE4B",
+      "relation": "requires"
+    },
+    {
+      "from": "M6",
+      "to": "CAP401",
+      "relation": "requires"
+    },
+    {
+      "from": "G8",
+      "to": "CAP401",
+      "relation": "requires"
+    },
+    {
+      "from": "M6",
+      "to": "ENT401",
+      "relation": "requires"
+    },
+    {
+      "from": "CAP401",
+      "to": "CAP402",
+      "relation": "requires"
+    },
+    {
+      "from": "M7",
+      "to": "CAP402",
+      "relation": "requires"
+    },
+    {
+      "from": "M6",
+      "to": "IND402",
+      "relation": "requires"
+    },
+    {
+      "from": "G8",
+      "to": "IND402",
+      "relation": "requires"
+    },
+    {
+      "from": "ELE4A",
+      "to": "ELE4C",
+      "relation": "requires"
+    },
+    {
+      "from": "RES401",
+      "to": "SEM402",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE101",
+      "to": "M1",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE111",
+      "to": "M1",
+      "relation": "requires"
+    },
+    {
+      "from": "M1",
+      "to": "M2",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE121",
+      "to": "M2",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE122",
+      "to": "M2",
+      "relation": "requires"
+    },
+    {
+      "from": "CSC102",
+      "to": "M2",
+      "relation": "requires"
+    },
+    {
+      "from": "DES102",
+      "to": "M2",
+      "relation": "requires"
+    },
+    {
+      "from": "M2",
+      "to": "M3",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE211",
+      "to": "M3",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE212",
+      "to": "M3",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE214",
+      "to": "M3",
+      "relation": "requires"
+    },
+    {
+      "from": "PRJ201",
+      "to": "M3",
+      "relation": "requires"
+    },
+    {
+      "from": "M3",
+      "to": "M4",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE221",
+      "to": "M4",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE225",
+      "to": "M4",
+      "relation": "requires"
+    },
+    {
+      "from": "PRJ202",
+      "to": "M4",
+      "relation": "requires"
+    },
+    {
+      "from": "M4",
+      "to": "M5",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE311",
+      "to": "M5",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE312",
+      "to": "M5",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE313",
+      "to": "M5",
+      "relation": "requires"
+    },
+    {
+      "from": "PRJ301",
+      "to": "M5",
+      "relation": "requires"
+    },
+    {
+      "from": "M5",
+      "to": "M6",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE321",
+      "to": "M6",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE322",
+      "to": "M6",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE323",
+      "to": "M6",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE324",
+      "to": "M6",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE325",
+      "to": "M6",
+      "relation": "requires"
+    },
+    {
+      "from": "PRJ302",
+      "to": "M6",
+      "relation": "requires"
+    },
+    {
+      "from": "G8",
+      "to": "M6",
+      "relation": "requires"
+    },
+    {
+      "from": "M6",
+      "to": "M7",
+      "relation": "requires"
+    },
+    {
+      "from": "CAP401",
+      "to": "M7",
+      "relation": "requires"
+    },
+    {
+      "from": "M7",
+      "to": "M8",
+      "relation": "requires"
+    },
+    {
+      "from": "CAP402",
+      "to": "M8",
+      "relation": "requires"
+    },
+    {
+      "from": "IND402",
+      "to": "M8",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE101",
+      "to": "G1",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE111",
+      "to": "G2",
+      "relation": "requires"
+    },
+    {
+      "from": "M1",
+      "to": "G2",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE101",
+      "to": "G3",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE122",
+      "to": "G3",
+      "relation": "requires"
+    },
+    {
+      "from": "CSC102",
+      "to": "G4",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE211",
+      "to": "G5",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE212",
+      "to": "G5",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE214",
+      "to": "G5",
+      "relation": "requires"
+    },
+    {
+      "from": "M3",
+      "to": "G5",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE225",
+      "to": "G6",
+      "relation": "requires"
+    },
+    {
+      "from": "PRJ202",
+      "to": "G6",
+      "relation": "requires"
+    },
+    {
+      "from": "M4",
+      "to": "G6",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE311",
+      "to": "G7",
+      "relation": "requires"
+    },
+    {
+      "from": "M5",
+      "to": "G7",
+      "relation": "requires"
+    },
+    {
+      "from": "PRJ302-G8-MODULE",
+      "to": "G8",
+      "relation": "requires"
+    },
+    {
+      "from": "ESE325",
+      "to": "G8",
+      "relation": "requires"
+    },
+    {
+      "from": "G1",
+      "to": "G8",
+      "relation": "requires"
+    },
+    {
+      "from": "G7",
+      "to": "G8",
+      "relation": "requires"
+    },
+    {
+      "from": "CAP402",
+      "to": "G9",
+      "relation": "requires"
+    },
+    {
+      "from": "M8",
+      "to": "G9",
+      "relation": "requires"
+    }
+  ],
+  "co_requires": [
+    {
+      "from": "ESE101",
+      "to": "ESE111",
+      "constraint": "co-requisite; both gate later physical laboratories"
+    },
+    {
+      "from": "ESE225",
+      "to": "ESE221",
+      "constraint": "sequenced co-requisite; interface/bring-up units precede MCU PCB work"
+    },
+    {
+      "from": "ESE211",
+      "to": "ESE214",
+      "constraint": "may be co-taught with coordinated metrology evidence"
+    }
+  ],
+  "unlocks": [
+    {
+      "from": "MAT101",
+      "to": "MAT102",
+      "relation": "unlocks"
+    },
+    {
+      "from": "PHY101",
+      "to": "PHY102",
+      "relation": "unlocks"
+    },
+    {
+      "from": "MAT101",
+      "to": "PHY102",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE111",
+      "to": "ESE121",
+      "relation": "unlocks"
+    },
+    {
+      "from": "G1",
+      "to": "ESE121",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE111",
+      "to": "ESE122",
+      "relation": "unlocks"
+    },
+    {
+      "from": "G1",
+      "to": "ESE122",
+      "relation": "unlocks"
+    },
+    {
+      "from": "CSC101",
+      "to": "CSC102",
+      "relation": "unlocks"
+    },
+    {
+      "from": "MAT102",
+      "to": "MAT201",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE121",
+      "to": "ESE211",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE122",
+      "to": "ESE211",
+      "relation": "unlocks"
+    },
+    {
+      "from": "MAT102",
+      "to": "ESE211",
+      "relation": "unlocks"
+    },
+    {
+      "from": "CSC102",
+      "to": "ESE212",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE121",
+      "to": "ESE213",
+      "relation": "unlocks"
+    },
+    {
+      "from": "MAT102",
+      "to": "ESE213",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE111",
+      "to": "ESE214",
+      "relation": "unlocks"
+    },
+    {
+      "from": "MAT102",
+      "to": "ESE214",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M2",
+      "to": "PRJ201",
+      "relation": "unlocks"
+    },
+    {
+      "from": "G4",
+      "to": "PRJ201",
+      "relation": "unlocks"
+    },
+    {
+      "from": "CSC102",
+      "to": "ESE221",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE122",
+      "to": "ESE221",
+      "relation": "unlocks"
+    },
+    {
+      "from": "G4",
+      "to": "ESE221",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE121",
+      "to": "ESE222",
+      "relation": "unlocks"
+    },
+    {
+      "from": "MAT201",
+      "to": "ESE222",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE121",
+      "to": "ESE223",
+      "relation": "unlocks"
+    },
+    {
+      "from": "CSC102",
+      "to": "ESE223",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE122",
+      "to": "ESE224",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE121",
+      "to": "ESE224",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE211",
+      "to": "ESE225",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE212",
+      "to": "ESE225",
+      "relation": "unlocks"
+    },
+    {
+      "from": "G3",
+      "to": "ESE225",
+      "relation": "unlocks"
+    },
+    {
+      "from": "PRJ201",
+      "to": "PRJ202",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M3",
+      "to": "PRJ202",
+      "relation": "unlocks"
+    },
+    {
+      "from": "G5",
+      "to": "PRJ202",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE221",
+      "to": "ESE311",
+      "relation": "unlocks"
+    },
+    {
+      "from": "G6",
+      "to": "ESE311",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE212",
+      "to": "ESE312",
+      "relation": "unlocks"
+    },
+    {
+      "from": "CSC102",
+      "to": "ESE312",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE211",
+      "to": "ESE313",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE213",
+      "to": "ESE313",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE214",
+      "to": "ESE313",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE213",
+      "to": "ESE314",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE223",
+      "to": "ESE314",
+      "relation": "unlocks"
+    },
+    {
+      "from": "MAT201",
+      "to": "ESE315",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE214",
+      "to": "ESE315",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M4",
+      "to": "PRJ301",
+      "relation": "unlocks"
+    },
+    {
+      "from": "G6",
+      "to": "PRJ301",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE213",
+      "to": "ESE321",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE221",
+      "to": "ESE321",
+      "relation": "unlocks"
+    },
+    {
+      "from": "MAT201",
+      "to": "ESE321",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE222",
+      "to": "ESE322",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE224",
+      "to": "ESE322",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE221",
+      "to": "ESE323",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE223",
+      "to": "ESE323",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE212",
+      "to": "ESE324",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE211",
+      "to": "ESE324",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE225",
+      "to": "ESE325",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE311",
+      "to": "ESE325",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M4",
+      "to": "PRJ302",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M5",
+      "to": "PRJ302",
+      "relation": "unlocks"
+    },
+    {
+      "from": "G7",
+      "to": "PRJ302",
+      "relation": "unlocks"
+    },
+    {
+      "from": "PRJ302",
+      "to": "PRJ302-G8-MODULE",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE325",
+      "to": "PRJ302-G8-MODULE",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M6",
+      "to": "RES401",
+      "relation": "unlocks"
+    },
+    {
+      "from": "G8",
+      "to": "RES401",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE311",
+      "to": "ESE401",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE312",
+      "to": "ESE401",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE325",
+      "to": "ESE401",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M6",
+      "to": "ELE4A",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M6",
+      "to": "ELE4B",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M6",
+      "to": "CAP401",
+      "relation": "unlocks"
+    },
+    {
+      "from": "G8",
+      "to": "CAP401",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M6",
+      "to": "ENT401",
+      "relation": "unlocks"
+    },
+    {
+      "from": "CAP401",
+      "to": "CAP402",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M7",
+      "to": "CAP402",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M6",
+      "to": "IND402",
+      "relation": "unlocks"
+    },
+    {
+      "from": "G8",
+      "to": "IND402",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ELE4A",
+      "to": "ELE4C",
+      "relation": "unlocks"
+    },
+    {
+      "from": "RES401",
+      "to": "SEM402",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE101",
+      "to": "M1",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE111",
+      "to": "M1",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M1",
+      "to": "M2",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE121",
+      "to": "M2",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE122",
+      "to": "M2",
+      "relation": "unlocks"
+    },
+    {
+      "from": "CSC102",
+      "to": "M2",
+      "relation": "unlocks"
+    },
+    {
+      "from": "DES102",
+      "to": "M2",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M2",
+      "to": "M3",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE211",
+      "to": "M3",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE212",
+      "to": "M3",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE214",
+      "to": "M3",
+      "relation": "unlocks"
+    },
+    {
+      "from": "PRJ201",
+      "to": "M3",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M3",
+      "to": "M4",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE221",
+      "to": "M4",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE225",
+      "to": "M4",
+      "relation": "unlocks"
+    },
+    {
+      "from": "PRJ202",
+      "to": "M4",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M4",
+      "to": "M5",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE311",
+      "to": "M5",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE312",
+      "to": "M5",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE313",
+      "to": "M5",
+      "relation": "unlocks"
+    },
+    {
+      "from": "PRJ301",
+      "to": "M5",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M5",
+      "to": "M6",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE321",
+      "to": "M6",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE322",
+      "to": "M6",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE323",
+      "to": "M6",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE324",
+      "to": "M6",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE325",
+      "to": "M6",
+      "relation": "unlocks"
+    },
+    {
+      "from": "PRJ302",
+      "to": "M6",
+      "relation": "unlocks"
+    },
+    {
+      "from": "G8",
+      "to": "M6",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M6",
+      "to": "M7",
+      "relation": "unlocks"
+    },
+    {
+      "from": "CAP401",
+      "to": "M7",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M7",
+      "to": "M8",
+      "relation": "unlocks"
+    },
+    {
+      "from": "CAP402",
+      "to": "M8",
+      "relation": "unlocks"
+    },
+    {
+      "from": "IND402",
+      "to": "M8",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE101",
+      "to": "G1",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE111",
+      "to": "G2",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M1",
+      "to": "G2",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE101",
+      "to": "G3",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE122",
+      "to": "G3",
+      "relation": "unlocks"
+    },
+    {
+      "from": "CSC102",
+      "to": "G4",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE211",
+      "to": "G5",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE212",
+      "to": "G5",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE214",
+      "to": "G5",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M3",
+      "to": "G5",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE225",
+      "to": "G6",
+      "relation": "unlocks"
+    },
+    {
+      "from": "PRJ202",
+      "to": "G6",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M4",
+      "to": "G6",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE311",
+      "to": "G7",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M5",
+      "to": "G7",
+      "relation": "unlocks"
+    },
+    {
+      "from": "PRJ302-G8-MODULE",
+      "to": "G8",
+      "relation": "unlocks"
+    },
+    {
+      "from": "ESE325",
+      "to": "G8",
+      "relation": "unlocks"
+    },
+    {
+      "from": "G1",
+      "to": "G8",
+      "relation": "unlocks"
+    },
+    {
+      "from": "G7",
+      "to": "G8",
+      "relation": "unlocks"
+    },
+    {
+      "from": "CAP402",
+      "to": "G9",
+      "relation": "unlocks"
+    },
+    {
+      "from": "M8",
+      "to": "G9",
+      "relation": "unlocks"
+    }
+  ],
+  "root_policy": {
+    "allowed_roots": [
+      "ESE101",
+      "MAT101",
+      "PHY101",
+      "CSC101",
+      "ESE111",
+      "COM101",
+      "DES102"
+    ],
+    "terminal_nodes": [
+      "G9"
+    ],
+    "orphan_definition": "a non-exempt node with neither an incoming nor outgoing requires edge"
+  },
+  "validation_policy": {
+    "cycles_forbidden_in": "requires",
+    "co_requisite_cycles_allowed": true,
+    "unknown_ids_forbidden": true,
+    "gate_bypass_forbidden": true
+  }
+}

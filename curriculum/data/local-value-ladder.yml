@@ -1,4 +1,103 @@
-version: 0.1.0
-status: scaffold
-levels: []
-contribution_records: []
+{
+  "schema_version": "1.0.0",
+  "version": "1.0.0",
+  "status": "approved-baseline",
+  "levels": [
+    {
+      "id": "V0",
+      "name": "Diagnose and maintain",
+      "capability": "identify functions, authenticate or characterize parts, localize faults, repair safely, and document limits",
+      "required_evidence": [
+        "teardown/service map",
+        "measurements",
+        "fault/repair record",
+        "component passport"
+      ],
+      "claim_limit": "claim only the highest level independently reproducible from released evidence"
+    },
+    {
+      "id": "V1",
+      "name": "Adapt and integrate",
+      "capability": "select modules/components and design interfaces, harness/enclosure, firmware, calibration, and user/service adaptation",
+      "required_evidence": [
+        "interface contract",
+        "make/buy record",
+        "locally executable build and calibration instructions"
+      ],
+      "claim_limit": "claim only the highest level independently reproducible from released evidence"
+    },
+    {
+      "id": "V2",
+      "name": "Design and verify",
+      "capability": "own measurable requirements, architecture, editable design, test points, verification, and controlled release",
+      "required_evidence": [
+        "editable source",
+        "design reviews",
+        "bring-up",
+        "raw verification data",
+        "independent reproduction"
+      ],
+      "claim_limit": "claim only the highest level independently reproducible from released evidence"
+    },
+    {
+      "id": "V3",
+      "name": "Pilot-production readiness",
+      "capability": "execute controlled repeat assembly/test with incoming inspection, serialization, fixtures, nonconformance, cost, and service",
+      "required_evidence": [
+        "repeat batch",
+        "traveler",
+        "checked production test",
+        "sample-specific defect/rework/cost report",
+        "technician handoff"
+      ],
+      "claim_limit": "claim only the highest level independently reproducible from released evidence"
+    },
+    {
+      "id": "V4",
+      "name": "Exercise product authority",
+      "capability": "control configuration and lifecycle decisions, compliance, supplier quality, scale, warranty/service, improvement, IP/data, and end of life",
+      "required_evidence": [
+        "accepted product dossier",
+        "supplier/capability plan",
+        "field/quality evidence",
+        "training",
+        "truthful contribution/origin statement"
+      ],
+      "claim_limit": "claim only the highest level independently reproducible from released evidence"
+    }
+  ],
+  "contribution_records": [
+    {
+      "id": "CONTRIB-ESE111-001",
+      "project_id": "M1",
+      "target_level": "V0",
+      "achieved_level": null,
+      "context_ids": [],
+      "contributions": [
+        {
+          "domain": "measurement-and-diagnosis",
+          "organization": "deploying institution",
+          "location": "deployment-defined",
+          "control": "learner-owned evidence",
+          "evidence_ids": [
+            "EVIDENCE-M1-V0-PENDING"
+          ]
+        }
+      ],
+      "imported_dependencies": [],
+      "make_buy_rationale": "not applicable until a deployment selects apparatus",
+      "cost_ids": [],
+      "capability_gaps": [
+        "deployment supplier, facility, and service evidence pending"
+      ],
+      "next_local_step": "qualify the local apparatus and service route",
+      "permitted_claim": "No geographic product-origin claim is permitted from this baseline record.",
+      "legal_review": {
+        "status": "required-before-origin-wording",
+        "jurisdiction_ids": []
+      },
+      "reviewer": "product-realization-lead",
+      "status": "draft"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+contract_version: 1.0.0
+manifest_name: smoke-hooks.yml
+allowed_kinds: [code, numerical, hdl, simulation, kicad]
+required_fields: [id, kind, command, working_directory, requires, timeout_seconds]
+command_rules:
+  shell: false
+  network: false
+  environment_allowlist: [PATH, LANG, LC_ALL, SOURCE_DATE_EPOCH]
+  path_placeholders: ["{repository}", "{manifest_dir}", "{report_dir}"]
+result_contract:
+  pass_exit_code: 0
+  stdout: captured
+  stderr: captured
+  junit_report: build/reports/smoke-hooks.xml
+  required_provenance: [hook_id, kind, command, tool_versions, duration_seconds, status]
+examples:
+  code: [python3, -m, unittest, discover, -s, "{manifest_dir}/tests"]
+  numerical: [python3, "{repository}/curriculum/scripts/check_numerical.py", "{manifest_dir}/cases.yml"]
+  hdl: [ghdl, -r, testbench, --assert-level=error]
+  simulation: [ngspice, -b, -o, "{report_dir}/ngspice.log", "{manifest_dir}/circuit.cir"]
+  kicad: [python3, "{repository}/curriculum/scripts/kicad_release.py", "{manifest_dir}"]

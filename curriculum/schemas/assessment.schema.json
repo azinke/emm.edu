@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://emm.edu/schemas/assessment.schema.json",
+  "title": "Assessment contract",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "version",
+    "status",
+    "assessments"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "status": {
+      "type": "string"
+    },
+    "assessments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "course_id",
+          "type",
+          "outcome_ids",
+          "language_routes",
+          "difficulty_contract",
+          "evidence",
+          "rubric_total",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "course_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": [
+              "string",
+              "object",
+              "array",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "outcome_ids": {
+            "type": "array"
+          },
+          "language_routes": {
+            "type": [
+              "string",
+              "object",
+              "array",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "difficulty_contract": {
+            "type": [
+              "string",
+              "object",
+              "array",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "evidence": {
+            "type": "array"
+          },
+          "rubric_total": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "status": {
+            "$ref": "#/$defs/status"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "localized": {
+      "type": "object",
+      "required": [
+        "en",
+        "fr"
+      ],
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fr": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "status": {
+      "enum": [
+        "brief",
+        "draft",
+        "review",
+        "technical-review",
+        "language-review",
+        "pilot",
+        "pilot-ready",
+        "stable",
+        "released",
+        "retired",
+        "approved",
+        "approved-baseline",
+        "mapping-in-progress",
+        "qualification-pending",
+        "quote-required",
+        "not-started",
+        "pending"
+      ]
+    }
+  }
+}

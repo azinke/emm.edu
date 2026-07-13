@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "version": "1.0.0",
+  "status": "draft",
+  "levels": [
+    {
+      "id": "L0",
+      "scope": "observation, simulation, and de-energized inspection",
+      "authorization_gate": null,
+      "supervision": "as defined by activity",
+      "stop_conditions": [
+        "unknown energy source",
+        "damaged apparatus"
+      ]
+    },
+    {
+      "id": "L1",
+      "scope": "approved low-voltage current-limited bench work",
+      "authorization_gate": "G1",
+      "supervision": "trained staff available under local laboratory plan",
+      "stop_conditions": [
+        "unexpected heat, smell, smoke, damaged insulation, unstable supply, or measurement outside expected bounds"
+      ]
+    },
+    {
+      "id": "L2",
+      "scope": "institution-controlled elevated energy or specialized apparatus",
+      "authorization_gate": "deployment-specific",
+      "supervision": "direct qualified supervision",
+      "stop_conditions": [
+        "any permit, enclosure, interlock, PPE, or supervision failure"
+      ]
+    }
+  ],
+  "prohibited_self_study": [
+    "mains",
+    "high-energy battery",
+    "RF power",
+    "high voltage"
+  ],
+  "incident_owner": "institutional-safety-lead"
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "version": "1.0.0",
+  "status": "draft",
+  "capabilities": [
+    {
+      "id": "CAP-BJ-PENDING-001",
+      "profile_id": "DP-BJ-2026-07",
+      "capability": "electronics repair, assembly, test, calibration, fabrication, service, and end-of-life ecosystem mapping",
+      "level_supported": null,
+      "organizations": [],
+      "locations": [],
+      "evidence_ids": [],
+      "limitations": [
+        "No capability or geographic-origin assertion is approved until field evidence and named organizations are reviewed."
+      ],
+      "review_date": "2026-07-13",
+      "review_due": "2026-10-13",
+      "status": "qualification-pending"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+policy_version: 1.0.0
+content_extensions: [.md, .qmd]
+languages: [en, fr]
+pair_path_segments: [en, fr]
+technical_contract_fields:
+  - outcomes
+  - equations
+  - values
+  - safety_limits
+  - expected_ranges
+  - rubric_total
+  - answer_key_digest
+  - figure_ids
+restricted_path_tokens:
+  - solutions
+  - answer-key
+  - current-assessments
+  - restricted-solutions
+restricted_markers:
+  - "RESTRICTED-SOLUTION"
+  - "INSTRUCTOR-ONLY"
+  - "LIVE-ASSESSMENT"
+  - "BEGIN ANSWER KEY"
+size_budgets_bytes:
+  html_per_page: 1500000
+  pdf_per_document: 8000000
+  slide_deck: 12000000
+  offline_bundle: 750000000
+print:
+  page_size: A4
+  max_blank_pages: 1
+  max_pages_per_document: 120
+visual_regression:
+  pixel_error_fraction: 0.001
+  root_mean_square_error: 0.01
+  viewports:
+    - {id: phone, width: 360, height: 800}
+    - {id: student-laptop, width: 1366, height: 768}
+    - {id: projector, width: 1920, height: 1080}

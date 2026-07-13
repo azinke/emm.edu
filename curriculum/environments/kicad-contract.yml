@@ -1,0 +1,60 @@
+contract_version: 1.0.0
+owner: pcb-toolchain-owner
+accountable_role: tooling engineer
+reviewers: [electronics-reviewer, release-manager]
+tested_version: 9.0.9
+supported_major: 9
+minimum_version: 9.0.0
+status: implemented
+required_before_milestone: M10
+network: forbidden
+checks:
+  erc:
+    command: [kicad-cli, sch, erc, --format, json, --severity-all, --exit-code-violations]
+    required_when: schematic_present
+  drc:
+    command: [kicad-cli, pcb, drc, --format, json, --severity-all, --schematic-parity, --exit-code-violations]
+    required_when: pcb_present
+release_artifacts:
+  - schematic_pdf
+  - pcb_pdf
+  - gerbers
+  - drill_files
+  - bom
+  - position_files
+  - assembly_drawing
+  - erc_json
+  - drc_json
+  - release_manifest_sha256
+waiver:
+  filename: kicad-waivers.yml
+  policy: no implicit exclusions
+  required_fields:
+    - id
+    - check
+    - rule
+    - exact_item
+    - rationale
+    - risk_assessment
+    - compensating_evidence
+    - approved_by
+    - approved_on
+    - expires_on
+    - affected_revision
+  approval_roles: [electronics-reviewer, safety-reviewer]
+  expiry_required: true
+  note: Native KiCad exclusions are reported and must have a matching, unexpired waiver record.
+  exact_item_format: sorted list of the KiCad item UUIDs reported for one violation
+  example:
+    id: KWAIVER-EXAMPLE-001
+    check: drc
+    rule: clearance
+    exact_item: [11111111-1111-4111-8111-111111111114]
+    rationale: Example only; a real record explains why the rule is inapplicable.
+    risk_assessment: Example only; state the residual electrical and manufacturing risk.
+    compensating_evidence: Example only; link measurements, fabrication rules, or review evidence.
+    approved_by: electronics-reviewer
+    approved_on: 2026-07-13
+    expires_on: 2027-07-13
+    affected_revision: example-revision
+seeded_failure_fixture: scripts/tests/fixtures/kicad-seeded-failure

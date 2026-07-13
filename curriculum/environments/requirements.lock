@@ -1,0 +1,3 @@
+# Install only into a prepared offline environment from a locally mirrored wheel.
+# Python itself and document/EDA executables are frozen in toolchain.yml.
+PyYAML==6.0.2

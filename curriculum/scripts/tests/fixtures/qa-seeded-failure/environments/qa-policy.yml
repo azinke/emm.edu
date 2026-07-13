@@ -1,0 +1,4 @@
+content_extensions: [.md, .qmd]
+technical_contract_fields: [outcomes, equations, values, safety_limits, expected_ranges, rubric_total, answer_key_digest, figure_ids]
+restricted_path_tokens: [instructor, solutions]
+restricted_markers: [RESTRICTED-SOLUTION]

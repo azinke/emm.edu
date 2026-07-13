@@ -2,6 +2,11 @@
 /curriculum/build/**
 !/curriculum/build/.gitkeep
 
+# Local interpreter and QA caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
 # Restricted artifacts belong in a separately permissioned store. Only the
 # directory markers in this public scaffold may be tracked here.
 /curriculum-private/current-assessments/**

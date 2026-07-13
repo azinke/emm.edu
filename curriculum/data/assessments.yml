@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "version": "1.0.0",
+  "status": "draft",
+  "assessments": [
+    {
+      "id": "ESE111-COURSE-END",
+      "course_id": "ESE111",
+      "type": "individual-practical",
+      "outcome_ids": [
+        "ESE111-CO01",
+        "PLO-01",
+        "PLO-07",
+        "PLO-08"
+      ],
+      "language_routes": [
+        "en",
+        "fr"
+      ],
+      "difficulty_contract": "same construct, thresholds, data, and safety limits",
+      "evidence": [
+        "schematic",
+        "raw measurements",
+        "uncertainty statement",
+        "fault-localization defense"
+      ],
+      "rubric_total": 100,
+      "status": "draft"
+    }
+  ]
+}

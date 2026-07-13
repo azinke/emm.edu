@@ -1,0 +1,7 @@
+hooks:
+  - id: fixture-code-failure
+    kind: code
+    command: [python3, "{repository}/curriculum/scripts/tests/mock_hook.py", --kind, code, --fail]
+    working_directory: "{manifest_dir}"
+    requires: [python3]
+    timeout_seconds: 10

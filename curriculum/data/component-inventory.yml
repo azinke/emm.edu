@@ -1,3 +1,63 @@
-version: 0.1.0
-status: scaffold
-components: []
+{
+  "schema_version": "1.0.0",
+  "version": "1.0.0",
+  "status": "draft",
+  "components": [
+    {
+      "id": "COMP-DMM",
+      "name": {
+        "en": "digital multimeter",
+        "fr": "multimètre numérique"
+      },
+      "category": "instrument",
+      "quantity_basis": "one per student",
+      "minimum_specification": "CAT/rating and protection appropriate to approved low-voltage work; continuity, voltage, current, resistance",
+      "approved_substitutes": [],
+      "safety_level": "L1",
+      "storage": "dry secured instrument storage",
+      "maintenance": "pre-use inspection and scheduled function check",
+      "calibration": "institutional metrology plan",
+      "supplier_ids": [],
+      "cost_ids": [],
+      "status": "qualification-pending"
+    },
+    {
+      "id": "COMP-BREADBOARD",
+      "name": {
+        "en": "solderless breadboard",
+        "fr": "plaque d'essai sans soudure"
+      },
+      "category": "construction",
+      "quantity_basis": "one per student",
+      "minimum_specification": "documented contact map and current limits",
+      "approved_substitutes": [],
+      "safety_level": "L1",
+      "storage": "clean dry kit",
+      "maintenance": "inspect damaged contacts",
+      "calibration": "not-applicable",
+      "supplier_ids": [],
+      "cost_ids": [],
+      "status": "qualification-pending"
+    },
+    {
+      "id": "COMP-PSU-LV",
+      "name": {
+        "en": "current-limited low-voltage supply",
+        "fr": "alimentation basse tension limitée en courant"
+      },
+      "category": "instrument",
+      "quantity_basis": "one per pair",
+      "minimum_specification": "adjustable current limit and visible output indication",
+      "approved_substitutes": [
+        "approved battery pack with fuse/current limit"
+      ],
+      "safety_level": "L1",
+      "storage": "secured bench",
+      "maintenance": "lead inspection and function check",
+      "calibration": "scheduled voltage/current verification",
+      "supplier_ids": [],
+      "cost_ids": [],
+      "status": "qualification-pending"
+    }
+  ]
+}

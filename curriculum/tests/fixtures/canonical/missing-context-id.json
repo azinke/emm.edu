@@ -1,0 +1,6 @@
+{
+  "document": "unit-manifests.yml",
+  "pointer": "/units/0/localization_layer",
+  "value": "project-context",
+  "expect": "deployment/context record missing context IDs"
+}

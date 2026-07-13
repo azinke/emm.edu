@@ -1,0 +1,31 @@
+hooks:
+  - id: fixture-code
+    kind: code
+    command: [python3, "{repository}/curriculum/scripts/tests/mock_hook.py", --kind, code]
+    working_directory: "{manifest_dir}"
+    requires: [python3]
+    timeout_seconds: 10
+  - id: fixture-numerical
+    kind: numerical
+    command: [python3, "{repository}/curriculum/scripts/tests/mock_hook.py", --kind, numerical]
+    working_directory: "{manifest_dir}"
+    requires: [python3]
+    timeout_seconds: 10
+  - id: fixture-hdl
+    kind: hdl
+    command: [python3, "{repository}/curriculum/scripts/tests/mock_hook.py", --kind, hdl]
+    working_directory: "{manifest_dir}"
+    requires: [python3]
+    timeout_seconds: 10
+  - id: fixture-simulation
+    kind: simulation
+    command: [python3, "{repository}/curriculum/scripts/tests/mock_hook.py", --kind, simulation]
+    working_directory: "{manifest_dir}"
+    requires: [python3]
+    timeout_seconds: 10
+  - id: fixture-kicad
+    kind: kicad
+    command: [python3, "{repository}/curriculum/scripts/tests/mock_hook.py", --kind, kicad]
+    working_directory: "{manifest_dir}"
+    requires: [python3]
+    timeout_seconds: 10

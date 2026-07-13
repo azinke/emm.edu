@@ -1,3 +1,67 @@
-version: 0.1.0
-status: scaffold
-platforms: []
+{
+  "schema_version": "1.0.0",
+  "version": "1.0.0",
+  "status": "draft",
+  "platforms": [
+    {
+      "id": "PLAT-MCU-FOUNDATION",
+      "category": "mcu-foundation",
+      "capability_contract": "low-voltage MCU with ADC, PWM, digital I/O, documented offline toolchain, and debug route",
+      "reference": "Raspberry Pi Pico 2 / RP2350-class",
+      "alternatives": [
+        "institution-approved capability-equivalent MCU"
+      ],
+      "binding": "platform-bound",
+      "review_due": "2027-07-13",
+      "context_ids": [],
+      "claim_ids": [
+        "CLM-PLAT-001"
+      ],
+      "status": "review"
+    },
+    {
+      "id": "PLAT-MCU-PRO",
+      "category": "mcu-professional",
+      "capability_contract": "professional MCU with hardware debug, production peripherals, security, and long-lived documentation",
+      "reference": "deployment-selected",
+      "alternatives": [],
+      "binding": "platform-bound",
+      "review_due": "2027-07-13",
+      "context_ids": [],
+      "claim_ids": [
+        "CLM-PLAT-001"
+      ],
+      "status": "review"
+    },
+    {
+      "id": "PLAT-FPGA",
+      "category": "fpga",
+      "capability_contract": "open-flow-capable FPGA path with HDL simulation, synthesis, timing, and hardware demonstration",
+      "reference": "deployment-selected",
+      "alternatives": [
+        "simulation-first path before board access"
+      ],
+      "binding": "platform-bound",
+      "review_due": "2027-07-13",
+      "context_ids": [],
+      "claim_ids": [
+        "CLM-PLAT-001"
+      ],
+      "status": "review"
+    },
+    {
+      "id": "PLAT-PCB",
+      "category": "pcb-cad",
+      "capability_contract": "offline schematic/PCB capture, ERC/DRC, fabrication outputs, and editable project source",
+      "reference": "KiCad-family workflow",
+      "alternatives": [],
+      "binding": "platform-bound",
+      "review_due": "2027-07-13",
+      "context_ids": [],
+      "claim_ids": [
+        "CLM-PLAT-001"
+      ],
+      "status": "review"
+    }
+  ]
+}

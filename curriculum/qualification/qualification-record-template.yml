@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+qualification_id: QUAL-AUTHOR-VERTICAL-01
+record_classification: restricted-personnel-record
+candidate_reference: CONTROLLED-STORE-ID
+sample:
+  semantic_id: SAMPLE-ID
+  version: 0.1.0
+  public_commit: 40-character-object-id
+  restricted_evidence_reference: CONTROLLED-STORE-ID
+  apparatus_path: minimal
+  physical_test_date: YYYY-MM-DD
+  offline_bundle_sha256: pending
+facets:
+  technical: {status: pending, approver: null, date: null, evidence: null}
+  apparatus_safety: {status: pending, approver: null, date: null, evidence: null}
+  en: {status: pending, approver: null, date: null, evidence: null}
+  fr: {status: pending, approver: null, date: null, evidence: null}
+  accessibility: {status: pending, approver: null, date: null, evidence: null}
+  license: {status: pending, approver: null, date: null, evidence: null}
+  offline_build: {status: pending, approver: null, date: null, evidence: null}
+authentic_defect:
+  before: null
+  correction: null
+  rationale: null
+  regression_evidence: null
+teach_back:
+  date: null
+  observer: null
+  calibration_result: pending
+decision: pending
+limitations: []
+expires: YYYY-MM-DD

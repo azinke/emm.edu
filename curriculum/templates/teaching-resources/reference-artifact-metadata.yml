@@ -1,0 +1,74 @@
+artifact_id: COURSE-U00-FIG-000
+semantic_id: COURSE-U00-FIG-000
+resource_type: figure-metadata # figure-metadata | reference-artifact-metadata
+artifact_kind: figure # figure | dataset | code | hdl | pcb | simulation | reference-document
+title: "[descriptive title]"
+version: 0.1.0
+lifecycle: drafting
+authoritative_source: "[editable/source path]"
+derived_outputs:
+  - path: "[rendered/build artifact]"
+    format: svg
+    generated_by: "[tool and pinned version or build target]"
+    checksum: "[digest or CI-generated reference]"
+language_scope: shared # shared | en | fr
+paired_with: null
+used_by: []
+technical_contract:
+  outcomes: []
+  claim_ids: []
+  configuration: "[toolchain, device, revision, dataset schema, or standard edition]"
+  expected_output: "[observable output, range, or invariant]"
+  verification: "[compile/test/ERC/DRC/recomputation/inspection/measurement evidence]"
+  limitations: "[domain, fidelity, unresolved issue]"
+figure_accessibility:
+  visual_type: "[schematic | plot | waveform | photograph | diagram | table | n/a]"
+  convention: "[IEC/ANSI/logical convention and legend]"
+  caption_en: "[what the artifact shows and why it matters]"
+  caption_fr: "[ce que montre l'artefact et sa fonction pédagogique]"
+  alt_text_en: "[concise equivalent purpose/content]"
+  alt_text_fr: "[équivalent concis du contenu utile]"
+  long_description_en: "[reading order, relationships, values, pattern, conclusion]"
+  long_description_fr: "[ordre de lecture, relations, valeurs, tendance, conclusion]"
+  color_independent_encoding: "[labels, shapes, line styles, patterns]"
+  scales_units_test_points: "[axes, scale, reference, trigger, nodes and conditions]"
+  provenance_mode: "[ideal | simulated | measured | composite | not-applicable]"
+provenance_and_license:
+  creator: "[person/organization]"
+  source_url_or_record: "[canonical source]"
+  source_version_or_edition: "[version]"
+  retrieved_on: YYYY-MM-DD
+  original_or_adapted: original # original | adapted | reused
+  modifications: "[what changed]"
+  license: "[SPDX identifier or exact terms]"
+  attribution_text: "[ready-to-publish credit]"
+  permission_evidence: "[record or not applicable]"
+  archival_copy_permitted: false
+  archival_checksum: null
+technical_specifics:
+  code:
+    language: null
+    test_command_or_evidence: null
+    dependency_lock: null
+  hdl:
+    clock_reset_assumptions: null
+    constraints: null
+    self_checking_test: null
+    cdc_policy: null
+  pcb:
+    project_revision: null
+    local_symbols_footprints: null
+    stackup_rules: null
+    erc_drc_reports: null
+    bom_and_manufacturing_outputs: null
+    bringup_evidence: null
+  data:
+    collection_or_generation_method: null
+    schema_units_uncertainty: null
+    privacy_or_consent_classification: null
+    raw_processed_relation: null
+reviews:
+  technical: {status: pending, reviewer: null, date: null, evidence: null}
+  language: {status: pending, reviewer: null, date: null, evidence: null}
+  accessibility: {status: pending, reviewer: null, date: null, evidence: null}
+  license: {status: pending, reviewer: null, date: null, evidence: null}

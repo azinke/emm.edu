@@ -1,5 +1,18 @@
 # Restricted curriculum store boundary
 
-This public repository contains only the default directory markers. Before storing any live assessment, restricted solution, student data, or partner-confidential data, provision `curriculum-private` as a separately permissioned repository or controlled store with its own access, retention, backup, and release policy.
+This tracked directory is a public policy marker only. It is **not** the
+restricted store, and no restricted payload, private URL, identity, key, answer,
+or partner detail may be placed below it.
 
-The root `.gitignore` prevents contents of the three restricted directories from entering this public Git history. Do not weaken those rules to publish restricted material.
+Create the real separately permissioned repository outside this public checkout:
+
+```sh
+python3 curriculum/scripts/initialize_restricted_store.py \
+  /approved/private/path/emm-edu-restricted \
+  --remote ssh://private-host/controlled/emm-edu-restricted.git
+```
+
+Classification, roles, access review, backup, incident response, and opaque
+public-reference rules are controlled by
+`curriculum/governance/restricted-material.md`. The empty markers below make
+accidental writes visible to the leak scan; `.gitignore` is not access control.

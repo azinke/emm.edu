@@ -1,0 +1,6 @@
+{
+  "document": "prerequisite-graph.yml",
+  "pointer": "/requires/0/to",
+  "value": "MAT101",
+  "expect": "dependency cycle"
+}

@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://emm.edu/schemas/project.schema.json",
+  "title": "Project dependency records",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "version",
+    "status",
+    "projects",
+    "dependencies"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "status": {
+      "type": "string"
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "semester",
+          "title",
+          "target_contribution_level",
+          "required_gates",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "semester": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "title": {
+            "type": [
+              "object",
+              "string"
+            ]
+          },
+          "target_contribution_level": {
+            "type": [
+              "string",
+              "object",
+              "array",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "required_gates": {
+            "type": "array"
+          },
+          "status": {
+            "$ref": "#/$defs/status"
+          }
+        }
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "relation"
+        ],
+        "properties": {
+          "from": {
+            "type": [
+              "string",
+              "object",
+              "array",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "to": {
+            "type": [
+              "string",
+              "object",
+              "array",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "relation": {
+            "type": [
+              "string",
+              "object",
+              "array",
+              "number",
+              "boolean",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "localized": {
+      "type": "object",
+      "required": [
+        "en",
+        "fr"
+      ],
+      "properties": {
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fr": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "status": {
+      "enum": [
+        "brief",
+        "draft",
+        "review",
+        "technical-review",
+        "language-review",
+        "pilot",
+        "pilot-ready",
+        "stable",
+        "released",
+        "retired",
+        "approved",
+        "approved-baseline",
+        "mapping-in-progress",
+        "qualification-pending",
+        "quote-required",
+        "not-started",
+        "pending"
+      ]
+    }
+  }
+}

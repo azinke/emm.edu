@@ -11,7 +11,7 @@
 
 - [x] **M00-E1-T01 [DEC]** Convene faculty, laboratory, bilingual, student, industry/community, accessibility, IT, library/IP, and institutional representatives.
 - [x] **M00-E1-T02 [DEC]** Approve mission, learner profiles, four-year/240-ECTS reference path, optional bridge, possible exit points, and deployment modes.
-- [ ] **M00-E1-T03 [DEC]** Approve or formally disposition each PEO, PLO, competence level, and G1–G9 program competence gate for observability and deployment relevance.
+- [x] **M00-E1-T03 [DEC]** Approve or formally disposition each PEO, PLO, competence level, and G1–G9 program competence gate for observability and deployment relevance.
 - [ ] **M00-E1-T04 [DEC]** Ratify every master §1.1 invariant, including claim accuracy/currency, the full hands-on cycle, personal physical evidence, EN/FR parity, energy-aware safety, ethics/security/sustainability/accessibility/manufacturability, offline access, editable source, vendor neutrality, context evidence, equivalent standard, and truthful origin claims.
 - [ ] **M00-E1-T05 [DEC]** Record accepted deviations from the master with rationale, owner, effect on dependencies, and review trigger.
 - [ ] **M00-E1-T06 [DEC]** Adopt the universal-core/deployment-profile contract, V0–V4 local product-authority ladder, and cross-language/equipment/site moderation rule; local paths may not lower mastery.
@@ -55,6 +55,59 @@ The program director circulates the master document, this charter, the decision 
 | Re-entry and transfer | prior evidence is reviewed against current outcomes and gates | diagnostics and targeted bridge/remediation replace automatic repetition or unverified credit claims |
 
 Possible recognition points are approved for planning at the ends of S1, S2, S4, S6, and S8 exactly as bounded in master §16.5. These are evidence checkpoints, not automatic awards: their public names and legal status remain pending institutional and national approval. Only the end-S8 reference path claims the full program outcome set. A deployment must publish which profile it offers, the outcomes and gates it certifies, its local credit conversion, and the authoritative approval record before enrollment or advertising.
+
+#### M00-E1-T03 — Objectives, outcomes, levels, and gates
+
+**Decision:** every PEO, PLO, competence level, and program gate is approved without modification for the 240-ECTS reference profile. “Approved” means observable and relevant across deployment contexts when implemented with the named evidence; it is not a claim that attainment has already been demonstrated. M02 must preserve these IDs in the canonical outcomes and prerequisite records.
+
+| PEO | Disposition | Observable program evidence and deployment relevance |
+|---|---|---|
+| PEO-1 Practice | approve | graduate/employer evidence of contribution to design, verification, deployment, or maintenance; applicable to product, service, laboratory, and field settings |
+| PEO-2 Grow | approve | continued learning from primary sources and progression into work, enterprise, or further study; protects adaptability across tools and vendors |
+| PEO-3 Lead responsibly | approve | collaboration and communication evidence with safety, ethics, sustainability, security, and community consequences; applies across languages and jurisdictions |
+| PEO-4 Create value | approve | traceable adaptation plus growth in design, production, test, service, or improvement capability; each deployment defines “local” explicitly |
+| PEO-5 Improve systems | approve | measured product/process improvements using field evidence and stakeholder feedback; applies to mature and emerging ecosystems |
+
+PEOs are evaluated 3–5 years after graduation through multiple sources such as graduate, employer, partner, portfolio, and product/process evidence. No single satisfaction survey is sufficient.
+
+| PLO | Disposition | Observable graduation evidence | Deployment-relevance test |
+|---|---|---|---|
+| PLO-01 | approve | defensible model, computation, assumptions, and validation | locally chosen problems preserve mathematical and scientific depth |
+| PLO-02 | approve | design review plus measured analog, mixed-signal, digital, power, or feedback performance | apparatus may vary; circuit reasoning and physical verification remain |
+| PLO-03 | approve | tested firmware with timing and resource evidence | architecture and tools may vary; peripheral, concurrency, and constraint evidence remain |
+| PLO-04 | approve | HDL verification and FPGA demonstration | device may vary; logic, architecture, verification, and physical implementation remain |
+| PLO-05 | approve | DRC-clean release, bring-up, assembly/test instructions, and production evidence | fabrication route may vary; editable source, DFM/DFT, bring-up, and release control remain |
+| PLO-06 | approve | requirements-traced component and interface trade study | parts and suppliers are local facts; selection method and datasheet evidence remain |
+| PLO-07 | approve | reproducible data package and uncertainty budget | instruments may vary; personal measurement, traceability, uncertainty, and justified conclusions remain |
+| PLO-08 | approve | timed fault-localization practical | seeded fault and equipment may vary; hypothesis-led isolation and individual defense remain |
+| PLO-09 | approve | hazard/threat analyses and verification cases | applicable standards and hazards are deployment-specific; lifecycle reasoning is universal |
+| PLO-10 | approve | stakeholder-validated requirements, make/buy and local-value plan, and impact review | user, cultural, environmental, economic, and manufacturing constraints must come from dated context evidence |
+| PLO-11 | approve | chosen-language professional dossier and defense, bilingual abstract, and prepared cross-language briefing | academic entry language may vary; equivalent technical reasoning and EN/FR bridge evidence remain |
+| PLO-12 | approve | peer evidence, interface contracts, and retrospectives | team composition may vary; inclusive contribution and personal accountability remain |
+| PLO-13 | approve | datasheet-based implementation and literature trail | source access may be offline; primary-source judgment and independent learning remain |
+| PLO-14 | approve | auditable repository, limitations, attribution, and AI-use log | local law and policy may add controls; honest claims, configuration, and provenance remain |
+
+| Level | Disposition | Observable distinction | Use in any deployment |
+|---|---|---|---|
+| 0 — Encountered | approve | recognizes language and purpose with guidance | diagnostic or introductory evidence only; never an exit claim |
+| 1 — Assisted | approve | safely executes a documented method | guided evidence; does not establish independence |
+| 2 — Independent | approve | selects and applies a method to a bounded problem | minimum prerequisite evidence where named |
+| 3 — Integrated | approve | combines domains under incomplete or conflicting constraints | graduation minimum for every PLO in the reference profile |
+| 4 — Defensible | approve | justifies trade-offs, verifies claims, handles anomalies, and transfers learning | required at graduation for PLO-07, PLO-08, PLO-11, and two chosen technical PLOs |
+
+| Gate | Disposition and deadline | Minimum direct evidence | Deployment relevance |
+|---|---|---|---|
+| G1 Safe bench user | approve; S1 week 4 | written check plus observed safe setup, energy/fault check, instrument use, shutdown, and response to a stop condition | required before independent L1 energization on any equipment path |
+| G2 Fundamental measurement and uncertainty | approve; end S1 | individual measurement plan, raw data, units, uncertainty, and defended conclusion | instrument substitutions must preserve personal measurement and reasoning |
+| G3 Soldering and rework | approve; end S2 | inspected individual assembly, rework, workmanship, continuity, cleanup, and safe tool use | accessible assistance may support manipulation only when it preserves the assessed decision and evidence |
+| G4 C programming and source control | approve; before ESE221 | individually explained tested program, debug trace, commits, and reproducible build | board and development environment may vary; language, debugging, and configuration competence remain |
+| G5 Analog/digital fault localization | approve; end S3 | timed unseen-fault diagnosis using observations, hypotheses, isolation, root cause, and verification | fault and instrument path may vary at equal complexity and independence |
+| G6 PCB release and safe bring-up | approve; end S4 | individual release review, DRC evidence, pre-power checks, current-limited bring-up, measurements, and disposition | fabrication source may vary; release ownership and physical bring-up cannot be simulated away |
+| G7 Embedded timing/concurrency debug | approve; end S5 | timing evidence and diagnosis of an unseen concurrency or interface fault | platform may vary; timing, resource, and systematic-debug construct remain |
+| G8 Field readiness and deployment ethics | approve; before student-led field or human-participant activity | assessed consent, safety, privacy/data, lawful communication, incident, and rollback decisions | local policy and law may add authorization; the student pass never replaces institutional or partner approval |
+| G9 Independent system defense | approve; capstone | individual defense tracing requirements, design, implementation, test, limitations, responsibility, and contribution | context and product may vary; independent, cross-domain, evidence-based defense remains |
+
+Every gate specification must define mastery cut, authorized variants and resources, ordinary-attempt limit and escalation, retention, assessor calibration, appeal/moderation, and transfer-based reassessment. Gates cannot be compensated by course averages. A separately named derived program must publish an explicit retain/omit disposition for every PLO and gate; omission changes the claim and may not be presented as equivalent to this reference profile.
 
 ## Epic E2 — Establish authority and responsibilities
 

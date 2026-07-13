@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0.0",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "draft",
   "platforms": [
     {
       "id": "PLAT-MCU-FOUNDATION",
       "category": "mcu-foundation",
-      "capability_contract": "low-voltage MCU with ADC, PWM, digital I/O, documented offline toolchain, and debug route",
+      "capability_contract": "low-voltage foundation MCU with mapped I/O domains, ADC, timer/PWM, UART/SPI/I2C, inspectable memory/resource use, hardware-debug route, reversible bad-image recovery, and archived offline C/C++ plus introductory-language tooling; radio is disabled unless separately approved",
       "reference": "Raspberry Pi Pico 2 / RP2350-class",
       "alternatives": [
         "institution-approved capability-equivalent MCU"
@@ -17,12 +17,12 @@
       "claim_ids": [
         "CLM-PLAT-001"
       ],
-      "status": "review"
+      "status": "qualification-pending"
     },
     {
       "id": "PLAT-MCU-PRO",
       "category": "mcu-professional",
-      "capability_contract": "professional MCU with hardware debug, production peripherals, security, and long-lived documentation",
+      "capability_contract": "professional MCU with exact electrical/alternate-function mapping, ADC, timer/capture/PWM, production serial/field buses, measured bare-metal/RTOS memory headroom, SWD/JTAG-class debug, reversible recovery, frozen offline RTOS/toolchain support, and no required irreversible security state",
       "reference": "deployment-selected",
       "alternatives": [],
       "binding": "platform-bound",
@@ -31,12 +31,30 @@
       "claim_ids": [
         "CLM-PLAT-001"
       ],
-      "status": "review"
+      "status": "qualification-pending"
+    },
+    {
+      "id": "PLAT-WIRELESS",
+      "category": "wireless-node",
+      "capability_contract": "wireless MCU/module with mapped I/O and peak-power behavior, wired fault visibility and recovery, sufficient radio/security-stack memory, archived offline SDK/RTOS path, demonstrable transmit-disabled state, and dated jurisdiction approval for the exact module, antenna, firmware, region, and configured power before transmission",
+      "reference": "deployment-selected from ESP32-C3/C6-class or qualified Zephyr-supported radio boards",
+      "alternatives": [
+        "Pico 2 W-class after qualification",
+        "nRF52840-class development kit or module after qualification",
+        "approved non-transmitting wired path while radio authorization is pending"
+      ],
+      "binding": "platform-bound",
+      "review_due": "2027-07-13",
+      "context_ids": [],
+      "claim_ids": [
+        "CLM-PLAT-001"
+      ],
+      "status": "qualification-pending"
     },
     {
       "id": "PLAT-FPGA",
       "category": "fpga",
-      "capability_contract": "open-flow-capable FPGA path with HDL simulation, synthesis, timing, and hardware demonstration",
+      "capability_contract": "education FPGA with documented I/O-bank limits, accessible clock/reset and serial/PMOD-style I/O, sufficient logic/memory headroom for the approved architecture artifact, self-checking simulation, inspectable synthesis/place-route/timing reports, offline programming, and reversible known-good-image recovery",
       "reference": "deployment-selected",
       "alternatives": [
         "simulation-first path before board access"
@@ -47,7 +65,42 @@
       "claim_ids": [
         "CLM-PLAT-001"
       ],
-      "status": "review"
+      "status": "qualification-pending"
+    },
+    {
+      "id": "PLAT-LINUX-EMBEDDED",
+      "category": "embedded-linux",
+      "capability_contract": "supported SBC or equivalent target with protected mapped GPIO/peripheral interfaces, local console/log diagnostics, replaceable or recoverable storage, measured image/service RAM and storage headroom, reproducible offline provisioning/build, MCU bridge for deterministic timing, and disabled or locally approved radio/network configuration",
+      "reference": "deployment-selected Raspberry Pi 4/5-class or capability-equivalent target",
+      "alternatives": [
+        "qualified BeagleBone/BeaglePlay-class target",
+        "fully imaged and qualified equivalent SBC",
+        "refurbished x86 mini-PC plus qualified remote MCU"
+      ],
+      "binding": "platform-bound",
+      "review_due": "2027-07-13",
+      "context_ids": [],
+      "claim_ids": [
+        "CLM-PLAT-001"
+      ],
+      "status": "qualification-pending"
+    },
+    {
+      "id": "PLAT-DEBUG-PROGRAM",
+      "category": "debug-probe-programmer",
+      "capability_contract": "interface-matched reusable probe/programmer with explicit target-voltage sensing and powering limits, keyed/strain-relieved adapters, required SWD/JTAG/UART or FPGA programming operations, offline drivers/server/debug integration, archived firmware and self-recovery, genuine/clone provenance, and no need to place reusable targets in irreversible state",
+      "reference": "deployment-selected interface-matched institution-qualified tool",
+      "alternatives": [
+        "on-board debug probe after exact target qualification",
+        "separately powered institution-qualified probe/programmer"
+      ],
+      "binding": "platform-bound",
+      "review_due": "2027-07-13",
+      "context_ids": [],
+      "claim_ids": [
+        "CLM-PLAT-001"
+      ],
+      "status": "qualification-pending"
     },
     {
       "id": "PLAT-PCB",

@@ -1,0 +1,83 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+record_id: M03-E2-GOLDEN-CATEGORY-CANDIDATE-SAMPLE-DATE
+specification_id: M03-E2-GOLDEN-001
+specification_version: 1.0.0
+status: not_run
+candidate:
+  capability_contract_id: null
+  abstraction_sheet_id: null
+  manufacturer_part_number: null
+  board_or_tool_revision: null
+  silicon_package_revision: null
+  sample_asset_id: null
+provenance:
+  supplier_channel_record_id: null
+  incoming_inspection_record_id: null
+  identity_evidence: []
+configuration:
+  source_commit: null
+  environment_lock_id: null
+  offline_bundle_manifest_sha256: null
+  host_benchmark_record_id: null
+  probe_programmer_asset_and_firmware: null
+  fixture_id_and_revision: null
+  instrument_ids_and_function_check_or_calibration: []
+  known_good_artifact_ids_and_sha256: []
+execution:
+  operator: null
+  witness: null
+  date: null
+  location: null
+  ambient_conditions_if_relevant: null
+  network_unavailable_verification: null
+  current_limit_and_safe_setup_record: null
+tests:
+  GP-00: {applicability: required, result: not_run, evidence: [], anomalies: []}
+  GP-01: {applicability: required, result: not_run, evidence: [], anomalies: []}
+  GP-02: {applicability: pending, result: not_run, evidence: [], anomalies: []}
+  GP-03: {applicability: pending, result: not_run, evidence: [], anomalies: []}
+  GP-04: {applicability: pending, result: not_run, evidence: [], anomalies: []}
+  GP-05: {applicability: pending, result: not_run, evidence: [], anomalies: []}
+  GP-06: {applicability: pending, result: not_run, evidence: [], anomalies: []}
+  GP-07: {applicability: pending, result: not_run, evidence: [], anomalies: []}
+  GP-08: {applicability: required, result: not_run, evidence: [], anomalies: []}
+  GP-09: {applicability: pending, result: not_run, evidence: [], anomalies: []}
+  GP-10: {applicability: pending, result: not_run, evidence: [], anomalies: []}
+  GP-11: {applicability: pending, result: not_run, evidence: [], anomalies: []}
+builds: []
+  # Each: test_id, command, started, elapsed_seconds, peak_ram_mib, output_bytes,
+  # output_sha256, warnings, complete_log, result.
+measurements: []
+  # Each: test_id, measurand, prediction_and_bound, method, instrument, raw_data,
+  # resolution_or_uncertainty, result, limitation.
+recovery_attempts: []
+  # Each: test_id, fault_state, method, elapsed_seconds, restored_artifact_sha256,
+  # permanent_state_changed (must be false), result, evidence.
+anomalies_and_corrections: []
+  # Preserve before, hypothesis, discriminating test, correction, retest, impact.
+irreversible_security_operations_performed: false
+radio:
+  default_disabled_verified: not_run
+  transmission_performed: false
+  jurisdiction_and_facility_approval_id: null
+review:
+  independent_reviewer: null
+  formula_and_raw_evidence_recomputed: not_run
+  required_tests_complete: false
+  open_critical_defects: []
+decision:
+  result: not_evaluated
+  allowed_values: [pass, conditional, fail, inconclusive, not_evaluated]
+  limitations: []
+  course_and_assessment_disposition: null
+  expires_or_review_due: null
+  event_triggers: []
+approvals:
+  platform_engineer: null
+  safety_officer: null
+  toolchain_owner: null
+  course_owner: null
+limitations_notice: >-
+  This unexecuted record does not qualify hardware, a toolchain, a procurement
+  channel, or a host computer. Every required test needs attributable raw evidence
+  and independent review.

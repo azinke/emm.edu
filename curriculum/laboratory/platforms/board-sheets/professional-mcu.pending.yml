@@ -1,0 +1,48 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+sheet_id: PLAT-SHEET-MCU-PROFESSIONAL-PENDING
+sheet_version: 0.1.0
+status: qualification-pending
+capability_contract_id: CAP-MCU-PROFESSIONAL
+candidate:
+  category: mcu-professional
+  planned_reference_class: cortex-m33-nucleo-class-or-capability-equivalent
+  exact_product: null
+  orderable_part_number: null
+  board_revision: null
+required_pin_groups:
+  - power-ground-reference-and-debugger-bridge-domains
+  - gpio-adc-and-dac-if-present
+  - timer-pwm-capture-and-low-power-clock
+  - uart-spi-i2c-and-field-bus
+  - swd-jtag-reset-and-uart
+  - boot-selection-and-recovery
+electrical_fields_required:
+  - connector-to-silicon-routing-and-alternate-functions
+  - recommended-and-absolute-ranges
+  - per-pin-and-aggregate-current
+  - analog-reference-calibration-and-source-impedance
+  - onboard-debugger-power-isolation-and-backfeed
+  - transceiver-and-level-shifter-requirements
+boot_debug_fields_required:
+  - reset-boot-and-option-state
+  - halt-step-breakpoint-register-memory-and-reset
+  - recovery-under-reset
+  - rt_os_debug-resource-conflicts
+known_failure_modes_to_investigate:
+  - debugger-target-power-contention
+  - option-byte-or-boot-mode-confusion
+  - alternate-function-routing-error
+  - timer-or-dma-resource-conflict
+  - low-power-clock-or-debug-interaction
+  - non-genuine-probe-or-board-variant
+substitute_mapping_required:
+  - register-and-peripheral-concept-map
+  - rt_os-board-support-and-memory-headroom
+  - probe-and-connector-change
+  - field-bus-fixture-change
+  - assessment-timing-and-fairness-impact
+golden_project_applicability: [GP-00, GP-01, GP-02, GP-03, GP-04, GP-05, GP-06, GP-07, GP-08]
+decision: not_evaluated
+limitations:
+  - Exact stocked model and all hardware-specific fields remain pending cohort selection, primary-document review, and sample testing.
+complete_using: ../board-abstraction-sheet-template.yml

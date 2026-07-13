@@ -1,0 +1,145 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+scorecard_id: M03-E2-SCORE-CATEGORY-CANDIDATE-CHANNEL-DATE
+version: 1.0.0
+status: not_run
+protocol_id: M03-E2-PROC-001
+capability_contract_id: null
+category: null # foundation-mcu | professional-mcu | wireless | fpga | embedded-linux | probe | programmer
+candidate:
+  manufacturer: null
+  product: null
+  manufacturer_part_number: null
+  board_or_tool_revision: null
+  silicon_device_package_revision: null
+  sample_asset_ids: []
+  abstraction_sheet_id: null
+channel:
+  controlled_supplier_record_id: null
+  independence_basis: null
+  quote_record_id: null
+  quote_date: null
+  quote_valid_until: null
+  quantity: null
+  stock_and_lead_time_basis: null
+  provenance_class: null
+  identity_counterfeit_controls: []
+commercial_basis:
+  source_currency: null
+  deployment_currency: null
+  exchange_source_and_date: null
+  unit_price: null
+  accessories_per_unit: null
+  freight_total: null
+  tax_duty_fees_total: null
+  other_known_costs: []
+  unknown_costs: []
+  landed_unit_cost: null
+  cohort_total_cost_record_id: null
+  warranty_return_terms_record_id: null
+request_freeze:
+  cohort_or_planning_id: null
+  cohort_quantity_and_spares: null
+  shared_ratio: null
+  latest_acceptable_delivery: null
+  environment_lock_id: null
+  golden_project_version: null
+  fixture_revision: null
+  planned_sample_size: null
+  predeclared_minimum_total: null
+  predeclared_category_minimums: {}
+hard_gates:
+  identity_and_revision_resolved: not_run
+  authoritative_electrical_limits_complete: not_run
+  safe_extra_low_voltage_fixture_approved: not_run
+  repeatable_boot_program_and_recovery: not_run
+  offline_build_program_debug: not_run
+  required_learning_actions_visible: not_run
+  no_required_irreversible_security_operation: not_run
+  radio_jurisdiction_or_verified_disabled_state: not_run
+  no_open_critical_safety_or_identity_defect: not_run
+  applicable_contract_specific_gates: []
+  overall: not_evaluated
+evidence:
+  incoming_inspection_record: null
+  primary_document_review_record: null
+  abstraction_sheet: null
+  golden_project_record: null
+  offline_bundle_manifest_sha256: null
+  raw_evidence_directory_or_controlled_id: null
+  anomaly_and_quarantine_records: []
+scores:
+  # score must be integer 0..5; weighted_points = score / 5 * weight.
+  transferable_learning_visibility:
+    weight: 20
+    score: null
+    weighted_points: null
+    evidence: []
+    rationale: null
+  documentation_schematics_examples_community:
+    weight: 15
+    score: null
+    weighted_points: null
+    evidence: []
+    rationale: null
+  availability_landed_cost:
+    weight: 15
+    score: null
+    weighted_points: null
+    evidence: []
+    rationale: null
+  open_offline_cross_platform_tools:
+    weight: 15
+    score: null
+    weighted_points: null
+    evidence: []
+    rationale: null
+  debug_test_access:
+    weight: 10
+    score: null
+    weighted_points: null
+    evidence: []
+    rationale: null
+  lifecycle_second_source:
+    weight: 10
+    score: null
+    weighted_points: null
+    evidence: []
+    rationale: null
+  electrical_robustness_repairability:
+    weight: 10
+    score: null
+    weighted_points: null
+    evidence: []
+    rationale: null
+  accessibility_licensing:
+    weight: 5
+    score: null
+    weighted_points: null
+    evidence: []
+    rationale: null
+  total_weight: 100
+  total_weighted_points: null
+  independently_recomputed_by: null
+limitations_and_anomalies: []
+comparison:
+  other_channel_scorecard_ids: []
+  substitute_scorecard_ids: []
+  material_differences: []
+decision:
+  value: not_evaluated
+  allowed_values: [qualified-primary, qualified-substitute, conditionally-qualified, not-qualified, decision-deferred]
+  rationale: null
+  conditions: []
+  expires_or_review_due: null
+  event_triggers: []
+approvals:
+  procurement_lead: {name_or_role: null, date: null}
+  platform_engineer: {name_or_role: null, date: null}
+  independent_technical_reviewer: {name_or_role: null, date: null}
+  safety_officer: {name_or_role: null, date: null}
+  course_or_toolchain_owner: {name_or_role: null, date: null}
+  laboratory_director: {name_or_role: null, date: null}
+limitations_notice: >-
+  This blank sample scorecard records neither a quote nor a qualification result.
+  Null commercial fields are unknown, not zero. Do not advance status without
+  linked primary, commercial, raw test, and independent-review evidence.

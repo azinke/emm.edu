@@ -1,0 +1,134 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+sheet_id: PLAT-SHEET-CATEGORY-CANDIDATE-REVISION
+sheet_version: 0.1.0
+status: qualification-pending
+capability_contract_id: CAP-CATEGORY
+candidate:
+  category: null
+  role_in_cohort: candidate # primary | substitute | candidate | retired
+  manufacturer: null
+  product_name: null
+  orderable_part_number: null
+  board_revision: null
+  silicon:
+    device: null
+    package: null
+    revision_or_stepping: null
+  received_identity:
+    asset_or_sample_ids: []
+    supplier_channel_record_ids: []
+    markings_and_photos_evidence: null
+authoritative_sources:
+  datasheet: {document_id: null, revision: null, locator: null, retrieved: null, archive_sha256: null}
+  reference_manual: {document_id: null, revision: null, locator: null, retrieved: null, archive_sha256: null}
+  board_schematic: {document_id: null, revision: null, locator: null, retrieved: null, archive_sha256: null}
+  hardware_design: {document_id: null, revision: null, locator: null, retrieved: null, archive_sha256: null}
+  errata: {document_id: null, revision: null, locator: null, retrieved: null, archive_sha256: null}
+  toolchain_docs: {document_id: null, revision: null, locator: null, retrieved: null, archive_sha256: null}
+electrical:
+  logic_domains: []
+  power_inputs: []
+  power_outputs: []
+  recommended_operating_conditions: []
+  absolute_maximum_ratings: []
+  per_pin_current_limits: []
+  aggregate_current_limits: []
+  five_volt_tolerance_by_pin: []
+  backfeed_and_phantom_power_paths: []
+  analog_reference_and_ground: null
+  accessible_temperature_or_energy_notes: []
+pin_map:
+  board_pin_reference_convention: null
+  do_not_use: []
+  entries: []
+  # Each entry: board_pin, silk_label, silicon_pin, default_role, alternatives,
+  # voltage_domain, reset_state, pull_state, drive_limits, conflicts, safe_fixture.
+peripherals:
+  gpio: {available: null, notes: []}
+  adc: {channels: [], resolution_modes: [], reference: null, limitations: []}
+  dac: {channels: [], limitations: []}
+  timers_pwm_capture: []
+  uart: []
+  spi: []
+  i2c: []
+  field_buses: []
+  radio: {fitted: null, technologies: [], default_state: null, disable_method: null, approval_record: null}
+  clocks_and_reset: []
+memory_logic:
+  nonvolatile: []
+  volatile: []
+  external_memory: []
+  programmable_logic: []
+  reserved_regions_or_resources: []
+boot_program_debug:
+  normal_boot: null
+  boot_selection: []
+  program_interfaces: []
+  debug_interfaces: []
+  supported_probe_ids: []
+  uart_or_console: null
+  bad_image_recovery: null
+  interrupted_program_recovery: null
+  known_good_image_id: null
+  irreversible_operations_prohibited:
+    - permanent-debug-disable
+    - one-time-programmable-security-or-boot-fuse
+    - unrecoverable-readout-or-write-protection
+    - permanent-anti-rollback-state
+    - device-unique-key-destruction-or-replacement
+toolchain:
+  environment_lock_id: null
+  host_profiles: []
+  build_command: null
+  program_command: null
+  debug_command: null
+  recovery_command: null
+  network_required_after_install: null
+  license_or_account_constraints: []
+safe_handling:
+  deenergized_connection_rule: null
+  current_limit_and_fixture: null
+  esd_controls: null
+  connector_keying_and_strain_relief: null
+  battery_or_storage_media: null
+  radio_controls: null
+  quarantine_triggers: []
+known_errata_and_failure_modes: []
+  # Each entry: id, source_or_observation, affected_revision, symptom, safety,
+  # discriminating_test, workaround, teaching_impact, status, review_trigger.
+substitute_mapping:
+  substitute_sheet_id: null
+  preserved_actions: []
+  pin_and_fixture_changes: []
+  peripheral_semantic_changes: []
+  toolchain_changes: []
+  assessment_changes: []
+  evidence_of_equivalence: []
+golden_project:
+  specification_version: 1.0.0
+  applicable_test_ids: []
+  last_record_id: null
+  result: not_run
+qualification:
+  document_review: pending
+  incoming_inspection: not_run
+  electrical_review: not_run
+  golden_project: not_run
+  offline_build: not_run
+  recovery: not_run
+  safety_review: pending
+  technical_review: pending
+  decision: not_evaluated
+  limitations:
+    - This blank sheet is not evidence that a candidate is qualified.
+freeze:
+  cohort_ids: []
+  effective_date: null
+  review_due: null
+  event_triggers: []
+approvals:
+  platform_engineer: null
+  safety_officer: null
+  toolchain_owner: null
+  course_owner: null
+  release_manager: null

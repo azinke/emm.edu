@@ -1,0 +1,144 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+benchmark_record_id: M03-E2-COMP-PROFILE-ASSET-DATE
+protocol_id: M03-E2-COMP-001
+version: 1.0.0
+status: not_run
+profile:
+  id: null
+  source: curriculum/environments/toolchain.yml
+  predeclared_acceptance_record: null
+machine:
+  controlled_asset_id: null
+  manufacturer: null
+  model: null
+  refurbished: null
+  relevant_repair_history: []
+  firmware_version: null
+  architecture: null
+  cpu_exact_model: null
+  physical_cores: null
+  ram_gib: null
+  storage_type_model_capacity: null
+  storage_health_method_and_result: null
+  free_storage_gib_before_install: null
+  display_resolution_and_scaling: null
+  required_ports_and_condition: []
+  battery_power_and_thermal_condition: null
+os:
+  name_edition_version_build: null
+  filesystem: null
+  locale: null
+  kernel_or_build: null
+  privilege: student-non-admin
+  background_services_power_mode: null
+  accessibility_configuration: null
+environment:
+  source_commit: null
+  toolchain_lock_id: null
+  offline_bundle_version: null
+  offline_bundle_manifest_sha256: null
+  install_from_offline_result: not_run
+  install_seconds: null
+  installed_size_bytes: null
+  peak_install_space_bytes: null
+  network_unavailable_method_and_evidence: null
+  cache_state_definition: null
+configuration:
+  operator: null
+  independent_reviewer: null
+  date: null
+  location: null
+  repetitions_planned: null
+  timing_method: null
+  peak_ram_method: null
+  storage_method: null
+  thermal_throttle_method: null
+  exclusions_predeclared: []
+workflows:
+  COMP-DOC:
+    result: not_run
+    acceptance: null
+    repetitions: []
+    output_correctness: not_run
+    interaction_accessibility: not_run
+    defects: []
+  COMP-KICAD:
+    result: not_run
+    acceptance: null
+    repetitions: []
+    output_correctness: not_run
+    interaction_accessibility: not_run
+    defects: []
+  COMP-FW:
+    result: not_run
+    acceptance: null
+    repetitions: []
+    output_correctness: not_run
+    interaction_accessibility: not_run
+    defects: []
+  COMP-HDL:
+    result: not_run
+    acceptance: null
+    repetitions: []
+    output_correctness: not_run
+    interaction_accessibility: not_run
+    defects: []
+  COMP-NUM:
+    result: not_run
+    acceptance: null
+    repetitions: []
+    output_correctness: not_run
+    interaction_accessibility: not_run
+    defects: []
+  COMP-LINUX:
+    result: not_run
+    acceptance: null
+    repetitions: []
+    output_correctness: not_run
+    interaction_accessibility: not_run
+    defects: []
+repetition_record_shape:
+  run_number: null
+  cache_state: null
+  started: null
+  wall_seconds_by_step: {}
+  total_wall_seconds: null
+  peak_ram_mib: null
+  cpu_or_thermal_observation: null
+  free_storage_bytes_minimum: null
+  temporary_and_output_bytes: null
+  output_hashes: []
+  complete_log: null
+  warnings_errors_interventions: []
+  result: not_run
+storage_offline_audit:
+  attempted_fetch_signin_or_license_events: []
+  bundle_installed_bytes: null
+  peak_temporary_bytes: null
+  outputs_logs_cache_bytes: null
+  minimum_free_bytes: null
+  academic_period_and_backup_estimate_bytes: null
+  student_work_backup_restore_result: not_run
+support_routes:
+  loan_route_id_and_status: null
+  repair_route_id_and_status: null
+  shared_build_route_id_and_status: null
+  peak_capacity_or_outage_test_record: null
+limitations_and_repairs: []
+decision:
+  value: not_evaluated
+  allowed_values: [pass, conditional, fail, not_evaluated]
+  rationale: null
+  shared_tasks: []
+  personal_tasks_preserved: []
+  expires_or_review_due: null
+  event_triggers: []
+approvals:
+  toolchain_owner: null
+  accessibility_reviewer: null
+  laboratory_computing_lead: null
+  affected_course_owners: []
+  release_manager: null
+limitations_notice: >-
+  This template contains no physical-machine result. Do not infer performance from
+  the proposed profile, marketing specification, virtual machine, or empty fields.

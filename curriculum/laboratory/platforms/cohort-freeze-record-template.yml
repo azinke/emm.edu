@@ -1,0 +1,84 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+freeze_record_id: M03-E2-FREEZE-COHORT-VERSION
+control_id: M03-E2-DEC-001
+version: 1.0.0
+status: pending
+cohort:
+  id: null
+  teaching_start: null
+  deployment_profile_id: null
+  courses_and_assessments: []
+baseline:
+  release_tag_or_commit: null
+  platform_matrix_version: null
+  environment_lock_id: null
+  offline_bundle_manifest_sha256: null
+  release_date: null
+platforms: []
+  # Each entry: category, role, exact manufacturer part number, assembly revision,
+  # silicon/package revision, abstraction sheet ID, scorecard IDs by channel,
+  # golden record IDs by sample, probe/programmer, fixture, known-good image/hash,
+  # quantity, spare quantity, qualification decision and expiry.
+substitutes: []
+  # Include two instructor exemplar asset references, equivalence evidence, and
+  # assessed-action mapping; do not publish sensitive serial numbers.
+toolchain:
+  board_probe_firmware: []
+  drivers_and_usb_rules: []
+  compilers_sdks_rtos_fpga_linux_images: []
+  host_profiles_and_benchmark_report_ids: []
+  archived_documentation_and_license_record: null
+  build_program_debug_recovery_commands_record: null
+operations:
+  safe_handling_and_current_limit_cards: []
+  incoming_inspection_record: null
+  repair_loan_shared_access_route: null
+  staff_qualification_records: []
+  radio_jurisdiction_records: []
+  total_cost_and_procurement_approval_record: null
+irreversible_security_control:
+  reusable_stock_operations_prohibited: true
+  prohibited_operations:
+    - otp-or-efuse-security-boot-key-region-or-antirollback-state
+    - permanent-debug-disable-or-unrecoverable-readout-lock
+    - destructive-device-unique-key-or-lifecycle-change
+  security_exercise_route: simulation-or-controlled-sacrificial-hardware-only
+  sacrificial_hardware_control_record: null
+artifact_trace:
+  platform_bound_en_assets: []
+  platform_bound_fr_assets: []
+  shared_assets: []
+  parity_review_record: null
+  accessibility_review_record: null
+open_gaps: []
+  # Each: gap, affected path, why non-safety/non-assessment, mitigation, owner,
+  # due date before use, expiry, evidence needed.
+replacement_triggers:
+  scheduled_review: null
+  event_triggers:
+    - safety-incident-near-miss-damage-pattern-or-material-erratum
+    - counterfeit-identity-lot-or-board-revision-change
+    - golden-project-recovery-or-assessment-behavior-failure
+    - lifecycle-security-tool-driver-host-or-license-support-change
+    - two-channel-supply-or-approved-total-cost-failure
+    - radio-jurisdiction-antenna-firmware-network-or-privacy-change
+    - lowest-supported-computer-or-accessibility-failure
+decision:
+  value: not_approved
+  allowed_values: [frozen-qualified, frozen-with-owned-gap, not-approved]
+  rationale: null
+  effective_date: null
+  rollback_route: null
+  learner_impact: null
+  effectiveness_check_due: null
+approvals:
+  release_manager: null
+  laboratory_director: null
+  safety_officer: null
+  platform_engineering_lead: null
+  toolchain_owner: null
+  procurement_lead: null
+  affected_course_owners: []
+limitations_notice: >-
+  This template is not an approved cohort freeze. Blank, pending, not-run, or
+  expired qualification evidence blocks a frozen-qualified decision.

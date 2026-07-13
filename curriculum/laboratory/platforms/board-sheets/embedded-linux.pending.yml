@@ -1,0 +1,52 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+sheet_id: PLAT-SHEET-EMBEDDED-LINUX-PENDING
+sheet_version: 0.1.0
+status: qualification-pending
+capability_contract_id: CAP-EMBEDDED-LINUX
+candidate:
+  category: embedded-linux
+  planned_reference_class: raspberry-pi-4-5-class-or-supported-equivalent
+  exact_product: null
+  orderable_part_number: null
+  board_revision_and_memory_variant: null
+required_pin_groups:
+  - power-ground-and-usb-network-domains
+  - protected-gpio-uart-spi-i2c
+  - serial-console-or-equivalent-recovery
+  - storage-and-image-recovery
+  - mcu-bridge-when-deterministic-io-is-required
+electrical_fields_required:
+  - power-input-and-peak-load-method
+  - gpio-recommended-and-absolute-ranges
+  - backfeed-and-shutdown-behavior
+  - cooling-enclosure-and-accessible-temperature-review
+  - protected-interface-fixture
+memory_storage_fields_required:
+  - ram-variant
+  - boot-and-root-storage-media
+  - image-free-space-and-peak-memory
+  - backup-restore-and-media-replacement
+  - update-and-rollback-space
+boot_debug_fields_required:
+  - known-good-image-and-checksum
+  - local-console-and-boot-diagnostics
+  - offline-package-source-and-service-logs
+  - credential-injection-from-controlled-storage
+known_failure_modes_to_investigate:
+  - inadequate-or-unstable-power
+  - storage-corruption-or-wear
+  - thermal-throttling
+  - gpio-voltage-or-timing-assumption
+  - image-hardware-revision-mismatch
+  - online-package-or-name-service-dependency
+substitute_mapping_required:
+  - service-device-and-mcu-link-map
+  - image-build-and-package-change
+  - gpio-fixture-and-console-change
+  - performance-memory-and-storage-headroom
+  - shared-access-scheduling-and-fairness
+golden_project_applicability: [GP-00, GP-01, GP-02, GP-05, GP-07, GP-08, GP-11]
+decision: not_evaluated
+limitations:
+  - No SBC image, electrical interface, offline package set, or performance result is qualified by this pending sheet.
+complete_using: ../board-abstraction-sheet-template.yml

@@ -21,7 +21,7 @@
 
 ## Epic E2 — Platform capability qualification
 
-- [ ] **M03-E2-T01 [SPEC]** Convert each planned board use into capability contracts: I/O voltage, ADC, timers, buses, memory, debug, radio, logic, toolchain, recovery, lifecycle, and cost.
+- [x] **M03-E2-T01 [SPEC]** Convert each planned board use into capability contracts: I/O voltage, ADC, timers, buses, memory, debug, radio, logic, toolchain, recovery, lifecycle, and cost.
 - [ ] **M03-E2-T02 [TEST]** Procure samples from at least two channels and score Pico 2/equivalent, professional MCU, wireless board, FPGA, Linux target, probes, and programmers.
 - [ ] **M03-E2-T03 [TEST]** Run golden projects for boot/recovery, GPIO, ADC, timer/PWM, serial buses, debug, power, and offline build on primary and substitute boards.
 - [ ] **M03-E2-T04 [SPEC]** Publish board abstraction sheets with pins, electrical limits, boot/debug, errata, known failure modes, substitute mapping, and safe handling.
@@ -86,6 +86,42 @@ learner authorization, or deployment result.
   incident-response and damaged-battery/equipment quarantine drills in the named
   facility, including accessibility, communications, timing, observed actions,
   corrective owners, and a successful effectiveness check. **Owner:** safety officer.
+
+### E2 — Platform capability qualification
+
+- [Capability contracts](../../curriculum/laboratory/platforms/capability-contracts.yml)
+  now cover foundation MCU, professional MCU/RTOS, wireless, FPGA, embedded Linux,
+  and debug/programming tools across electrical domains, ADC, timers, buses, memory,
+  debug, radio, logic, offline toolchain, recovery, lifecycle, and total cost. The
+  canonical platform matrix carries all seven categories and truthfully marks
+  untested hardware `qualification-pending`.
+- The platform control pack provides two-channel procurement and weighted scorecard
+  records; a common golden-project contract for boot/recovery, GPIO, ADC, timers/PWM,
+  buses, debug, power, and offline build; abstraction-sheet fields and pending
+  category sheets; cohort freeze/replacement and irreversible-security controls;
+  and full-workflow lowest-supported/refurbished-computer benchmark records.
+- Exact pins, electrical limits, errata, MPN/revision, supplier provenance, and
+  measured results are intentionally blank until verified against primary documents
+  and received samples. A category sheet is not a qualified board.
+- Canonical validation, generator equality, YAML parsing, offline content QA,
+  automated script tests, and `git diff --check` passed during implementation.
+- **Open M03-E2-T02/T03 evidence:** procure exact samples through at least two viable
+  channels, authenticate/inspect them, run and independently review every applicable
+  golden test on each primary and substitute revision, and publish the resulting
+  scores, raw logs, measurements, limitations, and landed costs. **Owners:** platform
+  engineering and procurement leads.
+- **Open M03-E2-T04 evidence:** complete and approve exact abstraction sheets from
+  authoritative documents plus sample measurements and failure/recovery evidence.
+  **Owner:** platform engineering lead.
+- **Open M03-E2-T05 evidence:** sign a real cohort freeze naming every orderable part,
+  assembly revision, tool image, driver, programmer, substitute, spare quantity, and
+  trigger. **Approvers:** course owners, laboratory director, safety/procurement,
+  toolchain owner, and release manager.
+- **Open M03-E2-T06 evidence:** execute all six workflow classes on named minimum
+  Linux and Windows/refurbished candidates; publish cold/warm times, failures,
+  offline storage, repair/loan route, and shared-build fallback after review. The
+  development host is not promoted to minimum-profile evidence. **Owners:** toolchain
+  owner, IT/loan-fleet owner, and learner-device reviewer.
 
 ## Hands-on and real-life safeguard
 

@@ -1,0 +1,51 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+sheet_id: PLAT-SHEET-FPGA-EDUCATION-PENDING
+sheet_version: 0.1.0
+status: qualification-pending
+capability_contract_id: CAP-FPGA-EDUCATION
+candidate:
+  category: fpga-education
+  planned_reference_class: ice40-open-flow-capable-board-or-qualified-equivalent
+  exact_product: null
+  orderable_part_number: null
+  fpga_package_and_board_revision: null
+required_pin_groups:
+  - configuration-programming-and-reset
+  - oscillator-clock-and-reset
+  - led-button-and-safe-loopback
+  - uart-and-pmod-style-or-equivalent-connectors
+  - bank-power-and-ground
+electrical_fields_required:
+  - bank-voltage-and-io-standard-by-pin
+  - configuration-pin-reset-state
+  - connector-current-and-voltage-limits
+  - programmer-shared-pins-and-contention
+  - clock-frequency-tolerance-and-routing
+logic_memory_fields_required:
+  - exact-device-package-and-resource-counts
+  - block-ram-pll-and-external-memory
+  - configuration-memory-and-known-good-image
+  - golden-architecture-utilization-timing-and-headroom
+boot_debug_fields_required:
+  - volatile-and-nonvolatile-programming-routes
+  - invalid-bitstream-recovery
+  - uart-test-point-and-logic-capture
+  - external-known-good-programmer
+known_failure_modes_to_investigate:
+  - wrong-bank-voltage-or-io-standard
+  - missing-or-wrong-timing-constraint
+  - programmer-driver-or-cable-failure
+  - configuration-memory-versus-volatile-load-confusion
+  - connector-pin-numbering-mismatch
+  - tool-flow-device-or-package-mismatch
+substitute_mapping_required:
+  - hdl-port-and-constraints-map
+  - clock-reset-and-memory-map
+  - programmer-and-cable-change
+  - resource-and-timing-headroom
+  - open-flow-or-vendor-fallback-host-impact
+golden_project_applicability: [GP-00, GP-01, GP-02, GP-04, GP-05, GP-07, GP-08, GP-10]
+decision: not_evaluated
+limitations:
+  - No board, pin map, tool flow, bitstream, or timing result is qualified by this pending sheet.
+complete_using: ../board-abstraction-sheet-template.yml

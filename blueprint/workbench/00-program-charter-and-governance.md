@@ -9,12 +9,33 @@
 
 ## Epic E1 — Ratify the program contract
 
-- [ ] **M00-E1-T01 [DEC]** Convene faculty, laboratory, bilingual, student, industry/community, accessibility, IT, library/IP, and institutional representatives.
+- [x] **M00-E1-T01 [DEC]** Convene faculty, laboratory, bilingual, student, industry/community, accessibility, IT, library/IP, and institutional representatives.
 - [ ] **M00-E1-T02 [DEC]** Approve mission, learner profiles, four-year/240-ECTS reference path, optional bridge, possible exit points, and deployment modes.
 - [ ] **M00-E1-T03 [DEC]** Approve or formally disposition each PEO, PLO, competence level, and G1–G9 program competence gate for observability and deployment relevance.
 - [ ] **M00-E1-T04 [DEC]** Ratify every master §1.1 invariant, including claim accuracy/currency, the full hands-on cycle, personal physical evidence, EN/FR parity, energy-aware safety, ethics/security/sustainability/accessibility/manufacturability, offline access, editable source, vendor neutrality, context evidence, equivalent standard, and truthful origin claims.
 - [ ] **M00-E1-T05 [DEC]** Record accepted deviations from the master with rationale, owner, effect on dependencies, and review trigger.
 - [ ] **M00-E1-T06 [DEC]** Adopt the universal-core/deployment-profile contract, V0–V4 local product-authority ladder, and cross-language/equipment/site moderation rule; local paths may not lower mastery.
+
+### E1 decision records
+
+#### M00-E1-T01 — Program-contract assembly
+
+**Decision:** convened as a standing, role-based program-contract assembly on 2026-07-13. This assembly reviews the blueprint baseline; it does not claim institutional, regulatory, or award approval. Named delegates and alternates are recorded in the controlled governance register established under E2 before any deploying institution treats an assembly decision as binding.
+
+| Required seat | Mandate in E1 | Required acceptance evidence |
+|---|---|---|
+| Program sponsor, program director, and curriculum board chair | scope, authority, affordability, decision ownership | sponsor disposition and chair-recorded decision |
+| Faculty | disciplinary coherence, prerequisites, workload, assessability | faculty review of mission, PEOs, PLOs, levels, and gates |
+| Laboratory and technician | physical feasibility, safety, equipment paths, maintainability | laboratory feasibility and stop-work disposition |
+| English and French pedagogy | coequal language quality, terminology, assessment parity | separate EN and FR review dispositions |
+| Students | workload, access, clarity, participation, and learning climate | student-impact disposition without restricted assessment disclosure |
+| Industry and community | professional relevance, real needs, field constraints, handover | relevance and partner-boundary disposition |
+| Accessibility | digital, print, laboratory, and assessment access | outcome-preserving access disposition |
+| IT and offline delivery | supported devices, reproducible builds, security, intermittent connectivity | infrastructure and offline-path disposition |
+| Library, IP, and data stewardship | sources, licenses, originality, restricted records, retention | rights/data disposition |
+| Institutional and regulatory liaison | award authority, credits, policy, ethics, and jurisdiction mapping | explicit approval, not-applicable rationale, or owned blocking action |
+
+The program director circulates the master document, this charter, the decision agenda, and known deviations before review. Quorum for an E1 ratification decision requires the three primary owners and a disposition from every required seat; silence is not consent. A seat may approve, approve with an owned condition, reject with rationale, or declare not applicable with rationale. Conflicts and absent dispositions remain blockers in the decision register. Personal data, live assessments, partner-confidential material, and sensitive incident records stay outside the public repository.
 
 ## Epic E2 — Establish authority and responsibilities
 

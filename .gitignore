@@ -1,0 +1,12 @@
+# Generated publication output
+/curriculum/build/**
+!/curriculum/build/.gitkeep
+
+# Restricted artifacts belong in a separately permissioned store. Only the
+# directory markers in this public scaffold may be tracked here.
+/curriculum-private/current-assessments/**
+!/curriculum-private/current-assessments/.gitkeep
+/curriculum-private/restricted-solutions/**
+!/curriculum-private/restricted-solutions/.gitkeep
+/curriculum-private/protected-student-partner-data/**
+!/curriculum-private/protected-student-partner-data/.gitkeep

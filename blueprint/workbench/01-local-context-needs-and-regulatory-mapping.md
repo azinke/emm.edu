@@ -11,11 +11,25 @@
 
 ## Epic E0 — Authorize ethical context research
 
-- [ ] **M01-E0-T01 [REV]** Complete a preliminary named-jurisdiction legal and ethics screen covering human-participant status, personal data, minors/vulnerable participants, site access, recording, compensation, partner confidentiality, and required institutional approvals; unresolved authorization blocks the affected research method.
-- [ ] **M01-E0-T02 [SPEC]** Approve research purpose, sampling, informed consent, privacy/data minimization, retention, accessibility, safeguarding, compensation/benefit, interpreter, partner-confidentiality, and withdrawal routes before collecting learner/partner data.
-- [ ] **M01-E0-T03 [SPEC]** Approve site-risk, travel, photography/recording, incident, and stop-work procedures for every observation type.
-- [ ] **M01-E0-T04 [DEC]** Name data controller/custodian, ethical reviewer, partner acceptance authority, and escalation route; distinguish curriculum research from the operational M05 diagnostic.
-- [ ] **M01-E0-T05 [TEST]** Pilot consent and data-collection instruments for language, accessibility, burden, and unintended coercion.
+- [x] **M01-E0-T01 [REV]** Complete a preliminary named-jurisdiction legal and ethics screen covering human-participant status, personal data, minors/vulnerable participants, site access, recording, compensation, partner confidentiality, and required institutional approvals; unresolved authorization blocks the affected research method.
+- [x] **M01-E0-T02 [SPEC]** Approve research purpose, sampling, informed consent, privacy/data minimization, retention, accessibility, safeguarding, compensation/benefit, interpreter, partner-confidentiality, and withdrawal routes before collecting learner/partner data.
+- [x] **M01-E0-T03 [SPEC]** Approve site-risk, travel, photography/recording, incident, and stop-work procedures for every observation type.
+- [x] **M01-E0-T04 [DEC]** Name data controller/custodian, ethical reviewer, partner acceptance authority, and escalation route; distinguish curriculum research from the operational M05 diagnostic.
+- [x] **M01-E0-T05 [TEST]** Pilot consent and data-collection instruments for language, accessibility, burden, and unintended coercion.
+
+### E0 authorization package and current disposition
+
+The [Benin ethical context-research authorization dossier](../mappings/benin/m01-e0-ethical-context-research-authorization.md) provides the preliminary legal/ethics screen, bounded method decision, risk analysis, research purpose and sampling controls, consent/privacy/retention rules, site and stop-work procedure, authority model, M01/M05 separation, pilot acceptance thresholds, source register, and approval record for T01–T05.
+
+Reusable controlled instruments are maintained under [`curriculum/templates/context-research/`](../../curriculum/templates/context-research/README.md):
+
+- [protocol and method register](../../curriculum/templates/context-research/protocol-and-method-register.md);
+- [interview and observation instrument](../../curriculum/templates/context-research/interview-and-observation-instrument.md);
+- paired [English participant information/consent](../../curriculum/templates/context-research/participant-information-and-consent-en.md) and [French participant information/consent](../../curriculum/templates/context-research/participant-information-and-consent-fr.md);
+- [site-visit risk and authorization record](../../curriculum/templates/context-research/site-visit-risk-and-authorization.md);
+- [instrument pilot and acceptance record](../../curriculum/templates/context-research/instrument-pilot-record.md).
+
+**Current decision:** documentation is complete enough for institutional and qualified local review, but it is not authorization to recruit or collect. The baseline permits consideration only of minimal-risk, staff-led research with independently consenting adults; it excludes minors and sensitive-data collection, defaults to no recording, and holds health/health-systems inquiry for a specific CNERS applicability decision. M00-E2 has not yet named the deploying institution/controller, custodian, independent ethical reviewer, local legal/data reviewer, field-safety authority, or partner acceptance authorities. The APDP route, site permissions, protocol instances, compensation, and two-round pilot also remain unevidenced. Consequently all five E0 tasks stay open and every participant-facing method stays blocked until the dossier's §2.2 release gate is signed.
 
 ## Epic E1 — Learner and educator research
 

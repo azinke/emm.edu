@@ -14,7 +14,7 @@
 - [x] **M00-E1-T03 [DEC]** Approve or formally disposition each PEO, PLO, competence level, and G1–G9 program competence gate for observability and deployment relevance.
 - [x] **M00-E1-T04 [DEC]** Ratify every master §1.1 invariant, including claim accuracy/currency, the full hands-on cycle, personal physical evidence, EN/FR parity, energy-aware safety, ethics/security/sustainability/accessibility/manufacturability, offline access, editable source, vendor neutrality, context evidence, equivalent standard, and truthful origin claims.
 - [x] **M00-E1-T05 [DEC]** Record accepted deviations from the master with rationale, owner, effect on dependencies, and review trigger.
-- [ ] **M00-E1-T06 [DEC]** Adopt the universal-core/deployment-profile contract, V0–V4 local product-authority ladder, and cross-language/equipment/site moderation rule; local paths may not lower mastery.
+- [x] **M00-E1-T06 [DEC]** Adopt the universal-core/deployment-profile contract, V0–V4 local product-authority ladder, and cross-language/equipment/site moderation rule; local paths may not lower mastery.
 
 ### E1 decision records
 
@@ -141,6 +141,36 @@ Any learner, staff member, reviewer, or partner may call an immediate pause for 
 Future deviations are recorded before dependent work proceeds. Each entry must identify affected outcomes, prerequisites, gates, courses, projects, language editions, apparatus paths, deployment packs, safety/ethics/access controls, assessments, schedules, budgets, releases, and public claims; “no effect” requires a rationale. It also records alternatives considered, time limit, compensating evidence, consultation, independent approver, and closure decision. An approved local mapping or substitution already permitted by the universal/deployment contract is not a deviation when it passes equivalence review. A separately named derived program is not a deviation from the 240-ECTS reference profile when it publishes its own authorized contract and makes no equivalence claim.
 
 No entry may waive a §1.1 invariant. If evidence shows an invariant itself must change, work remains blocked until the master is revised through controlled program governance, all dependent artifacts and public claims are impact-assessed, and the revised contract is ratified.
+
+#### M00-E1-T06 — Portable contract, product authority, and moderation
+
+**Decision:** adopt the three-layer portability contract and V0–V4 ladder in master §§2.5 and 7.5 without modification. A local route may add requirements or support; it may not reduce the universal outcome, reasoning, safety, mastery, or attributable individual-evidence threshold.
+
+| Layer | Controlled content | Change authority and rule |
+|---|---|---|
+| Universal engineering contract | PLOs and exit levels, prerequisite logic, mathematics/science depth, safe practice, personal physical evidence, mastery cuts, technical review, release gates, EN/FR parity, and invariant controls | program board through controlled master revision and dependency impact review only |
+| Dated national/institutional deployment pack | authorized award/credit mapping, regulations, calendar, language support, grid/environment facts, facilities, computing access, suppliers/costs, staffing, local capability, and approval records | deploying institution with qualified local review, source/retrieval dates, owners, expiry/review triggers, and no reduction of the universal contract |
+| Project/user context | evidenced need, stakeholders, user/service languages, operating environment, maintenance, acceptance, data, cost, and lifecycle constraints | approved per project through needs/ethics/design reviews using a versioned context brief |
+
+| Level | Adopted local product authority | Evidence required to claim the level |
+|---|---|---|
+| V0 — Diagnose and maintain | identify functions and parts, localize faults, repair safely, and state limits | teardown/service map, measurements, fault/repair record, component passport |
+| V1 — Adapt and integrate | select modules/components and own interfaces, harness/enclosure, firmware, calibration, and user/service adaptation | interface contract, make/buy record, locally executable build and calibration instructions |
+| V2 — Design and verify | own measurable requirements, architecture, editable electronics/software design, test points, verification, and controlled release | editable source, design reviews, bring-up, raw verification data, independent reproduction |
+| V3 — Pilot-production readiness | execute and control repeat assembly/test, inspection, serialization, fixtures, nonconformance/rework, alternates, cost, and service | locally executed repeat batch, traveler/work instructions, checked production test, sample basis, first-pass/defect/rework/cost evidence, technician handoff |
+| V4 — Exercise product authority | control configuration and product decisions across compliance, suppliers, scale, field quality, warranty/service, improvement, IP/data, partners, and end of life | accepted product dossier, supplier/capability plan, field/quality evidence, training, and lawful truthful contribution/origin statement |
+
+Project targets remain M1 V0; M2 V1; M3 V1→V2; M4 V2 plus a pooled V3-readiness exercise; M5 V2→V3; M6 V2→V3 only under an approved risk/maturity plan; and M7/M8 V3→V4 where scope permits. Reference-profile graduation requires individual V2 evidence and an attributable, defended contribution to a V3-readiness process. V4 remains an ambition, never an inflated label for a prototype. Each applicable project maintains the master §7.5 contribution/provenance dossier and claims no more than another competent team can reproduce from its evidence.
+
+Cross-path moderation applies before first use, after material change, each offering for high-stakes gates, and at release review:
+
+1. **Map the construct.** Every EN/FR, minimal/standard/advanced equipment, accessible, and site/deployment variant identifies the same outcome IDs, prerequisite level, rubric dimensions, mastery cut, permitted independence, safety controls, and required personal evidence. A prepared dataset may assess analysis but may not stand in for required personal construction, measurement, or debugging.
+2. **Qualify the route.** Appropriate technical, laboratory/safety, language, accessibility, and local-context reviewers test instructions, expected ranges, timing, offline operation, accommodations, and failure recovery. Hazards and jurisdiction-specific controls may be stricter locally.
+3. **Calibrate judgments.** Assessors use shared rubrics and anchor evidence spanning non-mastery, threshold, and defensible performance. Moderation samples every path and site, including borderline decisions, reassessments, accommodations, anomalies, and all safety or integrity failures; restricted learner evidence remains in the controlled store.
+4. **Compare and disposition.** Reviewers compare construct coverage, prompting, apparatus opportunity, workload, scores, pass decisions, and learner access across languages, equipment paths, assessors, and sites. A difference prompts investigation; it is neither automatically acceptable nor automatically proof of bias.
+5. **Correct before certification.** If a path is less demanding, less safe, inadequately accessible, or lacks attributable evidence, its release or affected decision is paused. Owners correct and re-moderate the route, provide remediation and reassessment to affected learners, and record impact. Difficulty is never “balanced” by lowering another path.
+
+The assessment coordinator owns the moderation record; independent domain, language, laboratory/safety, accessibility, and deployment reviewers sign the facets relevant to their competence. Unresolved cross-path differences escalate to the program board, while physical stop-work authority remains with the laboratory or field safety authority.
 
 ## Epic E2 — Establish authority and responsibilities
 

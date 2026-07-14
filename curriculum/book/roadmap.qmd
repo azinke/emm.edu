@@ -6,71 +6,231 @@ page-role: frontmatter
 
 # Reading roadmap {.unnumbered}
 
-The default route follows the parts in order. It is the safest route for a new
-reader because later chapters assume the measurement habits, reference
-directions, model limits, and evidence practices established in Part I. A route
-is a way to emphasize a destination, not permission to ignore prerequisites.
+The default route follows the parts in order, from a single measured voltage to a
+qualified system. It is the safest route for a new reader because later chapters
+assume the measurement habits, reference directions, model limits, and evidence
+practices established in Part I [@jcgm2008gum]. A route is a way to emphasize a
+destination, not permission to ignore prerequisites: this page tells you where you
+may enter, what each part hands to the next, and how to turn reading into
+evidence.
+
+The book is fifty-five chapters in seven parts and two appendix families. Each
+part answers one central question and carries a canonical reference alongside the
+prose, so that the compact models in the text can always be traced back to a
+primary source rather than restated from memory.
+
+## The book at a glance
+
+| Part | Chapters | Central question | Reference spine |
+|---|---|---|---|
+| [I — Electrical foundations](01-foundations/index.qmd) | F01–F08 | What are voltage, current, resistance, energy, and a *trustworthy* measurement? | @horowitz2015art; @bipm2019si; @jcgm2008gum |
+| [II — Devices and analog](02-analog/index.qmd) | A01–A08 | How do physical devices shape and amplify real signals? | @sedra2020microelectronic |
+| [III — Digital hardware](03-digital/index.qmd) | D01–D06 | How are values, decisions, state, and computation built from those circuits? | @harris2021digital |
+| [IV — Embedded systems](04-embedded/index.qmd) | E01–E06 | How does software meet time, energy, peripherals, and failure? | @harris2021digital |
+| [V — System domains](05-domains/index.qmd) | S01–S10 | How do we sample, process, control, power, and communicate? | @oppenheim1996signals; @astrom2021feedback |
+| [VI — Product realization](06-realization/index.qmd) | R01–R06 | How does a design become reproducible, compliant, and maintainable hardware? | @ott2009electromagnetic |
+| [VII — Complete systems](07-systems/index.qmd) | X01–X05 | How are cross-domain trade-offs verified and handed to another person? | *(integrates all of the above)* |
+| [Appendices](appendices/index.qmd) | M01–M03, T01–T03 | What mathematics and working practice does a chapter reach for? | @bipm2019si; @jcgm2008gum |
+
+Each part builds a durable capability rather than a topic list. Foundations make
+measurement trustworthy; devices and analog make signals controllable; digital
+and embedded make behavior computable and time-aware; the domains extend the same
+models to sampling, control, power, and radio; realization makes a design
+reproducible; and the final systems demand that every earlier detail survive
+contact with a real requirement.
 
 ## Choose a destination
 
+Pick the nearest destination to what you want to build. *Begin with* names the
+non-negotiable entry material; *then emphasize* names the chapters that carry the
+destination; *demonstrate readiness with* names the evidence that shows you
+arrived. Every route still respects the chapter prerequisites recorded in
+[`chapters.toml`](chapters.toml).
+
 | Destination | Begin with | Then emphasize | Demonstrate readiness with |
 |---|---|---|---|
-| First trustworthy bench investigation | [safe practice](01-foundations/f01-safe-practice.qmd) | F02–F06 | a prediction, current-limited test, uncertainty statement, and bounded conclusion |
-| Analog instrument | Part I | A01–A06, S01–S02, R05 | a calibrated signal chain with an error budget |
-| Digital and embedded system | F01–F07, A01–A02 | D01–D05, E01–E05 | timed interface evidence, fault recovery, and reproducible firmware |
-| Custom electronic product | Parts I–IV | R01–R06 alongside the relevant domain chapters | a reviewed design baseline, staged bring-up, verification matrix, and release package |
+| First trustworthy bench investigation | [safe practice](01-foundations/f01-safe-practice.qmd) (F01) | F02–F06 | a prediction, a current-limited test, an uncertainty statement, and a bounded conclusion |
+| Analog instrument | Part I | A01–A06, then S01–S02 and R05 | a calibrated signal chain with a stated error budget [@sedra2020microelectronic] |
+| Digital and embedded system | F01–F07, A01–A02 | D01–D06, E01–E05 | timed interface evidence, a recovered fault, and reproducible firmware [@harris2021digital] |
+| Custom electronic product | Parts I–IV | R01–R06 alongside the relevant domain (S-part) chapters | a reviewed design baseline, staged bring-up, a verification matrix, and a release package [@ott2009electromagnetic] |
 | Complete field system | the full route or equivalent demonstrated knowledge | X01–X05 | qualification evidence that another person can reproduce and maintain |
 
-Institutional course mappings provide paced routes through the same chapter
-IDs. The table above is for readers selecting a destination rather than a
-semester.
+Institutional course mappings provide *paced* routes through these same chapter
+IDs; see [Follow a paced institutional route](#follow-a-paced-institutional-route)
+below. The table above is for a reader selecting a destination, not a semester.
+
+## Read in dependency order, not just page order
+
+Page order is one valid ordering of the dependency graph; it is not the only one.
+A reader who already knows basic circuit theory can enter later without breaking a
+dependency, provided every listed prerequisite is genuinely held. Three chains
+carry most of the book and are worth seeing explicitly:
+
+- **The measurement spine** — F01 → F02 → F03 → F06 — reaches a *trustworthy
+  measurement* early, and almost every later chapter quietly assumes it. Do not
+  skip it to reach a device chapter faster.
+- **The dynamics spine** — F04 → F07 → F08 → S01 — carries stored energy,
+  transients, impedance, and frequency response into signals and systems
+  [@oppenheim1996signals]; it is the prerequisite for conversion (S02), control
+  (S04), and RF (S07).
+- **The realization spine** — R01 → R02 → R03/R04 → R05 → R06 — turns a working
+  breadboard into a reproducible, compliant product, and it depends on both the
+  analog (A04) and digital (D03) sides meeting at a schematic.
+
+Two dependencies routinely surprise readers because they cross parts. A digital
+chapter (D01) depends on the transistor as a switch (A02), because a logic level
+is an analog quantity before it is a bit. And the embedded software chapters
+depend on both the C-and-hardware boundary (E01) *and* digital timing (D03),
+because a missed deadline is a timing failure, not a matter of coding style. When
+in doubt, follow the prerequisite links at the head of a chapter rather than the
+page order.
 
 ## Use the appendices just in time
 
 The appendices are working references, not a final hurdle. Follow a prerequisite
-link to them when a chapter first needs the technique:
+link to them the moment a chapter first needs the technique, then return:
 
-- M01 for units, graphs, algebra, and complex quantities;
-- M02 for dynamic models, differential equations, and linear algebra;
-- M03 for uncertainty, statistics, and numerical decisions;
-- T01 for datasheets, standards, and source quality;
-- T02 for tools, automation, files, and version control;
-- T03 for records that another person can reproduce and audit.
+- **M01** — algebra, units, graphs, and complex quantities. Underpins F03 and the
+  phasor notation of F08, and fixes the SI conventions used throughout the book
+  [@bipm2019si].
+- **M02** — calculus, differential equations, and linear algebra. Needed for
+  transients (F07), signals (S01), and control (S04).
+- **M03** — probability, statistics, and numerical decisions. Needed for
+  uncertainty and debugging (F06) and for reliability and production test (R05)
+  [@jcgm2008gum].
+- **T01** — reading datasheets, standards, and judging source quality. Enters at
+  requirements (R01) and wherever a claim rests on a datasheet or a standard.
+- **T02** — tools, files, automation, and version control. Needed before HDL
+  verification (D04) and the C boundary (E01).
+- **T03** — records another person can reproduce and audit. The habit behind every
+  project deliverable and the whole final part.
 
 ## Practice and project spine
 
-Book chapters develop durable models. Labs ask for physical or authentic
-evidence; projects force several models and interfaces to succeed together.
-Their stable IDs allow a class or independent implementation to change
-apparatus without copying the theory.
+Book chapters develop durable models. **Labs** ask for physical or authentic
+evidence; **projects** force several models and interfaces to succeed together.
+Their stable IDs let a class or an independent learner change apparatus without
+rewriting the theory the ID points at.
+
+### Labs: evidence goals (L01–L20)
 
 | Stage | Evidence sequence | Integrating result |
 |---|---|---|
-| Foundations | L01–L05: safe instruments, loaded networks, power, transients, and frequency response | M1: a qualified energy-and-light measurement claim |
-| Devices and computation | L06–L10: device regions, analog limits, calibration, timing, HDL, and FPGA evidence | M2–M3: an environmental monitor and precision instrument |
-| Embedded domains | L11–L18: drivers, protocols, control, power, mixed signal, radio, and recovery | M4–M6: a data logger, secure node, and field pilot |
-| Realization and handover | L19–L20: repeat-build, production-test, and field-readiness evidence | M7–M8: risk retirement, qualification, and reproducible handover |
+| Foundations | L01–L05: safe instruments, loaded networks, power and heat, transients, and frequency response | **M1** — a qualified energy-and-light measurement claim |
+| Devices and computation | L06–L10: device regions, amplifier limits, sensor calibration, logic timing, and HDL/FPGA evidence | **M2–M3** — a calibrated environmental monitor and a precision instrument |
+| Embedded and domains | L11–L18: peripheral drivers, protocol faults, feedback control, protected power, PCB bring-up, converter error budgets, a legal radio link, and fault recovery | **M4–M6** — a resilient data logger, a secure node, and a field pilot |
+| Realization and handover | L19–L20: production test, repeat-build, and field-readiness evidence | **M7–M8** — risk retirement, qualification, and reproducible handover |
 
-The lab IDs denote evidence goals, not permission to perform an activity. The
-safety level, apparatus, stop conditions, and local authorization must be
-defined before a lab becomes deliverable.
+The lab IDs denote **evidence goals, not permission to perform an activity**. Each
+lab carries an explicit safety level: L01–L12 and L16/L18 are current-limited
+extra-low-voltage work (L1), while L13–L15, L17, and L19–L20 involve controlled
+energy, mechanical, or radio hazards (L2). The safety level, apparatus, stop
+conditions, and local authorization must be defined *before* a lab becomes
+deliverable.
+
+### Projects: milestone integrations (M1–M8)
+
+Each project is a milestone that binds a group of chapters into one accepted
+result. They compound: a later milestone reuses the qualified evidence of the
+earlier ones rather than rebuilding it.
+
+| Project | Integrates | Accepted result |
+|---|---|---|
+| **M1** | F01–F06, T03 | a safe measurement plan, calibrated observations, and a qualified energy claim |
+| **M2** | F07–F08, A01–A02, A08, E01, R01 | a two-variable monitor with protection, calibration, and a defensible use context |
+| **M3** | A03–A06, S01–S02, R05, X01 | a measured signal chain with calibration and an uncertainty statement |
+| **M4** | E02–E04, S04–S05, R02–R04, X02 | a fabrication-ready board, staged bring-up, tested firmware, and a release package |
+| **M5** | D05–D06, E05, S02, S07, R05–R06, X03 | an alpha product with a threat model, a measured link, stress evidence, and recovery |
+| **M6** | E06, S03, S06, S08–S10, R01, R06, X04 | a field pilot with ethical requirements, rollback, a service plan, and bounded claims |
+| **M7** | R01, R05–R06, X05, T01, T03 | reviewed requirements, architecture, risk prototypes, and a qualification plan |
+| **M8** | R04–R06, X05, T03 | a verified product, a reproducible dossier, a technical defense, and an accepted handover |
+
+## Follow a paced institutional route
+
+For a reader who wants a calendar rather than a destination, the same chapter,
+lab, and project IDs are arranged into a reference degree program: an eight-
+semester, 240-credit *Electronics Systems Engineering* route that introduces,
+reinforces, and finally masters each chapter across courses. Its themes trace the
+same elements-to-systems arc as the book:
+
+| Semester | Theme | Milestone |
+|---|---|---|
+| 1 | Observe, measure, model | M1 |
+| 2 | Dynamic circuits and active devices | M2 |
+| 3 | Analog, digital, signals, and metrology | M3 |
+| 4 | Integrated interfaces and first PCB | M4 |
+| 5 | Robust connected products | M5 |
+| 6 | Advanced domains and field engineering | M6 |
+| 7 | Specialize and validate | M7 |
+| 8 | Qualify, transfer, and reflect | M8 |
+
+There are no course-specific copies of the theory: a concept used by three courses
+is still written once, and each course points back to the shared chapter ID. The
+full course catalogue, prerequisites, and mastery levels are published with the
+[reference program](../courses/README.md).
 
 ## Interpret chapter status
+
+Each chapter reports its own maturity in its front matter. Status describes how
+much of the chapter you can rely on today, not how important the chapter is.
 
 | Status | What the reader can rely on |
 |---|---|
 | `outline` | scope, central question, concept sequence, and dependency boundary |
-| `draft` | complete instructional path, still subject to technical and editorial revision |
+| `draft` | a complete instructional path, still subject to technical and editorial revision |
 | `review` | worked results and evidence checked; review findings may still change the chapter |
 | `released` | accepted for the stated edition and still bounded by its documented assumptions |
 
-Status describes maturity, not importance. Regardless of status, prose in this
-book does not authorize work beyond the stated safety boundary.
+This is a development edition: the table of contents and the dependency structure
+are complete, but the chapters are currently outlines. An outline is a scope
+commitment, not yet a teachable or safety-authorizing chapter. Regardless of
+status, prose in this book does not authorize work beyond the stated safety
+boundary — reading a chapter is never authorization for mains, high-voltage,
+high-energy battery, RF power, rotating-machine, medical, or safety-critical work.
+
+## The reference spine
+
+The book cites primary and canonical sources rather than restating them, and each
+part builds against one:
+
+- practical, bench-first electronics runs through the whole book
+  [@horowitz2015art];
+- device behavior follows the standard microelectronics treatment
+  [@sedra2020microelectronic];
+- logic, memory, and processors build toward computer architecture
+  [@harris2021digital];
+- sampling and signal processing follow the standard signals-and-systems text
+  [@oppenheim1996signals];
+- feedback and control draw on modern feedback-systems theory
+  [@astrom2021feedback];
+- realization takes electromagnetic compatibility as a design constraint, not a
+  final test [@ott2009electromagnetic];
+- and units and uncertainty are held to their defining references throughout — the
+  SI [@bipm2019si] and the guide to expressing measurement uncertainty
+  [@jcgm2008gum].
+
+None of these is a substitute for a datasheet, a standard, or supervised
+laboratory training, and neither is this book. The full
+[bibliography](references.qmd) grows with the technical content it supports.
 
 ## A productive chapter cycle
 
-Before reading, state a directional prediction and the evidence that might
-change your mind. While reading, track the physical system, schematic or
-architecture, equations, assumptions, and test points as one model. At the end,
-recompute the central result, explain a plausible mismatch, and state the claim
-that the available evidence supports—no stronger.
+Whichever route you take, read each chapter the same way.
+
+Before reading, state a directional prediction and the evidence that might change
+your mind. While reading, track the physical system, the schematic or
+architecture, the equations, the assumptions, and the test points as one model
+[@horowitz2015art]. At the end, recompute the central result, explain a plausible
+mismatch, and state the claim that the available evidence supports—no stronger.
+That cycle rides on an evidence ladder that runs from a rough estimate to a
+qualified claim:
+
+```text
+estimate → calculation → simulation → measurement → repeated test
+         → independent reproduction → field evidence → qualified claim
+```
+
+Not every question needs the top rung. The consequence of being wrong sets how
+much evidence is appropriate: a sign convention can rest on a calculation, while a
+safety or lifecycle claim cannot. Choosing the right rung—and stopping there—is
+itself part of the engineering.

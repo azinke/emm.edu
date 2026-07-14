@@ -9,7 +9,7 @@ result = "A safe measurement plan, calibrated observations, and a qualified ener
 [[project]]
 id = "M2"
 title = "Build a calibrated environmental monitor"
-chapter_ids = ["F07", "F08", "A01", "A02", "E01", "R01"]
+chapter_ids = ["F07", "F08", "A01", "A02", "A08", "E01", "R01"]
 result = "A two-variable monitor with protection, calibration, and a defensible use context."
 
 [[project]]
@@ -33,7 +33,7 @@ result = "An alpha product with a threat model, measured link, stress evidence, 
 [[project]]
 id = "M6"
 title = "Pilot a context-responsive field system"
-chapter_ids = ["E06", "S03", "S06", "R01", "R06", "X04"]
+chapter_ids = ["E06", "S03", "S06", "S08", "S09", "S10", "R01", "R06", "X04"]
 result = "A field pilot with ethical requirements, rollback, service plan, and bounded claims."
 
 [[project]]

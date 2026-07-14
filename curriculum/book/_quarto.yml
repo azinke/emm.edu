@@ -39,6 +39,7 @@ book:
         - 02-analog/a05-sensors-instrumentation.qmd
         - 02-analog/a06-noise-nonlinearity-stability.qmd
         - 02-analog/a07-integrated-circuits.qmd
+        - 02-analog/a08-optoelectronics-hmi.qmd
     - part: 03-digital/index.qmd
       chapters:
         - 03-digital/d01-bits-codes-logic.qmd
@@ -64,6 +65,9 @@ book:
         - 05-domains/s05-power-electronics.qmd
         - 05-domains/s06-storage-motors-drives.qmd
         - 05-domains/s07-communications-rf-antennas.qmd
+        - 05-domains/s08-edge-machine-learning.qmd
+        - 05-domains/s09-offgrid-solar-harvesting.qmd
+        - 05-domains/s10-lpwan-iot-connectivity.qmd
     - part: 06-realization/index.qmd
       chapters:
         - 06-realization/r01-requirements-architecture.qmd

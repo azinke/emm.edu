@@ -17,6 +17,7 @@ errors: list[str] = []
 checks = 0
 VALID_CHAPTER_STATUSES = {"outline", "draft", "review", "released"}
 VALID_PAGE_ROLES = {"frontmatter", "part", "backmatter"}
+VALID_COVERAGE_LEVELS = {"introduce", "reinforce", "master"}
 
 
 def load_toml(path: Path) -> dict:
@@ -124,6 +125,83 @@ def check_default_reading_order(records: list[dict]) -> None:
                 errors.append(
                     f"chapter {record['id']}: prerequisite {dependency} appears later "
                     "in the default reading order"
+                )
+
+
+def load_course_chapters(
+    courses: list[dict], chapter_ids: set[str]
+) -> tuple[dict[str, list[str]], dict[str, set[str]]]:
+    """Validate leveled course chapter mappings and index them for later checks."""
+    global checks
+    course_chapter_map: dict[str, list[str]] = {}
+    chapter_levels: dict[str, set[str]] = {}
+    for course in courses:
+        owner = course.get("id", "<unknown>")
+        entries = course.get("chapters")
+        if not isinstance(entries, list) or not entries:
+            errors.append(f"course {owner}: missing chapters list")
+            course_chapter_map[owner] = []
+            continue
+        ids: list[str] = []
+        for entry in entries:
+            checks += 1
+            if not isinstance(entry, dict) or "id" not in entry or "level" not in entry:
+                errors.append(f"course {owner}: chapter entry needs id and level: {entry!r}")
+                continue
+            chapter_id = entry["id"]
+            level = entry["level"]
+            if chapter_id not in chapter_ids:
+                errors.append(f"course {owner}: unknown chapter id {chapter_id}")
+            if level not in VALID_COVERAGE_LEVELS:
+                errors.append(
+                    f"course {owner}: chapter {chapter_id} has invalid level {level}; "
+                    "expected one of " + ", ".join(sorted(VALID_COVERAGE_LEVELS))
+                )
+            ids.append(chapter_id)
+            chapter_levels.setdefault(chapter_id, set()).add(level)
+        duplicates = [value for value, count in Counter(ids).items() if count > 1]
+        if duplicates:
+            errors.append(f"course {owner}: duplicate chapters: {', '.join(sorted(duplicates))}")
+        course_chapter_map[owner] = ids
+    return course_chapter_map, chapter_levels
+
+
+def check_chapter_semester_coherence(
+    chapters: list[dict],
+    course_chapter_map: dict[str, list[str]],
+    semester_by_course: dict[str, int],
+) -> None:
+    """Every non-appendix prerequisite chapter must be taught no later than its dependents.
+
+    Complements the course-level prerequisite check: a course route can otherwise
+    schedule a chapter before the chapter theory it depends on. Appendix chapters
+    (M/T) are just-in-time references and are exempt, matching the reading-order rule.
+    """
+    global checks
+    prerequisites = {record["id"]: record.get("prerequisites", []) for record in chapters}
+    earliest: dict[str, int] = {}
+    for course_id, chapter_ids in course_chapter_map.items():
+        semester = semester_by_course.get(course_id)
+        if semester is None:
+            continue
+        for chapter_id in chapter_ids:
+            earliest[chapter_id] = min(earliest.get(chapter_id, 10**9), semester)
+    for chapter_id, semester in sorted(earliest.items()):
+        for prerequisite in prerequisites.get(chapter_id, []):
+            if prerequisite.startswith(("M", "T")):
+                continue
+            checks += 1
+            prerequisite_semester = earliest.get(prerequisite)
+            if prerequisite_semester is None:
+                errors.append(
+                    f"chapter {chapter_id} is taught in semester {semester}, but its "
+                    f"prerequisite {prerequisite} is taught by no scheduled course"
+                )
+            elif prerequisite_semester > semester:
+                errors.append(
+                    f"chapter {chapter_id} is first taught in semester {semester}, before "
+                    f"its prerequisite {prerequisite} (first taught in semester "
+                    f"{prerequisite_semester})"
                 )
 
 
@@ -293,11 +371,31 @@ def main() -> int:
     course_data = load_toml(CURRICULUM / "courses" / "catalog.toml")
     courses = course_data.get("course", [])
     course_ids = unique(courses, "id", "courses")
-    check_refs(courses, "chapter_ids", chapter_ids, "course")
+    course_chapter_map, chapter_levels = load_course_chapters(courses, chapter_ids)
     check_refs(courses, "lab_ids", lab_ids, "course")
     check_refs(courses, "project_ids", project_ids, "course")
     check_refs(courses, "prerequisite_ids", course_ids, "course")
     check_refs(courses, "corequisite_ids", course_ids, "course")
+
+    outcome_data = load_toml(CURRICULUM / "courses" / "outcomes.toml")
+    outcomes = outcome_data.get("outcome", [])
+    unique(outcomes, "id", "outcomes")
+    check_refs(outcomes, "chapter_ids", chapter_ids, "outcome")
+    for outcome in outcomes:
+        owner = outcome.get("id", "<unknown>")
+        outcome_chapters = outcome.get("chapter_ids", [])
+        checks += 1
+        if not outcome.get("statement"):
+            errors.append(f"outcome {owner}: missing statement")
+        if not any(chapter_id in chapter_levels for chapter_id in outcome_chapters):
+            errors.append(f"outcome {owner}: no course introduces any of its chapters")
+        elif not any(
+            "master" in chapter_levels.get(chapter_id, set())
+            for chapter_id in outcome_chapters
+        ):
+            errors.append(
+                f"outcome {owner}: no course carries any of its chapters to master level"
+            )
 
     program = load_toml(CURRICULUM / "courses" / "program.toml")
     semesters = program.get("semester", [])
@@ -360,10 +458,14 @@ def main() -> int:
                     "the same semester"
                 )
 
+    check_chapter_semester_coherence(chapters, course_chapter_map, semester_by_course)
+
     mapped_chapters = {
         chapter_id
-        for record in courses + projects
-        for chapter_id in record.get("chapter_ids", [])
+        for chapter_id in (
+            [chapter_id for ids in course_chapter_map.values() for chapter_id in ids]
+            + [chapter_id for record in projects for chapter_id in record.get("chapter_ids", [])]
+        )
     }
     unmapped_chapters = chapter_ids - mapped_chapters
     checks += len(chapter_ids)

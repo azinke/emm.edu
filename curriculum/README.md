@@ -38,5 +38,8 @@ quarto render curriculum/book --to html   # when Quarto is installed
 ```
 
 The validator checks unique IDs, registry paths, course/lab/project references,
-Quarto coverage, internal links, forbidden committed circuit SVG files, and
-basic chapter front matter.
+course chapter coverage levels, chapter prerequisite scheduling across semesters,
+program-outcome coverage, Quarto coverage, internal links, forbidden committed
+circuit SVG files, and basic chapter front matter. `tools/report.py` renders the
+maturity dashboard, outcome assurance matrix, and dependency graph from the same
+data.

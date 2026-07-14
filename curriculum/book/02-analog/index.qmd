@@ -29,6 +29,7 @@ nearby when interpreting device curves or measured gain.
 | A03–A04 | create gain and predictable closed-loop behavior through bias and feedback |
 | A05–A06 | build signal chains while accounting for calibration, noise, nonlinearity, bandwidth, and stability |
 | A07 | connect circuit behavior to integrated implementation and layout-dependent effects |
+| A08 | convert between electrical signals and light, and present state through readable, accessible indicators |
 
 ## Exit capability
 

@@ -24,6 +24,13 @@ chapter IDs.
 python3 curriculum/tools/validate.py
 ```
 
+Generate the maturity dashboard, program-outcome assurance matrix, and
+prerequisite dependency graph (written under `build/reports/`):
+
+```sh
+python3 curriculum/tools/report.py
+```
+
 When Quarto is installed:
 
 ```sh

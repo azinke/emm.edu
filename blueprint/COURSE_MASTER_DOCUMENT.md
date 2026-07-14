@@ -2,7 +2,7 @@
 
 **Document ID:** EMM-CMD-001
 **Status:** curriculum architecture
-**Version:** 0.3.0
+**Version:** 0.4.0
 **Last structural review:** 2026-07-14
 
 ## 1. Purpose
@@ -77,10 +77,10 @@ Stable IDs are semantic and must not be renumbered when chapters move.
 | Part | IDs | Scope |
 |---|---|---|
 | I. Electrical foundations | F01–F08 | safety, quantities, sources, loads, networks, energy, measurement, transients, AC |
-| II. Devices and analog circuits | A01–A07 | semiconductors, transistors, amplifiers, op-amps, instrumentation, noise, integrated circuits |
+| II. Devices and analog circuits | A01–A08 | semiconductors, transistors, amplifiers, op-amps, instrumentation, noise, integrated circuits, optoelectronics and HMI |
 | III. Digital hardware | D01–D06 | representation, logic, state, HDL, architecture, FPGA systems |
 | IV. Embedded systems | E01–E06 | C, microcontrollers, timing, protocols, RTOS, embedded Linux |
-| V. Signals, control, power, and communication | S01–S07 | signals, conversion, DSP, control, converters, drives, RF |
+| V. Signals, control, power, and communication | S01–S10 | signals, conversion, DSP, control, converters, drives, RF, edge inference, off-grid energy, LPWAN connectivity |
 | VI. Product realization | R01–R06 | requirements, PCB, EMC, manufacture, test, assurance, lifecycle |
 | VII. Complete systems | X01–X05 | instruments, loggers, connected nodes, field systems, capstone handover |
 | Appendices | M01–M03, T01–T03 | mathematics, datasheets, tools, reproducible engineering |
@@ -124,18 +124,27 @@ An institution using the complete program should require graduates to:
 13. learn from datasheets, standards, research, and experiments;
 14. manage configuration and make honest, traceable performance claims.
 
-The course catalog maps these outcomes to the book without embedding separate
-course manuscripts.
+These outcomes are encoded in [`outcomes.toml`](../curriculum/courses/outcomes.toml)
+as a mapping to the chapters that develop them; course coverage and depth are then
+derived from the chapter mappings rather than restated per course.
 
 ## 8. Reference course architecture
 
 The reference program remains eight semesters and 240 ECTS-equivalent credits,
 but its implementation is now data rather than duplicated prose:
 
-- [`catalog.toml`](../curriculum/courses/catalog.toml) defines every course;
+- [`catalog.toml`](../curriculum/courses/catalog.toml) defines every course and,
+  per chapter, its coverage level (`introduce`, `reinforce`, or `master`);
 - [`program.toml`](../curriculum/courses/program.toml) places courses by semester;
+- [`outcomes.toml`](../curriculum/courses/outcomes.toml) maps each program outcome
+  to the chapters that develop it;
 - [`labs/catalog.toml`](../curriculum/labs/catalog.toml) defines practical work;
 - [`projects/spine.toml`](../curriculum/projects/spine.toml) defines integration milestones.
+
+`tools/validate.py` checks structural coherence, including that no chapter is
+scheduled before a chapter it depends on and that every program outcome is both
+introduced and mastered. `tools/report.py` renders the maturity dashboard,
+outcome assurance matrix, and prerequisite dependency graph from the same data.
 
 The conceptual progression is:
 

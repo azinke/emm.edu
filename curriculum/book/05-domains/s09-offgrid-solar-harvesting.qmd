@@ -1,0 +1,49 @@
+---
+title: "Off-grid power, solar, and energy harvesting"
+chapter-id: S09
+status: outline
+---
+
+::: {.callout-note title="Chapter outline"}
+The scope and dependency boundary are stable. Full exposition, worked examples,
+exercises, and tested practical evidence still need authoring and review.
+:::
+
+## Central question
+
+How do you keep a system running from an unreliable or absent grid within a
+truthful energy budget?
+
+## Learning outcomes
+
+After completing this chapter, the reader should be able to:
+
+- construct an energy budget for a load profile served by a variable source;
+- size a photovoltaic source, storage, and conversion stage for a stated
+  availability target;
+- select and configure charge control and protection for the chosen storage
+  chemistry;
+- evaluate whether ambient harvesting can sustain a duty-cycled load, and bound
+  the resulting claim.
+
+## Concept path
+
+- source characterization: PV curves, irradiance, temperature, and derating;
+- maximum-power-point tracking and conversion stages;
+- storage sizing, depth of discharge, and lifetime;
+- charge control, protection, and safe disconnection;
+- harvesting from light, heat, vibration, and radio energy;
+- availability, autonomy, and honest energy accounting.
+
+## Evidence and practice
+
+The completed chapter will include a prediction, a worked model, a simulation or
+executable check where it adds value, measured or authentic data, a fault or
+model mismatch, and a requirements-based design decision. The final exercise set
+will mix retrieval, calculation, interpretation, debugging, and open design.
+
+## Connections
+
+Chapter ID: `S09`. Prerequisites and downstream course mappings are maintained in
+[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
+provides reader-facing routes and the practice spine.

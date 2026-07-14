@@ -1,0 +1,50 @@
+---
+title: "Machine learning at the edge"
+chapter-id: S08
+status: outline
+---
+
+::: {.callout-note title="Chapter outline"}
+The scope and dependency boundary are stable. Full exposition, worked examples,
+exercises, and tested practical evidence still need authoring and review.
+:::
+
+## Central question
+
+When can a model run usefully on a microcontroller, and how do you keep its
+latency, memory, and energy inside a hard budget?
+
+## Learning outcomes
+
+After completing this chapter, the reader should be able to:
+
+- frame an edge task as a signal-conditioning and inference pipeline with
+  explicit accuracy and resource targets;
+- estimate the memory, latency, and energy cost of an inference and fit it to a
+  microcontroller or accelerator budget;
+- apply quantization and feature extraction, and measure the accuracy lost to
+  each;
+- collect, label, and version representative field data, and defend the
+  resulting claim and its failure modes.
+
+## Concept path
+
+- from hand-designed DSP features to learned features;
+- model families that fit from kilobytes to a few megabytes;
+- quantization, pruning, and operator support;
+- fixed-point inference, accelerators, and memory placement;
+- on-device measurement of latency, energy, and accuracy;
+- data collection, distribution drift, and honest evaluation.
+
+## Evidence and practice
+
+The completed chapter will include a prediction, a worked model, a simulation or
+executable check where it adds value, measured or authentic data, a fault or
+model mismatch, and a requirements-based design decision. The final exercise set
+will mix retrieval, calculation, interpretation, debugging, and open design.
+
+## Connections
+
+Chapter ID: `S08`. Prerequisites and downstream course mappings are maintained in
+[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
+provides reader-facing routes and the practice spine.

@@ -106,6 +106,13 @@ file = "02-analog/a07-integrated-circuits.qmd"
 prerequisites = ["A02", "A03"]
 
 [[chapter]]
+id = "A08"
+title = "Optoelectronics, displays, and human-machine interface"
+part = "analog"
+file = "02-analog/a08-optoelectronics-hmi.qmd"
+prerequisites = ["A01", "A05"]
+
+[[chapter]]
 id = "D01"
 title = "Bits, codes, Boolean logic, and electrical levels"
 part = "digital"
@@ -237,6 +244,27 @@ title = "Communications, RF, and antennas"
 part = "domains"
 file = "05-domains/s07-communications-rf-antennas.qmd"
 prerequisites = ["S01", "E04"]
+
+[[chapter]]
+id = "S08"
+title = "Machine learning at the edge"
+part = "domains"
+file = "05-domains/s08-edge-machine-learning.qmd"
+prerequisites = ["S03", "E03", "M03"]
+
+[[chapter]]
+id = "S09"
+title = "Off-grid power, solar, and energy harvesting"
+part = "domains"
+file = "05-domains/s09-offgrid-solar-harvesting.qmd"
+prerequisites = ["S05", "S06"]
+
+[[chapter]]
+id = "S10"
+title = "Low-power wide-area networks and IoT connectivity"
+part = "domains"
+file = "05-domains/s10-lpwan-iot-connectivity.qmd"
+prerequisites = ["S07", "E04"]
 
 [[chapter]]
 id = "R01"

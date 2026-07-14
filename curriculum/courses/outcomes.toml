@@ -1,0 +1,83 @@
+version = 1
+
+# Program outcomes for the reference Electronics Systems Engineering program.
+#
+# Each outcome lists the book chapters that develop it. A course is credited
+# with contributing to an outcome when it teaches one of the outcome's chapters;
+# the coverage level (introduce / reinforce / master) is derived from the course
+# chapter mapping in `catalog.toml`. `tools/report.py` renders the resulting
+# assurance-of-learning matrix, and `tools/validate.py` checks that every
+# outcome is both introduced and mastered somewhere in the program.
+#
+# The chapter lists are the single source of truth for outcome coverage. Edit a
+# chapter mapping here rather than duplicating outcome text inside a course.
+
+[[outcome]]
+id = "PO1"
+statement = "Apply mathematics, science, and computation to electronics problems."
+chapter_ids = ["M01", "M02", "M03", "T02"]
+
+[[outcome]]
+id = "PO2"
+statement = "Analyze and design analog, mixed-signal, digital, power, and feedback circuits."
+chapter_ids = ["A03", "A04", "A06", "D02", "S02", "S04", "S05"]
+
+[[outcome]]
+id = "PO3"
+statement = "Create tested embedded software under timing and resource constraints."
+chapter_ids = ["E01", "E02", "E03", "E05", "S08"]
+
+[[outcome]]
+id = "PO4"
+statement = "Implement and verify digital hardware and computer architecture."
+chapter_ids = ["D04", "D05", "D06"]
+
+[[outcome]]
+id = "PO5"
+statement = "Design manufacturable, testable, and maintainable PCBs and product packages."
+chapter_ids = ["R02", "R03", "R04"]
+
+[[outcome]]
+id = "PO6"
+statement = "Select sensors, actuators, sources, interfaces, and communication links."
+chapter_ids = ["A05", "A08", "S06", "S07", "E04", "S10"]
+
+[[outcome]]
+id = "PO7"
+statement = "Plan experiments, measure safely, quantify uncertainty, and justify conclusions."
+chapter_ids = ["F01", "F06", "R05"]
+
+[[outcome]]
+id = "PO8"
+statement = "Debug hardware and software systematically from evidence."
+chapter_ids = ["F06", "E05", "R04"]
+
+[[outcome]]
+id = "PO9"
+statement = "Address safety, security, privacy, EMC, reliability, sustainability, and lifecycle."
+chapter_ids = ["R03", "R06", "S09"]
+
+[[outcome]]
+id = "PO10"
+statement = "Design for user, environmental, economic, and manufacturing constraints."
+chapter_ids = ["R01", "S09", "A08"]
+
+[[outcome]]
+id = "PO11"
+statement = "Communicate through schematics, code, data, reports, demonstrations, and talks."
+chapter_ids = ["T01", "T03", "R02"]
+
+[[outcome]]
+id = "PO12"
+statement = "Work inclusively, manage interfaces, and resolve uncertainty in teams."
+chapter_ids = ["R01", "X05", "T03"]
+
+[[outcome]]
+id = "PO13"
+statement = "Learn from datasheets, standards, research, and experiments."
+chapter_ids = ["T01", "S08"]
+
+[[outcome]]
+id = "PO14"
+statement = "Manage configuration and make honest, traceable performance claims."
+chapter_ids = ["T02", "T03", "R05"]

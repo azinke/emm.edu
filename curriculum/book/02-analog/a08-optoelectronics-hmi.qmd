@@ -1,0 +1,50 @@
+---
+title: "Optoelectronics, displays, and human-machine interface"
+chapter-id: A08
+status: outline
+---
+
+::: {.callout-note title="Chapter outline"}
+The scope and dependency boundary are stable. Full exposition, worked examples,
+exercises, and tested practical evidence still need authoring and review.
+:::
+
+## Central question
+
+How do you convert reliably between electrical signals and light, and present a
+system's state to a person without misleading them?
+
+## Learning outcomes
+
+After completing this chapter, the reader should be able to:
+
+- model an LED or photodiode operating point and choose drive and current
+  limiting for a target radiant or luminous output;
+- specify an optocoupler or optical sensor interface with adequate isolation,
+  bandwidth, and margin;
+- choose a display technology and driving scheme from readability, power, and
+  environment constraints;
+- design indicators that stay unambiguous without color and under the expected
+  ambient light.
+
+## Concept path
+
+- photons, band gap, emission, and absorption;
+- LEDs: forward drive, current limiting, efficiency, binning, and thermal droop;
+- photodiodes, phototransistors, and ambient-light rejection;
+- optocouplers and optical isolation for safety and noise separation;
+- display families (LED, LCD, OLED, e-paper) and multiplexed driving;
+- indicator semantics, contrast, legibility, and accessible signalling.
+
+## Evidence and practice
+
+The completed chapter will include a prediction, a worked model, a simulation or
+executable check where it adds value, measured or authentic data, a fault or
+model mismatch, and a requirements-based design decision. The final exercise set
+will mix retrieval, calculation, interpretation, debugging, and open design.
+
+## Connections
+
+Chapter ID: `A08`. Prerequisites and downstream course mappings are maintained in
+[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
+provides reader-facing routes and the practice spine.

@@ -119,7 +119,14 @@ format:
     documentclass: scrreprt
     pdf-engine: xelatex
     keep-tex: true
+    fontsize: 12pt
+    linestretch: 1.2
+    mainfont: "Caladea"
+    sansfont: "Inter"
+    monofont: "Source Code Pro"
+    monofontoptions:
+      - Scale=0.85
     geometry:
-      - margin=24mm
+      - margin=28mm
 
 lang: en

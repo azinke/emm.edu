@@ -1,2 +1,4 @@
 /.quarto/
 **/*.quarto_ipynb
+# keep-tex: true leaves LaTeX sources next to the .qmd on PDF builds
+/*.tex

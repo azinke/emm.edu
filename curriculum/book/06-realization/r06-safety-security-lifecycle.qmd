@@ -1,0 +1,45 @@
+---
+title: "Safety, security, compliance, and lifecycle"
+chapter-id: R06
+status: outline
+---
+
+::: {.callout-note title="Chapter outline"}
+The scope and dependency boundary are stable. Full exposition, worked examples,
+exercises, and tested practical evidence still need authoring and review.
+:::
+
+## Central question
+
+How do you prevent a technically successful product from becoming unsafe, insecure, unlawful, or unmaintainable?
+
+## Learning outcomes
+
+After completing this chapter, the reader should be able to:
+
+- explain the central model and the assumptions that bound its use;
+- connect physical behavior, a schematic or architecture, and quantitative reasoning;
+- interpret evidence and identify at least one credible failure mode;
+- make and defend a design or diagnostic decision;
+
+## Concept path
+
+- hazards, misuse, safe state, protection layers, and residual risk;
+- assets, threats, attack surfaces, trust boundaries, and security controls;
+- privacy, data minimization, consent, retention, and access;
+- EMC, radio, environmental, product, and sector compliance pathways;
+- reliability, repair, updates, vulnerability response, and end of life;
+- evidence dossiers, limitations, and responsible claims;
+
+## Evidence and practice
+
+The completed chapter will include a prediction, a worked model, a simulation or
+executable check where it adds value, measured or authentic data, a fault or
+model mismatch, and a requirements-based design decision. The final exercise set
+will mix retrieval, calculation, interpretation, debugging, and open design.
+
+## Connections
+
+Chapter ID: `R06`. Prerequisites and downstream course mappings are maintained in
+[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
+provides reader-facing routes and the practice spine.

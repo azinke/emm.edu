@@ -1,0 +1,42 @@
+---
+title: "VI — Product realization"
+description: "Turning a circuit into reproducible, testable, supportable hardware."
+page-role: part
+part-id: realization
+---
+
+A working prototype is evidence, not yet a product. Product realization makes
+requirements, interfaces, layout, manufacture, test, compliance, service, and
+retirement part of the design rather than paperwork added at the end.
+
+## Part question
+
+How does an electronic design become hardware that another person can build,
+verify, operate, maintain, and retire under explicit constraints?
+
+## Entry knowledge
+
+This part is most useful alongside a concrete circuit or embedded design. It
+assumes measurement and debugging from F06, relevant analog and digital
+behavior, and the evidence-reading practices in [T01](../appendices/t01-datasheets-standards.qmd).
+R01 can be read early; R02–R06 draw on increasingly broad technical experience.
+
+## Learning arc
+
+| Chapters | Development |
+|---|---|
+| R01 | turn needs into bounded requirements, architecture, interfaces, and recorded trade-offs |
+| R02–R04 | capture a design, control layout interactions, release it for manufacture, and bring it up in stages |
+| R05 | design calibration, reliability evidence, and production tests around decisions |
+| R06 | integrate safety, security, compliance, maintenance, and end-of-life obligations |
+
+## Exit capability
+
+You should be able to create a traceable baseline from requirement through
+verification, release recoverable design and manufacturing sources, isolate a
+bring-up failure without compounding it, and state which lifecycle claims the
+evidence does—and does not—support.
+
+Labs L15, L19, and L20 exercise bring-up, repeat build, and qualification. The
+projects introduce these practices early and revisit them at higher consequence;
+see the [practice and project spine](../roadmap.qmd#practice-and-project-spine).

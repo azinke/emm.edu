@@ -1,0 +1,420 @@
+version = 1
+
+[[course]]
+id = "ESE101"
+title = "Engineering Practice, Safety, and Prototyping"
+credits = 5
+prerequisite_ids = []
+chapter_ids = ["F01", "F06", "T01", "T02", "T03", "R01"]
+lab_ids = ["L01"]
+project_ids = ["M1"]
+
+[[course]]
+id = "MAT101"
+title = "Engineering Mathematics I"
+credits = 6
+prerequisite_ids = []
+chapter_ids = ["M01", "M02"]
+lab_ids = []
+project_ids = ["M1"]
+
+[[course]]
+id = "PHY101"
+title = "Physics I: Mechanics, Energy, and Thermal Science"
+credits = 5
+prerequisite_ids = []
+chapter_ids = ["F02", "F05", "M01"]
+lab_ids = ["L04"]
+project_ids = ["M1"]
+
+[[course]]
+id = "CSC101"
+title = "Programming and Computational Thinking"
+credits = 5
+prerequisite_ids = []
+chapter_ids = ["T02", "T03", "M03"]
+lab_ids = []
+project_ids = ["M1"]
+
+[[course]]
+id = "ESE111"
+title = "DC Circuits and Measurement"
+credits = 6
+prerequisite_ids = []
+chapter_ids = ["F01", "F02", "F03", "F04", "F05", "F06"]
+lab_ids = ["L01", "L02", "L03", "L04"]
+project_ids = ["M1"]
+
+[[course]]
+id = "COM101"
+title = "Bilingual Technical Communication I"
+credits = 3
+prerequisite_ids = []
+chapter_ids = ["T01", "T03", "R01"]
+lab_ids = []
+project_ids = ["M1"]
+
+[[course]]
+id = "MAT102"
+title = "Engineering Mathematics II"
+credits = 6
+prerequisite_ids = ["MAT101"]
+chapter_ids = ["M01", "M02"]
+lab_ids = []
+project_ids = ["M2"]
+
+[[course]]
+id = "PHY102"
+title = "Physics II: Fields, Waves, and Materials"
+credits = 5
+prerequisite_ids = ["MAT101", "PHY101"]
+chapter_ids = ["F02", "F07", "F08", "A01", "S01"]
+lab_ids = ["L05"]
+project_ids = ["M2"]
+
+[[course]]
+id = "ESE121"
+title = "AC Circuits, Transients, and Signals"
+credits = 6
+prerequisite_ids = ["ESE111", "MAT101"]
+chapter_ids = ["F07", "F08", "S01"]
+lab_ids = ["L05"]
+project_ids = ["M2"]
+
+[[course]]
+id = "ESE122"
+title = "Electronic Devices I"
+credits = 6
+prerequisite_ids = ["ESE111", "PHY101"]
+chapter_ids = ["A01", "A02", "A03"]
+lab_ids = ["L06"]
+project_ids = ["M2"]
+
+[[course]]
+id = "CSC102"
+title = "C Programming and Data Structures"
+credits = 4
+prerequisite_ids = ["CSC101"]
+chapter_ids = ["E01", "D01", "T02"]
+lab_ids = []
+project_ids = ["M2"]
+
+[[course]]
+id = "DES102"
+title = "Human-Centered and Sustainable Design"
+credits = 3
+prerequisite_ids = ["ESE101"]
+chapter_ids = ["R01", "R06", "T03"]
+lab_ids = []
+project_ids = ["M2"]
+
+[[course]]
+id = "MAT201"
+title = "Differential Equations, Probability, and Numerical Methods"
+credits = 6
+prerequisite_ids = ["MAT102"]
+chapter_ids = ["M02", "M03", "S01"]
+lab_ids = []
+project_ids = ["M3"]
+
+[[course]]
+id = "ESE211"
+title = "Analog Electronics"
+credits = 6
+prerequisite_ids = ["ESE121", "ESE122", "MAT102"]
+chapter_ids = ["A03", "A04", "A05", "A06"]
+lab_ids = ["L07", "L08"]
+project_ids = ["M3"]
+
+[[course]]
+id = "ESE212"
+title = "Digital Logic and HDL"
+credits = 6
+prerequisite_ids = ["CSC102", "ESE122"]
+chapter_ids = ["D01", "D02", "D03", "D04"]
+lab_ids = ["L09", "L10"]
+project_ids = ["M3"]
+
+[[course]]
+id = "ESE213"
+title = "Signals and Systems"
+credits = 5
+prerequisite_ids = ["ESE121", "MAT102"]
+chapter_ids = ["S01", "F08", "M02"]
+lab_ids = ["L05"]
+project_ids = ["M3"]
+
+[[course]]
+id = "ESE214"
+title = "Instrumentation and Metrology"
+credits = 4
+prerequisite_ids = ["ESE111", "MAT102"]
+chapter_ids = ["F06", "A05", "A06", "R05"]
+lab_ids = ["L08"]
+project_ids = ["M3"]
+
+[[course]]
+id = "PRJ201"
+title = "Integrated Design Studio I"
+credits = 3
+prerequisite_ids = ["ESE121", "ESE122"]
+chapter_ids = ["R01", "X01", "T03"]
+lab_ids = []
+project_ids = ["M3"]
+
+[[course]]
+id = "ESE221"
+title = "Embedded Systems I"
+credits = 6
+prerequisite_ids = ["CSC102", "ESE122"]
+chapter_ids = ["E01", "E02", "E03", "E04"]
+lab_ids = ["L11", "L12"]
+project_ids = ["M4"]
+
+[[course]]
+id = "ESE222"
+title = "Feedback and Control"
+credits = 5
+prerequisite_ids = ["ESE213", "MAT201"]
+chapter_ids = ["S04", "S01", "M02"]
+lab_ids = ["L13"]
+project_ids = ["M4"]
+
+[[course]]
+id = "ESE223"
+title = "Communications and Data Networks"
+credits = 5
+prerequisite_ids = ["ESE213", "CSC102"]
+chapter_ids = ["E04", "S07"]
+lab_ids = ["L12", "L17"]
+project_ids = ["M4"]
+
+[[course]]
+id = "ESE224"
+title = "Power Electronics and Energy Systems"
+credits = 5
+prerequisite_ids = ["ESE122", "ESE121"]
+chapter_ids = ["S05", "S06", "F05"]
+lab_ids = ["L14"]
+project_ids = ["M4"]
+
+[[course]]
+id = "ESE225"
+title = "PCB Design, EMC, and Manufacturing"
+credits = 6
+prerequisite_ids = ["ESE211", "ESE212"]
+chapter_ids = ["R02", "R03", "R04"]
+lab_ids = ["L15"]
+project_ids = ["M4"]
+
+[[course]]
+id = "PRJ202"
+title = "Integrated Design Studio II"
+credits = 3
+prerequisite_ids = ["PRJ201", "ESE211", "ESE212"]
+chapter_ids = ["R01", "X02", "T03"]
+lab_ids = []
+project_ids = ["M4"]
+
+[[course]]
+id = "ESE311"
+title = "Embedded Systems II: RTOS, Concurrency, and Security"
+credits = 6
+prerequisite_ids = ["ESE221"]
+chapter_ids = ["E05", "E03", "R06"]
+lab_ids = ["L18"]
+project_ids = ["M5"]
+
+[[course]]
+id = "ESE312"
+title = "Computer Architecture and FPGA Systems"
+credits = 6
+prerequisite_ids = ["ESE212", "CSC102"]
+chapter_ids = ["D05", "D06", "D04"]
+lab_ids = ["L10"]
+project_ids = ["M5"]
+
+[[course]]
+id = "ESE313"
+title = "Mixed-Signal Systems and Data Conversion"
+credits = 5
+prerequisite_ids = ["ESE211", "ESE213", "ESE214"]
+chapter_ids = ["S02", "A05", "A06", "R03"]
+lab_ids = ["L16"]
+project_ids = ["M5"]
+
+[[course]]
+id = "ESE314"
+title = "RF, Wireless, and Antennas"
+credits = 5
+prerequisite_ids = ["ESE213", "PHY102"]
+chapter_ids = ["S07", "R03"]
+lab_ids = ["L17"]
+project_ids = ["M5"]
+
+[[course]]
+id = "ESE315"
+title = "Engineering Statistics, Reliability, and Test"
+credits = 4
+prerequisite_ids = ["MAT201", "ESE214"]
+chapter_ids = ["M03", "R05"]
+lab_ids = ["L19"]
+project_ids = ["M5"]
+
+[[course]]
+id = "PRJ301"
+title = "Product Engineering Sprint"
+credits = 4
+prerequisite_ids = ["PRJ202", "ESE221", "ESE225"]
+chapter_ids = ["R01", "R04", "R05", "X03"]
+lab_ids = []
+project_ids = ["M5"]
+
+[[course]]
+id = "ESE321"
+title = "Digital Signal Processing"
+credits = 5
+prerequisite_ids = ["ESE213", "ESE221"]
+chapter_ids = ["S03", "S02"]
+lab_ids = ["L16"]
+project_ids = ["M6"]
+
+[[course]]
+id = "ESE322"
+title = "Drives, Renewable Energy, and Advanced Control"
+credits = 5
+prerequisite_ids = ["ESE222", "ESE224"]
+chapter_ids = ["S04", "S05", "S06"]
+lab_ids = ["L13", "L14"]
+project_ids = ["M6"]
+
+[[course]]
+id = "ESE323"
+title = "Embedded Linux and Edge Networking"
+credits = 5
+prerequisite_ids = ["ESE311"]
+chapter_ids = ["E06", "E04", "R06"]
+lab_ids = ["L18"]
+project_ids = ["M6"]
+
+[[course]]
+id = "ESE324"
+title = "Semiconductor and Integrated-Circuit Fundamentals"
+credits = 5
+prerequisite_ids = ["ESE211", "ESE212"]
+chapter_ids = ["A01", "A02", "A03", "A07", "D01"]
+lab_ids = ["L06"]
+project_ids = ["M6"]
+
+[[course]]
+id = "ESE325"
+title = "Systems Safety, Cybersecurity, and Compliance"
+credits = 4
+prerequisite_ids = ["ESE225", "ESE311"]
+chapter_ids = ["R01", "R06", "R03"]
+lab_ids = []
+project_ids = ["M6"]
+
+[[course]]
+id = "PRJ302"
+title = "Community Field Engineering"
+credits = 6
+prerequisite_ids = ["PRJ301"]
+corequisite_ids = ["ESE325"]
+chapter_ids = ["X04", "R01", "R06", "T03"]
+lab_ids = ["L20"]
+project_ids = ["M6"]
+
+[[course]]
+id = "RES401"
+title = "Research Methods, Standards, Ethics, and IP"
+credits = 4
+prerequisite_ids = ["PRJ302"]
+chapter_ids = ["T01", "T03", "R01", "R06"]
+lab_ids = []
+project_ids = ["M7"]
+
+[[course]]
+id = "ESE401"
+title = "Secure Hardware-Software Co-design"
+credits = 5
+prerequisite_ids = ["ESE311", "ESE312", "ESE325"]
+chapter_ids = ["D06", "E05", "E06", "R06"]
+lab_ids = ["L18"]
+project_ids = ["M7"]
+
+[[course]]
+id = "ELE4A"
+title = "Technical Elective A"
+route_status = "example"
+credits = 5
+prerequisite_ids = ["ESE321"]
+chapter_ids = ["S03", "D06"]
+lab_ids = []
+project_ids = ["M7"]
+
+[[course]]
+id = "ELE4B"
+title = "Technical Elective B"
+route_status = "example"
+credits = 5
+prerequisite_ids = ["ESE322"]
+chapter_ids = ["S05", "S06", "S07"]
+lab_ids = []
+project_ids = ["M7"]
+
+[[course]]
+id = "CAP401"
+title = "Capstone I: Discovery through Engineering Validation"
+credits = 8
+prerequisite_ids = ["PRJ302"]
+corequisite_ids = ["RES401"]
+chapter_ids = ["R01", "R05", "R06", "X05"]
+lab_ids = []
+project_ids = ["M7"]
+
+[[course]]
+id = "ENT401"
+title = "Enterprise, Manufacturing, and Product Lifecycle"
+credits = 3
+prerequisite_ids = ["PRJ301"]
+chapter_ids = ["R04", "R05", "R06", "X05"]
+lab_ids = []
+project_ids = ["M7"]
+
+[[course]]
+id = "CAP402"
+title = "Capstone II: Verification, Field Trial, and Handover"
+credits = 15
+prerequisite_ids = ["CAP401"]
+chapter_ids = ["R04", "R05", "R06", "X05"]
+lab_ids = ["L20"]
+project_ids = ["M8"]
+
+[[course]]
+id = "IND402"
+title = "Internship or Applied Engineering Clinic"
+credits = 6
+prerequisite_ids = ["PRJ302"]
+chapter_ids = ["T03", "R01", "R06"]
+lab_ids = []
+project_ids = ["M8"]
+
+[[course]]
+id = "ELE4C"
+title = "Technical Elective C"
+route_status = "example"
+credits = 6
+prerequisite_ids = ["ELE4A", "ELE4B"]
+chapter_ids = ["A06", "D06", "S03", "S06", "S07"]
+lab_ids = []
+project_ids = ["M8"]
+
+[[course]]
+id = "SEM402"
+title = "Emerging Technology and Professional Seminar"
+credits = 3
+prerequisite_ids = ["RES401"]
+chapter_ids = ["T01", "R01", "R06"]
+lab_ids = []
+project_ids = ["M8"]

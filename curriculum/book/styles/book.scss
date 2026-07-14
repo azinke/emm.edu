@@ -1,0 +1,25 @@
+/*-- scss:defaults --*/
+$font-family-sans-serif: "Inter", "Source Sans 3", system-ui, sans-serif;
+$font-family-monospace: "IBM Plex Mono", "Source Code Pro", monospace;
+$body-color: #20252b;
+$primary: #145c6e;
+$link-color: #0b677d;
+$code-bg: #f4f6f7;
+
+/*-- scss:rules --*/
+.chapter-number,
+.header-section-number {
+  color: #6b747c;
+}
+
+.callout {
+  border-radius: 0.2rem;
+}
+
+table {
+  font-variant-numeric: tabular-nums;
+}
+
+.quarto-title-banner {
+  background: linear-gradient(120deg, #103d48, #176b78);
+}

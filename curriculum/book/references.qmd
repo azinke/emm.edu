@@ -1,0 +1,14 @@
+---
+title: "References"
+page-role: backmatter
+---
+
+# References {.unnumbered}
+
+The bibliography will grow with chapter content. Technical claims should cite
+primary datasheets, standards, manufacturer application notes, or original
+research where appropriate; explanatory secondary sources remain useful for
+pedagogy.
+
+::: {#refs}
+:::

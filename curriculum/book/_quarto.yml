@@ -1,0 +1,121 @@
+project:
+  type: book
+  output-dir: ../../build/book
+
+book:
+  title: "Electronics: From Elements to Systems"
+  subtitle: "A practical, model-based introduction"
+  description: "A practical path from safe first measurements to qualified electronic systems."
+  author: "EMM curriculum contributors"
+  date: last-modified
+  search: true
+  page-navigation: true
+  back-to-top-navigation: true
+  bread-crumbs: true
+  reader-mode: true
+  repo-url: https://github.com/azinke/emm.edu
+  repo-subdir: curriculum/book
+  repo-actions: [edit, issue]
+  chapters:
+    - index.qmd
+    - preface.qmd
+    - roadmap.qmd
+    - part: 01-foundations/index.qmd
+      chapters:
+        - 01-foundations/f01-safe-practice.qmd
+        - 01-foundations/f02-charge-voltage-current.qmd
+        - 01-foundations/f03-sources-loads-resistance.qmd
+        - 01-foundations/f04-networks-kirchhoff.qmd
+        - 01-foundations/f05-energy-power-thermal.qmd
+        - 01-foundations/f06-measurement-uncertainty-debug.qmd
+        - 01-foundations/f07-capacitors-inductors-transients.qmd
+        - 01-foundations/f08-sinusoids-impedance-frequency.qmd
+    - part: 02-analog/index.qmd
+      chapters:
+        - 02-analog/a01-semiconductor-diodes.qmd
+        - 02-analog/a02-transistors.qmd
+        - 02-analog/a03-bias-small-signal-amplifiers.qmd
+        - 02-analog/a04-op-amps-feedback.qmd
+        - 02-analog/a05-sensors-instrumentation.qmd
+        - 02-analog/a06-noise-nonlinearity-stability.qmd
+        - 02-analog/a07-integrated-circuits.qmd
+    - part: 03-digital/index.qmd
+      chapters:
+        - 03-digital/d01-bits-codes-logic.qmd
+        - 03-digital/d02-combinational-logic.qmd
+        - 03-digital/d03-state-clock-timing.qmd
+        - 03-digital/d04-hdl-verification.qmd
+        - 03-digital/d05-memory-computer-architecture.qmd
+        - 03-digital/d06-fpga-systems.qmd
+    - part: 04-embedded/index.qmd
+      chapters:
+        - 04-embedded/e01-c-hardware-boundary.qmd
+        - 04-embedded/e02-microcontrollers-peripherals.qmd
+        - 04-embedded/e03-interrupts-time-concurrency.qmd
+        - 04-embedded/e04-buses-networks-protocols.qmd
+        - 04-embedded/e05-rtos-testing-dependability.qmd
+        - 04-embedded/e06-embedded-linux-edge-security.qmd
+    - part: 05-domains/index.qmd
+      chapters:
+        - 05-domains/s01-signals-systems.qmd
+        - 05-domains/s02-sampling-data-conversion.qmd
+        - 05-domains/s03-digital-signal-processing.qmd
+        - 05-domains/s04-feedback-control.qmd
+        - 05-domains/s05-power-electronics.qmd
+        - 05-domains/s06-storage-motors-drives.qmd
+        - 05-domains/s07-communications-rf-antennas.qmd
+    - part: 06-realization/index.qmd
+      chapters:
+        - 06-realization/r01-requirements-architecture.qmd
+        - 06-realization/r02-schematic-pcb.qmd
+        - 06-realization/r03-signal-power-integrity-emc.qmd
+        - 06-realization/r04-manufacture-bringup.qmd
+        - 06-realization/r05-metrology-reliability-test.qmd
+        - 06-realization/r06-safety-security-lifecycle.qmd
+    - part: 07-systems/index.qmd
+      chapters:
+        - 07-systems/x01-precision-instrument.qmd
+        - 07-systems/x02-resilient-data-logger.qmd
+        - 07-systems/x03-secure-connected-node.qmd
+        - 07-systems/x04-field-system.qmd
+        - 07-systems/x05-capstone-handover.qmd
+    - part: appendices/index.qmd
+      chapters:
+        - appendices/m01-algebra-units-complex.qmd
+        - appendices/m02-calculus-linear-differential.qmd
+        - appendices/m03-probability-numerical.qmd
+        - appendices/t01-datasheets-standards.qmd
+        - appendices/t02-tools-version-control.qmd
+        - appendices/t03-reproducible-engineering.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+crossref:
+  chapters: true
+  fig-prefix: Figure
+  tbl-prefix: Table
+  eq-prefix: Equation
+
+execute:
+  freeze: auto
+  cache: false
+
+format:
+  html:
+    theme:
+      - cosmo
+      - styles/book.scss
+    toc: true
+    toc-depth: 3
+    code-copy: true
+    code-overflow: wrap
+    html-math-method: mathml
+  pdf:
+    documentclass: scrreprt
+    pdf-engine: xelatex
+    keep-tex: true
+    geometry:
+      - margin=24mm
+
+lang: en

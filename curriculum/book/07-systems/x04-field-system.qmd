@@ -1,0 +1,45 @@
+---
+title: "System study: a context-responsive field system"
+chapter-id: X04
+status: outline
+---
+
+::: {.callout-note title="Chapter outline"}
+The scope and dependency boundary are stable. Full exposition, worked examples,
+exercises, and tested practical evidence still need authoring and review.
+:::
+
+## Central question
+
+What changes when an electronic design must survive real users, climate, infrastructure, maintenance, and consequences?
+
+## Learning outcomes
+
+After completing this chapter, the reader should be able to:
+
+- explain the central model and the assumptions that bound its use;
+- connect physical behavior, a schematic or architecture, and quantitative reasoning;
+- interpret evidence and identify at least one credible failure mode;
+- make and defend a design or diagnostic decision;
+
+## Concept path
+
+- ethical discovery and evidence-based requirements;
+- environment, power, connectivity, language, cost, and service constraints;
+- architecture and trade studies under uncertain conditions;
+- field readiness, rollback, spares, training, and incident response;
+- pilot design, data governance, stakeholder acceptance, and impact;
+- revision from field evidence without overstating results;
+
+## Evidence and practice
+
+The completed chapter will include a prediction, a worked model, a simulation or
+executable check where it adds value, measured or authentic data, a fault or
+model mismatch, and a requirements-based design decision. The final exercise set
+will mix retrieval, calculation, interpretation, debugging, and open design.
+
+## Connections
+
+Chapter ID: `X04`. Prerequisites and downstream course mappings are maintained in
+[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
+provides reader-facing routes and the practice spine.

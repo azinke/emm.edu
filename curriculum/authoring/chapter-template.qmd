@@ -1,0 +1,56 @@
+---
+title: "Chapter title"
+description: "One sentence stating the chapter's engineering purpose."
+chapter-id: Z00
+status: outline
+---
+
+## The system question
+
+Open with an observable behavior, discrepancy, failure, or real design need.
+Collect a prediction before introducing the model.
+
+## What you will be able to do
+
+Write three to five observable outcomes. Name the prerequisite idea that each
+outcome builds on. Avoid generic outcomes that could be pasted into every
+chapter.
+
+## Build the model
+
+Define quantities, reference directions, units, assumptions, and the model's
+domain of validity. Connect the physical view, circuit or architecture, words,
+and equations.
+
+## Work an example
+
+Estimate, calculate, check units and limiting cases, then interpret the result.
+
+## Test the model
+
+Compare prediction, simulation where useful, and measured or authentic data.
+Record configuration, raw evidence, and uncertainty.
+
+## When the model fails
+
+Develop non-ideal effects, common misconceptions, and one plausible fault through
+discriminating evidence.
+
+## Make a design decision
+
+Give measurable requirements, alternatives, trade-offs, an acceptance test, and
+the limit of the resulting claim.
+
+## Summary
+
+Connect the chapter's mental model to its downstream chapters.
+
+## Exercises
+
+Include retrieval, estimation, derivation, data interpretation, debugging, and
+open design. Keep live-assessment variants and solutions outside the public book.
+
+## References
+
+Cite claims at the point of use and prefer primary technical sources for
+version-bound or consequential facts.

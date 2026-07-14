@@ -1,0 +1,76 @@
+---
+title: "Reading roadmap"
+description: "Ways through the book, chapter maturity, and just-in-time supporting material."
+page-role: frontmatter
+---
+
+# Reading roadmap {.unnumbered}
+
+The default route follows the parts in order. It is the safest route for a new
+reader because later chapters assume the measurement habits, reference
+directions, model limits, and evidence practices established in Part I. A route
+is a way to emphasize a destination, not permission to ignore prerequisites.
+
+## Choose a destination
+
+| Destination | Begin with | Then emphasize | Demonstrate readiness with |
+|---|---|---|---|
+| First trustworthy bench investigation | [safe practice](01-foundations/f01-safe-practice.qmd) | F02–F06 | a prediction, current-limited test, uncertainty statement, and bounded conclusion |
+| Analog instrument | Part I | A01–A06, S01–S02, R05 | a calibrated signal chain with an error budget |
+| Digital and embedded system | F01–F07, A01–A02 | D01–D05, E01–E05 | timed interface evidence, fault recovery, and reproducible firmware |
+| Custom electronic product | Parts I–IV | R01–R06 alongside the relevant domain chapters | a reviewed design baseline, staged bring-up, verification matrix, and release package |
+| Complete field system | the full route or equivalent demonstrated knowledge | X01–X05 | qualification evidence that another person can reproduce and maintain |
+
+Institutional course mappings provide paced routes through the same chapter
+IDs. The table above is for readers selecting a destination rather than a
+semester.
+
+## Use the appendices just in time
+
+The appendices are working references, not a final hurdle. Follow a prerequisite
+link to them when a chapter first needs the technique:
+
+- M01 for units, graphs, algebra, and complex quantities;
+- M02 for dynamic models, differential equations, and linear algebra;
+- M03 for uncertainty, statistics, and numerical decisions;
+- T01 for datasheets, standards, and source quality;
+- T02 for tools, automation, files, and version control;
+- T03 for records that another person can reproduce and audit.
+
+## Practice and project spine
+
+Book chapters develop durable models. Labs ask for physical or authentic
+evidence; projects force several models and interfaces to succeed together.
+Their stable IDs allow a class or independent implementation to change
+apparatus without copying the theory.
+
+| Stage | Evidence sequence | Integrating result |
+|---|---|---|
+| Foundations | L01–L05: safe instruments, loaded networks, power, transients, and frequency response | M1: a qualified energy-and-light measurement claim |
+| Devices and computation | L06–L10: device regions, analog limits, calibration, timing, HDL, and FPGA evidence | M2–M3: an environmental monitor and precision instrument |
+| Embedded domains | L11–L18: drivers, protocols, control, power, mixed signal, radio, and recovery | M4–M6: a data logger, secure node, and field pilot |
+| Realization and handover | L19–L20: repeat-build, production-test, and field-readiness evidence | M7–M8: risk retirement, qualification, and reproducible handover |
+
+The lab IDs denote evidence goals, not permission to perform an activity. The
+safety level, apparatus, stop conditions, and local authorization must be
+defined before a lab becomes deliverable.
+
+## Interpret chapter status
+
+| Status | What the reader can rely on |
+|---|---|
+| `outline` | scope, central question, concept sequence, and dependency boundary |
+| `draft` | complete instructional path, still subject to technical and editorial revision |
+| `review` | worked results and evidence checked; review findings may still change the chapter |
+| `released` | accepted for the stated edition and still bounded by its documented assumptions |
+
+Status describes maturity, not importance. Regardless of status, prose in this
+book does not authorize work beyond the stated safety boundary.
+
+## A productive chapter cycle
+
+Before reading, state a directional prediction and the evidence that might
+change your mind. While reading, track the physical system, schematic or
+architecture, equations, assumptions, and test points as one model. At the end,
+recompute the central result, explain a plausible mismatch, and state the claim
+that the available evidence supports—no stronger.

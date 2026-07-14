@@ -1,0 +1,45 @@
+---
+title: "Bits, codes, Boolean logic, and electrical levels"
+chapter-id: D01
+status: outline
+---
+
+::: {.callout-note title="Chapter outline"}
+The scope and dependency boundary are stable. Full exposition, worked examples,
+exercises, and tested practical evidence still need authoring and review.
+:::
+
+## Central question
+
+How do continuous voltages represent discrete values without becoming ambiguous?
+
+## Learning outcomes
+
+After completing this chapter, the reader should be able to:
+
+- explain the central model and the assumptions that bound its use;
+- connect physical behavior, a schematic or architecture, and quantitative reasoning;
+- interpret evidence and identify at least one credible failure mode;
+- make and defend a design or diagnostic decision;
+
+## Concept path
+
+- binary, hexadecimal, signed integers, fixed point, and encoding;
+- Boolean operations and truth tables;
+- logic voltage thresholds and noise margin;
+- gates as transistor circuits;
+- active-low signals, tri-state, pull devices, and unknown states;
+- overflow, representation error, and bitwise operations;
+
+## Evidence and practice
+
+The completed chapter will include a prediction, a worked model, a simulation or
+executable check where it adds value, measured or authentic data, a fault or
+model mismatch, and a requirements-based design decision. The final exercise set
+will mix retrieval, calculation, interpretation, debugging, and open design.
+
+## Connections
+
+Chapter ID: `D01`. Prerequisites and downstream course mappings are maintained in
+[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
+provides reader-facing routes and the practice spine.

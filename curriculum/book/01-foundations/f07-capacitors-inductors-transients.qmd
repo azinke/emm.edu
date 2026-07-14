@@ -1,0 +1,45 @@
+---
+title: "Capacitors, inductors, and transients"
+chapter-id: F07
+status: outline
+---
+
+::: {.callout-note title="Chapter outline"}
+The scope and dependency boundary are stable. Full exposition, worked examples,
+exercises, and tested practical evidence still need authoring and review.
+:::
+
+## Central question
+
+How do circuits remember energy and respond when conditions change?
+
+## Learning outcomes
+
+After completing this chapter, the reader should be able to:
+
+- explain the central model and the assumptions that bound its use;
+- connect physical behavior, a schematic or architecture, and quantitative reasoning;
+- interpret evidence and identify at least one credible failure mode;
+- make and defend a design or diagnostic decision;
+
+## Concept path
+
+- capacitance, inductance, and stored energy;
+- continuity of capacitor voltage and inductor current;
+- first-order RC and RL natural and forced response;
+- time constants and initial/final-value reasoning;
+- switching, flyback, and protection;
+- non-ideal ESR, leakage, saturation, and parasitics;
+
+## Evidence and practice
+
+The completed chapter will include a prediction, a worked model, a simulation or
+executable check where it adds value, measured or authentic data, a fault or
+model mismatch, and a requirements-based design decision. The final exercise set
+will mix retrieval, calculation, interpretation, debugging, and open design.
+
+## Connections
+
+Chapter ID: `F07`. Prerequisites and downstream course mappings are maintained in
+[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
+provides reader-facing routes and the practice spine.

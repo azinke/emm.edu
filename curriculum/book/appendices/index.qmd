@@ -1,0 +1,29 @@
+---
+title: "Appendices — Working references"
+description: "Mathematical and engineering-practice references used throughout the book."
+page-role: part
+part-id: appendices
+---
+
+These appendices support the main text at the moment a method is needed. They
+are not remedial side material and do not need to be read from beginning to end
+before starting electronics.
+
+## Two reference threads
+
+| Thread | Appendices | Use |
+|---|---|---|
+| Mathematical tools | M01–M03 | units and algebra; dynamic and linear models; uncertainty, statistics, and numerical methods |
+| Engineering practice | T01–T03 | evaluate evidence; manage tools and versions; create reproducible records and releases |
+
+## How to use them
+
+Follow a prerequisite link when a chapter introduces an unfamiliar technique.
+Work enough examples to use the technique and interpret its limits, then return
+to the engineering question. Revisit the appendix when the consequence of error
+increases—for example, when an estimate becomes a calibration claim or a local
+file becomes a release artifact.
+
+The appendices share the book’s evidence standard: define quantities, expose
+assumptions, preserve recoverable work, and connect each calculation or record
+to the decision it supports.

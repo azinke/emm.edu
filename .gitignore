@@ -1,14 +1,17 @@
-# Generated publication output
-/curriculum/build/**
-!/curriculum/build/.gitkeep
+# Generated books, circuit derivatives, and reports
+/build/**
+!/build/.gitkeep
 
-# Local interpreter and QA caches
+# Legacy output location; safe to remove locally
+/curriculum/build/**
+
+# Local caches
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.quarto/
 
-# Restricted artifacts belong in a separately permissioned store. Only the
-# directory markers in this public scaffold may be tracked here.
+# Restricted stores are separate; public markers remain empty
 /curriculum-private/current-assessments/**
 !/curriculum-private/current-assessments/.gitkeep
 /curriculum-private/restricted-solutions/**

@@ -1,0 +1,58 @@
+---
+title: "How to use this book"
+description: "Reading routes, notation, evidence, and practical expectations."
+page-role: frontmatter
+---
+
+# How to use this book
+
+The default route follows the sidebar from elements to systems. Readers who
+already know basic circuit theory can use the chapter prerequisites in
+[`chapters.toml`](chapters.toml) to enter later. Institutional course routes
+select from the same chapter IDs without forking the book. The
+[reading roadmap](roadmap.qmd) provides shorter reader-facing routes, connects
+the practical spine, and explains chapter maturity.
+
+## A chapter has three jobs
+
+First, it should make a model intelligible. Second, it should connect that model
+to observable evidence. Third, it should use the evidence to make a design or
+diagnostic decision. A chapter is incomplete when it performs only the first.
+
+## Representations
+
+Important examples should connect several of these views:
+
+- physical construction and energy path;
+- schematic and named nodes;
+- equations and assumptions;
+- simulation or executable model;
+- measured data and uncertainty;
+- software, state, or timing;
+- requirements and acceptance tests.
+
+## Notation
+
+SI units are used throughout. Voltage polarity and current reference direction
+are defined before equations. A negative result means reality opposes the chosen
+reference; it is not automatically an error. Approximation, tolerance, bound,
+and uncertainty are written distinctly.
+
+## Evidence
+
+The evidence ladder is:
+
+```text
+estimate → calculation → simulation → measurement → repeated test
+         → independent reproduction → field evidence → qualified claim
+```
+
+Not every question needs the final rung. The consequence of being wrong
+determines how much evidence is appropriate.
+
+## Building lectures from the book
+
+A lecture should select a small number of chapter sections, surface one
+misconception, work one example, and create one decision or exit check. Slides
+provide cues; the book provides durable exposition. See the
+[instructor guide](../instructor/README.md).

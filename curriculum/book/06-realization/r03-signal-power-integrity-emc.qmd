@@ -1,0 +1,45 @@
+---
+title: "Signal integrity, power integrity, and EMC"
+chapter-id: R03
+status: outline
+---
+
+::: {.callout-note title="Chapter outline"}
+The scope and dependency boundary are stable. Full exposition, worked examples,
+exercises, and tested practical evidence still need authoring and review.
+:::
+
+## Central question
+
+Why does a correct schematic fail when geometry, current return, and electromagnetic coupling become real?
+
+## Learning outcomes
+
+After completing this chapter, the reader should be able to:
+
+- explain the central model and the assumptions that bound its use;
+- connect physical behavior, a schematic or architecture, and quantitative reasoning;
+- interpret evidence and identify at least one credible failure mode;
+- make and defend a design or diagnostic decision;
+
+## Concept path
+
+- interconnect as a transmission path;
+- return current, loop area, reference discontinuities, and common-mode conversion;
+- reflection, crosstalk, termination, and timing margin;
+- power distribution impedance, decoupling, and resonance;
+- emissions, immunity, filtering, shielding, and grounding;
+- pre-compliance measurement and evidence-driven layout revision;
+
+## Evidence and practice
+
+The completed chapter will include a prediction, a worked model, a simulation or
+executable check where it adds value, measured or authentic data, a fault or
+model mismatch, and a requirements-based design decision. The final exercise set
+will mix retrieval, calculation, interpretation, debugging, and open design.
+
+## Connections
+
+Chapter ID: `R03`. Prerequisites and downstream course mappings are maintained in
+[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
+provides reader-facing routes and the practice spine.

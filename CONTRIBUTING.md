@@ -1,19 +1,20 @@
 # Contributing
 
-Start with [`curriculum/README.md`](curriculum/README.md) and preserve the Course
-Master Document's stable IDs, evidence threshold, EN/FR parity, offline path,
-safety boundaries, and universal/deployment/context separation.
+Read the [authoring guide](curriculum/authoring/README.md) and the
+[master architecture](blueprint/COURSE_MASTER_DOCUMENT.md) before writing.
 
-Contributions follow the license matrix in
-`curriculum/governance/licensing-and-contributions.md` and use Developer
-Certificate of Origin 1.1 sign-off:
+The central rule is simple: explain a technical concept once in the book. Course,
+lab, project, and instructor records reference stable IDs instead of copying the
+explanation.
 
-```text
-Signed-off-by: Contributor Name <address@example.org>
-```
+Before submitting a change:
 
-Complete the pull-request template and the independent facet review checklist.
-Never submit live assessment content, current solutions, personal/student data,
-partner-confidential data, credentials, or private store links to this public
-repository. If uncertain, stop before committing and ask the assessment or data
-owner to classify the material.
+1. run `python3 curriculum/tools/validate.py`;
+2. render the book when Quarto is available;
+3. verify calculations, circuit source, code, links, accessibility, and licenses;
+4. keep live assessments, solutions, personal data, credentials, and confidential
+   partner material out of the public repository;
+5. add `Signed-off-by: Name <email>` under Developer Certificate of Origin 1.1.
+
+Courseware is contributed under CC BY-SA 4.0, code under MIT, and hardware design
+source under CERN-OHL-P-2.0 unless a file records a compatible exception.

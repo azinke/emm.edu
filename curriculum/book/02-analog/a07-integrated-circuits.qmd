@@ -1,0 +1,47 @@
+---
+title: "Integrated-circuit building blocks and layout"
+chapter-id: A07
+status: outline
+---
+
+::: {.callout-note title="Chapter outline"}
+The scope and dependency boundary are stable. Full exposition, worked examples,
+exercises, and tested practical evidence still need authoring and review.
+:::
+
+## Central question
+
+What changes when transistors and interconnect are designed together on silicon
+rather than assembled as discrete parts on a board?
+
+## Learning outcomes
+
+After completing this chapter, the reader should be able to:
+
+- relate CMOS device behavior to inverter, switch, mirror, differential-pair,
+  and gain-stage operation;
+- explain the roles of process, geometry, matching, bias, and parasitics;
+- read a simplified integrated-circuit schematic and layout as connected physical
+  representations;
+- use simulation evidence to defend a bounded block-level design decision.
+
+## Concept path
+
+- CMOS process, wells, devices, interconnect, and design rules;
+- inverter transfer, noise margin, delay, dynamic power, and leakage;
+- current mirrors, differential pairs, active loads, and bias networks;
+- gain stages, output stages, common mode, headroom, and stability;
+- matching, corners, Monte Carlo analysis, and layout-dependent effects;
+- hierarchy, PDKs, schematic/layout verification, packaging, and test.
+
+## Evidence and practice
+
+The completed chapter will include transistor-level simulation across process,
+voltage, and temperature corners; a layout-aware parasitic comparison; and a
+small block whose performance claim is limited by an explicit error budget.
+
+## Connections
+
+Chapter ID: `A07`. Prerequisites and downstream course mappings are maintained in
+[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
+provides reader-facing routes and the practice spine.

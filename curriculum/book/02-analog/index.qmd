@@ -1,0 +1,42 @@
+---
+title: "II — Devices and analog circuits"
+description: "From semiconductor behavior to bounded, measured signal chains."
+page-role: part
+part-id: analog
+---
+
+Analog design connects device physics to continuously varying signals. The aim
+is not to memorize ideal circuits, but to know which approximation controls a
+design decision and which non-ideal effect will invalidate it first.
+
+## Part question
+
+How do physical devices shape, switch, amplify, and measure real signals within
+finite voltage, current, noise, bandwidth, and thermal limits?
+
+## Entry knowledge
+
+You should be comfortable with DC networks, power, measurement loading,
+transients, and impedance from Part I. Review [M01](../appendices/m01-algebra-units-complex.qmd)
+for logarithms and complex quantities and keep [F06](../01-foundations/f06-measurement-uncertainty-debug.qmd)
+nearby when interpreting device curves or measured gain.
+
+## Learning arc
+
+| Chapters | Development |
+|---|---|
+| A01–A02 | move from semiconductor behavior to diode and transistor operating regions |
+| A03–A04 | create gain and predictable closed-loop behavior through bias and feedback |
+| A05–A06 | build signal chains while accounting for calibration, noise, nonlinearity, bandwidth, and stability |
+| A07 | connect circuit behavior to integrated implementation and layout-dependent effects |
+
+## Exit capability
+
+You should be able to select an operating point, predict small- and large-signal
+behavior, identify the dominant error term, choose a device or amplifier from
+bounded requirements, and define measurements that expose saturation,
+instability, noise, or thermal failure.
+
+Labs L06–L08 provide the main evidence sequence. The precision-instrument thread
+continues through S01, S02, R05, and system study X01; see the
+[practice and project spine](../roadmap.qmd#practice-and-project-spine).

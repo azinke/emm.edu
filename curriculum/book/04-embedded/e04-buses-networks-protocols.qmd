@@ -1,0 +1,45 @@
+---
+title: "Buses, networks, and robust protocols"
+chapter-id: E04
+status: outline
+---
+
+::: {.callout-note title="Chapter outline"}
+The scope and dependency boundary are stable. Full exposition, worked examples,
+exercises, and tested practical evidence still need authoring and review.
+:::
+
+## Central question
+
+What makes communication reliable when wires, timing, devices, and software can all disagree?
+
+## Learning outcomes
+
+After completing this chapter, the reader should be able to:
+
+- explain the central model and the assumptions that bound its use;
+- connect physical behavior, a schematic or architecture, and quantitative reasoning;
+- interpret evidence and identify at least one credible failure mode;
+- make and defend a design or diagnostic decision;
+
+## Concept path
+
+- UART, SPI, I2C, CAN, USB, and network abstractions;
+- electrical layers, termination, topology, and timing;
+- framing, addressing, arbitration, flow control, and errors;
+- checksums, timeouts, retries, idempotence, and recovery;
+- protocol state machines and observability;
+- interoperability tests and interface documentation;
+
+## Evidence and practice
+
+The completed chapter will include a prediction, a worked model, a simulation or
+executable check where it adds value, measured or authentic data, a fault or
+model mismatch, and a requirements-based design decision. The final exercise set
+will mix retrieval, calculation, interpretation, debugging, and open design.
+
+## Connections
+
+Chapter ID: `E04`. Prerequisites and downstream course mappings are maintained in
+[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
+provides reader-facing routes and the practice spine.

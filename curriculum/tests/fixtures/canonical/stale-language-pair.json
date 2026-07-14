@@ -1,6 +1,0 @@
-{
-  "document": "unit-manifests.yml",
-  "pointer": "/units/0/last_parity_review",
-  "value": "2024-01-01",
-  "expect": "stale paired-language record"
-}

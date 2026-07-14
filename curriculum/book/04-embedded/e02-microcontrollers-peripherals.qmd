@@ -1,0 +1,45 @@
+---
+title: "Microcontrollers, memory, and peripherals"
+chapter-id: E02
+status: outline
+---
+
+::: {.callout-note title="Chapter outline"}
+The scope and dependency boundary are stable. Full exposition, worked examples,
+exercises, and tested practical evidence still need authoring and review.
+:::
+
+## Central question
+
+How does a microcontroller turn pins, clocks, memory, and peripherals into a controlled system?
+
+## Learning outcomes
+
+After completing this chapter, the reader should be able to:
+
+- explain the central model and the assumptions that bound its use;
+- connect physical behavior, a schematic or architecture, and quantitative reasoning;
+- interpret evidence and identify at least one credible failure mode;
+- make and defend a design or diagnostic decision;
+
+## Concept path
+
+- core, memory, clock, reset, power, and debug architecture;
+- GPIO electrical behavior and safe interfacing;
+- timers, capture/compare, PWM, ADC, DAC, and DMA;
+- startup configuration and peripheral drivers;
+- datasheet and reference-manual navigation;
+- pin multiplexing, resource conflicts, and bring-up;
+
+## Evidence and practice
+
+The completed chapter will include a prediction, a worked model, a simulation or
+executable check where it adds value, measured or authentic data, a fault or
+model mismatch, and a requirements-based design decision. The final exercise set
+will mix retrieval, calculation, interpretation, debugging, and open design.
+
+## Connections
+
+Chapter ID: `E02`. Prerequisites and downstream course mappings are maintained in
+[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
+provides reader-facing routes and the practice spine.

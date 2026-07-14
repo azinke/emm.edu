@@ -1,0 +1,43 @@
+---
+title: "III — Digital hardware"
+description: "Logic, state, timing, verification, architecture, and programmable hardware."
+page-role: part
+part-id: digital
+---
+
+Digital abstraction is powerful because a range of analog states can represent
+one logical value. It is trustworthy only while electrical levels, timing,
+clocking, reset, and uncertainty remain within their contracts.
+
+## Part question
+
+How are values, decisions, state, and computation built from physical circuits,
+and how do we prove that the intended behavior holds across time and inputs?
+
+## Entry knowledge
+
+The part assumes transistor switching, RC behavior, and disciplined use of
+units and evidence. [M01](../appendices/m01-algebra-units-complex.qmd) supports
+binary arithmetic and Boolean manipulation; [T02](../appendices/t02-tools-version-control.qmd)
+supports executable models, tests, and versioned HDL.
+
+## Learning arc
+
+| Chapters | Development |
+|---|---|
+| D01–D02 | encode information and construct combinational decisions and arithmetic |
+| D03 | introduce state, clocks, setup/hold constraints, reset, and clock-domain risk |
+| D04 | express hardware and verify behavior before implementation |
+| D05–D06 | assemble memory and processors, then partition systems onto programmable logic |
+
+## Exit capability
+
+You should be able to move between a logic requirement, truth or state model,
+timed interface, HDL implementation, and verification evidence. You should also
+be able to distinguish a functional error from an electrical, reset, clocking,
+or timing failure.
+
+Labs L09–L10 connect timed measurements to simulation and FPGA implementation.
+The resulting models feed directly into embedded systems and the secure
+connected-node study; see the
+[practice and project spine](../roadmap.qmd#practice-and-project-spine).

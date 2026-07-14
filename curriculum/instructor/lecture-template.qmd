@@ -1,0 +1,42 @@
+---
+title: "Session: question, not topic"
+course-id: ESE000
+chapter-ids: [F00]
+duration-minutes: 90
+---
+
+## Before class
+
+- Required book sections:
+- Retrieval prompt:
+- Apparatus or dataset:
+- Safety and failure-recovery check:
+
+## Opening prediction — 10 min
+
+Present the phenomenon or decision. Collect an individual prediction and reason.
+
+## Model and worked example — 25 min
+
+Record board/diagram cues and the one calculation learners should see developed
+live. Link to the book instead of copying the derivation.
+
+## Evidence encounter — 25 min
+
+Describe the demonstration, short measurement, simulation, or dataset. Include a
+credible mismatch and the question that distinguishes hypotheses.
+
+## Design decision — 20 min
+
+Give constraints and require a choice with an acceptance test.
+
+## Exit check — 10 min
+
+Use a new representation or parameter so the check tests transfer.
+
+## After class
+
+- Evidence to review:
+- Remediation:
+- Enrichment:
+- Revision note:

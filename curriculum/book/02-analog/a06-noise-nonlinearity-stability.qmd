@@ -1,0 +1,45 @@
+---
+title: "Noise, nonlinearity, bandwidth, and stability"
+chapter-id: A06
+status: outline
+---
+
+::: {.callout-note title="Chapter outline"}
+The scope and dependency boundary are stable. Full exposition, worked examples,
+exercises, and tested practical evidence still need authoring and review.
+:::
+
+## Central question
+
+Which non-ideal effect limits the smallest trustworthy signal in a real analog chain?
+
+## Learning outcomes
+
+After completing this chapter, the reader should be able to:
+
+- explain the central model and the assumptions that bound its use;
+- connect physical behavior, a schematic or architecture, and quantitative reasoning;
+- interpret evidence and identify at least one credible failure mode;
+- make and defend a design or diagnostic decision;
+
+## Concept path
+
+- thermal, shot, flicker, quantization, and interference sources;
+- noise density, bandwidth, and signal-to-noise ratio;
+- dynamic range, clipping, distortion, and intermodulation;
+- input-referred and output-referred error budgets;
+- stability margins and unintended feedback;
+- layout, shielding, filtering, and averaging trade-offs;
+
+## Evidence and practice
+
+The completed chapter will include a prediction, a worked model, a simulation or
+executable check where it adds value, measured or authentic data, a fault or
+model mismatch, and a requirements-based design decision. The final exercise set
+will mix retrieval, calculation, interpretation, debugging, and open design.
+
+## Connections
+
+Chapter ID: `A06`. Prerequisites and downstream course mappings are maintained in
+[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
+provides reader-facing routes and the practice spine.

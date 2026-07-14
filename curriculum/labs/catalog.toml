@@ -1,0 +1,121 @@
+version = 1
+
+[[lab]]
+id = "L01"
+title = "Bench safety and instrument qualification"
+chapter_ids = ["F01", "F06"]
+safety_level = "L1"
+
+[[lab]]
+id = "L02"
+title = "Source, load, resistance, and meter loading"
+chapter_ids = ["F02", "F03", "F06"]
+safety_level = "L1"
+
+[[lab]]
+id = "L03"
+title = "Network conservation and equivalents"
+chapter_ids = ["F04", "F06"]
+safety_level = "L1"
+
+[[lab]]
+id = "L04"
+title = "Power, efficiency, and temperature rise"
+chapter_ids = ["F05", "F06"]
+safety_level = "L1"
+
+[[lab]]
+id = "L05"
+title = "RC/RL transients and frequency response"
+chapter_ids = ["F07", "F08", "S01"]
+safety_level = "L1"
+
+[[lab]]
+id = "L06"
+title = "Diode and transistor operating regions"
+chapter_ids = ["A01", "A02"]
+safety_level = "L1"
+
+[[lab]]
+id = "L07"
+title = "Amplifier gain, limits, and feedback"
+chapter_ids = ["A03", "A04", "A06"]
+safety_level = "L1"
+
+[[lab]]
+id = "L08"
+title = "Sensor calibration and uncertainty"
+chapter_ids = ["A05", "F06", "R05"]
+safety_level = "L1"
+
+[[lab]]
+id = "L09"
+title = "Logic levels, timing, and state"
+chapter_ids = ["D01", "D03"]
+safety_level = "L1"
+
+[[lab]]
+id = "L10"
+title = "HDL verification and FPGA implementation"
+chapter_ids = ["D04", "D06"]
+safety_level = "L1"
+
+[[lab]]
+id = "L11"
+title = "Microcontroller peripheral driver"
+chapter_ids = ["E01", "E02", "E03"]
+safety_level = "L1"
+
+[[lab]]
+id = "L12"
+title = "Protocol fault isolation"
+chapter_ids = ["E04", "F06"]
+safety_level = "L1"
+
+[[lab]]
+id = "L13"
+title = "Plant identification and feedback control"
+chapter_ids = ["S04", "M02"]
+safety_level = "L2"
+
+[[lab]]
+id = "L14"
+title = "Protected power conversion"
+chapter_ids = ["S05", "S06"]
+safety_level = "L2"
+
+[[lab]]
+id = "L15"
+title = "PCB inspection and staged bring-up"
+chapter_ids = ["R02", "R03", "R04"]
+safety_level = "L2"
+
+[[lab]]
+id = "L16"
+title = "Converter noise and mixed-signal error budget"
+chapter_ids = ["S02", "A06", "R03"]
+safety_level = "L1"
+
+[[lab]]
+id = "L17"
+title = "Legal low-power radio link"
+chapter_ids = ["S07", "R03"]
+safety_level = "L2"
+
+[[lab]]
+id = "L18"
+title = "Concurrent firmware fault and recovery"
+chapter_ids = ["E05", "E06", "R06"]
+safety_level = "L1"
+
+[[lab]]
+id = "L19"
+title = "Production test and repeat-build evidence"
+chapter_ids = ["R04", "R05"]
+safety_level = "L2"
+
+[[lab]]
+id = "L20"
+title = "Field-readiness and qualification exercise"
+chapter_ids = ["R05", "R06", "X04", "X05"]
+safety_level = "L2"

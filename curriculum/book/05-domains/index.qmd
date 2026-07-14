@@ -1,0 +1,43 @@
+---
+title: "V — Signals, control, power, and communication"
+description: "Cross-domain models for information, feedback, energy, motion, and links."
+page-role: part
+part-id: domains
+---
+
+This part develops domain models that sit between component behavior and a
+complete system. Each model deliberately discards detail; engineering judgment
+lies in knowing what it preserves, where it fails, and how to test the boundary.
+
+## Part question
+
+How do we represent, sample, transform, control, power, move, and communicate
+with physical signals while preserving the quantities that matter?
+
+## Entry knowledge
+
+Frequency response, dynamic circuits, measurement uncertainty, and basic analog
+and embedded implementation are assumed. Use [M02](../appendices/m02-calculus-linear-differential.qmd)
+for continuous and discrete dynamics and [M03](../appendices/m03-probability-numerical.qmd)
+for noise, estimation, and numerical decisions.
+
+## Learning arc
+
+| Chapters | Development |
+|---|---|
+| S01–S03 | represent signals and systems, cross the analog/digital boundary, and process sampled data |
+| S04 | close a feedback loop and relate performance to stability and robustness |
+| S05–S06 | convert, store, and control electrical energy and motion |
+| S07 | encode information onto physical communication channels and antennas |
+
+## Exit capability
+
+You should be able to choose a useful time-, frequency-, energy-, or information-
+domain model; allocate a sampling, stability, power, or link budget; state the
+model’s neglected effects; and design a measurement that tests the decision
+made from it.
+
+Labs L13, L14, L16, and L17 anchor the control, power, mixed-signal, and radio
+evidence. These domains converge in the projects and complete-system studies
+that follow; see the
+[practice and project spine](../roadmap.qmd#practice-and-project-spine).

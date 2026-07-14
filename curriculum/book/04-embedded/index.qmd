@@ -1,0 +1,43 @@
+---
+title: "IV — Embedded systems"
+description: "Software interacting with hardware, time, energy, communication, and failure."
+page-role: part
+part-id: embedded
+---
+
+An embedded system is correct only when its software, hardware, timing, power,
+interfaces, recovery behavior, and update path work together. A function that
+returns the right value too late—or only in the laboratory—is not enough.
+
+## Part question
+
+How does software control and observe a physical system predictably despite
+concurrency, finite resources, imperfect communication, and faults?
+
+## Entry knowledge
+
+You should understand logic levels, state, timing, basic computer architecture,
+and transistor-level interfaces. [T02](../appendices/t02-tools-version-control.qmd)
+provides the version-control and automation practices assumed by code examples;
+[T03](../appendices/t03-reproducible-engineering.qmd) supports reproducible
+firmware releases and test records.
+
+## Learning arc
+
+| Chapters | Development |
+|---|---|
+| E01–E02 | connect C semantics and memory to registers, peripherals, and physical pins |
+| E03 | reason about interrupts, deadlines, shared state, energy, and low-power modes |
+| E04 | design robust local buses, network exchanges, framing, and fault handling |
+| E05–E06 | scale to RTOS and Linux systems with dependability, security, services, and updates |
+
+## Exit capability
+
+You should be able to define a hardware/software interface, budget time and
+energy, capture protocol evidence, reproduce a concurrency failure, and design a
+bounded recovery or update mechanism. Tests should identify configuration and
+expose failure paths rather than demonstrate only the nominal case.
+
+Labs L11, L12, and L18 provide the principal driver, protocol, and recovery
+evidence. Projects M2–M6 reuse these capabilities at increasing system scale;
+see the [practice and project spine](../roadmap.qmd#practice-and-project-spine).

@@ -1,6 +1,0 @@
-terms:
-  - id: TERM-VOLTAGE
-    preferred:
-      en: voltage
-      fr: tension
-    avoided_terms: [potential force]

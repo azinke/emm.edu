@@ -1,0 +1,49 @@
+version = 1
+
+[[project]]
+id = "M1"
+title = "Measure an energy-and-light system"
+chapter_ids = ["F01", "F02", "F03", "F04", "F05", "F06", "T03"]
+result = "A safe measurement plan, calibrated observations, and a qualified energy claim."
+
+[[project]]
+id = "M2"
+title = "Build a calibrated environmental monitor"
+chapter_ids = ["F07", "F08", "A01", "A02", "E01", "R01"]
+result = "A two-variable monitor with protection, calibration, and a defensible use context."
+
+[[project]]
+id = "M3"
+title = "Create a precision instrument"
+chapter_ids = ["A03", "A04", "A05", "A06", "S01", "S02", "R05", "X01"]
+result = "A measured signal chain with calibration and an uncertainty statement."
+
+[[project]]
+id = "M4"
+title = "Release a custom-PCB resilient data logger"
+chapter_ids = ["E02", "E03", "E04", "S04", "S05", "R02", "R03", "R04", "X02"]
+result = "A fabrication-ready board, staged bring-up, tested firmware, and release package."
+
+[[project]]
+id = "M5"
+title = "Engineer a secure connected node"
+chapter_ids = ["D05", "D06", "E05", "S02", "S07", "R05", "R06", "X03"]
+result = "An alpha product with a threat model, measured link, stress evidence, and recovery."
+
+[[project]]
+id = "M6"
+title = "Pilot a context-responsive field system"
+chapter_ids = ["E06", "S03", "S06", "R01", "R06", "X04"]
+result = "A field pilot with ethical requirements, rollback, service plan, and bounded claims."
+
+[[project]]
+id = "M7"
+title = "Resolve capstone risks"
+chapter_ids = ["R01", "R05", "R06", "X05", "T01", "T03"]
+result = "Reviewed requirements, architecture, risk prototypes, and qualification plan."
+
+[[project]]
+id = "M8"
+title = "Qualify and hand over a complete system"
+chapter_ids = ["R04", "R05", "R06", "X05", "T03"]
+result = "A verified product, reproducible dossier, technical defense, and accepted handover."

@@ -1,0 +1,44 @@
+---
+title: "VII — Complete systems"
+description: "System studies that integrate models, evidence, trade-offs, and handover."
+page-role: part
+part-id: systems
+---
+
+The system studies reverse the usual chapter perspective. Instead of isolating
+one concept, they begin with a need and ask which representations, interfaces,
+budgets, risks, and evidence must agree for the whole system to be credible.
+
+## Part question
+
+What changes when analog, digital, embedded, power, communication, mechanical,
+human, and lifecycle decisions must succeed together?
+
+## Entry knowledge
+
+These are synthesis chapters. Each has explicit prerequisites in the chapter
+registry, and each expects the record-keeping practices in [T03](../appendices/t03-reproducible-engineering.qmd).
+A reader may enter one study after its prerequisites rather than waiting to
+finish every domain chapter.
+
+## Learning arc
+
+| Chapters | Development |
+|---|---|
+| X01 | integrate precision analog, conversion, calibration, and uncertainty |
+| X02 | balance sensing, logging, power, storage, enclosure, and recovery |
+| X03 | connect programmable hardware, communication, threat modeling, and secure recovery |
+| X04 | adapt a maintainable system to field context, infrastructure, users, and service constraints |
+| X05 | qualify, defend, hand over, monitor, and improve a complete system |
+
+## Exit capability
+
+You should be able to maintain a system-level argument from need to evidence,
+allocate requirements across interfaces, identify a cross-domain failure,
+resolve conflicting trade-offs transparently, and prepare a handover that lets
+another competent team reproduce and improve the result.
+
+The studies align with projects M3–M8 in the
+[practice and project spine](../roadmap.qmd#practice-and-project-spine). The
+project artifact is the evidence; the study explains how to reason about it and
+bound the resulting claim.

@@ -1,0 +1,58 @@
+---
+title: "Electronics: From Elements to Systems"
+description: "A free, practical guide from first measurements to complete electronic systems."
+page-role: frontmatter
+---
+
+# Start with a voltage. End with a system.
+
+Electronics becomes understandable when the representations agree: the physical
+assembly, circuit diagram, equations, simulation, code, measurements,
+requirements, and test evidence all describe the same thing.
+
+This book develops that agreement one layer at a time. It begins with safe
+measurement and simple sources and loads. It then builds through passive
+networks, semiconductor devices, analog and digital circuits, embedded software,
+signals, control, power, communication, and product realization. The final part
+uses complete systems to show why the earlier details matter.
+
+## How the path is organized
+
+| Stage | Central question |
+|---|---|
+| Foundations | What are voltage, current, resistance, energy, and a trustworthy measurement? |
+| Devices and analog | How do physical devices shape and amplify real signals? |
+| Digital hardware | How are values, decisions, state, and computation built from circuits? |
+| Embedded systems | How does software interact with time, energy, peripherals, and failure? |
+| System domains | How do we sample, control, power, and communicate? |
+| Product realization | How does a design become reproducible, compliant, and maintainable hardware? |
+| Complete systems | How are cross-domain trade-offs verified and handed to another person? |
+
+Each chapter can support self-study or classroom teaching. Course routes are
+published separately and point to the same chapters; there are no course-specific
+copies of the theory.
+
+Use the [reading roadmap](roadmap.qmd) to follow the full sequence, approach a
+particular destination, or identify the mathematical and engineering-practice
+references to keep nearby. Each part opens with its entry knowledge, learning
+arc, and exit capability.
+
+::: {.callout-note title="Development edition"}
+The table of contents and dependency structure are complete, but the chapters
+are currently outlines. Their front matter reports maturity explicitly; an
+outline is a scope commitment, not yet a teachable or safety-authorizing chapter.
+:::
+
+::: {.callout-warning title="Safety boundary"}
+Early practical work is deliberately low voltage and current limited. Reading a
+chapter is not authorization for mains, high-voltage, high-energy battery, RF
+power, rotating-machine, medical, or safety-critical work. Use approved
+facilities, supervision, and local procedures.
+:::
+
+## Read, predict, test, decide
+
+Do not read electronics as a list of formulas. Before a result is revealed,
+predict its direction and approximate magnitude. State the model and its limits.
+Then compare calculation, simulation, and measurement. Treat disagreement as
+information. Finish by deciding what the evidence permits you to claim.

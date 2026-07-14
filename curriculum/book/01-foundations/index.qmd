@@ -1,0 +1,43 @@
+---
+title: "I — Electrical foundations"
+description: "Safe observation, circuit models, measurement, and dynamic behavior."
+page-role: part
+part-id: foundations
+---
+
+The first part establishes the habits on which every later result depends:
+control the hazard, define what is being measured, choose reference directions,
+state the model, and compare its prediction with evidence.
+
+## Part question
+
+How can a physical electrical system, a circuit model, and a set of measurements
+be made to tell the same defensible story?
+
+## Entry knowledge
+
+No prior circuit theory is assumed. Basic algebra and scientific notation are
+helpful; use [M01](../appendices/m01-algebra-units-complex.qmd) when units,
+graphs, or equation manipulation need review. Practical work begins only with
+current-limited extra-low-voltage systems and locally approved procedures.
+
+## Learning arc
+
+| Chapters | Development |
+|---|---|
+| F01–F02 | establish safe observation and define charge, voltage, and current |
+| F03–F05 | model sources, loads, networks, energy, power, and heat |
+| F06 | decide whether a measurement or debugging claim is trustworthy |
+| F07–F08 | extend static models to stored energy, transients, sinusoids, and frequency response |
+
+## Exit capability
+
+You should be able to inspect and energize an approved low-energy circuit in
+stages, predict its order of magnitude, measure without silently changing the
+quantity of interest, reconcile a model with uncertainty, and stop when the
+evidence or safety boundary is inadequate. Those capabilities feed every later
+part; they are not preliminaries to discard.
+
+The aligned practical sequence is L01–L05. Project M1 integrates the part into
+a qualified energy-and-light measurement claim; see the
+[practice and project spine](../roadmap.qmd#practice-and-project-spine).

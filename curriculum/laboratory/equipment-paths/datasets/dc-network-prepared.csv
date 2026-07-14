@@ -1,7 +1,0 @@
-dataset_id,dataset_version,record_class,provenance,run_id,record_index,source_v,r_top_ohm,r_bottom_ohm,node_out_v,declared_rounding_v,anomaly_label,spdx_license
-M03-E4-DATA-DC,0.1.0,prepared_synthetic_non_personal,ideal_model_no_physical_apparatus,DC-A,1,5.000,1000,1000,2.500,0.005,none,CC-BY-SA-4.0
-M03-E4-DATA-DC,0.1.0,prepared_synthetic_non_personal,ideal_model_no_physical_apparatus,DC-A,2,4.950,1000,1000,2.475,0.005,source_low,CC-BY-SA-4.0
-M03-E4-DATA-DC,0.1.0,prepared_synthetic_non_personal,ideal_model_no_physical_apparatus,DC-A,3,5.050,1000,1000,2.525,0.005,source_high,CC-BY-SA-4.0
-M03-E4-DATA-DC,0.1.0,prepared_synthetic_non_personal,ideal_model_no_physical_apparatus,DC-B,1,5.000,1000,820,2.253,0.005,seeded_wrong_value_r_bottom,CC-BY-SA-4.0
-M03-E4-DATA-DC,0.1.0,prepared_synthetic_non_personal,ideal_model_no_physical_apparatus,DC-B,2,4.950,1000,820,2.230,0.005,seeded_wrong_value_r_bottom,CC-BY-SA-4.0
-M03-E4-DATA-DC,0.1.0,prepared_synthetic_non_personal,ideal_model_no_physical_apparatus,DC-B,3,5.050,1000,820,2.275,0.005,seeded_wrong_value_r_bottom,CC-BY-SA-4.0

@@ -1,0 +1,45 @@
+---
+title: "Embedded Linux, edge services, and secure updates"
+chapter-id: E06
+status: outline
+---
+
+::: {.callout-note title="Chapter outline"}
+The scope and dependency boundary are stable. Full exposition, worked examples,
+exercises, and tested practical evidence still need authoring and review.
+:::
+
+## Central question
+
+How do you operate and update a networked embedded computer as a dependable product?
+
+## Learning outcomes
+
+After completing this chapter, the reader should be able to:
+
+- explain the central model and the assumptions that bound its use;
+- connect physical behavior, a schematic or architecture, and quantitative reasoning;
+- interpret evidence and identify at least one credible failure mode;
+- make and defend a design or diagnostic decision;
+
+## Concept path
+
+- boot chain, kernel, device tree, drivers, and filesystems;
+- processes, services, permissions, IPC, and resource control;
+- device interfaces, acquisition, storage, and telemetry;
+- reproducible images, configuration, deployment, and rollback;
+- identity, authentication, secure boot, signed updates, and secrets;
+- observability, fleet operation, and lifecycle support;
+
+## Evidence and practice
+
+The completed chapter will include a prediction, a worked model, a simulation or
+executable check where it adds value, measured or authentic data, a fault or
+model mismatch, and a requirements-based design decision. The final exercise set
+will mix retrieval, calculation, interpretation, debugging, and open design.
+
+## Connections
+
+Chapter ID: `E06`. Prerequisites and downstream course mappings are maintained in
+[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
+provides reader-facing routes and the practice spine.

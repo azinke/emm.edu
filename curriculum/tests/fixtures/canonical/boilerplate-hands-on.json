@@ -1,6 +1,0 @@
-{
-  "document": "unit-manifests.yml",
-  "pointer": "/units/0/hands_on_contract/real_life_question",
-  "value": "[question]",
-  "expect": "boilerplate hands-on contract"
-}

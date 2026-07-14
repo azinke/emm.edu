@@ -1,0 +1,8 @@
+version = 1
+
+[[circuit]]
+id = "f03-voltage-divider"
+source = "f03-voltage-divider.tex"
+chapter_id = "F03"
+caption = "A loaded voltage-divider model with an explicit source, reference node, and output test point."
+alt = "Voltage source VS drives series resistors R1 and R2. R2 returns to ground, and output test point TP1 is the junction of R1 and R2."

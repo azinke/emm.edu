@@ -1,0 +1,59 @@
+version = 1
+title = "Electronics Systems Engineering reference program"
+credits_total = 240
+
+[[semester]]
+number = 1
+theme = "Observe, measure, model"
+course_ids = ["ESE101", "MAT101", "PHY101", "CSC101", "ESE111", "COM101"]
+credits = 30
+project_id = "M1"
+
+[[semester]]
+number = 2
+theme = "Dynamic circuits and active devices"
+course_ids = ["MAT102", "PHY102", "ESE121", "ESE122", "CSC102", "DES102"]
+credits = 30
+project_id = "M2"
+
+[[semester]]
+number = 3
+theme = "Analog, digital, signals, and metrology"
+course_ids = ["MAT201", "ESE211", "ESE212", "ESE213", "ESE214", "PRJ201"]
+credits = 30
+project_id = "M3"
+
+[[semester]]
+number = 4
+theme = "Integrated interfaces and first PCB"
+course_ids = ["ESE221", "ESE222", "ESE223", "ESE224", "ESE225", "PRJ202"]
+credits = 30
+project_id = "M4"
+
+[[semester]]
+number = 5
+theme = "Robust connected products"
+course_ids = ["ESE311", "ESE312", "ESE313", "ESE314", "ESE315", "PRJ301"]
+credits = 30
+project_id = "M5"
+
+[[semester]]
+number = 6
+theme = "Advanced domains and field engineering"
+course_ids = ["ESE321", "ESE322", "ESE323", "ESE324", "ESE325", "PRJ302"]
+credits = 30
+project_id = "M6"
+
+[[semester]]
+number = 7
+theme = "Specialize and validate"
+course_ids = ["RES401", "ESE401", "ELE4A", "ELE4B", "CAP401", "ENT401"]
+credits = 30
+project_id = "M7"
+
+[[semester]]
+number = 8
+theme = "Qualify, transfer, and reflect"
+course_ids = ["CAP402", "IND402", "ELE4C", "SEM402"]
+credits = 30
+project_id = "M8"

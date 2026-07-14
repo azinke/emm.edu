@@ -1,0 +1,358 @@
+version = 1
+
+[[chapter]]
+id = "F01"
+title = "Safe practice, units, and the engineering bench"
+part = "foundations"
+file = "01-foundations/f01-safe-practice.qmd"
+prerequisites = []
+
+[[chapter]]
+id = "F02"
+title = "Charge, fields, voltage, and current"
+part = "foundations"
+file = "01-foundations/f02-charge-voltage-current.qmd"
+prerequisites = ["F01"]
+
+[[chapter]]
+id = "F03"
+title = "Sources, loads, and resistance"
+part = "foundations"
+file = "01-foundations/f03-sources-loads-resistance.qmd"
+prerequisites = ["F02", "M01"]
+
+[[chapter]]
+id = "F04"
+title = "Networks, Kirchhoff's laws, and equivalents"
+part = "foundations"
+file = "01-foundations/f04-networks-kirchhoff.qmd"
+prerequisites = ["F03"]
+
+[[chapter]]
+id = "F05"
+title = "Energy, power, efficiency, and heat"
+part = "foundations"
+file = "01-foundations/f05-energy-power-thermal.qmd"
+prerequisites = ["F03"]
+
+[[chapter]]
+id = "F06"
+title = "Measurement, uncertainty, and systematic debugging"
+part = "foundations"
+file = "01-foundations/f06-measurement-uncertainty-debug.qmd"
+prerequisites = ["F03", "M03"]
+
+[[chapter]]
+id = "F07"
+title = "Capacitors, inductors, and transients"
+part = "foundations"
+file = "01-foundations/f07-capacitors-inductors-transients.qmd"
+prerequisites = ["F04", "F05", "M02"]
+
+[[chapter]]
+id = "F08"
+title = "Sinusoids, impedance, and frequency response"
+part = "foundations"
+file = "01-foundations/f08-sinusoids-impedance-frequency.qmd"
+prerequisites = ["F07", "M01"]
+
+[[chapter]]
+id = "A01"
+title = "Semiconductor behavior and diodes"
+part = "analog"
+file = "02-analog/a01-semiconductor-diodes.qmd"
+prerequisites = ["F04", "F05"]
+
+[[chapter]]
+id = "A02"
+title = "Transistors as switches and controlled sources"
+part = "analog"
+file = "02-analog/a02-transistors.qmd"
+prerequisites = ["A01", "F05"]
+
+[[chapter]]
+id = "A03"
+title = "Bias and small-signal amplifiers"
+part = "analog"
+file = "02-analog/a03-bias-small-signal-amplifiers.qmd"
+prerequisites = ["A02", "F08"]
+
+[[chapter]]
+id = "A04"
+title = "Operational amplifiers and feedback"
+part = "analog"
+file = "02-analog/a04-op-amps-feedback.qmd"
+prerequisites = ["A03", "F08"]
+
+[[chapter]]
+id = "A05"
+title = "Sensors, bridges, and instrumentation"
+part = "analog"
+file = "02-analog/a05-sensors-instrumentation.qmd"
+prerequisites = ["A04", "F06"]
+
+[[chapter]]
+id = "A06"
+title = "Noise, nonlinearity, bandwidth, and stability"
+part = "analog"
+file = "02-analog/a06-noise-nonlinearity-stability.qmd"
+prerequisites = ["A04", "F08"]
+
+[[chapter]]
+id = "A07"
+title = "Integrated-circuit building blocks and layout"
+part = "analog"
+file = "02-analog/a07-integrated-circuits.qmd"
+prerequisites = ["A02", "A03"]
+
+[[chapter]]
+id = "D01"
+title = "Bits, codes, Boolean logic, and electrical levels"
+part = "digital"
+file = "03-digital/d01-bits-codes-logic.qmd"
+prerequisites = ["A02", "M01"]
+
+[[chapter]]
+id = "D02"
+title = "Combinational logic and arithmetic"
+part = "digital"
+file = "03-digital/d02-combinational-logic.qmd"
+prerequisites = ["D01"]
+
+[[chapter]]
+id = "D03"
+title = "State, clocks, and timing"
+part = "digital"
+file = "03-digital/d03-state-clock-timing.qmd"
+prerequisites = ["D02", "F07"]
+
+[[chapter]]
+id = "D04"
+title = "Hardware description and verification"
+part = "digital"
+file = "03-digital/d04-hdl-verification.qmd"
+prerequisites = ["D03", "T02"]
+
+[[chapter]]
+id = "D05"
+title = "Memory and computer architecture"
+part = "digital"
+file = "03-digital/d05-memory-computer-architecture.qmd"
+prerequisites = ["D03", "D04"]
+
+[[chapter]]
+id = "D06"
+title = "FPGA systems and hardware/software partitioning"
+part = "digital"
+file = "03-digital/d06-fpga-systems.qmd"
+prerequisites = ["D04", "D05"]
+
+[[chapter]]
+id = "E01"
+title = "C and the hardware/software boundary"
+part = "embedded"
+file = "04-embedded/e01-c-hardware-boundary.qmd"
+prerequisites = ["D01", "T02"]
+
+[[chapter]]
+id = "E02"
+title = "Microcontrollers, memory, and peripherals"
+part = "embedded"
+file = "04-embedded/e02-microcontrollers-peripherals.qmd"
+prerequisites = ["E01", "D03"]
+
+[[chapter]]
+id = "E03"
+title = "Interrupts, time, concurrency, and low power"
+part = "embedded"
+file = "04-embedded/e03-interrupts-time-concurrency.qmd"
+prerequisites = ["E02"]
+
+[[chapter]]
+id = "E04"
+title = "Buses, networks, and robust protocols"
+part = "embedded"
+file = "04-embedded/e04-buses-networks-protocols.qmd"
+prerequisites = ["E02", "F08"]
+
+[[chapter]]
+id = "E05"
+title = "RTOS design, testing, and dependability"
+part = "embedded"
+file = "04-embedded/e05-rtos-testing-dependability.qmd"
+prerequisites = ["E03", "E04"]
+
+[[chapter]]
+id = "E06"
+title = "Embedded Linux, edge services, and secure updates"
+part = "embedded"
+file = "04-embedded/e06-embedded-linux-edge-security.qmd"
+prerequisites = ["E04", "E05", "T03"]
+
+[[chapter]]
+id = "S01"
+title = "Signals and systems in time and frequency"
+part = "domains"
+file = "05-domains/s01-signals-systems.qmd"
+prerequisites = ["F08", "M02"]
+
+[[chapter]]
+id = "S02"
+title = "Sampling and data conversion"
+part = "domains"
+file = "05-domains/s02-sampling-data-conversion.qmd"
+prerequisites = ["S01", "A05"]
+
+[[chapter]]
+id = "S03"
+title = "Digital signal processing"
+part = "domains"
+file = "05-domains/s03-digital-signal-processing.qmd"
+prerequisites = ["S02", "E03"]
+
+[[chapter]]
+id = "S04"
+title = "Feedback and control"
+part = "domains"
+file = "05-domains/s04-feedback-control.qmd"
+prerequisites = ["F07", "S01", "M02"]
+
+[[chapter]]
+id = "S05"
+title = "Power electronics and conversion"
+part = "domains"
+file = "05-domains/s05-power-electronics.qmd"
+prerequisites = ["A02", "F05", "S04"]
+
+[[chapter]]
+id = "S06"
+title = "Energy storage, motors, and drives"
+part = "domains"
+file = "05-domains/s06-storage-motors-drives.qmd"
+prerequisites = ["S05", "S04"]
+
+[[chapter]]
+id = "S07"
+title = "Communications, RF, and antennas"
+part = "domains"
+file = "05-domains/s07-communications-rf-antennas.qmd"
+prerequisites = ["S01", "E04"]
+
+[[chapter]]
+id = "R01"
+title = "Requirements, architecture, interfaces, and trade-offs"
+part = "realization"
+file = "06-realization/r01-requirements-architecture.qmd"
+prerequisites = ["T01"]
+
+[[chapter]]
+id = "R02"
+title = "Schematic capture and PCB layout"
+part = "realization"
+file = "06-realization/r02-schematic-pcb.qmd"
+prerequisites = ["A04", "D03", "R01"]
+
+[[chapter]]
+id = "R03"
+title = "Signal integrity, power integrity, and EMC"
+part = "realization"
+file = "06-realization/r03-signal-power-integrity-emc.qmd"
+prerequisites = ["R02", "F08"]
+
+[[chapter]]
+id = "R04"
+title = "Manufacture, assembly, and bring-up"
+part = "realization"
+file = "06-realization/r04-manufacture-bringup.qmd"
+prerequisites = ["R02", "F06"]
+
+[[chapter]]
+id = "R05"
+title = "Metrology, reliability, and production test"
+part = "realization"
+file = "06-realization/r05-metrology-reliability-test.qmd"
+prerequisites = ["F06", "R04", "M03"]
+
+[[chapter]]
+id = "R06"
+title = "Safety, security, compliance, and lifecycle"
+part = "realization"
+file = "06-realization/r06-safety-security-lifecycle.qmd"
+prerequisites = ["R01", "R05"]
+
+[[chapter]]
+id = "X01"
+title = "System study: a precision instrument"
+part = "systems"
+file = "07-systems/x01-precision-instrument.qmd"
+prerequisites = ["A05", "A06", "S02", "R05"]
+
+[[chapter]]
+id = "X02"
+title = "System study: a resilient data logger"
+part = "systems"
+file = "07-systems/x02-resilient-data-logger.qmd"
+prerequisites = ["E04", "R02", "S05"]
+
+[[chapter]]
+id = "X03"
+title = "System study: a secure connected node"
+part = "systems"
+file = "07-systems/x03-secure-connected-node.qmd"
+prerequisites = ["E05", "D06", "S07", "R06"]
+
+[[chapter]]
+id = "X04"
+title = "System study: a context-responsive field system"
+part = "systems"
+file = "07-systems/x04-field-system.qmd"
+prerequisites = ["E06", "R06", "X02"]
+
+[[chapter]]
+id = "X05"
+title = "Capstone qualification, handover, and improvement"
+part = "systems"
+file = "07-systems/x05-capstone-handover.qmd"
+prerequisites = ["X01", "X03", "X04"]
+
+[[chapter]]
+id = "M01"
+title = "Algebra, units, graphs, and complex numbers"
+part = "appendices"
+file = "appendices/m01-algebra-units-complex.qmd"
+prerequisites = []
+
+[[chapter]]
+id = "M02"
+title = "Calculus, linear algebra, and differential equations"
+part = "appendices"
+file = "appendices/m02-calculus-linear-differential.qmd"
+prerequisites = ["M01"]
+
+[[chapter]]
+id = "M03"
+title = "Probability, statistics, and numerical methods"
+part = "appendices"
+file = "appendices/m03-probability-numerical.qmd"
+prerequisites = ["M01"]
+
+[[chapter]]
+id = "T01"
+title = "Reading datasheets, standards, and evidence"
+part = "appendices"
+file = "appendices/t01-datasheets-standards.qmd"
+prerequisites = []
+
+[[chapter]]
+id = "T02"
+title = "Tools, files, automation, and version control"
+part = "appendices"
+file = "appendices/t02-tools-version-control.qmd"
+prerequisites = []
+
+[[chapter]]
+id = "T03"
+title = "Reproducible engineering records"
+part = "appendices"
+file = "appendices/t03-reproducible-engineering.qmd"
+prerequisites = ["T01", "T02"]

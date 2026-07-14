@@ -36,9 +36,14 @@ approved glossary, calculator, schematic, and DMM manual. Collaboration, hidden
 notes, and undeclared generated answers are not allowed. A reassessment changes
 parameters and fault so it tests transfer.
 
-This public form is a practice/construct specification. Current values, setup key,
-fault, reset data, and examiner anchors are controlled by
-`RST-ESE111-CH04-PRACT-001`; they must not be inferred from the teaching example.
+This public form describes the kind of task you will complete. The examiner will
+provide the current values and setup; they will not be copied from the teaching
+example.
+
+<!--
+Authoring trace: current values, setup key, fault, reset data, and examiner anchors
+are controlled by RST-ESE111-CH04-PRACT-001.
+-->
 
 ## Candidate actions
 

@@ -22,6 +22,14 @@ boilerplate, or a context that does not affect engineering work.
 
 ## Author the complete learning cycle
 
+Treat the five phases below as an authoring and review map, not as mandatory
+learner-facing section titles. Chapters, problem sets, and other learner resources
+should read as coherent publications: use headings that name the actual question,
+phenomenon, or idea being developed. Keep phase names, coverage codes, rubric
+dimensions, answer-store references, and other production controls in source
+comments, metadata, or the unit manifest unless learners need them to understand
+the task or a published grading decision.
+
 ### Discover
 
 Present a device, waveform, failure, observation, or user need. Ask for a prediction

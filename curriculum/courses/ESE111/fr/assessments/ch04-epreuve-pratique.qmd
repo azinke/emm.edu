@@ -35,9 +35,15 @@ Vous pouvez travailler en français ou anglais avec glossaire, calculatrice, sch
 et notice approuvés. Collaboration, notes cachées et réponses générées non déclarées
 sont interdites. La réévaluation change paramètres et panne pour tester le transfert.
 
-Cette forme publique présente le construit et sert à l'entraînement. Valeurs
-actuelles, clé de montage, panne, remise à zéro et ancres examinateur sont contrôlées
-par `RST-ESE111-CH04-PRACT-001` et ne doivent pas être déduites de l'exemple de cours.
+Cette forme publique décrit le type de tâche à réaliser et sert d'entraînement.
+L'examinateur fournira les valeurs et le montage du jour ; ils ne reprendront pas
+l'exemple du cours.
+
+<!--
+Trace de production : les valeurs actuelles, la clé de montage, la panne, la
+remise à zéro et les ancres examinateur sont contrôlées par
+RST-ESE111-CH04-PRACT-001.
+-->
 
 ## Actions du candidat
 

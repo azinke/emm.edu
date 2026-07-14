@@ -136,8 +136,10 @@ ouverte. Une résistance/continuité hors tension discrimine mieux qu'un remplac
 aléatoire. Si les nœuds sont proches mais le résidu change avec la pointe, modélisez
 l'instrument. Dites toujours quel résultat inverserait votre classement.
 
-L'insertion exacte, la randomisation et la remise à zéro portent la référence
-`RST-ESE111-CH04-FAULT-001`, hors historique public.
+<!--
+Trace de production : l'insertion exacte, la randomisation et la remise à zéro
+sont contrôlées par RST-ESE111-CH04-FAULT-001, hors historique public.
+-->
 
 ## Acceptation et limites
 

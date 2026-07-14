@@ -27,7 +27,7 @@ technical_contract:
 
 # Série PS04 — Le réseau peut-il soutenir ses propres affirmations ?
 
-## Objectif, règles et contrôle initial
+## Avant de commencer
 
 Remettez un dossier individuel, sur papier ou en PDF, avec les sorties de modèle.
 Estimez avant de calculer et indiquez références, unités, hypothèses et outils.
@@ -36,7 +36,9 @@ individuels. Un calcul ou code généré par IA est orange : déclarez-le, véri
 par un calcul manuel et préparez sa défense. La variante sommative change valeurs
 et panne. Vous pouvez demander un indice après un premier essai, en consignant son effet.
 
-## A. Fondements et estimation (F)
+<!-- Couverture F : rappel, fondements et estimation. -->
+
+## A. Que peut-on savoir avant de résoudre ?
 
 1. Sans système d'équations, encadrez $V_A$, $V_B$ et $I_1$. Pourquoi
    $V_A>V_B>0$ dans le réseau passif sain ?
@@ -45,7 +47,9 @@ et panne. Vous pouvez demander un indice après un premier essai, en consignant 
 3. Un solveur donne $I_3=-82\ \mu\text{A}$. Interprétez le signe. Quand la
    valeur absolue, et non le signe, deviendrait-elle invraisemblable ?
 
-## B. Modélisation et dérivation (M)
+<!-- Couverture M : modélisation et dérivation. -->
+
+## B. Les équations correspondent-elles au circuit ?
 
 4. Déduisez les deux équations à partir des courants de branche, puis calculez
    $V_A,V_B,I_1\ldots I_4$. Vérifiez les deux nœuds, deux mailles indépendantes
@@ -53,7 +57,9 @@ et panne. Vous pouvez demander un indice après un premier essai, en consignant 
 5. Recalculez avec R3 ouverte. Justifiez le passage de $1/R_3$ vers zéro comme
    une limite. Quelle mesure sépare le mieux cette panne d'une R4 trop faible ?
 
-## C. Navigation dans une source primaire (D)
+<!-- Couverture D : consultation d'une source primaire. -->
+
+## C. Que dit réellement la notice du multimètre ?
 
 6. Le registre cite la notice du Fluke 12, révision septembre 2004. Trouvez la
    résistance d'entrée en tension continue et les conditions du mode basse
@@ -61,7 +67,9 @@ et panne. Vous pouvez demander un indice après un premier essai, en consignant 
    valeur ne s'applique pas à tout multimètre. Pour le multimètre réel du TP,
    identifiez le champ équivalent ou marquez-le non résolu.
 
-## D. Simulation/code et interprétation (S)
+<!-- Couverture S : simulation, code et interprétation. -->
+
+## D. Qu'établit le modèle numérique ?
 
 7. Avant l'exécution, classez $V_A,V_B,I_1,I_2$, puis lancez :
 
@@ -73,7 +81,9 @@ et panne. Vous pouvez demander un indice après un premier essai, en consignant 
    trois faits physiques qu'ils n'établissent pas. Passez seulement la résistance
    d'entrée à 1 MΩ et expliquez la branche créée en TP-B.
 
-## E. Données préparées et incertitude (X)
+<!-- Couverture X : données préparées et incertitude. -->
+
+## E. Où est passé le courant manquant ?
 
 8. Analysez PREP-A dans `shared/data/prepared-analysis.csv`. Les valeurs sont
    R1=9,98 kΩ, R2=22,10 kΩ, R3=32,90 kΩ, R4=14,92 kΩ ; entrée 1 MΩ. Étiquetez
@@ -86,28 +96,34 @@ et panne. Vous pouvez demander un indice après un premier essai, en consignant 
    trois explications. Quel essai hors tension discrimine efficacement R3 ouverte ?
    Annoncez les résultats possibles avant de choisir.
 
-## F. Diagnostic à partir des preuves (B)
+<!-- Couverture B : diagnostic fondé sur les preuves. -->
+
+## F. Quel essai de panne faut-il réaliser ensuite ?
 
 10. Un essai physique donne VS=6,00 V, VA=3,60 V, VB=1,87 V ; la source est stable.
     Classez R4 trop forte, R3 ouverte et mauvaise référence COM. Choisissez un
     essai, prévoyez son résultat sous chaque hypothèse et définissez la preuve
     nécessaire au remplacement. Ne supposez pas les valeurs déjà fiables.
 
-## G. Conception ouverte sous contraintes (O)
+<!-- Couverture O : conception ouverte sous contraintes. -->
+
+## G. Quelle valeur de R4 respecte toutes les limites ?
 
 11. Modifiez uniquement R4. Comparez 18 kΩ, 22 kΩ, 27 kΩ et 33 kΩ à
     $1,40\le V_B\le1,52\text{ V}$ et $I_S\le0,25\text{ mA}$. Fournissez
     valeurs nominales, sensibilité tolérance/charge, choix normalisé, séquence
     d'essai et limite restante. Une réussite nominale sans marge n'est pas une vérification.
 
-## H. Contexte, éthique et communication (R)
+<!-- Couverture R : contexte, responsabilité et communication. -->
+
+## H. Jusqu'où les preuves permettent-elles d'aller ?
 
 12. Rédigez une note de maintenance de 120 mots : modification, preuve et limites.
     N'affirmez ni éclairement réel, ni origine locale, ni fiabilité produit à partir
     de cette maquette. Pourquoi conserver l'échec et récupérer les pièces relève-t-il
     de la responsabilité d'ingénieur ?
 
-## Auto-vérification
+## Avant de remettre votre travail
 
 - [ ] Estimations, flèches, références, unités et limites précèdent les résultats.
 - [ ] Les provenances brute, préparée et simulée restent distinctes.
@@ -116,6 +132,9 @@ et panne. Vous pouvez demander un indice après un premier essai, en consignant 
 - [ ] La conception trace les deux exigences et sa méthode de vérification.
 - [ ] Outils et sources sont attribués ; sécurité et intégrité sont acquises.
 
-Le raisonnement corrigé, les variantes acceptées, erreurs diagnostiques et notes
-de correction portent la référence `RST-ESE111-CH04-PSET-SOL-001`. Ils doivent
-exister dans le magasin contrôlé séparé avant clôture de la tâche.
+<!--
+Trace de production : le raisonnement corrigé, les variantes acceptées, les
+erreurs diagnostiques et les notes de correction portent la référence
+RST-ESE111-CH04-PSET-SOL-001. Ils doivent exister dans le magasin contrôlé séparé
+avant la clôture de cette tâche de production.
+-->

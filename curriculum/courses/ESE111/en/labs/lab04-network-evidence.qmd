@@ -145,8 +145,10 @@ branch is safer and more discriminating than random replacement. If all nodes ar
 close but residuals shift with probe connection, model the meter. At every branch,
 state what result would reverse your ranking.
 
-Exact insertion, randomization, and reset details belong to
-`RST-ESE111-CH04-FAULT-001`, outside public history.
+<!--
+Authoring trace: exact insertion, randomization, and reset details are controlled
+by RST-ESE111-CH04-FAULT-001 outside public history.
+-->
 
 ## Design acceptance and limitations
 

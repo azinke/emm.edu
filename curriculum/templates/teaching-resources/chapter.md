@@ -19,80 +19,96 @@ design_decision: "[trade-off changed by evidence]"
 acceptance_test: "[measurable pass/fail rule with conditions]"
 ---
 
-# [A claim, phenomenon, or engineering question]
+# [A natural, subject-specific chapter title]
 
-## Why this matters
+<!--
+The learning-cycle comments in this template are review markers, not required
+reader-facing headings. Replace every bracketed heading with language that fits
+the subject and lets the chapter read as a continuous explanation.
+-->
+
+## [The question or situation that opens the chapter]
 
 Introduce a sourced historical/context note and an authentic question. State the
 context layer and show which requirement, calculation, architecture, test, cost,
 safety, or lifecycle decision the context changes.
 
-## Outcomes, prerequisites, and retrieval
+## [A natural orientation to the chapter]
 
 List stable outcome IDs and observable evidence. Provide a short prerequisite
 check and direct links to targeted remediation; never repeat an entire earlier
 chapter as “review.”
 
-## Discover
+<!-- Learning-cycle phase: Discover -->
+
+## [The phenomenon before the formal model]
 
 Present the phenomenon/device/failure. Learners record an individual prediction,
 reason, assumptions, and confidence through an inclusive response route.
 
-## Understand
+<!-- Learning-cycle phase: Understand -->
 
-### Mental model, definitions, notation, and sign convention
+## [The central idea or model]
 
-### Derivation and domain of validity
+### [A subject-specific heading for definitions and notation]
+
+### [A subject-specific heading for the derivation]
 
 Show units, assumptions, limiting cases, tolerances, uncertainty, loading,
 bandwidth, temperature, noise, and parasitics where relevant.
 
-### Worked examples
+### [A subject-specific heading for worked reasoning]
 
 Use estimate → calculate → sanity-check → interpret. Fade support across examples
 and identify the claim/source or independent recomputation evidence.
 
-## Visualize
+## [The idea in another representation]
 
 Link editable figures and metadata. Captions, alt text, long descriptions, scales,
 test points, states, and measured/simulated/ideal provenance must be explicit.
 
-## Experiment
+<!-- Learning-cycle phase: Experiment -->
+
+## [What changes when the model meets the bench or data]
 
 State minimal/standard/advanced paths, safety/stop conditions, prediction,
 observable student action, raw-data table, expected instructor range, substitute
 effects, and outcome-equivalence argument.
 
-## Analyze
+<!-- Learning-cycle phase: Analyze -->
+
+## [How evidence tests the model]
 
 Compare prediction, model, simulation, and measurement. Quantify uncertainty and
 residuals; investigate the named anomaly rather than deleting inconvenient data.
 
-## Design
+<!-- Learning-cycle phase: Design -->
+
+## [The engineering choice created by the evidence]
 
 Give an open decision under measurable constraints. Require a trade study,
 requirements trace, acceptance test, and statement of remaining limitations.
 
-## Professional practice
+## [What makes the result professionally defensible]
 
 Navigate primary sources; consider safety, security, privacy, manufacture,
 repair, sustainability, service, local contribution, and honest provenance where
 applicable. Link approved applicability decisions where a concern truly does not
 apply.
 
-## Misconceptions and debugging
+## [Common wrong turns and how evidence resolves them]
 
 | Observable symptom/response | Likely model | Discriminating question/test | Feedback or next evidence |
 |---|---|---|---|
 | [evidence] | [misconception/hypothesis] | [one decisive check] | [route] |
 
-## Retrieval, transfer, and exit check
+## [A final challenge or change of context]
 
 Include beginner/intermediate/advanced items, one novel transfer, and an exit
 decision that determines the next teaching action. Answers stay in the controlled
 instructor view when appropriate.
 
-## Summary, concept map, next dependencies, and references
+## [The ideas to carry forward]
 
 State what the model can and cannot claim. Cite sources with edition/version,
 retrieval date, license, and review trigger as required.

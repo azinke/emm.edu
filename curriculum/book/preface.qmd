@@ -1,58 +1,200 @@
 ---
-title: "How to use this book"
-description: "Reading routes, notation, evidence, and practical expectations."
+title: "Preface"
+description: "Why this book exists, what it covers, and the notation, evidence, and reading conventions it holds to."
 page-role: frontmatter
 ---
 
-# How to use this book
+# Preface {.unnumbered}
 
-The default route follows the sidebar from elements to systems. Readers who
-already know basic circuit theory can use the chapter prerequisites in
-[`chapters.toml`](chapters.toml) to enter later. Institutional course routes
-select from the same chapter IDs without forking the book. The
-[reading roadmap](roadmap.qmd) provides shorter reader-facing routes, connects
-the practical spine, and explains chapter maturity.
+Most people meet electronics twice. The first time it is a set of rules that
+happen to work: memorize the formula, recognize the circuit, trust the answer.
+The second time—on a bench, at 2 a.m., with a board that refuses to do what the
+formula promised—it becomes something else entirely. This book is written for
+the second meeting, and it tries to spare you as much of the 2 a.m. confusion as
+a book honestly can.
 
-## A chapter has three jobs
+Its central conviction is simple. A working circuit is a single object that we
+happen to describe in many languages: the physical assembly and its energy path,
+the schematic with its named nodes, the governing equations, a simulation, the
+firmware, the measured waveform, the requirement, and the test that accepts it.
+When those descriptions agree, you understand the circuit. When they disagree,
+one of them is wrong—and the disagreement is the most useful thing the bench
+will tell you all day. Everything in this book is organized around producing,
+and then reconciling, those descriptions. It follows the bench-first tradition
+of practical electronics [@horowitz2015art] while grounding device behavior in
+the quantitative circuit models of the standard microelectronics literature
+[@sedra2020microelectronic], and it treats the reconciliation itself—not any
+single number—as the skill worth learning.
 
-First, it should make a model intelligible. Second, it should connect that model
-to observable evidence. Third, it should use the evidence to make a design or
-diagnostic decision. A chapter is incomplete when it performs only the first.
+## Who this book is for
 
-## Representations
+It is written for anyone who wants to *understand* electronics well enough to
+build something trustworthy, and who is willing to earn that understanding on a
+bench rather than accept it on authority. In practice that includes the
+self-directed learner starting from a battery and a multimeter, the
+undergraduate who wants the through-line their courses assume but rarely state,
+the software engineer moving toward hardware, and the working practitioner who
+needs a coherent reference across domains they do not touch every day.
 
-Important examples should connect several of these views:
+The only firm prerequisite is a willingness to predict before you measure and to
+believe the measurement afterward. Mathematics is developed just in time, in the
+appendices, when a chapter first needs it. The book is, and will remain, free.
 
-- physical construction and energy path;
-- schematic and named nodes;
-- equations and assumptions;
-- simulation or executable model;
-- measured data and uncertainty;
-- software, state, or timing;
-- requirements and acceptance tests.
+## What the book covers
 
-## Notation
+The path is long on purpose: a single measured voltage and a field-qualified
+instrument are the same craft practiced at different scales. It runs in seven
+parts, each answering one central question and handing a durable capability to
+the next.
 
-SI units are used throughout. Voltage polarity and current reference direction
-are defined before equations. A negative result means reality opposes the chosen
-reference; it is not automatically an error. Approximation, tolerance, bound,
-and uncertainty are written distinctly.
+- **Foundations** ask what voltage, current, resistance, energy, and a
+  *trustworthy* measurement actually are. This part establishes the habits—safe
+  practice, reference directions, model limits, and uncertainty—that every later
+  part silently assumes.
+- **Devices and analog** ask how physical devices shape and amplify real
+  signals, from the semiconductor junction through transistors, amplifiers,
+  feedback, sensors, and the limits imposed by noise and bandwidth
+  [@sedra2020microelectronic].
+- **Digital hardware** asks how values, decisions, state, and computation are
+  built from those same analog circuits, building toward memory, processors, and
+  reconfigurable logic [@harris2021digital].
+- **Embedded systems** ask how software meets time, energy, peripherals, and
+  failure—the place where a correct algorithm still misses a deadline, and a
+  clean interrupt still corrupts a shared variable.
+- **System domains** ask how we sample, process, control, power, and communicate.
+  Sampling and signal processing follow the standard signals-and-systems
+  treatment [@oppenheim1996signals]; feedback and control draw on modern
+  feedback-systems theory [@astrom2021feedback]; power, storage, RF, and
+  connectivity extend the same models outward.
+- **Product realization** asks how a design becomes reproducible, compliant, and
+  maintainable hardware, taking electromagnetic compatibility as a design
+  constraint rather than a final test [@ott2009electromagnetic].
+- **Complete systems** ask how the earlier details hold up under load: a
+  precision instrument, a resilient data logger, a secure connected node, and a
+  context-responsive field system, ending in a capstone that must be qualified,
+  handed to another person, and improved.
 
-## Evidence
+Alongside these run the appendices (M01–M03, T01–T03): algebra through
+differential equations, probability and numerical methods, and the working
+practices of reading datasheets and standards, using tools and version control,
+and keeping records another person can reproduce. They are references used when
+a chapter reaches for them, not a hurdle to clear before starting.
 
-The evidence ladder is:
+Course routes are published separately and point to these same chapters. There
+are no course-specific copies of the theory and no chapter forked for a
+particular semester; a concept used by three courses is still written once.
+
+## What a chapter promises
+
+A chapter in this book has three jobs. First, it makes a model intelligible.
+Second, it connects that model to observable evidence. Third, it uses the
+evidence to make a design or diagnostic decision. A chapter that performs only
+the first job—however elegant its derivation—is incomplete, and the book treats
+it as such.
+
+That structure shapes the working method the whole text asks of you: **predict,
+build, measure, reconcile, decide.** Before a result is revealed, predict its
+direction and rough magnitude, and state the model and its limits. Then compare
+calculation, simulation, and measurement, and read any disagreement as
+information rather than noise. Finish by deciding what the evidence actually
+permits you to claim—no stronger.
+
+## Representations kept in agreement
+
+Keeping the descriptions of one system aligned is the recurring discipline of
+the book. An important example tries to connect several of these views at once:
+
+- physical construction and the energy path;
+- schematic with named nodes and reference directions;
+- equations and their assumptions;
+- simulation or another executable model;
+- measured data with its uncertainty;
+- software, state, and timing;
+- requirements and the tests that accept them.
+
+Code and simulation expose their parameters rather than hide them in a
+screenshot, and raw data stays available beside the analysis that interprets it,
+so that any reader can re-run the reconciliation rather than take it on trust.
+
+## Notation and conventions
+
+SI units are used throughout [@bipm2019si]. Voltage polarity and current
+reference direction are defined *before* the equations that use them, because a
+sign is meaningless until its reference is stated. A negative result therefore
+means reality opposes the chosen reference; it is not automatically an error.
+The book keeps equality, approximation, tolerance, bound, and uncertainty
+verbally and typographically distinct, and it says whether an amplitude is
+instantaneous, peak, peak-to-peak, RMS, average, phasor, or spectral density
+rather than leaving it to context. Every compact model is named together with
+the operating conditions and validity range that make it true.
+
+## Evidence and the weight of a claim
+
+Measurement uncertainty is treated as a first-class quantity to be estimated,
+not an afterthought to be waved away [@jcgm2008gum]. Behind every result sits an
+evidence ladder that runs from a rough estimate to a qualified claim:
 
 ```text
 estimate → calculation → simulation → measurement → repeated test
          → independent reproduction → field evidence → qualified claim
 ```
 
-Not every question needs the final rung. The consequence of being wrong
-determines how much evidence is appropriate.
+Not every question needs the top rung. The consequence of being wrong sets how
+much evidence is appropriate: a sign convention can rest on a calculation, while
+a safety or lifecycle claim cannot. Learning to choose the right rung—and to
+stop there—is itself part of the engineering.
 
-## Building lectures from the book
+## How to use this book
 
-A lecture should select a small number of chapter sections, surface one
-misconception, work one example, and create one decision or exit check. Slides
-provide cues; the book provides durable exposition. See the
-[instructor guide](../instructor/README.md).
+The default route follows the sidebar from elements to systems, and it is the
+safest route for a new reader because later parts assume the measurement habits,
+reference directions, model limits, and evidence practices established in Part I.
+Readers who already know basic circuit theory can use the chapter prerequisites
+in [`chapters.toml`](chapters.toml) to enter later without breaking a dependency.
+Readers aiming at a specific destination—a bench investigation, an analog
+instrument, an embedded system, a custom product, or a complete field system—can
+use the [reading roadmap](roadmap.qmd), which also explains chapter maturity and
+maps the practice-and-project spine that turns reading into evidence.
+
+Reach for the appendices just in time: follow a prerequisite link when a chapter
+first needs the technique, rather than reading them front to back.
+
+To build a lecture from the book, select a small number of chapter sections,
+surface one misconception, work one example, and create one decision or exit
+check. Slides provide cues; the book provides the durable exposition. The
+[instructor guide](../instructor/README.md) develops this into templates.
+
+## Maturity, and an honest boundary
+
+This is a development edition. The table of contents and the dependency
+structure are complete, but the chapters are currently outlines: each reports
+its own maturity in its front matter, and an outline is a scope commitment, not
+yet a teachable or safety-authorizing chapter. The book would rather tell you
+what it does not yet contain than imply a completeness it has not earned.
+
+::: {.callout-warning title="Safety boundary"}
+Early practical work is deliberately low-voltage and current-limited. Reading a
+chapter is not authorization for mains, high-voltage, high-energy battery, RF
+power, rotating-machine, medical, or safety-critical work. Use approved
+facilities, supervision, and local procedures.
+:::
+
+## Sources, and how they are used
+
+Where a claim rests on device physics, metrology, or regulation, the book points
+to primary and canonical sources rather than restating them from memory. The
+works cited here—practical electronics [@horowitz2015art], microelectronic
+circuits [@sedra2020microelectronic], signals and systems [@oppenheim1996signals],
+digital design and computer architecture [@harris2021digital], feedback systems
+[@astrom2021feedback], electromagnetic compatibility [@ott2009electromagnetic],
+the SI [@bipm2019si], and the guide to expressing measurement uncertainty
+[@jcgm2008gum]—are the reference spine the chapters build against, and the full
+[bibliography](references.qmd) grows with the technical content it supports.
+
+None of them is a substitute for a datasheet, a standard, or supervised
+laboratory training, and neither is this book. Its aim is narrower and, we hope,
+more durable: to leave you able to say which model you are using, what would
+break it, and exactly how much your evidence lets you claim. When you can do
+that with a single voltage, you can do it with a system.
+
+Begin with [safe practice](01-foundations/f01-safe-practice.qmd).

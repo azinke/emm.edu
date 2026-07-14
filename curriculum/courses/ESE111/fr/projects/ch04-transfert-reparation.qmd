@@ -40,7 +40,7 @@ secteur, modification de batterie, radio, travail à chaud et collecte de donné
 - RQ1 : nœuds, références, valeurs et flèches sans ambiguïté.
 - RQ2 : reproduction de $V_A,V_B$ et de la décision d'incertitude.
 - RQ3 : arbre séparant au moins branche ouverte et valeur incorrecte.
-- RQ4 : TP-B=1,40–1,52 V et courant de source ≤0,25 mA.
+- RQ4 : TP-B=1,40–1,52 V et courant de source $\leq 0,25$ mA.
 - RQ5 : montage, arrêt, remise à zéro, récupération et limites explicites.
 
 Un pair ignorant votre dossier réalise une revue sur papier sans coaching et trouve

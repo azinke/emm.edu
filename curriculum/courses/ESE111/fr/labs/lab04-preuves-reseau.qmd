@@ -42,7 +42,7 @@ l'analyse de risque, du matériel, de la supervision et de l'autorisation enseig
 
 ## Sécurité et arrêt
 
-- Source continue protégée approuvée : 0–6,1 V, limite réglée ≤20 mA.
+- Source continue protégée approuvée : 0–6,1 V, limite réglée $\leq 20$ mA.
 - Cordons uniquement sur COM et V/Ω ; entrée courant interdite.
 - Sortie coupée et absence d'énergie vérifiée pour câblage ou résistance.
 - Inspection obligatoire avant la première mise sous tension et après toute modification.
@@ -115,7 +115,7 @@ Sortie coupée et zéro énergie vérifié, apprenant et vérificateur paraphent
 13. Classez trois hypothèses ; choisissez un essai qui en sépare au moins deux,
     annoncez les issues, faites approuver, isolez, exécutez et mettez à jour.
 14. Après preuve de cause, corrigez puis répétez l'acceptation initiale.
-15. Comparez les candidates R4 avec marge pour 1,40–1,52 V et ≤0,25 mA.
+15. Comparez les candidates R4 avec marge pour 1,40–1,52 V et $\leq 0,25$ mA.
 16. Isolez, montez R4 choisie, inspectez, mesurez et acceptez/refusez les deux exigences.
 
 | N° | État | De→vers | Valeur brute/unité | Calibre/résolution | Incertitude élargie $U$ / couverture $k$ / base | Prévision | Résidu | Décision/anomalie |

@@ -17,6 +17,7 @@ sys.path.insert(0, str(SCRIPTS))
 import qa_content
 import run_smoke_hooks
 import build_publications
+import check_outputs
 
 
 class QualityFixtureTests(unittest.TestCase):
@@ -97,6 +98,15 @@ class KiCadContractTests(unittest.TestCase):
 
 
 class BuildFallbackTests(unittest.TestCase):
+    def test_pdffonts_embedded_column_is_read_from_the_right(self) -> None:
+        output = (
+            "name type encoding emb sub uni object ID\n"
+            "---- ---- -------- --- --- --- ---------\n"
+            "ABC+Embedded CID Type 0C Identity-H yes yes yes 4 0\n"
+            "ABC+Missing TrueType WinAnsi no no yes 5 0\n"
+        )
+        self.assertEqual(check_outputs.unembedded_fonts(output), ["ABC+Missing"])
+
     def test_remote_build_resource_is_rejected_before_render(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

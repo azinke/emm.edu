@@ -15,6 +15,7 @@ from scriptlib import CURRICULUM, dump_json, isolated_environment, run_command
 
 FORMATS = ("html", "pdf", "slides")
 LANGUAGES = ("en", "fr")
+PANDOC_SVG_SHIM = CURRICULUM / "scripts" / "tool-shims" / "rsvg-convert"
 REMOTE_RESOURCE_RE = re.compile(
     r"!\[[^]]*\]\(\s*https?://|<(?:img|script|link)\b[^>]*(?:src|href)=[\"']\s*(?:https?:)?//|@import\s+(?:url\()?['\"]?https?://",
     re.I,
@@ -37,7 +38,14 @@ def destination(root: Path, language: str, format_name: str, source: Path, suffi
     return root / "build" / language / format_name / without_language.with_suffix(suffix)
 
 
-def pandoc_command(source: Path, output: Path, language: str, format_name: str, root: Path) -> list[str]:
+def pandoc_command(
+    source: Path,
+    output: Path,
+    language: str,
+    format_name: str,
+    root: Path,
+    latex_template: Path | None = None,
+) -> list[str]:
     source_text = source.read_text(encoding="utf-8")
     heading = re.search(r"^#\s+(.+)$", source_text, re.M)
     fallback_title = heading.group(1).strip() if heading else source.stem.replace("-", " ").title()
@@ -51,7 +59,39 @@ def pandoc_command(source: Path, output: Path, language: str, format_name: str, 
         return common + ["--to", "html5", "--embed-resources", "--mathml", "--output", str(output)]
     if format_name == "slides":
         return common + ["--to", "html5", "--embed-resources", "--mathml", "--section-divs", "--template", str(CURRICULUM / "environments" / "pandoc-slides.html"), "--output", str(output)]
-    return common + ["--to", "pdf", "--pdf-engine", "xelatex", "--variable", "papersize=a4", "--variable", "geometry:margin=22mm", "--output", str(output)]
+    pdf = common + ["--to", "pdf", "--pdf-engine", "xelatex", "--variable", "papersize=a4", "--variable", "geometry:margin=22mm"]
+    if latex_template:
+        pdf += ["--template", str(latex_template)]
+    return pdf + ["--output", str(output)]
+
+
+def pandoc_latex_template(root: Path, env: dict[str, str]) -> tuple[Path | None, str | None]:
+    """Make Pandoc's long-table footnote enhancement optional on minimal TeX installs."""
+    if shutil.which("kpsewhich"):
+        for package in ("footnotehyper.sty", "footnote.sty"):
+            lookup = run_command(["kpsewhich", package], cwd=root, env=env)
+            if lookup.returncode == 0 and lookup.stdout.strip():
+                return None, None
+
+    default = run_command(
+        ["pandoc", "--print-default-data-file=templates/default.latex"],
+        cwd=root,
+        env=env,
+    )
+    if default.returncode:
+        return None, default.stderr.strip() or "Pandoc did not provide its default LaTeX template"
+    original = r"\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}"
+    replacement = (
+        r"\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{%" "\n"
+        r"  \IfFileExists{footnote.sty}{\usepackage{footnote}}{\providecommand{\makesavenoteenv}[1]{}}%" "\n"
+        r"}"
+    )
+    if original not in default.stdout:
+        return None, "Pandoc's LaTeX template has an unsupported long-table footnote block"
+    template = root / "build" / ".pandoc" / "default.latex"
+    template.parent.mkdir(parents=True, exist_ok=True)
+    template.write_text(default.stdout.replace(original, replacement, 1), encoding="utf-8")
+    return template, None
 
 
 def reject_remote_resources(root: Path, languages: list[str]) -> list[str]:
@@ -64,14 +104,40 @@ def reject_remote_resources(root: Path, languages: list[str]) -> list[str]:
     return errors
 
 
+def needs_svg_conversion(root: Path, languages: list[str]) -> bool:
+    return any(
+        ".svg" in source.read_text(encoding="utf-8").lower()
+        for language in languages
+        for source in sources(root, language, False)
+    )
+
+
 def build_pandoc(root: Path, languages: list[str], formats: list[str], report: list[dict]) -> int:
     required = ["pandoc"] + (["xelatex"] if "pdf" in formats else [])
     missing = [tool for tool in required if not shutil.which(tool)]
+    if (
+        "pdf" in formats
+        and needs_svg_conversion(root, languages)
+        and not shutil.which("rsvg-convert")
+        and not shutil.which("inkscape")
+    ):
+        missing.append("rsvg-convert or inkscape")
     if missing:
         print(f"ERROR missing Pandoc fallback dependencies: {', '.join(missing)}", file=sys.stderr)
         return 2
-    failures = 0
     env = isolated_environment(root / "build" / ".xdg")
+    if "pdf" in formats and not shutil.which("rsvg-convert") and shutil.which("inkscape"):
+        env["PATH"] = os.pathsep.join((str(PANDOC_SVG_SHIM.parent), env["PATH"]))
+        print("INFO using the installed Inkscape as Pandoc's SVG-to-PDF fallback")
+    latex_template = None
+    if "pdf" in formats:
+        latex_template, template_error = pandoc_latex_template(root, env)
+        if template_error:
+            print(f"ERROR cannot prepare Pandoc LaTeX template: {template_error}", file=sys.stderr)
+            return 2
+        if latex_template:
+            print("INFO TeX footnote package unavailable; using the safe long-table template fallback")
+    failures = 0
     for language in languages:
         for format_name in formats:
             candidates = sources(root, language, format_name == "slides")
@@ -79,7 +145,11 @@ def build_pandoc(root: Path, languages: list[str], formats: list[str], report: l
                 suffix = ".pdf" if format_name == "pdf" else ".html"
                 output = destination(root, language, format_name, source, suffix)
                 output.parent.mkdir(parents=True, exist_ok=True)
-                result = run_command(pandoc_command(source, output, language, format_name, root), cwd=root, env=env)
+                result = run_command(
+                    pandoc_command(source, output, language, format_name, root, latex_template),
+                    cwd=root,
+                    env=env,
+                )
                 report.append({"engine": "pandoc", "language": language, "format": format_name, "source": str(source.relative_to(root)), "output": str(output.relative_to(root)), **result.__dict__})
                 if result.returncode:
                     failures += 1

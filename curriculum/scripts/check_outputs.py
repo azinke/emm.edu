@@ -24,6 +24,11 @@ def pdf_pages(path: Path) -> int | None:
     return len(re.findall(rb"/Type\s*/Page\b", data)) or None
 
 
+def unembedded_fonts(output: str) -> list[str]:
+    rows = [line.split() for line in output.splitlines()[2:] if line.strip()]
+    return [row[0] for row in rows if len(row) >= 5 and row[-5].lower() != "yes"]
+
+
 def check_pdf(path: Path, root: Path, policy: dict, errors: list[str]) -> None:
     label = path.relative_to(root)
     if not path.read_bytes().startswith(b"%PDF-"):
@@ -44,9 +49,8 @@ def check_pdf(path: Path, root: Path, policy: dict, errors: list[str]) -> None:
         font_rows = [line.split() for line in fonts.stdout.splitlines()[2:] if line.strip()]
         if not font_rows:
             errors.append(f"FONT {label}: no embedded font evidence")
-        for row in font_rows:
-            if len(row) >= 6 and row[-6].lower() != "yes":
-                errors.append(f"FONT {label}: font {row[0]} is not embedded")
+        for font in unembedded_fonts(fonts.stdout):
+            errors.append(f"FONT {label}: font {font} is not embedded")
     if shutil.which("pdftotext"):
         text = run_command(["pdftotext", "-layout", str(path), "-"], cwd=path.parent)
         if text.returncode:

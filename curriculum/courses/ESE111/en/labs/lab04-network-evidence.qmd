@@ -42,7 +42,7 @@ apparatus path, supervision, and instructor authorization are approved.
 
 ## Safety and stop-work conditions
 
-- Approved protected DC source only; 0–6.1 V, configured current limit ≤20 mA.
+- Approved protected DC source only; 0–6.1 V, configured current limit $\leq 20$ mA.
 - Leads remain in COM and V/Ω. The current input is not permitted.
 - Source output off and circuit verified de-energized for wiring or resistance work.
 - Before first power and after any topology change, complete the inspection below.
@@ -122,7 +122,7 @@ With output off and zero energy verified, learner and verifier initial each line
 14. After evidence supports a root cause, authorize/carry out the correction and
     rerun the baseline acceptance measurements.
 15. Compare R4 candidates; select one with margin for TP-B=1.40–1.52 V and source
-    current ≤0.25 mA, not merely a nominal pass.
+    current $\leq 0.25$ mA, not merely a nominal pass.
 16. Isolate, install the selected R4, repeat inspection and measurements, and accept
     or reject both requirements from physical evidence.
 

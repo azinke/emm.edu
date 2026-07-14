@@ -28,8 +28,8 @@ technical_contract:
 
 ## Intention et preuves
 
-Cette unité répète pour la première fois toute la chaîne « circuit physique ↔
-schéma ↔ équations ↔ simulation ↔ mesure ↔ exigence ». L'essentiel n'est pas de
+Cette unité répète pour la première fois toute la chaîne « circuit physique $\leftrightarrow$
+schéma $\leftrightarrow$ équations $\leftrightarrow$ simulation $\leftrightarrow$ mesure $\leftrightarrow$ exigence ». L'essentiel n'est pas de
 résoudre deux équations, mais de relier chaque terme à une branche, puis d'employer
 un résidu pour choisir l'essai. Preuves : prévision, modèle signé, contrôles,
 branche instrument, hypothèse mise à jour et décision R4 vérifiée. Elle prépare

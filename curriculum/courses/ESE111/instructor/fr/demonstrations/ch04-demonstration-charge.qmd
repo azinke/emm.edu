@@ -42,7 +42,7 @@ qui ne sera pas confondue avec un essai de précision. Consignez identifiants,
 résistances d'entrée, R réelles, ambiance, photo, inspection, plages et remise à
 zéro. Aucune entrée courant.
 
-Sortie coupée : inspectez, réglez 6,0 V/≤20 mA, cordons COM/VΩ, obtenez le contrôle.
+Sortie coupée : inspectez, réglez 6,0 V/$\leq 20$ mA, cordons COM/VΩ, obtenez le contrôle.
 Mettez sous tension sans toucher. Lisez TP-B, branchez la seconde voie déclarée,
 lisez, retirez et confirmez le retour. Isolez avant réglage. Respectez tous les arrêts.
 
@@ -62,4 +62,3 @@ de lecture textuelle. Elle n'atteste aucune compétence physique.
 Récupération : couper → isoler → vérifier zéro → conserver relevés/configuration →
 étiqueter la panne → poursuivre en statique ou terminer au point sûr. Ne remplacez
 jamais un appareil non qualifié sous tension. Consignez impact, responsable et retest.
-

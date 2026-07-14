@@ -28,8 +28,8 @@ technical_contract:
 
 ## Instructional intent and evidence
 
-This unit is the first complete rehearsal of “physical circuit ↔ schematic ↔
-equations ↔ simulation ↔ measurement ↔ requirement.” Its central move is not
+This unit is the first complete rehearsal of “physical circuit $\leftrightarrow$ schematic $\leftrightarrow$
+equations $\leftrightarrow$ simulation $\leftrightarrow$ measurement $\leftrightarrow$ requirement.” Its central move is not
 solving two equations; it is making every term accountable to a branch, then using
 a residual to decide what to test. Required evidence is initial prediction, signed
 model, independent checks, instrument branch, hypothesis update, and verified R4
@@ -112,4 +112,3 @@ exit tickets into lab-ready, REM-loading, REM-debug, REM-reference/algebra, and
 REM-dmm. Record actual timing, learner wording, access issue, apparatus behavior,
 defect/owner, and paired correction. Second-instructor rehearsal evidence belongs
 in the E3 record, not as an unchecked claim here.
-

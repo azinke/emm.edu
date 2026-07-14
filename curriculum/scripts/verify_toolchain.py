@@ -30,6 +30,19 @@ def main() -> int:
     for tool, declaration in contract.get("tools", {}).items():
         if tool == "pyyaml":
             found, output = True, yaml.__version__
+        elif tool == "svg_converter":
+            command = next(
+                (
+                    candidate
+                    for candidate in (("rsvg-convert", "--version"), ("inkscape", "--version"))
+                    if shutil.which(candidate[0])
+                ),
+                None,
+            )
+            found, output = bool(command), ""
+            if command:
+                completed = subprocess.run(command, capture_output=True, text=True, check=False)
+                output = (completed.stdout or completed.stderr).splitlines()[0]
         else:
             command = COMMANDS.get(tool)
             executable = shutil.which(command[0]) if command else None

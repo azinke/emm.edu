@@ -43,7 +43,7 @@ accuracy test. Record source/meter IDs, input resistances, measured R values,
 ambient note, setup photo, inspection, actual ranges, and reset time in the staff
 pilot record. No current-input use.
 
-With output off: inspect topology, set 6.0 V/≤20 mA, leads in COM/VΩ, and obtain
+With output off: inspect topology, set 6.0 V/$\leq 20$ mA, leads in COM/VΩ, and obtain
 checkpoint. Energize without touching. Read TP-B on the reference route; attach
 the declared second channel; read both; remove it and confirm recovery. Isolate
 before adjustment. Stop on any LAB04 condition.
@@ -64,4 +64,3 @@ view (spoken text/table). It teaches analysis but makes no physical competence c
 Recovery: output off → isolate → verify zero → preserve readings/configuration →
 label the failure → continue static or end at the safe checkpoint. Never swap an
 unqualified meter live. Record failure, learner impact, owner, and required retest.
-

@@ -24,6 +24,10 @@ tools:
   xelatex:
     tested: "TeX Live 2023 (local fallback); CI uses Quarto TinyTeX frozen with the cohort image"
     required_for_pdf: true
+  svg_converter:
+    tested: "librsvg rsvg-convert or Inkscape 1.4.3"
+    required_for_offline_fallback: true
+    executables: [rsvg-convert, inkscape]
   kicad_cli:
     tested: "9.0.9"
     supported: ">=9.0,<10"

@@ -55,3 +55,24 @@ source = "f03-source-load.tex"
 chapter_id = "F03"
 caption = "A finite-resistance voltage source drives a resistive load at a shared terminal voltage and current operating point."
 alt = "Ideal source V_OC in series with source resistance R_S drives load R_L. Current I leaves the source and enters the load at terminal A; voltage V is measured from A to terminal B at zero volts."
+
+[[circuit]]
+id = "f04-bridge"
+source = "f04-bridge.tex"
+chapter_id = "F04"
+caption = "A resistive bridge with two unknown node voltages and a declared bridge-current reference."
+alt = "A 10 volt source feeds two resistor dividers. R1 and R2 meet at test point TP1 with node voltage v1; R3 and R4 meet at TP2 with node voltage v2; bridge resistor R5 connects TP1 to TP2, with current I12 referenced from v1 to v2. TP0 is the zero volt reference."
+
+[[circuit]]
+id = "f04-two-mesh"
+source = "f04-two-mesh.tex"
+chapter_id = "F04"
+caption = "Two planar meshes share one resistor; clockwise mesh-current references make the shared downward branch current I1 minus I2."
+alt = "Two adjacent loops share resistor R2. The left loop contains a 10 volt source and R1; the right loop contains R3 and a 5 volt source. Both mesh currents are clockwise, so they oppose in shared resistor R2."
+
+[[circuit]]
+id = "f04-one-port"
+source = "f04-one-port.tex"
+chapter_id = "F04"
+caption = "A linear source network drives a removable load at port A-B; the same named port is used for superposition, equivalent reduction, and verification."
+alt = "A 10 volt source feeds port A through R1, R2 connects A to the zero volt terminal B, and a 1 milliamp current source injects current from B into A. Load RL connects from A to B, with load current i leaving the network at A."

@@ -1,45 +1,1149 @@
 ---
 title: "Networks, Kirchhoff's laws, and equivalents"
+description: "Turn charge conservation, loop consistency, and linearity into repeatable methods for solving networks, reducing one-ports, and testing whether the result deserves trust."
 chapter-id: F04
-status: outline
+status: draft
 ---
 
-::: {.callout-note title="Chapter outline"}
-The scope and dependency boundary are stable. Full exposition, worked examples,
-exercises, and tested practical evidence still need authoring and review.
+::: {.callout-note title="Chapter maturity — draft"}
+This chapter provides a complete instructional path: conservation statements,
+nodal and mesh derivations, worked examples, an executable cross-check, explicitly
+synthetic diagnostic data, a bounded acceptance decision, and a full exercise set.
+It remains subject to technical and editorial revision. Physical evidence belongs
+in aligned Lab **L03**; the synthetic values here do not qualify a hardware claim.
+See the [reading roadmap](../roadmap.qmd) for the meaning of status levels.
+:::
+
+::: {.callout-warning title="Safety boundary for this chapter"}
+Practical work discussed here is limited to **current-limited,
+extra-low-voltage** DC networks under local supervision and an approved procedure.
+Do not determine a short-circuit current by physically shorting an unknown source.
+De-energize before changing topology or measuring resistance. This chapter is not
+authorization for mains, high voltage, high-energy cells or battery packs, RF
+power, rotating machines, medical equipment, or safety-critical systems. Apply
+the source–path–target controls of [F01](f01-safe-practice.qmd) [@iec61010].
 :::
 
 ## Central question
 
-How can conservation laws predict every node voltage and branch current in a network?
+> How can conservation laws predict every node voltage and branch current in a
+> connected network?
+
+The word *every* needs a boundary. This chapter treats connected, lumped,
+steady-DC networks whose resistors are linear over the stated range and whose
+sources have consistent terminal relations. Kirchhoff's laws supply conservation
+constraints; the element relations from [F03](f03-sources-loads-resistance.qmd)
+supply the rest. Together, and only together, they can determine the operating
+point.
+
+Consider the bridge in @fig-f04-bridge. Two unloaded dividers would put TP1 near
+$6.67$ V and TP2 near $6.88$ V. Connecting $R_5$ makes them interact. Does bridge
+current $I_{12}$ flow in its drawn reference direction, from TP1 to TP2, or the
+other way? Is it closer to $30~\mu\text{A}$, $3$ mA, or $300$ mA? A negative
+answer later will not mean the calculation failed; it will mean the physical
+current opposes the reference chosen before calculation.
+
+![A five-resistor bridge used to connect schematic topology, node equations, branch currents, code, and test points. All quantities are steady DC values.](../../../build/circuits/f04-bridge.png){#fig-f04-bridge fig-alt="A 10 volt source feeds two resistor dividers. R1 and R2 meet at TP1 with voltage v1; R3 and R4 meet at TP2 with voltage v2; R5 joins TP1 to TP2. Bridge current I12 is referenced from TP1 toward TP2, and TP0 is the zero volt reference."}
+
+::: {.callout-tip title="Predict before writing equations"}
+Compare the two divider ratios first. If $R_5$ were absent, which midpoint would
+be higher? Connecting a positive resistor cannot reverse that ordering without
+some other source. Commit to the sign and order of magnitude of $I_{12}$. Then
+ask what should happen in three limits: $R_5\to\infty$, $R_5\to0$, and equal
+divider ratios $R_1/R_2=R_3/R_4$. These predictions become checks on the algebra.
+:::
 
 ## Learning outcomes
 
-After completing this chapter, the reader should be able to:
+This chapter assumes [F03](f03-sources-loads-resistance.qmd): declared voltage
+and current references, ideal sources, linear resistance, series/parallel
+reduction, loading, and steady-DC operating points. It uses only the algebra and
+simultaneous-equation methods introduced in
+[M01](../appendices/m01-algebra-units-complex.qmd). After completing it you
+should be able to:
 
-- explain the central model and the assumptions that bound its use;
-- connect physical behavior, a schematic or architecture, and quantitative reasoning;
-- interpret evidence and identify at least one credible failure mode;
-- make and defend a design or diagnostic decision;
+- **identify nodes, branches, paths, loops, meshes, and ports**, select a
+  reference node without confusing it with protective earth, and declare all
+  signed quantities before using them;
+- **derive and apply KCL and KVL within the lumped-circuit boundary**, combining
+  them with resistor and source relations to solve and verify one- and two-node
+  networks, including Millman's shortcut for parallel source branches;
+- **choose between node-voltage and planar mesh-current analysis**, including
+  the supernode and supermesh extensions, and interpret a negative solution;
+- **use superposition only for linear voltage and current responses**, deactivate
+  independent ideal sources correctly, and explain why powers do not superpose;
+- **derive and use Thévenin and Norton equivalents at a declared port**, while
+  stating exactly which external behavior they preserve and which internal
+  behavior they do not;
+- **derive the resistive maximum-power condition and its efficiency cost**, then
+  reject matching when voltage regulation or energy efficiency is the real
+  requirement; and
+- **plan a bounded network test** using named test points, instrument loading,
+  tolerances, residuals, uncertainty limits, and an explicit decision rule.
 
-## Concept path
+## Topology says which equations are independent
 
-- Kirchhoff current and voltage laws;
-- node-voltage and mesh-current methods;
-- superposition and linearity;
-- Thévenin and Norton equivalents;
-- maximum-power transfer and its efficiency cost;
-- model verification with test points;
+A schematic is not a picture of spatial layout. It is a statement about
+connectivity. The following vocabulary makes that statement precise:
 
-## Evidence and practice
+- A **node** is a set of points connected by ideal wire and therefore assigned
+  one potential in the lumped description.
+- A **branch** is one circuit element, or a declared element combination,
+  between two nodes. Its branch current has one chosen reference direction.
+- A **path** is a sequence of connected branches that does not revisit a node.
+- A **loop** is a closed path.
+- A **mesh** is a loop containing no other loop inside it in a particular planar
+  drawing. Every mesh is a loop; not every loop is a mesh.
+- A **port** is a pair of terminals through which an external circuit interacts
+  with a network. Port voltage and port current must be declared together.
 
-The completed chapter will include a prediction, a worked model, a simulation or
-executable check where it adds value, measured or authentic data, a fault or
-model mismatch, and a requirements-based design decision. The final exercise set
-will mix retrieval, calculation, interpretation, debugging, and open design.
+The **reference node** is assigned $0$ V so every other node voltage has a common
+coordinate. This is an algebraic choice. It need not be earth, chassis, protective
+earth, or a magical sink into which current disappears. Choosing another
+reference shifts all node potentials by one constant but leaves every branch
+voltage and current unchanged.
+
+For a connected network with $n$ nodes and $b$ branches, there are $n-1$
+independent node conservation equations and $b-n+1$ independent loop equations.
+Other KCL or KVL equations are valid but algebraically redundant. The count does
+not eliminate the need for $b$ branch relations: conservation says how branch
+quantities fit together, while a resistor or source says what each branch does.
+A compact topological argument makes the count recoverable. A **spanning tree**
+connects all $n$ nodes without a loop and therefore contains $n-1$ branches. Each
+of the remaining $b-(n-1)=b-n+1$ branches closes one independent loop when added
+to that tree. Likewise, one node KCL equation is the negative sum of all the
+others, leaving $n-1$ independent balances [@sedra2020microelectronic].
+
+::: {.callout-note title="A repeatable solve-and-check routine"}
+For every network in this chapter:
+
+1. mark nodes, branches, and the operating condition;
+2. choose a $0$ V reference and declare branch-current directions and voltage
+   polarities;
+3. estimate signs, magnitudes, and useful limits;
+4. write only independent conservation equations and all required branch
+   relations;
+5. solve with units attached;
+6. interpret negative results as reversal of the declared reference; and
+7. substitute the result back into every node or loop equation and inspect the
+   residual before trusting it.
+:::
+
+## Current balance is charge conservation with a boundary
+
+Enclose a physical junction by a fixed surface. Define the surface normal as
+outward and define each listed branch current as positive **into** the enclosed
+region. Integral charge conservation gives the exact statement
+
+$$
+\sum_k I_{k,\mathrm{in}}(t)
+=\frac{\mathrm d Q_{\mathrm{stored}}(t)}{\mathrm dt}.
+$$ {#eq-f04-continuity}
+
+Current has units C/s, as does $\mathrm dQ/\mathrm dt$, so the dimensions agree.
+Equation @eq-f04-continuity is not a resistor relation and it does not forbid
+charge accumulation. An imbalance is precisely the rate at which charge inside
+the boundary changes.
+
+In the **lumped ideal-node approximation**, charge storage within the small node
+region is negligible, or storage has been represented explicitly as a capacitor
+branch. Then $\mathrm dQ_{\mathrm{stored}}/\mathrm dt\approx0$, and Kirchhoff's
+current law (KCL) becomes
+
+$$
+\boxed{\sum_k I_{k,\mathrm{in}}=0.}
+$$ {#eq-f04-kcl-lumped}
+
+Equivalently, total current entering equals total current leaving. This is the
+network form of the continuity result introduced in [F02](f02-charge-voltage-current.qmd#nodes-ideal-wires-and-the-reach-of-a-lumped-description).
+
+For example, if declared currents of $2.00$ mA and $0.80$ mA enter a node and
+one declared current $I_x$ leaves, KCL gives
+$2.00+0.80-I_x=0$ mA, hence $I_x=2.80$ mA. If the solution were
+$I_x=-2.80$ mA **after its arrow had instead been declared into the node**, the
+negative result would mean $2.80$ mA actually leaves against that arrow. A sign
+describes agreement with a reference; it is not a second physical current.
+
+The leading correction is parasitic storage. An unrepresented node capacitance
+$C_p$ carrying node voltage $v$ contributes $C_p\,\mathrm dv/\mathrm dt$. At
+steady DC, $\mathrm dv/\mathrm dt=0$; during a fast transition, ignoring it can
+make a resistor-only KCL prediction fail. F07 makes that branch explicit.
+
+## Loop consistency follows declared potential changes
+
+Choose a closed traversal $a\to b\to c\to a$. Define branch voltage
+$v_{xy}\equiv V_x-V_y$ before assigning a sign. The signed potential changes
+around the traversal telescope:
+
+$$
+(V_b-V_a)+(V_c-V_b)+(V_a-V_c)=0.
+$$
+
+Thus, for a lumped loop whose branch voltages are defined consistently,
+Kirchhoff's voltage law (KVL) is
+
+$$
+\boxed{\sum_{\text{closed traversal}} \Delta v_k=0.}
+$$ {#eq-f04-kvl-lumped}
+
+This is an exact algebraic consequence of single-valued node potentials inside
+the lumped description. A practical sign rule is simple: while traversing a
+branch, crossing from its marked $-$ terminal to $+$ is a rise and contributes
+$+v$; crossing from $+$ to $-$ is a drop and contributes $-v$. One may reverse
+all traversal signs and obtain the same physical solution.
+
+The electromagnetic boundary matters. Give the loop an orientation and choose
+its positive surface normal by the right-hand rule. Faraday's law states
+
+$$
+\oint_C \vec E\mathbin{\cdot}\mathrm d\vec l
+=-\frac{\mathrm d\Phi_B}{\mathrm dt}.
+$$ {#eq-f04-faraday}
+
+Significant changing magnetic flux linked by the physical loop makes the electric
+field path-dependent. A naïve zero-sum treatment of resistor drops then omits an
+induced electromotive contribution. Lumped circuit analysis remains useful when
+geometry is electrically small and induced or stored-energy effects are
+negligible at the timescale of interest, or when those effects are represented by
+explicit inductive and coupled branches [@griffiths2017electrodynamics;
+@ulaby2015electromagnetics]. All numerical examples below are steady DC resistive
+networks, so the right side of @eq-f04-faraday is zero.
+
+## Node voltages make current balance systematic
+
+Node-voltage analysis is usually the first method to try because a circuit with
+$n$ nodes needs only $n-1$ unknown node voltages. Choose node $0$ as the
+reference. For a resistor $R_{km}$ from node $k$ to node $m$, declare branch
+current $i_{km}$ positive from $k$ to $m$. The linear constitutive relation is
+
+$$
+i_{km}=\frac{v_k-v_m}{R_{km}}
+=G_{km}(v_k-v_m),
+\qquad G_{km}\equiv\frac{1}{R_{km}}.
+$$ {#eq-f04-branch-current}
+
+At node $k$, take $i_{\mathrm{inj},k}$ as the algebraic sum of independent source
+currents injected into the node. KCL then gives the reusable node equation
+
+$$
+\boxed{\sum_m G_{km}(v_k-v_m)=i_{\mathrm{inj},k}.}
+$$ {#eq-f04-node-general}
+
+Every term has units S·V = A. The left side lists resistor currents leaving; the
+right side lists source current entering. That declared convention prevents a
+memorized sign pattern from replacing reasoning.
+
+### Millman's shortcut solves parallel source branches at once
+
+An important special case of @eq-f04-node-general occurs when several linear
+branches share one unknown node and the reference node. **Millman's theorem** is
+the resulting one-equation nodal solution, not an additional conservation law.
+
+Let the unknown node voltage be $v$ relative to the reference node. In branch
+$k$, an ideal voltage source fixes a node at $V_k$ relative to the same reference,
+and a series resistance $R_k>0$ connects that fixed-potential node to $v$. Define
+the branch current positive from $v$ toward $V_k$, so
+
+$$
+i_k=\frac{v-V_k}{R_k}.
+$$
+
+Also define every independent current $J_m$ as positive when injected **into**
+the unknown node. KCL—resistor currents leaving equal source currents entering—
+gives
+
+$$
+\sum_k\frac{v-V_k}{R_k}=\sum_m J_m.
+$$
+
+Collecting the terms in $v$ produces Millman's relation:
+
+$$
+\boxed{
+v=
+\frac{\displaystyle\sum_k V_k/R_k+\sum_m J_m}
+{\displaystyle\sum_k 1/R_k}
+}.
+$$ {#eq-f04-millman}
+
+The numerator has units of current and the denominator has units of conductance,
+so $[v]=\text{A}/\text{S}=\text{V}$. Source polarity is carried by the algebraic
+sign of $V_k$; a current source pointing out of the node enters the numerator as
+a negative $J_m$.
+
+For a concrete check, connect an unknown node to $10.0$ V through $1.00$ kΩ and
+to $0$ V through both $2.00$ kΩ and a $3.00$ kΩ load. Inject $1.00$ mA into the
+node. These are the branch values later drawn in @fig-f04-one-port. Millman's
+relation gives
+
+$$
+v=
+\frac{10.0~\text{V}/(1.00~\text{k}\Omega)+1.00~\text{mA}}
+{1/(1.00~\text{k}\Omega)+1/(2.00~\text{k}\Omega)
+ +1/(3.00~\text{k}\Omega)}
+=\frac{11.00~\text{mA}}{1.833~\text{mS}}
+=6.000~\text{V}.
+$$ {#eq-f04-millman-loaded}
+
+Removing the $3.00$ kΩ load removes its conductance from the denominator and
+gives $v=11.00~\text{mA}/1.500~\text{mS}=7.333$ V. This is the open-circuit
+voltage found later by direct KCL.
+
+The same calculation anticipates the one-port equivalent. For this class of
+independent-source branches,
+
+$$
+G_\text{eq}=\sum_k\frac{1}{R_k},
+\qquad
+R_\text{th}=\frac{1}{G_\text{eq}},
+\qquad
+I_\text{N}=\sum_k\frac{V_k}{R_k}+\sum_m J_m,
+\qquad
+V_\text{th}=I_\text{N}R_\text{th}.
+$$ {#eq-f04-millman-equivalent}
+
+Thus Millman's numerator is the Norton current and its denominator is the
+zero-source port conductance. For the open one-port above,
+$R_\text{th}=1/(1.500~\text{mS})=666.7~\Omega$ and
+$I_\text{N}=11.00$ mA, so $V_\text{th}=7.333$ V. The nodal shortcut and the
+equivalent are two readings of the same linear terminal relation
+[@sedra2020microelectronic].
+
+The shortcut has a strict topology and validity range. All included branches must
+connect the same node pair and have linear relations over the stated operating
+range. A zero-resistance ideal voltage-source branch cannot be inserted into the
+conductance sum; it directly constrains $v$, and multiple such sources must impose
+compatible voltages. A bridge or general multi-node network still requires the
+coupled node equations. Nonlinear devices, current limiting, and temperature-
+dependent resistance also invalidate one fixed set of Millman coefficients.
+
+### The bridge resolves the opening prediction
+
+In @fig-f04-bridge, TP0 is $0$ V and TP$_S$ is constrained by the ideal source to
+$V_S=10.0$ V. Define $I_{12}$ positive from TP1 to TP2. KCL at TP1 and TP2 gives
+
+$$
+\frac{v_1-10.0}{1.00~\text{k}\Omega}
++\frac{v_1}{2.00~\text{k}\Omega}
++\frac{v_1-v_2}{4.70~\text{k}\Omega}=0,
+$$ {#eq-f04-bridge-node1}
+
+$$
+\frac{v_2-10.0}{1.50~\text{k}\Omega}
++\frac{v_2}{3.30~\text{k}\Omega}
++\frac{v_2-v_1}{4.70~\text{k}\Omega}=0.
+$$ {#eq-f04-bridge-node2}
+
+Using volts and kilohms makes every current term a milliampere. Collecting terms
+and solving the two simultaneous equations by elimination gives
+
+$$
+v_1=6.688~\text{V},
+\qquad
+v_2=6.841~\text{V}.
+$$
+
+The bridge-current reference was TP1 to TP2, so
+
+$$
+I_{12}=\frac{v_1-v_2}{R_5}
+=\frac{6.688-6.841}{4.70~\text{k}\Omega}
+=-32.6~\mu\text{A}.
+$$ {#eq-f04-bridge-current}
+
+The negative sign confirms that the actual current is $32.6~\mu\text{A}$ from TP2 to
+TP1. It is close to the predicted tens-of-microamperes scale, not milliamperes.
+At TP1, $3.312$ mA arrives through $R_1$, while $3.344$ mA leaves through $R_2$
+and the declared bridge current is $-0.0326$ mA. The signed residual is
+$3.312-3.344-(-0.0326)\approx0$ mA; the small displayed remainder is rounding.
+
+The limiting cases teach more than another decimal place:
+
+- $R_5\to\infty$ opens the bridge and recovers two independent dividers;
+- $R_5\to0$ merges TP1 and TP2 into one node, so their voltage difference tends
+  to zero while the finite branch-current limit must be found from the rest of
+  the network rather than by writing $0/0$; and
+- $R_1/R_2=R_3/R_4$ balances the bridge, giving $v_1=v_2$ and $I_{12}=0$ for any
+  finite $R_5$ under the ideal assumptions.
+
+Contact resistance, resistor self-heating, source resistance, and meter input
+resistance are leading ways a physical bridge can depart from these values.
+
+### A voltage source between unknown nodes creates a supernode
+
+An ideal voltage source connected from an unknown node directly to the reference
+fixes that node voltage and causes no difficulty. A voltage source between two
+unknown nodes $p$ and $q$ does not provide its current as a function of voltage,
+so one cannot replace its branch current with $(v_p-v_q)/R$.
+
+Instead, surround both nodes and the source with one **supernode**. Write KCL for
+all branches crossing the boundary, then add the source constraint. If the source
+is marked $+$ at $p$, $-$ at $q$, and has value $V_X$,
+
+$$
+\sum I_{\text{leaving supernode}}=0,
+\qquad v_p-v_q=V_X.
+$$ {#eq-f04-supernode}
+
+Those are two independent equations for the two node voltages. The current inside
+the voltage-source branch can be recovered afterward from either node's KCL.
+
+## Mesh currents organize planar loop equations
+
+Mesh-current analysis is the planar dual of node-voltage analysis. It applies
+only when the network can be drawn on a plane without branch crossings that are
+not nodes. Assign one algebraic current to each mesh; these currents are solution
+variables, not necessarily distinct physical branch currents. In a branch shared
+by two meshes, the physical current is their signed difference when the mesh
+references oppose.
+
+In @fig-f04-two-mesh, define both $I_1$ and $I_2$ clockwise. The downward
+reference through shared $R_2$ is therefore $I_1-I_2$. The left source is a
+$10.0$ V rise when traversed clockwise. The right source has $+$ at its top, so
+the clockwise right traversal crosses it as a $5.00$ V drop. KVL gives
+
+$$
+\begin{aligned}
+(R_1+R_2)I_1-R_2I_2 &= V_1,\\
+-R_2I_1+(R_2+R_3)I_2 &= -V_2.
+\end{aligned}
+$$ {#eq-f04-two-mesh-system}
+
+![Two clockwise mesh-current references share $R_2$. The sign of the right-hand source term follows its marked polarity and the clockwise traversal.](../../../build/circuits/f04-two-mesh.png){#fig-f04-two-mesh fig-alt="Two adjacent planar loops share a vertical 2 kilohm resistor. The left loop has a 10 volt source and 1 kilohm resistor; the right has a 3 kilohm resistor and 5 volt source. Both mesh currents are clockwise, so the downward shared current is I1 minus I2."}
+
+Substituting kilohms and volts, so the unknowns emerge in milliamperes,
+
+$$
+3I_1-2I_2=10,
+\qquad -2I_1+5I_2=-5.
+$$
+
+Elimination gives
+
+$$
+I_1=3.636~\text{mA},
+\qquad I_2=0.455~\text{mA},
+$$
+
+and the actual shared downward current is
+$I_1-I_2=3.182$ mA. The exact values are $I_1=40/11$ mA and
+$I_2=5/11$ mA, which return zero KVL residual before rounding. Substituting the
+displayed three-decimal currents instead gives residuals of approximately
+$-2$ mV and $+3$ mV. The shared-node voltage provides an independent
+representation check:
+
+$$
+v_{\mathrm{TP1}}
+=(I_1-I_2)R_2
+=6.364~\text{V},
+$$
+
+which also equals $10.0~\text{V}-I_1R_1$ and
+$5.00~\text{V}+I_2R_3$.
+
+A current source shared by two meshes prevents writing a voltage drop for that
+branch. Form a **supermesh** around the outer perimeter, omitting the current
+source from the KVL traversal, and add its current constraint. For a source
+$I_X$ directed with mesh 1 and against mesh 2 in the shared branch,
+$I_1-I_2=I_X$. A source on the outer boundary simply fixes the adjacent mesh
+current.
+
+### Choose the method that exposes the fewest unknowns
+
+| Situation | Usually efficient | Reason |
+|---|---|---|
+| Obvious series/parallel structure | direct reduction | fewest equations and clearest physical reading |
+| Few essential nodes; many current sources | node voltage | roughly one unknown per non-reference node |
+| Planar circuit; few meshes; many voltage sources | mesh current | roughly one unknown per mesh |
+| Need each source's contribution | superposition | isolates linear cause while retaining the same network |
+| Many candidate loads at one terminal pair | Thévenin/Norton | solve the internal network once, then vary the load |
+
+An equation solver reporting a singular system is often a circuit clue. A floating
+subnetwork may have no defined absolute potential and therefore infinitely many
+node-coordinate solutions; contradictory ideal voltage sources may demand two
+different voltages for the same nodes and yield no solution. Check connectivity,
+reference choice, and source consistency before blaming arithmetic.
+
+## Linearity lets source contributions add
+
+A network is linear over a stated operating range when scaling every independent
+excitation by $a$ scales a voltage or current response by $a$, and adding two
+excitations adds their responses. Linear resistors and linear controlled sources
+meet this requirement while their parameters remain constant. A diode, current
+limit, saturating amplifier, temperature-dependent resistor, or changing switch
+state generally does not.
+
+A **controlled (dependent) source** is an ideal source whose value is fixed by a
+voltage or current elsewhere in the same network—for example
+$i_d=g_m v_x$. It can be linear even though it is not independent. When a test
+voltage $v_t$ is applied at a port, the relation $i_d=g_m v_x(v_t)$ remains part
+of the equations; deleting it would describe a different network. A02 develops
+physical controlled-source behavior in detail.
+
+The **superposition theorem** follows: in a linear network, any branch voltage or
+current equals the algebraic sum of the responses produced by each independent
+source acting alone. “Acting alone” means setting every other independent ideal
+source to zero while retaining its zero-valued constitutive relation:
+
+- $0$ V across an ideal voltage source is a short circuit;
+- $0$ A through an ideal current source is an open circuit; and
+- dependent sources, if present, remain active because their controlling
+  relation is part of the network.
+
+This is the standard linear-network statement of superposition
+[@sedra2020microelectronic].
+
+This is an analysis operation, not an instruction to manipulate a physical
+supply. Internal or series resistance stays in the network.
+
+Use the one-port network in @fig-f04-one-port with the $3.00$ kΩ load connected.
+Define $v=V_A-V_B$ and load current $i$ positive leaving the network at A and
+entering $R_L$. Direct KCL at A is
+
+$$
+\frac{v-10.0}{1.00~\text{k}\Omega}
++\frac{v}{2.00~\text{k}\Omega}
++\frac{v}{3.00~\text{k}\Omega}
+-1.00~\text{mA}=0,
+$$
+
+which gives $v=6.000$ V and $i=2.000$ mA.
+
+![The anchor one-port. Removing $R_L$ creates the open circuit used for $V_\text{th}$; replacing it by a safe calculated short condition defines $I_\text{N}$; reconnecting it checks the equivalent.](../../../build/circuits/f04-one-port.png){#fig-f04-one-port fig-alt="A 10 volt source feeds port A through a 1 kilohm resistor. A 2 kilohm resistor and a 1 milliamp source connect between A and zero volt terminal B. A removable 3 kilohm load connects A to B; load current leaves the network at A."}
+
+With only $V_S$ active, the current source becomes an open circuit and
+$v_{V_S}=60/11=5.455$ V. With only $I_S$ active, the voltage source becomes a
+short circuit and the resistance from A to B is
+$1.00\parallel2.00\parallel3.00=6/11$ kΩ, so
+
+$$
+v_{I_S}=(1.00~\text{mA})\left(\frac{6}{11}~\text{k}\Omega\right)
+=0.545~\text{V}.
+$$
+
+Their sum is $6.000$ V, exactly the direct solution.
+
+Power does **not** superpose because it is a product. For the load,
+$P_L=v^2/R_L=12.0$ mW using the total voltage. Squaring the two separate
+contributions and adding gives only $10.0$ mW; the missing cross-term
+$2v_{V_S}v_{I_S}/R_L$ is why source-by-source powers cannot simply be added.
+
+## A linear one-port can be replaced at its terminals
+
+External circuitry connected only to A and B does not need every internal branch
+value. It needs the relation between port voltage and port current. Continue to
+define
+
+$$
+v\equiv V_A-V_B,
+$$
+
+and define $i$ positive **leaving** the source network at A and entering the load.
+For a linear resistive one-port with a finite positive output resistance, its
+affine terminal relation can be written
+
+$$
+\boxed{v=V_\text{th}-R_\text{th}i.}
+$$ {#eq-f04-thevenin-line}
+
+This form follows directly from superposition [@sedra2020microelectronic]. First
+open the port, so $i=0$;
+the internal independent sources produce $V_\text{OC}$. Next set those independent
+sources to zero, retain all dependent sources, and drive the port with the declared
+current $i$ leaving A. The linear zero-source network responds with a voltage
+change $-R_\text{th}i$ under the chosen port references. Adding the two linear
+responses gives $v=V_\text{OC}-R_\text{th}i$. Thus the Thévenin form is an ideal
+voltage source $V_\text{th}=V_\text{OC}$ in series with $R_\text{th}$, not a
+formula detached from superposition. At open circuit, $i=0$, so
+
+$$
+V_\text{th}=V_\text{OC}.
+$$
+
+Solving @eq-f04-thevenin-line for current gives
+
+$$
+\boxed{i=I_\text{N}-\frac{v}{R_\text{th}}},
+\qquad
+I_\text{N}\equiv\frac{V_\text{th}}{R_\text{th}}.
+$$ {#eq-f04-norton-line}
+
+This is the Norton form: an ideal current source $I_\text{N}$ directed from B to
+A in parallel with $R_\text{th}$. At short circuit, $v=0$ and the current leaving
+A is $I_\text{SC}=I_\text{N}$. Open circuit means zero port **current**, not zero
+voltage; short circuit means zero port **voltage**, not zero current.
+
+The units expose the conversion:
+$[V_\text{th}/R_\text{th}]=\text{V}/\Omega=\text{A}$ and
+$[I_\text{N}R_\text{th}]=\text{A}\cdot\Omega=\text{V}$.
+
+### Three ways to find the port parameters
+
+1. **Open-circuit voltage and safe analysis of short-circuit current.** Calculate
+   $V_\text{OC}$ and $I_\text{SC}$, then
+   $R_\text{th}=V_\text{OC}/I_\text{SC}$ when the ratio is defined. Do not
+   physically short an unknown or energetic source.
+2. **Deactivate independent sources and look into the port.** Replace independent
+   ideal voltage sources by shorts and independent ideal current sources by opens;
+   retain all resistances. This works for the resistor/independent-source networks
+   in this chapter.
+3. **Apply a test source.** Set independent sources to zero, retain every dependent
+   source, mark the test voltage positive at A relative to B, and define
+   $i_\text{test}$ positive **entering the deactivated network at A**. Then
+   calculate $R_\text{th}=v_\text{test}/i_\text{test}$. Under the chapter's load
+   current reference, $i_\text{test}=-i$. This is the general linear method
+   once dependent sources appear. If a dependent-source network has no independent
+   excitation, both $V_\text{OC}$ and $I_\text{SC}$ may be zero while the port
+   resistance remains finite, so their ratio is useless.
+
+For @fig-f04-one-port with $R_L$ removed, KCL gives
+
+$$
+\frac{v-10.0}{1.00~\text{k}\Omega}
++\frac{v}{2.00~\text{k}\Omega}
+-1.00~\text{mA}=0,
+$$
+
+so
+
+$$
+V_\text{th}=V_\text{OC}=7.333~\text{V}.
+$$
+
+After suppressing the independent sources, the port sees
+
+$$
+R_\text{th}=R_1\parallel R_2
+=\frac{(1.00)(2.00)}{1.00+2.00}~\text{k}\Omega
+=0.667~\text{k}\Omega.
+$$
+
+Therefore
+
+$$
+I_\text{N}=I_\text{SC}
+=\frac{7.333~\text{V}}{0.667~\text{k}\Omega}
+=11.00~\text{mA}.
+$$
+
+Reconnect $R_L=3.00$ kΩ. The equivalent predicts
+
+$$
+i=\frac{V_\text{th}}{R_\text{th}+R_L}
+=2.000~\text{mA},
+\qquad
+v=iR_L=6.000~\text{V},
+$$ {#eq-f04-equivalent-loaded}
+
+matching direct KCL and superposition. Three representations now agree at the
+same named port.
+
+::: {.callout-important title="Equivalent does not mean physically identical"}
+Thévenin and Norton forms preserve the terminal $v$–$i$ relation for external
+loads within the stated linear, steady-DC range. They do **not** preserve internal
+node voltages, branch currents, component dissipation, noise, current limits,
+stored energy, or ratings. The equivalent is port-specific: choosing another pair
+of terminals generally gives different parameters. A nonlinear network may have
+only a local small-signal equivalent around a named operating point.
+:::
+
+## Maximum power occurs at a costly match
+
+Take a fixed resistive Thévenin source with $R_\text{th}>0$ and connect a variable
+positive resistance $R_L$. Under the port references already declared,
+
+$$
+i=\frac{V_\text{th}}{R_\text{th}+R_L},
+\qquad
+P_L=i^2R_L
+=\frac{V_\text{th}^2R_L}{(R_\text{th}+R_L)^2}.
+$$ {#eq-f04-load-power}
+
+The dimensions are
+$[V^2R/R^2]=\text{V}^2/\Omega=\text{V}\cdot\text{A}=\text{W}$.
+The limiting cases are sensible: $R_L\to0$ gives nearly zero load voltage and
+therefore zero load power; $R_L\to\infty$ gives nearly zero current and again
+zero load power. A maximum must lie between.
+
+No calculus is required to locate it. Let $x=R_L/R_\text{th}>0$. Relative to the
+candidate value at $x=1$,
+
+$$
+\frac{4x}{(1+x)^2}\le1
+\quad\Longleftrightarrow\quad
+(1-x)^2\ge0.
+$$
+
+Equality holds only at $x=1$, so
+
+$$
+\boxed{R_L=R_\text{th}},
+\qquad
+\boxed{P_{L,\max}=\frac{V_\text{th}^2}{4R_\text{th}}}.
+$$ {#eq-f04-max-power}
+
+For the one-port above, the matched load is $0.667$ kΩ. Then
+
+$$
+v_L=\frac{V_\text{th}}{2}=3.667~\text{V},
+\quad
+i_L=5.50~\text{mA},
+\quad
+P_{L,\max}=20.2~\text{mW}.
+$$
+
+In the Thévenin source-plus-series-resistance representation, the same current
+flows through $R_\text{th}$ and $R_L$. At the match their dissipations are equal,
+so the port-delivery ratio
+
+$$
+\eta_\text{port}
+=\frac{P_L}{P_L+P_{R_\text{th}}}
+=50\%.
+$$
+
+That familiar 50% is **not automatically the overall efficiency of the original
+multi-source network**, because the equivalent does not preserve internal power.
+It is exact for a physical ideal voltage source with a real series resistance and
+describes the Thévenin representation's source-to-load split. F05 develops full
+power budgets.
+
+Maximum power is therefore not the default goal for voltage delivery. If
+$R_L\gg R_\text{th}$, load voltage stays near $V_\text{th}$ and the simple series
+loss is small, although extracted power may be below its mathematical maximum.
+Matching is useful when extracting maximum available signal or power is worth the
+loss. Efficient regulated supplies instead aim for output resistance much smaller
+than load resistance. Negative resistance, $R_\text{th}=0$, nonlinear limits, and
+AC impedance matching lie outside this positive-resistive theorem; F08 develops
+the frequency-domain case.
+
+## Executable arithmetic keeps the representations synchronized
+
+The following standard-library program solves the bridge's two node equations,
+checks their residuals, and sweeps loads on the one-port. Parameters remain
+visible, so changing a resistor changes the same quantities named in the prose
+and schematics.
+
+```python
+def solve_2x2(a11, a12, a21, a22, b1, b2):
+    """Solve A x = b for a nonsingular 2-by-2 system."""
+    det = a11 * a22 - a12 * a21
+    if abs(det) < 1e-18:
+        raise ValueError("singular network equations")
+    x1 = (b1 * a22 - a12 * b2) / det
+    x2 = (a11 * b2 - b1 * a21) / det
+    return x1, x2
+
+
+def bridge_nodes(source_v, r1, r2, r3, r4, r5):
+    g1, g2 = 1.0 / r1, 1.0 / r2
+    g3, g4, g5 = 1.0 / r3, 1.0 / r4, 1.0 / r5
+    v1, v2 = solve_2x2(
+        g1 + g2 + g5, -g5,
+        -g5, g3 + g4 + g5,
+        g1 * source_v, g3 * source_v,
+    )
+    res1 = g1 * (v1 - source_v) + g2 * v1 + g5 * (v1 - v2)
+    res2 = g3 * (v2 - source_v) + g4 * v2 + g5 * (v2 - v1)
+    return v1, v2, (v1 - v2) / r5, res1, res2
+
+
+def one_port_loaded(v_th, r_th, load_ohm):
+    current_a = v_th / (r_th + load_ohm)
+    return current_a * load_ohm, current_a
+
+
+v1, v2, i12, res1, res2 = bridge_nodes(
+    10.0, 1.00e3, 2.00e3, 1.50e3, 3.30e3, 4.70e3
+)
+print(f"bridge: v1={v1:.4f} V, v2={v2:.4f} V")
+print(f"bridge: I12={i12 * 1e6:.2f} uA")
+print(f"KCL residuals: {res1 * 1e9:.3f}, {res2 * 1e9:.3f} nA")
+
+v_th = 22.0 / 3.0
+r_th = 2.00e3 / 3.0
+for load in (3.00e3, 1.00e3, r_th):
+    voltage_v, current_a = one_port_loaded(v_th, r_th, load)
+    print(
+        f"RL={load:.1f} ohm: "
+        f"v={voltage_v:.4f} V, i={current_a * 1e3:.4f} mA"
+    )
+```
+
+Expected output:
+
+```text
+bridge: v1=6.6884 V, v2=6.8414 V
+bridge: I12=-32.56 uA
+KCL residuals: 0.000, 0.000 nA
+RL=3000.0 ohm: v=6.0000 V, i=2.0000 mA
+RL=1000.0 ohm: v=4.4000 V, i=4.4000 mA
+RL=666.7 ohm: v=3.6667 V, i=5.5000 mA
+```
+
+The code reaches the calculation rung of the evidence ladder. Agreement with
+hand algebra catches transcription and arithmetic errors; it is not a simulation
+of non-ideal hardware and not a measurement.
+
+## A load sweep can support or falsify the straight-line claim
+
+The network and its equivalent predict a straight port relation. A physical test
+should challenge that prediction at several safe loads rather than celebrate one
+agreeing point; this follows the prediction-first bench practice of
+[@horowitz2015art]. For the one-port of @fig-f04-one-port, a bounded test would:
+
+1. de-energize, confirm component values and load power ratings, and set the
+   supply current limit;
+2. declare $v=V_A-V_B$ with the red lead at TPA and black at TPB;
+3. record the apparent open-circuit voltage with the voltmeter input resistance
+   included—the meter means the physical port current is small, not exactly zero;
+4. connect several approved loads, recording $R_L$, $v$, instrument range,
+   source state, ambient condition, and raw digits;
+5. derive total port current as
+   $i_\text{port}=v/R_L+v/R_\text{in}$, with the first term omitted for the
+   apparent-open row, and carry load tolerance, temperature, meter input
+   resistance, and correlated voltage error into its bound; and
+6. examine whether $v+R_\text{th}i_\text{port}$ remains consistent with one
+   $V_\text{th}$.
+
+@tbl-f04-synthetic is **synthetic, illustrative data**, not a record from an
+instrument. The first four rows were generated from
+$V_\text{th}=7.333$ V and $R_\text{th}=666.7~\Omega$, with small illustrative
+offsets. The last row deliberately imitates a source entering a current-limited
+region. Assume, only for learning how to reason from the table, a 10 MΩ voltmeter
+with ±1% input-resistance tolerance, an absolute voltage accuracy limit of ±5 mV
+under the stated range, and load values within ±0.2% at $23\ ^\circ$C ±2 °C.
+Those assumed limits are not a $k=2$ expanded uncertainty and do not qualify a
+physical claim.
+
+| $R_L$ | Synthetic indication $v$ | Derived total port current $i_\text{port}$ | Recorded source state | $v+(666.7~\Omega)i_\text{port}$ |
+|---:|---:|---:|---|---:|
+| apparent open | 7.335 V | 0.000734 mA | CV | 7.3355 V |
+| 3.00 kΩ | 6.002 V | 2.0013 mA | CV | 7.3363 V |
+| 1.00 kΩ | 4.398 V | 4.3984 mA | CV | 7.3304 V |
+| 667 Ω | 3.665 V | 5.4951 mA | CV | 7.3286 V |
+| 330 Ω | 2.200 V | 6.6669 mA | **current limit** | 6.6447 V |
+
+: Synthetic load-sweep data generated for diagnosis. It can teach a residual test but cannot establish the behavior of physical hardware. {#tbl-f04-synthetic}
+
+The first four inferred intercepts cluster within 8 mV and are visually
+consistent with one line. A formal compatibility decision still requires
+propagating the stated load, input-resistance, and voltage limits—including the
+fact that the same voltage indication appears in both table columns. The final
+row is hundreds of millivolts away and carries a state change, so even those
+conservative limits cannot plausibly extend the same straight line into that
+region. The bounded conclusion is that the synthetic pattern supports further
+testing of one line over the first four points and falsifies its extension into
+the indicated current-limit region; it qualifies no hardware.
+
+A single mismatch has rivals. A wrong load value changes derived current; meter
+loading lowers the apparent open-circuit voltage; lead/contact resistance changes
+the loaded slope; resistor self-heating produces gradual curvature; a current
+limit creates a knee. Record source indicators and measure at multiple separated
+points because those hypotheses predict different patterns.
+
+## A guarded port requirement turns analysis into a decision
+
+Suppose the one-port is intended to drive an input guaranteed to have
+$R_L\ge3.00$ kΩ. The engineering requirement is:
+
+> For $V_S=10.0$ V ±1%, $I_S=1.00$ mA ±2%,
+> $R_1=1.00$ kΩ ±1%, $R_2=2.00$ kΩ ±1%, and ambient conditions under which those
+> limits apply, the steady-DC voltage $V_A-V_B$ shall be **strictly greater than
+> 5.75 V** for every $R_L\ge3.00$ kΩ.
+
+The matched load $R_L=R_\text{th}\approx667~\Omega$ fails immediately: it gives
+only $3.667$ V nominally. Maximum available power is irrelevant because this is a
+voltage-interface requirement.
+
+For the stated linear network, the loaded voltage is
+
+$$
+v=\frac{V_S/R_1+I_S}
+{1/R_1+1/R_2+1/R_L}.
+$$ {#eq-f04-port-design}
+
+The lowest load resistance is the worst load. A corner evaluation using
+$V_S=9.90$ V, $I_S=0.980$ mA, $R_L=3.00$ kΩ, and all four $R_1,R_2$ tolerance
+corners gives the minimum at $R_1=1.010$ kΩ and $R_2=1.980$ kΩ:
+
+$$
+v_\text{corner}=5.897~\text{V}.
+$$
+
+The calculated worst-corner margin under the listed assumptions is therefore
+$5.897-5.750=0.147$ V. This is a worst-corner calculation under the listed
+inputs, not proof that manufactured hardware passes: it omits temperature drift,
+source output resistance, connector drops, and measurement effects unless their
+limits are already included.
+
+An acceptance test must say what a pass means. One suitable draft rule is:
+
+- **Measurand and points:** steady $V_A-V_B$, red at TPA and black at TPB.
+- **Conditions:** approved current-limited extra-low-voltage source and a
+  qualification fixture using screened or substituted boundary components.
+  Including stimulus uncertainty, establish upper bounds
+  $V_S\le9.90$ V, $I_S\le0.980$ mA, and $R_L\le3.00$ kΩ for this deliberately
+  conservative low-output test; use $R_1=1.010$ kΩ and $R_2=1.980$ kΩ within
+  their stated bounds. Record the declared ambient range and wait for a stated
+  steady condition. A different end-item acceptance screen needs a correlation
+  justified against this qualification corner.
+- **Instrument intrusion:** voltmeter input at least 10 MΩ, placed in parallel
+  with $R_L$ in the prediction; record range, accuracy specification, calibration
+  status, and leads.
+- **Uncertainty basis:** establish an expanded uncertainty $U$ for the complete
+  result using the method of F06; do not relabel a datasheet accuracy limit as
+  $k=2$ uncertainty [@jcgm2008gum].
+- **Guard band and rule:** reserve 50 mV beyond the strict requirement and accept
+  only if $v_\text{indicated}-U>5.80$ V. Equality does not pass. Any current-limit
+  indication, thermal drift outside the declared stability criterion, or result
+  outside the predicted tolerance envelope is a stop and investigation condition.
+
+This rule deliberately consumes part of the calculated 147 mV worst-corner
+margin. Whether the remaining margin is sufficient cannot be decided until $U$
+and omitted physical
+effects are bounded. One end-item acceptance test also cannot demonstrate every
+manufacturing corner unless component values are screened or separately bounded;
+corner coverage belongs in design qualification and production controls. That is
+the honest handoff from a network calculation to a verification claim.
+
+## Where the compact treatment stops working
+
+The methods are durable; their simple inputs are conditional. Watch for these
+failure boundaries:
+
+- **Unrepresented storage or coupling:** parasitic capacitance permits transient
+  node accumulation; changing linked flux adds induced emf. Add the relevant
+  branches and use F07/F08 rather than insisting a resistor-only DC equation fit.
+- **Nonlinear or changing elements:** diodes, saturating devices, heating
+  resistors, switching states, and source current limits change the element
+  relation. Piecewise or local analysis must name its operating region.
+- **Non-ideal interconnect:** wire and contact resistance split what the schematic
+  called one node. Measure both ends or add explicit branches.
+- **Instrument intrusion:** finite voltmeter input resistance becomes another
+  branch; ammeter burden changes a loop. Analyze the circuit-plus-instrument.
+- **Floating or inconsistent ideal constraints:** an unreferenced island has an
+  arbitrary absolute potential; opposing ideal voltage sources may have no
+  simultaneous solution.
+- **Overinterpreted reduction:** a port equivalent predicts external terminal
+  behavior, not internal temperature, ratings, noise, or safety.
+
+In each case, disagreement is useful. Locate which representation—physical
+assembly, schematic topology, branch relation, equation, code, or measurement—no
+longer describes the same object.
+
+## What to carry forward
+
+Kirchhoff's laws are conservation constraints, not isolated recipes. KCL comes
+from charge continuity after node accumulation is made negligible or explicit;
+KVL comes from consistent potential changes after linked induction is negligible
+or represented. Element relations complete the equations.
+
+The reusable workflow is: choose references, estimate, write independent node or
+mesh equations, solve, inspect signs, calculate every branch quantity, and test
+residuals and limiting cases. Linearity then lets independent source responses
+add. At a named port, the same linear network becomes a Thévenin or Norton line
+that can be reused across loads. Maximum power occurs at a resistive match, but
+the voltage and loss consequences must serve the actual requirement.
+
+F07 adds explicit storage and transients to the same conservation structure. F08
+extends branch relations to impedance and frequency. A01 and A02 replace linear
+resistors with nonlinear and controlled devices while keeping the node equations.
+F06 turns residuals, loading, and mismatch hypotheses into defensible physical
+evidence. The topology changes; the discipline does not.
+
+## Exercises
+
+Declare references, operating conditions, units, and assumptions. Estimate before
+calculating, and substitute solutions back into the governing equations. Full
+solutions and assessment variants remain outside the public book; selected
+self-check values are included for calibration.
+
+**Quick check (multiple choice)**
+
+One best answer each; the key follows.
+
+1. A solved branch current is $-2.0$ mA. This means:
+    a. current cannot be negative, so the network has no solution;
+    b. the actual current is 2.0 mA opposite the declared arrow;
+    c. KCL has failed;
+    d. the resistor generated charge.
+2. The node chosen as $0$ V is:
+    a. necessarily protective earth;
+    b. necessarily the path carrying all current;
+    c. a potential reference that may or may not be earth;
+    d. forbidden from connecting to a source.
+3. To deactivate an independent ideal source for superposition:
+    a. open a voltage source and short a current source;
+    b. remove every source and its internal resistance;
+    c. short a zero-valued voltage source and open a zero-valued current source;
+    d. deactivate dependent sources as well.
+4. Which quantity may be added directly by superposition in a linear network?
+    a. a branch voltage;
+    b. resistor power;
+    c. efficiency;
+    d. temperature rise.
+5. A Thévenin equivalent at port A-B preserves:
+    a. every internal branch current;
+    b. internal component temperatures;
+    c. the terminal voltage-current relation over the stated range;
+    d. behavior at every other possible port.
+6. For a fixed positive resistive Thévenin source, $R_L=R_\text{th}$ gives:
+    a. maximum load power and zero internal loss;
+    b. maximum load power and equal dissipation in the equivalent series
+       resistance and load;
+    c. maximum voltage regulation and 100% port-delivery efficiency;
+    d. minimum load power.
+
+*[Key: 1-b, 2-c, 3-c, 4-a, 5-c, 6-b.]*
+
+**Retrieval and explanation**
+
+1. Define node, branch, path, loop, mesh, port, and reference node. Explain why
+   every mesh is a loop but not every loop is a mesh.
+2. Starting from @eq-f04-continuity, explain precisely what approximation leads
+   to @eq-f04-kcl-lumped. Give one observation that would reveal unrepresented
+   charge storage.
+3. Explain why @eq-f04-kvl-lumped and @eq-f04-faraday do not conflict. State when
+   a localized inductor is sufficient and when coupled branches or an induced
+   source are needed to represent external linked flux.
+4. A connected network has 7 nodes and 10 branches. How many independent KCL
+   equations and independent loop equations exist? *[Self-check: 6 and 4.]*
+
+**Estimation and topology**
+
+5. Without solving @fig-f04-bridge, estimate the sign and scale of $I_{12}$.
+   Then predict what changes if $R_5$ is increased tenfold.
+6. A $9.0$ V source connects through 1 kΩ to node $x$; 2 kΩ connects $x$ to
+   ground, and a 1 mA current source injects into $x$. Estimate whether $v_x$ is
+   above or below the ordinary 1 kΩ–2 kΩ divider voltage before calculating.
+7. Draw one planar network with three loops but only two meshes. Identify the
+   redundant loop equation as an algebraic combination of the mesh equations.
+
+**Derivation and calculation**
+
+8. Re-solve @eq-f04-bridge-node1 and @eq-f04-bridge-node2 by elimination. Calculate
+   all five resistor currents with declared directions and show both node
+   residuals. *[Self-check: $v_1=6.688$ V, $v_2=6.841$ V,
+   $I_{12}=-32.6~\mu\text{A}$.]*
+9. Reverse only the reference arrow for $I_{12}$ in the bridge. Which equations
+   and numerical signs change, and which physical observations do not?
+10. A 4.0 V ideal source lies between unknown nodes $p$ and $q$, positive at
+    $p$. Node $p$ connects to 10 V through 2 kΩ; node $q$ connects to ground
+    through 3 kΩ. Write the supernode KCL equation and source constraint, solve
+    $v_p,v_q$, and recover source current.
+11. Re-solve @eq-f04-two-mesh-system. Calculate each physical branch current and
+    verify TP1 by three independent voltage paths.
+12. A 2 mA current source lies in the branch shared by two clockwise meshes and
+    points with mesh 1. Write the current constraint and describe the perimeter
+    used for the supermesh KVL equation.
+13. Derive @eq-f04-thevenin-line from two safe loaded points
+    $(v_1,i_1)$ and $(v_2,i_2)$. Show that
+    $R_\text{th}=(v_1-v_2)/(i_2-i_1)$ under the chapter's port reference.
+14. Use $(1-x)^2\ge0$ to derive @eq-f04-max-power. Then show that load power is
+    half its maximum at two reciprocal normalized resistances, and find them.
+
+**Linearity and equivalents**
+
+15. For @fig-f04-one-port with $R_L=3.00$ kΩ, first use @eq-f04-millman to
+    calculate the loaded node voltage directly, then reproduce the two
+    superposition contributions. Calculate total load power and show numerically
+    why the separate source-contribution powers do not add to it.
+16. Find the Thévenin and Norton equivalents seen from A-B if $R_2$ changes to
+    4.00 kΩ. Predict the loaded voltage for $R_L=3.00$ kΩ and verify it by direct
+    KCL.
+17. **Extension.** A linear amplifier output contains a dependent source but no independent
+    source after its input is set to zero. Explain why $V_\text{OC}/I_\text{SC}$
+    becomes $0/0$ and specify a test-source method for finding output resistance.
+18. Give two internal quantities that a Thévenin equivalent cannot predict even
+    when it predicts the load voltage exactly. Design one observation that would
+    distinguish two internally different but terminally equivalent networks.
+
+**Data interpretation**
+
+19. Recalculate the final column of @tbl-f04-synthetic. Using the stated
+    illustrative accuracy limit, decide which rows can share one straight line
+    and which cannot. State why this is not a physical qualification.
+20. A synthetic bridge test reports TP$_S$ = 10.001 V, TP1 = 6.690 V, and
+    TP2 = 6.839 V. Resistors have independently established values equal to their
+    labels within ±0.2%, and each voltage has an accuracy limit of ±5 mV. Estimate
+    $I_{12}$ and explain which additional bounds are needed before declaring a KCL
+    failure.
+21. A load sweep curves gradually without a source-state change. Rank resistor
+    self-heating, abrupt current limiting, and a fixed voltmeter-loading error as
+    hypotheses. Name a discriminating test for the two most plausible.
+
+**Debugging**
+
+22. For @fig-f04-one-port with $R_L=3.00$ kΩ, a student's superposition work
+    opens the voltage source and shorts the current source. Explain both errors
+    from the zero-valued source relations, then calculate the resulting wrong
+    load-voltage contributions and compare their sum with 6.000 V.
+23. A node solver reports a singular square system. Give one floating-network
+    cause and one equation-selection cause in which a redundant equation replaced
+    a required independent constraint. Explain why adding a redundant residual
+    check without discarding the independent set does not make the physical
+    network indeterminate, and name a test that distinguishes the two causes.
+24. A physical bridge gives nearly zero $I_{12}$ although the labelled ratios are
+    unbalanced. Propose three competing hypotheses involving topology, component
+    value, and instrument intrusion. Identify test points or de-energized checks
+    that separate them.
+25. A drawn wire crosses another without a junction dot, but the breadboard wires
+    are electrically joined. Explain why correct algebra for the drawing still
+    fails to predict the hardware and state the smallest schematic repair.
+
+**Open design**
+
+26. Redesign the one-port values so a receiver with
+    $2.0~\text{k}\Omega\le R_L\le10~\text{k}\Omega$ receives more than 5.0 V
+    while no resistor exceeds 20 mW. State source and resistor tolerances, check
+    all relevant corners, include voltmeter loading, and write a guarded acceptance
+    rule.
+27. Design a safe L03 load sweep that estimates $V_\text{th}$ and
+    $R_\text{th}$ without a physical short. Specify loads and power ratings,
+    voltage/current references, instruments and ranges, source current limit,
+    test points, raw records, uncertainty basis, stop conditions, and the evidence
+    that would falsify linearity.
+28. Compare two interface goals for the same source: (a) maximum received power
+    and (b) output voltage within 2% of open circuit. Derive the load-resistance
+    requirement for each and defend which one fits a sensor input. State why a
+    maximum-power slogan cannot replace a requirement.
 
 ## Connections
 
-Chapter ID: `F04`. Prerequisites and downstream course mappings are maintained in
-[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
-provides reader-facing routes and the practice spine.
+Chapter ID: `F04`. Its registered prerequisite is
+[F03](f03-sources-loads-resistance.qmd), which supplies source/load operating
+points, resistance, loading, and series/parallel reductions. The algebra support
+is [M01](../appendices/m01-algebra-units-complex.qmd); matrix methods, when needed
+for larger networks, are developed just in time in
+[M02](../appendices/m02-calculus-linear-differential.qmd).
+
+This chapter begins the Part I **dynamics spine** F04 → F07 → F08: node and loop
+structure persists when [F07](f07-capacitors-inductors-transients.qmd) adds
+storage and when [F08](f08-sinusoids-impedance-frequency.qmd) adds impedance.
+It also feeds [A01](../02-analog/a01-semiconductor-diodes.qmd) and
+[A02](../02-analog/a02-transistors.qmd), where nonlinear and controlled branches
+enter the same network equations. [F06](f06-measurement-uncertainty-debug.qmd)
+provides the uncertainty and fault-isolation discipline needed to turn residuals
+into evidence.
+
+The aligned physical evidence is **Lab L03 — Network conservation and
+equivalents**, at safety level L1, and the ideas contribute to integrating
+milestone **M1**. Reproducible configuration and raw-data practice connects to
+[T03](../appendices/t03-reproducible-engineering.qmd). These IDs state learning
+and evidence goals; they do not authorize practical work. The
+[Part I introduction](index.qmd) and [reading roadmap](../roadmap.qmd) show the
+full route.
+
+## References
+
+Claims are cited where used. Charge continuity and the electromagnetic boundary
+of loop-voltage reasoning follow canonical field treatments
+[@griffiths2017electrodynamics; @ulaby2015electromagnetics]. Linear network
+analysis, superposition, dependent-source practice, and one-port equivalents
+follow the standard circuit treatment in [@sedra2020microelectronic]. Practical
+bench reasoning and the insistence on checking a compact description against the
+physical circuit follow [@horowitz2015art]. Measurement and uncertainty language
+follows [@jcgm2008gum]. The complete
+[bibliography](../references.qmd) collects these sources. No source substitutes
+for component datasheets, local procedures, or physical qualification.

@@ -1,0 +1,46 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \draw (-2,0) node[ground] {}
+    to[V, l_={$V_S=\SI{10.0}{\volt}$}] (-2,4)
+    -- (5.0,4);
+  \node[font=\small] at (-2.35,3.35) {$+$};
+  \node[font=\small] at (-2.35,0.65) {$-$};
+
+  \draw (1.0,4)
+    to[R, l_={$R_1\;\SI{1.00}{\kilo\ohm}$}] (1.0,2.35)
+    to[R, l_={$R_2\;\SI{2.00}{\kilo\ohm}$}] (1.0,0)
+    -- (-2,0);
+
+  \draw (5.0,4)
+    to[R, l={$R_3\;\SI{1.50}{\kilo\ohm}$}] (5.0,2.35)
+    to[R, l={$R_4\;\SI{3.30}{\kilo\ohm}$}] (5.0,0)
+    -- (1.0,0);
+
+  \draw (1.0,2.35)
+    to[R, l={$R_5\;\SI{4.70}{\kilo\ohm}$},
+       i>^=$I_{12}$] (5.0,2.35);
+
+  % Explicit dots at every junction of three or more conductors.
+  \node[circ] at (1.0,4) {};
+  \node[circ] at (5.0,4) {};
+  \node[circ] at (1.0,2.35) {};
+  \node[circ] at (5.0,2.35) {};
+  \node[circ] at (1.0,0) {};
+  \node[circ] at (5.0,0) {};
+
+  % Test points are led away from components and conductors.
+  \draw (1.0,2.35) -- (0.15,2.35)
+    node[ocirc, label={[font=\small]left:{TP1: $v_1$}}] {};
+  \draw (5.0,2.35) -- (5.85,2.35)
+    node[ocirc, label={[font=\small]right:{TP2: $v_2$}}] {};
+  \draw (5.0,0) -- (5.85,0)
+    node[ocirc, label={[font=\small]right:{TP0: $0$~V}}] {};
+  \draw (5.0,4) -- (5.85,4)
+    node[ocirc, label={[font=\small]right:{TP$_S$: $V_S$}}] {};
+
+  \node[font=\small] at (3.0,-0.35) {reference node};
+\end{circuitikz}
+\end{document}

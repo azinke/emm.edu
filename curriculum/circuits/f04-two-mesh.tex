@@ -1,0 +1,36 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \draw (0,0) node[ground] {}
+    to[V, l_={$V_1=\SI{10.0}{\volt}$}] (0,3)
+    to[R, l={$R_1\;\SI{1.00}{\kilo\ohm}$}] (3,3)
+    to[R, l={$R_3\;\SI{3.00}{\kilo\ohm}$}] (6,3)
+    to[V, l={$V_2=\SI{5.00}{\volt}$}] (6,0)
+    -- (0,0);
+  \node[font=\small] at (-0.35,2.55) {$+$};
+  \node[font=\small] at (-0.35,0.45) {$-$};
+  \node[font=\small] at (6.35,2.55) {$+$};
+  \node[font=\small] at (6.35,0.45) {$-$};
+
+  \draw (3,3)
+    to[R, l={$R_2\;\SI{2.00}{\kilo\ohm}$},
+       i>^=$I_1-I_2$] (3,0);
+
+  \node[circ] at (3,3) {};
+  \node[circ] at (3,0) {};
+
+  % Bottom-segment arrows show the clockwise mesh references without crowding
+  % component labels. Clockwise flow is right-to-left along each bottom edge.
+  \draw[->, thick] (2.45,0.72) -- (0.75,0.72)
+    node[midway, above, font=\small] {$I_1$ clockwise};
+  \draw[->, thick] (5.55,0.72) -- (3.85,0.72)
+    node[midway, above, font=\small] {$I_2$ clockwise};
+
+  \draw (3,3) -- (3,3.55)
+    node[ocirc, label={[font=\small]above:{TP1}}] {};
+  \draw (3,0) -- (3,-0.55)
+    node[ocirc, label={[font=\small]below:{TP0}}] {};
+\end{circuitikz}
+\end{document}

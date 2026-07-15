@@ -1,45 +1,1092 @@
 ---
 title: "Sources, loads, and resistance"
+description: "Predict the operating voltage and current of a real source–load pair, including resistance, loading, tolerances, ratings, and measurement intrusion."
 chapter-id: F03
-status: outline
+status: draft
 ---
 
-::: {.callout-note title="Chapter outline"}
-The scope and dependency boundary are stable. Full exposition, worked examples,
-exercises, and tested practical evidence still need authoring and review.
+::: {.callout-note title="Chapter maturity — draft"}
+This chapter presents a complete instructional path: first-principles derivations,
+worked examples, an executable check, explicitly synthetic diagnostic data, a real
+component-datasheet case, a bounded design decision, and a full exercise set. It is
+still subject to technical and editorial revision. Physical evidence belongs in
+the aligned laboratory; the synthetic values here do not qualify a physical claim.
+See the [reading roadmap](../roadmap.qmd) for the meaning of status levels.
+:::
+
+::: {.callout-warning title="Safety boundary for this chapter"}
+Any practical work discussed here is limited to **current-limited,
+extra-low-voltage** sources, under local supervision and an approved procedure.
+An open-circuit voltage does not reveal all the energy a source can deliver, and a
+small internal resistance can permit destructive fault current. Never determine a
+source's resistance by deliberately shorting an unknown source. This chapter is
+**not** authorization for work on mains, high-voltage supplies, high-energy cells
+or battery packs, RF power, or safety-critical equipment. Apply the source, path,
+and target controls established in [F01](f01-safe-practice.qmd) [@iec61010].
 :::
 
 ## Central question
 
-Why does the voltage of a source change when a real load is connected?
+> Why does the voltage of a source change when a real load is connected?
+
+Consider a **hypothetical, illustrative observation**. A voltmeter reads 5.00 V
+across an unloaded bench supply. Connect one approved load and the display at the
+load reads 4.98 V. Connect a heavier load and it reads 4.2 V, or perhaps exactly
+2.0 V while a **CC** indicator lights. Which statement is right: “the source is
+5 V,” “the load pulled it down,” or “the source has become a 2 V source”? These
+numbers motivate the question; they are not presented as measured evidence.
+
+Each statement is incomplete because voltage and current are not properties of one
+component in isolation. The connected source and load settle at one **operating
+point**: a terminal voltage and current that satisfy both devices at once. The
+source determines what voltage it can sustain as current changes; the load
+determines what current it takes as voltage changes. Their intersection is what a
+meter can observe.
+
+::: {.callout-tip title="Predict before connecting"}
+Consider an **illustrative** 5.00 V source represented, over a limited range, by an
+ideal 5.00 V source in series with 47 Ω. Predict the load voltage for (a) no load,
+(b) 1.0 kΩ, and (c) 47 Ω. Will any loaded voltage exceed 5.00 V? At what load will
+the source lose half its open-circuit voltage? Commit to directional and
+order-of-magnitude answers before doing the arithmetic. We reconcile them with a
+schematic, equations, code, and synthetic diagnostic data later.
+:::
 
 ## Learning outcomes
 
-After completing this chapter, the reader should be able to:
+This chapter assumes [F02](f02-charge-voltage-current.qmd), especially potential
+difference, current, nodes, ideal wires, and declared reference directions, plus
+the algebra, ratios, and SI prefixes of
+[M01](../appendices/m01-algebra-units-complex.qmd). After completing it you should
+be able to:
 
-- explain the central model and the assumptions that bound its use;
-- connect physical behavior, a schematic or architecture, and quantitative reasoning;
-- interpret evidence and identify at least one credible failure mode;
-- make and defend a design or diagnostic decision;
+- **distinguish an ideal voltage source, an ideal current source, a real source,
+  and a load**, and explain why “source” and “load” describe a port interaction,
+  not an immutable component type;
+- **derive terminal resistance from material behavior**, distinguish resistance
+  from resistivity and conductance, and state when Ohm's law is a useful linear
+  constitutive relation rather than a universal law;
+- **find the DC operating point** of a resistive load driven by a source with
+  finite source resistance, interpret limiting cases, and recognize current limit
+  or compliance as a change of operating region;
+- **reduce series and parallel resistor combinations**, derive unloaded and
+  loaded voltage-divider relations, and carry component tolerances far enough to
+  bound a result;
+- **predict voltmeter and ammeter intrusion**, use loaded measurements to estimate
+  source resistance without shorting the source, and distinguish a source fault
+  from an instrument-created discrepancy; and
+- **decode common resistor markings and make a bounded selection** using nominal
+  value, tolerance, temperature coefficient, dissipation, voltage, and
+  environmental limits rather than resistance alone.
 
-## Concept path
+## A connected load reveals what an open circuit hides
 
-- voltage and current sources;
-- resistance, conductance, and Ohm's law;
-- source/load viewpoint and operating point;
-- series and parallel combinations;
-- source resistance, loading, and measurement intrusion;
-- resistor codes, tolerances, and ratings;
+The physical circuit, schematic, equations, and instrument reading describe the
+same event at different resolutions. Begin at the two terminals shared by source
+and load. Name the upper terminal A and lower terminal B. Define the terminal
+voltage
 
-## Evidence and practice
+$$
+V \equiv V_{AB}=V_A-V_B,
+$$
 
-The completed chapter will include a prediction, a worked model, a simulation or
-executable check where it adds value, measured or authentic data, a fault or
-model mismatch, and a requirements-based design decision. The final exercise set
-will mix retrieval, calculation, interpretation, debugging, and open design.
+with $+$ at A and $-$ at B. Define the loop current $I$ as leaving the source at A,
+entering the load at A, and returning through B. All quantities in this chapter are
+steady DC values unless a different condition is stated. With that declaration,
+positive $VI$ means the **load absorbs** power. The current entering the source's
+positive terminal is $-I$, so its absorbed terminal power is $-VI$: for positive
+$V$ and $I$, it delivers the same amount. [F05](f05-energy-power-thermal.qmd)
+develops the complete power and heat account.
+
+An **ideal voltage source** is a constitutive idealization that imposes
+$V=V_S$ for any $I$. It has zero source resistance and unlimited current capability.
+An **ideal current source** imposes $I=I_S$ for any $V$. It has infinite output
+resistance and unlimited voltage capability. Neither unlimited capability is
+physical. The ideal sources are useful pieces inside bounded descriptions of real
+devices, not claims that a bench supply, cell, sensor output, or transistor can
+ignore energy and thermal limits [@sedra2020microelectronic].
+
+A **load** is whatever is connected to a port and draws energy under the stated
+references and operating condition. A source need not be a battery: a powered
+amplifier output, regulator, solar cell, or another subcircuit can supply energy.
+Nor is a physical device always one or the other. A rechargeable cell is a source
+while discharging and a load while charging. Under the passive sign convention of
+F02, the sign of terminal power distinguishes the present role more reliably than
+the component's name.
+
+The practical question is therefore not “what is the source voltage?” but:
+
+> At what $(V,I)$ pair do the source's terminal relation and the load's terminal
+> relation both hold?
+
+That pair is the operating point. It changes when either relation changes.
+
+## Resistance connects field behavior to terminal behavior
+
+F02 developed the local, low-field constitutive relation
+$\vec J=\sigma\vec E$ for a homogeneous, isotropic, approximately ohmic material
+at a stable temperature. Resistivity is defined as $\rho\equiv1/\sigma$. We can now
+derive a terminal relation for a uniform specimen rather than memorize one.
+
+Take a straight specimen of length $L$ and uniform cross-sectional area $A$.
+Choose the $+x$ axis from terminal A to terminal B. Declare $V=V_A-V_B$ and current
+$I$ positive from A to B, so current enters the terminal marked $+$. Let $E_x$ and
+$J_x$ be the signed $x$ components of electric field and current density. Assume
+they are approximately uniform, fringing and contact resistance are negligible,
+material properties do not vary along the specimen, and temperature is stable.
+The electrostatic potential relation from F02 and the definition of current density
+then give
+
+$$
+V_A-V_B=\int_A^B \vec E\mathbin{\cdot}\mathrm d\vec l=E_xL,
+\qquad
+I=J_xA,
+\qquad
+J_x=\sigma E_x=\frac{E_x}{\rho}.
+$$
+
+Eliminating $E_x$ and $J_x$ gives
+
+$$
+V=\left(\rho\frac{L}{A}\right)I.
+$$
+
+Define the specimen's terminal resistance under these conditions as
+
+$$
+R\equiv\rho\frac{L}{A},
+\qquad\text{so that}\qquad
+V=RI.
+$$ {#eq-ohm}
+
+The dimensional check is
+
+$$
+[R]=[\rho]\frac{[L]}{[A]}
+=(\Omega\!\cdot\!\text{m})\frac{\text{m}}{\text{m}^2}=\Omega,
+\qquad
+[RI]=\Omega\!\cdot\!\text{A}=\text{V}.
+$$
+
+Equation @eq-ohm is **Ohm's law for an ohmic element**: a linear constitutive
+relation within the operating range in which $R$ is effectively constant. It is
+not a definition that forces every device to be linear. A diode, lamp filament,
+thermistor, battery, and transistor can all have curved current–voltage relations.
+At an operating point with $I\ne0$, one may calculate the **static resistance**
+$R_\text{static}=V/I$, while the local slope defines the **differential
+resistance** $r=\mathrm dV/\mathrm dI$. They need not be equal. Only a straight
+line through the origin has one constant resistance describing every point.
+
+The siemens (S) is the reciprocal ohm. **Conductance** is defined for a linear
+resistor as
+
+$$
+G\equiv\frac{1}{R},
+\qquad I=GV,
+\qquad [G]=\text{S}=\Omega^{-1}=\text{A/V}.
+$$ {#eq-conductance}
+
+Conductance is often the natural quantity for parallel paths because their
+currents add.
+
+::: {.callout-note title="Demonstration — geometry, sign, and limits"}
+Use an illustrative material with
+$\rho=1.7\times10^{-8}~\Omega\!\cdot\!\text{m}$, length $L=2.0$ m, and area
+$A=0.50~\text{mm}^2=5.0\times10^{-7}$ m². The terminal resistance estimate is
+
+$$
+R=\rho\frac{L}{A}
+=(1.7\times10^{-8})\frac{2.0}{5.0\times10^{-7}}
+=6.8\times10^{-2}~\Omega.
+$$
+
+At $I=+1.0$ A from A to B, $V_{AB}=+68$ mV. If the same physical current flows
+from B to A while the declared references stay fixed, $I=-1.0$ A and
+$V_{AB}=-68$ mV. Doubling $L$ doubles $R$; doubling $A$ halves it; taking
+$\rho\to0$ recovers the ideal-wire limit. Contact resistance, self-heating, a
+changing $\rho(T)$, or nonuniform geometry would make this estimate incomplete.
+The numerical resistivity is illustrative here; use a material and temperature
+specification for a design.
+:::
+
+## A finite source resistance creates voltage sag
+
+Many real voltage-producing devices can be described near a bounded operating
+region by an ideal open-circuit voltage $V_\text{OC}$ in series with a source
+resistance $R_S$. This is a **first-order linear approximation**, not a statement
+about the device's internal construction. Electrochemical polarization, regulator
+control, current limiting, wiring, connectors, temperature, state of charge, and
+frequency can all make the apparent $R_S$ change.
+
+Use the references already declared: $I$ leaves terminal A and $V=V_A-V_B$.
+Traversing from the ideal source to terminal A, the resistor drops $IR_S$, so the
+source terminal relation is
+
+$$
+V=V_\text{OC}-IR_S.
+$$ {#eq-source-line}
+
+This straight line is the source's **terminal characteristic**. At $I=0$ it gives
+$V=V_\text{OC}$, as required. Extrapolating it to $V=0$ gives
+$I=V_\text{OC}/R_S$, but that is a **predicted short-circuit current of the linear
+approximation**, not permission to perform a short-circuit test. A real source may
+current-limit, heat, fail, arc, or deliver dangerous energy before that point.
+
+Connect a linear load $R_L$ between A and B. With current entering the load's
+positive terminal, its relation is
+
+$$
+V=IR_L.
+$$ {#eq-load-line}
+
+The operating point satisfies both @eq-source-line and @eq-load-line. Equating
+them and solving gives
+
+$$
+I=\frac{V_\text{OC}}{R_S+R_L},
+\qquad
+V=\frac{V_\text{OC}R_L}{R_S+R_L}.
+$$ {#eq-source-load}
+
+On a graph with $I$ increasing to the right and $V$ increasing upward, the source
+characteristic begins at $(0,V_\text{OC})$ and falls with slope $-R_S$; the
+resistive load line begins at the origin and rises with slope $R_L$. Their one
+intersection is @eq-source-load. A smaller $R_L$ makes the load line shallower and
+moves the intersection toward greater current and lower voltage. This graphical
+language becomes especially valuable when either characteristic is nonlinear.
+
+![A real voltage source and resistive load with synchronized references. The loop current $I$ leaves the source's positive side, crosses $R_S$, enters the load $R_L$ at its positive terminal, and returns to 0 V. The load voltage $V=V_A-V_B$ is measured at TP1 relative to TP0.](../../../build/circuits/f03-source-load.png){#fig-source-load fig-alt="An ideal open-circuit voltage source V_OC in series with source resistance R_S drives load resistor R_L. Current I points from the source through R_S into R_L. Test point TP1 marks the positive load terminal A and TP0 marks terminal B at zero volts; voltage V is positive at A."}
+
+The dimensions are explicit: volts divided by ohms gives amperes, and the voltage
+ratio $R_L/(R_S+R_L)$ is dimensionless. Three limiting cases make the physics
+memorable:
+
+- $R_L\to\infty$: $I\to0$ and $V\to V_\text{OC}$. An ideal voltmeter approaches
+  this open-circuit observation.
+- $R_L=R_S$: $V=V_\text{OC}/2$. Half the open-circuit voltage appears at the load.
+- $R_L\to0$: the linear relation predicts $V\to0$ and
+  $I\to V_\text{OC}/R_S$. This is where current limit, heating, and other omitted
+  physics are most likely to invalidate the approximation.
+
+The fractional voltage sag relative to open circuit is
+
+$$
+\frac{V_\text{OC}-V}{V_\text{OC}}
+=\frac{R_S}{R_S+R_L}.
+$$ {#eq-sag}
+
+Thus a source is **stiff** for a particular load only when $R_S\ll R_L$. “A stiff
+5 V source” is incomplete without a load range and an allowed sag.
+
+::: {.callout-note title="Worked example — settle the opening prediction"}
+For the illustrative $V_\text{OC}=5.00$ V and $R_S=47~\Omega$ source:
+
+- open circuit gives $I=0$ and $V=5.00$ V;
+- with $R_L=1.0$ kΩ,
+  $I=5.00/(47+1000)=4.78$ mA and
+  $V=(4.78~\text{mA})(1.0~\text{k}\Omega)=4.78$ V; and
+- with $R_L=47~\Omega$, the equal-resistance limit gives
+  $I=5.00/(94~\Omega)=53.2$ mA and $V=2.50$ V.
+
+No passive positive resistance in this circuit can make the loaded terminal
+voltage exceed $V_\text{OC}$: @eq-source-line subtracts the nonnegative drop
+$IR_S$. A reading above 5.00 V would therefore falsify at least one assumption —
+perhaps the reference polarity, the “passive load” description, the open-circuit
+value, or the constant-$R_S$ approximation.
+:::
+
+### Two safe loaded measurements estimate the slope
+
+Equation @eq-source-line also gives a diagnostic method. Measure two steady
+operating points $(V_1,I_1)$ and $(V_2,I_2)$ inside the same linear region, with
+the same polarity and current reference. Subtraction eliminates $V_\text{OC}$:
+
+$$
+V_1-V_2=(I_2-I_1)R_S,
+\qquad
+R_S=\frac{V_1-V_2}{I_2-I_1}.
+$$ {#eq-source-resistance}
+
+Choose two approved loads that keep voltage, current, component dissipation, and
+source energy inside their limits. Do **not** use a short circuit as the second
+point. Once $R_S$ is estimated,
+$V_\text{OC}=V_1+I_1R_S$. Because this is a slope estimate, meter uncertainty and
+load tolerance matter strongly if the two currents are too close. For an ohmic,
+characterized load, measuring its terminal voltage and calculating $I=V/R_L$ can
+avoid inserting an ammeter; otherwise include the ammeter's burden. More than two
+safe load points can reveal curvature or a current-limit knee that a two-point
+slope would hide.
+
+## Current sources face the dual limit: compliance
+
+Some ports are better approximated by a current source. Keep $V=V_A-V_B$ across
+the load and $I$ positive into its A terminal. A useful first-order description is
+an ideal current $I_S$ in parallel with a finite output resistance $R_O$. The
+source current divides between $R_O$ and $R_L$. Charge conservation at terminal A
+gives
+
+$$
+I_S=\frac{V}{R_O}+\frac{V}{R_L}.
+$$
+
+Therefore
+
+$$
+V=I_S(R_O\parallel R_L),
+\qquad
+I=\frac{V}{R_L}
+=I_S\frac{R_O}{R_O+R_L}.
+$$ {#eq-current-source-load}
+
+Here $R_O\parallel R_L$ denotes their parallel equivalent, derived in the next
+section. As $R_O\to\infty$, $I\to I_S$: a good current source has output
+resistance much larger than the load. But holding $I_S$ through a larger $R_L$
+requires $V\approx I_SR_L$. A physical source reaches a maximum terminal voltage,
+called its **compliance-voltage limit**, and can no longer maintain the programmed
+current. An ideal current source connected to an open circuit would require
+unbounded voltage; the resulting infinity is a warning about the idealization, not
+a physical prediction.
+
+Voltage-source current limit and current-source voltage compliance express the
+same engineering truth: a real source can regulate one terminal quantity only
+inside a bounded region of the $(V,I)$ plane.
+
+## Series paths add resistance; parallel paths add conductance
+
+Resistor reductions follow from the same terminal relations plus conservation.
+They are exact for ideal linear resistors connected by ideal wires in a lumped
+network. Lead, contact, leakage, temperature, and frequency effects determine how
+well a physical assembly matches that description.
+
+**Series.** Declare current $I$ positive through $n$ resistors in sequence, and
+mark each resistor voltage $V_k$ positive where that current enters. The same
+current crosses every element in steady state. If the intervening node potentials
+are $V_0,V_1,\ldots,V_n$, the element differences telescope exactly in the
+electrostatic lumped description:
+
+$$
+V_0-V_n=(V_0-V_1)+(V_1-V_2)+\cdots+(V_{n-1}-V_n)
+=\sum_{k=1}^{n}V_k.
+$$
+
+Using $V_k=IR_k$ therefore gives
+
+$$
+V=\sum_{k=1}^{n}V_k
+=I\sum_{k=1}^{n}R_k.
+$$
+
+Comparing with $V=IR_\text{series}$ gives
+
+$$
+R_\text{series}=\sum_{k=1}^{n}R_k.
+$$ {#eq-series}
+
+The result also follows dimensionally: only quantities with unit ohm are added.
+If one positive resistance tends to zero, it becomes an ideal wire and drops out;
+if one tends to infinity, it opens the path and the series current tends to zero
+for finite applied voltage.
+
+**Parallel.** Connect $n$ resistors across the same nodes A and B. Declare
+$V=V_A-V_B$ and each branch current $I_k$ positive from A to B. Every branch has
+the same voltage. Charge conservation at the junction, with negligible steady
+accumulation as established in F02, makes the total current the branch sum:
+
+$$
+I=\sum_{k=1}^{n}I_k
+=V\sum_{k=1}^{n}\frac{1}{R_k}
+=V\sum_{k=1}^{n}G_k.
+$$
+
+Thus
+
+$$
+G_\text{parallel}=\sum_{k=1}^{n}G_k,
+\qquad
+\frac{1}{R_\text{parallel}}
+=\sum_{k=1}^{n}\frac{1}{R_k}.
+$$ {#eq-parallel}
+
+For two resistors,
+
+$$
+R_1\parallel R_2
+=\frac{R_1R_2}{R_1+R_2}.
+$$ {#eq-two-parallel}
+
+A parallel equivalent must be smaller than the smallest positive branch
+resistance because it provides an additional current path. Two equal resistors
+$R$ give $R/2$. If one branch tends to infinity it contributes zero conductance;
+if one tends to zero, the combination tends to zero.
+
+::: {.callout-note title="Worked example — reduce, check, and bound"}
+Let $R_1=2.2$ kΩ be in series with the parallel pair
+$R_2=3.3$ kΩ and $R_3=6.8$ kΩ. Then
+
+$$
+R_2\parallel R_3
+=\frac{(3.3)(6.8)}{3.3+6.8}~\text{k}\Omega
+=2.22~\text{k}\Omega,
+$$
+
+and $R_\text{eq}=2.2+2.22=4.42$ kΩ. The parallel result is correctly below
+3.3 kΩ. If all three are independent ±5 % parts and only guaranteed limits are
+known, monotonicity gives a conservative worst case by putting all values at the
+same end: $R_\text{eq,min}=0.95(4.42)=4.20$ kΩ and
+$R_\text{eq,max}=1.05(4.42)=4.64$ kΩ. That bound is not a statistical
+uncertainty; it is a tolerance interval under the stated assumptions.
+:::
+
+## A divider is a source whose output resistance matters
+
+Two series resistors create a fraction of an input voltage, but the familiar
+ratio is the **unloaded** result. In @fig-voltage-divider, the ideal input source
+sets $V_S$ relative to 0 V. $R_1$ connects the source to output node TP1; $R_2$
+and the external load $R_L$ connect TP1 to 0 V. Define
+$V_\text{out}=V_\text{TP1}-V_\text{TP0}$, with
+$V_\text{TP0}=0$ V.
+
+![A loaded voltage divider. $R_1$ feeds TP1 from source test point TP\_S; $R_2$ and the external load $R_L$ both return from TP1 to 0 V, so they are in parallel. The input is measured from TP\_S to TP0 and the output from TP1 to TP0.](../../../build/circuits/f03-voltage-divider.png){#fig-voltage-divider fig-alt="An ideal voltage source V_S drives source test point TP_S and resistor R1 to output test point TP1. Resistor R2 and load resistor R_L connect in parallel from TP1 to the zero-volt return at TP0. The output voltage is positive at TP1."}
+
+With no external load ($R_L\to\infty$), the same current flows through $R_1$ and
+$R_2$:
+
+$$
+I_0=\frac{V_S}{R_1+R_2},
+\qquad
+V_{\text{out},0}=I_0R_2
+=V_S\frac{R_2}{R_1+R_2}.
+$$ {#eq-divider}
+
+When $R_L$ is connected, the lower leg becomes
+$R_P=R_2\parallel R_L$. The loaded output is therefore
+
+$$
+V_\text{out}=V_S\frac{R_P}{R_1+R_P},
+\qquad R_P=R_2\parallel R_L.
+$$ {#eq-loaded-divider}
+
+The load always lowers the output for positive finite resistances because
+$R_P<R_2$. This is not the load mysteriously “taking voltage”; it changes the
+terminal relation, so the source and load settle at a new operating point.
+
+There is a particularly revealing rewrite. Define the divider's open-circuit
+output resistance as
+
+$$
+R_\text{out}=R_1\parallel R_2.
+$$
+
+Direct algebra applied to @eq-loaded-divider gives
+
+$$
+V_\text{out}
+=V_{\text{out},0}\frac{R_L}{R_\text{out}+R_L}.
+$$ {#eq-divider-loading}
+
+Thus the whole divider, viewed from TP1, behaves for this calculation like a
+voltage source $V_{\text{out},0}$ with series resistance $R_\text{out}$. F04
+generalizes this observation into Thévenin and Norton network equivalents.
+
+::: {.callout-note title="Worked example — a meter becomes the load"}
+A 9.00 V ideal source drives $R_1=R_2=1.00$ MΩ. Unloaded,
+$V_{\text{out},0}=4.50$ V and
+$R_\text{out}=1.00~\text{M}\Omega\parallel1.00~\text{M}\Omega=500$ kΩ.
+Connect a voltmeter whose specified DC input resistance is 10.0 MΩ. The meter is
+$R_L$, so
+
+$$
+V_\text{read}=4.50~\text{V}
+\frac{10.0~\text{M}\Omega}{10.0~\text{M}\Omega+0.500~\text{M}\Omega}
+=4.286~\text{V}.
+$$
+
+The intrusion error relative to the unloaded quantity is
+
+$$
+\frac{V_\text{read}-V_{\text{out},0}}{V_{\text{out},0}}
+=-4.76\%.
+$$
+
+The display may resolve millivolts while the measurement is wrong by 214 mV for
+the intended measurand. If $R_L\to\infty$, the error tends to zero. A meter with
+input resistance equal to $R_\text{out}$ would read exactly half the unloaded
+voltage.
+:::
+
+## Instruments join the source–load system
+
+A voltmeter is intended to approximate an open circuit; a current meter is
+intended to approximate a short section of wire. Real instruments do neither
+perfectly.
+
+For a DC voltage measurement, use the meter's specified input resistance
+$R_\text{in}$ at the selected function and range. It appears in parallel with the
+circuit at the probe points. If the unmeasured port has open-circuit voltage
+$V_0$ and output resistance $R_\text{out}$, @eq-divider-loading applies directly:
+
+$$
+V_\text{read}=V_0\frac{R_\text{in}}{R_\text{out}+R_\text{in}}.
+$$ {#eq-voltmeter-loading}
+
+To keep the magnitude of loading error below a fractional requirement
+$\varepsilon$,
+
+$$
+\frac{R_\text{out}}{R_\text{out}+R_\text{in}}<\varepsilon
+\quad\Longrightarrow\quad
+R_\text{in}>R_\text{out}\frac{1-\varepsilon}{\varepsilon}.
+$$ {#eq-meter-requirement}
+
+For 1 % maximum loading, $R_\text{in}>99R_\text{out}$. The casual “ten times
+higher is enough” rule permits about 9.1 % error, not 1 %.
+
+A real ammeter inserts a nonzero **burden resistance** $R_A$ (and sometimes an
+additional burden voltage from its measurement circuit). For a source
+$V_\text{OC}$, source resistance $R_S$, and load $R_L$, the desired current before
+insertion is $I_0=V_\text{OC}/(R_S+R_L)$. If the meter is represented by series
+$R_A$, it reads
+
+$$
+I_\text{read}=\frac{V_\text{OC}}{R_S+R_L+R_A},
+\qquad
+\frac{I_\text{read}-I_0}{I_0}
+=-\frac{R_A}{R_S+R_L+R_A}.
+$$ {#eq-ammeter-loading}
+
+The current range matters because different shunts can produce different burdens.
+Never place an ammeter directly across a source: that asks its low resistance to
+become the load and can blow a fuse, damage equipment, or release dangerous energy.
+
+At changing or high-frequency signals, a voltmeter or oscilloscope input also has
+capacitance, leads have inductance, and ground paths can alter the system. Those
+effects belong to F07–F08; the DC resistance is the correct first check here, not a
+complete instrument description.
+
+## Reconcile the straight line with bounded evidence
+
+Suppose an approved, current-limited source is nominally 5.00 V. A calculation
+uses $R_S=47.0~\Omega$ and predicts its terminal voltage for several known loads.
+The source is also assumed to enter constant-current operation at 20.0 mA. The
+piecewise teaching rule is
+
+$$
+I=\min\!\left(
+\frac{V_\text{OC}}{R_S+R_L},\ I_\text{limit}
+\right),
+\qquad V=IR_L.
+$$ {#eq-current-limit}
+
+This rule is an approximation to one possible CV/CC supply. It does not describe
+loop dynamics, foldback, hiccup protection, lead resistance, or transition error.
+
+| $R_L$ | Linear prediction $V$ | Piecewise prediction $V$ | Synthetic observation | Region |
+|---:|---:|---:|---:|---|
+| open | 5.000 V | 5.000 V | 4.999 V | CV, no load |
+| 10.0 kΩ | 4.977 V | 4.977 V | 4.976 V | CV |
+| 1.00 kΩ | 4.776 V | 4.776 V | 4.777 V | CV |
+| 330 Ω | 4.377 V | 4.377 V | 4.375 V | CV |
+| 100 Ω | 3.401 V | 2.000 V | 1.998 V | CC |
+
+: **Synthetic, illustrative data** generated to resemble rounded observations from the stated piecewise relation, with small arbitrary offsets added for diagnosis practice. They are not physical measurements and do not qualify any claim about a real supply. {#tbl-source-synthetic}
+
+The first four rows agree with the linear calculation to a few millivolts. Using
+the 4.999 V synthetic open-circuit value and the 330 Ω row gives
+$I=4.375/330=13.26$ mA and
+
+$$
+R_S\approx\frac{4.999-4.375}{13.26~\text{mA}}
+=47.1~\Omega.
+$$
+
+The 100 Ω row does not imply that $R_S$ suddenly became 150 Ω. Its 19.98 mA load
+current, near the declared 20.0 mA limit, and the CC state discriminate a change of
+operating region from a constant-resistance source fault. The disagreement is the
+useful signal.
+
+The following standard-library program reproduces the calculations and performs
+the divider worst-case check used later. It is executable arithmetic, not an
+independent simulation or measurement; it remains on the **calculation** rung of
+the evidence ladder.
+
+```python
+# f03_operating_points.py -- reproducible F03 calculations.
+
+def source_point(v_oc, r_source, r_load, i_limit):
+    """Return terminal current, voltage, and CV/CC region."""
+    i_linear = v_oc / (r_source + r_load)
+    current = min(i_linear, i_limit)
+    region = "CV" if i_linear <= i_limit else "CC"
+    return current, current * r_load, region
+
+
+def divider(v_source, r_top, r_bottom, r_load):
+    """Return loaded divider voltage and source current."""
+    r_parallel = r_bottom * r_load / (r_bottom + r_load)
+    current = v_source / (r_top + r_parallel)
+    return current * r_parallel, current
+
+
+v_oc = 5.00
+r_source = 47.0
+i_limit = 20.0e-3
+
+for r_load in (10_000.0, 1_000.0, 330.0, 100.0):
+    current, voltage, region = source_point(
+        v_oc, r_source, r_load, i_limit
+    )
+    print(
+        f"RL={r_load:7.0f} ohm: "
+        f"V={voltage:5.3f} V, "
+        f"I={1e3 * current:5.2f} mA, {region}"
+    )
+
+# Worst low output: low source, high top R, low bottom R,
+# minimum load, and opposing 50 ppm/K TCR over 50 K.
+tcr_shift = 50e-6 * 50.0
+r_top_hi = 1_000.0 * 1.01 * (1.0 + tcr_shift)
+r_bottom_lo = 1_000.0 * 0.99 * (1.0 - tcr_shift)
+v_low, _ = divider(4.95, r_top_hi, r_bottom_lo, 100_000.0)
+
+# Worst high output is unloaded with the opposite extremes.
+r_top_lo = 1_000.0 * 0.99 * (1.0 - tcr_shift)
+r_bottom_hi = 1_000.0 * 1.01 * (1.0 + tcr_shift)
+v_high = 5.05 * r_bottom_hi / (r_top_lo + r_bottom_hi)
+
+print(f"divider worst-case: {v_low:.3f} V to {v_high:.3f} V")
+```
+
+```text
+# Expected output:
+# RL=  10000 ohm: V=4.977 V, I= 0.50 mA, CV
+# RL=   1000 ohm: V=4.776 V, I= 4.78 mA, CV
+# RL=    330 ohm: V=4.377 V, I=13.26 mA, CV
+# RL=    100 ohm: V=2.000 V, I=20.00 mA, CC
+# divider worst-case: 2.432 V to 2.557 V
+```
+
+A physical test would need the source identity, warm-up state, current-limit
+setting, leads, load values and ratings, instruments and ranges, calibration state,
+raw readings, temperature, and an uncertainty basis. Repetition could then test
+whether $R_S$ stays stable. Until that is done, the table supports learning and
+code verification only, not a claim about hardware.
+
+## A resistor value is only the first selection parameter
+
+Schematics show an exact symbol such as 1 kΩ; purchased parts have a nominal value,
+a permitted initial deviation, environmental sensitivity, and limits. Marking
+systems for resistors and capacitors are standardized in IEC 60062, while preferred
+number series are specified in IEC 60063 [@iec60062; @iec60063]. Always verify a
+part's actual manufacturer documentation when the identification matters.
+
+### Read common colour and printed codes
+
+For the familiar axial-resistor colour code, the digit colours are:
+
+| Colour | Digit | Multiplier |
+|---|---:|---:|
+| black | 0 | $10^0$ |
+| brown | 1 | $10^1$ |
+| red | 2 | $10^2$ |
+| orange | 3 | $10^3$ |
+| yellow | 4 | $10^4$ |
+| green | 5 | $10^5$ |
+| blue | 6 | $10^6$ |
+| violet | 7 | $10^7$ |
+| grey | 8 | $10^8$ |
+| white | 9 | $10^9$ |
+| gold | — | $10^{-1}$ |
+| silver | — | $10^{-2}$ |
+
+: Common resistor colour digits and multipliers. IEC 60062 contains the normative coding rules, additional cases, tolerance colours, and temperature-coefficient markings [@iec60062]. {#tbl-resistor-colours}
+
+A **four-band** code normally gives two significant digits, a multiplier, and a
+tolerance. Yellow–violet–red–gold is
+$47\times10^2~\Omega=4.7$ kΩ with ±5 % tolerance. A **five-band** value normally
+uses three significant digits, then multiplier and tolerance:
+brown–black–black–red–brown is
+$100\times10^2~\Omega=10.0$ kΩ with ±1 % tolerance. A sixth band can encode a
+temperature coefficient. Band spacing and the tolerance band usually indicate
+reading direction, but ambiguous, heat-darkened, or nonstandard parts should be
+checked with documentation and, when safe and isolated, a meter.
+
+Common printed codes use the same significant-digits-plus-multiplier idea. “472”
+means $47\times10^2=4.7$ kΩ; “1002” means
+$100\times10^2=10.0$ kΩ; and a letter can replace the decimal point, so “4R7”
+means 4.7 Ω. Very small parts may be unmarked, and some precision codes require a
+lookup table. Do not guess from package size or body colour.
+
+Preferred **E-series** values distribute nominal values approximately
+logarithmically through each decade. For example, E12 uses
+1.0, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, and 8.2 multiplied by any
+power of ten. IEC 60063 defines the series and explains their relationship to
+marking resolution and tolerance; membership in a series does not by itself prove
+a particular part's tolerance [@iec60063].
+
+### Tolerance, temperature, and ratings answer different questions
+
+**Tolerance** is a guaranteed or classified interval around the nominal resistance
+under the manufacturer's stated reference conditions. A 1.00 kΩ ±1 % part may
+initially be anywhere from 990 Ω to 1010 Ω. Tolerance is not measurement
+uncertainty, not a probability distribution, and not permission to assume that
+temperature and aging cause no further change.
+
+The **temperature coefficient of resistance** (TCR), often stated in parts per
+million per kelvin, supports a first-order estimate over its specified range:
+
+$$
+R(T)\approx R(T_0)
+\left[1+\alpha(T-T_0)\right].
+$$ {#eq-tcr}
+
+Here $T_0$ is the reference temperature, $\alpha$ is the signed TCR in K⁻¹, and the
+approximation assumes a sufficiently linear range. A magnitude limit of
+50 ppm/K over 50 K permits a resistance shift of up to
+$50\times10^{-6}\times50=0.0025$, or 0.25 %, in this first-order screen.
+
+The **rated dissipation** is not simply “power the resistor always survives.” It
+depends on ambient temperature, heat flow through leads or pads, board layout,
+permitted film temperature, duration, and derating. A separate **maximum operating
+voltage** can dominate for high resistance values even when $V^2/R$ is below the
+nominal power rating. Pulse-energy, overload, insulation, noise, voltage
+coefficient, and long-term drift can matter in their own applications.
+
+As an authentic example, the Vishay MRS25 leaded metal-film resistor datasheet
+specifies a 1 Ω to 10 MΩ range, ±1 % tolerance, ±50 ppm/K TCR, rated dissipation
+$P_{70}=0.6$ W, a 350 V maximum AC/DC operating voltage, and a −55 °C to 155 °C
+operating range. It explicitly relates power dissipation to temperature rise and
+heat flow, and requires the permitted film temperature to be respected
+[@vishaymrs25]. These are **datasheet specifications for that series**, not generic
+properties of every resistor. The 350 V figure lies far outside this chapter's
+practical safety boundary and conveys no authorization to operate there. The same
+datasheet identifies MBA/SMA parts as suitable replacements, so MRS25 is used here
+as an available-part teaching example, not as an unqualified recommendation for a
+new product [@vishaymrs25].
+
+For positive steady DC under associated voltage and current references, terminal
+power is $P=VI$. Substituting the ohmic relations $I=V/R$ and $V=IR$ gives the
+equivalent screens
+
+$$
+P=VI=\frac{V^2}{R}=I^2R.
+$$
+
+Consequently, $P=V^2/R\le P_\text{rated}$ implies
+$|V|\le\sqrt{P_\text{rated}R}$, but the permitted magnitude is the smaller of that
+result and the applicable voltage rating, after derating and pulse conditions are
+applied. F05 develops power, temperature rise, and margin rigorously; here the
+lesson is simply that “correct resistance” is not a complete selection.
+
+## A bounded divider design closes the loop
+
+Design is where nominal arithmetic meets source behavior, loading, tolerance,
+temperature, and measurement. Consider this deliberately modest requirement:
+
+- source terminal voltage: 5.00 V nominal, guaranteed 4.95 V to 5.05 V under the
+  divider load;
+- required output: 2.50 V ±3 %, hence 2.425 V to 2.575 V;
+- external input resistance: at least 100 kΩ;
+- temperature: 20 °C to 70 °C;
+- divider's source current: no more than 3.0 mA; and
+- use two available MRS25 1.00 kΩ, ±1 %, ±50 ppm/K resistors
+  [@vishaymrs25].
+
+The source-voltage guarantee is a **requirement at the loaded terminals**, not an
+unloaded label; the upstream source must independently pass it. Equal nominal
+resistors give 2.50 V unloaded. Loading, low source voltage, high $R_1$, and low
+$R_2$ all push the output downward. Over $\Delta T=50$ K, the worst first-order TCR
+magnitude is 0.25 %. A conservative low corner is therefore
+
+$$
+\begin{aligned}
+R_{1,\max}&=(1.00~\text{k}\Omega)(1.01)(1.0025)
+=1.0125~\text{k}\Omega,\\
+R_{2,\min}&=(1.00~\text{k}\Omega)(0.99)(0.9975)
+=0.9875~\text{k}\Omega,\\
+R_P&=R_{2,\min}\parallel100~\text{k}\Omega
+=0.9779~\text{k}\Omega,\\
+V_{\text{out,min}}&=(4.95~\text{V})
+\frac{R_P}{R_{1,\max}+R_P}
+\approx2.432~\text{V}.
+\end{aligned}
+$$
+
+The high corner occurs with the highest source voltage, low $R_1$, high $R_2$,
+and no external loading:
+
+$$
+V_{\text{out,max}}=(5.05~\text{V})
+\frac{1.0125}{0.9875+1.0125}
+\approx2.557~\text{V}.
+$$
+
+Both lie inside 2.425–2.575 V. A conservative current screen uses high source
+voltage and low resistances; including the 100 kΩ path gives about 2.6 mA, below
+3.0 mA. Bounding either resistor's dissipation by $I^2R$ gives less than 7 mW,
+far below the series' 0.6 W rating at 70 °C, though a final product would still
+apply layout, long-term drift, overload, and environmental requirements.
+
+The lower predicted margin is only about 7 mV. The acceptance measurement must
+therefore be more discriminating than the margin. A defensible test is:
+
+1. verify the source remains within 4.95–5.05 V from TP\_S to TP0 under the
+   actual divider load and at both temperature endpoints;
+2. apply a characterized 100 kΩ minimum load, then test the no-load case;
+3. use a voltmeter whose $R_\text{in}\ge10$ MΩ, making its loading of this
+   roughly 1 kΩ output less than 0.01 %, and whose manufacturer accuracy limit
+   at 2.5 V is no wider than ±1 mV; use that limit only as an input to the
+   uncertainty analysis, not as expanded uncertainty;
+4. construct a decision guard band $g$ from the stated coverage and the complete
+   uncertainty basis, including calibration information, accuracy limits,
+   resolution, repeatability, temperature stabilization, and knowledge of the
+   applied load; require $g\le2$ mV for this test;
+5. accept only when
+   $V_\text{meas}-g>2.425$ V and $V_\text{meas}+g<2.575$ V; equality at either
+   strict boundary does not pass; and
+6. record resistor identities, actual resistance observations, temperature,
+   source voltage, load, instrument/range, calibration state, and raw readings.
+
+The calculation establishes a **worst-case feasibility claim under stated
+independent bounds**. It does not establish production yield, long-term stability,
+or physical compliance. Those require measurements and, at higher stakes,
+repeated test and independent reproduction. If the complete 2 mV guard-band
+requirement or temperature stabilization cannot be achieved, the present
+acceptance plan is not capable of protecting the roughly 7 mV lower design margin;
+the correct decision is to increase design margin or improve the test, not to
+round the result into passing.
+
+## Recognize the boundaries before they become faults
+
+The compact relations in this chapter are powerful because their boundaries are
+visible. Common breakdowns are diagnostic clues:
+
+- **Current limit or compliance:** a source follows one straight terminal relation
+  only until its regulator reaches a current, voltage, thermal, or input-energy
+  limit. A mode indicator and a slope change across several loads discriminate
+  this from one fixed $R_S$.
+- **Self-heating:** $V=RI$ with constant $R$ fails if dissipation changes the
+  element's temperature enough to change $R$. A lamp filament is a familiar
+  nonlinear example. Measure only after defining whether the desired point is cold,
+  transient, or thermally settled.
+- **Contact and lead resistance:** these add series drops, especially in low-ohm or
+  high-current work. A two-wire resistance observation includes leads and contacts;
+  a four-terminal method separates the current path from the voltage-sense path.
+- **Leakage and surface contamination:** a supposedly open parallel path can be
+  comparable to a high-value resistor, especially with humidity or residue. The
+  parallel-conductance view predicts the resulting low reading.
+- **Frequency and switching:** parasitic capacitance and inductance make terminal
+  relations depend on time and frequency. DC resistance alone cannot predict a fast
+  edge; F07–F08 add stored energy and impedance.
+- **Instrument range and reference error:** a DMM may change input resistance or
+  burden between ranges. Reversed leads change the sign; a shared or earth-referred
+  return can change the physical circuit. Record the connection, range, and
+  reference points rather than only the display.
+- **Misread or damaged components:** a wrong decade, ambiguous colour direction,
+  in-circuit parallel path, or heat-damaged resistor can imitate a source fault.
+  De-energize, isolate one terminal when appropriate, and compare identification,
+  circuit context, and resistance evidence.
+
+A single loaded measurement rarely identifies the cause. Several deliberately
+chosen loads reveal a line, a knee, or inconsistency. That is the diagnostic value
+of the operating-point view: it turns “the voltage is wrong” into competing,
+testable terminal relations.
+
+## What to carry forward
+
+A source and load do not negotiate vaguely; they settle at the one voltage and
+current that satisfy both terminal descriptions. Resistance turns field behavior
+into a bounded linear relation, series paths add resistance, parallel paths add
+conductance, and a finite source resistance makes load current visible as voltage
+sag. Instruments are additional loads, so a reading belongs to the source–load–
+instrument system unless loading has been shown negligible or corrected.
+
+The durable working sequence is:
+
+1. declare voltage polarity, current direction, DC or other operating condition,
+   and the safety boundary;
+2. predict the operating region and order of magnitude;
+3. derive the source and load relations, then solve their common point;
+4. include tolerances, ratings, temperature, wiring, and instrument resistance far
+   enough to compare with the requirement;
+5. measure at safe, discriminating operating points and reconcile disagreement;
+6. state only the claim supported by the achieved evidence rung.
+
+F04 generalizes the reductions into Kirchhoff analysis and Thévenin/Norton
+equivalents. F05 follows the same operating point into energy, power, and heat.
+F06 turns loading, uncertainty, and competing fault hypotheses into a systematic
+measurement discipline. The simple source–resistor–load loop is therefore not a
+toy to discard; it is the smallest complete example of how the book reasons about
+systems.
+
+## Exercises
+
+Use declared references, SI units, an estimate before calculation, and a statement
+of assumptions. Full solutions and live-assessment variants remain outside the
+public book; selected self-check results are included for calibration.
+
+**Quick check (multiple choice)**
+
+One best answer each; the key follows.
+
+1. A real 5 V source reads 4.8 V under load. The best first interpretation is:
+    a. the load consumed 0.2 V;
+    b. source and load settled at an operating point with 4.8 V at their terminals;
+    c. Ohm's law has failed;
+    d. every 5 V source is actually a 4.8 V source.
+2. For positive resistors in parallel, the equivalent resistance is:
+    a. greater than the largest branch;
+    b. their arithmetic sum;
+    c. smaller than the smallest branch;
+    d. always zero.
+3. An ideal voltage source has:
+    a. zero source resistance and unbounded current capability;
+    b. infinite source resistance and zero current;
+    c. a resistance equal to its load;
+    d. a fixed current and arbitrary voltage.
+4. A 10 MΩ voltmeter measures a port whose output resistance is 1.0 MΩ. Its DC
+   loading error relative to open circuit is approximately:
+    a. 0 %;
+    b. −9.1 %;
+    c. +10 %;
+    d. −50 %.
+5. A supply changes from CV to CC as load resistance falls. This most directly
+   indicates:
+    a. the meter reversed polarity;
+    b. the load became an open circuit;
+    c. the source reached its programmed current limit;
+    d. resistance can no longer be measured in ohms.
+6. A resistor marked 1.00 kΩ ±1 % is guaranteed, under the stated reference
+   conditions, to lie initially in:
+    a. 999–1001 Ω;
+    b. 990–1010 Ω;
+    c. exactly 1000 Ω;
+    d. any range allowed by the power rating.
+
+*[Key: 1-b, 2-c, 3-a, 4-b, 5-c, 6-b.]*
+
+**Retrieval and explanation**
+
+1. Define voltage source, current source, load, resistance, resistivity,
+   conductance, operating point, source resistance, and compliance voltage. For
+   each source idealization, name the unphysical unlimited capability.
+2. Explain why a rechargeable cell is not permanently a source or permanently a
+   load. Use declared current direction and the sign of terminal power.
+3. State the assumptions required to derive $R=\rho L/A$. Give one physical
+   observation that would challenge each of two assumptions.
+4. Explain why $V/I$ at one operating point does not prove that a device obeys a
+   constant-resistance Ohm's law.
+
+**Estimation**
+
+5. A 3.3 V output has $R_S\approx22~\Omega$. Estimate the voltage with loads of
+   10 kΩ, 220 Ω, and 22 Ω before calculating exactly. Which load makes the
+   output half its open-circuit value? *[Self-check: approximately 3.29 V,
+   3.00 V, and 1.65 V.]*
+6. Without exact arithmetic, rank these from smallest to largest equivalent
+   resistance: (a) two 1 kΩ resistors in series; (b) one 1 kΩ resistor; (c) two
+   1 kΩ resistors in parallel; (d) 1 kΩ in parallel with 10 kΩ.
+7. A 2.5 V node has 200 kΩ output resistance. Estimate the minimum voltmeter input
+   resistance required for less than 1 % loading, then use
+   @eq-meter-requirement to calculate it.
+
+**Derivation and calculation**
+
+8. Starting from $\vec J=\sigma\vec E$, derive $V=RI$ and
+   $R=\rho L/A$ for a uniform specimen. Declare the axis, polarity, and current
+   reference, and show the dimensional check.
+9. Derive @eq-source-load from @eq-source-line and @eq-load-line. Then reverse the
+   current reference without changing the physical circuit and write both terminal
+   relations consistently.
+10. Derive @eq-series and @eq-parallel using the voltage and current conservation
+    statements. Prove that the parallel equivalent of positive finite resistors is
+    smaller than the smallest branch.
+11. A 12.0 V source reads 11.7 V at 30.0 mA and 11.1 V at 90.0 mA. Estimate
+    $R_S$ and $V_\text{OC}$ using @eq-source-resistance. Predict the terminal
+    voltage at 50 mA, provided the same region holds. *[Self-check:
+    $R_S=10.0~\Omega$, $V_\text{OC}=12.0$ V, $V=11.5$ V.]*
+12. Derive @eq-divider-loading directly from @eq-loaded-divider. Identify the
+    limits $R_L\to\infty$, $R_L=R_\text{out}$, and $R_L\to0$.
+
+**Tolerance and data interpretation**
+
+13. A 4.7 kΩ ±5 % resistor is in series with a 10.0 kΩ ±1 % resistor. Find the
+    guaranteed minimum and maximum series resistance. State why the interval is not
+    a standard uncertainty.
+14. Decode these common markings: (a) yellow–violet–red–gold; (b)
+    brown–black–black–brown–brown; (c) “332”; (d) “4R7.” Then state what the
+    marking does **not** tell you about dissipation or temperature.
+15. Recalculate the apparent $R_S$ for every loaded row of
+    @tbl-source-synthetic using 4.999 V as the open-circuit value. Plot or tabulate
+    $V$ against $I$. Which row falsifies the single straight-line relation, and
+    which recorded state explains it?
+16. A real test gives $(V_1,I_1)=(4.950~\text{V},1.00~\text{mA})$ and
+    $(V_2,I_2)=(4.900~\text{V},2.00~\text{mA})$, with ±5 mV voltage accuracy
+    limits and ±0.02 mA current accuracy limits. Estimate $R_S$, then explain why
+    the uncertainty may be too large for a strong slope claim. Choose a wider but
+    still safe current separation.
+
+**Debugging**
+
+17. A divider built from two isolated, meter-checked 1.00 MΩ resistors reads
+    4.29 V instead of 4.50 V on a 10 MΩ DMM. Show whether loading explains the
+    observation before accusing either resistor. Propose a second measurement that
+    discriminates loading from a wrong source voltage.
+18. A nominal 5 V source follows a 47 Ω slope down to 330 Ω, but a 100 Ω load
+    produces 2.0 V and lights the CC indicator. A colleague replaces the source,
+    calling the first one defective. Explain why that diagnosis is unsupported and
+    state one test that would support or falsify the current-limit hypothesis.
+19. A 10 Ω resistor appears to measure 10.8 Ω with ordinary two-wire probes but
+    10.0 Ω after the probe tips are shorted and their 0.8 Ω reading is subtracted.
+    Identify the omitted series elements. Explain why simple subtraction is only a
+    correction, not a four-terminal measurement.
+20. An axial resistor's bands are darkened and ambiguous after overheating. Give a
+    safe, de-energized identification procedure and explain why measuring it in
+    circuit can read low.
+
+**Open design**
+
+21. Design a divider that produces nominally 1.65 V from a loaded 3.30 V source.
+    The receiver input is guaranteed above 50 kΩ, divider current must be below
+    1.0 mA, available resistors are E12 ±5 %, and output must remain within ±5 %
+    over source and component tolerances that you must state. Determine whether a
+    passive design is feasible; if not, identify the requirement that must change
+    or the need for a buffer.
+22. Write a safe test plan to estimate the source resistance of an unknown but
+    approved extra-low-voltage output without shorting it. Specify load choices,
+    ratings, instruments, references, stop conditions, calculations, uncertainty,
+    and the evidence needed before calling the source linear over the tested range.
+23. Select a real resistor series for a 1.0 kΩ load expected to dissipate 0.20 W
+    at 60 °C ambient. Use a current manufacturer datasheet. Check resistance range,
+    tolerance, TCR, derating, voltage, steady dissipation, overload or pulse needs,
+    and layout conditions. State exactly what your document review establishes and
+    what still requires physical qualification.
 
 ## Connections
 
-Chapter ID: `F03`. Prerequisites and downstream course mappings are maintained in
-[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
-provides reader-facing routes and the practice spine.
+Chapter ID: `F03`. Its prerequisites are [F02](f02-charge-voltage-current.qmd)
+(charge, voltage, current, nodes, and reference directions) and
+[M01](../appendices/m01-algebra-units-complex.qmd) (algebra, ratios, graphs, and SI
+units), as recorded in [`chapters.toml`](../chapters.toml).
+
+This chapter is the middle of the Part I **measurement spine**
+F01 → F02 → F03 → F06. It hands operating-point and loading reasoning to
+[F04](f04-networks-kirchhoff.qmd), power and resistor-rating consequences to
+[F05](f05-energy-power-thermal.qmd), and measurement intrusion plus fault
+discrimination to [F06](f06-measurement-uncertainty-debug.qmd). The aligned
+practical evidence is **Lab L02 — Source, load, resistance, and meter loading**;
+the ideas also feed integrating milestone **M1**. These IDs denote learning and
+evidence goals, not authorization to energize hardware. The
+[reading roadmap](../roadmap.qmd) and [Part I introduction](index.qmd) show the
+full route.
+
+## References
+
+Claims are cited where used. The physical and circuit treatment rests on canonical
+electronics and device references [@horowitz2015art; @sedra2020microelectronic];
+marking codes and preferred resistor values on the relevant IEC standards
+[@iec60062; @iec60063]; and the worked component-rating case on the cited
+MRS16/MRS25 manufacturer datasheet [@vishaymrs25]. SI and uncertainty language
+follows the references established in F01 [@bipm2019si; @jcgm2008gum]. The complete
+[bibliography](../references.qmd) collects these sources. A standard, datasheet, or
+chapter never substitutes for local authorization, a complete application review,
+or physical qualification.

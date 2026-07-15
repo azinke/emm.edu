@@ -46,5 +46,12 @@ alt = "A source VS drives current I through load R_L, which returns through a re
 id = "f03-voltage-divider"
 source = "f03-voltage-divider.tex"
 chapter_id = "F03"
-caption = "A loaded voltage-divider model with an explicit source, reference node, and output test point."
-alt = "Voltage source VS drives series resistors R1 and R2. R2 returns to ground, and output test point TP1 is the junction of R1 and R2."
+caption = "A loaded voltage divider: R1 feeds TP1 from TP_S, while R2 and the external load RL form parallel return paths to TP0."
+alt = "Voltage source VS drives source test point TP_S and R1 to output test point TP1. R2 and load resistor RL connect in parallel from TP1 to the zero-volt return at TP0."
+
+[[circuit]]
+id = "f03-source-load"
+source = "f03-source-load.tex"
+chapter_id = "F03"
+caption = "A finite-resistance voltage source drives a resistive load at a shared terminal voltage and current operating point."
+alt = "Ideal source V_OC in series with source resistance R_S drives load R_L. Current I leaves the source and enters the load at terminal A; voltage V is measured from A to terminal B at zero volts."

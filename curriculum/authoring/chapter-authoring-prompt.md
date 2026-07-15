@@ -88,6 +88,11 @@ stakes allow.
   claim. Authentic measurements identify configuration, instrument, range,
   calibration state, raw observations, and uncertainty basis. A datasheet accuracy
   limit is not automatically a $k=2$ expanded uncertainty.
+- **Acceptance decisions:** name the measurand, test points, operating and
+  environmental conditions, instrument loading, accuracy/calibration inputs,
+  uncertainty basis, guard band, and explicit pass/fail decision rule. A display
+  inside the specification is not a pass when the guarded interval crosses a
+  boundary; equality does not satisfy a strict limit.
 - **Headings:** natural and chapter-specific — never the word "model" in a heading,
   never a generic template label reused book-wide.
 - **Mermaid:** vertical `flowchart TB`, concise nodes, detail in caption/alt, **no

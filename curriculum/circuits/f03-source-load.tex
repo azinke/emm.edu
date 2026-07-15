@@ -1,0 +1,32 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Declared loop current leaves the source, crosses R_S, and enters R_L at +.
+  \draw (0,0) node[ground] {}
+    to[V, l_=$V_{\mathrm{OC}}$] (0,3)
+    to[R, l=$R_S$, i>=$I$] (2.5,3)
+    -- (4,3)
+    to[R, l=$R_L$] (4,0)
+    -- (0,0);
+
+  \node[font=\small] at (-0.34,2.55) {$+$};
+  \node[font=\small] at (-0.34,0.45) {$-$};
+
+  % Explicit junction dots for the two test-point branches.
+  \node[circ] at (4,3) {};
+  \node[circ] at (4,0) {};
+
+  % Load-voltage polarity and label, kept clear of conductors.
+  \node[font=\small] at (3.62,2.55) {$+$};
+  \node[font=\small] at (3.62,0.45) {$-$};
+  \node[font=\small] at (3.42,1.5) {$V$};
+
+  % Test points are brought into clear space and labelled off the wires.
+  \draw (4,3) -- (5.4,3)
+    node[ocirc, label={[font=\small]right:{TP1: A}}] {};
+  \draw (4,0) -- (5.4,0)
+    node[ocirc, label={[font=\small]right:{TP0: B ($0$~V)}}] {};
+\end{circuitikz}
+\end{document}

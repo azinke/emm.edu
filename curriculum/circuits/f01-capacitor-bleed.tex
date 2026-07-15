@@ -1,0 +1,23 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Supply charges C through switch S; when S opens, the source is removed
+  % but the energy stored in C remains until the bleed resistor discharges it.
+  \draw
+    (0,0) node[ground] {}
+    to[V, l_=$V_{S}$] (0,3)
+    to[cspst, l=$S$] (2,3) coordinate (top);
+
+  % Storage capacitor; its node voltage v_C is marked at TP1 below.
+  \draw (top) to[C, l=$C$, *-*] (2,0) coordinate (bot);
+
+  % Bleed resistor permanently across C (the intentional discharge path).
+  \draw (top) -- (4,3) to[R, l=$R_{\mathrm{bleed}}$] (4,0) -- (bot);
+
+  % Return rail and a test point on the capacitor node.
+  \draw (bot) -- (0,0);
+  \draw (top) -- (2,3.7) node[ocirc, label=right:{TP1: $v_{C}$}] {};
+\end{circuitikz}
+\end{document}

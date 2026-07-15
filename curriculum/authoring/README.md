@@ -39,7 +39,11 @@ Use this sequence where it fits the idea:
 7. diagnose a mismatch;
 8. make a design choice and define an acceptance test.
 
-These are editorial functions, not mandatory visible section names.
+These are editorial functions, not visible section names. Title each section
+naturally for its own chapter — a specific claim about the system at hand, not a
+generic phrase repeated book-wide, and never the bare word "model" as a heading.
+See [`technical-style.md`](technical-style.md) for headings, diagrams, code, and
+citation conventions.
 
 ## Keep representations synchronized
 

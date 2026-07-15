@@ -1,0 +1,19 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Source V_S drives an exposed live contact relative to earth.
+  \draw
+    (0,0) node[ground] {}
+    to[V, l_=$V_{S}$] (0,3)
+    to[short, -o] (1,3) node[above right] {contact};
+
+  % The body is a resistance from the live contact back to earth;
+  % I is the shock current, referenced from contact toward earth.
+  \draw
+    (1,3) -- (2,3)
+    to[R, l=$R_{\mathrm{body}}$, i>_=$I$] (2,0)
+    node[ground] {};
+\end{circuitikz}
+\end{document}

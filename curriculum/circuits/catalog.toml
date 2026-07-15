@@ -1,6 +1,27 @@
 version = 1
 
 [[circuit]]
+id = "f01-shock-path"
+source = "f01-shock-path.tex"
+chapter_id = "F01"
+caption = "The shock path as a circuit: a source drives current through the body, modelled as a resistance to earth."
+alt = "Voltage source VS connects earth to an exposed live contact. The body, drawn as resistor R_body, returns from the contact to earth, and the shock current I flows from the contact through R_body to earth."
+
+[[circuit]]
+id = "f01-capacitor-bleed"
+source = "f01-capacitor-bleed.tex"
+chapter_id = "F01"
+caption = "Stored energy outlives the switch: capacitor C holds its voltage after switch S opens, discharging only through the bleed resistor."
+alt = "Source VS charges capacitor C through switch S. A bleed resistor R_bleed is connected permanently across C, and test point TP1 marks the capacitor voltage v_C. When S opens, C discharges through R_bleed."
+
+[[circuit]]
+id = "f01-divider-loading"
+source = "f01-divider-loading.tex"
+chapter_id = "F01"
+caption = "A voltmeter loads the node it measures: its finite input resistance R_in sits in parallel with R2, pulling the reading at TP1 below the unloaded divider value."
+alt = "Voltage source VS drives series resistors R1 and R2 to ground, with output test point TP1 at their junction. A voltmeter of input resistance R_in is connected from TP1 to the 0 V rail, in parallel with R2."
+
+[[circuit]]
 id = "f03-voltage-divider"
 source = "f03-voltage-divider.tex"
 chapter_id = "F03"

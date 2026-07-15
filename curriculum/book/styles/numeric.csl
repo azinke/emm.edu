@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" default-locale="en-US">
+  <info>
+    <title>EMM Numeric</title>
+    <id>https://github.com/azinke/emm.edu/curriculum/book/styles/numeric</id>
+    <link href="https://github.com/azinke/emm.edu" rel="self"/>
+    <category citation-format="numeric"/>
+    <summary>Compact bracketed-numeric citation style so references never crowd the prose.</summary>
+    <updated>2024-01-01T00:00:00+00:00</updated>
+  </info>
+  <macro name="author">
+    <names variable="author">
+      <name and="text" initialize-with=". " delimiter=", "/>
+      <substitute>
+        <names variable="editor"/>
+        <text variable="title" font-style="italic"/>
+      </substitute>
+    </names>
+  </macro>
+  <macro name="title">
+    <text variable="title" font-style="italic"/>
+  </macro>
+  <macro name="edition">
+    <choose>
+      <if is-numeric="edition">
+        <group delimiter=" ">
+          <number variable="edition" form="ordinal"/>
+          <text term="edition" form="short"/>
+        </group>
+      </if>
+      <else>
+        <text variable="edition"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="issuer">
+    <choose>
+      <if type="report thesis manuscript" match="any">
+        <group delimiter=", ">
+          <text variable="number"/>
+          <text variable="publisher"/>
+        </group>
+      </if>
+      <else>
+        <text variable="publisher"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="issued">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+  <citation collapse="citation-number">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+    <layout prefix="[" suffix="]" delimiter="], [">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+  <bibliography second-field-align="flush" entry-spacing="0">
+    <layout>
+      <text variable="citation-number" prefix="[" suffix="]"/>
+      <group delimiter=", " suffix=".">
+        <text macro="author"/>
+        <text macro="title"/>
+        <text macro="edition"/>
+        <text macro="issuer"/>
+        <text macro="issued"/>
+      </group>
+    </layout>
+  </bibliography>
+</style>

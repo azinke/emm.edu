@@ -1,0 +1,29 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Divider under test: V_S across R1 and R2, mid-node brought out as TP1.
+  \draw (0,0) node[ground] {}
+    to[V, l_=$V_{S}$] (0,3)   % source: - at ground, + at top rail
+    -- (2,3)                  % top rail
+    to[R, l=$R_{1}$] (2,1.5)  % R1 into the mid-node
+    to[R, l=$R_{2}$] (2,0)    % R2 down to the return rail
+    -- (0,0);                 % return rail back to the source
+
+  % Mid-node: an explicit connection dot where R1, R2, and the taps meet.
+  \node[circ] (mid) at (2,1.5) {};
+  % Return-node dot where R2 and the voltmeter return share the 0 V rail.
+  \node[circ] (rtn) at (2,0)   {};
+
+  % Voltmeter (its finite input resistance R_in) in parallel with R2,
+  % tapped from the mid-node; an explicit dot marks the tap junction.
+  \draw (mid) -- (4,1.5) node[circ] {} coordinate (vtap)
+    to[voltmeter, l=$R_{\mathrm{in}}$] (4,0) -| (rtn);
+
+  % Test point TP1 brought out past the tap so its label sits in clear space,
+  % never drawn over a wire or a component.
+  \draw (vtap) -- (5.5,1.5)
+    node[ocirc, label={[font=\small]above:{TP1 ($V_{\mathrm{out}}$)}}] {};
+\end{circuitikz}
+\end{document}

@@ -1,44 +1,855 @@
 ---
 title: "Safe practice, units, and the engineering bench"
+description: "Control the hazard, reason in SI units, and treat every measurement as an intrusion — the bench habits every later chapter quietly assumes."
 chapter-id: F01
-status: outline
+status: draft
 ---
 
-::: {.callout-note title="Chapter outline"}
-The scope and dependency boundary are stable. Full exposition, worked examples,
-exercises, and tested practical evidence still need authoring and review.
+::: {.callout-note title="Chapter maturity — draft"}
+This chapter presents a complete instructional path: exposition, worked examples,
+an executable check, a reconciliation with data, and a full exercise set. It is
+still subject to technical and editorial revision, and the physical evidence it
+describes is collected in the aligned laboratory work, not in the prose. See how
+to interpret status levels in the [reading roadmap](../roadmap.qmd).
+:::
+
+::: {.callout-warning title="Safety boundary for this chapter"}
+Everything here is written for **current-limited, extra-low-voltage** bench work
+under local supervision and approved procedures. Reading this chapter is **not**
+authorization to work on mains, high-voltage, high-energy battery, RF-power,
+rotating-machine, medical, or any safety-critical system. When the evidence or
+the safety boundary is inadequate, the correct engineering action is to
+**stop** [@iec61010; @nfpa70e].
 :::
 
 ## Central question
 
-How do you investigate an electrical system without creating a new hazard or corrupting the evidence?
+> How do you investigate an electrical system without creating a new hazard or
+> corrupting the evidence?
+
+Two failures haunt every bench. The first is **physical**: a circuit that was
+supposed to teach you something injures you, damages an instrument, or destroys
+the very part you were studying. The second is quieter and, over a career, far
+more common: the measurement itself changes the system, and you draw a confident
+conclusion from a number that was never true. A good engineer is recognizable
+long before the design review — by how they approach a powered board and how
+much they trust their own meter.
+
+Picture the situation concretely. A small development board is in front of you,
+a bench supply on its left, a digital multimeter on its right. A colleague says a
+node "should be about 3.3 volts." The temptation is to set the supply, clip the
+probes, and read the display. This chapter argues that three questions come
+*before* the probe touches metal, and that skipping them is what separates a
+result from a guess:
+
+1. **What energy is available, and where can it go?** (So that energizing is a
+   staged, reversible act, not a gamble.)
+2. **In what units am I reasoning, and does my estimate even have the right
+   dimensions and order of magnitude?** (So that a wrong answer is caught by
+   arithmetic before it is caught by smoke.)
+3. **How much will my instrument disturb the thing I am trying to observe, and
+   how well do I actually know the number it returns?** (So that the reading is
+   evidence, not an artifact.)
+
+::: {.callout-tip title="Make a prediction first"}
+Before reading on, commit to two directional answers. **(a)** If you touch both
+terminals of a 9 V battery with dry fingers, roughly how much current flows
+through you — microamps, milliamps, or amps? **(b)** If you measure a node in a
+1 MΩ resistive divider with an ordinary multimeter, will the reading be too high,
+too low, or exactly right? Write the answers down. We reconcile them with a model
+and with data later in the chapter; the point of committing now is that a
+surprise you predicted teaches far more than one you merely observed
+[@horowitz2015art].
+:::
 
 ## Learning outcomes
 
-After completing this chapter, the reader should be able to:
+After completing this chapter — and it assumes no prior circuit theory, only
+comfort with algebra, ratios, and scientific notation
+([M01](../appendices/m01-algebra-units-complex.qmd)) — you should be able to:
 
-- explain the central model and the assumptions that bound its use;
-- connect physical behavior, a schematic or architecture, and quantitative reasoning;
-- interpret evidence and identify at least one credible failure mode;
-- make and defend a design or diagnostic decision;
+- **model an electrical hazard as controllable energy** and justify the
+  extra-low-voltage, current-limited boundary using the physiological effect of
+  current, not merely the size of a voltage [@iec60479];
+- **energize a circuit in reversible stages** using a bench supply's voltage and
+  current limits, and state explicit *stop conditions* before applying power
+  (builds on the energy model above);
+- **reason quantitatively in SI**, carrying units through a calculation,
+  checking dimensional homogeneity, and reporting an honest number of
+  significant figures [@bipm2019si; @nist811];
+- **distinguish equality, approximation, tolerance, bound, and uncertainty**,
+  and attach a defensible uncertainty to a measured value [@jcgm2008gum;
+  @jcgm2012vim];
+- **predict how an instrument loads a circuit**, estimate the resulting error,
+  and decide whether a reading is trustworthy evidence or an artifact of the
+  measurement (builds on the SI and uncertainty ideas above); and
+- **keep a traceable engineering record** — configuration, raw data, and
+  reasoning — that another person could use to reproduce your result
+  ([T03](../appendices/t03-reproducible-engineering.qmd)).
 
-## Concept path
+## Three ideas that keep the work honest
 
-- hazard, risk, authorization, and stop conditions;
-- SI units, prefixes, dimensions, and estimation;
-- bench supplies, multimeters, oscilloscopes, and current limits;
-- breadboard topology, inspection, and de-energized checks;
-- engineering notebooks and traceable configuration;
+This chapter has no single equation to memorize. What it offers instead is a way
+of standing in front of a bench, built from three small, sturdy ideas. Each one
+answers one of the three questions above, and each recurs, scaled up, in every
+later part of the book.
 
-## Evidence and practice
+### Risk is controllable energy
 
-The completed chapter will include a prediction, a worked model, a simulation or
-executable check where it adds value, measured or authentic data, a fault or
-model mismatch, and a requirements-based design decision. The final exercise set
-will mix retrieval, calculation, interpretation, debugging, and open design.
+A hazard is not a mystical property of "electricity." It is **energy that can
+reach a target along a path**. Break any one link — the source, the path, or the
+exposure — and the hazard is controlled. That is the whole logic of electrical
+safety, drawn in @fig-hazard-model: under each stage sits the control that weakens
+or removes it.
+
+```{mermaid}
+%%| label: fig-hazard-model
+%%| fig-cap: "The energy–path–target view of an electrical hazard, stacked source to target. Limiting or removing any one link controls the risk; the rounded nodes name the control available at each stage. Typical instances: a *source* is a bench supply, a charged capacitor, or a cell; a *path* is a probe tip, wet skin, a solder bridge, a dropped tool, an arc, or a shared return; a *target* is you, the device under test, or a meter."
+%%| fig-alt: "Three stages stacked vertically — an energy source, then a coupling path, then a target — each with a control action branching to the side, showing that limiting or removing any one link controls the hazard."
+flowchart TB
+  S["Energy source"]
+  P["Path<br/>couples source to target"]
+  T["Target"]
+  S -->|drives current| P
+  P -->|delivers energy| T
+  SC(["Control: limit V and I;<br/>discharge; isolate"])
+  PC(["Control: insulate;<br/>one hand back;<br/>manage the return"])
+  TC(["Control: shielding, PPE,<br/>distance; a bounded claim"])
+  S -.-> SC
+  P -.-> PC
+  T -.-> TC
+```
+
+Two facts turn this picture into engineering judgment.
+
+**It is current through the body, for a duration, that harms — not voltage in the
+abstract.** Voltage is what *drives* current, but the injury is done by the
+current that actually flows and how long it flows. The canonical reference data
+[@iec60479] gives, for a 50/60 Hz current passing hand-to-hand through an adult,
+the approximate thresholds in @tbl-body-current — worth committing to memory as
+orders of magnitude:
+
+| Body current (AC, 50/60 Hz) | Typical effect |
+|---|---|
+| ~1 mA | threshold of perception — a faint tingle |
+| ~10 mA | *let-go* threshold — muscles may lock; you cannot release the conductor |
+| ~30–50 mA | ventricular fibrillation becomes a real risk if sustained beyond a heartbeat |
+| > ~100 mA | frequently lethal |
+
+: Approximate effects of a 50/60 Hz current passing hand-to-hand through an adult body. Values are order-of-magnitude and depend strongly on duration and current path; direct current shifts the thresholds upward. {#tbl-body-current}
+
+This is exactly why the residual-current devices (RCDs / GFCIs) that protect wet
+areas are built to trip near 30 mA, and why the earth-leakage threshold is a
+current, not a voltage [@iec60479]. Direct current shifts these numbers upward
+(the let-go current is several times larger), but the ranking is the same.
+
+**Whether a given voltage is dangerous depends on the resistance of the path.**
+The body is not a fixed resistor: dry, intact skin contributes anywhere from tens
+of kilohms to over a hundred kilohms, while wet or broken skin, or a large
+contact area, can fall to roughly 1 kΩ, with the internal body itself only a few
+hundred ohms [@iec60479]. Whatever its value, the body simply completes a circuit
+from an exposed live contact back to earth (@fig-shock-path), so Ohm's law
+(developed fully in [F03](f03-sources-loads-resistance.qmd), used here only as an
+estimate) applies to it directly. For a 9 V source across dry fingers of, say,
+50 kΩ:
+
+$$
+I \approx \frac{V}{R} = \frac{9~\text{V}}{50\times10^{3}~\Omega}
+      = 1.8\times10^{-4}~\text{A} = 0.18~\text{mA}.
+$$
+
+![The shock path is just a circuit: the body completes a path from an exposed live contact back to earth, so the current is set by Ohm's law with the body as a resistance $R_\text{body}$. Limiting the source $V_S$ — the book's extra-low-voltage boundary — is what keeps $I$ below the thresholds of @tbl-body-current.](../../../build/circuits/f01-shock-path.png){#fig-shock-path fig-alt="A voltage source V_S connects earth to an exposed live contact; the body, drawn as a resistor R_body, returns from the contact to earth, and the shock current I flows from the contact through the body resistance to earth."}
+
+That is below the perception threshold — which is why the 9 V prediction you made
+earlier resolves to "you feel essentially nothing." Now feed the *same* Ohm's law
+a 230 V mains source across wet skin of 1 kΩ and it returns 230 mA, deep into the
+lethal band. Same law, same body, a thousand-fold difference in outcome — carried
+entirely by voltage and skin condition. The lesson is not "9 V is safe and 230 V
+is not"; it is that **safety is a claim about the whole energy–path–target
+system**, and the extra-low-voltage boundary of this book exists precisely so
+that the driving voltage cannot push a dangerous current through a plausible body
+path. The conventional dry-condition boundary is about **50 V AC rms or 120 V DC**
+(lower in wet or special locations); everything in Part I stays well beneath it.
+
+::: {.callout-important title="Current limiting is your primary control"}
+A bench power supply has two knobs, and the second one is the safety feature. Set
+the **voltage limit** to the value the circuit needs; set the **current limit**
+(sometimes labelled *I~limit~* or *compliance*) to just above the current the
+healthy circuit should draw. Now a short circuit, a reversed part, or a slipped
+probe cannot deliver more than that bounded current: the supply leaves
+constant-voltage mode, drops its output, and *tells you* (a CC/"current-limit"
+indicator) that something is wrong — before a trace vaporizes. A current limit
+converts an open-ended fault into a bounded, observable, recoverable event. It is
+the single most useful habit on a low-voltage bench.
+:::
+
+**Stored energy outlives the switch.** "Powered off" is not "safe." A capacitor
+holds energy $E=\tfrac12 C V^2$ after the supply is disconnected, and it will
+deliver that energy into the first low-resistance path it finds — including a
+finger or a shorting screwdriver. A de-energized board is only genuinely
+de-energized once its storage elements are *proven* discharged. The disciplined
+version of this, scaled down from installation practice, is the **five-step
+de-energizing sequence** [@en50110]: (1) disconnect the source completely;
+(2) secure it against reconnection; (3) *verify* the absence of voltage with a
+tester you have just checked works; (4) discharge and, where relevant, ground
+stored energy; and (5) protect against anything still live nearby. On a hobby
+bench that collapses to *unplug, wait, and measure to confirm zero before you
+trust it* — but the logic is identical, and step 3 is never optional.
+
+**Authorization and stop conditions come before power, not after trouble.** Two
+sentences, written in your notebook before you energize, prevent most bench
+incidents:
+
+- *Authorization:* "I am approved to do **this specific work** at **this energy
+  level** using **this apparatus**." A chapter, a datasheet, or a forum post is
+  never authorization; a supervisor, a lab rule, or a signed procedure is.
+- *Stop conditions:* the pre-declared observations that end the experiment
+  immediately — a smell, a sound, a temperature you can no longer touch, a
+  current limit that trips, a reading outside a range you predicted, or simply
+  the boundary of what you were authorized to do.
+
+### Every quantity lives in SI
+
+The second sub-model is arithmetic hygiene. Engineering runs on the International
+System of Units, and the discipline is not bureaucratic: it is how you catch an
+error at your desk instead of on the bench.
+
+Seven base units define everything else [@bipm2019si]:
+
+| Base quantity | Unit | Symbol |
+|---|---|---|
+| time | second | s |
+| length | metre | m |
+| mass | kilogram | kg |
+| **electric current** | **ampere** | **A** |
+| thermodynamic temperature | kelvin | K |
+| amount of substance | mole | mol |
+| luminous intensity | candela | cd |
+
+The ampere is the electrical base unit, and since the 2019 redefinition it is
+*defined* by fixing the elementary charge at exactly
+$e = 1.602176634\times10^{-19}~\text{C}$ — so the coulomb, the volt, the ohm,
+and every quantity in this book trace back to a fundamental constant rather than
+to a physical artifact in a vault [@bipm2019si]. The electrical units you will
+use constantly are all *derived* from the seven:
+
+| Quantity | Unit | Symbol | In base units |
+|---|---|---|---|
+| charge | coulomb | C | A·s |
+| voltage (potential difference) | volt | V | kg·m²·s⁻³·A⁻¹ |
+| resistance | ohm | Ω | V/A |
+| capacitance | farad | F | C/V |
+| power | watt | W | J/s = V·A |
+| energy | joule | J | W·s |
+| frequency | hertz | Hz | $s^-1$ |
+
+Real quantities span an enormous dynamic range, so we scale with **prefixes**
+rather than trailing zeros. The ones you will meet daily:
+
+| Factor | 10⁻¹² | 10⁻⁹ | 10⁻⁶ | 10⁻³ | 10³ | 10⁶ | 10⁹ | 10¹² |
+|---|---|---|---|---|---|---|---|---|
+| Prefix | pico | nano | micro | milli | kilo | mega | giga | tera |
+| Symbol | p | n | µ | m | k | M | G | T |
+
+(The SI even added `ronna`/`quetta` and `ronto`/`quecto` at 10^±27 and 10^±30 in
+2022 — a reminder that the system is maintained, not frozen [@bipm2019si].) Note
+the case discipline that trips up beginners: **`m` is milli, `M` is mega** — a
+factor of $10^{9}$ between them. A "1 mΩ" shunt and a "1 MΩ" isolation resistor
+differ by a billion; writing one for the other is not a typo, it is a design
+fault.
+
+Three habits make units *do work* for you:
+
+**Dimensional homogeneity.** Both sides of a correct equation, and every term in
+a sum, must carry the same units. This catches errors for free. Is the time
+constant $\tau = RC$ really a time? Check:
+
+$$
+[\,R\,][\,C\,] = \Omega \cdot \text{F}
+   = \frac{\text{V}}{\text{A}} \cdot \frac{\text{C}}{\text{V}}
+   = \frac{\text{C}}{\text{A}}
+   = \frac{\text{A}\cdot\text{s}}{\text{A}} = \text{s}. \qquad\checkmark
+$$
+
+If a derivation ever hands you an "RC" measured in ohm-farads that do *not*
+reduce to seconds, you have made an algebra mistake — and you found it without a
+single measurement. This same check will save you repeatedly in
+[F07](f07-capacitors-inductors-transients.qmd), where $\tau=RC$ governs every
+transient.
+
+**Order-of-magnitude estimation.** Before any precise calculation, get the
+exponent right. Will a common ¼ W resistor survive 5 V across 100 Ω?
+$P = V^2/R = (5~\text{V})^2 / 100~\Omega = 0.25~\text{W}$ — *exactly* the rating,
+so it runs at its thermal limit with no margin and you should choose a larger
+part or a smaller voltage. A ten-second estimate prevented a scorched component;
+[F05](f05-energy-power-thermal.qmd) turns this reflex into a full power budget.
+
+**Honest significant figures.** A number's digits are a claim about how well you
+know it. A multimeter that displays `4.286 V` is asserting millivolt resolution;
+if the measurement's uncertainty is ±0.05 V, reporting `4.286 V` is dishonest and
+`4.29 V ± 0.05 V` (or `4.29(5) V`) is truthful. Resolution is what the instrument
+*shows*; uncertainty is what you actually *know*. They are not the same number,
+and confusing them is the most common way a good measurement becomes a bad claim.
+
+::: {.callout-note title="Five words that are not synonyms"}
+Precision of language is precision of thought. Keep these distinct, in prose and
+in symbols [@jcgm2012vim]:
+
+- **Equality (`=`)** — exact or by definition: $1~\text{k}\Omega = 1000~\Omega$.
+- **Approximation (`≈`)** — a model result under stated assumptions:
+  $I \approx V/R$ for an ideal resistor.
+- **Tolerance (`±x%`)** — a manufacturing spread: a "100 Ω ±1%" resistor is
+  guaranteed only to lie in [99, 101] Ω.
+- **Bound (`≤`, `≥`)** — a one-sided guarantee: "dissipation $\le 0.25$ W."
+- **Uncertainty (`± u`, coverage `k`)** — the dispersion of a *measured* value:
+  "$V = (4.29 \pm 0.05)$ V, $k=2$" means an interval expected to contain the true
+  value with ~95 % confidence [@jcgm2008gum].
+:::
+
+One more convention this book insists on from the start: **state what an
+amplitude is**. "5 V" is ambiguous until you say whether it is DC, a peak, a
+peak-to-peak swing, or an RMS value — a 5 V RMS sinusoid has a 7.07 V peak and a
+14.14 V peak-to-peak span, and a fuse, a rating, or a shock hazard cares which
+one you meant. In Part I the quantities are mostly DC; the habit of labelling them
+is what makes [F08](f08-sinusoids-impedance-frequency.qmd) survivable.
+
+### A measurement is an intrusion
+
+The third sub-model is the one beginners resist longest: **you cannot observe a
+circuit without joining it, and joining it changes it.** An ideal voltmeter draws
+no current; a real one has a finite input resistance and draws a little. An ideal
+oscilloscope probe is invisible; a real one adds capacitance and its own ground
+path. The instrument becomes part of the circuit under test the instant you
+connect it, and the reading is the behavior of *circuit-plus-instrument*, not of
+the circuit you meant to study. Good measurement is the craft of keeping that
+intrusion small enough to ignore — and of *knowing when you cannot* — because,
+as @fig-measurement-loop shows, the probe and its return close a loop and what
+you read is the behavior of that whole loop.
+
+```{mermaid}
+%%| label: fig-measurement-loop
+%%| fig-cap: "The measurement loop. The probe and the shared return connect the node of interest to an instrument of finite input impedance, so the quantity you read describes the joined circuit-plus-instrument loop, not the circuit alone."
+%%| fig-alt: "The node of interest, characterized by its Thévenin resistance, connects through a probe to an instrument with finite input resistance and capacitance; the instrument returns to the node through a shared return, closing a loop, so the reading describes the combined loop rather than the circuit alone."
+flowchart TB
+  N["Node of interest<br/>Thévenin resistance Rₜₕ"]
+  I["Instrument<br/>finite input Rᵢₙ ∥ Cᵢₙ"]
+  N -->|probe| I
+  I -->|shared return| N
+  R(["What you read =<br/>the joined loop,<br/>not the circuit alone"])
+  I -.-> R
+```
+
+The single most common intrusion is **loading**: a voltmeter of input resistance
+$R_\text{in}$ placed across a node whose source (Thévenin) resistance is
+$R_\text{th}$ forms a divider with it, and the fractional error in the reading is,
+to good approximation,
+
+$$
+\frac{\Delta V}{V} \approx -\,\frac{R_\text{th}}{R_\text{th} + R_\text{in}}.
+$$ {#eq-loading}
+
+![A voltmeter loads the node it measures. Its finite input resistance $R_\text{in}$ sits in parallel with $R_2$, so the value read at TP1 is the *loaded* divider — below the unloaded $V_S\,R_2/(R_1+R_2)$ by the fraction in @eq-loading, where $R_\text{th}=R_1\Vert R_2$ is the resistance the node presents to the meter.](../../../build/circuits/f01-divider-loading.png){#fig-divider-loading fig-alt="Voltage source V_S drives series resistors R1 and R2 to ground, with output test point TP1 at their junction; a voltmeter of input resistance R_in is connected from TP1 to the 0 V rail, in parallel with R2."}
+
+Two consequences fall straight out of @fig-divider-loading. When
+$R_\text{in} \gg R_\text{th}$ the error
+is negligible and the reading is honest; when the node is *high-impedance*
+($R_\text{th}$ comparable to $R_\text{in}$) the meter drags the node down and the
+reading is fiction. This is why your earlier prediction — "measuring a 1 MΩ
+divider will read **too low**" — is the correct sign: the loading term is always
+negative. We put numbers on it in the next section. The same reasoning governs
+oscilloscope bandwidth, probe capacitance, and common-mode and ground-loop errors
+that [F06](f06-measurement-uncertainty-debug.qmd) treats in full; here we only
+plant the reflex: *before you trust a reading, ask what the instrument did to the
+node.*
+
+**Reference directions make a sign mean something.** A meter answers a question
+you posed with your leads. Put the red lead on node A and black on node B and a
+reading of $+4.29$ V means A is above B; swap the leads and the same physical
+state reads $-4.29$ V. Neither is "wrong" — but only one matches the reference
+direction you declared. Decide and write down the positive sense *before* you
+probe, so that a negative result reads as "reality opposes my chosen reference,"
+not "error." This convention is the whole subject of
+[F02](f02-charge-voltage-current.qmd); adopt it now as a habit.
+
+### The bench, instrument by instrument
+
+The instruments are not a shopping list; each one is a lever on one of the three
+ideas.
+
+| Instrument | Primary role | Which idea it serves |
+|---|---|---|
+| **DC bench supply** | source energy with a *voltage* and a *current* limit | Energy — bound what a fault can deliver |
+| **Digital multimeter (DMM)** | measure V, I, R, continuity | Units + intrusion — a number, with loading and uncertainty |
+| **Oscilloscope + probe** | see a signal versus time | Intrusion — via bandwidth and probe capacitance |
+| **Breadboard / test fixture** | hold the topology you can inspect | Energy — a return path you can see and reason about |
+| **Engineering notebook** | record configuration, data, reasoning | All three — makes a result reproducible |
+
+A breadboard deserves one specific warning about energy and the return path: its
+long power rails have real resistance and inductance, its spring contacts are
+intermittent, and its shared returns invite ground loops. Inspect the topology
+and the return path *de-energized* — trace where current will actually flow —
+before you apply power. Many "mysterious" first-project faults are simply a
+half-seated jumper or a rail powered from the wrong end.
+
+## Putting numbers on the predictions
+
+We now put arithmetic on the three predictions, following the book's discipline
+every time: **estimate → calculate → check units and limits → interpret.**
+
+### Example A — "Is this node safe to touch?"
+
+*Estimate.* A bench node sits at 24 V DC. Dry-finger contact resistance is of
+order $10^4$–$10^5$ Ω, so the body of @fig-shock-path becomes $R_\text{body}$
+across the node. Ohm's law says the current is "tens to hundreds of microamps" —
+below perception. State that expectation before computing.
+
+*Calculate.* Take a mid-range dry-skin path $R_\text{body} = 40~\text{k}\Omega$:
+
+$$
+I = \frac{V}{R_\text{body}} = \frac{24~\text{V}}{40\times10^{3}~\Omega}
+  = 6.0\times10^{-4}~\text{A} = 0.60~\text{mA}.
+$$
+
+*Check.* Units: V/Ω = A. ✓ Limiting case: as $R_\text{body}\to$ the wet-skin
+worst case of ~1 kΩ, $I \to 24~\text{mA}$ — now approaching the let-go region.
+The answer is *conditional on the path*, exactly as the energy–path–target
+picture warns.
+
+*Interpret.* At 24 V with dry skin the shock hazard is negligible (0.6 mA, below
+the ~1 mA perception threshold), which is why this is legitimate bench work. But
+the same node with sweaty hands or a cut finger is an order of magnitude worse,
+and the *arithmetic itself* tells you not to rely on skin resistance as your
+safety margin — rely on keeping the voltage low. Note what this example did **not**
+consider: stored energy and short-circuit current, which Example C shows can bite
+hard even at voltages that cannot shock you.
+
+### Example B — "A current limit turns a fault into a footnote"
+
+*Estimate.* A 3.3 V rail should draw ~150 mA when healthy. You set the supply's
+current limit to 250 mA. A student accidentally shorts the rail to ground. Without
+a limit, how bad is it; with the limit, how bad is it?
+
+*Calculate.* Unlimited, the fault current is set by the wiring resistance alone —
+tens of milliohms of trace and clip lead, so $I = 3.3~\text{V}/0.03~\Omega \approx
+110~\text{A}$ momentarily, dumping $P=VI \approx 360$ W into a copper trace
+designed for a fraction of a watt: it vaporizes. *With* the 250 mA limit, the
+supply leaves constant-voltage mode, folds its output voltage back to whatever
+sustains 250 mA into the short (a fraction of a volt), and dissipates at most
+$P \le V_\text{set}\cdot I_\text{lim} = 3.3~\text{V}\times0.25~\text{A}=0.83$ W —
+a bound, not an equality, because the real output voltage collapses well below
+3.3 V.
+
+*Check.* Units: V·A = W. ✓ The limiting behavior is correct: as the short
+resistance $\to 0$, the limited supply holds *current* fixed and lets *voltage*
+fall, so power stays bounded.
+
+*Interpret.* The current limit converted a 360 W catastrophe into an 0.8 W
+non-event with a blinking front-panel light. This is the energy idea made
+quantitative, and it is why "set the current limit first" is the first move of
+every careful bench session.
+
+### Example C — "A de-energized board that still bites"
+
+*Estimate.* A board holds a $C = 1000~\mu\text{F}$ bulk capacitor charged to 30 V
+when you switch off (@fig-capacitor-bleed). Is the stored energy trivial? $E=\tfrac12 CV^2$ with rough
+numbers is $\sim\tfrac12(10^{-3})(10^3)=0.5$ J — small but not nothing.
+
+*Calculate.* Precisely,
+$E=\tfrac12(1000\times10^{-6}~\text{F})(30~\text{V})^2 = 0.45~\text{J}$, still
+present *after* the supply is unplugged. If a 1 kΩ bleed resistor is fitted, the
+voltage decays with $\tau=RC=(10^3~\Omega)(10^{-3}~\text{F})=1$ s, so after
+$5\tau = 5$ s it has fallen to $30\,e^{-5}\approx 0.2$ V — safe. With *no* bleed
+path it can hold 30 V for minutes.
+
+![Stored energy outlives the switch. After switch $S$ opens the source is gone, but capacitor $C$ keeps its voltage $v_C$ and discharges only through the bleed resistor $R_\text{bleed}$, with time constant $\tau=R_\text{bleed}C$. A board with no bleed path holds its charge — and its hazard — for minutes.](../../../build/circuits/f01-capacitor-bleed.png){#fig-capacitor-bleed fig-alt="Source V_S charges capacitor C through switch S; a bleed resistor R_bleed is connected permanently across C, and test point TP1 marks the capacitor voltage v_C. With S open, C discharges through R_bleed."}
+
+*Check.* Units: F·V² = (C/V)·V² = C·V = J. ✓ And $RC$ has units of seconds, as the
+dimensional check earlier confirmed.
+
+*Interpret.* Half a joule at 30 V will not shock you through skin, but discharged
+through a shorting tool it produces a bright spark, a startle reflex (which causes
+*most* minor bench injuries), and a pitted screwdriver; scale the same numbers to
+a camera-flash or motor-drive capacitor at hundreds of volts and it is lethal.
+This is the concrete meaning of step 3 of the de-energizing sequence: **prove it
+is discharged, don't assume it.** It is also a first look at the RC transient that
+[F07](f07-capacitors-inductors-transients.qmd) develops rigorously.
+
+### Example D — "The meter changed the answer"
+
+*Estimate.* A 9 V source drives a divider of $R_1=R_2=1~\text{M}\Omega$ (the
+circuit of @fig-divider-loading); the ideal mid-node is 4.50 V. Your DMM has
+$R_\text{in}=10~\text{M}\Omega$. From @eq-loading you expect a *few percent low*.
+
+*Calculate.* The node's Thévenin resistance is
+$R_\text{th}=R_1\Vert R_2 = 0.5~\text{M}\Omega$. The fractional loading error is
+
+$$
+\frac{\Delta V}{V} \approx -\frac{R_\text{th}}{R_\text{th}+R_\text{in}}
+   = -\frac{0.5}{0.5+10} = -4.8\%,
+$$
+
+so the meter should read about $4.50~\text{V}\times(1-0.048)=4.29$ V. (Computed
+the long way — replace $R_2$ by $R_2\Vert R_\text{in}=0.909~\text{M}\Omega$ and
+redo the divider — you also get 4.29 V, confirming the shortcut.)
+
+*Check.* Units: a ratio of resistances is dimensionless. ✓ Limit: if
+$R_\text{in}=10~\text{G}\Omega$ (an electrometer), the error is $-5\times10^{-5}$,
+i.e. negligible — high input resistance buys honesty.
+
+*Interpret.* The 0.21 V discrepancy is **not noise and not a fault** — it is a
+*predictable, correctable, systematic* effect of the intrusion, so it is a
+*bound/known-bias*, not an *uncertainty* (the vocabulary of *Every quantity lives
+in SI* earns its keep here). Because you can compute it, you can either correct
+for it or defeat it by
+measuring high-impedance nodes with a higher-$R_\text{in}$ instrument or a
+buffer. What you must *never* do is report 4.29 V as the divider's true node
+voltage without noting that your meter pulled it there.
+
+## Reconciling the prediction with the bench
+
+A prediction you never check is a belief. Example D gives a clean, cheap
+reconciliation, so we make it the chapter's worked test: **predict, measure,
+compare within uncertainty.** The physical version of this is Lab **L01**; here we
+show the shape of the evidence and its bookkeeping, because the *format* of a
+result is itself part of the skill.
+
+Configuration (the kind of record [T03](../appendices/t03-reproducible-engineering.qmd)
+requires so a result is reproducible):
+
+- Source: bench supply set to 9.00 V, current limit 10 mA.
+- Divider: $R_1, R_2$ nominal 1 MΩ ±1 %, measured 0.998 MΩ and 1.003 MΩ.
+- Meter: DMM, DC volts, 10 MΩ input, resolution 1 mV, accuracy per its datasheet
+  ±(0.5 % of reading + 2 counts) ⇒ combined standard uncertainty ≈ 0.03 V here.
+
+| Test point | Predicted (model) | Measured | Agreement |
+|---|---|---|---|
+| Open-source voltage $V_S$ | 9.00 V (set) | 9.00 V ± 0.05 V | ✓ |
+| Ideal mid-node (no meter) | 4.50 V | — (unobservable directly) | — |
+| Mid-node, DMM loaded | 4.29 V | 4.28 V ± 0.03 V (k = 2) | ✓ within u |
+| Loading error $\Delta V$ | −0.21 V | −0.22 V ± 0.06 V | ✓ |
+
+The measured mid-node, $4.28 \pm 0.03$ V, brackets the loaded prediction 4.29 V
+and is decisively *below* the naïve 4.50 V — the model and the bench tell the same
+story, within a stated uncertainty, using an explicit reference direction (red on
+the mid-node, black on the supply return). That agreement is what the whole book
+means by *understanding a circuit*: the equation, the schematic, and the
+measurement converge on one number you can defend [@horowitz2015art].
+
+A short, dependency-free script makes the model reproducible and its parameters
+visible rather than hidden — the book prefers recoverable source to a screenshot:
+
+```python
+# f01_bench_checks.py — parameterized checks for the F01 worked examples.
+# Standard library only; run with:  python3 f01_bench_checks.py
+import math
+
+def parallel(a, b):
+    return a * b / (a + b)
+
+def body_current(voltage_V, body_ohm):
+    "Energy idea: estimate shock current for a contact path."
+    return voltage_V / body_ohm
+
+def cap_energy(C_farad, V_volt):
+    "Energy idea: energy still stored after power-off."
+    return 0.5 * C_farad * V_volt**2
+
+def bleed_time(R_ohm, C_farad, n_tau=5):
+    "Energy idea: time for a bleed resistor to (nearly) discharge C."
+    return n_tau * R_ohm * C_farad
+
+def divider_loaded(Vs, R1, R2, Rin):
+    "Intrusion idea: true divider node vs. the value a finite-Rin meter reads."
+    ideal  = Vs * R2 / (R1 + R2)
+    loaded = Vs * parallel(R2, Rin) / (R1 + parallel(R2, Rin))
+    return ideal, loaded, (loaded - ideal) / ideal
+
+if __name__ == "__main__":
+    print(f"A: 24 V / 40k dry skin -> {body_current(24, 40e3)*1e3:.2f} mA")
+    print(f"C: energy in 1000uF @ 30 V -> {cap_energy(1000e-6, 30):.2f} J")
+    print(f"C: 5*tau bleed, 1k*1000uF -> {bleed_time(1e3, 1000e-6):.1f} s")
+    ideal, loaded, err = divider_loaded(9.0, 1e6, 1e6, 10e6)
+    print(f"D: ideal {ideal:.3f} V, loaded {loaded:.3f} V, error {err*100:.1f}%")
+# Expected output:
+#   A: 24 V / 40k dry skin -> 0.60 mA
+#   C: energy in 1000uF @ 30 V -> 0.45 J
+#   C: 5*tau bleed, 1k*1000uF -> 5.0 s
+#   D: ideal 4.500 V, loaded 4.286 V, error -4.8%
+```
+
+Change a number — the body resistance, the input impedance, the capacitor — and
+the model tells you the new consequence before the bench does. That is the loop
+this book asks you to run on every claim.
+
+## Three ways to fool yourself
+
+A working idea earns trust by naming the conditions that break it. Three
+misconceptions cause a large share of real bench damage, and one worked diagnosis
+shows how to tell an intrusion from a fault.
+
+**"Low voltage is automatically safe."** False in two directions. First, *stored
+and delivered energy* ignores the shock threshold: a single 18650 lithium cell at
+3.7 V has an internal resistance of order 30 mΩ, so a dead short draws
+$I\approx 3.7/0.03 \approx 120$ A, dumping tens of watts into whatever bridges it
+— a ring, a tool, a trace — hot enough to cause burns and to make the cell vent.
+The voltage cannot shock you; the *current* can burn you and start a fire. Second,
+the injury statistics on a low-voltage bench are dominated not by the electricity
+at all but by the **startle reflex** — the involuntary jerk when a capacitor snaps
+or a part pops — which drives hands into hot irons and sharp edges. "Low voltage"
+narrows the hazard; it does not remove it.
+
+**"The meter reads the truth."** The meter reads the *joined system* — recall that
+a measurement is an intrusion. It
+loads the node (Example D); its bandwidth rolls off fast signals; its leads pick
+up hum; a shared ground creates loops that add or subtract volts you never
+sourced. A reading is evidence about *circuit-plus-instrument*, and turning it
+into evidence about the circuit is an act of reasoning, not of reading a display.
+
+**"Units are cosmetic."** They are load-bearing. In 1999 NASA's Mars Climate
+Orbiter was lost because one team's software produced an impulse in
+pound-force-seconds while the navigation software consumed it as newton-seconds; a
+factor of 4.45 accumulated silently until the spacecraft entered the Martian
+atmosphere at the wrong altitude and was destroyed [@nasa1999mco]. A quarter-billion
+dollars turned on a units label. Every dimensional check you run at your desk is a
+tiny rehearsal of the discipline that would have saved it.
+
+::: {.callout-caution title="Worked diagnosis — intrusion or fault?"}
+You measure the Example-D mid-node and read 4.28 V, not the 4.50 V a naïve divider
+predicts. Is the circuit *broken* (say $R_2$ is low), or is your *meter loading*
+the node? Do not guess — design a discriminating test. The two hypotheses make
+*different* predictions:
+
+- **Loading** predicts the error scales with the meter: repeat with a
+  higher-input-resistance instrument (or a unity-gain buffer) and the reading
+  should climb toward 4.50 V.
+- **A low $R_2$** predicts the error is *independent* of the meter and that a
+  de-energized resistance measurement of $R_2$ reads low.
+
+Swap to a 10 GΩ-input electrometer: the node reads 4.500 V. Hypothesis
+"loading" survives; "fault" is refuted. The 0.22 V was the intrusion, exactly as
+@eq-loading predicted. This is the whole method of
+[F06](f06-measurement-uncertainty-debug.qmd) in miniature — *isolate a cause by
+finding evidence that separates it from its rivals*, not by staring harder at one
+number.
+:::
+
+## The decision: a bench plan
+
+Engineering is deciding under constraints and defending the choice. The decision
+this chapter equips you to make is the **bench safety-and-measurement plan** for a
+first investigation — the artifact that turns "let's probe it and see" into a
+result another person would accept.
+
+*Requirements (measurable, declared before power).*
+
+- Work stays within the extra-low-voltage boundary: source ≤ 24 V DC, well under
+  the ~50 V AC / 120 V DC boundary set out earlier.
+- Current limit set to $\le 1.5\times$ the predicted healthy current, so a fault
+  is bounded and annunciated (Example B).
+- Every measured node's $R_\text{th}$ estimated in advance; instrument chosen so
+  the loading error of @eq-loading is $< 1\%$, or the error is corrected and
+  reported.
+- Stop conditions written down: current-limit trip, any reading outside the
+  predicted range by more than its uncertainty, heat you cannot hold, smell, or
+  sound.
+- A record sufficient for reproduction: supply settings, part values as
+  *measured*, instrument model and ranges, raw readings with uncertainty.
+
+*Alternatives and trade-offs.* A **higher current limit** lets a hungry circuit
+settle faster and avoids nuisance trips, but widens the energy a fault can deliver
+— speed traded against safety margin. A **direct DMM** is quick but loads
+high-impedance nodes; a **buffered/high-$R_\text{in}$ probe** is honest on those
+nodes but adds parts, offset, and bandwidth limits — convenience traded against
+fidelity. Choose per node, not once for the whole session.
+
+*Acceptance test.* The plan is accepted when a dry run reproduces a *known* value
+— e.g. the loaded 4.29 V mid-node of Example D — within its stated uncertainty,
+with the current limit demonstrably tripping on a deliberate (safe, momentary)
+short. If the known value cannot be reproduced, the plan, not the reality, is at
+fault.
+
+*Limit of the claim.* This plan qualifies **current-limited, extra-low-voltage
+bench investigation only.** It is explicitly *not* a method for mains, stored
+high-energy, or any hazardous system, and passing its acceptance test authorizes
+nothing beyond the energy level and apparatus it names. Stating that limit is not
+timidity; it is the difference between an engineering claim and an overreach.
+
+## What to carry forward
+
+The stance to carry out of this chapter is a way of working, not a formula:
+**bound the energy, reason in units, and distrust the reading.** Before power,
+you ask where the energy can go and cap it with a voltage and a current limit;
+during reasoning, you carry SI units, check dimensions, and separate what you
+*know* from what the display *shows*; and at every reading you ask what the
+instrument did to the node, because you are always measuring the joined system.
+Wrapped around all three is a record another person could follow.
+
+Each of these three ideas is the seed of a later chapter, and the chapter is
+deliberately the root of the book's dependency graph — it has no prerequisites and
+almost everything depends on it:
+
+- the **quantities** you agreed to reason in — charge, voltage, current, and their
+  reference directions — are defined properly in
+  [F02](f02-charge-voltage-current.qmd);
+- the **Ohm's-law and loading** estimates used here become the source-and-load
+  theory of [F03](f03-sources-loads-resistance.qmd);
+- the **energy and power** bounds of Examples B–C grow into the power-and-thermal
+  budget of [F05](f05-energy-power-thermal.qmd);
+- the **uncertainty and intrusion** discipline is the whole subject of
+  [F06](f06-measurement-uncertainty-debug.qmd), the pivot of the part; and
+- the **record** you keep is formalized in
+  [T03](../appendices/t03-reproducible-engineering.qmd).
+
+That chain — F01 → F02 → F03 → F06 — is the *measurement spine* of Part I (see the
+[part introduction](index.qmd)): it reaches a *trustworthy number* as early as
+possible, because every later chapter quietly assumes you can produce one. You now
+hold the habits that make the rest of the book safe to read on a real bench.
+
+## Exercises
+
+Work these with the estimate → calculate → check → interpret loop, and state the
+assumptions and units every time. Full solutions and live-assessment variants are
+maintained outside the public book; a few self-check answers are given so you can
+calibrate.
+
+**Quick check (multiple choice)**
+
+One best answer each; the key follows. These take a minute and surface the most
+common misconceptions before you invest in the longer problems.
+
+1. Electrical safety is expressed first as a limit on
+    a. voltage alone;
+    b. the current through the body, and how long it flows;
+    c. the source's internal resistance;
+    d. the power factor.
+2. You set a bench supply's current limit just above the healthy current, and a
+   short then occurs. The supply
+    a. delivers unlimited current until a fuse blows;
+    b. raises its voltage to force current through the short;
+    c. leaves constant-voltage mode, drops its output, and bounds the fault;
+    d. shuts down permanently and must be replaced.
+3. A resistor marked "1 mΩ" and one marked "1 MΩ" differ by a factor of
+    a. $10^{3}$;
+    b. $10^{6}$;
+    c. $10^{9}$;
+    d. nothing — the markings mean the same thing.
+4. A 10 MΩ-input DMM measures the mid-node of a $2\times1~\text{M}\Omega$ divider.
+   Compared with the ideal 4.50 V, the reading is
+    a. higher than 4.50 V;
+    b. lower than 4.50 V;
+    c. exactly 4.50 V;
+    d. unpredictable in sign.
+5. A meter displays "4.286 V" but the measurement's uncertainty is ±0.05 V. The
+   honest report is
+    a. 4.286 V;
+    b. (4.29 ± 0.05) V;
+    c. 4 V;
+    d. (4.286 ± 0.001) V.
+6. "Powered off" guarantees a board is safe to touch. This is
+    a. always true;
+    b. true unless the board has capacitors, which can retain a hazardous charge
+       until proven discharged;
+    c. true one second after switch-off;
+    d. true only for mains-powered boards.
+
+*[Key: 1-b, 2-c, 3-c, 4-b, 5-b, 6-b. Each maps to a section above: 1 and 6 to
+*Risk is controllable energy*, 3 and 5 to *Every quantity lives in SI*, 4 to
+*A measurement is an intrusion*, and 2 to the current-limit habit.]*
+
+**Retrieval and reasoning**
+
+1. State, in your own words, why electrical *safety* is expressed as a limit on
+   current (and duration) rather than on voltage alone. Name the approximate
+   perception, let-go, and fibrillation thresholds [@iec60479].
+2. List the five steps of the de-energizing sequence [@en50110] and explain why
+   step 3 (verify absence of voltage) can never be skipped, even after step 1.
+3. A rail is labelled "5 V." What three questions must you ask before that label
+   is unambiguous? (Hint: DC? peak? RMS? referenced to what?)
+
+**Estimation**
+
+4. Estimate the current through your body if you grip both electrodes of a 12 V
+   battery with (a) dry hands (~50 kΩ) and (b) salt-water-wet hands (~1.5 kΩ).
+   Which, if either, would you perceive? *[Self-check: ≈ 0.24 mA and ≈ 8 mA.]*
+5. A ¼ W, 220 Ω resistor is placed directly across a 12 V supply by mistake.
+   Estimate its power dissipation and state whether it survives. By what factor is
+   the rating exceeded? *[Self-check: ≈ 0.65 W, ~2.6× over rating — it will
+   overheat.]*
+6. Estimate the energy stored in a 470 µF capacitor charged to 50 V, and the
+   $5\tau$ discharge time through a 2.2 kΩ bleed resistor.
+
+**Derivation and units**
+
+7. Starting from the units of the volt, ampere, and farad, show from first
+   principles that the farad-volt-squared product $\tfrac12 CV^2$ has units of
+   joules.
+8. Derive @eq-loading from a two-resistor divider by replacing the lower resistor
+   $R_2$ with $R_2 \Vert R_\text{in}$, and show that for $R_\text{in}\gg R_\text{th}$
+   the fractional error reduces to $-R_\text{th}/R_\text{in}$.
+
+**Data interpretation**
+
+9. A datasheet quotes a DMM accuracy of "±(0.5 % of reading + 2 counts)" on a
+   range with 1 mV resolution. For a displayed reading of 4.286 V, compute the
+   accuracy-band half-width and write the result as a value with uncertainty and a
+   sensible number of significant figures.
+10. You measure a node three times: 3.301 V, 3.298 V, 3.303 V. Distinguish the
+    *resolution*, the *scatter* (an A-type uncertainty), and any *loading* you
+    would still need to consider separately before quoting a final value
+    [@jcgm2008gum].
+
+**Debugging**
+
+11. A colleague measures the mid-point of a 2 × 4.7 MΩ divider from a 10 V source
+    and reports 3.4 V, "so a resistor must be out of spec." Using @eq-loading with
+    a 10 MΩ meter, compute what an *ideal-part* divider would actually read on
+    that meter, and decide whether the data support the fault claim or an
+    intrusion. Then design one measurement that discriminates the two.
+12. A breadboard circuit works when probed and fails when the probe is removed.
+    Give two mechanisms — one an energy or return-path effect, one a measurement
+    intrusion (e.g. an intermittent contact the probe happens to complete; a
+    ground path the probe supplies) — and a de-energized check for each.
+
+**Open design**
+
+13. Write a one-page bench safety-and-measurement plan (requirements, current
+    limit, per-node instrument choice, stop conditions, and record format) for
+    measuring the quiescent current and three node voltages of an unfamiliar 3.3 V
+    sensor board. State the limit of the claim your plan can support.
+14. Propose an acceptance test that would convince a skeptical reviewer that your
+    plan in Exercise 13 actually bounds the fault energy and keeps every loading
+    error below 1 %. What single piece of evidence would *falsify* it?
 
 ## Connections
 
-Chapter ID: `F01`. Prerequisites and downstream course mappings are maintained in
-[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
-provides reader-facing routes and the practice spine.
+Chapter ID: `F01`. Prerequisites are none — this chapter is the root of the book's
+dependency graph — and downstream course mappings are maintained in
+[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd) provides
+reader-facing routes and the practice spine; this chapter opens the **measurement
+spine** (F01 → F02 → F03 → F06) described in the
+[Part I introduction](index.qmd).
+
+The aligned practical evidence is **Lab L01** (bench safety and instrument
+qualification), and the integrating milestone is **Project M1** (a qualified
+energy-and-light measurement), which binds F01–F06 with reproducible records
+([T03](../appendices/t03-reproducible-engineering.qmd)). Lab and project IDs denote
+*evidence goals*, not permission to perform an activity: the safety level,
+apparatus, stop conditions, and local authorization must be defined before any of
+this becomes deliverable, and reading this chapter authorizes nothing beyond the
+current-limited, extra-low-voltage boundary stated at its head.
+
+## References
+
+Claims in this chapter are cited at the point of use and prefer primary sources:
+physiological current thresholds and the safe de-energizing sequence rest on the
+relevant IEC and CENELEC standards [@iec60479; @en50110]; instrument and
+laboratory-equipment safety, including measurement-category ratings, on
+IEC 61010-1 and workplace electrical-safety practice [@iec61010; @nfpa70e]; the SI
+units, the ampere's 2019 redefinition, and their correct use on the defining
+brochure and the NIST guide [@bipm2019si; @nist811]; the vocabulary of
+measurement and the expression of uncertainty on the VIM and the GUM
+[@jcgm2012vim; @jcgm2008gum]; and the bench-first working method on the standard
+practical reference [@horowitz2015art]. The complete, growing
+[bibliography](../references.qmd) collects these. None of them, and neither this
+book, substitutes for a datasheet, a governing standard, or supervised laboratory
+training.

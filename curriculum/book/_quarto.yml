@@ -94,6 +94,8 @@ book:
     - references.qmd
 
 bibliography: references.bib
+# Bracketed-numeric citations ([1], [2]) keep references from crowding the prose.
+csl: styles/numeric.csl
 
 crossref:
   chapters: true
@@ -128,5 +130,10 @@ format:
       - Scale=0.85
     geometry:
       - margin=28mm
+    # Wrap long code and verbatim lines so listings stay inside the page margin.
+    include-in-header:
+      text: |
+        \usepackage{fvextra}
+        \fvset{breaklines=true,breakanywhere=true}
 
 lang: en

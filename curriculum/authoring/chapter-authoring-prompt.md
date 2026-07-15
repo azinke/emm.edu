@@ -32,15 +32,41 @@ stakes allow.
 - Every equation is derivable and dimensionally correct; **derive from first
   principles** with assumptions and validity range stated, or cite a primary source
   — never assert from memory.
+- Before writing a signed equation, declare its reference direction, polarity,
+  coordinate axis, integration path, or positive surface normal as applicable. A
+  symbol such as $V_{AB}$, $I$, work, gain, or phase is incomplete until its
+  reference is unambiguous.
+- Distinguish the status of every important relation: **definition**, exact
+  conservation law, constitutive relation, approximation, empirical fit,
+  rule-of-thumb screen, tolerance, or requirement. Derive the general conservation
+  statement before its steady-state or lumped special case; do not turn "negligible
+  accumulation" into "accumulation is impossible."
 - Every quantitative claim is either **worked** (numbers you can check) or **cited**
   to a datasheet, standard, or canonical reference. Do not invent device numbers;
   use representative values and label them *typical / illustrative*, or cite a real
   part. Distinguish **exact vs. typical vs. worst-case**.
+- Demonstrate governing equations when doing so helps the reader form the concept.
+  A useful demonstration normally includes: declared references; numerical
+  substitution; units; an honest number of significant figures; interpretation in
+  words; and one revealing variation such as reversing the reference, doubling an
+  input, taking a limiting case, or changing an operating condition. Do not leave a
+  central equation as a formula to memorize, but do not manufacture arithmetic for
+  a relation whose meaning is already transparent.
 - Name the operating region and limits of every compact model (small-signal,
   ideal-diode, lumped, linear, etc.); show at least one limiting case and one
   second-order effect that breaks the first-order picture.
+- Keep distinct phenomena distinct even when casual language merges them: carrier
+  motion versus electromagnetic propagation, source response versus load response,
+  stored quantity versus flow rate, potential versus potential difference, and
+  physical behavior versus instrument indication. State whether a claim concerns
+  steady state, a switching transient, sinusoidal steady state, or a bounded time
+  interval.
 - If something is genuinely uncertain, contested, or approximate, say so with the
   bound — don't smooth it over.
+- A design that merely equals a strict limit does not pass it. Carry tolerances,
+  environmental effects, parasitics, connection losses, and measurement uncertainty
+  far enough to decide whether margin is real; otherwise label the result a nominal
+  feasibility estimate rather than a verified design.
 
 ## Invariant 3 — conventions (identical across all chapters)
 - **Front matter:** `title` (registry), one-sentence `description`, `chapter-id`,
@@ -56,13 +82,21 @@ stakes allow.
   distinguish equality / approximation / tolerance / bound / uncertainty; state the
   amplitude type (instantaneous, peak, pk-pk, RMS, average, phasor, spectral
   density); uncertainty is first-class.
+- **Evidence integrity:** never present invented or internally generated values as
+  measured data. Label them **synthetic / illustrative** beside the table or figure,
+  explain what they can teach, and state that they do not qualify the physical
+  claim. Authentic measurements identify configuration, instrument, range,
+  calibration state, raw observations, and uncertainty basis. A datasheet accuracy
+  limit is not automatically a $k=2$ expanded uncertainty.
 - **Headings:** natural and chapter-specific — never the word "model" in a heading,
   never a generic template label reused book-wide.
 - **Mermaid:** vertical `flowchart TB`, concise nodes, detail in caption/alt, **no
   `$…$`** — Unicode subscripts (`Rₜₕ`, `Rᵢₙ ∥ Cᵢₙ`) or plain names. Every figure has
   caption + alt text.
 - **Code:** standard-library, parameterized, runnable, with an expected-output
-  block; short lines that wrap in print.
+  block; lines short enough to survive print without awkward wrapping. Run it,
+  compare actual and expected output, and keep variable names synchronized with the
+  prose while avoiding symbol names that become ambiguous in code.
 - **Circuits:** CircuitikZ source in `curriculum/circuits/<id>.tex`, registered in
   `catalog.toml`, referenced as `../../../build/circuits/<id>.png`; explicit
   connection dot at every 3+ conductor junction; test-point labels off wires and
@@ -96,16 +130,63 @@ defensible decision or capability.** Those are functions to fulfill, not section
 to stamp. Use tables, derivations, procedures, and comparisons freely where they
 teach better than prose.
 
+## Make equations teach
+
+For each equation central to the chapter, build a short explanatory chain. Scale
+the chain to the equation's importance; a defining relation may need only a
+paragraph, while the governing design equation may need a full worked example.
+
+1. **Name the physical question.** Say what the relation lets the reader predict or
+   decide before displaying symbols.
+2. **Declare references and quantities.** Define every symbol, sign, amplitude type,
+   and SI unit. For vector or field relations, declare axes, path, surface, or
+   geometry before reducing them to scalars.
+3. **Derive or source it.** Show the shortest first-principles path that preserves
+   understanding. Identify each approximation at the line where it enters.
+4. **Check dimensions.** Do this explicitly for the central relation and whenever a
+   unit conversion or derived unit is instructional.
+5. **Demonstrate it.** Estimate first, substitute checkable values, report sensible
+   precision, and interpret the sign and magnitude in the physical system.
+6. **Interrogate it.** Reverse a reference, vary one parameter, examine zero and
+   large-value limits, or add the leading non-ideal effect. Tell the reader what
+   observation would reveal that the relation is being used outside its range.
+7. **Hand it to practice.** Connect the result to the schematic, code, data, test
+   point, component selection, or acceptance criterion that consumes it.
+
+Avoid two common failures: a wall of algebra with no physical reading, and friendly
+prose that never gives the reader enough mathematics to reproduce the result.
+
 ## Workflow
-1. Draft the `.qmd` at the registry `file` path; author and render any circuits.
-2. `python3 curriculum/tools/validate.py` — must pass.
-3. `quarto render curriculum/book/<file> --to html` — must succeed; verify no
+1. Draft the `.qmd` at the registry `file` path. Build an equation inventory while
+   drafting: for every central relation record its status, references, assumptions,
+   units, demonstration, limiting case, and downstream use.
+2. Audit quantitative inputs. Cite real specifications or mark values
+   illustrative; include temperature, frequency, tolerance, aging, geometry,
+   loading, connector/contact effects, and other operating conditions whenever they
+   can change the decision. A nominal calculation is not a worst-case design.
+3. Audit evidence. Separate prediction, synthetic teaching data, simulation,
+   authentic measurement, and qualified claim. Make the prose say exactly which
+   rung has actually been reached.
+4. Author and render any circuits. Inspect the rendered images, not just the source,
+   for arrow direction, polarity, junction dots, legible labels, and correspondence
+   with the equations and test points.
+5. Run every code listing and compare it with its expected-output block.
+6. `python3 curriculum/tools/validate.py` — must pass.
+7. `quarto render curriculum/book/<file> --to html` — must succeed; verify no
    "model" in headings, `[1]` citations, `TB` mermaid with Unicode subscripts, the
    MCQ with a–d options, figures resolving, and equations rendering.
-4. Report the layout you chose and why, any new `references.bib` keys, and the
+8. Read the rendered chapter once as a student: can every central result be
+   recomputed, can every sign be interpreted, and is it clear what is exact,
+   illustrative, measured, assumed, or still unverified?
+9. Report the layout you chose and why, any new `references.bib` keys, and the
    verification results.
 
 ## Quality bar
 Correct, specific, and thorough — quality lecture material a student could learn
 from and an instructor could teach from unchanged. Depth and factual precision beat
-brevity; a generic or hand-wavy chapter is a failed chapter.
+brevity; a generic or hand-wavy chapter is a failed chapter. Completeness does not
+mean mentioning every adjacent topic. It means that the chapter's promised exit
+capability is fully supported: prerequisites are named, central quantities are
+defined, equations are derived and demonstrated, evidence is honestly classified,
+failure boundaries are visible, exercises cover the misconceptions, and the final
+decision is valid under stated conditions.

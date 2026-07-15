@@ -1,44 +1,1038 @@
 ---
 title: "Charge, fields, voltage, and current"
+description: "Relate charge, electric field, potential difference, and current, with the reference directions that make every later circuit statement unambiguous."
 chapter-id: F02
-status: outline
+status: draft
 ---
 
-::: {.callout-note title="Chapter outline"}
-The scope and dependency boundary are stable. Full exposition, worked examples,
-exercises, and tested practical evidence still need authoring and review.
+::: {.callout-note title="Chapter maturity — draft"}
+This chapter presents a complete instructional path: exposition, first-principles
+derivations, worked examples, an executable check, a measurement plan with an
+explicitly illustrative dataset, a fault diagnosis, and a full exercise set. It is
+still subject to technical and editorial revision, and the physical evidence it
+describes is collected in the aligned laboratory work, not in the prose. See how to
+interpret status levels in the [reading roadmap](../roadmap.qmd).
+:::
+
+::: {.callout-warning title="Safety boundary for this chapter"}
+Everything here stays within the **current-limited, extra-low-voltage** boundary
+set in [F01](f01-safe-practice.qmd): bench work under local supervision and
+approved procedures. This chapter defines quantities and conventions; it is **not**
+authorization to work on mains, high-voltage, high-energy batteries, RF power, or
+any safety-critical system. Even at extra-low voltage, a low-impedance source or a
+charged capacitor can release enough energy to heat conductors, damage equipment,
+or cause burns. Establish both the voltage and available-energy boundary before
+touching metal [@iec60479].
 :::
 
 ## Central question
 
-What physical quantities are moving or changing when a circuit appears to do work?
+> When a circuit lights a lamp, charges a phone, or reads a sensor, what physical
+> quantity is actually moving, what is merely changing, and how fast does each one
+> happen?
+
+Ask three careful people what "flows" in a wire and you will get three answers:
+electrons, current, and energy. All three are involved, none of them is a synonym
+for the others, and the differences between them are exactly what a beginner keeps
+getting wrong — that a bulb "uses up current," that electrons "race at the speed of
+light," that a wire is always at "one voltage." This chapter replaces those slogans
+with four precisely defined quantities — **charge, electric field, potential
+difference, and current** — and, just as importantly, with the **reference
+directions** that let a signed measurement mean something. [F01](f01-safe-practice.qmd)
+promised that the sign of a reading is a claim about a direction you chose in
+advance; this is the chapter that makes good on it.
+
+::: {.callout-tip title="Make a prediction first"}
+A lamp sits at the far end of a 3 m cord. You close the switch. Commit to three
+answers before reading on. **(a)** When does the *electrical disturbance* reach the
+lamp — nanoseconds, seconds, or minutes? **(b)** How fast does an individual
+conduction electron drift along the wire while current is steady — a fraction of a
+millimetre per second, a few metres per second, or near the speed of light? **(c)**
+In steady operation, is the current leaving the lamp smaller than the current
+entering it because the lamp "used some up"? Do not use the lamp's visible response
+as the clock for part (a): an incandescent filament, an LED, and their drivers have
+different response times after the electrical change arrives. Write the three
+answers down before continuing [@horowitz2015art].
+:::
 
 ## Learning outcomes
 
-After completing this chapter, the reader should be able to:
+This chapter assumes only [F01](f01-safe-practice.qmd) (the bench, SI units, and the
+reference-direction habit) and the algebra and scientific notation of
+[M01](../appendices/m01-algebra-units-complex.qmd). After completing it you should
+be able to:
 
-- explain the central model and the assumptions that bound its use;
-- connect physical behavior, a schematic or architecture, and quantitative reasoning;
-- interpret evidence and identify at least one credible failure mode;
-- make and defend a design or diagnostic decision;
+- **define electric charge and state its conservation**, relate the coulomb to a
+  count of elementary charges, and use both to do charge bookkeeping (builds on the
+  SI base units of F01);
+- **explain the electric field and potential difference** as *force per unit charge*
+  and *energy per unit charge*, compute a voltage from a uniform field, and say why a
+  single number — a node voltage — can describe a point at all (builds on the energy
+  idea of F01);
+- **define current as the rate of charge flow through a chosen reference direction**,
+  read a signed current or voltage correctly, and apply the associated (passive) sign
+  convention (this is the chapter F01's reference-direction habit was pointing to);
+- **estimate carrier drift velocity and contrast it with signal-propagation speed**,
+  and thereby say precisely what moves quickly and what moves slowly (a quantitative
+  outcome, built on SI estimation);
+- **explain how carrier density and mobility distinguish conductors,
+  semiconductors, and insulators**, and use resistivity and $R=\rho L/A$ *as an
+  estimate* to size a conductor (looking ahead to Ohm's law in
+  [F03](f03-sources-loads-resistance.qmd)); and
+- **state the assumptions behind an ideal wire and a lumped circuit**, apply charge
+  conservation at a node, and name the length-versus-wavelength condition under which
+  the whole picture stops being valid.
 
-## Concept path
+## Four quantities, one event
 
-- charge and conservation;
-- electric field and potential difference;
-- current as a rate with an explicit reference direction;
-- conductors, insulators, and material response;
-- ideal wires, nodes, and the limits of lumped models;
+Charge is the conserved property at the centre of the story; the other quantities
+describe its interaction or transport. @fig-quantity-chain lays out the vocabulary
+on one page: the **field** is force *per unit charge*, **potential difference** is
+energy transferred *per unit charge*, and **current** is the net charge crossing a
+chosen surface *per unit time*. Keep those distinctions; the rest of the chapter
+develops them.
 
-## Evidence and practice
+```{mermaid}
+%%| label: fig-quantity-chain
+%%| fig-cap: "Four related but non-interchangeable quantities. Charge Q is a conserved property; electric field E gives force per unit charge; potential difference V gives field work per unit charge after a polarity is declared; and current I gives the rate of net charge transport through a declared surface."
+%%| fig-alt: "A vertical diagram with charge Q at the top as a conserved property. One branch leads to electric field E, force per unit charge, then to potential difference V, field work per unit charge. A separate branch leads from charge Q to current I, net charge crossing per unit time."
+flowchart TB
+  Q["Charge Q (C)<br/>conserved property"]
+  E["Electric field E (V/m)<br/>force per unit charge"]
+  V["Potential difference V (V)<br/>field work per unit charge"]
+  I["Current I (A)<br/>net charge per unit time"]
+  Q -->|"force on it: F = qE"| E
+  E -->|"work to move it: W = qV"| V
+  Q -->|"rate it flows: I = dQ/dt"| I
+```
 
-The completed chapter will include a prediction, a worked model, a simulation or
-executable check where it adds value, measured or authentic data, a fault or
-model mismatch, and a requirements-based design decision. The final exercise set
-will mix retrieval, calculation, interpretation, debugging, and open design.
+@tbl-quantities is the same map as a reference table; the derivations that justify
+each "defining relation" column occupy the next three sections.
+
+| Quantity | Symbol | SI unit | Defining relation | What it measures |
+|---|---|---|---|---|
+| electric charge | $Q,\ q$ | coulomb, C ($=$ A·s) | conserved property | net amount of positive minus negative charge |
+| electric field | $\vec E,\ E$ | volt/metre, V/m ($\equiv$ N/C) | $\vec F = q\vec E$ | force a unit positive charge feels at a point |
+| potential difference (voltage) | $V,\ v$ | volt, V ($\equiv$ J/C) | $V_{AB}=W_{A\to B}^{(E)}/q$ | field work per unit charge, with $+$ at A and $-$ at B |
+| current | $I,\ i$ | ampere, A ($\equiv$ C/s) | $i = \mathrm{d}q_{\text{crossed}}/\mathrm{d}t$ | rate of net charge transport through a chosen surface |
+
+: The four quantities this chapter defines, with their SI units and defining relations. The ampere is an SI base unit; charge is the derived quantity A·s. Vector symbols ($\vec E$, $\vec F$) carry a direction in space; circuit voltage and current carry signs relative to declared references. {#tbl-quantities}
+
+## Charge: the conserved quantity everything else is built from
+
+**Charge is a property of matter, like mass, but it comes in two signs and it is
+conserved.** Two facts make it the bedrock of the whole subject.
+
+*Ordinary circuit charge transfer is quantized.* Electrons and ions carry charge
+in integer multiples of the elementary charge $e$, whose value the 2019 SI
+redefinition fixes *exactly* [@bipm2019si]:
+$$
+e = 1.602176634\times10^{-19}~\text{C}.
+$$
+A proton carries $+e$ and an electron $-e$. Net charge transferred through an
+ordinary wire is therefore counted in steps of $e$. (Fractionally charged quarks
+are not isolated circuit carriers; some advanced solid-state systems have
+fractional *quasiparticle* excitations, outside this chapter's scope.) The coulomb
+is a very large count: one coulomb corresponds to
+$$
+\frac{1~\text{C}}{e} = \frac{1}{1.602176634\times10^{-19}}
+   \approx 6.24\times10^{18}\ \text{elementary charges}.
+$$
+Because the count is astronomically large in ordinary macroscopic circuits, a
+continuous-charge approximation is excellent there. Granularity becomes observable
+when very small numbers of carriers or shot noise matter, as in photodiodes and
+small devices (a thread picked up in
+[A06](../02-analog/a06-noise-nonlinearity-stability.qmd)).
+
+*Net electric charge is conserved.* Charged particles can be created, destroyed,
+or transformed in physical reactions, but the algebraic total charge does not
+change. At circuit scale we ordinarily move and separate existing charge: if net
+charge leaves a defined region, the region's stored charge falls by exactly that
+amount. This principle produces the continuity equation and, after a lumped-circuit
+approximation is stated, Kirchhoff's current law. It is an exact conservation law;
+the later approximation is that a circuit node stores negligible net charge
+[@griffiths2017electrodynamics].
+
+For stationary point charges in vacuum, the magnitude of their force is described
+by **Coulomb's law** [@griffiths2017electrodynamics]:
+$$
+|F| = \frac{1}{4\pi\varepsilon_0}\,\frac{|q_1 q_2|}{r^{2}},
+\qquad \frac{1}{4\pi\varepsilon_0}\approx 8.99\times10^{9}~\text{N·m}^2/\text{C}^2,
+$$ {#eq-coulomb}
+where $r$ is their separation and $\varepsilon_0\approx8.854\times10^{-12}$ F/m is
+the vacuum permittivity. The force lies along the line joining the charges: like
+signs repel, unlike signs attract, and the magnitude falls as $1/r^2$. We will
+rarely compute @eq-coulomb directly — circuits are built from *fields* and
+*potentials*, which package Coulomb's law into more useful quantities — but it is the
+reason those quantities exist.
+
+::: {.callout-note title="Demonstration — reading Coulomb's law"}
+Two point charges of $+1.0$ nC separated by 0.10 m in vacuum repel with
+$$
+|F|=(8.99\times10^9)
+\frac{(1.0\times10^{-9})^2}{(0.10)^2}
+=8.99\times10^{-7}~\text{N}\approx0.90~\mu\text{N}.
+$$
+Doubling the separation makes the force one quarter as large; reversing one
+charge's sign leaves the magnitude unchanged but changes repulsion to attraction.
+The calculation applies to point charges in vacuum. It is not a wire-force formula:
+extended conductors rearrange surface charge, and material polarization changes the
+field.
+:::
+
+::: {.callout-note title="Worked example — charge bookkeeping in a battery cell"}
+*Estimate.* Consider an illustrative cell with a rated capacity of 3.00 A·h. An
+ampere-hour is current times time, hence charge, so a full rated discharge transfers
+order $10^{4}$ C through the external circuit, or order $10^{23}$ elementary-charge
+equivalents. State that before computing.
+
+*Calculate.* Charge delivered:
+$$
+Q = 3.0~\text{A·h}\times 3600~\tfrac{\text{s}}{\text{h}} = 1.08\times10^{4}~\text{C}.
+$$
+Number of elementary-charge equivalents: $Q/e =
+1.08\times10^{4}/1.602\times10^{-19}=6.74\times10^{22}$. In a metallic external
+wire, electrons carry that charge; ions also move inside the electrochemical cell.
+
+*Check.* Units: A·h·(s/h) = A·s = C. ✓ Order of magnitude: $10^4$ C and $10^{23}$
+charge equivalents, as predicted. At a 1.00 A draw the cell lasts
+$Q/I=1.08\times10^4$ s
+$\approx 3$ h, consistent with "3 A·h at 1 A ≈ 3 h." ✓
+
+*Interpret.* The carrier count is unwieldy, which is why circuit work uses coulombs
+and amperes. The 3.00 A·h value is **illustrative**, not a specification for an
+unnamed cell. A real datasheet defines test current, cutoff voltage, temperature,
+aging conditions, and whether the stated capacity is typical or guaranteed; the
+simple 3 h estimate is valid only if the rated capacity applies at the stated 1.0 A
+operating condition.
+:::
+
+## Field and potential: force per charge, energy per charge
+
+A bare charge tells you nothing about what it will *do*; that depends on the other
+charges around it. Rather than re-run Coulomb's law over every pair, we summarize
+"the effect of all the other charges at this point" in one vector, the **electric
+field** $\vec E$, defined using a positive test charge small enough not to perturb
+the original charge distribution:
+$$
+\vec E = \frac{\vec F}{q}, \qquad [\,E\,] = \frac{\text{N}}{\text{C}}
+   = \frac{\text{V}}{\text{m}}.
+$$ {#eq-field}
+A positive charge placed in the field feels $\vec F = q\vec E$ along the field; a
+negative charge feels a force *against* it. The two unit spellings N/C and V/m are
+identical, and the second one already hints that the field is a voltage spread over
+distance.
+
+**Voltage is energy per charge, but its sign requires a declared polarity.** Define
+$V_{AB}$ with $+$ at A and $-$ at B, so $V_{AB}\equiv V_A-V_B$. If the electric
+field moves a positive test charge $q$ from A to B, the work done *by the field* is
+$W_{A\to B}^{(E)}=qV_{AB}$. Equivalently, the charge's potential-energy change is
+$\Delta U_{A\to B}=-qV_{AB}$. Therefore
+$$
+V_{AB} = \frac{W_{A\to B}^{(E)}}{q}
+=-\frac{\Delta U_{A\to B}}{q},
+\qquad [\,V\,] = \frac{\text{J}}{\text{C}} = \text{volt}.
+$$ {#eq-voltage}
+One volt is one joule per coulomb. When one coulomb moves through a potential drop
+of one volt, the field transfers one joule. The *magnitude* of the energy change for
+one electron crossing a one-volt difference is one **electron-volt**,
+$1~\text{eV}=e\times1~\text{V}=1.602176634\times10^{-19}$ J exactly. Whether the
+electron gains or loses potential energy depends on its direction and negative
+charge.
+
+For a **uniform electrostatic field**, choose A and B a distance $d$ apart with the
+field pointing from A toward B. The force on a positive test charge is constant, so
+the field work from A to B is $W_{A\to B}^{(E)}=qEd$. With $+$ at A and $-$ at B,
+@eq-voltage becomes
+$$
+V_{AB} = E\,d \qquad\Longleftrightarrow\qquad E = \frac{V_{AB}}{d}.
+$$ {#eq-ved}
+This is why the field's unit is volts per metre: 100 V across an idealized 1 mm
+uniform-field gap corresponds to $10^5$ V/m. Do not turn that ratio alone into an
+insulation claim: breakdown also depends on geometry, pressure, humidity, material,
+surface condition, and transient duration.
+
+::: {.callout-note title="Demonstration — polarity controls the energy sign"}
+Let A be 9.0 V above B, so the declared voltage is $V_{AB}=+9.0$ V. If the field
+moves $+2.0$ C from A to B,
+$$
+W_{A\to B}^{(E)}=qV_{AB}=(2.0~\text{C})(9.0~\text{J/C})=18~\text{J},
+$$
+and the charge's potential energy changes by $-18$ J. Reverse the reference:
+$V_{BA}=-9.0$ V. Nothing physical changed; the sign changed because the named
+polarity changed. A negative test charge reverses the force and energy signs again.
+This is why a voltage number without its two points and polarity is incomplete.
+:::
+
+Two properties of voltage matter for the rest of the book.
+
+**Only differences are physical; a reference is a choice.** @eq-voltage defines a
+*difference* between two points. The "voltage at a node" is shorthand for its
+difference from a **reference node** we agree to call 0 V (the "ground" or "common" of
+F01). Choosing a different reference shifts every node voltage by the same constant
+but changes no voltage difference, current, field, or energy difference. A
+differential measurement between the same two points is unchanged — exactly as
+changing the zero of a height scale changes no separation. Declare the reference
+before you quote a node voltage.
+
+**In electrostatics the field is conservative, so potential is path-independent.**
+The field work per charge between A and B is the same along every path
+[@griffiths2017electrodynamics]. That is what permits one scalar potential at each
+point. When magnetic flux through a loop changes with time, however, Faraday's law
+gives nonzero electric-field circulation around the loop. A measured terminal
+voltage then depends on the physical measurement path as well as its endpoints.
+Lumped circuit theory remains useful when the loop is small enough that this induced
+term is negligible; otherwise a ground symbol hides important geometry. That is the
+reason F01 treated the measurement loop as part of the circuit, and it returns in
+[F06](f06-measurement-uncertainty-debug.qmd).
+
+## Current: charge in motion, with a chosen positive sense
+
+**Conduction current** is the signed rate at which net charge crosses a chosen
+surface, such as the cross-section of a wire. Choose the positive normal to that
+surface first, and let $q_{\text{crossed}}(t)$ be the algebraic charge that has
+crossed in that direction. Then
+$$
+i(t) = \frac{\mathrm{d}q_{\text{crossed}}}{\mathrm{d}t},
+\qquad\text{and over an interval}\qquad I_{\text{avg}} = \frac{\Delta Q}{\Delta t},
+\qquad [\,I\,] = \frac{\text{C}}{\text{s}} = \text{ampere}.
+$$ {#eq-current}
+One ampere is one coulomb per second — about $6.24\times10^{18}$ elementary charges
+of one sign crossing per second in the simple single-carrier picture. The ampere is
+the electrical SI base unit, and since
+2019 it is defined by fixing $e$ (@eq-coulomb's charge) together with the second
+[@bipm2019si]. For steady DC, instantaneous and average current coincide. The
+derivative form (calculus reviewed in
+[M02](../appendices/m02-calculus-linear-differential.qmd)) becomes essential the
+moment a capacitor charges in [F07](f07-capacitors-inductors-transients.qmd), where
+$i = C\,\mathrm{d}v/\mathrm{d}t$. No electron crosses a capacitor's dielectric;
+changing electric flux supplies the corresponding displacement-current term in
+Maxwell's equations. At capacitor terminals, circuit theory packages that effect as
+the branch current $i$.
+
+::: {.callout-note title="Demonstration — current accumulates charge"}
+A steady $+20$ mA through the declared positive direction for 250 ms transfers
+$$
+\Delta Q=I\Delta t=(20\times10^{-3}~\text{C/s})(250\times10^{-3}~\text{s})
+=5.0\times10^{-3}~\text{C}.
+$$
+That is $5.0$ mC, or $\Delta Q/e\approx3.1\times10^{16}$ elementary-charge
+equivalents. If the same physical current flows opposite the reference arrow,
+$I=-20$ mA and the signed $\Delta Q$ is $-5.0$ mC. The magnitude did not become
+"negative"; the sign records direction.
+:::
+
+### The positive sense is yours to declare
+
+Current has a direction, and a number for it is meaningless until you say which way
+counts as positive. **The reference direction is an arrow you draw on the branch
+before you measure anything.** A measured value of $+15$ mA then means "positive
+charge crosses in the arrow's direction at 15 mA"; a value of $-15$ mA means "the
+actual flow is 15 mA *against* the arrow." Neither is wrong; the sign is information
+about direction relative to *your* choice, exactly as F01 insisted for a voltmeter's
+leads. @fig-reference-directions fixes such a choice for a one-loop circuit: the
+current reference is clockwise, and the voltage across $R$ is marked $+$ where the
+current enters.
+
+![A single source–load loop with its reference directions declared *before* any measurement. The current reference $I$ is clockwise; the load voltage $V_R$ is marked $+$ at the terminal the reference current enters. With the current arrow entering the $+$ terminal, the *passive sign convention* applies to $R$, so a positive $V_R I$ is power the resistor *absorbs*. TP\_A and TP\_B are the test points where the two node voltages are measured against the 0 V reference.](../../../build/circuits/f02-reference-directions.png){#fig-reference-directions fig-alt="A voltage source VS with its plus terminal at the top drives a clockwise reference current I through a load resistor R and back to the 0 V reference node. The voltage across R is marked positive at the top where the current enters. Two test points, TP_A at the top node and TP_B at the 0 V node, are brought out to the right."}
+
+The choice in @fig-reference-directions is not arbitrary in one respect: for a
+*load* we conventionally point the current reference into the $+$ voltage terminal.
+This is the **passive sign convention** (also called *associated* reference
+directions), and it makes the product $p = vi$ come out **positive when the element
+absorbs energy** and negative when it delivers energy. An ideal positive resistor
+always absorbs, so
+with associated references its power is positive; a source usually delivers, so its
+power comes out negative under the same convention. We only *name* the convention
+here — power itself is the subject of [F05](f05-energy-power-thermal.qmd) — but fixing
+it now is what keeps the sign of every future energy statement honest. (These
+quantities are DC or instantaneous values; when signals become sinusoidal in
+[F08](f08-sinusoids-impedance-frequency.qmd), you must additionally say whether an
+amplitude is peak, peak-to-peak, or RMS, a distinction F01 flagged and F08 formalizes.)
+For a quick numerical reading, $v=+5.0$ V and $i=+20$ mA under associated
+references gives $p=vi=+0.10$ W: the element absorbs energy at 0.10 J/s. If the
+measured current were $-20$ mA with the same voltage reference, $p=-0.10$ W and the
+element would deliver energy at that instant.
+
+### Conventional current and electron flow are the same physics
+
+By a historical convention older than the electron, **current points in the direction
+positive charge would move.** In a metal wire the mobile charges are electrons, which
+are negative, so the electrons physically drift *opposite* to the conventional current
+arrow. This is not a mistake to be corrected and not two competing currents: it is one
+physical flow with two equivalent descriptions. A conventional current of $+1$ A to
+the right *is* a stream of electrons moving left, because moving negative charge one
+way is electrically identical to moving positive charge the other way. Every equation
+in this book uses conventional current; you only need the electron picture when the
+carrier's actual identity matters, as in a semiconductor junction
+([A01](../02-analog/a01-semiconductor-diodes.qmd)), where electrons and positively
+charged "holes" genuinely move in opposite directions and both contribute.
+
+## What actually moves, and how fast
+
+Here the opening prediction gets settled, and the answer is more interesting than
+either slogan. Relate the macroscopic current to the microscopic motion of carriers.
+Choose a positive axis along a uniform wire of cross-sectional area $A$. In a
+single-carrier conductor with $n$ mobile carriers per unit volume, carrier charge
+$q_c$, and signed mean drift velocity $v_d$ along that axis, the carriers crossing a
+plane in time $\Delta t$ occupy a signed slab length $v_d\Delta t$. Multiplying
+number density, volume, and charge gives
+$$
+I = n\,q_c\,A\,v_d, \qquad\text{equivalently}\qquad
+J \equiv \frac{I}{A} = n q_c v_d,
+$$ {#eq-drift}
+where $J$ is the signed component of **current density** in A/m². For electrons,
+$q_c=-e$ and their drift velocity is opposite conventional current, so the two
+negative signs give positive $I$. When only the speed is wanted, use magnitudes:
+$|I|=neA|v_d|$. This result is charge counting; the material physics enters through
+the values of $n$ and $v_d$.
+
+::: {.callout-note title="Worked example — slow drift and fast propagation"}
+*Estimate.* Copper has about one free electron per atom, $n\approx 8.5\times10^{28}$
+per m³ [@kittel2005solidstate]. A 1 A current in a thin hookup wire (AWG 24,
+$A = 0.205~\text{mm}^2 = 2.05\times10^{-7}~\text{m}^2$) spreads that one amp over a
+huge number of carriers, so each must move *slowly*. Guess sub-mm/s.
+
+*Calculate.* Solve @eq-drift for the drift velocity:
+$$
+|v_d| = \frac{|I|}{neA}
+= \frac{1~\text{A}}{(8.5\times10^{28})(1.602\times10^{-19})(2.05\times10^{-7})}
+\approx 3.6\times10^{-4}~\text{m/s} = 0.36~\text{mm/s}.
+$$
+
+*Check.* Units: $\text{A}/(\text{m}^{-3}\cdot\text{C}\cdot\text{m}^2)
+= \text{A}/(\text{C·m}^{-1}) = \text{A·m}/(\text{A·s}) = \text{m/s}$. ✓ At 0.36 mm/s a
+given electron takes $1~\text{m}/(3.6\times10^{-4}~\text{m/s})\approx 2800$ s, about
+**47 minutes**, to travel one metre.
+
+*Interpret.* Closing the switch launches an electromagnetic disturbance through
+the field in and around the two-conductor path. Using an **illustrative** propagation
+speed of $2.0\times10^8$ m/s, the earliest electrical change reaches a lamp 3.0 m
+away after about $3.0/(2.0\times10^8)=15$ ns [@ulaby2015electromagnetics]. That is a
+propagation-delay estimate, not a claim that visible light appears in 15 ns: the
+lamp and any driver add electrical, recombination, or thermal response time. As the
+field changes locally along the cord, local electrons acquire their slow drift.
+During 15 ns an electron drifting at the calculated steady speed would cover only
+$(3.6\times10^{-4})(15\times10^{-9})\approx5\times10^{-12}$ m, a few picometres.
+Thus the electrical influence propagates quickly while charge carriers drift
+slowly. Energy transfer is described by the electromagnetic field; later chapters
+formalize its rate as power.
+:::
+
+For the third prediction, scope matters. In a lumped series loop at steady state,
+current is equal at every cross-section because the charge stored in each region is
+no longer changing. During switching, tiny surface-charge changes and parasitic
+capacitances help establish the new fields, so currents at separated cross-sections
+need not match at the same instant. A lamp does not consume current: in steady
+operation, charge enters and leaves at equal rates while electrical energy is
+converted to light and heat. **Energy is transferred; net charge is conserved.**
+We examine the steady claim with an illustrative dataset below.
+
+## Conductors, insulators, and the materials in between
+
+Carrier density is important, but it is not the whole classification. A carrier
+must also respond to a field. In the low-field, approximately linear regime, define
+the **mobility** $\mu$ by the magnitude relation $|v_d|=\mu|E|$. Combining it with
+@eq-drift gives, for one carrier type,
+$$
+J=\sigma E, \qquad \sigma=n|q_c|\mu, \qquad \rho\equiv\frac{1}{\sigma},
+$$ {#eq-conductivity}
+with conductivity $\sigma$ in S/m and resistivity $\rho$ in Ω·m. Multiple carrier
+types contribute additively to conductivity. This compact relation assumes an
+isotropic, homogeneous material, sufficiently small field, and stable temperature;
+mobility can depend on temperature, field, impurities, and crystal direction
+[@kittel2005solidstate; @sedra2020microelectronic].
+
+| Class | Carrier picture | Why it is useful | What defeats the label |
+|---|---|---|---|
+| conductor | many mobile carriers with useful mobility | small field can support substantial current; used for wires, contacts, and planes | finite resistivity, heating, high frequency, and geometry |
+| semiconductor | electron and hole populations can be changed by doping, fields, light, and temperature | controllable conductivity enables diodes, transistors, and sensors | operation is strongly condition- and device-dependent |
+| insulator or dielectric | very few mobile carriers under rated conditions; polarization can still occur | separates conductors and stores electric-field energy | leakage, contamination, humidity, surface conduction, and breakdown |
+
+: Conductors, semiconductors, and insulators are operating descriptions, not perfectly sharp species. Carrier density and mobility jointly set low-field conductivity; environment and applied field can change the classification in practice. {#tbl-materials}
+
+Copper illustrates the conducting end: near room temperature it has roughly one
+conduction electron per atom, $n\approx8.5\times10^{28}$ m⁻³, and a representative
+resistivity near $1.7\times10^{-8}$ Ω·m. Intrinsic silicon at 300 K has electron and
+hole concentrations of only order $10^{16}$ m⁻³, but doping and electric fields
+make carrier populations controllable over wide ranges [@kittel2005solidstate;
+@sedra2020microelectronic]. An insulator is not literally carrier-free: leakage and
+polarization still occur, and its useful limits must come from the actual material
+or component specification. Contamination and moisture can make a nominally
+insulating surface conduct enough to corrupt a high-impedance circuit.
+
+::: {.callout-note title="Demonstration — the small field inside a copper wire"}
+For the 1.0 A, AWG 24 example, $A=2.05\times10^{-7}$ m², so
+$$
+J=\frac{I}{A}\approx4.88\times10^6~\text{A/m}^2.
+$$
+Using the representative room-temperature copper resistivity above,
+$$
+E=\rho J\approx(1.68\times10^{-8})(4.88\times10^6)
+=8.2\times10^{-2}~\text{V/m}.
+$$
+A uniform 1.0 m length therefore drops about $EL=82$ mV, whereas a 1 cm length
+drops about 0.82 mV. The limiting case is visible: as length or resistivity tends
+to zero, so does the drop. This anticipates $R=\rho L/A$ in F03 and also shows why
+"wire = one node" can be excellent over a centimetre yet poor over a long,
+high-current return.
+:::
+
+**Inside a real conductor carrying current there is a field, and it exposes the
+ideal-wire approximation.** In electrostatic equilibrium — no current — the
+mobile charges rearrange until the field inside a conductor is zero; any leftover field
+would keep pushing them [@griffiths2017electrodynamics]. When the conductor *carries*
+steady current in the linear regime, an axial field remains to sustain the drift.
+The better the conductor, the smaller that field for a given current density. In
+the limit $\rho\to0$ it vanishes: an **ideal wire** has zero field along it, hence
+zero voltage across it, hence its two ends are at *the same potential*. That
+idealization is what lets us draw a wire as a single node — and knowing it is an
+idealization is what lets us predict when it fails.
+
+## Nodes, ideal wires, and the reach of a lumped description
+
+A **node** is the set of points joined by ideal (zero-resistance) wire; by the
+argument just made they share one potential, so the whole node has a single voltage.
+A **branch** is a component between two nodes; a **loop** is a closed path. These three
+words, and the two conservation laws attached to them, are the grammar of every
+schematic and the subject of [F04](f04-networks-kirchhoff.qmd). One of the two laws is
+already in hand.
+
+**Charge conservation permits accumulation and accounts for it exactly.** Enclose a
+physical junction in a small boundary and define branch currents as positive into
+it. Conservation says
+$$
+\sum I_{\text{in}}=\frac{\mathrm dQ_{\text{stored}}}{\mathrm dt}.
+$$ {#eq-continuity-node}
+This is the integral continuity equation: any instantaneous imbalance changes the
+charge stored in the enclosed region. In the **lumped ideal-node approximation**, the
+region's charge storage is negligible or is represented explicitly by a capacitor
+branch. Then $\mathrm dQ_{\text{stored}}/\mathrm dt\approx0$, giving Kirchhoff's
+current law (KCL), $\sum I_{\text{in}}=0$ for algebraically signed currents.
+
+@fig-node-currents declares $I_1$ into node $a$ and $I_2,I_3$ out, so
+$$
+I_1-I_2-I_3=\frac{\mathrm dQ_a}{\mathrm dt}
+\quad\xrightarrow[\text{ideal node}]{}\quad
+I_1=I_2+I_3.
+$$ {#eq-kcl}
+The steady series-loop statement — equal current at successive cross-sections — is
+the two-branch case after accumulation and unrepresented leakage are excluded. F04
+develops KCL as a network tool.
+
+::: {.callout-note title="Demonstration — what an unbalanced node equation predicts"}
+Suppose the declared currents in @fig-node-currents are $I_1=12$ mA into the node,
+$I_2=5$ mA out, and $I_3=6$ mA out. Then
+$$
+\frac{\mathrm dQ_a}{\mathrm dt}=I_1-I_2-I_3=1~\text{mA}.
+$$
+If that imbalance lasted 2 ms, the enclosed region would gain
+$\Delta Q=(1~\text{mA})(2~\text{ms})=2~\mu\text{C}$. A tiny physical junction
+cannot generally accept that charge without its voltage changing, so the currents
+or fields must respond. If $I_3$ instead becomes 7 mA, the derivative is zero and
+the node can remain in steady state. KCL is therefore not a rule that deletes
+accumulation; it is the zero-accumulation operating case of the conservation law.
+:::
+
+![Charge conservation at a junction. With the declared arrows, $I_1-I_2-I_3$ equals the rate of charge accumulation in the enclosed node region; the ideal-node approximation sets that rate to zero and gives $I_1=I_2+I_3$. The explicit dot marks a genuine three-conductor junction.](../../../build/circuits/f02-node-currents.png){#fig-node-currents fig-alt="Three resistor branches meet at a connection dot labelled node a. Current I1 points into the node; I2 and I3 point out. Their signed imbalance equals the rate of charge accumulation, and becomes zero for an ideal lumped node."}
+
+The single-potential node and the "same current everywhere in series" both rest on a
+hidden assumption: that the circuit is **lumped** — small enough that a signal crosses
+it in a time short compared with how fast the signal itself changes, so that "the
+voltage here" and "the voltage there" are the same *now*. Concretely, the lumped,
+ideal-wire description holds while the physical size $L$ of the relevant current
+loop is much smaller than the wavelength $\lambda = v/f$ of the highest significant
+frequency $f$
+(propagation speed $v\approx c$ on loose wire, slower in a dielectric)
+[@ulaby2015electromagnetics]; the common engineering line is
+$$
+L \ll \lambda, \qquad
+L < \frac{\lambda}{10}\ \text{as an initial screening rule}
+\quad\Longleftrightarrow\quad f < \frac{v}{10L}.
+$$ {#eq-lumped}
+The one-tenth-wavelength line is a heuristic, not an accuracy guarantee: acceptable
+electrical length depends on allowed phase error, interconnect impedance, source and
+load mismatch, and edge spectrum [@ulaby2015electromagnetics]. A digital signal's
+clock frequency alone is insufficient; its rise and fall times determine the
+significant high-frequency content. @fig-lumped-validity turns the screening test
+into the choice it represents.
+
+```{mermaid}
+%%| label: fig-lumped-validity
+%%| fig-cap: "Screening a connection for lumped treatment. Compare the relevant loop length L with the wavelength λ = v/f at the highest significant frequency. Small electrical length supports a lumped approximation; otherwise propagation, return-path geometry, and reflections require a distributed description. The one-tenth-wavelength rule is only a first screen, not a promised error bound."
+%%| fig-alt: "A decision flowchart. Begin with loop size L and highest significant frequency f. Compare L with wavelength lambda. If L is much smaller, use a lumped approximation and then check parasitics. If not, include propagation delay and transmission-line effects."
+flowchart TB
+  A["Circuit size L,<br/>fastest frequency f"]
+  B{"L ≪ λ ?<br/>(λ = v ∕ f)"}
+  A --> B
+  B -->|yes| C["Lumped approximation:<br/>then check parasitics"]
+  B -->|no| D["Distributed description:<br/>delay and reflections"]
+```
+
+::: {.callout-note title="Worked example — when does a benchtop stop being one node?"}
+*Estimate.* A breadboard assembly spans about $L = 0.30$ m of wire, effectively in
+air, so $v\approx c$. Below some frequency it is safely lumped; guess "tens to
+hundreds of MHz."
+
+*Calculate.* The screening boundary from @eq-lumped is $f = v/(10L) =
+$(3\times10^{8})/(10\times0.30)
+= 1.0\times10^{8}~\text{Hz} = 100~\text{MHz}$. On an FR4 PCB the signal slows to
+an illustrative $v\approx1.5\times10^{8}$ m/s, halving the boundary to about
+50 MHz. Actual PCB velocity depends on stack-up, field distribution, and frequency.
+
+*Check.* Sanity by wavelength: at 1 MHz, $\lambda = c/f = 300$ m $\gg 0.30$ m, so the
+board is $10^{-3}$ of a wavelength — emphatically lumped. At 2.4 GHz (Wi-Fi),
+$\lambda = 0.125$ m $\approx L$ — emphatically *not*. ✓
+
+*Interpret.* At 1 MHz the propagation phase across 0.30 m is small, but that alone
+does not make the wire ideal: finite resistance, inductance, capacitance, and return
+geometry can still matter. Near and above the screening boundary, or with fast
+logic edges containing appreciable energy there, the two ends cannot automatically
+be treated as the same node. The required accuracy decides how early to abandon the
+approximation. Distributed reasoning is developed in
+[R03](../06-realization/r03-signal-power-integrity-emc.qmd)
+and [S07](../05-domains/s07-communications-rf-antennas.qmd) — flagged here so you know
+the boundary of the tool you are about to use everywhere.
+:::
+
+## A measurement plan for steady current continuity
+
+A prediction becomes evidence only when it is tested. A clean test of the claim
+beginners most doubt is to compare steady current at several break points around a
+series loop. The physical test belongs to Lab **L02**. The values below form a
+**synthetic teaching dataset**, chosen to be internally consistent with the stated
+setup. They demonstrate analysis and record structure; they are not observations
+and do not qualify the physical claim [@horowitz2015art].
+
+Configuration (the reproducible record
+[T03](../appendices/t03-reproducible-engineering.qmd) asks for):
+
+- Illustrative source reading: 5.00 V DC; current limit set to 50 mA.
+- Illustrative series loop: $R_1=100.3$ Ω and $R_2=219.4$ Ω as measured before
+  assembly; nothing else intentionally connected.
+- Hypothetical meter specification: DC mA range, resolution 0.01 mA, series
+  **burden resistance** approximately 2 Ω at this operating point, and maximum
+  indication error ±(0.8 % of reading + 3 counts). A real record must identify the
+  instrument, range, calibration state, and actual datasheet.
+
+The prediction has two layers. Ideally $I = V/(R_1+R_2) = 5.00/319.7 = 15.6$ mA. But
+an ammeter is an **intrusion**, the dual of F01's voltmeter loading: to read current
+you break the loop and insert the meter, adding its burden resistance in series, which
+*lowers* the current slightly. With a 2 Ω burden the loop becomes 321.7 Ω and
+$I = 5.00/321.7 = 15.5$ mA. That small deficit is a *predictable systematic bias*, not
+noise.
+
+| Break point (meter inserted) | Ideal $V/(R_1+R_2)$ | With 2 Ω burden | Illustrative indication | Comparison |
+|---|---|---|---|---|
+| before $R_1$ | 15.6 mA | 15.5 mA | 15.54 mA ± 0.16 mA | consistent |
+| between $R_1$ and $R_2$ | 15.6 mA | 15.5 mA | 15.51 mA ± 0.16 mA | consistent |
+| after $R_2$ (return leg) | 15.6 mA | 15.5 mA | 15.55 mA ± 0.16 mA | consistent |
+
+: Synthetic series-current indications at three break points. The ±0.16 mA entries are conservative rounded limits from the hypothetical accuracy formula at about 15.5 mA; they are not $k=2$ expanded uncertainties. A complete uncertainty evaluation would also include source voltage, resistance, burden, temperature, and repeatability. {#tbl-current-continuity}
+
+Two patterns are deliberately visible in @tbl-current-continuity. First, the three
+intervals overlap, as expected for equal steady current at all break points. Second,
+their central indications sit below the no-meter calculation and near the
+burden-inclusive calculation. The table therefore illustrates how a result could be
+consistent with charge continuity *and* meter intrusion. It does not prove either:
+that evidential rung requires real data, repeated observations, and the uncertainty
+work of F06. If real readings disagree beyond their evaluated uncertainty, preserve
+the disagreement and investigate leakage, changing source voltage, contact faults,
+range-dependent burden, or an incorrect circuit record.
+
+A short, dependency-free script makes the quantitative predictions reproducible and
+their parameters visible rather than buried in a screenshot:
+
+```python
+# f02_quantities.py — parameterized checks for the F02 worked examples.
+# Standard library only; run with:  python3 f02_quantities.py
+
+ELEMENTARY_CHARGE = 1.602176634e-19  # C, exact in the SI
+N_CU = 8.5e28                         # illustrative, 1/m^3
+RHO_CU = 1.68e-8                      # near 20 C, ohm*m
+C_LIGHT = 2.998e8                     # vacuum, m/s
+
+def charge_equivalents(coulombs):
+    "Number of elementary-charge equivalents in a charge magnitude."
+    return coulombs / ELEMENTARY_CHARGE
+
+def drift_velocity(current_A, area_m2, n=N_CU):
+    "Carrier-speed magnitude from I = n*q*A*v_d."
+    return current_A / (n * ELEMENTARY_CHARGE * area_m2)
+
+def wavelength_screen_frequency(length_m, v=C_LIGHT, ratio=10):
+    "One-wavelength-ratio screening boundary, not an error guarantee."
+    return v / (ratio * length_m)
+
+def conductor_area_boundary(current_A, length_m, drop_V, rho=RHO_CU):
+    "Area at equality for a conductor-only DC voltage-drop budget."
+    r_max = drop_V / current_A       # allowed return resistance
+    return rho * length_m / r_max    # from R = rho*L / A
+
+if __name__ == "__main__":
+    per_coulomb = charge_equivalents(1.0)
+    cell_count = charge_equivalents(10800)
+    print(f"1 C corresponds to {per_coulomb:.3e} charge equivalents")
+    print(f"10800 C -> {cell_count:.3e} charge equivalents")
+    vd = drift_velocity(1.0, 2.05e-7)  # 1 A in AWG-24 copper
+    travel_minutes = 1 / vd / 60
+    print(
+        f"drift velocity {vd*1e3:.3f} mm/s; "
+        f"1 m takes {travel_minutes:.1f} min"
+    )
+    delay_ns = 3 / 2e8 * 1e9
+    print(f"3 m propagation at 2e8 m/s: {delay_ns:.1f} ns")
+    f_screen = wavelength_screen_frequency(0.30)
+    screen_mhz = f_screen / 1e6
+    print(f"lambda/10 screen, 0.30 m in air: {screen_mhz:.0f} MHz")
+    a = conductor_area_boundary(0.5, 0.5, 10e-3)
+    area_mm2 = a * 1e6
+    print(f"20 C conductor area > {area_mm2:.2f} mm^2 for <10 mV")
+# Expected output:
+#   1 C corresponds to 6.242e+18 charge equivalents
+#   10800 C -> 6.741e+22 charge equivalents
+#   drift velocity 0.358 mm/s; 1 m takes 46.5 min
+#   3 m propagation at 2e8 m/s: 15.0 ns
+#   lambda/10 screen, 0.30 m in air: 100 MHz
+#   20 C conductor area > 0.42 mm^2 for <10 mV
+```
+
+Change a number — the wire gauge, the current, the length — and the model reports the
+new consequence before the bench does. That is the loop this book runs on every claim.
+
+## Where the simple picture breaks
+
+A working idea earns trust by naming what breaks it. Three slogans cause most of the
+confusion this chapter targets, and one genuine fault shows how to tell an idealization
+from a defect.
+
+**"A load uses up current."** False in steady lumped operation. The continuity
+equation requires equal rates of charge entry and exit when the load's stored charge
+is not changing. @tbl-current-continuity shows what a test of that claim should look
+like; Lab L02 supplies physical evidence. A load transfers or converts energy, not
+net charge. During a transient, unequal terminal currents can temporarily change
+stored charge or feed parasitic capacitance, so the unqualified slogan "current is
+always the same" is also unsafe.
+
+**"Electrons move at the speed of light."** The worked copper example gives a
+steady drift speed of 0.36 mm/s, with $c/|v_d|\approx8\times10^{11}$. The
+electromagnetic disturbance propagates through the structure at a substantial
+fraction of $c$, set by its geometry and materials. Keeping propagation distinct
+from carrier drift is essential to later timing and transmission-line reasoning.
+
+**"Conventional current has the arrow backwards."** Neither description is more true;
+they are the same physics (moving $-q$ left $\equiv$ moving $+q$ right). The only error
+is *mixing* them mid-calculation. Pick conventional current, as this book does, and
+stay in it.
+
+The genuine failure is subtler and expensive, and it attacks the idealization at the
+heart of the chapter — that a wire is one node.
+
+::: {.callout-caution title="Worked diagnosis — one ground, or two?"}
+A 3.3 V sensor board shares a single return wire with a 0.5 A actuator back to the
+supply (the topology of @fig-shared-return). An ADC referenced to the supply ground
+reads the sensor about 12 mV high, drifting with the actuator. Two hypotheses:
+
+- **Sensor offset** — the sensor has a genuine 12 mV calibration error; the reading is
+  a property of the sensor and is *independent* of the actuator current.
+- **Shared-return ground shift** — the return wire is not an ideal node. Its resistance
+  $R_\text{ret}$ carries the actuator current $I$, so the sensor's local ground $G_1$
+  sits above the supply reference $G_0$ by $I R_\text{ret}$, and the "extra" 12 mV is
+  that offset, which should *scale with $I$*.
+
+These make different predictions, so a discriminating test exists. Estimate the
+suspect offset: a thin return, $R_\text{ret}\approx 25$ mΩ, at $I = 0.5$ A gives
+$I R_\text{ret} = 12.5$ mV — matching the symptom. Now vary the actuator current: drop
+it to 0.1 A and the offset falls to $\approx 2.5$ mV; raise it and the offset climbs
+in proportion. It tracks $I$ → the ground shift is confirmed and the sensor is
+exonerated. (The clinching direct measurement: a voltmeter from $G_1$ to $G_0$ reads
+the offset outright — the two "grounds" are simply not the same node.) This is the
+method of [F06](f06-measurement-uncertainty-debug.qmd) in miniature: *isolate a cause
+by finding evidence that separates it from its rivals.*
+:::
+
+![The failure of the single-node idealization. The return conductor has real resistance $R_\text{ret}$ and carries the full load current $I$, so the load-side ground $G_1$ is not at the reference potential $G_0$ but above it by $I R_\text{ret}$. Two points both labelled "ground" are then at different voltages — the equipotential-node assumption has quietly failed.](../../../build/circuits/f02-shared-return.png){#fig-shared-return fig-alt="A source VS drives current I through a load resistor R_L, which returns through a resistor R_ret representing the shared return conductor back to the reference ground G0. The load-side return node G1 is brought out to a labelled test point; the voltage from G1 to G0 equals I times R_ret rather than zero."}
+
+## Sizing a return so the ground stays one node
+
+Engineering is deciding under constraints and defending the choice. The decision this
+chapter equips you to make is a small but ubiquitous one: **size a shared return
+conductor so that the "single ground node" idealization holds to within a declared
+budget** — turning the fault above from an accident into a specified margin.
+
+*Requirements (measurable, declared in advance).*
+
+- The return carries $I = 0.5$ A over a length $L = 0.5$ m.
+- The DC ground offset $V_G = I R_\text{ret}$ must stay **below 10 mV** at a
+  maximum conductor temperature of 60 °C.
+- The combined resistance of connectors and terminations in the shared return is
+  specified not to exceed 2 mΩ and must be verified separately.
+- For this illustrative calculation, copper has
+  $\rho_{20}\approx1.68\times10^{-8}$ Ω·m and temperature coefficient
+  $\alpha\approx3.9\times10^{-3}$ K⁻¹ near room temperature; these are
+  representative values, not procurement limits [@kittel2005solidstate].
+
+*Calculate the requirement.* The total allowed return resistance is
+$R_\text{ret}<V_G/I=0.010/0.5=20$ mΩ. Reserving 2 mΩ for connections leaves
+18 mΩ for the conductor. Estimate the 60 °C resistivity with the first-order
+temperature relation
+$$
+\rho_{60}\approx\rho_{20}[1+\alpha(60-20)]
+\approx1.94\times10^{-8}~\Omega\!\cdot\!\text{m}.
+$$
+Using $R=\rho L/A$ as an estimate (developed in
+[F03](f03-sources-loads-resistance.qmd)), the conductor must satisfy
+$$
+A > \frac{\rho_{60}L}{18~\text{m}\Omega}
+=\frac{(1.94\times10^{-8})(0.5)}{0.018}
+\approx5.4\times10^{-7}~\text{m}^2=0.54~\text{mm}^2.
+$$
+Nominal AWG 20 area (0.518 mm²) is now slightly too small; the next listed option,
+AWG 18 (0.823 mm²), provides useful margin. The calculation assumes uniform
+cross-section and uses nominal wire areas.
+
+*Alternatives and trade-offs.*
+
+| Option | Estimated $V_G$ at 0.5 A, 60 °C | Verdict | Cost |
+|---|---|---|---|
+| AWG 24 shared return (0.205 mm²) | ≈ 25 mV | fails | thinnest, lightest |
+| AWG 22 shared return (0.326 mm²) | ≈ 16 mV | fails | light |
+| AWG 20 shared return (0.518 mm²) | ≈ 10.4 mV | fails narrowly | medium |
+| **AWG 18 shared return (0.823 mm²)** | **≈ 6.9 mV** | **passes with margin** | thicker, heavier |
+| Separate return for the sensitive reference | removes this shared $IR$ term | strong alternative | more routing |
+
+: Sizing the shared return against a strict 10 mV budget. Estimates use $V_G=I(\rho_{60}L/A+2~\text{m}\Omega)$, $L=0.5$ m, nominal areas, and representative copper properties. Equality at 10 mV would not pass because the requirement says "below." A separate return removes this shared-resistance contribution but still has its own resistance and inductance. {#tbl-conductor-choice}
+
+*Decision.* Choose the **AWG 18 shared return** for this bounded DC requirement, or
+route the sensitive reference separately when the topology permits. AWG 20 looked
+adequate at 20 °C with ideal connections but fails after temperature and connection
+allowances are included. That change is precisely why requirements are checked
+against operating conditions rather than nominal room-temperature values.
+
+*Acceptance test.* At 0.5 A after thermal steady state at the maximum specified
+conductor temperature, a suitable differential measurement from load ground to
+reference ground must remain below 10 mV, including its evaluated uncertainty. The
+single result that would
+**falsify** the design: an offset that *exceeds* the budget, or one that *grows with
+load current past the limit*, proving the return is not the near-ideal node the design
+assumed.
+
+*Limit of the claim.* This is a **DC, thermal-steady-state** claim about resistive
+$IR$ drop for the stated length, current, temperature, and connection allowance. It
+does not establish ampacity, insulation, mechanical suitability, or transient
+performance. A fast-changing current also sees return-path inductance, and
+$L\,\mathrm{d}i/\mathrm{d}t$ can exceed $IR_\text{ret}$ on a switching edge.
+Sizing against inductance and high-frequency return paths is the subject of
+[R03](../06-realization/r03-signal-power-integrity-emc.qmd); stating this limit is the
+difference between an engineering claim and an overreach.
+
+## What to carry forward
+
+Four quantities, defined once and for all, and a habit that makes their signs
+trustworthy — that is the whole of this chapter:
+
+- **charge** is a conserved property; ordinary circuit transfer occurs in elementary
+  steps of $e$, though a continuous approximation is excellent for macroscopic
+  circuits;
+- the **field** is force per unit charge, while **voltage** is field work per unit
+  charge after two points and a polarity have been declared;
+- **conduction current** is the signed rate of net charge transport through a
+  declared surface; a negative result reports motion opposite the reference, not a
+  failed calculation;
+- conservation first gives
+  $\sum I_{\text{in}}=\mathrm dQ_{\text{stored}}/\mathrm dt$; KCL is the lumped,
+  negligible-accumulation case, not a denial that charge can accumulate; and
+- an **ideal wire** is equipotential, but a real connection also has resistance,
+  inductance, capacitance, propagation delay, and a return path. Treating it as one
+  node is a bounded engineering approximation.
+
+Each of these hands directly to a later chapter, and F02 sits early in the book's
+dependency graph for that reason:
+
+- the **reference directions and passive sign convention** are used, unchanged, to
+  read every source and load in [F03](f03-sources-loads-resistance.qmd) and to sign
+  every branch in the Kirchhoff analysis of [F04](f04-networks-kirchhoff.qmd);
+- **charge conservation at a node** (@eq-kcl) becomes Kirchhoff's current law in
+  [F04](f04-networks-kirchhoff.qmd);
+- **energy per charge** (@eq-voltage) and the passive sign convention become the power
+  budget of [F05](f05-energy-power-thermal.qmd);
+- the microscopic field-and-drift picture ($\vec J = \sigma\vec E$) becomes the
+  macroscopic Ohm's law and resistance of [F03](f03-sources-loads-resistance.qmd), and
+  the *controllable* carrier density of a semiconductor becomes the diode and
+  transistor of [A01](../02-analog/a01-semiconductor-diodes.qmd)–[A02](../02-analog/a02-transistors.qmd);
+- the **ideal-wire / distributed-interconnect screen** (@eq-lumped) marks where
+  [R03](../06-realization/r03-signal-power-integrity-emc.qmd) and
+  [S07](../05-domains/s07-communications-rf-antennas.qmd) take over.
+
+Along the book's **measurement spine** — F01 → F02 → F03 → F06 (see the
+[part introduction](index.qmd)) — this chapter is the step that turns the quantities
+you agreed to reason in into quantities you can *measure with a sign*. You now have the
+nouns and verbs of every circuit statement that follows.
+
+## Exercises
+
+Work these with the estimate → calculate → check → interpret loop, and state the
+assumptions, reference directions, and units every time. Full solutions and
+live-assessment variants are kept outside the public book; a few self-check answers are
+given so you can calibrate.
+
+**Quick check (multiple choice)**
+
+One best answer each; the key follows. These surface the chapter's common
+misconceptions before the longer problems.
+
+1. In a lumped series loop at steady state, the current leaving the lamp compared
+   with the current entering it is
+    a. smaller, because the lamp uses some up;
+    b. larger, because the lamp adds energy;
+    c. equal, because charge is conserved;
+    d. zero, because the lamp blocks it.
+2. In a copper wire carrying a steady 1 A, an individual conduction electron travels at
+   roughly
+    a. the speed of light;
+    b. a few hundred m/s;
+    c. a fraction of a mm/s;
+    d. it does not move at all.
+3. One volt is defined as
+    a. one coulomb per second;
+    b. one joule per coulomb;
+    c. one newton per coulomb;
+    d. one ampere per ohm.
+4. A branch current is measured as $-8$ mA relative to its reference arrow. This means
+    a. the measurement is faulty;
+    b. 8 mA of positive charge flows *opposite* to the arrow;
+    c. the current is 8 mA below full scale;
+    d. no current flows.
+5. The best first screening condition for treating an interconnect as one lumped
+   node is
+    a. the wire is made of copper;
+    b. the current is DC;
+    c. the wire is much shorter than the signal wavelength, $L\ll\lambda$;
+    d. the voltage is below 50 V.
+6. Two points on a board are both labelled "ground" yet a meter reads 12 mV between
+   them. The most likely cause is
+    a. the meter is broken;
+    b. charge is being destroyed at one point;
+    c. a shared return conductor carries current, so $I R_\text{ret}$ separates them;
+    d. one point is at a higher *frequency* than the other.
+
+*[Key: 1-c, 2-c, 3-b, 4-b, 5-c, 6-c. Item 1 maps to charge conservation and
+@tbl-current-continuity; 2 to the drift-velocity example; 3 to @eq-voltage; 4 to
+reference directions; 5 to the wavelength screen @eq-lumped; 6 to the shared-return
+diagnosis.]*
+
+**Retrieval and reasoning**
+
+1. State, in one sentence each, what charge, field, voltage, and current *are* (not
+   their units). Then name which is conserved and which is a rate.
+2. Explain why "the voltage at node $a$" requires a reference node to be meaningful,
+   and what changes physically if you move the reference — current, energy, both, or
+   neither.
+3. A colleague says "electrons flow through the wire at the speed of light." Correct the
+   statement precisely: what travels at nearly $c$, and what actually crawls?
+
+**Estimation**
+
+4. A phone charger delivers 2.0 A through its metallic cable for 90 minutes. How
+   many coulombs and elementary-charge equivalents cross a cable section?
+   *[Self-check: $1.08\times10^{4}$ C, $6.7\times10^{22}$ charge equivalents.]*
+5. Repeat the drift-velocity calculation of @eq-drift for a 10 A current in a heavier
+   AWG 12 copper wire ($A = 3.31~\text{mm}^2$). Is the drift faster or slower than the
+   1 A / AWG 24 case, and by roughly what factor? *[Self-check: $\approx 0.22$ mm/s;
+   comparable — the larger area nearly cancels the larger current.]*
+6. Estimate the highest frequency at which a 5 cm IC-to-IC trace on FR4
+   ($v\approx1.5\times10^8$ m/s) can still be treated as one node using $L<\lambda/10$.
+
+**Derivation and units**
+
+7. Starting from "count the carriers in a signed slab of length $v_d\,\Delta t$,"
+   derive $I=nq_cAv_d$ (@eq-drift). Confirm the units and show explicitly why
+   $q_c<0$ and $v_d<0$ produce positive conventional current for electrons drifting
+   opposite the positive axis.
+8. From the definitions $E=F/q$ and $V=W/q$ and the constant force in a uniform field,
+   derive $V_{AB}=Ed$ (@eq-ved) for a field pointing from A to B with $+$ declared at
+   A. State the assumptions that make the derivation exact and one geometry where
+   $E$ is not uniform.
+
+**Data interpretation**
+
+9. In the synthetic dataset @tbl-current-continuity the three indications are
+   15.54, 15.51, and 15.55 mA, each with a stated ±0.16 mA instrument-error limit.
+   Explain what the overlapping intervals show, why that limit is not automatically
+   a $k=2$ uncertainty, and why the central indications lie below the no-meter
+   prediction. Then state what additional records real evidence would require.
+10. You measure 12.5 mV between two ground points at $I=0.5$ A and 5.1 mV at $I=0.2$ A.
+    Show that the offset is consistent with a shared-return resistance, estimate
+    $R_\text{ret}$, and state what a *constant* (current-independent) offset would have
+    implied instead.
+
+**Debugging**
+
+11. A 2 × 4.7 MΩ divider from 10 V is probed and the mid-node reads far from 5 V.
+    A colleague blames a "used-up current." Explain, using charge conservation and F01's
+    meter-loading result, why current consumption is the wrong diagnosis and meter
+    loading is the right one, and design one measurement that distinguishes them.
+12. A logic board works with slowly changing signals but glitches after faster edge
+    rates introduce appreciable spectral content near 300 MHz. Using @eq-lumped,
+    explain why the "single ground node" approximation can degrade. Identify both
+    $IR$ and $L\,\mathrm{d}i/\mathrm{d}t$ contributions and state what additional
+    measurements or geometry are needed before claiming which dominates.
+
+**Open design**
+
+13. Specify a return-conductor scheme (shared vs star, gauge, and length) for a 3.3 V
+    board with a quiet ADC reference and a 1 A motor driver, such that the ADC's ground
+    stays within 5 mV of the supply reference. State your budget, the acceptance test,
+    and the limit of the claim (what you are *not* guaranteeing).
+14. Propose an experiment that tests "a lamp does not consume current in steady
+    operation." Specify what you would measure, where, with what uncertainty, and
+    what single result would *falsify* the bounded claim.
 
 ## Connections
 
-Chapter ID: `F02`. Prerequisites and downstream course mappings are maintained in
-[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
-provides reader-facing routes and the practice spine.
+Chapter ID: `F02`. Its one prerequisite is [F01](f01-safe-practice.qmd) (the bench,
+SI units, and reference directions), with just-in-time support from
+[M01](../appendices/m01-algebra-units-complex.qmd) (algebra, units, prefixes) and, for
+the instantaneous $i=\mathrm{d}q/\mathrm{d}t$, [M02](../appendices/m02-calculus-linear-differential.qmd).
+Downstream course mappings are maintained in [`chapters.toml`](../chapters.toml); the
+[reading roadmap](../roadmap.qmd) provides reader-facing routes and the practice spine.
+
+This chapter opens the middle of the **measurement spine** (F01 → F02 → F03 → F06)
+described in the [Part I introduction](index.qmd). It hands its reference directions
+and passive sign convention to [F03](f03-sources-loads-resistance.qmd) and
+[F04](f04-networks-kirchhoff.qmd); its charge-conservation law becomes Kirchhoff's
+current law in [F04](f04-networks-kirchhoff.qmd); its energy-per-charge definition
+feeds the power budget of [F05](f05-energy-power-thermal.qmd); its microscopic
+field-and-drift picture becomes Ohm's law in [F03](f03-sources-loads-resistance.qmd)
+and the semiconductor behavior of [A01](../02-analog/a01-semiconductor-diodes.qmd); and
+its lumped-versus-distributed limit is the entry point to
+[R03](../06-realization/r03-signal-power-integrity-emc.qmd) and
+[S07](../05-domains/s07-communications-rf-antennas.qmd).
+
+The aligned practical evidence is **Lab L02** (source, load, resistance, and meter
+loading), which asks you to measure series current continuity and voltage with declared
+references and quantified instrument intrusion; it integrates, with F01 and F03–F06,
+into milestone **M1** (a qualified energy-and-light measurement) with reproducible
+records ([T03](../appendices/t03-reproducible-engineering.qmd)). Lab and project IDs
+denote *evidence goals*, not permission to perform an activity: the safety level,
+apparatus, stop conditions, and local authorization must be defined before any of this
+becomes deliverable, and reading this chapter authorizes nothing beyond the
+current-limited, extra-low-voltage boundary stated at its head.
+
+## References
+
+Claims are cited at the point of use and prefer primary or canonical sources. The
+exact elementary charge, the ampere's 2019 definition, and SI usage rest on the
+defining brochure and the NIST guide [@bipm2019si; @nist811]; the first-principles
+treatment of charge, Coulomb's law, the electric field, the conservative electrostatic
+potential, and current density follows the standard electrodynamics reference
+[@griffiths2017electrodynamics]; free-carrier densities and resistivities of real
+materials are drawn from the standard solid-state reference [@kittel2005solidstate],
+with intrinsic-semiconductor behavior from a canonical microelectronics text
+[@sedra2020microelectronic]; the lumped-versus-distributed criterion and
+signal-propagation speed follow an applied-electromagnetics reference
+[@ulaby2015electromagnetics]; and the bench-first working method and the danger of
+low-voltage energy follow the standard practical reference and the physiological-current
+standard [@horowitz2015art; @iec60479]. The complete, growing
+[bibliography](../references.qmd) collects these. None of them, and neither this book,
+substitutes for a datasheet, a governing standard, or supervised laboratory training.

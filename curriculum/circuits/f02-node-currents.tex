@@ -1,0 +1,22 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Charge continuity: the signed current imbalance equals the rate of charge
+  % accumulation. The ideal-node approximation sets that rate to zero.
+  \coordinate (n) at (0,0);
+
+  % Branch 1 enters the node from the left (I1 referenced inward).
+  \draw (-3.4,0) to[R, l=$R_{1}$, i>=$I_{1}$] (n);
+  % Branch 2 leaves downward-right (I2 referenced outward).
+  \draw (n) to[R, l_=$R_{2}$, i>=$I_{2}$] (2.3,-2.3);
+  % Branch 3 leaves upward-right (I3 referenced outward).
+  \draw (n) to[R, l=$R_{3}$, i>=$I_{3}$] (2.3,2.3);
+
+  % Explicit connection dot: three conductors meet here.
+  \node[circ] at (n) {};
+  % Node label placed below the dot, in clear space away from every branch.
+  \node[below=10pt, font=\small] at (n) {node $a$};
+\end{circuitikz}
+\end{document}

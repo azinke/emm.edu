@@ -1,0 +1,35 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % One source, one load. Fix the reference direction of I (clockwise) and
+  % the polarity of V_R (+ where I enters R) BEFORE reading any signed result.
+  \draw (0,0) node[ground] {}
+    to[V, l_=$V_{S}$] (0,3)            % source; + at the top rail
+    to[short, i>=$I$] (2,3)            % current reference arrow, clockwise
+    to[R, l=$R$] (2,0)                 % load
+    -- (0,0);                          % return rail to the reference node
+
+  % Explicit connection dots where the test-point branches make 3-conductor
+  % junctions at the load terminals.
+  \node[circ] at (2,3) {};
+  \node[circ] at (2,0) {};
+
+  % Source polarity marked explicitly at both terminals.
+  \node[font=\small] at (-0.34,2.55) {$+$};
+  \node[font=\small] at (-0.34,0.45) {$-$};
+
+  % Voltage across R marked by hand: + where I enters, - where it leaves,
+  % with V_R in clear space between the source and R.
+  \node[font=\small] at (1.6,2.55) {$+$};
+  \node[font=\small] at (1.6,0.45) {$-$};
+  \node[font=\small] at (1.32,1.5) {$V_{R}$};
+
+  % Test points brought out to clear space; labels sit off the wires.
+  \draw (2,3) -- (3.5,3)
+    node[ocirc, label={[font=\small]right:{TP\_A}}] {};
+  \draw (2,0) -- (3.5,0)
+    node[ocirc, label={[font=\small]right:{TP\_B ($0$~V)}}] {};
+\end{circuitikz}
+\end{document}

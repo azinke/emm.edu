@@ -1,0 +1,31 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % The return conductor is not ideal: its resistance R_ret carries the load
+  % current I, so the load-side ground G1 sits above the reference G0 by
+  % I*R_ret. "Ground" is then two different node voltages, not one.
+  \draw (0,0) node[ground] {}
+    to[V, l_=$V_{S}$] (0,3)
+    -- (3,3)
+    to[R, l=$R_{\mathrm{L}}$, i>=$I$] (3,0.8) coordinate (g1)
+    to[R, l_=$R_{\mathrm{ret}}$, i>=$I$] (0,0.8)  % shared return, non-zero R
+    -- (0,0);
+
+  % Source polarity marked explicitly at both terminals.
+  \node[font=\small] at (-0.34,2.55) {$+$};
+  \node[font=\small] at (-0.34,0.45) {$-$};
+
+  % Connection dots where 3+ conductors meet at both return nodes.
+  \node[circ] at (3,0.8) {};
+  \node[circ] at (0,0.8) {};
+
+  % Reference-ground label placed clear of the ground symbol.
+  \node[font=\small, right] at (0.25,-0.05) {$G_{0}$ ($0$~V)};
+
+  % Bring the load-side ground out to clear space; label it off the wire.
+  \draw (g1) -- (4.6,0.8)
+    node[ocirc, label={[font=\small]right:{$G_{1}$ (load return)}}] {};
+\end{circuitikz}
+\end{document}

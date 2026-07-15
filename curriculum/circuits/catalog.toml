@@ -22,6 +22,27 @@ caption = "A voltmeter loads the node it measures: its finite input resistance R
 alt = "Voltage source VS drives series resistors R1 and R2 to ground, with output test point TP1 at their junction. A voltmeter of input resistance R_in is connected from TP1 to the 0 V rail, in parallel with R2."
 
 [[circuit]]
+id = "f02-reference-directions"
+source = "f02-reference-directions.tex"
+chapter_id = "F02"
+caption = "Reference directions come before signs: a single loop with the current reference arrow I (clockwise) and the voltage polarity V_R (+ at the top of R) declared in advance, so a negative reading means reality opposes the chosen sense, not that a mistake was made."
+alt = "A voltage source VS with its plus terminal at the top rail drives a clockwise current I through a single load resistor R and back along the return rail to the 0 V reference node. The voltage across R, V_R, is marked positive at the top where the current enters, and test points TP_A and TP_B are brought out to clear space."
+
+[[circuit]]
+id = "f02-node-currents"
+source = "f02-node-currents.tex"
+chapter_id = "F02"
+caption = "Charge continuity at a junction: the signed current imbalance I1 - I2 - I3 equals the rate of charge accumulation in the enclosed node region; the ideal-node approximation sets that rate to zero and gives I1 = I2 + I3."
+alt = "Three resistor branches meet at a single connection dot labelled node a. Current I1 points into the node while I2 and I3 point out. Their signed imbalance equals the rate of charge accumulation and becomes zero for an ideal lumped node."
+
+[[circuit]]
+id = "f02-shared-return"
+source = "f02-shared-return.tex"
+chapter_id = "F02"
+caption = "Why two grounds can differ: the shared return conductor has resistance R_ret and carries the load current I, so the load-side ground G1 sits above the reference ground G0 by I times R_ret, and the single-node idealization of the return fails."
+alt = "A source VS drives current I through load R_L, which returns through a resistor R_ret representing the shared return conductor back to the reference ground G0. The load-side return node G1 is brought out to a labelled test point; the voltage from G1 to G0 equals I times R_ret rather than zero."
+
+[[circuit]]
 id = "f03-voltage-divider"
 source = "f03-voltage-divider.tex"
 chapter_id = "F03"

@@ -16,14 +16,33 @@
   when relationships are too complex for short alt text.
 - Never use color as the only carrier of state, polarity, warning, or pass/fail.
 
-## Headings
+## Factual rigor
+
+- Derive relations from first principles with assumptions and validity range
+  stated, or cite a primary source; never assert a technical claim from memory.
+- Make every quantitative claim either worked (numbers the reader can check) or
+  cited to a datasheet, standard, or canonical reference. Do not invent device
+  numbers — cite a real part, or label representative values as typical or
+  illustrative — and distinguish exact, typical, and worst-case.
+- Show at least one limiting case and one second-order effect that breaks each
+  first-order model. Where something is genuinely approximate or contested, say so
+  with the bound rather than smoothing it over.
+
+## Headings and structure
 
 - Write section headings as natural, chapter-specific claims. Do not reuse a
   fixed template vocabulary across chapters, and do not use the literal word
   "model" as a heading; name the actual idea instead.
-- Headings should still map cleanly to the editorial functions in
-  [`chapter-template.qmd`](chapter-template.qmd) (motivate, build, apply, test,
-  find limits, decide, consolidate) — the wording is yours, the sequence is not.
+- Structure follows the topic, not a fixed skeleton. Keep the shared opening
+  (`Central question`, `Learning outcomes`) and close (`Exercises`, `Connections`,
+  `References`); arrange the middle — derivation, regions of operation, parameter
+  tables, worked examples, design procedures, trade-off tables — however teaches
+  the material best.
+- Whatever the arrangement, still fulfil the editorial functions in
+  [`chapter-template.qmd`](chapter-template.qmd): motivate from something
+  observable, elicit a prediction, build the theory, work concrete numbers,
+  reconcile with evidence, expose failure modes, and end in a bounded decision.
+  These are functions to fulfil, not sections to stamp.
 
 ## Diagrams and code that survive print
 

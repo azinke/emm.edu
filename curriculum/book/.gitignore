@@ -2,3 +2,6 @@
 **/*.quarto_ipynb
 # keep-tex: true leaves LaTeX sources next to the .qmd on PDF builds
 /*.tex
+# Quarto per-document render artifacts (generated figures, incl. mermaid PNGs)
+# left beside a .qmd by single-file renders
+**/*_files/

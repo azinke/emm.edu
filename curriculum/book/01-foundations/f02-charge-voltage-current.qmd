@@ -22,7 +22,7 @@ authorization to work on mains, high-voltage, high-energy batteries, RF power, o
 any safety-critical system. Even at extra-low voltage, a low-impedance source or a
 charged capacitor can release enough energy to heat conductors, damage equipment,
 or cause burns. Establish both the voltage and available-energy boundary before
-touching metal [@iec60479].
+touching metal [@iec60479; @iec61010].
 :::
 
 ## Central question
@@ -390,8 +390,9 @@ the values of $n$ and $v_d$.
 ::: {.callout-note title="Worked example — slow drift and fast propagation"}
 *Estimate.* Copper has about one free electron per atom, $n\approx 8.5\times10^{28}$
 per m³ [@kittel2005solidstate]. A 1 A current in a thin hookup wire (AWG 24,
-$A = 0.205~\text{mm}^2 = 2.05\times10^{-7}~\text{m}^2$) spreads that one amp over a
-huge number of carriers, so each must move *slowly*. Guess sub-mm/s.
+$A = 0.205~\text{mm}^2 = 2.05\times10^{-7}~\text{m}^2$)
+[@nbs1956copperwire] spreads that one amp over a huge number of carriers, so each
+must move *slowly*. Guess sub-mm/s.
 
 *Calculate.* Solve @eq-drift for the drift velocity:
 $$
@@ -789,7 +790,8 @@ A > \frac{\rho_{60}L}{18~\text{m}\Omega}
 $$
 Nominal AWG 20 area (0.518 mm²) is now slightly too small; the next listed option,
 AWG 18 (0.823 mm²), provides useful margin. The calculation assumes uniform
-cross-section and uses nominal wire areas.
+cross-section and uses nominal solid-wire areas from the NBS copper-wire table
+[@nbs1956copperwire].
 
 *Alternatives and trade-offs.*
 
@@ -1028,11 +1030,14 @@ treatment of charge, Coulomb's law, the electric field, the conservative electro
 potential, and current density follows the standard electrodynamics reference
 [@griffiths2017electrodynamics]; free-carrier densities and resistivities of real
 materials are drawn from the standard solid-state reference [@kittel2005solidstate],
-with intrinsic-semiconductor behavior from a canonical microelectronics text
-[@sedra2020microelectronic]; the lumped-versus-distributed criterion and
-signal-propagation speed follow an applied-electromagnetics reference
+nominal AWG dimensions from the NBS copper-wire tables
+[@nbs1956copperwire], and intrinsic-semiconductor behavior from a canonical
+microelectronics text [@sedra2020microelectronic]; the
+lumped-versus-distributed criterion and signal-propagation speed follow an
+applied-electromagnetics reference
 [@ulaby2015electromagnetics]; and the bench-first working method and the danger of
 low-voltage energy follow the standard practical reference and the physiological-current
-standard [@horowitz2015art; @iec60479]. The complete, growing
+and laboratory-equipment safety standards
+[@horowitz2015art; @iec60479; @iec61010]. The complete, growing
 [bibliography](../references.qmd) collects these. None of them, and neither this book,
 substitutes for a datasheet, a governing standard, or supervised laboratory training.

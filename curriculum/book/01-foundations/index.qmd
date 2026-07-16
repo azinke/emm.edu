@@ -20,8 +20,9 @@ circuit is *one* object described in many languages — the physical assembly an
 its energy path, the schematic with named nodes, the governing equations, a
 simulation, and the measured waveform with its uncertainty. When those
 descriptions agree, you understand the circuit. When they disagree, one of them
-is wrong, and the disagreement is the most useful thing the bench will tell you
-all day.
+is incomplete, invalid under the stated conditions, or reported with too much
+confidence. That disagreement is often the most useful thing the bench will tell
+you all day.
 
 ## The part question
 
@@ -237,8 +238,10 @@ can do the same for a system.
 
 ::: {.callout-note title="Chapter maturity"}
 This is a development edition. The scope and dependency structure of Part I are
-complete, but the chapters are currently outlines: each reports its own status in
-its front matter, and an outline is a scope commitment, not yet a teachable or
-safety-authorizing chapter. The [reading roadmap](../roadmap.qmd) explains what
+complete, and all eight chapters are full teaching drafts. Each chapter reports
+its own status in front matter and identifies which examples are calculations,
+synthetic teaching data, manufacturer evidence, or work reserved for an aligned
+laboratory. A draft remains subject to technical and editorial revision and is
+never safety authorization. The [reading roadmap](../roadmap.qmd) explains what
 each maturity level lets a reader rely on.
 :::

@@ -6,10 +6,12 @@ status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter is complete enough for teaching and technical review. Its numerical
-examples and executable output have been checked, and its schematics have been
-rendered and inspected. The synthetic sweep data teach analysis but are not
-physical measurements; Lab L05 is the evidence step.
+This chapter presents a complete instructional path: phasor and impedance
+derivations, worked network and resonance examples, executable arithmetic,
+explicitly synthetic sweep data, a guarded filter decision, and a full exercise
+set. It remains subject to technical and editorial revision. The synthetic data
+teach analysis but do not qualify physical hardware; Lab **L05** supplies the
+aligned evidence. See the [reading roadmap](../roadmap.qmd) for status meanings.
 :::
 
 ::: {.callout-warning title="Safety boundary for frequency-response work"}
@@ -26,8 +28,8 @@ high-side circuits.
 
 ## Central question
 
-How can one unchanged circuit pass a slow signal almost intact, attenuate a fast
-signal, and shift the timing between input and output?
+> How can one unchanged circuit pass a slow signal almost intact, attenuate a
+> fast signal, and shift the timing between input and output?
 
 Consider a 10.0 k$\Omega$ resistor followed by a 10.0 nF capacitor. The output is
 taken across the capacitor. Apply a 1.000 V RMS sine wave. Before calculating,
@@ -59,7 +61,11 @@ output amplitude to shrink and lag. The calculation will replace “low” and
 
 ## Learning outcomes
 
-After completing this chapter, the reader should be able to:
+This chapter assumes [F07](f07-capacitors-inductors-transients.qmd), especially
+the ideal capacitor and inductor relations, stored energy, and time constants,
+plus the complex arithmetic and graph-reading support in
+[M01](../appendices/m01-algebra-units-complex.qmd). After completing it, you
+should be able to:
 
 - distinguish instantaneous, peak, peak-to-peak, average, and RMS values, and
   infer phase from a declared time reference;
@@ -1221,6 +1227,8 @@ interval does not establish conformity.
    stated instrument and justify the evidence still needed.
 
 ## Connections
+
+Chapter ID: `F08`.
 
 - **Prerequisites:** [F07 — Capacitors, inductors, and transients](f07-capacitors-inductors-transients.qmd)
   supplies constitutive relations, storage, time constants, and steady-state

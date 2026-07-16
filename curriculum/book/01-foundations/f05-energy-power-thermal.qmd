@@ -407,15 +407,20 @@ and other components inside the boundary may share it. The indicator's 0.050 W m
 leave partly as light and partly as heat. More test points or calorimetry are
 needed to allocate those paths.
 
-After every path has been assigned, use a distinct **closure residual**
+After every path has been assigned **independently**, use a distinct closure
+residual. For example, if separate electrical or calorimetric methods establish
+allocated path powers $P_k$, define
 
 $$
 r_\text{closure}=P_\text{supplied}-P_\text{useful}
--P_\text{indicator}-P_\text{unallocated}=0.
+-P_\text{indicator}-\sum_k P_k.
 $$
 
-In physical work, “zero” means consistent with combined uncertainty and the
-chosen timing—not an exact row of displayed digits.
+The 0.220 W remainder in @tbl-f05-opening-budget cannot be inserted as the final
+$P_k$ and then presented as closure evidence: that would force the residual to
+zero by definition. In physical work, closure means that independently obtained
+terms make $r_\text{closure}$ consistent with zero within combined uncertainty
+and the chosen timing—not that displayed digits satisfy an identity.
 
 ## Efficiency and system boundaries
 
@@ -1019,17 +1024,17 @@ Choose one best answer for each question.
 14. Derive @eq-f05-cascade-efficiency for three stages. Calculate total efficiency
     for 92 %, 85 %, and 96 % stages and the required input for 4.0 W useful output.
 15. **Extension.** Verify @eq-f05-thermal-step by substituting it into
-    @eq-f05-thermal-balance. Interpret the limits $t=0$, $t=\tau_\theta$, and
-    $t\to\infty$.
+    Equation @eq-f05-thermal-balance. Interpret the limits $t=0$,
+    $t=\tau_\theta$, and $t\to\infty$.
 16. **Extension.** Starting from one-dimensional Fourier conduction, derive
-    @eq-f05-conduction-resistance. Predict the effect of doubling $L$, $A$, and
-    $k$ separately.
+    Equation @eq-f05-conduction-resistance. Predict the effect of doubling $L$,
+    $A$, and $k$ separately.
 
 ### Data interpretation
 
 17. Recalculate every finite row of @tbl-f05-synthetic-temperature from
-    @eq-f05-thermal-step. At what time is the temperature within 5 % of its final
-    rise? Why can this synthetic agreement not qualify hardware?
+    Equation @eq-f05-thermal-step. At what time is the temperature within 5 % of
+    its final rise? Why can this synthetic agreement not qualify hardware?
 18. An illustrative test record (not physical evidence) gives
     $V_\text{in}=5.01$ V and $I_\text{in}=118$ mA,
     $V_\text{out}=3.29$ V and $I_\text{out}=101$ mA, plus a 49 mW auxiliary

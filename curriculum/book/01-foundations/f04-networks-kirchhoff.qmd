@@ -881,13 +881,15 @@ An acceptance test must say what a pass means. One suitable draft rule is:
 
 - **Measurand and points:** steady $V_A-V_B$, red at TPA and black at TPB.
 - **Conditions:** approved current-limited extra-low-voltage source and a
-  qualification fixture using screened or substituted boundary components.
-  Including stimulus uncertainty, establish upper bounds
-  $V_S\le9.90$ V, $I_S\le0.980$ mA, and $R_L\le3.00$ kΩ for this deliberately
-  conservative low-output test; use $R_1=1.010$ kΩ and $R_2=1.980$ kΩ within
-  their stated bounds. Record the declared ambient range and wait for a stated
-  steady condition. A different end-item acceptance screen needs a correlation
-  justified against this qualification corner.
+  qualification fixture whose guarded values are no more favorable than the
+  calculated low-output corner: $V_S\le9.90$ V,
+  $I_S\le0.980$ mA, $R_L\le3.00$ kΩ,
+  $R_1\ge1.010$ kΩ, and $R_2\le1.980$ kΩ. Include stimulus and component-value
+  uncertainty when establishing those inequalities, insert the actual fixture
+  values into @eq-f04-port-design, record the declared ambient range, and wait
+  for a stated steady condition. This deliberately severe qualification fixture
+  is distinct from an end-item acceptance screen; using the latter requires a
+  justified correlation to the qualification corner.
 - **Instrument intrusion:** voltmeter input at least 10 MΩ, placed in parallel
   with $R_L$ in the prediction; record range, accuracy specification, calibration
   status, and leads.

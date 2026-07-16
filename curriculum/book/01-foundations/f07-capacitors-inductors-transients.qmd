@@ -1094,11 +1094,13 @@ $$
 +U_V+\Delta V_\text{load,max}<1.00~\text{V}.}
 $$ {#eq-f07-bleed-decision}
 
-Equality does not satisfy the strict requirement. Also verify that the measured
-initial voltage does not exceed 12.6 V and that the resistance path remains
-present after power removal. A single pass supports only the tested unit and
-conditions; repeated units, environmental corners, aging, and open-circuit fault
-coverage require higher evidence rungs [@jcgm2012conformity].
+Equality does not satisfy the strict requirement. Also apply a one-sided guarded
+rule to the initial-voltage limit—its indicated value plus the relevant expanded
+uncertainty must not exceed 12.6 V—and verify by an approved method that the
+resistance path remains present after power removal. A single pass supports only
+the tested unit and conditions; repeated units, environmental corners, aging,
+and open-circuit fault coverage require higher evidence rungs
+[@jcgm2012conformity].
 
 ## Summary
 
@@ -1287,6 +1289,8 @@ divider final value and reduces the resistance seen by $C$.
 
 ## Connections
 
+Chapter ID: `F07`.
+
 - **Prerequisites:** [F04 — Network conservation and equivalent circuits](f04-networks-kirchhoff.qmd)
   supplies KCL, KVL, and Thévenin resistance; [F05 — Energy, power, efficiency,
   and heat](f05-energy-power-thermal.qmd) supplies passive-sign power and boundary
@@ -1309,7 +1313,11 @@ divider final value and reduces the resistance seen by $C$.
 
 ## References
 
-Point-of-use citations above identify the governing circuit and field texts,
-measurement decision guidance, safety standard, and manufacturer-primary
-documents used for non-ideal capacitor and inductor behavior. Full bibliographic
-details are in the book reference list.
+Point-of-use citations above identify the governing circuit and field treatments
+[@sedra2020microelectronic; @griffiths2017electrodynamics;
+@ulaby2015electromagnetics], signals terminology [@oppenheim1996signals], guarded
+decision guidance [@jcgm2012conformity], safety boundary [@iec61010], and
+manufacturer-primary documents used for capacitor and inductor limits
+[@vishay2026aluminumcaps; @murataemifilter6; @blakey2025ratedcurrent]. The
+complete [bibliography](../references.qmd) contains full details. These sources
+do not replace local authorization or physical qualification of an assembly.

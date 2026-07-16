@@ -52,14 +52,14 @@ result from a guess:
    evidence, not an artifact.)
 
 ::: {.callout-tip title="Make a prediction first"}
-Before reading on, commit to two directional answers. **(a)** If you touch both
-terminals of a 9 V battery with dry fingers, roughly how much current flows
-through you — microamps, milliamps, or amps? **(b)** If you measure a node in a
-1 MΩ resistive divider with an ordinary multimeter, will the reading be too high,
-too low, or exactly right? Write the answers down. We reconcile them with a model
-and with data later in the chapter; the point of committing now is that a
-surprise you predicted teaches far more than one you merely observed
-[@horowitz2015art].
+Before reading on, commit to two directional answers. This is a calculation, not
+an instruction to make body contact. **(a)** If both terminals of a 9 V battery
+were connected through an illustrative dry-finger path, would the current be
+microamps, milliamps, or amps? **(b)** If you measure a node in a 1 MΩ resistive
+divider with an ordinary multimeter, will the reading be too high, too low, or
+exactly right? Write the answers down. We reconcile them with a model and with
+data later in the chapter; the point of committing now is that a surprise you
+predicted teaches far more than one you merely observed [@horowitz2015art].
 :::
 
 ## Learning outcomes
@@ -68,9 +68,9 @@ After completing this chapter — and it assumes no prior circuit theory, only
 comfort with algebra, ratios, and scientific notation
 ([M01](../appendices/m01-algebra-units-complex.qmd)) — you should be able to:
 
-- **model an electrical hazard as controllable energy** and justify the
-  extra-low-voltage, current-limited boundary using the physiological effect of
-  current, not merely the size of a voltage [@iec60479];
+- **describe an electrical hazard as a source–path–target system** and explain
+  why an approved bench boundary must constrain current, duration, and available
+  energy rather than relying on a voltage label alone [@iec60479];
 - **energize a circuit in reversible stages** using a bench supply's voltage and
   current limits, and state explicit *stop conditions* before applying power
   (builds on the energy model above);
@@ -122,63 +122,62 @@ Two facts turn this picture into engineering judgment.
 
 **It is current through the body, for a duration, that harms — not voltage in the
 abstract.** Voltage is what *drives* current, but the injury is done by the
-current that actually flows and how long it flows. The canonical reference data
-[@iec60479] gives, for a 50/60 Hz current passing hand-to-hand through an adult,
-the approximate thresholds in @tbl-body-current — worth committing to memory as
-orders of magnitude:
+current that actually flows, its path and frequency, and how long it flows. The
+canonical reference data [@iec60479] supports the order-of-magnitude screening
+bands in @tbl-body-current for 50/60 Hz current through an adult. They are not
+universal thresholds for an individual:
 
 | Body current (AC, 50/60 Hz) | Typical effect |
 |---|---|
 | ~1 mA | threshold of perception — a faint tingle |
-| ~10 mA | *let-go* threshold — muscles may lock; you cannot release the conductor |
-| ~30–50 mA | ventricular fibrillation becomes a real risk if sustained beyond a heartbeat |
-| > ~100 mA | frequently lethal |
+| several to tens of mA | painful contraction and impaired voluntary release become possible |
+| tens of mA, sustained | the probability of dangerous cardiac effects rises with current and duration |
+| hundreds of mA | severe cardiac and thermal injury is possible even over short intervals |
 
-: Approximate effects of a 50/60 Hz current passing hand-to-hand through an adult body. Values are order-of-magnitude and depend strongly on duration and current path; direct current shifts the thresholds upward. {#tbl-body-current}
+: Approximate screening bands for 50/60 Hz current through an adult body. Effects depend strongly on magnitude, duration, path, frequency, contact conditions, and individual physiology; use the governing safety standard rather than this table for protection design [@iec60479]. {#tbl-body-current}
 
-This is exactly why the residual-current devices (RCDs / GFCIs) that protect wet
-areas are built to trip near 30 mA, and why the earth-leakage threshold is a
-current, not a voltage [@iec60479]. Direct current shifts these numbers upward
-(the let-go current is several times larger), but the ranking is the same.
+Protection requirements therefore use specified combinations of voltage,
+current, duration, insulation, disconnection, and environment. The physiological
+table explains why current matters; it does not by itself select a protective
+device or trip rating.
 
-**Whether a given voltage is dangerous depends on the resistance of the path.**
-The body is not a fixed resistor: dry, intact skin contributes anywhere from tens
-of kilohms to over a hundred kilohms, while wet or broken skin, or a large
-contact area, can fall to roughly 1 kΩ, with the internal body itself only a few
-hundred ohms [@iec60479]. Whatever its value, the body simply completes a circuit
-from an exposed live contact back to earth (@fig-shock-path), so Ohm's law
-(developed fully in [F03](f03-sources-loads-resistance.qmd), used here only as an
-estimate) applies to it directly. For a 9 V source across dry fingers of, say,
-50 kΩ:
+**Whether a given voltage is dangerous depends on the complete current path.**
+The body is not a fixed resistor: its impedance depends on touch voltage,
+duration, frequency, current path, skin moisture, contact area, pressure, and
+temperature [@iec60479]. A deliberately simplified resistive screen can still
+give an order of magnitude when its assumed path resistance is stated. In that
+screen the body completes a circuit from an exposed contact back to the source
+(@fig-shock-path). Using Ohm's law (developed in
+[F03](f03-sources-loads-resistance.qmd)) with an **illustrative** dry-contact
+value of 50 kΩ and a 9 V source gives
 
 $$
 I \approx \frac{V}{R} = \frac{9~\text{V}}{50\times10^{3}~\Omega}
       = 1.8\times10^{-4}~\text{A} = 0.18~\text{mA}.
 $$
 
-![The shock path is just a circuit: the body completes a path from an exposed live contact back to earth, so the current is set by Ohm's law with the body as a resistance $R_\text{body}$. Limiting the source $V_S$ — the book's extra-low-voltage boundary — is what keeps $I$ below the thresholds of @tbl-body-current.](../../../build/circuits/f01-shock-path.png){#fig-shock-path fig-alt="A voltage source V_S connects earth to an exposed live contact; the body, drawn as a resistor R_body, returns from the contact to earth, and the shock current I flows from the contact through the body resistance to earth."}
+![A first-order resistive screen for a contact path. The body completes a path from an exposed contact back to the source; $R_\text{body}$ is an illustrative equivalent for stated conditions, not a constant physiological resistance.](../../../build/circuits/f01-shock-path.png){#fig-shock-path fig-alt="A voltage source V_S connects earth to an exposed live contact; the body, represented by an illustrative equivalent resistance R_body, returns from the contact to earth, and contact current I flows through the path."}
 
-That is below the perception threshold — which is why the 9 V prediction you made
-earlier resolves to "you feel essentially nothing." Now feed the *same* Ohm's law
-a 230 V mains source across wet skin of 1 kΩ and it returns 230 mA, deep into the
-lethal band. Same law, same body, a thousand-fold difference in outcome — carried
-entirely by voltage and skin condition. The lesson is not "9 V is safe and 230 V
-is not"; it is that **safety is a claim about the whole energy–path–target
-system**, and the extra-low-voltage boundary of this book exists precisely so
-that the driving voltage cannot push a dangerous current through a plausible body
-path. The conventional dry-condition boundary is about **50 V AC rms or 120 V DC**
-(lower in wet or special locations); everything in Part I stays well beneath it.
+The result is below the approximate perception scale in @tbl-body-current, but it
+does not establish a generally safe touch voltage: the assumed impedance is both
+condition-dependent and voltage-dependent. Replacing the source and contact
+conditions by a much higher voltage and a much lower path impedance changes the
+result by orders of magnitude. The lesson is that **safety is a claim about the
+whole source–path–target system**, not a voltage label. Practical work in Part I
+therefore uses an approved, current-limited source no higher than the stated lab
+limit, never intentional body contact, and stop conditions fixed before power.
 
-::: {.callout-important title="Current limiting is your primary control"}
+::: {.callout-important title="Current limiting bounds sustained fault current"}
 A bench power supply has two knobs, and the second one is the safety feature. Set
 the **voltage limit** to the value the circuit needs; set the **current limit**
 (sometimes labelled *I~limit~* or *compliance*) to just above the current the
-healthy circuit should draw. Now a short circuit, a reversed part, or a slipped
-probe cannot deliver more than that bounded current: the supply leaves
-constant-voltage mode, drops its output, and *tells you* (a CC/"current-limit"
-indicator) that something is wrong — before a trace vaporizes. A current limit
-converts an open-ended fault into a bounded, observable, recoverable event. It is
-the single most useful habit on a low-voltage bench.
+healthy circuit should draw. On a sustained low-resistance fault, the control
+loop leaves constant-voltage mode, reduces its output, and indicates CC or
+current-limit operation. The specified limit bounds the regulated steady fault
+current; output capacitance, wiring inductance, control-loop response, and
+transient overshoot can still deliver energy before regulation settles. Current
+limiting is therefore a central low-voltage bench control, not a substitute for
+bounding stored energy, contact heating, and the complete fault path.
 :::
 
 **Stored energy outlives the switch.** "Powered off" is not "safe." A capacitor
@@ -340,10 +339,10 @@ flowchart TB
 The single most common intrusion is **loading**: a voltmeter of input resistance
 $R_\text{in}$ placed across a node whose source (Thévenin) resistance is
 $R_\text{th}$ forms a divider with it, and the fractional error in the reading is,
-to good approximation,
+exactly within that linear, purely resistive equivalent,
 
 $$
-\frac{\Delta V}{V} \approx -\,\frac{R_\text{th}}{R_\text{th} + R_\text{in}}.
+\frac{\Delta V}{V} = -\,\frac{R_\text{th}}{R_\text{th} + R_\text{in}}.
 $$ {#eq-loading}
 
 ![A voltmeter loads the node it measures. Its finite input resistance $R_\text{in}$ sits in parallel with $R_2$, so the value read at TP1 is the *loaded* divider — below the unloaded $V_S\,R_2/(R_1+R_2)$ by the fraction in @eq-loading, where $R_\text{th}=R_1\Vert R_2$ is the resistance the node presents to the meter.](../../../build/circuits/f01-divider-loading.png){#fig-divider-loading fig-alt="Voltage source V_S drives series resistors R1 and R2 to ground, with output test point TP1 at their junction; a voltmeter of input resistance R_in is connected from TP1 to the 0 V rail, in parallel with R2."}
@@ -397,9 +396,10 @@ every time: **estimate → calculate → check units and limits → interpret.**
 ### Worked example: contact current at a 24 V bench node
 
 *Estimate.* A bench node sits at 24 V DC. Dry-finger contact resistance is of
-order $10^4$–$10^5$ Ω, so the body of @fig-shock-path becomes $R_\text{body}$
-across the node. Ohm's law says the current is "tens to hundreds of microamps" —
-below perception. State that expectation before computing.
+order tens of kilohms in this deliberately simplified screen, so the body of
+@fig-shock-path becomes $R_\text{body}$ across the node. Ohm's law then suggests
+a sub-milliampere result. State that expectation before computing; do not test it
+by contact [@iec60479].
 
 *Calculate.* Take a mid-range dry-skin path $R_\text{body} = 40~\text{k}\Omega$:
 
@@ -408,18 +408,19 @@ I = \frac{V}{R_\text{body}} = \frac{24~\text{V}}{40\times10^{3}~\Omega}
   = 6.0\times10^{-4}~\text{A} = 0.60~\text{mA}.
 $$
 
-*Check.* Units: V/Ω = A. ✓ Limiting case: as $R_\text{body}\to$ the wet-skin
-worst case of ~1 kΩ, $I \to 24~\text{mA}$ — now approaching the let-go region.
-The answer is *conditional on the path*, exactly as the energy–path–target
-picture warns.
+*Check.* Units: V/Ω = A. ✓ Revealing variation: reducing the illustrative path
+value from 40 kΩ to 1 kΩ raises the screen to 24 mA, within the
+several-to-tens-of-milliamperes band where painful contraction and impaired
+release become possible. The answer is *conditional on the assumed path*,
+exactly as the source–path–target picture warns.
 
-*Interpret.* At 24 V with dry skin the shock hazard is negligible (0.6 mA, below
-the ~1 mA perception threshold), which is why this is legitimate bench work. But
-the same node with sweaty hands or a cut finger is an order of magnitude worse,
-and the *arithmetic itself* tells you not to rely on skin resistance as your
-safety margin — rely on keeping the voltage low. Note what this example did **not**
-consider: stored energy and short-circuit current, which Example C shows can bite
-hard even at voltages that cannot shock you.
+*Interpret.* Under the stated dry-contact assumption the result is below the
+approximate perception scale, while the 1 kΩ variation gives 24 mA. The large
+change shows why skin impedance is not a design control and why intentional
+contact is never a test method. The approved source voltage, current limit,
+available energy, insulation, and procedure establish the bench boundary. This
+calculation also omits stored energy and fault current, which must be bounded
+separately.
 
 ### Worked example: current-limited short circuit
 
@@ -427,24 +428,30 @@ hard even at voltages that cannot shock you.
 current limit to 250 mA. A student accidentally shorts the rail to ground. Without
 a limit, how bad is it; with the limit, how bad is it?
 
-*Calculate.* Unlimited, the fault current is set by the wiring resistance alone —
-tens of milliohms of trace and clip lead, so $I = 3.3~\text{V}/0.03~\Omega \approx
-110~\text{A}$ momentarily, dumping $P=VI \approx 360$ W into a copper trace
-designed for a fraction of a watt: it vaporizes. *With* the 250 mA limit, the
-supply leaves constant-voltage mode, folds its output voltage back to whatever
-sustains 250 mA into the short (a fraction of a volt), and dissipates at most
-$P \le V_\text{set}\cdot I_\text{lim} = 3.3~\text{V}\times0.25~\text{A}=0.83$ W —
-a bound, not an equality, because the real output voltage collapses well below
-3.3 V.
+*Calculate.* Without a current limit, the fault current cannot be known from the
+3.3 V label alone; the source's output relation and the complete path impedance
+are required. To expose the scale, suppose an **illustrative stiff source** can
+initially sustain 3.3 V into 30 mΩ of total source, lead, contact, and fault-path
+resistance. The first-order estimate is
+$I=3.3~\text{V}/0.030~\Omega=110$ A and source-terminal power is about 360 W,
+distributed among the path elements according to their resistances. A real
+source may current-limit, fold back, or fail before reaching that extrapolation.
+*With* the 250 mA limit, the supply leaves constant-voltage mode and reduces its
+output voltage to regulate the current. Its delivered terminal power is bounded
+by
+$P \le V_\text{set}I_\text{lim}
+=3.3~\text{V}\times0.25~\text{A}=0.83$ W. This is a bound rather than an
+equality because the output voltage across a low-resistance fault collapses.
 
 *Check.* Units: V·A = W. ✓ The limiting behavior is correct: as the short
 resistance $\to 0$, the limited supply holds *current* fixed and lets *voltage*
 fall, so power stays bounded.
 
-*Interpret.* The current limit converted a 360 W catastrophe into an 0.8 W
-non-event with a blinking front-panel light. This is the energy idea made
-quantitative, and it is why "set the current limit first" is the first move of
-every careful bench session.
+*Interpret.* Under the illustrative comparison, current limiting converts an
+open-ended extrapolation into a bounded source-port event with a visible mode
+change. Local contact heating, stored energy elsewhere, and a supply's transient
+response still require separate checks. This is why the voltage and current
+limits are set and verified before connection.
 
 ### Worked example: stored capacitor energy after disconnect
 
@@ -456,21 +463,21 @@ numbers is $\sim\tfrac12(10^{-3})(10^3)=0.5$ J — small but not nothing.
 $E=\tfrac12(1000\times10^{-6}~\text{F})(30~\text{V})^2 = 0.45~\text{J}$, still
 present *after* the supply is unplugged. If a 1 kΩ bleed resistor is fitted, the
 voltage decays with $\tau=RC=(10^3~\Omega)(10^{-3}~\text{F})=1$ s, so after
-$5\tau = 5$ s it has fallen to $30\,e^{-5}\approx 0.2$ V — safe. With *no* bleed
-path it can hold 30 V for minutes.
+$5\tau = 5$ s the ideal prediction is $30\,e^{-5}\approx 0.20$ V. With no
+characterized discharge path, the decay time is unknown and must be verified.
 
-![Stored energy outlives the switch. After switch $S$ opens the source is gone, but capacitor $C$ keeps its voltage $v_C$ and discharges only through the bleed resistor $R_\text{bleed}$, with time constant $\tau=R_\text{bleed}C$. A board with no bleed path holds its charge — and its hazard — for minutes.](../../../build/circuits/f01-capacitor-bleed.png){#fig-capacitor-bleed fig-alt="Source V_S charges capacitor C through switch S; a bleed resistor R_bleed is connected permanently across C, and test point TP1 marks the capacitor voltage v_C. With S open, C discharges through R_bleed."}
+![Stored energy outlives the switch. After switch $S$ opens the source is gone, but capacitor $C$ keeps its voltage $v_C$ and discharges through the characterized bleed resistor $R_\text{bleed}$, with time constant $\tau=R_\text{bleed}C$. Without a known path, the discharge interval cannot be assumed.](../../../build/circuits/f01-capacitor-bleed.png){#fig-capacitor-bleed fig-alt="Source V_S charges capacitor C through switch S; a bleed resistor R_bleed is connected permanently across C, and test point TP1 marks the capacitor voltage v_C. With S open, C discharges through R_bleed."}
 
 *Check.* Units: F·V² = (C/V)·V² = C·V = J. ✓ And $RC$ has units of seconds, as the
 dimensional check earlier confirmed.
 
-*Interpret.* Half a joule at 30 V will not shock you through skin, but discharged
-through a shorting tool it produces a bright spark, a startle reflex (which causes
-*most* minor bench injuries), and a pitted screwdriver; scale the same numbers to
-a camera-flash or motor-drive capacitor at hundreds of volts and it is lethal.
-This is the concrete meaning of step 3 of the de-energizing sequence: **prove it
-is discharged, don't assume it.** It is also a first look at the RC transient that
-[F07](f07-capacitors-inductors-transients.qmd) develops rigorously.
+*Interpret.* The 0.45 J remains available after disconnect and can produce an arc,
+damage a tool or component, and cause a startle response if released through a
+low-resistance path. Higher voltage or capacitance can raise both stored energy
+and contact hazard sharply. This is the concrete meaning of step 3 of the
+de-energizing sequence: **prove it is discharged; do not assume it.** It is also
+a first look at the RC transient developed rigorously in
+[F07](f07-capacitors-inductors-transients.qmd).
 
 ### Worked example: voltmeter loading of a divider
 
@@ -482,8 +489,8 @@ $R_\text{in}=10~\text{M}\Omega$. From @eq-loading you expect a *few percent low*
 $R_\text{th}=R_1\Vert R_2 = 0.5~\text{M}\Omega$. The fractional loading error is
 
 $$
-\frac{\Delta V}{V} \approx -\frac{R_\text{th}}{R_\text{th}+R_\text{in}}
-   = -\frac{0.5}{0.5+10} = -4.8\%,
+\frac{\Delta V}{V} = -\frac{R_\text{th}}{R_\text{th}+R_\text{in}}
+   = -\frac{0.5}{0.5+10} \approx -4.8\%,
 $$
 
 so the meter should read about $4.50~\text{V}\times(1-0.048)=4.29$ V. (Computed
@@ -494,11 +501,11 @@ redo the divider — you also get 4.29 V, confirming the shortcut.)
 $R_\text{in}=10~\text{G}\Omega$ (an electrometer), the error is $-5\times10^{-5}$,
 i.e. negligible — high input resistance buys honesty.
 
-*Interpret.* The 0.21 V discrepancy is **not noise and not a fault** — it is a
-*predictable, correctable, systematic* effect of the intrusion, so it is a
-*bound/known-bias*, not an *uncertainty* (the vocabulary of the SI-units section
-earns its keep here). Because you can compute it, you can either correct
-for it or defeat it by
+*Interpret.* The 0.21 V discrepancy is **not explained by noise or a component
+fault**; within the stated equivalent it is a predictable systematic effect of
+the intrusion. The calculated correction is an estimate, and uncertainty in
+$R_\text{th}$, $R_\text{in}$, and the indication remains part of the corrected
+result. You can apply that correction or reduce it by
 measuring high-impedance nodes with a higher-$R_\text{in}$ instrument or a
 buffer. What you must *never* do is report 4.29 V as the divider's true node
 voltage without noting that your meter pulled it there.
@@ -547,8 +554,6 @@ visible rather than hidden — the book prefers recoverable source to a screensh
 ```python
 # f01_bench_checks.py — parameterized checks for the F01 worked examples.
 # Standard library only; run with:  python3 f01_bench_checks.py
-import math
-
 def parallel(a, b):
     return a * b / (a + b)
 
@@ -593,16 +598,13 @@ A working idea earns trust by naming the conditions that break it. Three
 misconceptions cause a large share of real bench damage, and one worked diagnosis
 shows how to tell an intrusion from a fault.
 
-**"Low voltage is automatically safe."** False in two directions. First, *stored
-and delivered energy* ignores the shock threshold: a single 18650 lithium cell at
-3.7 V has an internal resistance of order 30 mΩ, so a dead short draws
-$I\approx 3.7/0.03 \approx 120$ A, dumping tens of watts into whatever bridges it
-— a ring, a tool, a trace — hot enough to cause burns and to make the cell vent.
-The voltage cannot shock you; the *current* can burn you and start a fire. Second,
-the injury statistics on a low-voltage bench are dominated not by the electricity
-at all but by the **startle reflex** — the involuntary jerk when a capacitor snaps
-or a part pops — which drives hands into hot irons and sharp edges. "Low voltage"
-narrows the hazard; it does not remove it.
+**"Low voltage is automatically safe."** False. The current-limited-source
+example showed that delivered power depends on the complete source and fault
+path, while the capacitor example showed that stored energy remains after
+disconnect. A low voltage can still heat a conductor, damage a component, cause
+a burn, or produce a startling arc when source impedance is small or stored
+energy is appreciable. "Low voltage" narrows one hazard; it does not remove the
+need to bound current, energy, temperature, and the return path.
 
 **"The meter reads the truth."** The meter reads the *joined system* — recall that
 a measurement is an intrusion. It
@@ -615,9 +617,9 @@ into evidence about the circuit is an act of reasoning, not of reading a display
 Orbiter was lost because one team's software produced an impulse in
 pound-force-seconds while the navigation software consumed it as newton-seconds; a
 factor of 4.45 accumulated silently until the spacecraft entered the Martian
-atmosphere at the wrong altitude and was destroyed [@nasa1999mco]. A quarter-billion
-dollars turned on a units label. Every dimensional check you run at your desk is a
-tiny rehearsal of the discipline that would have saved it.
+atmosphere at the wrong altitude and was lost [@nasa1999mco]. Every dimensional
+check you run at your desk is a tiny rehearsal of the discipline that would have
+caught the mismatch.
 
 ::: {.callout-caution title="Worked diagnosis — intrusion or fault?"}
 You measure the Example-D mid-node and read 4.28 V, not the 4.50 V a naïve divider
@@ -648,16 +650,18 @@ result another person would accept.
 
 *Requirements (measurable, declared before power).*
 
-- Work stays within the extra-low-voltage boundary: source ≤ 24 V DC, well under
-  the ~50 V AC / 120 V DC boundary set out earlier.
-- Current limit set to $\le 1.5\times$ the predicted healthy current, so a fault
-  is bounded and annunciated (Example B).
+- Work uses an approved source no higher than 24 V DC and remains within the
+  locally defined current and available-energy limits.
+- Set the current limit to the lowest value above the bounded healthy-current
+  demand, including documented startup, tolerance, and transient needs; record
+  the chosen margin rather than applying an unexplained universal factor.
 - Every measured node's $R_\text{th}$ estimated in advance; instrument chosen so
   the loading error of @eq-loading is $< 1\%$, or the error is corrected and
   reported.
-- Stop conditions written down: current-limit trip, any reading outside the
-  predicted range by more than its uncertainty, heat you cannot hold, smell, or
-  sound.
+- Stop conditions written down: an unplanned current-limit indication, any
+  reading outside the predicted range by more than its uncertainty, measured
+  temperature or rise rate beyond a predeclared limit, odor, smoke, unexpected
+  sound, discoloration, or unstable operation.
 - A record sufficient for reproduction: supply settings, part values as
   *measured*, instrument model and ranges, raw readings with uncertainty.
 
@@ -668,11 +672,13 @@ high-impedance nodes; a **buffered/high-$R_\text{in}$ probe** is honest on those
 nodes but adds parts, offset, and bandwidth limits — convenience traded against
 fidelity. Choose per node, not once for the whole session.
 
-*Acceptance test.* The plan is accepted when a dry run reproduces a *known* value
-— e.g. the loaded 4.29 V mid-node of Example D — within its stated uncertainty,
-with the current limit demonstrably tripping on a deliberate (safe, momentary)
-short. If the known value cannot be reproduced, the plan, not the reality, is at
-fault.
+*Acceptance test.* The plan is accepted when a dry run reproduces a characterized
+reference value—such as the loaded 4.29 V mid-node of Example D—within its stated
+uncertainty, and a rated test load requests more than the set current so the
+supply enters current regulation without a direct short. Record the load rating,
+indicated current and voltage, and source state. If the reference or limit
+behavior cannot be reproduced, investigate the plan and apparatus before testing
+the unknown circuit.
 
 *Limit of the claim.* This plan qualifies **current-limited, extra-low-voltage
 bench investigation only.** It is explicitly *not* a method for mains, stored

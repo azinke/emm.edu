@@ -987,7 +987,7 @@ One best answer each; the key follows.
    1 kΩ resistors in parallel; (d) 1 kΩ in parallel with 10 kΩ.
 7. A 2.5 V node has 200 kΩ output resistance. Estimate the minimum voltmeter input
    resistance required for less than 1 % loading, then use
-   @eq-meter-requirement to calculate it.
+   Equation @eq-meter-requirement to calculate it.
 
 **Derivation and calculation**
 
@@ -1016,7 +1016,7 @@ One best answer each; the key follows.
     brown–black–black–brown–brown; (c) “332”; (d) “4R7.” Then state what the
     marking does **not** tell you about dissipation or temperature.
 15. Recalculate the apparent $R_S$ for every loaded row of
-    @tbl-source-synthetic using 4.999 V as the open-circuit value. Plot or tabulate
+    Table @tbl-source-synthetic using 4.999 V as the open-circuit value. Plot or tabulate
     $V$ against $I$. Which row falsifies the single straight-line relation, and
     which recorded state explains it?
 16. A real test gives $(V_1,I_1)=(4.950~\text{V},1.00~\text{mA})$ and

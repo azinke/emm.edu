@@ -26,7 +26,7 @@
   % Loaded measurement circuit.
   \draw (7.0,0)
     to[sV, l_=$v_S(t)$] (7.0,3)
-    to[R, l=$R_S$] (9.0,3)
+    to[R, l_=$R_S$] (9.0,3)
     to[R, l=$R$] (11.0,3)
     -- (12.0,3);
   \draw (12.0,3) to[C, l=$C$] (12.0,0) -- (7.0,0);
@@ -43,13 +43,13 @@
   \node[circ] at (12.0,0) {};
   \node[circ] at (13.2,0) {};
   \node[circ] at (14.4,0) {};
-  \draw (12.0,3) -- (12.0,3.45)
+  \draw (12.0,3) -- (12.0,3.55)
     node[ocirc, label={[font=\small]above:{TP2}}] {};
-  \draw (9.0,3) -- (9.0,3.45)
-    node[ocirc, label={[font=\small]left:{TP1}}] {};
+  \draw (9.0,3) -- (9.0,3.55)
+    node[ocirc, label={[font=\small]above right:{TP1}}] {};
   \draw (15.6,0) -- (16.2,0)
     node[ocirc, label={[font=\small]right:{TP0: $0$~V}}] {};
-  \node[font=\small] at (11.25,3.95)
+  \node[font=\small] at (11.25,4.35)
     {(b) source, load, and probe included};
   \draw[dashed, rounded corners] (13.75,-0.45) rectangle (16.0,3.55);
   \node[font=\small] at (14.88,-0.78) {probe input};

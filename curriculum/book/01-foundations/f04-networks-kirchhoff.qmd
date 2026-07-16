@@ -1,6 +1,6 @@
 ---
-title: "Networks, Kirchhoff's laws, and equivalents"
-description: "Turn charge conservation, loop consistency, and linearity into repeatable methods for solving networks, reducing one-ports, and testing whether the result deserves trust."
+title: "Network conservation and equivalent circuits"
+description: "Derive node and loop analysis from conservation, reduce linear one-ports to Thévenin and Norton equivalents, and verify network predictions with bounded evidence."
 chapter-id: F04
 status: draft
 ---
@@ -317,7 +317,7 @@ compatible voltages. A bridge or general multi-node network still requires the
 coupled node equations. Nonlinear devices, current limiting, and temperature-
 dependent resistance also invalidate one fixed set of Millman coefficients.
 
-### The bridge resolves the opening prediction
+### Worked example: node-voltage solution of a loaded bridge
 
 In @fig-f04-bridge, TP0 is $0$ V and TP$_S$ is constrained by the ideal source to
 $V_S=10.0$ V. Define $I_{12}$ positive from TP1 to TP2. KCL at TP1 and TP2 gives
@@ -448,7 +448,7 @@ $I_X$ directed with mesh 1 and against mesh 2 in the shared branch,
 $I_1-I_2=I_X$. A source on the outer boundary simply fixes the adjacent mesh
 current.
 
-### Choose the method that exposes the fewest unknowns
+### Choosing between node-voltage and mesh-current analysis
 
 | Situation | Usually efficient | Reason |
 |---|---|---|
@@ -528,7 +528,7 @@ $P_L=v^2/R_L=12.0$ mW using the total voltage. Squaring the two separate
 contributions and adding gives only $10.0$ mW; the missing cross-term
 $2v_{V_S}v_{I_S}/R_L$ is why source-by-source powers cannot simply be added.
 
-## A linear one-port can be replaced at its terminals
+## Thévenin and Norton equivalents preserve linear port behavior
 
 External circuitry connected only to A and B does not need every internal branch
 value. It needs the relation between port voltage and port current. Continue to
@@ -577,7 +577,7 @@ The units expose the conversion:
 $[V_\text{th}/R_\text{th}]=\text{V}/\Omega=\text{A}$ and
 $[I_\text{N}R_\text{th}]=\text{A}\cdot\Omega=\text{V}$.
 
-### Three ways to find the port parameters
+### Methods for finding Thévenin and Norton port parameters
 
 1. **Open-circuit voltage and safe analysis of short-circuit current.** Calculate
    $V_\text{OC}$ and $I_\text{SC}$, then
@@ -647,7 +647,7 @@ of terminals generally gives different parameters. A nonlinear network may have
 only a local small-signal equivalent around a named operating point.
 :::
 
-## Maximum power occurs at a costly match
+## Maximum resistive load power occurs at an equal-resistance match
 
 Take a fixed resistive Thévenin source with $R_\text{th}>0$ and connect a variable
 positive resistance $R_L$. Under the port references already declared,
@@ -717,7 +717,7 @@ than load resistance. Negative resistance, $R_\text{th}=0$, nonlinear limits, an
 AC impedance matching lie outside this positive-resistive theorem; F08 develops
 the frequency-domain case.
 
-## Executable arithmetic keeps the representations synchronized
+## Executable cross-check of the network solution
 
 The following standard-library program solves the bridge's two node equations,
 checks their residuals, and sweeps loads on the one-port. Parameters remain
@@ -785,7 +785,7 @@ The code reaches the calculation rung of the evidence ladder. Agreement with
 hand algebra catches transcription and arithmetic errors; it is not a simulation
 of non-ideal hardware and not a measurement.
 
-## A load sweep can support or falsify the straight-line claim
+## Load-sweep evidence for the linear one-port relation
 
 The network and its equivalent predict a straight port relation. A physical test
 should challenge that prediction at several safe loads rather than celebrate one
@@ -842,7 +842,7 @@ the loaded slope; resistor self-heating produces gradual curvature; a current
 limit creates a knee. Record source indicators and measure at multiple separated
 points because those hypotheses predict different patterns.
 
-## A guarded port requirement turns analysis into a decision
+## Guarded acceptance decision for a port requirement
 
 Suppose the one-port is intended to drive an input guaranteed to have
 $R_L\ge3.00$ kΩ. The engineering requirement is:
@@ -907,7 +907,7 @@ manufacturing corner unless component values are screened or separately bounded;
 corner coverage belongs in design qualification and production controls. That is
 the honest handoff from a network calculation to a verification claim.
 
-## Where the compact treatment stops working
+## Validity limits of lumped linear DC network analysis
 
 The methods are durable; their simple inputs are conditional. Watch for these
 failure boundaries:
@@ -932,7 +932,7 @@ In each case, disagreement is useful. Locate which representation—physical
 assembly, schematic topology, branch relation, equation, code, or measurement—no
 longer describes the same object.
 
-## What to carry forward
+## Reusable network-analysis workflow
 
 Kirchhoff's laws are conservation constraints, not isolated recipes. KCL comes
 from charge continuity after node accumulation is made negligible or explicit;

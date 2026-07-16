@@ -1,6 +1,6 @@
 ---
-title: "Safe practice, units, and the engineering bench"
-description: "Control the hazard, reason in SI units, and treat every measurement as an intrusion — the bench habits every later chapter quietly assumes."
+title: "Safe bench practice and trustworthy measurement"
+description: "Control electrical hazards, reason in SI units, and account for measurement intrusion during current-limited, extra-low-voltage bench work."
 chapter-id: F01
 status: draft
 ---
@@ -87,14 +87,12 @@ comfort with algebra, ratios, and scientific notation
   reasoning — that another person could use to reproduce your result
   ([T03](../appendices/t03-reproducible-engineering.qmd)).
 
-## Three ideas that keep the work honest
-
 This chapter has no single equation to memorize. What it offers instead is a way
 of standing in front of a bench, built from three small, sturdy ideas. Each one
 answers one of the three questions above, and each recurs, scaled up, in every
 later part of the book.
 
-### Risk is controllable energy
+## Energy paths and hazard control
 
 A hazard is not a mystical property of "electricity." It is **energy that can
 reach a target along a path**. Break any one link — the source, the path, or the
@@ -208,7 +206,7 @@ incidents:
   current limit that trips, a reading outside a range you predicted, or simply
   the boundary of what you were authorized to do.
 
-### Every quantity lives in SI
+## SI units and quantitative discipline
 
 The second sub-model is arithmetic hygiene. Engineering runs on the International
 System of Units, and the discipline is not bureaucratic: it is how you catch an
@@ -313,7 +311,7 @@ peak-to-peak swing, or an RMS value — a 5 V RMS sinusoid has a 7.07 V peak and
 one you meant. In Part I the quantities are mostly DC; the habit of labelling them
 is what makes [F08](f08-sinusoids-impedance-frequency.qmd) survivable.
 
-### A measurement is an intrusion
+## Instrument loading and reference directions
 
 The third sub-model is the one beginners resist longest: **you cannot observe a
 circuit without joining it, and joining it changes it.** An ideal voltmeter draws
@@ -371,7 +369,7 @@ probe, so that a negative result reads as "reality opposes my chosen reference,"
 not "error." This convention is the whole subject of
 [F02](f02-charge-voltage-current.qmd); adopt it now as a habit.
 
-### The bench, instrument by instrument
+### Bench instruments and their roles
 
 The instruments are not a shopping list; each one is a lever on one of the three
 ideas.
@@ -391,12 +389,12 @@ and the return path *de-energized* — trace where current will actually flow �
 before you apply power. Many "mysterious" first-project faults are simply a
 half-seated jumper or a rail powered from the wrong end.
 
-## Putting numbers on the predictions
+## Worked examples: hazard, stored energy, and loading
 
 We now put arithmetic on the three predictions, following the book's discipline
 every time: **estimate → calculate → check units and limits → interpret.**
 
-### Example A — "Is this node safe to touch?"
+### Worked example: contact current at a 24 V bench node
 
 *Estimate.* A bench node sits at 24 V DC. Dry-finger contact resistance is of
 order $10^4$–$10^5$ Ω, so the body of @fig-shock-path becomes $R_\text{body}$
@@ -423,7 +421,7 @@ safety margin — rely on keeping the voltage low. Note what this example did **
 consider: stored energy and short-circuit current, which Example C shows can bite
 hard even at voltages that cannot shock you.
 
-### Example B — "A current limit turns a fault into a footnote"
+### Worked example: current-limited short circuit
 
 *Estimate.* A 3.3 V rail should draw ~150 mA when healthy. You set the supply's
 current limit to 250 mA. A student accidentally shorts the rail to ground. Without
@@ -448,7 +446,7 @@ non-event with a blinking front-panel light. This is the energy idea made
 quantitative, and it is why "set the current limit first" is the first move of
 every careful bench session.
 
-### Example C — "A de-energized board that still bites"
+### Worked example: stored capacitor energy after disconnect
 
 *Estimate.* A board holds a $C = 1000~\mu\text{F}$ bulk capacitor charged to 30 V
 when you switch off (@fig-capacitor-bleed). Is the stored energy trivial? $E=\tfrac12 CV^2$ with rough
@@ -474,7 +472,7 @@ This is the concrete meaning of step 3 of the de-energizing sequence: **prove it
 is discharged, don't assume it.** It is also a first look at the RC transient that
 [F07](f07-capacitors-inductors-transients.qmd) develops rigorously.
 
-### Example D — "The meter changed the answer"
+### Worked example: voltmeter loading of a divider
 
 *Estimate.* A 9 V source drives a divider of $R_1=R_2=1~\text{M}\Omega$ (the
 circuit of @fig-divider-loading); the ideal mid-node is 4.50 V. Your DMM has
@@ -498,14 +496,14 @@ i.e. negligible — high input resistance buys honesty.
 
 *Interpret.* The 0.21 V discrepancy is **not noise and not a fault** — it is a
 *predictable, correctable, systematic* effect of the intrusion, so it is a
-*bound/known-bias*, not an *uncertainty* (the vocabulary of *Every quantity lives
-in SI* earns its keep here). Because you can compute it, you can either correct
+*bound/known-bias*, not an *uncertainty* (the vocabulary of the SI-units section
+earns its keep here). Because you can compute it, you can either correct
 for it or defeat it by
 measuring high-impedance nodes with a higher-$R_\text{in}$ instrument or a
 buffer. What you must *never* do is report 4.29 V as the divider's true node
 voltage without noting that your meter pulled it there.
 
-## Reconciling the prediction with the bench
+## Prediction–measurement reconciliation
 
 A prediction you never check is a belief. Example D gives a clean, cheap
 reconciliation, so we make it the chapter's worked test: **predict, measure,
@@ -513,27 +511,35 @@ compare within uncertainty.** The physical version of this is Lab **L01**; here 
 show the shape of the evidence and its bookkeeping, because the *format* of a
 result is itself part of the skill.
 
-Configuration (the kind of record [T03](../appendices/t03-reproducible-engineering.qmd)
-requires so a result is reproducible):
+The following configuration and observations are **synthetic and illustrative**.
+They show the form of a reproducible record and an uncertainty-aware comparison,
+but they do not qualify a claim about physical hardware. An authentic record in
+Lab **L01** must identify the actual instrument, range, loading, calibration state,
+raw observations, operating conditions, and uncertainty basis as required by
+[T03](../appendices/t03-reproducible-engineering.qmd).
 
-- Source: bench supply set to 9.00 V, current limit 10 mA.
-- Divider: $R_1, R_2$ nominal 1 MΩ ±1 %, measured 0.998 MΩ and 1.003 MΩ.
-- Meter: DMM, DC volts, 10 MΩ input, resolution 1 mV, accuracy per its datasheet
-  ±(0.5 % of reading + 2 counts) ⇒ combined standard uncertainty ≈ 0.03 V here.
+- Source: illustrative bench supply setting of 9.00 V with a 10 mA current limit.
+- Divider: $R_1, R_2$ nominally 1 MΩ ±1 %, with synthetic resistance
+  observations of 0.998 MΩ and 1.003 MΩ.
+- Meter: illustrative DMM on its DC-voltage range, with 10 MΩ input resistance,
+  1 mV resolution, and an assumed accuracy limit of ±(0.5 % of reading +
+  2 counts). The table's ± intervals are illustrative expanded uncertainties
+  $U$ with coverage factor $k=2$; they are teaching assumptions, not a calibration
+  claim or a direct conversion of a datasheet limit.
 
-| Test point | Predicted (model) | Measured | Agreement |
+| Test point | Calculated prediction | Synthetic observation | Illustrative comparison |
 |---|---|---|---|
 | Open-source voltage $V_S$ | 9.00 V (set) | 9.00 V ± 0.05 V | ✓ |
 | Ideal mid-node (no meter) | 4.50 V | — (unobservable directly) | — |
-| Mid-node, DMM loaded | 4.29 V | 4.28 V ± 0.03 V (k = 2) | ✓ within u |
+| Mid-node, DMM loaded | 4.29 V | 4.28 V ± 0.03 V | ✓ within $U$ |
 | Loading error $\Delta V$ | −0.21 V | −0.22 V ± 0.06 V | ✓ |
 
-The measured mid-node, $4.28 \pm 0.03$ V, brackets the loaded prediction 4.29 V
-and is decisively *below* the naïve 4.50 V — the model and the bench tell the same
-story, within a stated uncertainty, using an explicit reference direction (red on
-the mid-node, black on the supply return). That agreement is what the whole book
-means by *understanding a circuit*: the equation, the schematic, and the
-measurement converge on one number you can defend [@horowitz2015art].
+The synthetic mid-node interval, $4.28 \pm 0.03$ V, contains the loaded prediction
+of 4.29 V and is decisively below the naïve 4.50 V. This constructed comparison
+shows how equation, schematic, and observation can be reconciled using an explicit
+reference direction (red on the mid-node, black on the supply return). Only the
+aligned physical lab can establish that agreement for real hardware
+[@horowitz2015art].
 
 A short, dependency-free script makes the model reproducible and its parameters
 visible rather than hidden — the book prefers recoverable source to a screenshot:
@@ -581,7 +587,7 @@ Change a number — the body resistance, the input impedance, the capacitor — 
 the model tells you the new consequence before the bench does. That is the loop
 this book asks you to run on every claim.
 
-## Three ways to fool yourself
+## Failure modes in bench reasoning
 
 A working idea earns trust by naming the conditions that break it. Three
 misconceptions cause a large share of real bench damage, and one worked diagnosis
@@ -633,7 +639,7 @@ finding evidence that separates it from its rivals*, not by staring harder at on
 number.
 :::
 
-## The decision: a bench plan
+## Bench safety and measurement plan
 
 Engineering is deciding under constraints and defending the choice. The decision
 this chapter equips you to make is the **bench safety-and-measurement plan** for a
@@ -674,7 +680,7 @@ high-energy, or any hazardous system, and passing its acceptance test authorizes
 nothing beyond the energy level and apparatus it names. Stating that limit is not
 timidity; it is the difference between an engineering claim and an overreach.
 
-## What to carry forward
+## Bench habits for later chapters
 
 The stance to carry out of this chapter is a way of working, not a formula:
 **bound the energy, reason in units, and distrust the reading.** Before power,
@@ -753,8 +759,9 @@ common misconceptions before you invest in the longer problems.
     d. true only for mains-powered boards.
 
 *[Key: 1-b, 2-c, 3-c, 4-b, 5-b, 6-b. Each maps to a section above: 1 and 6 to
-*Risk is controllable energy*, 3 and 5 to *Every quantity lives in SI*, 4 to
-*A measurement is an intrusion*, and 2 to the current-limit habit.]*
+*Energy paths and hazard control*, 3 and 5 to *SI units and quantitative
+discipline*, 4 to *Instrument loading and reference directions*, and 2 to the
+current-limit habit.]*
 
 **Retrieval and reasoning**
 

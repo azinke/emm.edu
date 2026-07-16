@@ -1,6 +1,6 @@
 ---
-title: "Sources, loads, and resistance"
-description: "Predict the operating voltage and current of a real source–load pair, including resistance, loading, tolerances, ratings, and measurement intrusion."
+title: "Source–load operating points and resistance"
+description: "Derive source–load operating points and predict loading, tolerance, rating, and measurement-intrusion effects in linear resistive DC circuits."
 chapter-id: F03
 status: draft
 ---
@@ -79,7 +79,7 @@ be able to:
   value, tolerance, temperature coefficient, dissipation, voltage, and
   environmental limits rather than resistance alone.
 
-## A connected load reveals what an open circuit hides
+## Source–load interaction defines the operating point
 
 The physical circuit, schematic, equations, and instrument reading describe the
 same event at different resolutions. Begin at the two terminals shared by source
@@ -295,7 +295,7 @@ perhaps the reference polarity, the “passive load” description, the open-cir
 value, or the constant-$R_S$ approximation.
 :::
 
-### Two safe loaded measurements estimate the slope
+### Two loaded measurements estimate source resistance safely
 
 Equation @eq-source-line also gives a diagnostic method. Measure two steady
 operating points $(V_1,I_1)$ and $(V_2,I_2)$ inside the same linear region, with
@@ -563,7 +563,7 @@ capacitance, leads have inductance, and ground paths can alter the system. Those
 effects belong to F07–F08; the DC resistance is the correct first check here, not a
 complete instrument description.
 
-## Reconcile the straight line with bounded evidence
+## Load sweeps distinguish source resistance from current limiting
 
 Suppose an approved, current-limited source is nominally 5.00 V. A calculation
 uses $R_S=47.0~\Omega$ and predicts its terminal voltage for several known loads.
@@ -671,7 +671,7 @@ raw readings, temperature, and an uncertainty basis. Repetition could then test
 whether $R_S$ stays stable. Until that is done, the table supports learning and
 code verification only, not a claim about hardware.
 
-## A resistor value is only the first selection parameter
+## Resistor selection includes tolerance, temperature, and ratings
 
 Schematics show an exact symbol such as 1 kΩ; purchased parts have a nominal value,
 a permitted initial deviation, environmental sensitivity, and limits. Marking
@@ -679,7 +679,7 @@ systems for resistors and capacitors are standardized in IEC 60062, while prefer
 number series are specified in IEC 60063 [@iec60062; @iec60063]. Always verify a
 part's actual manufacturer documentation when the identification matters.
 
-### Read common colour and printed codes
+### Resistor colour and printed codes
 
 For the familiar axial-resistor colour code, the digit colours are:
 
@@ -723,7 +723,7 @@ power of ten. IEC 60063 defines the series and explains their relationship to
 marking resolution and tolerance; membership in a series does not by itself prove
 a particular part's tolerance [@iec60063].
 
-### Tolerance, temperature, and ratings answer different questions
+### Tolerance, temperature coefficient, and ratings
 
 **Tolerance** is a guaranteed or classified interval around the nominal resistance
 under the manufacturer's stated reference conditions. A 1.00 kΩ ±1 % part may
@@ -777,7 +777,7 @@ result and the applicable voltage rating, after derating and pulse conditions ar
 applied. F05 develops power, temperature rise, and margin rigorously; here the
 lesson is simply that “correct resistance” is not a complete selection.
 
-## A bounded divider design closes the loop
+## Worked design: loaded divider with tolerance and temperature bounds
 
 Design is where nominal arithmetic meets source behavior, loading, tolerance,
 temperature, and measurement. Consider this deliberately modest requirement:
@@ -855,7 +855,7 @@ acceptance plan is not capable of protecting the roughly 7 mV lower design margi
 the correct decision is to increase design margin or improve the test, not to
 round the result into passing.
 
-## Recognize the boundaries before they become faults
+## Validity limits of linear resistive source–load analysis
 
 The compact relations in this chapter are powerful because their boundaries are
 visible. Common breakdowns are diagnostic clues:
@@ -891,7 +891,7 @@ chosen loads reveal a line, a knee, or inconsistency. That is the diagnostic val
 of the operating-point view: it turns “the voltage is wrong” into competing,
 testable terminal relations.
 
-## What to carry forward
+## Reusable source–load reasoning
 
 A source and load do not negotiate vaguely; they settle at the one voltage and
 current that satisfy both terminal descriptions. Resistance turns field behavior

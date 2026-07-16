@@ -1,5 +1,5 @@
 ---
-title: "Charge, fields, voltage, and current"
+title: "Charge, voltage, current, and reference directions"
 description: "Relate charge, electric field, potential difference, and current, with the reference directions that make every later circuit statement unambiguous."
 chapter-id: F02
 status: draft
@@ -83,7 +83,7 @@ be able to:
   conservation at a node, and name the length-versus-wavelength condition under which
   the whole picture stops being valid.
 
-## Four quantities, one event
+## Relations among charge, electric field, voltage, and current
 
 Charge is the conserved property at the centre of the story; the other quantities
 describe its interaction or transport. @fig-quantity-chain lays out the vocabulary
@@ -118,7 +118,7 @@ each "defining relation" column occupy the next three sections.
 
 : The four quantities this chapter defines, with their SI units and defining relations. The ampere is an SI base unit; charge is the derived quantity A·s. Vector symbols ($\vec E$, $\vec F$) carry a direction in space; circuit voltage and current carry signs relative to declared references. {#tbl-quantities}
 
-## Charge: the conserved quantity everything else is built from
+## Electric charge and conservation
 
 **Charge is a property of matter, like mass, but it comes in two signs and it is
 conserved.** Two facts make it the bedrock of the whole subject.
@@ -207,7 +207,7 @@ simple 3 h estimate is valid only if the rated capacity applies at the stated 1.
 operating condition.
 :::
 
-## Field and potential: force per charge, energy per charge
+## Electric field and potential difference
 
 A bare charge tells you nothing about what it will *do*; that depends on the other
 charges around it. Rather than re-run Coulomb's law over every pair, we summarize
@@ -286,7 +286,7 @@ term is negligible; otherwise a ground symbol hides important geometry. That is 
 reason F01 treated the measurement loop as part of the circuit, and it returns in
 [F06](f06-measurement-uncertainty-debug.qmd).
 
-## Current: charge in motion, with a chosen positive sense
+## Electric current and its reference direction
 
 **Conduction current** is the signed rate at which net charge crosses a chosen
 surface, such as the cross-section of a wire. Choose the positive normal to that
@@ -322,7 +322,7 @@ $I=-20$ mA and the signed $\Delta Q$ is $-5.0$ mC. The magnitude did not become
 "negative"; the sign records direction.
 :::
 
-### The positive sense is yours to declare
+### Positive current reference direction
 
 Current has a direction, and a number for it is meaningless until you say which way
 counts as positive. **The reference direction is an arrow you draw on the branch
@@ -354,7 +354,7 @@ references gives $p=vi=+0.10$ W: the element absorbs energy at 0.10 J/s. If the
 measured current were $-20$ mA with the same voltage reference, $p=-0.10$ W and the
 element would deliver energy at that instant.
 
-### Conventional current and electron flow are the same physics
+### Conventional current and electron drift
 
 By a historical convention older than the electron, **current points in the direction
 positive charge would move.** In a metal wire the mobile charges are electrons, which
@@ -368,7 +368,7 @@ carrier's actual identity matters, as in a semiconductor junction
 ([A01](../02-analog/a01-semiconductor-diodes.qmd)), where electrons and positively
 charged "holes" genuinely move in opposite directions and both contribute.
 
-## What actually moves, and how fast
+## Carrier drift and signal propagation
 
 Here the opening prediction gets settled, and the answer is more interesting than
 either slogan. Relate the macroscopic current to the microscopic motion of carriers.
@@ -428,7 +428,7 @@ operation, charge enters and leaves at equal rates while electrical energy is
 converted to light and heat. **Energy is transferred; net charge is conserved.**
 We examine the steady claim with an illustrative dataset below.
 
-## Conductors, insulators, and the materials in between
+## Charge transport in conductors, semiconductors, and insulators
 
 Carrier density is important, but it is not the whole classification. A carrier
 must also respond to a field. In the low-field, approximately linear regime, define
@@ -595,7 +595,7 @@ and [S07](../05-domains/s07-communications-rf-antennas.qmd) — flagged here so 
 the boundary of the tool you are about to use everywhere.
 :::
 
-## A measurement plan for steady current continuity
+## Measurement procedure: steady-current continuity
 
 A prediction becomes evidence only when it is tested. A clean test of the claim
 beginners most doubt is to compare steady current at several break points around a
@@ -700,7 +700,7 @@ if __name__ == "__main__":
 Change a number — the wire gauge, the current, the length — and the model reports the
 new consequence before the bench does. That is the loop this book runs on every claim.
 
-## Where the simple picture breaks
+## Misconceptions and limits of the lumped description
 
 A working idea earns trust by naming what breaks it. Three slogans cause most of the
 confusion this chapter targets, and one genuine fault shows how to tell an idealization
@@ -753,7 +753,7 @@ by finding evidence that separates it from its rivals.*
 
 ![The failure of the single-node idealization. The return conductor has real resistance $R_\text{ret}$ and carries the full load current $I$, so the load-side ground $G_1$ is not at the reference potential $G_0$ but above it by $I R_\text{ret}$. Two points both labelled "ground" are then at different voltages — the equipotential-node assumption has quietly failed.](../../../build/circuits/f02-shared-return.png){#fig-shared-return fig-alt="A source VS drives current I through a load resistor R_L, which returns through a resistor R_ret representing the shared return conductor back to the reference ground G0. The load-side return node G1 is brought out to a labelled test point; the voltage from G1 to G0 equals I times R_ret rather than zero."}
 
-## Sizing a return so the ground stays one node
+## Worked design: return-conductor sizing and voltage-drop margin
 
 Engineering is deciding under constraints and defending the choice. The decision this
 chapter equips you to make is a small but ubiquitous one: **size a shared return
@@ -826,7 +826,7 @@ Sizing against inductance and high-frequency return paths is the subject of
 [R03](../06-realization/r03-signal-power-integrity-emc.qmd); stating this limit is the
 difference between an engineering claim and an overreach.
 
-## What to carry forward
+## Conservation, reference directions, and approximation limits
 
 Four quantities, defined once and for all, and a habit that makes their signs
 trustworthy — that is the whole of this chapter:

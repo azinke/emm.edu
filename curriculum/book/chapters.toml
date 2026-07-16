@@ -2,28 +2,28 @@ version = 1
 
 [[chapter]]
 id = "F01"
-title = "Safe practice, units, and the engineering bench"
+title = "Safe bench practice and trustworthy measurement"
 part = "foundations"
 file = "01-foundations/f01-safe-practice.qmd"
 prerequisites = []
 
 [[chapter]]
 id = "F02"
-title = "Charge, fields, voltage, and current"
+title = "Charge, voltage, current, and reference directions"
 part = "foundations"
 file = "01-foundations/f02-charge-voltage-current.qmd"
 prerequisites = ["F01"]
 
 [[chapter]]
 id = "F03"
-title = "Sources, loads, and resistance"
+title = "Source–load operating points and resistance"
 part = "foundations"
 file = "01-foundations/f03-sources-loads-resistance.qmd"
 prerequisites = ["F02", "M01"]
 
 [[chapter]]
 id = "F04"
-title = "Networks, Kirchhoff's laws, and equivalents"
+title = "Network conservation and equivalent circuits"
 part = "foundations"
 file = "01-foundations/f04-networks-kirchhoff.qmd"
 prerequisites = ["F03"]

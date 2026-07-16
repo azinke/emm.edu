@@ -959,7 +959,7 @@ calculating, and substitute solutions back into the governing equations. Full
 solutions and assessment variants remain outside the public book; selected
 self-check values are included for calibration.
 
-**Quick check (multiple choice)**
+### Quick check
 
 One best answer each; the key follows.
 

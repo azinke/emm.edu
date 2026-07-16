@@ -876,7 +876,7 @@ assumptions, reference directions, and units every time. Full solutions and
 live-assessment variants are kept outside the public book; a few self-check answers are
 given so you can calibrate.
 
-**Quick check (multiple choice)**
+### Quick check
 
 One best answer each; the key follows. These surface the chapter's common
 misconceptions before the longer problems.

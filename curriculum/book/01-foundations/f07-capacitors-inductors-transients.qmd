@@ -1,45 +1,1315 @@
 ---
 title: "Capacitors, inductors, and transients"
+description: "Derive stored-energy element relations, predict first-order RC and RL transients, and make bounded switching and discharge decisions."
 chapter-id: F07
-status: outline
+status: draft
 ---
 
-::: {.callout-note title="Chapter outline"}
-The scope and dependency boundary are stable. Full exposition, worked examples,
-exercises, and tested practical evidence still need authoring and review.
+::: {.callout-note title="Chapter maturity — draft"}
+This chapter provides a complete instructional path: constitutive relations and
+stored-energy derivations, initial-condition reasoning, RC and RL step responses,
+an executable cross-check, explicitly synthetic diagnostic data, switching
+protection, non-ideal behavior, a guarded discharge design, and a full exercise
+set. It remains subject to technical and editorial revision. Physical evidence
+belongs in aligned Lab **L05**; calculations and synthetic data here do not
+qualify hardware. See the [reading roadmap](../roadmap.qmd) for status meanings.
+:::
+
+::: {.callout-warning title="Safety boundary for stored-energy work"}
+Practical work discussed here is limited to **current-limited,
+extra-low-voltage** sources, low stored energy, approved components, local
+supervision, and an approved procedure. A disconnected capacitor may remain
+charged, and an interrupted inductor current may create a voltage far above the
+supply. De-energize before changing topology; discharge through an approved
+resistor; then prove the voltage is safe with a suitable instrument. Never short
+a charged capacitor with a tool and never interrupt an unknown inductive load.
+This chapter is not authorization for mains, high voltage, high-energy capacitor
+banks, battery packs, ignition systems, motors, medical equipment, or
+safety-critical systems [@iec61010].
 :::
 
 ## Central question
 
-How do circuits remember energy and respond when conditions change?
+> How do circuits remember energy and respond when conditions change?
+
+Close a switch that connects a resistor and capacitor to a DC source. The
+capacitor voltage does not jump immediately to the source voltage; it approaches
+it. Replace the capacitor by an inductor. Now the branch current, rather than the
+element voltage, approaches its final value. Open the switch again and both
+elements can continue affecting the circuit after the source connection has
+changed. The schematic has changed instantaneously, but an energy-storing state
+has not.
+
+Before calculating, predict the following for the circuits in this chapter.
+
+- Which quantity cannot change abruptly when all currents and voltages remain
+  finite: capacitor voltage or capacitor current?
+- Which quantity cannot change abruptly for an inductor?
+- Does a larger series resistance make an RC capacitor charge faster or slower?
+- Does the same resistance make an RL normalized response settle faster or
+  slower, and does it change the initial current slope?
+- At five time constants, is the response exactly finished?
+- When a relay coil is switched off, where can its stored energy go?
+
+The answers follow from charge conservation, Faraday's law, and energy balance;
+they are not separate rules to memorize. The same physical circuit will be
+described as a schematic, a differential equation, an exponential waveform, an
+energy transfer, and a measurement. Agreement among those descriptions is the
+evidence that the reasoning is sound [@sedra2020microelectronic;
+@horowitz2015art].
 
 ## Learning outcomes
 
-After completing this chapter, the reader should be able to:
+This chapter assumes [F04](f04-networks-kirchhoff.qmd): KCL, KVL, and Thévenin
+reduction; [F05](f05-energy-power-thermal.qmd): passive-sign power and energy
+balances; and [M02](../appendices/m02-calculus-linear-differential.qmd):
+derivatives, integrals, and first-order differential equations. After completing
+it, you should be able to:
 
-- explain the central model and the assumptions that bound its use;
-- connect physical behavior, a schematic or architecture, and quantitative reasoning;
-- interpret evidence and identify at least one credible failure mode;
-- make and defend a design or diagnostic decision;
+- define capacitance and inductance with declared voltage, current, flux, and
+  winding references, and derive their ideal terminal relations and stored
+  energies;
+- explain exactly why ideal capacitor voltage and ideal inductor current are
+  continuous when excitation remains finite, and identify the impulse required
+  to violate that continuity;
+- reduce a one-storage-element linear network to its Thévenin resistance, write
+  and solve its first-order differential equation, and interpret its natural,
+  forced, complete, zero-input, and zero-state responses;
+- predict RC and RL transients from the initial value, final value, and time
+  constant, including signs, units, limiting cases, and component tolerances;
+- trace energy during charging, discharge, and switch opening without counting
+  stored energy, dissipation, and outward heat transfer twice;
+- diagnose departures caused by leakage, ESR, winding resistance, saturation,
+  parasitic capacitance, source resistance, or instrument loading; and
+- select a discharge or flyback path and state a bounded acceptance rule with
+  operating conditions, uncertainty, loading, and margin.
 
-## Concept path
+## Electric and magnetic storage variables
 
-- capacitance, inductance, and stored energy;
-- continuity of capacitor voltage and inductor current;
-- first-order RC and RL natural and forced response;
-- time constants and initial/final-value reasoning;
-- switching, flyback, and protection;
-- non-ideal ESR, leakage, saturation, and parasitics;
+Resistance relates voltage and current at an instant. An ideal capacitor or
+inductor relates a terminal quantity to the **rate of change** of an internal
+state. That state is what gives a first-order circuit memory.
 
-## Evidence and practice
+| Element | Stored state | Linear constitutive relation | Terminal relation | Energy for zero reference state |
+|---|---|---|---|---|
+| capacitor | charge separation $q$ | $q=Cv_C$ | $i_C=C\,\mathrm dv_C/\mathrm dt$ | $W_C=\tfrac12 Cv_C^2$ |
+| inductor | flux linkage $\lambda$ | $\lambda=Li_L$ | $v_L=L\,\mathrm di_L/\mathrm dt$ | $W_L=\tfrac12 Li_L^2$ |
 
-The completed chapter will include a prediction, a worked model, a simulation or
-executable check where it adds value, measured or authentic data, a fault or
-model mismatch, and a requirements-based design decision. The final exercise set
-will mix retrieval, calculation, interpretation, debugging, and open design.
+These are ideal, lumped, linear, time-invariant relations. $C$ and $L$ are
+constant in the stated operating range; fields are assumed confined well enough
+that one two-terminal element represents them; and loss, leakage, coupling,
+saturation, and parasitics are initially excluded. Real components approximate
+these relations only over bounded voltage, current, temperature, and frequency
+ranges [@sedra2020microelectronic; @ulaby2015electromagnetics].
+
+Charge separation $q$ and flux linkage $\lambda$ are the physical storage
+variables in this description. Because @eq-f07-qcv and $\lambda=Li_L$ are
+one-to-one when $C$ and $L$ are positive constants, $v_C$ and $i_L$ are
+convenient state coordinates in the ideal linear range. That convenience must
+not be extended unchanged into nonlinear or hysteretic operation.
+
+### Capacitance, current, and stored electric energy
+
+Name the capacitor terminals A and B. Define
+$v_C(t)\equiv V_A(t)-V_B(t)$, marked $+$ at A and $-$ at B. Define $i_C(t)$ as
+positive entering terminal A. These are passive-sign references. Let $q(t)$ be
+the free charge associated with terminal A relative to the chosen zero-charge
+state. For a linear capacitor, **capacitance is the proportionality**
+
+$$
+q(t)=C v_C(t),
+$$ {#eq-f07-qcv}
+
+where $C>0$ has unit farad:
+$1~\text{F}=1~\text{C}/\text{V}$. For parallel plates of area $A$, separation
+$d$, and approximately uniform dielectric permittivity $\epsilon$, neglecting
+fringing gives $C\approx\epsilon A/d$. This geometric expression is an
+approximation; @eq-f07-qcv is the terminal constitutive relation used here
+[@griffiths2017electrodynamics].
+
+Current is the rate at which terminal charge changes. Because the current
+reference enters the voltage-positive terminal,
+
+$$
+\boxed{i_C(t)=\frac{\mathrm dq}{\mathrm dt}
+=C\frac{\mathrm dv_C(t)}{\mathrm dt}.}
+$$ {#eq-f07-capacitor-iv}
+
+Equation @eq-f07-capacitor-iv is exact for the stated ideal constant-$C$
+description. Its dimensions teach the relation:
+
+$$
+[C\,\mathrm dv/\mathrm dt]
+=\frac{\text{C}}{\text{V}}\frac{\text{V}}{\text{s}}
+=\frac{\text{C}}{\text{s}}=\text{A}.
+$$
+
+A constant capacitor voltage implies zero ideal branch current, but it does not
+imply zero stored energy. Conversely, a finite constant current creates a linear
+voltage ramp with slope $i_C/C$. Reversing only the current reference changes
+the signed equation to $i'_C=-C\,\mathrm dv_C/\mathrm dt$; the physical device
+does not change.
+
+With passive-sign references, terminal power absorbed is
+$p_C=v_C i_C$. Starting from $v_C=0$ and integrating,
+
+$$
+W_C(v_C)
+=\int v_C i_C\,\mathrm dt
+=\int_0^{v_C} v\,C\,\mathrm dv
+=\boxed{\frac12 C v_C^2}.
+$$ {#eq-f07-capacitor-energy}
+
+The unit check is
+$\text{F}\,\text{V}^2=(\text{C}/\text{V})\text{V}^2
+=\text{C}\,\text{V}=\text{J}$. Energy depends on $v_C^2$, so reversing voltage
+polarity does not make stored energy negative. The sign of $p_C$, however, says
+whether energy is entering or leaving at that instant.
+
+### Inductance, voltage, and stored magnetic energy
+
+Choose a winding direction and a positive surface normal through each turn by
+the right-hand rule. Let $\Phi_B$ be magnetic flux through that oriented surface
+and let the signed flux linkage be $\lambda=N\Phi_B$ for $N$ identical linked
+turns. Mark inductor terminal A positive relative to B and define $i_L$ entering
+A. Choose the winding sense so positive $i_L$ produces positive $\lambda$.
+Faraday's law then gives the passive-sign terminal relation
+
+$$
+v_L(t)=\frac{\mathrm d\lambda(t)}{\mathrm dt}.
+$$ {#eq-f07-faraday-terminal}
+
+The minus sign in the field-law form is contained in the declared terminal,
+winding, path, and surface orientations; it must not be added again. For a
+linear, uncoupled inductor, **inductance is the proportionality**
+
+$$
+\lambda(t)=L i_L(t),
+$$
+
+so constant $L$ gives
+
+$$
+\boxed{v_L(t)=L\frac{\mathrm di_L(t)}{\mathrm dt}.}
+$$ {#eq-f07-inductor-iv}
+
+The henry satisfies
+
+$$
+[L]=\frac{\text{V}\,\text{s}}{\text{A}},
+\qquad
+[L\,\mathrm di/\mathrm dt]
+=\frac{\text{V}\,\text{s}}{\text{A}}
+  \frac{\text{A}}{\text{s}}=\text{V}.
+$$
+
+A constant ideal inductor current therefore requires zero inductor voltage but
+may correspond to nonzero stored energy. A constant finite voltage produces a
+linear current ramp. Integrating passive-sign power from zero current gives
+
+$$
+W_L(i_L)
+=\int v_L i_L\,\mathrm dt
+=\int_0^{i_L} L i\,\mathrm di
+=\boxed{\frac12 L i_L^2}.
+$$ {#eq-f07-inductor-energy}
+
+Its unit is
+$\text{H}\,\text{A}^2=(\text{V}\,\text{s}/\text{A})\text{A}^2
+=\text{V}\,\text{A}\,\text{s}=\text{J}$. The formula is not valid with a
+single constant $L$ once a magnetic core becomes appreciably nonlinear or
+saturates; then $\lambda(i)$ must be used and energy requires the actual
+magnetization relation,
+$W=\int i\,\mathrm d\lambda$. The distinct integral
+$\int\lambda\,\mathrm di$ is magnetic coenergy; the two are equal only for the
+linear relation used in @eq-f07-inductor-energy
+[@ulaby2015electromagnetics].
+
+### Series and parallel combinations
+
+Network reduction remains possible when the elements are ideal and uncoupled.
+The conditions matter.
+
+| Connection | Equivalent value | Required condition |
+|---|---:|---|
+| capacitors in parallel | $C_\text{eq}=\sum C_k$ | same terminal voltage |
+| capacitors in series | $C_\text{eq}^{-1}=\sum C_k^{-1}$ | intermediate nodes initially carry no unaccounted net free charge |
+| inductors in series | $L_\text{eq}=\sum L_k$ | negligible mutual coupling |
+| inductors in parallel | $L_\text{eq}^{-1}=\sum L_k^{-1}$ | negligible coupling and compatible initial currents |
+
+Nearby inductors can share flux, adding mutual-inductance terms; series
+capacitors can divide voltage unevenly through leakage and tolerance. The simple
+table is a terminal reduction, not a universal construction rule
+[@sedra2020microelectronic].
+
+## Continuity follows bounded excitation
+
+Continuity is a consequence of the constitutive relations, not a claim that a
+state can never change quickly.
+
+Integrate @eq-f07-capacitor-iv over a switching interval from $0^-$ to $0^+$:
+
+$$
+v_C(0^+)-v_C(0^-)
+=\frac{1}{C}\int_{0^-}^{0^+} i_C(t)\,\mathrm dt.
+$$ {#eq-f07-cap-continuity}
+
+If $i_C$ is bounded in a neighborhood of the switching instant and contains no
+impulse, the integral tends to zero with the interval and
+
+$$
+\boxed{v_C(0^+)=v_C(0^-).}
+$$ {#eq-f07-cap-initial}
+
+An ideal voltage step across an ideal capacitor is possible only with a current
+impulse whose area is $C\Delta v_C$. Real source resistance, lead inductance,
+ESR, and finite switching time bound the current and spread the change over time.
+
+Likewise, integrate @eq-f07-inductor-iv:
+
+$$
+i_L(0^+)-i_L(0^-)
+=\frac{1}{L}\int_{0^-}^{0^+} v_L(t)\,\mathrm dt.
+$$ {#eq-f07-ind-continuity}
+
+If $v_L$ is bounded near the switching instant and contains no impulse, then
+
+$$
+\boxed{i_L(0^+)=i_L(0^-).}
+$$ {#eq-f07-ind-initial}
+
+An ideal current step through an ideal inductor requires a voltage impulse of
+area $L\Delta i_L$. Opening a mechanical switch tries to force the branch current
+to zero while parasitic capacitance is very small; the inductor responds with
+whatever voltage the surrounding insulation, switch, arc, or clamp allows. That
+is why “the inductor resists current change” is useful only after the energy path
+and voltage limit are named.
+
+::: {.callout-important title="What is continuous, and what may jump"}
+A capacitor's **voltage** is continuous under finite current; its current may
+jump when the applied network changes. An inductor's **current** is continuous
+under finite voltage; its voltage may jump. “A capacitor is a short at turn-on”
+and “an inductor is an open at turn-on” are unsafe slogans: they are true only
+for particular zero initial conditions and particular surrounding networks.
+:::
+
+## First-order RC response
+
+@fig-f07-rc keeps the same $v_C$ polarity and downward $i_C$ reference in both
+configurations. During discharge the physical current flows opposite the arrow,
+so $i_C<0$; the reference does not rotate merely to keep a result positive.
+
+![A source-driven RC charging circuit and the corresponding source-free discharge circuit. The capacitor reference polarity and current arrow are unchanged across switching.](../../../build/circuits/f07-rc-transient.png){#fig-f07-rc fig-alt="Panel a shows voltage source V_S connected through switch S and Thevenin resistance R_th to capacitor C. Panel b shows the source removed and R_th connected across the capacitor. TP1 is the capacitor-positive node relative to TP0. Current i_C is referenced downward into the capacitor-positive terminal in both panels."}
+
+### Governing differential equation
+
+After the switch changes at $t=0$, replace the rest of any linear resistive
+network seen by the capacitor with its Thévenin voltage $V_\text{th}$ and
+resistance $R_\text{th}>0$. Independent sources are deactivated only when finding
+$R_\text{th}$; dependent sources, if present, remain and require a test source as
+in F04. With $v_C$ positive at TP1, KVL and
+@eq-f07-capacitor-iv give
+
+$$
+V_\text{th}=R_\text{th}i_C+v_C
+=R_\text{th}C\frac{\mathrm dv_C}{\mathrm dt}+v_C.
+$$ {#eq-f07-rc-ode}
+
+This is an exact first-order equation for constant $V_\text{th}$, constant
+$R_\text{th}$, and constant $C$ in the ideal lumped description. Rearranging,
+
+$$
+\frac{\mathrm dv_C}{\mathrm dt}
+=-\frac{1}{R_\text{th}C}(v_C-V_\text{th}).
+$$
+
+The derivative is proportional to the distance from the final value. Define
+$y(t)=v_C(t)-V_\text{th}$ and $\tau_C=R_\text{th}C$. When $y\ne0$, separation
+of variables from $0^+$ to $t$ gives
+
+$$
+\frac{\mathrm dy}{y}=-\frac{\mathrm dt}{\tau_C},
+\qquad
+\int_{y(0^+)}^{y(t)}\frac{\mathrm dy'}{y'}
+=-\int_0^t\frac{\mathrm dt'}{\tau_C},
+$$
+
+and therefore
+
+$$
+\ln\left|\frac{y(t)}{y(0^+)}\right|=-\frac{t}{\tau_C},
+\qquad
+y(t)=y(0^+)e^{-t/\tau_C}.
+$$
+
+The sign of $y$ cannot change in this homogeneous equation, which removes the
+absolute-value ambiguity. If $y(0^+)=0$, the identically zero solution follows
+directly: the capacitor already has its final voltage. Applying
+$v_C(0^+)=V_0$ in either case yields
+
+$$
+\boxed{v_C(t)=V_\infty+
+  \bigl(V_0-V_\infty\bigr)e^{-t/\tau_C},\qquad t\ge0,}
+$$ {#eq-f07-rc-complete}
+
+where
+
+$$
+V_\infty=V_\text{th},
+\qquad
+\boxed{\tau_C=R_\text{th}C.}
+$$ {#eq-f07-rc-tau}
+
+The time constant has units
+$\Omega\,\text{F}=(\text{V}/\text{A})(\text{C}/\text{V})
+=\text{C}/\text{A}=\text{s}$. It is not “the time to finish.” At $t=\tau_C$,
+the distance from final is $e^{-1}\approx0.368$ of its initial value, so 63.2%
+of a rising change is complete.
+
+The term $V_\infty$ is the **forced** or steady response to the post-switch
+source. The exponential is the **natural** response. Their sum is the complete
+response. With $V_0=0$, it is also called the zero-state response. With
+$V_\text{th}=0$ and $V_0\ne0$, it is the zero-input response. These labels refer
+to the mathematical decomposition, not to separate voltages physically stored
+in different places [@oppenheim1996signals].
+
+### Worked example: a 5 V charging transient
+
+Let an ideal 5.00 V DC step drive $R_\text{th}=10.0~\text{k}\Omega$ and
+$C=10.0~\mu\text{F}$, initially discharged. The estimate is a response on the
+scale of $10^4\times10^{-5}=10^{-1}$ s. Exactly within the ideal description,
+
+$$
+\tau_C=(10.0\times10^3~\Omega)(10.0\times10^{-6}~\text{F})
+=0.100~\text{s}.
+$$
+
+The initial and final values are $V_0=0$ and $V_\infty=5.00$ V, hence
+
+$$
+v_C(t)=5.00~\text{V}\left(1-e^{-t/(0.100~\text{s})}\right).
+$$
+
+At one time constant,
+
+$$
+v_C(0.100~\text{s})
+=5.00(1-e^{-1})~\text{V}=3.16~\text{V}.
+$$
+
+The associated current is
+
+$$
+i_C(t)=\frac{5.00~\text{V}}{10.0~\text{k}\Omega}
+e^{-t/(0.100~\text{s})}
+=(0.500~\text{mA})e^{-t/(0.100~\text{s})}.
+$$
+
+It starts at $+0.500$ mA and decays to zero. If the capacitor instead begins at
+7.00 V while the post-switch source remains 5.00 V, then
+$V_0-V_\infty=+2.00$ V: the voltage decays toward 5.00 V and $i_C<0$. The same
+equation handles charging and discharging; the sign comes from declared
+references and boundary values.
+
+### Worked example: a switched divider reduced at the capacitor port
+
+The preceding circuit was already in Thévenin form. @fig-f07-thevenin requires
+the full F04-to-F07 procedure. Assume switch $S$ has been open for long enough
+before $t=0$ that $R_2$ has discharged the capacitor. The switch closes at
+$t=0$ and the ideal 9.00 V DC source remains constant.
+
+![A switched resistor divider driving a capacitor at TP1.](../../../build/circuits/f07-thevenin-transient.png){#fig-f07-thevenin fig-alt="A 9 volt source and closing switch feed a 2 kilohm resistor R1 into TP1. A 4 kilohm resistor R2 and 15 microfarad capacitor C both connect from TP1 to reference TP0. Capacitor voltage is positive at TP1 and current i_C is referenced downward."}
+
+**Initial state.** With $S$ open, $R_2$ connects TP1 to TP0. At pre-switch DC
+steady state, $v_C(0^-)=0$ V. No current impulse is present, so continuity gives
+$v_C(0^+)=0$ V.
+
+**Post-switch final value.** At $t\to\infty$, the ideal capacitor current tends
+to zero. The remaining divider gives
+
+$$
+V_\infty=V_\text{th}
+=(9.00~\text{V})\frac{4.00~\text{k}\Omega}
+{2.00~\text{k}\Omega+4.00~\text{k}\Omega}
+=6.00~\text{V}.
+$$
+
+**Post-switch resistance.** Deactivate the independent ideal voltage source by
+replacing it with a short while retaining the closed-switch topology. Looking
+from TP1 to TP0 then gives
+
+$$
+R_\text{th}=R_1\parallel R_2
+=2.00~\text{k}\Omega\parallel4.00~\text{k}\Omega
+=1.333~\text{k}\Omega.
+$$
+
+Thus
+
+$$
+\tau_C=R_\text{th}C
+=(1.333~\text{k}\Omega)(15.0~\mu\text{F})
+=20.0~\text{ms},
+$$
+
+and the complete prediction is
+
+$$
+\boxed{v_C(t)=6.00~\text{V}
+\left(1-e^{-t/(20.0~\text{ms})}\right),\qquad t\ge0.}
+$$
+
+At one time constant, $v_C=3.79$ V. The predicted initial slope is
+
+$$
+\left.\frac{\mathrm dv_C}{\mathrm dt}\right|_{0^+}
+=\frac{V_\infty-V_0}{\tau_C}
+=300~\text{V/s},
+$$
+
+so $i_C(0^+)=C(300~\text{V/s})=4.50$ mA. Direct network analysis at
+$t=0^+$ agrees: TP1 is held initially at 0 V by the capacitor state, giving
+$(9.00~\text{V})/(2.00~\text{k}\Omega)=4.50$ mA through $R_1$ and zero through
+$R_2$. At final DC, the capacitor current is zero and both resistor currents are
+1.50 mA. Initial condition, final divider, Thévenin reduction, slope, and KCL
+therefore tell one consistent story.
+
+### Initial and final value procedure
+
+For any one-capacitor, first-order linear circuit:
+
+1. Solve the $t<0$ circuit far enough before switching to obtain $v_C(0^-)$.
+2. Apply continuity: $v_C(0^+)=v_C(0^-)$ unless an explicitly represented
+   current impulse exists.
+3. Solve the post-switch DC circuit for $v_C(\infty)$; only at this steady state
+   does an ideal capacitor branch carry zero current and behave as an open.
+4. Find $R_\text{th}$ seen by the capacitor in the **post-switch topology**.
+5. Form $\tau_C=R_\text{th}C$ and substitute the three values into @eq-f07-rc-complete.
+6. Check $t=0$, $t\to\infty$, the initial slope, units, and energy direction.
+
+If two independent capacitor voltages remain after reduction, the circuit is
+generally second order and one time constant is insufficient.
+
+## First-order RL response
+
+@fig-f07-rl retains the downward $i_L$ reference when the source is removed. The
+natural-response loop then produces $v_L<0$: the inductor delivers stored energy
+while current continues downward and decays.
+
+![A source-driven RL circuit and the corresponding source-free loop. The current reference remains downward through the inductor in both configurations.](../../../build/circuits/f07-rl-transient.png){#fig-f07-rl fig-alt="Panel a shows source V_S and switch S driving resistance R_th and inductor L in series. Panel b shows R_th and L in a source-free closed loop. Current i_L is referenced downward through L in both panels; TP1 and TP0 expose the inductor terminals."}
+
+### Governing differential equation
+
+Replace the linear network seen by the inductor after switching with a Thévenin
+source $V_\text{th}$ and the **total** series resistance $R_\text{th}>0$,
+including source resistance and winding resistance included in the first-order
+description. KVL with the references in @fig-f07-rl gives
+
+$$
+V_\text{th}=R_\text{th}i_L+v_L
+=R_\text{th}i_L+L\frac{\mathrm di_L}{\mathrm dt}.
+$$ {#eq-f07-rl-ode}
+
+Subtract $I_\infty=V_\text{th}/R_\text{th}$ and define
+$z(t)=i_L(t)-I_\infty$. Then
+$\mathrm dz/\mathrm dt=-z/(L/R_\text{th})$, exactly the equation just solved
+for $y$. Applying $i_L(0^+)=I_0$ gives
+
+$$
+\boxed{i_L(t)=I_\infty+
+  \bigl(I_0-I_\infty\bigr)e^{-t/\tau_L},\qquad t\ge0,}
+$$ {#eq-f07-rl-complete}
+
+with
+
+$$
+I_\infty=\frac{V_\text{th}}{R_\text{th}},
+\qquad
+\boxed{\tau_L=\frac{L}{R_\text{th}}.}
+$$ {#eq-f07-rl-tau}
+
+The unit check is
+$\text{H}/\Omega=(\text{V}\,\text{s}/\text{A})/(\text{V}/\text{A})
+=\text{s}$. Increasing resistance slows an RC normalized response because
+$\tau_C=RC$, but reduces an RL time constant because $\tau_L=L/R$. Thus an RL
+natural decay, or its normalized distance from final, settles faster. For a fixed
+ideal voltage step, increasing $R$ also lowers $I_\infty=V/R$ while leaving the
+initial slope $\mathrm di/\mathrm dt|_{0^+}=V/L$ unchanged. “The current rises
+faster” is therefore incomplete unless the compared quantity is named.
+
+### Worked example: current buildup and voltage reversal
+
+Let an ideal 5.00 V DC step drive $R_\text{th}=100~\Omega$ and
+$L=100~\text{mH}$ from $I_0=0$. The final current and time constant are
+
+$$
+I_\infty=\frac{5.00~\text{V}}{100~\Omega}=50.0~\text{mA},
+\qquad
+\tau_L=\frac{0.100~\text{H}}{100~\Omega}=1.00~\text{ms}.
+$$
+
+Therefore
+
+$$
+i_L(t)=50.0~\text{mA}\left(1-e^{-t/(1.00~\text{ms})}\right),
+$$
+
+and at $t=1.00$ ms the current is 31.6 mA. From KVL,
+
+$$
+v_L(t)=5.00~\text{V}\,e^{-t/(1.00~\text{ms})}.
+$$
+
+The inductor initially takes the full +5.00 V while the resistor drop is zero;
+at steady DC the inductor voltage is zero and the resistor takes the full source
+voltage.
+
+Now remove the source while preserving a 100 $\Omega$ closed discharge loop.
+Continuity gives $i_L(0^+)=50.0$ mA and $I_\infty=0$, so
+
+$$
+i_L(t)=50.0~\text{mA}\,e^{-t/(1.00~\text{ms})}.
+$$
+
+The current retains its positive downward direction, but
+
+$$
+v_L(0^+)=L\left.\frac{\mathrm di_L}{\mathrm dt}\right|_{0^+}
+=-(100~\Omega)(50.0~\text{mA})=-5.00~\text{V}.
+$$
+
+The voltage reverses so the inductor can deliver energy into the resistor. A
+negative passive-sign power $v_L i_L$ confirms delivery rather than absorption.
+
+### Initial and final value procedure
+
+The corresponding one-inductor procedure is:
+
+1. Find $i_L(0^-)$ from the pre-switch circuit.
+2. Apply $i_L(0^+)=i_L(0^-)$ unless a voltage impulse is explicitly present.
+3. Find $i_L(\infty)$ from the post-switch DC circuit; only then may an ideal
+   inductor be replaced by a zero-voltage short.
+4. Find the total resistance seen in the post-switch current path.
+5. Form $\tau_L=L/R_\text{th}$ and use @eq-f07-rl-complete.
+6. Check the initial inductor voltage, both endpoints, dimensions, and the path
+   that absorbs the initial magnetic energy.
+
+An ideal inductor directly across an ideal voltage source has
+$R_\text{th}=0$ and no finite DC final current; current ramps rather than
+approaching an exponential steady state. That limiting case is outside the
+$R_\text{th}>0$ solution above, not a division-by-zero nuisance to ignore.
+
+## Unified first-order response and settling
+
+Both circuits are instances of the linear state equation
+
+$$
+\frac{\mathrm dx}{\mathrm dt}
+=-\frac{1}{\tau}(x-x_\infty),
+$$ {#eq-f07-first-order-state}
+
+whose complete solution is
+
+$$
+\boxed{x(t)=x_\infty+
+\bigl(x(0^+)-x_\infty\bigr)e^{-t/\tau}.}
+$$ {#eq-f07-first-order-solution}
+
+For RC, $x=v_C$ and $\tau=R_\text{th}C$; for RL, $x=i_L$ and
+$\tau=L/R_\text{th}$. The normalized remaining error is
+
+$$
+\frac{x(t)-x_\infty}{x(0^+)-x_\infty}=e^{-t/\tau}.
+$$
+
+The duality is useful only when its differences remain visible:
+
+| Feature | One-capacitor RC | One-inductor RL |
+|---|---|---|
+| convenient linear state coordinate | $v_C$ | $i_L$ |
+| continuous under bounded, impulse-free excitation | $v_C$ | $i_L$ |
+| post-switch DC replacement for final value | open capacitor branch | zero-voltage inductor branch |
+| time constant | $R_\text{th}C$ | $L/R_\text{th}$ |
+| initial derivative | $(V_\infty-V_0)/\tau_C$ | $(I_\infty-I_0)/\tau_L$ |
+| effect of increasing $R_\text{th}$ | normalized settling slows | normalized settling speeds up |
+
+This makes useful settling screens independent of amplitude:
+
+| Elapsed time | Remaining distance | Completed fraction of a monotonic rise |
+|---:|---:|---:|
+| $1\tau$ | 36.8% | 63.2% |
+| $2\tau$ | 13.5% | 86.5% |
+| $3\tau$ | 4.98% | 95.0% |
+| $4.61\tau$ | 1.00% | 99.0% |
+| $5\tau$ | 0.674% | 99.326% |
+
+The exponential never becomes mathematically zero at finite time. “Settled” is
+therefore a requirement, not a natural constant: name the permitted error band,
+noise, measurement uncertainty, and duration. For a fractional remaining error
+$\epsilon$ with $0<\epsilon<1$,
+
+$$
+t_\text{settle}=-\tau\ln\epsilon.
+$$ {#eq-f07-settling}
+
+## Energy balance during transients
+
+Choose a boundary enclosing the ideal resistor and capacitor in the charging
+circuit, but not the source. Electrical power $p_\text{in}=V_S i$ crosses into
+the boundary. Inside, the resistor converts electrical energy to internal
+thermal energy at $i^2R$, while the capacitor accumulates field energy. KVL gives
+the exact lumped balance
+
+$$
+V_S i=i^2R+v_C i
+=i^2R+\frac{\mathrm d}{\mathrm dt}
+  \left(\frac12 Cv_C^2\right).
+$$ {#eq-f07-rc-power-balance}
+
+During warm-up, $i^2R$ is an internal conversion; heat has not necessarily
+crossed the outer physical boundary yet. Do not count the same energy once as
+resistor dissipation and again as outward heat before it actually leaves.
+
+For an initially uncharged ideal capacitor charged to $V_S$ through a resistor
+by an ideal voltage step, $i=C\,\mathrm dv_C/\mathrm dt$ converts the source
+integral into an integral over capacitor voltage:
+
+$$
+W_\text{source}
+=\int_0^\infty V_S i\,\mathrm dt
+=V_S\int_0^{V_S}C\,\mathrm dv_C
+=CV_S^2.
+$$
+
+The capacitor retains $W_C=\tfrac12CV_S^2$. Integrating
+@eq-f07-rc-power-balance, or subtracting the final stored energy from the only
+cross-boundary input, gives
+$W_R=W_\text{source}-W_C=\tfrac12CV_S^2$. Therefore
+
+$$
+W_\text{source}=CV_S^2,
+\qquad
+W_C(\infty)=\frac12CV_S^2,
+\qquad
+W_R=\frac12CV_S^2.
+$$ {#eq-f07-rc-charge-energy}
+
+The 50% split is exact only for this ideal step, zero initial voltage, constant
+source voltage, and resistive path. Changing $R$ changes how quickly energy is
+converted but not this integrated split. A shaped current source, energy-recovery
+circuit, nonzero initial voltage, leakage path, or non-ideal source changes it.
+
+For the 5.00 V, 10.0 $\mu$F example,
+
+$$
+W_C=\frac12(10.0~\mu\text{F})(5.00~\text{V})^2
+=125~\mu\text{J}.
+$$
+
+The source delivers 250 $\mu$J and the resistor converts 125 $\mu$J. This is a
+calculation under declared assumptions, not a measured energy budget.
+
+For a source-free RL loop, choose a boundary enclosing $L$ and $R$. No electrical
+power crosses the boundary after disconnection. Stored magnetic energy decreases
+while resistor internal energy increases:
+
+$$
+0=i^2R+\frac{\mathrm d}{\mathrm dt}
+  \left(\frac12Li^2\right).
+$$ {#eq-f07-rl-power-balance}
+
+Integrating over $0\le t<\infty$, as $i(t)\to0$, shows that the resistor and any
+other declared clamp elements together receive the initial $\tfrac12LI_0^2$. If an arc,
+switch avalanche, winding capacitance, or radiation takes part, those are
+additional paths to inventory rather than unexplained “lost energy.”
+
+## Switching and flyback protection
+
+In @fig-f07-flyback, $i_L$ is referenced downward through a coil with winding
+resistance $R_w$. While switch $S$ is closed, flyback diode $D_F$ is reverse
+biased. When $S$ opens, inductor-current continuity drives TP1 upward until the
+diode conducts from TP1 back toward the supply. The current then has a closed,
+controlled loop through $R_w$, $L$, and $D_F$.
+
+![A low-side switched inductive load with a flyback diode across the winding.](../../../build/circuits/f07-flyback-clamp.png){#fig-f07-flyback width="55%" fig-alt="Source V_S feeds winding resistance R_w and inductor L, followed by low-side switch S to TP0. Diode D_F is connected from switch node TP1 upward to the winding supply side. It is reverse biased while S is closed and carries the retained inductor current upward after S opens."}
+
+### Illustrative turn-off calculation
+
+Use **illustrative**, not component-specific, values
+$V_S=12.0$ V DC, $L=100$ mH, $R_w=120~\Omega$, and steady current
+$I_0=100$ mA immediately before opening. The stored energy is
+
+$$
+W_L(0)=\frac12(0.100~\text{H})(0.100~\text{A})^2
+=0.500~\text{mJ}.
+$$
+
+Energy can be small while voltage is large. For a source-free screening estimate,
+suppose an unclamped, lossless first description transfers all magnetic energy
+into only 100 pF of parasitic capacitance. Neglecting source work is reasonable
+only as an order-of-magnitude screen when the estimated excursion is far above
+the 12 V supply. Then
+
+$$
+\frac12LI_0^2=\frac12C_pV_p^2
+\quad\Rightarrow\quad
+V_p=I_0\sqrt{\frac{L}{C_p}}
+\approx3.16~\text{kV}.
+$$
+
+This is not a prediction that TP1 will reach 3.16 kV. Breakdown, arcing, switch
+avalanche, distributed capacitance, resistance, and electromagnetic emission
+may intervene first. It is an order-of-magnitude warning that a 12 V supply does
+not bound the turn-off voltage.
+
+Approximate the conducting diode by constant forward drop $V_F=0.70$ V. In the
+flyback loop,
+
+$$
+L\frac{\mathrm di}{\mathrm dt}+R_wi+V_F=0.
+$$ {#eq-f07-flyback-ode}
+
+While the diode conducts and $0<i\le I_0$, the solution is
+
+$$
+i(t)=\left(I_0+\frac{V_F}{R_w}\right)e^{-R_wt/L}
+-\frac{V_F}{R_w}.
+$$
+
+The constant-drop description ends when this expression reaches zero; extending
+it further would predict an unphysical negative diode current.
+
+At the instant after opening,
+$v_L(0^+)=-(R_wI_0+V_F)=-12.7$ V and TP1 is clamped near
+$V_S+V_F=12.7$ V, ignoring wiring inductance and diode dynamics. Setting the
+conducting-interval expression to zero gives
+
+$$
+t_0=\frac{L}{R_w}
+\ln\!\left(1+\frac{R_wI_0}{V_F}\right)
+=2.42~\text{ms}.
+$$
+
+A higher-voltage TVS or Zener clamp makes $|\mathrm di/\mathrm dt|$ larger and
+releases the actuator faster, but raises switch stress. A simple diode reduces
+voltage stress but can delay relay or solenoid release. Protection selection must
+therefore check maximum supply, switch rating with margin, peak and repetitive
+clamp current, stored energy, diode reverse voltage and recovery, temperature,
+and the required mechanical release time [@horowitz2015art].
+
+### Worked selection: release time versus switch stress
+
+Continue the illustrative coil calculation, but add design requirements: the
+current must reach zero within 1.00 ms; TP1 must remain strictly below 28.0 V for
+$V_S\le12.0$ V; the initial current is at most 100 mA; repetition is at most
+100 operations/s; and the ambient range is within the eventual component
+datasheets. Treat clamp voltages in this comparison as illustrative constants,
+not guaranteed device values.
+
+| Turn-off path | Clamp above $V_S$ | Calculated $t_0$ | TP1 screen | Decision |
+|---|---:|---:|---:|---|
+| silicon flyback diode | 0.70 V | 2.42 ms | 12.7 V | voltage passes; release fails |
+| diode + 12.0 V Zener | 12.7 V | 0.554 ms | 24.7 V | both screens pass |
+| TVS target near 13 V | about 13 V | about 0.54 ms | about 25 V | feasible; tolerance must be checked |
+
+The diode-plus-12 V-Zener path is the bounded **concept selection** because it
+meets both calculated screens with more TP1 margin than a target close to 16 V.
+Its initial clamp power screen is
+$(12.7~\text{V})(0.100~\text{A})=1.27$ W for a sub-millisecond pulse. The total
+stored-energy rate at 100 operations/s is at most
+$(0.500~\text{mJ})(100~\text{s}^{-1})=50.0$ mW before allocating energy between
+$R_w$, diode, and Zener.
+
+This is not yet a part acceptance. A real selection must use worst-case Zener or
+TVS clamp voltage at 100 mA, tolerance, dynamic resistance, temperature, pulse
+energy curve, average power, diode forward voltage and recovery, wiring
+overshoot, and the switch's derated rating. The guarded hardware rule is
+$v_{SW,\text{peak}}+U_V<28.0$ V at the maximum supply, current, repetition rate,
+and temperature, together with measured current-decay time plus timing
+uncertainty strictly below 1.00 ms. If either guarded inequality touches its
+limit, the path fails.
+
+::: {.callout-warning title="A clamp is part of the energy path"}
+Do not add a diode by symbol recognition alone. Verify its orientation, the loop
+that exists after opening, and every element that absorbs energy. A reversed
+diode may short the supply when the switch closes; a missing connection may leave
+the inductor unclamped; and a diode adequate for one isolated pulse may overheat
+under repetition.
+:::
+
+## Non-ideal behavior and validity limits
+
+Real capacitors and inductors are multi-parameter components. A useful first
+description adds only the effect needed to explain the observation, while keeping
+the omitted effects visible.
+
+| Effect | First added element or relation | Observable consequence | Design implication |
+|---|---|---|---|
+| capacitor leakage | parallel $R_\text{leak}$ | lower loaded DC final voltage when source resistance is finite, or self-discharge | final value and discharge time change |
+| capacitor ESR | series $R_\text{ESR}$ | terminal step $\Delta v=R_\text{ESR}\Delta i$ when current steps, and ripple heating | pulse current and temperature are limited |
+| capacitor ESL | series $L_\text{ESL}$ | impedance stops falling and becomes inductive above self-resonance | placement and package geometry matter |
+| nonlinear dielectric | $q=q(v,T,\ldots)$ and differential $C_d=\mathrm dq/\mathrm dv$ | time constant changes with bias and temperature | nominal marking is insufficient |
+| inductor winding resistance | series $R_w$ | lower final current and copper heating | include DCR in $R_\text{th}$ and power |
+| core saturation | nonlinear $\lambda(i)$; incremental $L$ falls | current rises faster than constant-$L$ prediction | current limit must precede saturation damage |
+| core loss | frequency- and waveform-dependent loss | additional heating and phase change | DC copper loss alone is incomplete |
+| inter-turn or self-capacitance | parallel parasitic $C_p$ | self-resonance and ringing | inductor can look capacitive at high frequency |
+| mutual coupling | flux linkage depends on other winding currents | induced voltages and changed equivalent $L$ | orientation and coupling coefficient matter |
+
+Manufacturer documentation confirms that aluminum-capacitor leakage depends on
+voltage, temperature, time after energization, and storage history; its stated
+acceptance condition can be tied to a specified time such as five minutes at
+20 °C rather than being one timeless resistance [@vishay2026aluminumcaps]. The
+same source treats ESR, ESL, ripple-current heating, and frequency as separate
+conditions. Murata's measured capacitor impedance examples show a minimum at
+self-resonance and inductive behavior above it, so an ideal $1/(2\pi fC)$ trend
+cannot be extended indefinitely [@murataemifilter6].
+
+For power inductors, “rated current” may be defined by temperature rise, by an
+inductance-drop criterion, or by a manufacturer's stated test setup. PCB copper,
+airflow, ambient temperature, waveform, and neighboring heat sources alter the
+application result. Würth's application note documents these dependencies and
+uses separate rated and saturation-current concepts; values from different test
+conditions are not automatically comparable [@blakey2025ratedcurrent].
+
+### Instrument loading and bandwidth
+
+An oscilloscope probe connected from TP1 to TP0 adds input resistance in parallel
+with the discharge path and input capacitance in parallel with the circuit
+capacitance. A nominal $R$ and $C$ therefore become, to first order,
+
+$$
+R_\text{effective}=R\parallel R_\text{probe},
+\qquad
+C_\text{effective}=C+C_\text{probe}.
+$$
+
+The probe may make a high-resistance discharge appear faster even while its
+capacitance slows a low-capacitance edge. Probe ground-lead inductance can add
+ringing that is not present at the intended test point. Record the probe mode,
+input resistance and capacitance, bandwidth limit, coupling, sample rate,
+trigger, ground connection, calibration state, and uncertainty basis. The
+instrument indication belongs to the circuit-plus-instrument system, as F06
+established.
+
+## Executable cross-check and synthetic diagnosis
+
+The following standard-library Python computes the complete first-order response.
+It is **executable arithmetic**, not a field solver, circuit simulator, or
+measurement. The parameter names match @eq-f07-first-order-solution.
+
+```python
+from math import exp
+
+
+def first_order(time_s, initial, final, tau_s):
+    if tau_s <= 0.0:
+        raise ValueError("tau_s must be positive")
+    distance = initial - final
+    return final + distance * exp(-time_s / tau_s)
+
+
+rc_tau_s = 10.0e3 * 10.0e-6
+rl_tau_s = 0.100 / 100.0
+
+for multiple in (0.0, 1.0, 3.0, 5.0):
+    rc_v = first_order(
+        multiple * rc_tau_s, 0.0, 5.0, rc_tau_s
+    )
+    rl_a = first_order(
+        multiple * rl_tau_s, 0.0, 0.050, rl_tau_s
+    )
+    print(f"{multiple:3.0f} tau: {rc_v:5.3f} V, "
+          f"{1e3 * rl_a:6.3f} mA")
+```
+
+Expected output, verified with Python 3:
+
+```text
+  0 tau: 0.000 V,  0.000 mA
+  1 tau: 3.161 V, 31.606 mA
+  3 tau: 4.751 V, 47.511 mA
+  5 tau: 4.966 V, 49.663 mA
+```
+
+The limiting cases are explicit: at zero time the initial values are returned;
+as the multiple grows, both approach but never equal their final values in
+finite time. If changing $R$ in code makes both RC and RL slower, one of the time
+constant assignments is wrong.
+
+Each representation occupies a different evidence rung:
+
+| Rung used here or downstream | What it can support | What it cannot yet support |
+|---|---|---|
+| order-of-magnitude estimate | expected timescale or stress scale | precise component behavior |
+| analytic calculation | prediction under declared ideal assumptions | a physical assembly claim |
+| executable arithmetic | check that the printed equation was implemented consistently | independent physics evidence |
+| synthetic data | practice fitting and discriminating hypotheses | a measurement claim |
+| L05 measurement | first comparison on one documented assembly | population or environmental qualification |
+| repeated units and corners | bounded reproducibility under tested conditions | untested field conditions |
+
+The evidence should stop at the lowest rung adequate for the decision. The code
+above cross-checks arithmetic; the next example teaches diagnosis; neither
+raises a physical claim to the measurement rung.
+
+### Synthetic diagnosis: a charging curve stops low
+
+Suppose the 5.00 V, 10.0 k$\Omega$, 10.0 $\mu$F RC circuit is expected to follow
+the ideal example, but the following values appear. The “observed” column is
+**synthetic**, generated from a hidden 100 k$\Omega$ leakage path and rounded to
+10 mV. Assigning an illustrative $\pm0.02$ V observation uncertainty does not
+turn it into measurement evidence; the table teaches diagnosis only.
+
+| Time after switch | Ideal prediction | Synthetic observation |
+|---:|---:|---:|
+| 0 ms | 0.00 V | $0.00\pm0.02$ V |
+| 50 ms | 1.97 V | $1.92\pm0.02$ V |
+| 100 ms | 3.16 V | $3.03\pm0.02$ V |
+| 200 ms | 4.32 V | $4.04\pm0.02$ V |
+| 500 ms | 4.97 V | $4.53\pm0.02$ V |
+
+The disagreement is structured: the curve is somewhat faster and its plateau is
+low. @fig-f07-leaky makes the added path explicit: it loads the DC divider and
+also appears in the resistance seen by $C$.
+
+![A charging RC circuit with a leakage resistance in parallel with the capacitor.](../../../build/circuits/f07-leaky-rc.png){#fig-f07-leaky fig-alt="A 5 volt source drives TP1 through 10 kilohm resistor R. Capacitor C of 10 microfarads and leakage resistance R_leak both connect from TP1 to reference TP0."}
+
+This leakage resistance from TP1 to TP0 predicts
+
+$$
+V_\infty
+=V_S\frac{R_\text{leak}}{R+R_\text{leak}},
+\qquad
+\tau=(R\parallel R_\text{leak})C.
+$$ {#eq-f07-leaky-rc}
+
+Using an illustrative fitted asymptote $V_\infty\approx4.55$ V (distinct from
+the rounded 500 ms sample),
+
+$$
+R_\text{leak}
+=R\frac{V_\infty}{V_S-V_\infty}
+\approx(10.0~\text{k}\Omega)
+\frac{4.55}{5.00-4.55}
+\approx101~\text{k}\Omega.
+$$
+
+The predicted effective time constant is then approximately
+$(10.0~\text{k}\Omega\parallel101~\text{k}\Omega)(10.0~\mu\text{F})
+=91.0$ ms, consistent with the synthetic curve. That agreement makes leakage a
+plausible hypothesis, not a proven location. A contaminated board, oscilloscope
+input, wrong resistor, source sag, or capacitor leakage can create the same
+terminal behavior. Discriminating measurements would separately verify the
+source terminals, measure the de-energized resistance seen from TP1, repeat with the
+probe removed or changed, and inspect the component value and board condition.
+
+## Worked design: a bounded capacitor discharge
+
+@fig-f07-bleed keeps $R_\text{bleed}$ permanently across $C$, so opening $S$
+removes the source without removing the intended discharge path. TP1 is the
+measurand node used in the calculation and acceptance rule.
+
+![A capacitor with a permanently connected bleed resistor and a switched charging source.](../../../build/circuits/f01-capacitor-bleed.png){#fig-f07-bleed fig-alt="Source V_S charges capacitor C through switch S. Bleed resistor R_bleed remains connected in parallel with C after S opens. TP1 marks capacitor voltage relative to the return."}
+
+An **illustrative** extra-low-voltage assembly has these requirements and assumed
+component bounds:
+
+- capacitor voltage immediately after isolation:
+  $0\le V_0\le12.6$ V DC;
+- capacitance: $C=470~\mu$F with a declared worst-case bound of $\pm20\%$ over
+  the applicable conditions, so $C_\text{max}=564~\mu$F;
+- a permanently connected bleed resistor with $\pm5\%$ tolerance;
+- unobserved capacitor voltage strictly below 1.00 V within 30.0 s after
+  isolation; and
+- initial resistor dissipation below 0.250 W.
+
+These bounds are teaching inputs, not specifications of an unnamed product.
+Temperature, aging, voltage coefficient, fault tolerance, creepage, and the
+consequence of an open resistor would require a real datasheet and system hazard
+analysis.
+
+For source-free discharge,
+$v_C(t)=V_0e^{-t/(RC)}$. The slowest case uses $V_{0,\max}$,
+$C_\text{max}$, and $R_\text{max}$. The timing requirement gives
+
+$$
+R_\text{max}<
+\frac{30.0~\text{s}}
+{(564~\mu\text{F})\ln(12.6/1.00)}
+\approx20.99~\text{k}\Omega.
+$$ {#eq-f07-bleed-rmax}
+
+Choose 18.0 k$\Omega$, $\pm5\%$, so
+$R_\text{max}=18.9$ k$\Omega$. Its worst-case crossing time is
+
+$$
+t_{1\text{V},\max}
+=(18.9~\text{k}\Omega)(564~\mu\text{F})
+\ln(12.6/1.00)
+=27.0~\text{s}.
+$$
+
+This leaves 3.0 s of calculated timing margin under the declared bounds. The
+largest initial resistor power occurs at maximum voltage and minimum resistance,
+$R_\text{min}=17.1$ k$\Omega$:
+
+$$
+P_{R,\max}(0)
+=\frac{(12.6~\text{V})^2}{17.1~\text{k}\Omega}
+=9.28~\text{mW}<0.250~\text{W}.
+$$
+
+The maximum initially stored energy is
+
+$$
+W_{C,\max}
+=\frac12(564~\mu\text{F})(12.6~\text{V})^2
+=44.8~\text{mJ}.
+$$
+
+The design therefore passes the **illustrative calculation**. It is not yet a
+verified assembly.
+
+### Acceptance test and decision rule
+
+For a physical low-energy implementation under an approved procedure, the
+measurand is $V_C=V_{\mathrm{TP1}}-V_{\mathrm{TP0}}$ at 30.0 s after isolation.
+Record actual $V_0$, ambient temperature, fitted component identities and values,
+instrument input resistance/capacitance, range, bandwidth, calibration status,
+timing uncertainty, raw waveform, and the coverage basis and factor for a
+one-sided expanded contribution $U_V$. Here $U_V$ must include instrument
+accuracy/calibration inputs and the voltage effect of sample-time uncertainty.
+A 10 M$\Omega$ probe in parallel with 18 k$\Omega$ reduces the discharge
+resistance by about 0.18%; that loading must be bounded because it can make a
+failing discharge appear to pass. Let $\Delta V_\text{load,max}\ge0$ bound the
+unobserved 30 s voltage minus the loaded indication under the declared component
+limits. With exactly 10 M$\Omega$, 18.9 k$\Omega$, 564 $\mu$F, and 12.6 V, the
+first-order screen gives 0.755 V unloaded and 0.751 V loaded, so the directional
+loading allowance is about 4 mV. A real test must use the guaranteed probe input
+bound rather than the nominal 10 M$\Omega$ marking.
+
+Use the guarded rule
+
+$$
+\boxed{\text{pass only if }V_\text{indicated}(30.0~\text{s})
++U_V+\Delta V_\text{load,max}<1.00~\text{V}.}
+$$ {#eq-f07-bleed-decision}
+
+Equality does not satisfy the strict requirement. Also verify that the measured
+initial voltage does not exceed 12.6 V and that the resistance path remains
+present after power removal. A single pass supports only the tested unit and
+conditions; repeated units, environmental corners, aging, and open-circuit fault
+coverage require higher evidence rungs [@jcgm2012conformity].
+
+## Summary
+
+A capacitor's charge separation is represented one-to-one by voltage in the
+linear range because $q=Cv_C$ and $i_C=C\,\mathrm dv_C/\mathrm dt$. An
+inductor's flux linkage is represented one-to-one by current because
+$\lambda=Li_L$ and
+$v_L=L\,\mathrm di_L/\mathrm dt$. Under finite excitation, capacitor voltage and
+inductor current are continuous. Those relations generate the first-order
+pattern
+
+$$
+x(t)=x_\infty+[x(0^+)-x_\infty]e^{-t/\tau},
+$$
+
+with $\tau=R_\text{th}C$ for RC and $\tau=L/R_\text{th}$ for RL. Initial value,
+final value, time constant, and a declared reference are enough only when the
+post-switch network is linear, time invariant, and genuinely first order.
+
+Energy explains what the exponential alone cannot: a charging capacitor
+accumulates electric-field energy while resistance converts part of the input;
+an inductor whose current is interrupted must send magnetic-field energy into a
+resistor, clamp, arc, avalanche path, or parasitic field. Leakage, ESR, DCR,
+saturation, self-resonance, and instrument loading are not afterthoughts; they
+define where the first-order description stops agreeing with the physical
+circuit.
+
+## Exercises
+
+### Quick check
+
+Choose one best answer for each item.
+
+1. An ideal 10 $\mu$F capacitor has $v_C(0^-)=3.0$ V. A switch changes a
+   finite-resistance network at $t=0$. What is $v_C(0^+)$?
+
+    a. 0 V;
+    b. 3.0 V;
+    c. the new source voltage;
+    d. impossible to state because capacitor voltage always jumps.
+
+2. A first-order rising response has elapsed for $5\tau$. Approximately what
+   fraction of the total change is complete?
+
+    a. 50%;
+    b. 63.2%;
+    c. 99.3%;
+    d. exactly 100%.
+
+3. A source-free RL loop has $i_L(0^+)>0$ under passive-sign references. What is
+   the sign of $v_L(0^+)$ while current decays?
+
+    a. positive;
+    b. negative;
+    c. zero for every inductor;
+    d. undefined.
+
+4. Doubling $R_\text{th}$ while holding the storage element fixed has which
+   effect on the time constants?
+
+    a. RC and RL both become twice as slow;
+    b. RC and RL both become twice as fast;
+    c. RC time constant doubles; RL time constant halves;
+    d. RC time constant halves; RL time constant doubles.
+
+5. Why is a flyback diode placed across a DC relay coil driven by a low-side
+   switch?
+
+    a. to force inductor current to zero instantaneously;
+    b. to increase the steady coil current without limit;
+    c. to provide a controlled path for retained current after switch opening;
+    d. to make the coil purely resistive at every frequency.
+
+6. A nominal 5 V RC charge settles near 4.5 V and also reaches its plateau sooner
+   than predicted. Which single added effect explains both observations?
+
+    a. a leakage resistance from the capacitor node to return;
+    b. a larger ideal capacitance only;
+    c. an open series resistor;
+    d. infinite oscilloscope input resistance.
+
+**Answer key:** 1 b — finite current preserves capacitor voltage; 2 c — the
+remaining error is $e^{-5}$; 3 b — the inductor delivers energy; 4 c — compare
+$RC$ with $L/R$; 5 c — current continuity needs a loop; 6 a — leakage lowers the
+divider final value and reduces the resistance seen by $C$.
+
+### Retrieval and explanation
+
+1. State the passive-sign references required before writing
+   $i_C=C\,\mathrm dv_C/\mathrm dt$.
+2. State the winding, flux, voltage, and current orientation needed before
+   writing $v_L=\mathrm d\lambda/\mathrm dt$.
+3. Distinguish natural, forced, complete, zero-input, and zero-state responses.
+4. Explain why “a capacitor is an open circuit” is conditional rather than
+   universal.
+5. Explain why a small stored energy does not guarantee a small switch-opening
+   voltage.
+6. Name four records needed to make an oscilloscope transient reproducible.
+7. State the conditions under which series capacitors and parallel inductors may
+   be replaced by the simple equivalents in the chapter table. Give one initial
+   charge/current or coupling condition that invalidates a naive reduction.
+
+### Estimation and calculation
+
+1. Estimate and then calculate the time constant of 47 k$\Omega$ and 2.2
+   $\mu$F. How long is required to enter a 1% final-value band?
+   **Self-check:** $\tau=0.103$ s and $t_{1\%}=0.476$ s.
+2. A 220 $\mu$F capacitor is initially at 9.0 V and discharges through 33 k$\Omega$.
+   Calculate $v_C$ at 5.0 s and the initial stored energy.
+3. A 24 V source drives a 240 $\Omega$ winding with $L=480$ mH. Starting from
+   zero current, find $i_L(\tau)$, $v_L(\tau)$, and stored energy at steady DC.
+4. An inductor carries 2.0 A and stores 8.0 mJ in its constant-$L$ range. Find
+   $L$. If 20 V is applied with the passive polarity, estimate the initial
+   current slope. **Self-check:** $L=4.0$ mH and
+   $\mathrm di/\mathrm dt=5.0$ kA/s.
+5. A capacitor has $v_C(0^-)=2.00$ V. At $t=0$ it is connected to a 12.0 V
+   divider with 3.00 k$\Omega$ from the source to TP1, 6.00 k$\Omega$ from TP1
+   to return, and $C=20.0~\mu$F from TP1 to return. Find $V_0$, $V_\infty$,
+   $R_\text{th}$, $\tau$, and the signed initial slope; then sketch and label
+   $0^-$, $0^+$, $1\tau$, and the final value. **Self-check:**
+   $V_\infty=8.00$ V, $R_\text{th}=2.00$ k$\Omega$,
+   $\tau=40.0$ ms, and the initial slope is $+150$ V/s.
+
+### Derivation and limiting cases
+
+1. Starting from KCL and $i_C=C\,\mathrm dv_C/\mathrm dt$, derive the response in @eq-f07-rc-complete for
+   arbitrary $V_0$ and constant $V_\text{th}$.
+2. Starting from KVL and $v_L=L\,\mathrm di_L/\mathrm dt$, derive the response in @eq-f07-rl-complete. Verify
+   its dimensions and both endpoints.
+3. Integrate the balance in @eq-f07-rc-power-balance to derive the energy split
+   in @eq-f07-rc-charge-energy. State every assumption that makes the split
+   independent of $R$.
+4. Take the limits $R\to0$ and $R\to\infty$ separately for RC and RL. Identify
+   which limiting circuits cease to have the finite exponential final value
+   assumed in the derivation.
+5. Derive @eq-f07-flyback-ode's time-to-zero expression for constant $V_F$.
+   Compare the limit $V_F\to0$ with ordinary exponential RL decay.
+
+### Data interpretation
+
+1. Refit the synthetic table in this chapter using the last value as the final
+   plateau. Estimate $R_\text{leak}$ and $C$. List two alternate physical causes
+   that the terminal curve alone cannot distinguish.
+2. A synthetic RL current record is 0, 28.3, 40.6, 48.2, and 49.9 mA at 0, 1,
+   2, 4, and 8 ms. The intended final current is 50.0 mA. Estimate $\tau$ from at
+   least two points. Decide whether $L=100$ mH with $R=100~\Omega$ is consistent.
+   State why the conclusion remains synthetic.
+3. A scope trace rings immediately after a flyback switch opens. Construct a
+   comparison table for three hypotheses: probe-ground inductance, inadequate
+   clamp placement, and diode forward-recovery or junction-capacitance effects.
+   For each, specify one change that should alter the trace if the hypothesis is
+   correct.
+4. A proposed RC waveform jumps from 2 V at $0^-$ to 5 V at $0^+$ even though
+   every branch current is bounded, then initially slopes away from its stated
+   4 V final value. Identify both contradictions, redraw a qualitatively possible
+   waveform, and name an impulse or topology change that could make either
+   observation physically credible.
+
+### Debugging
+
+1. A capacitor discharge appears twice as fast when a 1 M$\Omega$ probe is
+   connected. The intended bleed is 1 M$\Omega$. Diagnose the loading
+   quantitatively and propose a less intrusive measurement.
+2. An RL calculation predicts 100 mA steady current, but the measured value is
+   82 mA. List and order checks for source sag, winding DCR, added series
+   resistance, heating, current-instrument burden, and saturation. Which checks
+   can explain a lower final DC current without changing $L$?
+3. A relay releases too slowly after a flyback diode is fitted, but the switch
+   is now safely below its voltage rating. Explain the trade-off and propose two
+   higher-voltage clamp approaches. Name the new ratings that must be verified.
+
+### Open design
+
+1. Design a bleed path for a 24 V, 1000 $\mu$F capacitor that must fall below
+   2.0 V in 20 s. Define real component bounds, resistor pulse and steady-power
+   requirements, meter loading, an uncertainty budget, an open-resistor fault
+   response, and a guarded acceptance rule.
+2. Design the turn-off protection for an illustrative 24 V solenoid with known
+   $L$, DCR, maximum current, repetition rate, and required release time. Compare
+   a diode, diode-plus-Zener, and TVS. Trace stored energy into named components
+   and state the evidence needed before accepting the design.
+3. Create a current-limited, extra-low-voltage plan for distinguishing capacitor
+   leakage from oscilloscope loading. Include schematic test points, predicted
+   curves, component tolerances, instrument settings, raw-data fields, stop
+   conditions, and the claim permitted by one run versus repeated units.
 
 ## Connections
 
-Chapter ID: `F07`. Prerequisites and downstream course mappings are maintained in
-[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
-provides reader-facing routes and the practice spine.
+- **Prerequisites:** [F04 — Network conservation and equivalent circuits](f04-networks-kirchhoff.qmd)
+  supplies KCL, KVL, and Thévenin resistance; [F05 — Energy, power, efficiency,
+  and heat](f05-energy-power-thermal.qmd) supplies passive-sign power and boundary
+  balances; [M02 — Calculus, linear algebra, and differential equations](../appendices/m02-calculus-linear-differential.qmd)
+  supplies the derivative, integral, and first-order solution.
+- **Next on the dynamics spine:** [F08 — Sinusoids, impedance, and frequency
+  response](f08-sinusoids-impedance-frequency.qmd) turns the same $C$ and $L$
+  relations into frequency-dependent impedance, resonance, and filters.
+- **Downstream use:** [D03 — State, clocks, and timing](../03-digital/d03-state-clock-timing.qmd)
+  uses settling and stored state; [S04 — Feedback and control](../05-domains/s04-feedback-control.qmd)
+  uses time constants, poles, and transient performance; power conversion and
+  actuator chapters inherit flyback-energy reasoning.
+- **Practice:** Lab **L05** supplies physical RC/RL transient and frequency
+  evidence under the Part I safety boundary. The [practice and project
+  spine](../roadmap.qmd#practice-and-project-spine) maps F07 into milestone **M2**.
+- **Just-in-time support:** [F06 — Measurement, uncertainty, and debugging](f06-measurement-uncertainty-debug.qmd)
+  supports loading and guarded decisions; [M01 — Algebra, units, and complex
+  numbers](../appendices/m01-algebra-units-complex.qmd) supports SI and equation
+  manipulation.
+
+## References
+
+Point-of-use citations above identify the governing circuit and field texts,
+measurement decision guidance, safety standard, and manufacturer-primary
+documents used for non-ideal capacitor and inductor behavior. Full bibliographic
+details are in the book reference list.

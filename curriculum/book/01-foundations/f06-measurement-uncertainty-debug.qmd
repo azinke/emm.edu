@@ -1036,7 +1036,7 @@ otherwise, all numerical scenarios are illustrative and do not describe physical
 measurements. Full solutions and assessment variants remain outside the public
 book; selected self-check results are included.
 
-**Quick check (multiple choice)**
+### Quick check
 
 Choose one best answer. The key follows.
 

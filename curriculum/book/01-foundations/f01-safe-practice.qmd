@@ -718,7 +718,7 @@ assumptions and units every time. Full solutions and live-assessment variants ar
 maintained outside the public book; a few self-check answers are given so you can
 calibrate.
 
-**Quick check (multiple choice)**
+### Quick check
 
 One best answer each; the key follows. These take a minute and surface the most
 common misconceptions before you invest in the longer problems.

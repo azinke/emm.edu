@@ -1,0 +1,41 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Charging configuration.
+  \draw (0,0) node[ground] {}
+    to[V, l_=$V_S$] (0,3)
+    to[closing switch, l=$S$] (1.8,3)
+    to[R, l=$R_{\mathrm{th}}$] (4.2,3)
+    -- (4.2,2.35)
+    to[C, l=$C$, i>^=$i_C$] (4.2,0)
+    -- (0,0);
+  \node[circ] at (4.2,3) {};
+  \node[circ] at (4.2,0) {};
+  \draw (4.2,3) -- (5.1,3)
+    node[ocirc, label={[font=\small]right:{TP1: $v_C$}}] {};
+  \draw (4.2,0) -- (5.1,0)
+    node[ocirc, label={[font=\small]right:{TP0: $0$~V}}] {};
+  \node[font=\small] at (2.25,3.75) {(a) source connected};
+  \node[font=\small] at (3.85,2.08) {$+$};
+  \node[font=\small] at (3.85,0.27) {$-$};
+
+  % Discharging configuration, drawn separately to make topology explicit.
+  \draw (7.0,0) node[ground] {}
+    -- (10.8,0)
+    to[C, l_=$C$, i<^=$i_C$] (10.8,3)
+    -- (9.8,3)
+    to[R, l_=$R_{\mathrm{th}}$] (7.0,3)
+    -- (7.0,0);
+  \node[circ] at (10.8,3) {};
+  \node[circ] at (10.8,0) {};
+  \draw (10.8,3) -- (11.7,3)
+    node[ocirc, label={[font=\small]right:{TP1: $v_C$}}] {};
+  \draw (10.8,0) -- (11.7,0)
+    node[ocirc, label={[font=\small]right:{TP0: $0$~V}}] {};
+  \node[font=\small] at (8.9,3.75) {(b) source removed};
+  \node[font=\small] at (10.45,2.73) {$+$};
+  \node[font=\small] at (10.45,0.27) {$-$};
+\end{circuitikz}
+\end{document}

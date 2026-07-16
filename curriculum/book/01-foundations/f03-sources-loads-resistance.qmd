@@ -924,7 +924,7 @@ Use declared references, SI units, an estimate before calculation, and a stateme
 of assumptions. Full solutions and live-assessment variants remain outside the
 public book; selected self-check results are included for calibration.
 
-**Quick check (multiple choice)**
+### Quick check
 
 One best answer each; the key follows.
 

@@ -90,3 +90,38 @@ source = "f04-one-port.tex"
 chapter_id = "F04"
 caption = "A linear source network drives a removable load at port A-B; the same named port is used for superposition, equivalent reduction, and verification."
 alt = "A 10 volt source feeds port A through R1, R2 connects A to the zero volt terminal B, and a 1 milliamp current source injects current from B into A. Load RL connects from A to B, with load current i leaving the network at A."
+
+[[circuit]]
+id = "f07-rc-transient"
+source = "f07-rc-transient.tex"
+chapter_id = "F07"
+caption = "The same first-order RC network in its charging and source-free discharge configurations, with one capacitor-voltage polarity and current reference retained across switching."
+alt = "Two RC circuits are shown. In the charging circuit a source, switch, and Thevenin resistance feed capacitor C to ground. In the discharge circuit the source is removed and the same resistance is connected across C. Capacitor voltage v_C is positive at TP1 relative to TP0, and current i_C is referenced into that positive terminal."
+
+[[circuit]]
+id = "f07-rl-transient"
+source = "f07-rl-transient.tex"
+chapter_id = "F07"
+caption = "The same first-order RL network in its energized and source-free configurations, with the inductor-current reference retained across switching."
+alt = "Two RL circuits are shown. In the energizing circuit a source and switch drive a Thevenin resistance and inductor L in series. In the natural-response circuit the source is removed and R and L form a closed loop. Inductor current i_L retains the same reference direction through the switch event."
+
+[[circuit]]
+id = "f07-flyback-clamp"
+source = "f07-flyback-clamp.tex"
+chapter_id = "F07"
+caption = "A flyback diode gives an inductive load current a controlled path when the low-side switch opens."
+alt = "A 12 volt source feeds winding resistance R_w and inductor L, then a low-side switch to ground. Diode D_F spans the complete series winding representation R_w plus L and is reverse-biased while the switch is closed. When the switch opens, the retained downward winding current returns upward through D_F. TP1 observes the switch node relative to TP0."
+
+[[circuit]]
+id = "f07-thevenin-transient"
+source = "f07-thevenin-transient.tex"
+chapter_id = "F07"
+caption = "A switched divider drives a capacitor, requiring separate pre-switch state, post-switch final-value, and post-switch resistance calculations."
+alt = "A 9 volt source and closing switch feed 2 kilohm resistor R1 into TP1. Resistor R2 of 4 kilohms and capacitor C of 15 microfarads both connect from TP1 to reference TP0. Capacitor current i_C is referenced downward into its positive TP1 terminal."
+
+[[circuit]]
+id = "f07-leaky-rc"
+source = "f07-leaky-rc.tex"
+chapter_id = "F07"
+caption = "A leakage resistance in parallel with the capacitor changes both the final voltage and the time constant."
+alt = "A 5 volt source drives TP1 through a 10 kilohm resistor. A 10 microfarad capacitor and leakage resistance R_leak connect in parallel from TP1 to TP0, the zero volt reference."

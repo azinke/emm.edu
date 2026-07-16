@@ -1,0 +1,27 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \draw (0,0) node[ground] {}
+    to[V, l_={$V_S=\SI{5.00}{\volt}$}] (0,3.2)
+    to[R, l={$R\;\SI{10.0}{\kilo\ohm}$}] (3.5,3.2)
+    -- (3.5,2.5) coordinate (node);
+
+  \draw (node)
+    to[C, l_={$C\;\SI{10.0}{\micro\farad}$}] (3.5,0)
+    -- (0,0);
+  \draw (node) -- (6.0,2.5)
+    to[R, l={$R_{\mathrm{leak}}$}] (6.0,0)
+    -- (3.5,0);
+
+  \node[circ] at (3.5,2.5) {};
+  \node[circ] at (3.5,0) {};
+  \node[circ] at (6.0,2.5) {};
+  \node[circ] at (6.0,0) {};
+  \draw (6.0,2.5) -- (7.0,2.5)
+    node[ocirc, label={[font=\small]right:{TP1: $v_C$}}] {};
+  \draw (6.0,0) -- (7.0,0)
+    node[ocirc, label={[font=\small]right:{TP0: $0$~V}}] {};
+\end{circuitikz}
+\end{document}

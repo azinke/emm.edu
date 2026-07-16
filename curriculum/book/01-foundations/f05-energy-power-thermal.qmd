@@ -1,45 +1,1128 @@
 ---
 title: "Energy, power, efficiency, and heat"
+description: "Trace electrical energy through a system, close power and efficiency budgets, and turn dissipation into a defensible thermal and component-rating decision."
 chapter-id: F05
-status: outline
+status: draft
 ---
 
-::: {.callout-note title="Chapter outline"}
-The scope and dependency boundary are stable. Full exposition, worked examples,
-exercises, and tested practical evidence still need authoring and review.
+::: {.callout-note title="Chapter maturity — draft"}
+This chapter presents a complete instructional path: signed power and energy
+derivations, DC and pulsed examples, a system budget, executable arithmetic,
+explicitly synthetic thermal data, authentic manufacturer specifications, a
+failure diagnosis, and a guarded design decision. It remains subject to technical
+and editorial revision. The synthetic data teach analysis but do not qualify a
+physical assembly; physical evidence belongs in aligned Lab **L04**. See the
+[reading roadmap](../roadmap.qmd) for the meaning of status levels.
+:::
+
+::: {.callout-warning title="Safety boundary for energy and thermal work"}
+Any practical work discussed here is limited to **current-limited,
+extra-low-voltage** sources, approved components, local supervision, and an
+approved procedure. A low voltage can still cause burns, fire, component rupture,
+or battery damage when the available current or stored energy is high. Components
+can remain hot after power is removed; never use touch as a thermometer. De-energize
+before changing the circuit, set a conservative current limit before connecting,
+and stop for unexpected odor, sound, discoloration, swelling, smoke, unstable
+current, or temperature. This chapter is not authorization for mains, high voltage,
+high-energy cells or packs, RF power, rotating machines, medical equipment, or
+safety-critical systems [@iec61010].
 :::
 
 ## Central question
 
-Where does energy enter, move through, and leave an electronic system?
+> Where does energy enter, move through, and leave an electronic system?
+
+Imagine an **illustrative**, current-limited 5.00 V assembly. At its input test
+points it draws 120 mA after temperatures and readings settle. It supplies a
+3.30 V, 100 mA load and a 5.00 V, 10 mA indicator branch. The output voltages are
+correct, yet one conversion component becomes warm.
+
+Before calculating, predict:
+
+- Is charge being “used up,” or is energy being transferred and converted?
+- Does the 3.30 V load receive all $5.00~\text{V}\times120~\text{mA}$?
+- Which number describes an amount: joules, watts, or degrees Celsius?
+- If the component dissipates the same power in a warmer room, what happens to
+  its final temperature?
+- Does a case temperature below a datasheet limit prove that an inaccessible
+  internal hot spot is below its limit?
+
+The electrical readings alone tell only part of the story. A complete account
+needs declared directions, a time interval, a system boundary, and a heat-flow
+path. The physical assembly, schematic, equations, code, temperature record, and
+acceptance rule must describe that same account.
 
 ## Learning outcomes
 
-After completing this chapter, the reader should be able to:
+This chapter assumes [F03](f03-sources-loads-resistance.qmd): associated voltage
+and current references, sources and loads, resistance, operating points, and
+component ratings. Algebra and SI support are available in
+[M01](../appendices/m01-algebra-units-complex.qmd). After completing this chapter,
+you should be able to:
 
-- explain the central model and the assumptions that bound its use;
-- connect physical behavior, a schematic or architecture, and quantitative reasoning;
-- interpret evidence and identify at least one credible failure mode;
-- make and defend a design or diagnostic decision;
+- derive signed instantaneous power from voltage, charge, and current, and
+  interpret positive and negative results under the passive sign convention;
+- distinguish energy, instantaneous power, average power, RMS heating, stored
+  energy, dissipation, temperature, and heat transfer;
+- place a boundary around a DC or periodic system, account for accumulation, and
+  close an auditable power and efficiency budget without double-counting;
+- use dissipation, ambient temperature, thermal resistance, and thermal
+  capacitance within their stated limits to predict steady temperature rise and
+  settling behavior;
+- read power, temperature, voltage, and pulse ratings as simultaneous conditional
+  limits rather than interchangeable targets; and
+- plan measurements and apply a guarded decision rule that distinguishes a
+  nominal feasibility estimate from verified thermal performance.
 
-## Concept path
+The thermal step response can be used and checked with algebra and an exponential;
+[M02](../appendices/m02-calculus-linear-differential.qmd) is just-in-time support
+only for its optional differential-equation derivation.
 
-- passive sign convention;
-- instantaneous and average power;
-- energy storage and conversion;
-- efficiency and power budgets;
-- component ratings and derating;
-- thermal resistance, temperature rise, and failure;
+The chapter proceeds in the same order as an engineering decision: establish the
+sign of terminal power, accumulate energy over time, close a system boundary,
+define useful output and efficiency, predict temperature rise, and finally compare
+the result with conditional ratings and a guarded acceptance rule.
 
-## Evidence and practice
+## Terminal power and the passive sign convention
 
-The completed chapter will include a prediction, a worked model, a simulation or
-executable check where it adds value, measured or authentic data, a fault or
-model mismatch, and a requirements-based design decision. The final exercise set
-will mix retrieval, calculation, interpretation, debugging, and open design.
+Begin with a two-terminal element. Name its terminals A and B and define the
+instantaneous voltage
+
+$$
+v(t)\equiv V_A(t)-V_B(t),
+$$
+
+placing $+$ at A and $-$ at B. Define current $i(t)$ as positive **entering A**, the
+terminal marked $+$. These are associated references: the **passive sign
+convention**. Lowercase symbols denote instantaneous quantities; steady DC values
+will use uppercase symbols [@sedra2020microelectronic].
+
+Voltage is energy transferred per unit charge. With the stated polarity, an
+increment of positive charge $\mathrm dq$ traversing the element from A to B
+corresponds to incremental energy absorbed by the element
+
+$$
+\mathrm dW_\text{abs}=v(t)\,\mathrm dq.
+$$
+
+Current is the rate of charge transfer, $i(t)=\mathrm dq/\mathrm dt$. Dividing the
+energy increment by time gives the **definition of instantaneous absorbed power**:
+
+$$
+p_\text{abs}(t)
+\equiv\frac{\mathrm dW_\text{abs}}{\mathrm dt}
+=v(t)\frac{\mathrm dq}{\mathrm dt}
+=v(t)i(t).
+$$ {#eq-f05-instantaneous-power}
+
+The dimensional chain is
+
+$$
+[vi]=\text{V}\cdot\text{A}
+=\frac{\text{J}}{\text{C}}\frac{\text{C}}{\text{s}}
+=\frac{\text{J}}{\text{s}}=\text{W}.
+$$
+
+The watt (W) is one joule per second; it is a **rate**, not an amount of energy
+[@bipm2019si]. Under the declared references:
+
+- $p_\text{abs}>0$: the element absorbs electrical energy at that instant;
+- $p_\text{abs}<0$: the element delivers electrical energy at that instant; and
+- $p_\text{abs}=0$: no net terminal energy transfer occurs at that instant,
+  although the element may still contain stored energy.
+
+A negative result is not “negative physics.” It says the actual transfer is
+opposite to absorption under the selected references. If only current is reversed,
+$i'=-i$ no longer enters the voltage-positive terminal and absorbed power must be
+written $p_\text{abs}=-vi'$. Reversing voltage alone similarly gives
+$p_\text{abs}=-v'i$. Reversing both restores associated references and
+$p_\text{abs}=v'i'$. The physical transfer does not change when an arrow or
+polarity mark is redrawn.
+
+::: {.callout-note title="Signed source and load — one physical transfer"}
+Place 5.00 V DC across an illustrative 100 Ω ohmic load. Define $I_L$ entering the
+load's positive terminal. Then
+
+$$
+I_L=\frac{5.00~\text{V}}{100~\Omega}=50.0~\text{mA},
+\qquad
+P_{L,\text{abs}}=(5.00~\text{V})(50.0~\text{mA})=+0.250~\text{W}.
+$$
+
+For the source, keep its voltage positive at the terminal from which current
+leaves, but define its associated current $I_S$ as entering that positive terminal.
+The physical current therefore gives $I_S=-50.0$ mA and
+
+$$
+P_{S,\text{abs}}=(5.00~\text{V})(-50.0~\text{mA})=-0.250~\text{W}.
+$$
+
+The signed terminal powers sum to zero. Over 60.0 s the load absorbs 15.0 J and
+the source delivers 15.0 J. Ideal wires add no loss in this first calculation.
+Real source resistance, leads, and contacts would add positive absorbed powers,
+reducing what reaches the load.
+:::
+
+This terminal description does not mean charge carriers race from the source to
+the load carrying packets of energy. Charge continuity and electromagnetic energy
+transfer are distinct descriptions; F02 established their boundary. Here the
+terminal product $vi$ is the correct lumped quantity for accounting.
+
+## Energy and average power over an interval
+
+Power answers “how fast now?” Energy answers “how much over an interval?” For a
+fixed interval from $t_0$ to $t_1$, summing small power-times-duration rectangles
+and taking their limiting value gives
+
+$$
+\Delta W_\text{abs}
+=\int_{t_0}^{t_1}p_\text{abs}(t)\,\mathrm dt
+=\int_{t_0}^{t_1}v(t)i(t)\,\mathrm dt.
+$$ {#eq-f05-energy-integral}
+
+The **average power over that named interval** is defined as
+
+$$
+P_\text{avg}
+\equiv\frac{1}{t_1-t_0}
+\int_{t_0}^{t_1}p(t)\,\mathrm dt
+=\frac{\Delta W}{t_1-t_0}.
+$$ {#eq-f05-average-power}
+
+For constant DC power, @eq-f05-energy-integral reduces exactly to
+$\Delta W=P\Delta t$. A 0.250 W load operated for 60.0 s absorbs 15.0 J. Operated
+for 1 h, it absorbs 0.250 Wh. The conversion
+
+$$
+1~\text{Wh}=(1~\text{J/s})(3600~\text{s})=3600~\text{J}
+$$
+
+is exact. A watt-hour is energy; a watt is power. “Watts per hour” means a rate of
+change of power and is not a substitute for either.
+
+Battery capacity in ampere-hours is charge, because
+$1~\text{Ah}=3600~\text{C}$. Multiplying an ampere-hour rating by a representative
+terminal voltage gives only an **energy estimate**. For example, an illustrative
+2.0 Ah cell at a nominal 3.7 V suggests $7.4$ Wh, but usable energy depends on its
+voltage curve, discharge rate, temperature, aging, cutoff, and converter losses.
+Use a manufacturer discharge specification for a design.
+
+### Mode-weighted energy budgets
+
+Many electronic systems alternate among operating modes rather than draw one
+constant power. Suppose mode $k$ has approximately constant absorbed power $P_k$
+for duration $t_k$ during a repeated observation interval. Applying
+@eq-f05-energy-integral to each interval gives
+
+$$
+E_\text{interval}=\sum_k P_k t_k,
+\qquad
+P_\text{avg}=\frac{\sum_k P_k t_k}{\sum_k t_k}
+=\sum_k D_kP_k,
+$$ {#eq-f05-mode-budget}
+
+where $D_k\equiv t_k/\sum_jt_j$ is the dimensionless duty fraction and
+$\sum_kD_k=1$. This relation is exact for the stated piecewise-constant powers.
+Transition energy, startup surges, and modes omitted from the inventory must be
+added separately.
+
+For an illustrative 5.00 V sensor, define input current as positive into the
+system. It draws 150 mA for 10 ms and 10.0 mA for the remaining 990 ms of each
+second. The active duty fraction is 0.010, so
+
+$$
+P_\text{avg}
+=(0.010)(5.00~\text{V})(150~\text{mA})
++(0.990)(5.00~\text{V})(10.0~\text{mA})
+=57.0~\text{mW}.
+$$
+
+Over 24.0 h the predicted input energy is
+$(57.0~\text{mW})(24.0~\text{h})=1.37$ Wh. The 0.750 W active peak sets source,
+wiring, and transient requirements; the much smaller mode-weighted average sets
+the first energy and steady-heating estimate. A meter that misses the 10 ms event
+can understate the peak even when its long-term average current is adequate.
+
+### Average and RMS power for pulsed waveforms
+
+For a constant, positive, ohmic resistance $R$, with the passive sign convention,
+$v(t)=Ri(t)$. Substitution into @eq-f05-instantaneous-power gives the constitutive
+results
+
+$$
+p_R(t)=i^2(t)R=\frac{v^2(t)}{R}\ge0.
+$$ {#eq-f05-resistor-power}
+
+These forms are valid while $R$ is adequately constant. Self-heating,
+temperature coefficient, voltage coefficient, non-ohmic behavior, and pulses
+large or long enough to change temperature or operating region can break that
+assumption.
+
+Now apply a 10.0 V rectangular pulse to an illustrative 100 Ω resistor for 25 %
+of every period, with zero voltage otherwise. During each on-time,
+$i=100$ mA and $p=1.00$ W. Over a full period,
+
+$$
+P_\text{avg}=(0.25)(1.00~\text{W})+(0.75)(0)=0.250~\text{W}.
+$$
+
+Yet $V_\text{avg}=2.50$ V and $I_\text{avg}=25.0$ mA, whose product is only
+62.5 mW. In general,
+
+$$
+\operatorname{avg}(vi)\ne
+\operatorname{avg}(v)\operatorname{avg}(i).
+$$
+
+The **RMS** value is defined to preserve heating equivalence in a constant
+resistance:
+
+$$
+I_\text{rms}
+\equiv\sqrt{\frac{1}{T}\int_0^T i^2(t)\,\mathrm dt},
+\qquad
+P_{R,\text{avg}}=I_\text{rms}^2R.
+$$ {#eq-f05-rms-heating}
+
+For the pulse, $I_\text{rms}=100~\text{mA}\sqrt{0.25}=50.0$ mA and
+$V_\text{rms}=5.00$ V, reproducing 0.250 W. Even then,
+$V_\text{rms}I_\text{rms}$ is not universally average power for arbitrary loads;
+voltage and current timing must be correlated. F08 develops sinusoidal phase,
+apparent power, and power factor.
+
+An average-power pass also does not prove a pulse pass. Peak voltage, peak
+current, energy per pulse, pulse duration, repetition rate, and thermal impedance
+may impose separate limits.
+
+## Energy conservation across a system boundary
+
+Draw a boundary around the device or system being studied. Name every port that
+crosses it and choose one of two accounting languages:
+
+1. **Signed terminal powers:** use the passive sign convention at every port and
+   sum algebraically.
+2. **Positive engineering magnitudes:** explicitly label powers as supplied into,
+   useful out of, non-useful out of, or accumulated inside the boundary.
+
+Both are correct. Mixing them without translating signs is not.
+
+For positive magnitudes in their named directions, energy conservation over a
+general interval gives the boundary account
+
+$$
+E_\text{supplied}
+=E_\text{useful,out}+E_\text{nonuseful,out}
++\Delta E_\text{system}.
+$$ {#eq-f05-energy-balance}
+
+When the quantities vary smoothly, its rate form is
+
+$$
+P_\text{supplied}(t)
+=P_\text{useful,out}(t)+P_\text{nonuseful,out}(t)
++\frac{\mathrm dE_\text{system}}{\mathrm dt}.
+$$ {#eq-f05-power-balance}
+
+This is a conservation statement, not an efficiency approximation. The two
+outgoing terms count energy that has actually crossed the boundary. Internally,
+electrical dissipation $P_D$ converts electrical energy into internal energy; that
+energy may accumulate before later crossing the boundary as heat. For a component
+whose only internal generation is $P_D$, with no other work or energy output, the
+corresponding thermal account is [@bergman2017heat]
+
+$$
+P_D=\dot Q_\text{out}+\frac{\mathrm dE_\text{th}}{\mathrm dt}.
+$$ {#eq-f05-dissipation-balance}
+
+Counting $P_D$ as an outward loss **and** counting the same temperature-rise
+energy in $\Delta E_\text{system}$ would double-count it during warm-up. At thermal
+steady state the accumulation vanishes and average internal dissipation equals
+average heat transfer out. Non-useful outward transfer may also be light, sound,
+vibration, or radiation; none is destroyed energy.
+
+At true steady state, system energy does not change, so the accumulation term is
+zero. In periodic steady operation, stored energy may rise and fall within every
+cycle while its **cycle-average change** is zero. Startup, shutdown, charging, and
+discharging do not permit that simplification. F07 develops the electrical storage
+elements; here $\Delta E_\text{system}$ keeps the budget honest without
+pre-empting their details.
+
+The three destinations in @fig-f05-energy-boundary keep outward transfer and
+internal accumulation visually separate.
+
+```{mermaid}
+%%| label: fig-f05-energy-boundary
+%%| fig-cap: "An energy account begins with a named boundary. Supplied energy can leave as useful output or non-useful output and can temporarily accumulate inside; only after accumulation is negligible over the chosen interval may the supplied and outgoing average powers be equated."
+%%| fig-alt: "A vertical flow enters a system boundary as supplied energy, then branches to useful output, non-useful output such as heat or light, and stored-energy change. A note states that steady or whole-cycle averaging makes the stored-energy change zero, whereas startup and shutdown do not."
+flowchart TB
+  S["Supplied energy"] --> B["Named system boundary"]
+  B --> U["Useful output"]
+  B --> L["Non-useful output"]
+  B --> A["Stored-energy change"]
+  A --> C["Zero only at steady state<br/>or over a complete repeated cycle"]
+```
+
+### Worked example: a steady DC power budget
+
+Return to the explicitly illustrative 5.00 V assembly after it has reached steady
+DC operation. Ripple is neglected, so the constant terminal products equal their
+average powers; a physical switching system would instead require the average of
+synchronous instantaneous $v(t)i(t)$ samples. Define all entries below as positive
+power magnitudes in their labeled directions. The named boundary and ports appear
+in @fig-f05-opening-architecture.
+
+```{mermaid}
+%%| label: fig-f05-opening-architecture
+%%| fig-cap: "The recurring illustrative system at architecture level. Input power crosses TP_IN into the chosen boundary, then reaches the 3.30 V useful-load port, the 5.00 V indicator branch, or unallocated internal paths. The implementation is deliberately unspecified, so this diagram supports the boundary account but is not a component schematic."
+%%| fig-alt: "A 5.00 volt source feeds system test point TP_IN at 120 milliamperes and crosses a system boundary. Three downward branches lead to a 3.30 volt useful load at 100 milliamperes, a 5.00 volt indicator at 10 milliamperes, and unallocated conversion, control, and wiring paths."
+flowchart TB
+  S["5.00 V source"] -->|"TP_IN: 120 mA"| B["Chosen system boundary"]
+  B -->|"TP_OUT: 3.30 V, 100 mA"| U["Useful load"]
+  B -->|"5.00 V, 10 mA"| I["Indicator branch"]
+  B --> O["Conversion, control,<br/>and wiring paths"]
+```
+
+| Account item | Calculation | Power |
+|---|---:|---:|
+| supplied at TP_IN | $(5.00~\text{V})(120~\text{mA})$ | 0.600 W |
+| useful load at TP_OUT | $(3.30~\text{V})(100~\text{mA})$ | 0.330 W |
+| indicator branch | $(5.00~\text{V})(10.0~\text{mA})$ | 0.050 W |
+| unallocated internal power | $0.600-0.330-0.050$ | 0.220 W |
+
+: Illustrative steady power budget. The values are calculated teaching inputs, not measured evidence. {#tbl-f05-opening-budget}
+
+Table @tbl-f05-opening-budget leaves one quantity unallocated rather than
+pretending it has already been localized to a component.
+
+Define the **unallocated power** as
+
+$$
+P_\text{unallocated}
+=P_\text{supplied}-P_\text{useful}-P_\text{indicator}
+=0.220~\text{W}.
+$$
+
+It is not automatically “the converter chip's heat.” Leads, contacts, a controller,
+and other components inside the boundary may share it. The indicator's 0.050 W may
+leave partly as light and partly as heat. More test points or calorimetry are
+needed to allocate those paths.
+
+After every path has been assigned, use a distinct **closure residual**
+
+$$
+r_\text{closure}=P_\text{supplied}-P_\text{useful}
+-P_\text{indicator}-P_\text{unallocated}=0.
+$$
+
+In physical work, “zero” means consistent with combined uncertainty and the
+chosen timing—not an exact row of displayed digits.
+
+## Efficiency and system boundaries
+
+For a fixed boundary and interval with no net decrease of stored energy, define
+**external-input energy efficiency** as
+
+$$
+\eta_E\equiv
+\frac{E_\text{useful,out}}{E_\text{supplied,in}}.
+$$ {#eq-f05-energy-efficiency}
+
+At steady or periodic operation, with matched averaging intervals and no net
+stored-energy change, the corresponding average-power ratio is
+
+$$
+\eta\equiv
+\frac{P_\text{useful,out}}{P_\text{supplied,in}},
+\qquad
+P_\text{loss}=P_\text{supplied,in}-P_\text{useful,out}.
+$$ {#eq-f05-power-efficiency}
+
+Efficiency is dimensionless and is often reported as a percentage. For a complete
+boundary using positive supplied and useful magnitudes, with every energy input
+included **and no omitted net release of stored energy**, $0\le\eta\le1$. During
+discharge, a port ratio can exceed 1—or have zero external input—because stored
+energy is another contribution. Report its change separately or include released
+energy in the available-energy denominator. An unexplained value above 100 %
+therefore points to omitted storage, boundary, timing, reference, or calibration
+before it points to new physics.
+
+If only the 3.30 V load is useful, the opening assembly has
+
+$$
+\eta_\text{system}
+=\frac{0.330~\text{W}}{0.600~\text{W}}=0.550=55.0\%.
+$$
+
+If the indicator is required output, the useful ratio becomes
+$(0.330+0.050)/0.600=63.3\%$. Neither answer is meaningful without the boundary
+and definition of useful output. Efficiency is also not voltage regulation,
+efficacy in lumens per watt, battery utilization, or maximum power transfer.
+
+For cascaded stages with matched boundaries and operating intervals,
+
+$$
+\eta_\text{total}
+=\frac{P_2}{P_0}
+=\frac{P_1}{P_0}\frac{P_2}{P_1}
+=\eta_1\eta_2.
+$$ {#eq-f05-cascade-efficiency}
+
+Two 90 % stages therefore give 81 %, not 80 % and not 90 %. The product is invalid
+if $P_1$ is counted at different test points or time intervals, or if an auxiliary
+rail bypasses the stage boundary.
+
+### Linear conversion and dissipation
+
+Consider an illustrative requirement: deliver 5.00 V DC at 100 mA from 12.0 V DC.
+For an idealized **linear regulator**, define input current as output current plus
+ground current $I_G$. Its steady input, output, and internal powers are
+
+$$
+P_\text{in}=V_\text{in}(I_\text{out}+I_G),
+\qquad
+P_\text{out}=V_\text{out}I_\text{out},
+$$
+
+$$
+P_\text{loss}
+=(V_\text{in}-V_\text{out})I_\text{out}+V_\text{in}I_G.
+$$ {#eq-f05-linear-loss}
+
+With the explicitly illustrative $I_G=2.0$ mA,
+
+$$
+P_\text{in}=1.224~\text{W},\quad
+P_\text{out}=0.500~\text{W},\quad
+P_\text{loss}=0.724~\text{W},\quad
+\eta=40.8\%.
+$$
+
+The shortcut $\eta\approx V_\text{out}/V_\text{in}=41.7\%$ is the limiting case
+$I_G\ll I_\text{out}$; it is not exact here. As $V_\text{in}$ rises at fixed load,
+linear-regulator loss rises. A switching architecture can reduce that loss, but
+its efficiency varies with load, input voltage, switching frequency, and
+implementation and must come from a specified device and operating condition.
+F05 supplies the accounting; [S05](../05-domains/s05-power-electronics.qmd)
+develops the conversion mechanisms and trade-offs.
+
+## From electrical dissipation to temperature rise
+
+Temperature, stored internal energy, and heat are not synonyms. **Temperature** is
+a thermodynamic state variable. **Heat** is energy crossing a boundary because of
+a temperature difference. A component can accumulate internal energy while its
+temperature rises; at thermal steady state its temperature stops rising even
+though heat continues to flow out at the same average rate that power is dissipated
+inside [@bergman2017heat].
+
+Choose a hot point at temperature $T_H$ and a reference point at $T_R$. Define heat
+flow rate $\dot Q$ as positive from the hot point toward the reference. A commonly
+useful **linearized, steady-state constitutive approximation** defines thermal
+resistance between those named points as
+
+$$
+R_\theta\equiv\frac{T_H-T_R}{\dot Q},
+\qquad [R_\theta]=\text{K/W}.
+$$ {#eq-f05-thermal-resistance-definition}
+
+If essentially all component dissipation $P_D$ follows the characterized path and
+conditions are steady,
+
+$$
+\Delta T\equiv T_H-T_R\approx P_D R_\theta,
+\qquad
+T_H\approx T_R+P_D R_\theta.
+$$ {#eq-f05-steady-temperature}
+
+A temperature **difference** of 1 K equals a difference of 1 °C, so K/W and °C/W
+have the same numerical slope. Absolute temperatures are not interchangeable in
+relations such as thermal radiation, which requires kelvin.
+
+Thermal resistance is not an intrinsic promise detached from geometry. To see why,
+consider one-dimensional conduction through a uniform slab of thickness $L$, area
+$A$, and approximately constant thermal conductivity $k$. Fourier conduction is
+the constitutive relation
+
+$$
+\dot Q=kA\frac{T_H-T_C}{L},
+$$
+
+for steady heat flow from hot to cold. Comparing with
+@eq-f05-thermal-resistance-definition gives
+
+$$
+R_{\theta,\text{cond}}=\frac{L}{kA}.
+$$ {#eq-f05-conduction-resistance}
+
+Its units are
+$(\text{m})/[\text{W}/(\text{m}\cdot\text{K})\,\text{m}^2]=\text{K/W}$.
+Doubling thickness doubles resistance; doubling cross-sectional area halves it;
+$k\to\infty$ approaches an isothermal link. Spreading, interfaces, contact
+pressure, nonuniform area, temperature-dependent conductivity, convection, and
+radiation break the one-dimensional picture [@bergman2017heat].
+
+Series thermal resistances add only when essentially the same heat flow traverses
+them in sequence. Simultaneous routes through leads, package, board, air, and a heat
+sink act in parallel. Radiation is intrinsically nonlinear, while convection's
+effective coefficient is condition-dependent even though Newton cooling is linear
+in temperature difference when that coefficient is held constant. A single
+$R_\theta$ is therefore normally a local engineering approximation around stated
+power, temperatures, orientation, enclosure, and airflow.
+
+### Semiconductor package thermal metrics
+
+For an IC, $R_{\theta JA}$ denotes a junction-to-ambient result under specified
+package, test-board, mounting, and air conditions. It is not a portable package
+constant. Board copper, thermal vias, die size, power, nearby heat sources,
+orientation, enclosure, and airflow can change the application result. A
+manufacturer's $\Psi_{JT}$ is a characterization parameter for estimating junction
+temperature from package-top temperature under its defined conditions; it is not
+interchangeable with $R_{\theta JC}$. Nor should a complete $R_{\theta JA}$ path be
+added to a separate junction-to-case plus heat-sink path—the same heat routes would
+be counted twice. The distinctions and test dependence are documented in the TI
+package-thermal-metrics report [@ti2024thermalmetrics].
+
+Thus
+
+$$
+T_J\approx T_A+P_D R_{\theta JA}
+$$
+
+is at most a screening estimate unless the application is sufficiently similar to
+the characterization conditions or an application-specific effective resistance
+has been established. A **typical** thermal metric cannot become a guaranteed
+worst-case bound by arithmetic. When a manufacturer supplies $\Psi_{JT}$ for the
+relevant conditions, the distinct estimate
+
+$$
+T_J\approx T_\text{top}+\Psi_{JT}P_D
+$$
+
+uses a measured package-top temperature; it does not turn $\Psi_{JT}$ into a
+series thermal resistance or remove the measurement and condition uncertainties
+[@ti2024thermalmetrics].
+
+## Thermal capacitance and transient temperature
+
+::: {.callout-note title="Optional bridge to first-order dynamics"}
+Using the step-response relation and interpreting its limits require only algebra,
+an exponential function, and the idea of a time constant. The differential-equation
+derivation is an optional bridge to [M02](../appendices/m02-calculus-linear-differential.qmd)
+and [F07](f07-capacitors-inductors-transients.qmd); readers following only the F03
+prerequisite may use the stated response here and return to the derivation later.
+:::
+
+Let one approximately uniform thermal mass have temperature $T(t)$, reference
+ambient $T_A$, and thermal capacitance $C_\theta$ in J/K. Define $C_\theta$ by the
+incremental stored-energy relation
+$\mathrm dE_\text{th}=C_\theta\,\mathrm dT$. With constant internal dissipation
+$P_D$ and a linear heat path $R_\theta$, conservation gives
+
+$$
+C_\theta\frac{\mathrm dT}{\mathrm dt}
+=P_D-\frac{T-T_A}{R_\theta}.
+$$ {#eq-f05-thermal-balance}
+
+This is a **single-node, first-order approximation**. For a power step applied at
+$t=0$ from initial condition $T(0)=T_A$, the solution is
+
+$$
+T(t)=T_A+P_D R_\theta
+\left(1-e^{-t/\tau_\theta}\right),
+\qquad
+\tau_\theta=R_\theta C_\theta.
+$$ {#eq-f05-thermal-step}
+
+Substitution verifies the solution: at $t=0$, the rise is zero and its initial
+slope is $P_D/C_\theta$; as $t\to\infty$, the exponential vanishes and
+@eq-f05-steady-temperature returns. Dimensions also agree:
+$(\text{K/W})(\text{J/K})=\text{J/W}=\text{s}$. The calculus support is in
+[M02](../appendices/m02-calculus-linear-differential.qmd); F07 develops the same
+accumulation-versus-flow structure for electrical transients.
+
+Real packages usually have several thermal masses and paths, so one exponential
+may fit only part of the record. Power-dependent convection and radiation,
+temperature-dependent dissipation, changing airflow, and neighboring heat sources
+also make $R_\theta$ or $C_\theta$ appear to change.
+
+### Worked example: first-order thermal settling
+
+For this separate synthetic scenario only, assume the entire 0.220 W unallocated
+system power is dissipated in one component and follows the represented heat path.
+Take illustrative parameters
+$T_A=23.0~^\circ\text{C}$, $P_D=0.220$ W,
+$R_\theta=120$ K/W, and $C_\theta=0.750$ J/K. The predicted steady rise is
+26.4 K, the final temperature is 49.4 °C, and
+$\tau_\theta=90.0$ s.
+
+| Time after step (s) | Temperature (°C) |
+|---:|---:|
+| 0 | 23.0 |
+| 30 | 30.5 |
+| 60 | 35.8 |
+| 120 | 42.4 |
+| 240 | 47.6 |
+| 360 | 48.9 |
+| steady limit | 49.4 |
+
+: **Synthetic illustrative data** generated from @eq-f05-thermal-step, rounded to 0.1 °C. They teach settling and residual checks but do not qualify any device or assembly. {#tbl-f05-synthetic-temperature}
+
+At $t=60$ s the part is still 13.6 K below the steady prediction. Treating that
+reading as steady would underestimate rise by more than half. A physical test needs
+an equilibrium criterion such as a slope small enough for a specified duration,
+not merely “wait one minute.”
+
+The following standard-library program closes the opening budget and generates the
+same thermal prediction. Parameters are visible so that boundary or thermal
+assumptions can be changed deliberately.
+
+```python
+from math import exp
+
+def power_w(voltage_v, current_a):
+    return voltage_v * current_a
+
+def temperature_c(time_s, ambient_c, loss_w,
+                  thermal_k_per_w, thermal_j_per_k):
+    tau_s = thermal_k_per_w * thermal_j_per_k
+    rise_k = loss_w * thermal_k_per_w
+    return ambient_c + rise_k * (1.0 - exp(-time_s / tau_s))
+
+pin_w = power_w(5.00, 0.120)
+pload_w = power_w(3.30, 0.100)
+pindicator_w = power_w(5.00, 0.0100)
+unallocated_w = pin_w - pload_w - pindicator_w
+# Separate synthetic assumption: all unallocated power heats one part.
+assumed_component_loss_w = unallocated_w
+
+print(f"input       {pin_w:.3f} W")
+print(f"useful      {pload_w:.3f} W")
+print(f"indicator   {pindicator_w:.3f} W")
+print(f"unallocated {unallocated_w:.3f} W")
+print(f"efficiency  {100 * pload_w / pin_w:.1f} %")
+for time_s in (0, 30, 60, 120, 240, 360):
+    temp_c = temperature_c(
+        time_s, 23.0, assumed_component_loss_w, 120.0, 0.750
+    )
+    print(f"T({time_s:3d} s)    {temp_c:.1f} degC")
+```
+
+Expected output:
+
+```text
+input       0.600 W
+useful      0.330 W
+indicator   0.050 W
+unallocated 0.220 W
+efficiency  55.0 %
+T(  0 s)    23.0 degC
+T( 30 s)    30.5 degC
+T( 60 s)    35.8 degC
+T(120 s)    42.4 degC
+T(240 s)    47.6 degC
+T(360 s)    48.9 degC
+```
+
+This execution reproduces an analytical calculation; it is neither a device
+simulation nor a measurement. Concentrating all unallocated power in one part is
+an explicit, testable hypothesis, not an observed fact.
+
+## Power ratings, derating, and simultaneous limits
+
+A component rating answers a specific question under stated conditions. No single
+number replaces the others:
+
+| Datasheet item | Question it constrains | Common mistake |
+|---|---|---|
+| continuous power | average dissipation under stated mounting and ambient | treating package size as a universal wattage |
+| derating curve | permitted power as ambient or case temperature changes | applying the room-temperature value everywhere |
+| maximum temperature | film, junction, case, or ambient limit at a named point | substituting an easier surface measurement |
+| operating voltage | electrical stress independent of average power | checking only $V^2/R$ |
+| pulse/overload curve | peak power or energy for a stated duration and repetition | assuming low average power makes any pulse safe |
+| tolerance and TCR | value spread and temperature response | treating them as measurement uncertainty |
+| absolute maximum | boundary beyond which damage may occur | using equality as a recommended operating point |
+
+Ratings can interact. In a positive-TCR resistor under constant current,
+$P=I^2R(T)$ rises as resistance rises, reinforcing heating. Under constant voltage,
+$P=V^2/R(T)$ falls for the same positive TCR. Semiconductors can show stronger
+electrothermal feedback and thermal runaway. A constant-$R$ calculation is a first
+screen, not permission to ignore temperature dependence.
+
+The authentic Vishay MRS25 datasheet illustrates the conditional language. For
+that specified series it lists a 0.6 W rated dissipation at 70 °C, 350 V maximum
+AC/DC operating voltage, −55 °C to 155 °C operating range, and 155 °C peak
+permissible film temperature. It also states that resistor temperature rise
+depends on PCB heat-flow support, that the rated dissipation applies only if the
+film-temperature limit is respected, and that long-term resistance drift can set
+a functional lifetime [@vishaymrs25]. Those facts are manufacturer document
+evidence, not measurements of a particular board. The 350 V value is far outside
+this chapter's practical safety boundary and conveys no authorization to operate
+there.
+
+For any manufacturer curve or table, define $P_\text{permitted}(T_A)$ only under
+its stated mounting and environment. A continuous-power screen then requires
+
+$$
+P_{D,\max}<P_\text{permitted}(T_{A,\max}),
+$$
+
+in addition to—not instead of—voltage, pulse, film/junction-temperature, and
+lifetime checks. For the worked design that follows, the cited datasheet supplies
+$P_\text{permitted}(70~^\circ\text{C})=0.600$ W [@vishaymrs25]; the application
+power must still be bounded before the comparison can be made. At an ambient above
+70 °C, this chapter does not invent an interpolation: the current manufacturer
+derating curve and its conditions must be read directly. If no guaranteed curve
+or application-specific thermal bound is available, the result remains a
+feasibility screen rather than a worst-case pass.
+
+## Worked design: resistor power and margin
+
+The claim is intentionally limited to terminal power. It does **not** accept film
+or junction temperature because the fixture described here cannot observe that
+measurand or establish a qualified correlation from surface temperature.
+
+Consider this deliberately low-voltage design requirement:
+
+- source at the resistor terminals: $5.00$ V DC nominal, bounded from 4.90 V to
+  5.10 V in operation;
+- resistor: MRS25, 100 Ω nominal at the 20 °C design reference,
+  ±1 % initial tolerance and
+  ±50 ppm/K TCR magnitude [@vishaymrs25];
+- local ambient: 20 °C to 70 °C, still-air orientation and board mounting to be
+  recorded;
+- internal continuous-power design limit: **strictly less than 0.300 W**, chosen
+  below the datasheet's 0.6 W rating at 70 °C;
+- steady surface temperature is a diagnostic measurand, while film temperature is
+  acknowledged as inaccessible in this setup; and
+- no pulse or overload operation.
+
+At constant voltage, maximum resistance power occurs at maximum voltage and
+minimum resistance. As a first-order bound, conservatively allow the signed TCR to
+reduce resistance from a 20 °C reference to the 155 °C permitted-film boundary.
+This is wider than the ambient range because self-heating makes film temperature
+exceed ambient. It
+treats initial tolerance and temperature shift as simultaneous bounds, not as
+probability distributions:
+
+$$
+R_{\min}=(100~\Omega)(1-0.01)
+\left[1-(50\times10^{-6}~\text{K}^{-1})(135~\text{K})\right]
+=98.33~\Omega,
+$$
+
+$$
+P_{R,\max}
+=\frac{(5.10~\text{V})^2}{98.33~\Omega}
+=0.265~\text{W}.
+$$ {#eq-f05-resistor-worst-power}
+
+The units reduce to $\text{V}^2/\Omega=\text{W}$. Nominal power would be only
+0.250 W; carrying source and resistance bounds consumes about 15 mW of the apparent
+50 mW margin. The worst-case calculation leaves
+$0.300-0.265=0.035$ W to the internal design limit and remains below the
+datasheet's 0.6 W rating at the stated 70 °C reference condition.
+
+The calculation-to-datasheet comparison is therefore
+$0.265~\text{W}<0.600~\text{W}$: 44.2 % of the permitted dissipation at the cited
+reference condition. The 0.265 W value is a bounded chapter calculation; the
+0.600 W value is manufacturer document evidence [@vishaymrs25].
+
+The simultaneous voltage screen is also satisfied:
+$5.10~\text{V}<350~\text{V}$ for this series [@vishaymrs25]. This comparison is
+not authorization to approach 350 V; it shows that the low-voltage design is
+governed by power and thermal conditions rather than the separate operating-voltage
+rating.
+
+**Decision:** conditionally proceed for the strict terminal-power requirement,
+because the bounded 0.265 W result is below 0.300 W. This establishes
+**document-based electrical feasibility under the stated bounds**, not verified
+film temperature, lifetime, pulse capability, or production qualification. The
+datasheet explicitly makes PCB heat flow relevant, and a case
+or lacquer-surface reading is not the film hot spot. A qualified product decision
+needs the current manufacturer documentation, actual mounting, environmental
+tests, drift requirements, and evidence appropriate to the consequence of failure.
+Turning the diagnostic surface record into a thermal acceptance rule would require
+a manufacturer-supported or independently validated correlation to film
+temperature for the actual mounting, with its own calibration and uncertainty.
+
+### Acceptance test for terminal power
+
+For an approved L1 fixture only, a defensible acceptance test for the narrower
+continuous-power requirement would:
+
+1. identify the resistor and mounting; record local ambient, board, enclosure,
+   orientation, airflow, source current limit, and stabilization criterion;
+2. measure DC voltage directly at the resistor terminals and current in the same
+   steady interval, with declared polarities and instrument ranges;
+3. account for voltmeter loading, ammeter burden, lead/contact loss, accuracy
+   limits, resolution, calibration state, repeatability, and temperature drift in
+   the uncertainty basis [@jcgm2008gum];
+4. calculate $P_\text{meas}=V_R I_R$ and a conservative power guard $g_P$ at the
+   stated coverage; do not relabel a datasheet accuracy limit as expanded
+   uncertainty;
+5. pass the strict electrical requirement only if
+   $P_\text{meas}+g_P<0.300$ W at every required operating corner—equality does
+   not pass; and
+6. record ambient and resistor-surface temperature versus time as diagnostic
+   evidence, but do not claim the unmeasured film temperature from the surface
+   reading alone.
+
+The thermal observation can reveal instability, inadequate settling, or mounting
+changes. It cannot strengthen the claim beyond the measurand and uncertainty that
+the setup actually supports.
+
+## Reconciling power and temperature evidence
+
+Suppose, in a **hypothetical illustrative test rather than a measurement record**,
+the opening assembly's input appears to be
+0.600 W while the 0.330 W useful output and 0.050 W indicator add to 0.380 W, yet
+a temperature estimate that assigns all 0.220 W of unallocated power to one part
+is far above its observed surface temperature. Do not immediately conclude that
+energy conservation or the temperature sensor has
+failed. Competing hypotheses include:
+
+- the power readings were taken at different times or operating modes;
+- an auxiliary output or stored-energy change was omitted;
+- source-display values were used instead of simultaneous voltage at the load
+  terminals and branch current;
+- wiring or ammeter burden moved a test point outside the intended boundary;
+- the part had not reached thermal steady state;
+- heat leaves through multiple paths, so the assumed $R_\theta$ is wrong;
+- surface temperature is below the internal hot spot, or the sensor attachment,
+  emissivity, or ambient reference is biased [@ti2024thermalmetrics]; and
+- dissipation is distributed among several components rather than concentrated in
+  the observed one.
+
+A useful diagnostic sequence is:
+
+1. redraw the boundary and inventory every crossing power path;
+2. sample input and outputs over the same interval and calculate a residual with
+   uncertainty;
+3. measure voltage at both ends of suspect leads to localize electrical loss;
+4. continue the thermal record until a quantitative slope criterion is met;
+5. change one heat-flow condition, such as controlled airflow, without changing
+   electrical load, and observe which temperatures respond; and
+6. compare the complete time record with one- and multi-time-constant predictions.
+
+This is the chapter's working cycle: **predict → build → measure → reconcile →
+decide** [@horowitz2015art]. Calculation can establish a feasibility screen.
+Synthetic data can test analysis. Manufacturer documents can establish
+conditional ratings. Only a traceable physical test reaches evidence about the
+actual assembly, and repeated
+or qualified tests are required when the consequence warrants them.
+
+## Summary
+
+- With current defined into the voltage-positive terminal,
+  $p_\text{abs}(t)=v(t)i(t)$; positive means absorption and negative delivery.
+- Energy is the time integral of power, and average power is energy divided by a
+  named interval. Mode-weighted budgets sum $P_kt_k$; in general, average $vi$ is
+  not average $v$ times average $i$.
+- A complete boundary account includes useful and non-useful outward transfer plus
+  system-energy change. Internal dissipation becomes outward heat only after any
+  thermal accumulation is accounted for.
+- Efficiency is a ratio only after the useful output, boundary, operating mode,
+  and interval are fixed. Cascaded efficiencies multiply across matched ports.
+- Dissipation and heat transfer are linked by a condition-dependent thermal path.
+  $\Delta T\approx P_D R_\theta$ is a steady, linearized approximation, while
+  thermal capacitance explains why temperature takes time to settle.
+- Power, voltage, pulse, temperature, mounting, and lifetime ratings apply
+  together. Equality to a strict limit is not margin, and a typical thermal metric
+  is not a guaranteed application bound.
+- A defensible decision names the measurand, test points, environment, instrument
+  loading, uncertainty, guard band, and explicit pass/fail rule.
+
+## Exercises
+
+### Quick check
+
+Choose one best answer for each question.
+
+1. Under the passive sign convention, a component has $v=+5$ V and
+   $i=-20$ mA. It is:
+    a. absorbing 100 mW;
+    b. delivering 100 mW;
+    c. storing exactly 100 mJ;
+    d. violating conservation.
+2. Which quantity is an amount of energy?
+    a. 2 W;
+    b. 2 A;
+    c. 2 Wh;
+    d. 2 K/W.
+3. In periodic steady operation, stored energy may:
+    a. never change within a cycle;
+    b. change within a cycle while its whole-cycle net change is zero;
+    c. increase by the same amount every cycle forever;
+    d. be omitted from every instantaneous balance.
+4. A reported converter efficiency is meaningful only when:
+    a. output voltage alone is known;
+    b. input and useful output use a stated boundary, mode, and matched interval;
+    c. it is below 100 %;
+    d. the package remains cool to touch.
+5. A datasheet value of $R_{\theta JA}$ is best interpreted as:
+    a. an intrinsic constant independent of PCB and airflow;
+    b. electrical resistance from junction to ambient;
+    c. a thermal result tied to stated package and test conditions;
+    d. the same quantity as $\Psi_{JT}$.
+6. A worst-case prediction equals a strict maximum rating. The design:
+    a. passes with zero uncertainty;
+    b. passes because equality is conservative;
+    c. needs no thermal test;
+    d. does not pass the strict requirement because it has no margin.
+
+*[Key: 1-b, 2-c, 3-b, 4-b, 5-c, 6-d.]*
+
+### Retrieval and explanation
+
+1. Define energy, instantaneous power, average power, dissipation, efficiency,
+   heat, temperature, thermal resistance, and thermal capacitance. Give the SI
+   unit of each.
+2. State the passive sign convention and explain why negative absorbed power is
+   not an error.
+3. Explain why “the resistor consumed 15 W” is ambiguous or wrong. Rewrite it for
+   (a) a rate and (b) an amount over 60 s.
+4. Explain why an ampere-hour rating is not an energy rating and why nominal
+   voltage times ampere-hours is only an estimate of usable energy.
+5. Distinguish junction, case, surface, local ambient, and room temperature. Why
+   can no one value silently replace another?
+
+### Estimation
+
+6. Use @eq-f05-mode-budget for a 5 V system that draws 20 mA in standby and
+   200 mA while active for 10 % of each hour. Estimate average input power and
+   energy per day before calculating. State what transition energy the two-mode
+   calculation omits.
+   *[Self-check: 0.190 W and 4.56 Wh/day.]*
+7. A converter supplies 2.0 W at 80 % efficiency. Estimate input power and loss.
+   Then repeat at 95 %. Which improvement matters more thermally?
+8. A component dissipates 0.50 W with an application-specific thermal resistance
+   near 60 K/W at 25 °C ambient. Estimate its hot-point temperature. State why
+   the result is not yet a worst-case bound. *[Self-check: about 55 °C.]*
+9. An illustrative battery stores 12 Wh, of which 75 % is usable through the
+   converter. Estimate runtime for a constant 1.5 W load. Name two effects that
+   could invalidate the estimate. *[Self-check: about 6 h.]*
+
+### Derivation and calculation
+
+10. Starting from $\mathrm dW=v\,\mathrm dq$ and
+    $i=\mathrm dq/\mathrm dt$, derive @eq-f05-instantaneous-power. Declare the
+    references and show units.
+11. Reverse only the current reference in the 5.00 V, 100 Ω source-load example.
+    Write a correct power relation in the new variables and show that the physical
+    source and load transfers are unchanged.
+12. Derive @eq-f05-resistor-power from $v=iR$. State why it guarantees
+    nonnegative absorbed power only for a positive ohmic resistance under the
+    passive sign convention.
+13. A 12 V pulse is applied to 48 Ω for 2.0 ms every 10 ms. Calculate peak power,
+    duty cycle, average power, energy per pulse, $V_\text{avg}$, $I_\text{avg}$,
+    $V_\text{rms}$, and $I_\text{rms}$. Verify that average $vi$ differs from
+    $V_\text{avg}I_\text{avg}$.
+14. Derive @eq-f05-cascade-efficiency for three stages. Calculate total efficiency
+    for 92 %, 85 %, and 96 % stages and the required input for 4.0 W useful output.
+15. **Extension.** Verify @eq-f05-thermal-step by substituting it into
+    @eq-f05-thermal-balance. Interpret the limits $t=0$, $t=\tau_\theta$, and
+    $t\to\infty$.
+16. **Extension.** Starting from one-dimensional Fourier conduction, derive
+    @eq-f05-conduction-resistance. Predict the effect of doubling $L$, $A$, and
+    $k$ separately.
+
+### Data interpretation
+
+17. Recalculate every finite row of @tbl-f05-synthetic-temperature from
+    @eq-f05-thermal-step. At what time is the temperature within 5 % of its final
+    rise? Why can this synthetic agreement not qualify hardware?
+18. An illustrative test record (not physical evidence) gives
+    $V_\text{in}=5.01$ V and $I_\text{in}=118$ mA,
+    $V_\text{out}=3.29$ V and $I_\text{out}=101$ mA, plus a 49 mW auxiliary
+    branch. Calculate input, useful, unallocated power, and useful efficiency.
+    Name the uncertainty information needed before localizing the unallocated
+    power to a component.
+19. A part dissipating 0.20, 0.40, and 0.60 W reaches steady rises of 18, 33, and
+    45 K in a synthetic illustrative record. Calculate apparent $R_\theta$ at each
+    point. Does one constant thermal resistance fit? Suggest two physical
+    explanations.
+20. An illustrative thermal trace continues rising at 0.4 K/min when the record
+    stops. Explain why its last temperature is not a steady-state result and
+    propose a quantitative stabilization rule.
+
+### Debugging
+
+21. A power budget reports 110 % efficiency during startup. Give four hypotheses
+    involving stored energy, timing, test points, sign, or omitted inputs, and one
+    measurement that discriminates at least two of them.
+22. Two instruments report different input power for a pulsed load. One multiplies
+    displayed average voltage by displayed average current; the other averages
+    simultaneous waveform products. Which method targets average real power, and
+    under what bandwidth and sampling conditions could it still fail?
+23. An IC runs hotter after the same design is moved to a smaller PCB, although
+    electrical dissipation is unchanged. Explain why copying the earlier
+    $R_{\theta JA}$ result is invalid. Name evidence that would separate changed
+    copper heat spreading from changed airflow.
+24. An infrared camera reads a package cooler than a fine thermocouple. Propose
+    hypotheses involving emissivity, reflection, sensor attachment, spatial
+    resolution, and sensor heat sinking. Do not assume either is the truth standard.
+25. A resistor meets its average-power rating but fails after repetitive pulses.
+    Identify at least four unchecked constraints and state what manufacturer data
+    would be needed.
+
+### Open design
+
+26. Choose between a linear and switching architecture for 12 V to 5 V at loads
+    from 5 mA to 300 mA. Set requirements for regulation, standby current,
+    efficiency at multiple loads, ripple, cost, and maximum temperature. Use real
+    current datasheets, calculate worst-case losses, and state what physical tests
+    remain.
+27. Design an approved extra-low-voltage L04 experiment that compares predicted
+    resistor power with temperature rise. Specify resistor identity and ratings,
+    voltage/current references, current limit, test points, ambient/airflow and
+    mounting, temperature measurand and attachment, instruments/ranges/calibration,
+    raw time records, uncertainty, stop conditions, and a guarded decision rule.
+28. Develop a 24-hour energy budget for a battery-powered sensor with sleep,
+    sampling, processing, radio transmit, and conversion losses. State every duty
+    cycle, include standby paths, carry battery usable-energy uncertainty, and
+    identify the mode that dominates energy rather than peak power.
+29. Select a real resistor for the bounded case in this chapter. Use the current
+    manufacturer datasheet to check continuous derating, operating voltage,
+    pulse/overload limits, TCR, mounting, drift, and availability. Define a design
+    margin and state exactly what document review proves and what needs physical
+    qualification.
 
 ## Connections
 
-Chapter ID: `F05`. Prerequisites and downstream course mappings are maintained in
-[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
-provides reader-facing routes and the practice spine.
+Chapter ID: `F05`. Its registered prerequisite is
+[F03](f03-sources-loads-resistance.qmd), which supplies associated references,
+source-load operating points, resistance, loading, and ratings. Algebra and SI
+support are in [M01](../appendices/m01-algebra-units-complex.qmd); the differential
+equation in the optional thermal-settling bridge is supported by
+[M02](../appendices/m02-calculus-linear-differential.qmd).
+
+Direct downstream chapters are [F07](f07-capacitors-inductors-transients.qmd),
+which develops electrical energy storage and first-order transients;
+[A01](../02-analog/a01-semiconductor-diodes.qmd) and
+[A02](../02-analog/a02-transistors.qmd), which add temperature-sensitive device
+regions and dissipation; and [S05](../05-domains/s05-power-electronics.qmd), which
+develops efficient conversion. [F06](f06-measurement-uncertainty-debug.qmd)
+provides the full uncertainty and fault-isolation machinery assumed by the
+acceptance rule.
+
+The aligned physical evidence is **Lab L04 — Power, efficiency, and temperature
+rise**, at safety level L1. The chapter also contributes to **M1 — Measure an
+energy-and-light system**. Reproducible configuration and raw-data practice connect
+to [T03](../appendices/t03-reproducible-engineering.qmd), and datasheet
+interpretation to [T01](../appendices/t01-datasheets-standards.qmd). These IDs
+denote learning and evidence goals; they do not authorize practical work. The
+[Part I introduction](index.qmd) and [reading roadmap](../roadmap.qmd) show the
+full route.
+
+## References
+
+Claims are cited where used. SI definitions follow the SI Brochure
+[@bipm2019si]; circuit power conventions and practical electronics treatment
+follow canonical electronics texts [@sedra2020microelectronic;
+@horowitz2015art]. Heat-flow relations follow the canonical heat-transfer
+treatment [@bergman2017heat]. Package thermal-metric limits follow the
+manufacturer application report [@ti2024thermalmetrics], and the authentic
+resistor example follows the MRS16/MRS25 manufacturer datasheet
+[@vishaymrs25]. Measurement-uncertainty language follows [@jcgm2008gum]. The
+complete [bibliography](../references.qmd) collects these sources. No textbook,
+datasheet, calculation, or chapter substitutes for local authorization or
+qualification of a physical design.

@@ -18,6 +18,9 @@ yours to design, but the conventions and the factual bar below are fixed.
 4. The part introduction (`.../<part>/index.qmd`) — fit its arc, spines, exit
    capability, and vocabulary.
 5. `curriculum/book/references.bib` — reuse existing keys; add real ones as needed.
+6. The nearest completed prerequisite chapter and relevant downstream outlines —
+   preserve notation, do not re-teach their scope, and hand forward exactly what
+   later chapters expect.
 
 ## Invariant 1 — the book's thesis (must run through every chapter)
 A circuit is **one object described in many languages** (physical, schematic,
@@ -41,10 +44,25 @@ stakes allow.
   rule-of-thumb screen, tolerance, or requirement. Derive the general conservation
   statement before its steady-state or lumped special case; do not turn "negligible
   accumulation" into "accumulation is impossible."
+- In every boundary balance, keep three things separate: **quantities crossing the
+  chosen boundary**, **conversion or generation inside it**, and **accumulation
+  inside it**. Do not count one transfer twice — for example, once as internal
+  dissipation and again as heat that has not yet crossed the boundary during
+  warm-up. State exactly when steady or whole-cycle averaging makes accumulation
+  vanish.
+- State the denominator and storage condition of every efficiency or utilization
+  ratio. A port ratio can exceed one while stored energy is being released; the
+  bound $0\le\eta\le1$ applies only when every energy input, including any net
+  storage release relevant to the interval, is accounted for.
 - Every quantitative claim is either **worked** (numbers you can check) or **cited**
   to a datasheet, standard, or canonical reference. Do not invent device numbers;
   use representative values and label them *typical / illustrative*, or cite a real
   part. Distinguish **exact vs. typical vs. worst-case**.
+- Keep the provenance of a comparison visible. A chapter calculation compared
+  with a datasheet limit is not wholly "documented": name which value was derived,
+  which was specified by the manufacturer, and which — if any — was measured.
+  Present the derivation before using its result in a rating or acceptance
+  comparison.
 - Demonstrate governing equations when doing so helps the reader form the concept.
   A useful demonstration normally includes: declared references; numerical
   substitution; units; an honest number of significant figures; interpretation in
@@ -77,7 +95,9 @@ stakes allow.
   of use with `[@key]`, prefer primary/canonical sources, add accurate entries to
   `references.bib`, and close with a short `## References` note and a `## Connections`
   section that links prerequisites, downstream chapters, labs, projects, and
-  just-in-time appendices by ID.
+  just-in-time appendices by ID. The closing note never substitutes for a citation
+  at the first consequential claim. Verify every new bibliography entry against an
+  official or primary source, then audit that every citation key resolves.
 - **Notation:** SI throughout; reference directions before any signed result;
   distinguish equality / approximation / tolerance / bound / uncertainty; state the
   amplitude type (instantaneous, peak, pk-pk, RMS, average, phasor, spectral
@@ -88,20 +108,34 @@ stakes allow.
   claim. Authentic measurements identify configuration, instrument, range,
   calibration state, raw observations, and uncertainty basis. A datasheet accuracy
   limit is not automatically a $k=2$ expanded uncertainty.
+- **Residual language:** an **unallocated quantity** is what remains after only
+  some paths have been inventoried; it is not yet localized to a component or
+  failure. A **closure residual** compares independently obtained terms after all
+  declared paths are assigned and should be consistent with zero within
+  uncertainty. Never manufacture a zero residual by defining the final term as the
+  remainder and then presenting the identity as evidence.
 - **Acceptance decisions:** name the measurand, test points, operating and
   environmental conditions, instrument loading, accuracy/calibration inputs,
   uncertainty basis, guard band, and explicit pass/fail decision rule. A display
   inside the specification is not a pass when the guarded interval crosses a
   boundary; equality does not satisfy a strict limit.
-- **Headings:** natural and chapter-specific — never the word "model" in a heading,
-  never a generic template label reused book-wide.
+- **Headings:** build a textbook skeleton, not a sequence of blog headlines. Use
+  compact, chapter-specific noun phrases or precise declarative claims that name
+  the concept, method, operating region, or decision. A reader scanning only the
+  table of contents should see the intellectual progression. Avoid promotional,
+  teasing, conversational, or cute titles; never use the word "model" in a heading
+  and never paste generic template labels into the middle of every chapter.
 - **Mermaid:** vertical `flowchart TB`, concise nodes, detail in caption/alt, **no
   `$…$`** — Unicode subscripts (`Rₜₕ`, `Rᵢₙ ∥ Cᵢₙ`) or plain names. Every figure has
   caption + alt text.
 - **Code:** standard-library, parameterized, runnable, with an expected-output
   block; lines short enough to survive print without awkward wrapping. Run it,
   compare actual and expected output, and keep variable names synchronized with the
-  prose while avoiding symbol names that become ambiguous in code.
+  prose while avoiding symbol names that become ambiguous in code. Make every
+  consequential assumption visible in the variable assignment or adjacent prose:
+  do not silently rename "unallocated" power as component "loss," treat a
+  hypothesis as an observation, or imply that executable arithmetic is a physical
+  simulation.
 - **Circuits:** CircuitikZ source in `curriculum/circuits/<id>.tex`, registered in
   `catalog.toml`, referenced as `../../../build/circuits/<id>.png`; explicit
   connection dot at every 3+ conductor junction; test-point labels off wires and
@@ -112,6 +146,9 @@ stakes allow.
   debugging, and open design; a few self-check answers inline; full solutions stay
   out of the public book.
 - **Representations stay synchronized** (schematic ↔ equations ↔ code ↔ data ↔ test).
+  If a diagram is intentionally architectural rather than a component schematic,
+  say so; use the same boundary names, test points, quantities, and assumptions in
+  its caption, tables, equations, code, and acceptance procedure.
 
 ## Adaptable structure — design the layout the topic needs
 F01's ten sections fit a bench-habits chapter. A technical chapter should be
@@ -134,6 +171,28 @@ numbers, reconcile with evidence, expose failure modes, and end in a bounded,
 defensible decision or capability.** Those are functions to fulfill, not sections
 to stamp. Use tables, derivations, procedures, and comparisons freely where they
 teach better than prose.
+
+## Make the table of contents teach
+
+Design the heading hierarchy before filling it with prose. It is the chapter's
+conceptual map and should remain useful after the examples are forgotten.
+
+1. Keep the shared opening and closing headings fixed, but let the middle expose
+   the topic's own logic. Each `##` should represent one durable conceptual unit;
+   add a `###` only for a genuine subdivision, worked example, operating region,
+   or procedure within it.
+2. Prefer book-like headings such as `Terminal power and the passive sign
+   convention`, `Small-signal behavior around the operating point`, or `Worked
+   design: gain, loading, and margin`. Avoid titles such as `The number that
+   changes everything`, `Why this part gets hot`, or `A surprising result`.
+3. Keep neighboring headings parallel in scale and grammar. Do not mix a broad
+   field (`Noise`) with a tiny example (`A 2.2 kΩ resistor`) at the same level.
+4. Use consistent prefixes where they help navigation — for example, `Worked
+   example: ...`, `Worked design: ...`, or `Acceptance test: ...` — but do not turn
+   the whole book into a fixed template.
+5. Read the headings alone as a student before drafting and again after review.
+   They should reveal prerequisite idea → governing relations → application →
+   limits → evidence → decision without sounding promotional or conversational.
 
 ## Make equations teach
 
@@ -162,29 +221,53 @@ Avoid two common failures: a wall of algebra with no physical reading, and frien
 prose that never gives the reader enough mathematics to reproduce the result.
 
 ## Workflow
-1. Draft the `.qmd` at the registry `file` path. Build an equation inventory while
-   drafting: for every central relation record its status, references, assumptions,
-   units, demonstration, limiting case, and downstream use.
-2. Audit quantitative inputs. Cite real specifications or mark values
+1. Draft the heading skeleton first. Read it without body prose and verify that it
+   is book-like, parallel in scale, specific to the topic, and sufficient to show
+   the learning arc. Then draft the `.qmd` at the registry `file` path.
+2. Build an equation inventory while drafting: for every central relation record
+   its status, references, assumptions, units, demonstration, limiting case, and
+   downstream use. For every balance, also record the boundary, internal
+   conversions, accumulation term, and the condition under which it vanishes.
+3. Audit quantitative inputs. Cite real specifications or mark values
    illustrative; include temperature, frequency, tolerance, aging, geometry,
    loading, connector/contact effects, and other operating conditions whenever they
    can change the decision. A nominal calculation is not a worst-case design.
-3. Audit evidence. Separate prediction, synthetic teaching data, simulation,
+4. Audit terminology and provenance. Distinguish unallocated quantities from
+   independently evaluated closure residuals; chapter calculations from datasheet
+   limits; typical values from guaranteed bounds; and surface observations from
+   inaccessible internal quantities.
+5. Audit evidence. Separate prediction, synthetic teaching data, simulation,
    authentic measurement, and qualified claim. Make the prose say exactly which
    rung has actually been reached.
-4. Author and render any circuits. Inspect the rendered images, not just the source,
+6. Author and render any circuits. Inspect the rendered images, not just the source,
    for arrow direction, polarity, junction dots, legible labels, and correspondence
    with the equations and test points.
-5. Run every code listing and compare it with its expected-output block.
-6. `python3 curriculum/tools/validate.py` — must pass.
-7. `quarto render curriculum/book/<file> --to html` — must succeed; verify no
+7. Run every code listing and compare it with its expected-output block. Confirm
+   that code names preserve the distinctions and assumptions made in the prose.
+8. Start independent review passes on the **completed draft** when review agents
+   are available:
+   - **technical:** recompute every central numerical result, audit signs,
+     dimensions, conservation boundaries, limiting cases, and conclusions;
+   - **pedagogical:** read as a learner and instructor, audit the heading skeleton,
+     prerequisite burden, misconceptions, examples, exercises, and exit capability;
+   - **repository/editorial:** audit front matter, links, citations, evidence
+     labels, diagram rules, code/output agreement, Connections, and rendering.
+   Apply substantiated improvements, then repeat the affected calculation or
+   render checks; a review of the outline alone is not a final review.
+9. Re-read the final heading list and every point-of-use citation. Verify that
+   bibliography keys resolve and that the final `## References` note is not the
+   first citation for a consequential claim.
+10. `python3 curriculum/tools/validate.py` — must pass.
+11. `quarto render curriculum/book/<file> --to html` — must succeed; verify no
    "model" in headings, `[1]` citations, `TB` mermaid with Unicode subscripts, the
-   MCQ with a–d options, figures resolving, and equations rendering.
-8. Read the rendered chapter once as a student: can every central result be
+   MCQ with a–d options, figures resolving, equations rendering, and no missing or
+   duplicate internal targets.
+12. Read the rendered chapter once as a student: can every central result be
    recomputed, can every sign be interpreted, and is it clear what is exact,
-   illustrative, measured, assumed, or still unverified?
-9. Report the layout you chose and why, any new `references.bib` keys, and the
-   verification results.
+   illustrative, measured, assumed, or still unverified? Read the table of contents
+   once more: does it still teach the chapter's progression?
+13. Report the layout you chose and why, meaningful review-driven corrections, any
+   new `references.bib` keys, and the verification results.
 
 ## Quality bar
 Correct, specific, and thorough — quality lecture material a student could learn
@@ -193,5 +276,6 @@ brevity; a generic or hand-wavy chapter is a failed chapter. Completeness does n
 mean mentioning every adjacent topic. It means that the chapter's promised exit
 capability is fully supported: prerequisites are named, central quantities are
 defined, equations are derived and demonstrated, evidence is honestly classified,
-failure boundaries are visible, exercises cover the misconceptions, and the final
-decision is valid under stated conditions.
+failure boundaries are visible, exercises cover the misconceptions, the heading
+skeleton teaches the conceptual arc, citations support consequential claims at the
+point of use, and the final decision is valid under stated conditions.

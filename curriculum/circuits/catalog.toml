@@ -22,6 +22,20 @@ caption = "A voltmeter loads the node it measures: its finite input resistance R
 alt = "Voltage source VS drives series resistors R1 and R2 to ground, with output test point TP1 at their junction. A voltmeter of input resistance R_in is connected from TP1 to the 0 V rail, in parallel with R2."
 
 [[circuit]]
+id = "f06-divider-measurement"
+source = "f06-divider-measurement.tex"
+chapter_id = "F06"
+caption = "The F06 divider and measurement connection: a 5 V source drives 100 kΩ and 400 kΩ resistors, while the finite meter input resistance joins TP1 to reference TP0."
+alt = "A 5 V source at TP_S drives 100 kilohm resistor R1 to TP1 and 400 kilohm resistor R2 from TP1 to reference TP0. Meter input resistance R_in connects between TP1 and TP0. Voltage V0 is positive at TP1 relative to TP0."
+
+[[circuit]]
+id = "f06-ammeter-insertion"
+source = "f06-ammeter-insertion.tex"
+chapter_id = "F06"
+caption = "An ammeter is inserted in series: current enters RED and leaves COM, while effective burden resistance R_A reduces the current that existed before insertion."
+alt = "A Thevenin source V_th and resistance R_th drive a series loop through an ammeter, its effective burden resistance R_A, and load R_L. Indicated current I_read enters the RED terminal and leaves COM. Burden voltage V_B is positive from RED to COM."
+
+[[circuit]]
 id = "f02-reference-directions"
 source = "f02-reference-directions.tex"
 chapter_id = "F02"

@@ -1,0 +1,22 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Source, inserted ammeter, burden resistance, and load form one series loop.
+  \draw (0,0) node[ground] {}
+    to[V, l_=$V_{\mathrm{th}}$] (0,2)
+    to[R, l_=$R_{\mathrm{th}}$] (2.2,2)
+    to[ammeter] (3.7,2)
+    to[R, l=$R_A$] (5.2,2)
+    to[R, l=$R_L$] (5.2,0)
+    -- (0,0);
+
+  % Meter terminals and burden-voltage reference are explicit.
+  \node[circ, label={[font=\small]above left:{RED ($+$)}}] at (2.2,2) {};
+  \node[circ, label={[font=\small]above right:{COM ($-$)}}] at (5.2,2) {};
+  \draw (2.2,2.8) to[open, v^>=$V_B$] (5.2,2.8);
+  \draw[->] (0.4,2.9) -- (1.4,2.9)
+    node[midway, above] {$I_{\mathrm{read}}$};
+\end{circuitikz}
+\end{document}

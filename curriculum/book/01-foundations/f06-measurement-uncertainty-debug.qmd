@@ -1,45 +1,1213 @@
 ---
 title: "Measurement, uncertainty, and systematic debugging"
+description: "Plan minimally intrusive measurements, evaluate their uncertainty, and isolate circuit faults with discriminating evidence."
 chapter-id: F06
-status: outline
+status: draft
 ---
 
-::: {.callout-note title="Chapter outline"}
-The scope and dependency boundary are stable. Full exposition, worked examples,
-exercises, and tested practical evidence still need authoring and review.
+::: {.callout-note title="Chapter maturity — draft"}
+This chapter presents a complete instructional path: definitions, derivations,
+worked uncertainty budgets, executable arithmetic, an explicitly synthetic fault
+investigation, a guarded decision, and a full exercise set. It remains subject to
+technical and editorial revision. Physical claims require the aligned laboratory
+evidence; the teaching data in this chapter do not provide it. See the
+[reading roadmap](../roadmap.qmd) for the meaning of status levels.
+:::
+
+::: {.callout-warning title="Safety boundary for this chapter"}
+All practical discussion is limited to **current-limited, extra-low-voltage**
+circuits under local supervision and an approved procedure. De-energize before
+resistance, continuity, diode, or capacitance tests; prove stored energy is
+discharged; and never move a lead between voltage and current terminals while a
+circuit is energized [@fluke87manual]. Oscilloscope ground clips may be
+earth-referenced and can
+create a short circuit [@tektronix2024tds3000csafety]. Reading this chapter is not authorization for mains,
+high-voltage, high-energy battery, RF-power, medical, or safety-critical work.
+Stop whenever the instrument rating, circuit reference, available fault energy,
+or local authorization is uncertain [@iec61010].
 :::
 
 ## Central question
 
-What evidence is strong enough to distinguish a circuit fault from a measurement mistake?
+> What evidence is strong enough to distinguish a circuit fault from a
+> measurement mistake?
+
+An **illustrative** divider is intended to produce 4.00 V DC at test point TP1
+relative to TP0. A digital multimeter (DMM) indicates 3.964 V. An oscilloscope
+then indicates 3.70 V. The schematic, two instruments, and two displays appear to
+describe three different circuits.
+
+There are many plausible explanations: the source is low, a resistor is wrong,
+a connection is resistive, the circuit is oscillating, either instrument is out
+of calibration, or each instrument has changed the node it measures. A display
+alone cannot select among them. Replacing parts until the symptom disappears may
+restore operation, but it neither identifies the cause nor establishes that the
+repair is robust.
+
+::: {.callout-tip title="Predict before diagnosing"}
+Commit to an answer before reading on. If the DMM has 10 MΩ input resistance and
+the oscilloscope has 1 MΩ input resistance, should the lower-resistance
+instrument indicate a higher voltage, a lower voltage, or the same voltage at a
+high-resistance divider? Which single observation would most strongly separate
+instrument loading from a faulty resistor? The worked investigation later in the
+chapter reconciles the schematic, equations, instrument descriptions, synthetic
+data, and decision.
+:::
+
+Measurement and debugging are the same intellectual task. Both begin with a
+claim about a precisely defined quantity, predict what different explanations
+would produce, and seek evidence that separates those explanations. The goal is
+not a large pile of readings. It is the smallest safe set of observations that
+supports a bounded conclusion.
 
 ## Learning outcomes
 
-After completing this chapter, the reader should be able to:
+This chapter assumes the source–load and instrument-loading reasoning of
+[F03](f03-sources-loads-resistance.qmd) and the elementary statistics introduced
+just in time in [M03](../appendices/m03-probability-numerical.qmd). After
+completing it, you should be able to:
 
-- explain the central model and the assumptions that bound its use;
-- connect physical behavior, a schematic or architecture, and quantitative reasoning;
-- interpret evidence and identify at least one credible failure mode;
-- make and defend a design or diagnostic decision;
+- **define a measurand and measurement procedure** with test points, polarity,
+  operating conditions, bandwidth, and instrument loading stated before a
+  reading is taken [@jcgm2012vim];
+- **distinguish accuracy, precision, resolution, repeatability, error,
+  correction, and uncertainty**, and explain why none can be inferred from the
+  number of display digits alone [@jcgm2012vim];
+- **evaluate Type A and Type B standard uncertainties**, propagate independent
+  inputs through a measurement equation, account for shared or correlated inputs,
+  and report combined and expanded uncertainty without relabelling a datasheet
+  limit as a coverage interval [@jcgm2008gum; @nist1994tn1297];
+- **predict resistive DMM and oscilloscope intrusion** and recognize when input
+  capacitance, burden voltage, bandwidth, reference connection, or aliasing makes
+  that DC description inadequate;
+- **isolate a fault by competing hypotheses**, choosing continuity, resistance,
+  voltage, current, or waveform tests for their safety and discriminating power;
+  and
+- **make a guarded acceptance decision** whose measurand, conditions,
+  uncertainty basis, and strict pass/fail rule are explicit
+  [@jcgm2012conformity].
 
-## Concept path
+## A measurement result begins with the measurand
 
-- accuracy, precision, resolution, repeatability, and uncertainty;
-- instrument input/output impedance and bandwidth;
-- measurement planning and raw data;
-- hypothesis-driven fault isolation;
-- continuity, voltage, current, and waveform strategies;
-- qualified claims and reproducible records;
+A **measurand** is the quantity intended to be measured. “The voltage at TP1” is
+not yet a complete measurand. For the divider in the opening problem, a useful
+definition is:
 
-## Evidence and practice
+> the DC average potential difference
+> $V_0=V_{\mathrm{TP1}}-V_{\mathrm{TP0}}$ with no external load connected, for
+> an allowed source setting from 4.995 V to 5.005 V, after 60 s settling, at an
+> allowed ambient temperature from 21 °C to 25 °C.
 
-The completed chapter will include a prediction, a worked model, a simulation or
-executable check where it adds value, measured or authentic data, a fault or
-model mismatch, and a requirements-based design decision. The final exercise set
-will mix retrieval, calculation, interpretation, debugging, and open design.
+The polarity is now declared: a positive value means TP1 is at higher potential
+than TP0. The amplitude type is DC average, not peak, peak-to-peak, or RMS. The
+state, source condition, settling time, and temperature are part of the quantity.
+Here “allowed” denotes an operating-condition interval, not a standard or
+expanded uncertainty. “No external load” excludes the measuring instrument:
+$V_0$ is inferred by a validated correction or by a sufficiently non-intrusive
+method rather than observed without interaction.
+Changing one can change the value rather than merely reveal “noise.” The VIM
+therefore treats measurement as a process that experimentally obtains quantity
+values that can reasonably be attributed to a measurand, not as reading a display
+[@jcgm2012vim].
+
+The instrument produces an **indication** $x$. A measurement procedure turns
+that indication and relevant influence quantities into a reported estimate $y$
+through a measurement equation
+
+$$
+y=f(x_1,x_2,\ldots,x_N).
+$$ {#eq-measurement-function}
+
+This is a **definition of the data-reduction relation**, not a physical
+conservation law. Its inputs can include raw indications, calibration
+corrections, loading corrections, temperature, lead resistance, reference values,
+or any other quantity needed to connect the indication to the measurand. The
+relation is only as adequate as its inventory of effects.
+
+For a DMM of input resistance $R_\text{in}$ connected to a linear DC node with
+unloaded voltage $V_0$ and Thévenin resistance $R_\text{th}$, F03 gives the exact
+loaded value within that resistive equivalent:
+
+$$
+x=V_0\frac{R_\text{in}}{R_\text{th}+R_\text{in}}.
+$$
+
+Solving for the intended unloaded measurand gives the correction equation
+
+$$
+V_0=x\left(1+\frac{R_\text{th}}{R_\text{in}}\right).
+$$ {#eq-loading-correction}
+
+Both sides have units of volts because the bracketed resistance ratio is
+dimensionless. If $R_\text{in}\rightarrow\infty$, the correction factor tends to
+one, as an ideal voltmeter requires. If $R_\text{in}=R_\text{th}$, the meter
+indicates half the unloaded voltage and the correction factor is two. This
+limiting case exposes why a high-resolution display does not guarantee a small
+measurement error.
+
+![The F06 divider and measurement connection. The source is observed at TP\_S relative to TP0; the defined unloaded voltage is $V_0=V_{\mathrm{TP1}}-V_{\mathrm{TP0}}$. Connecting a meter adds $R_\text{in}$ in parallel with $R_2$, so the indication belongs to the circuit-plus-instrument system.](../../../build/circuits/f06-divider-measurement.png){#fig-f06-divider-loading fig-alt="A 5 V source at TP_S drives 100 kilohm resistor R1 to TP1 and 400 kilohm resistor R2 from TP1 to reference TP0. Meter input resistance R_in connects between TP1 and TP0. Voltage V0 is positive at TP1 relative to TP0."}
+
+The correction in @eq-loading-correction is valid only while the divider and
+instrument can be represented by linear resistances at DC. Input leakage,
+auto-ranging, frequency-dependent impedance, temperature drift, and unstable
+circuit operation can break that description. A real DMM manual, for example,
+describes approximately 10 MΩ in parallel with less than 100 pF on its voltage
+ranges and warns that high source impedance creates loading error
+[@fluke87manual]. The manual documents an instrument characteristic; it does not
+prove the value of a particular meter on a particular day.
+
+### The measurement chain and traceability
+
+The result depends on a chain of physical and informational transformations:
+
+```{mermaid}
+%%| label: fig-measurement-chain
+%%| fig-cap: "A measurement chain converts a defined circuit quantity into a decision. Each arrow can contribute loading, correction, variation, or uncertainty; traceability concerns the reference chain behind the calibrated result, not merely the presence of an instrument label."
+%%| fig-alt: "A vertical flow from measurand, through probe and instrument, indication, corrections and uncertainty, reported result, and decision. A reference chain feeds the corrections and uncertainty stage."
+flowchart TB
+  M["Defined measurand"]
+  P["Probe and connection"]
+  I["Instrument and range"]
+  X["Raw indication"]
+  C["Corrections and uncertainty"]
+  R["Reported result"]
+  D["Decision rule"]
+  T["Calibration and reference chain"]
+  M --> P --> I --> X --> C --> R --> D
+  T -.-> C
+```
+
+**Calibration** establishes a relation between indications and reference values,
+with associated uncertainties; it is not the same as adjustment, and it does not
+guarantee that an instrument remains suitable indefinitely. **Metrological
+traceability** requires a documented, unbroken calibration chain to a reference,
+each link contributing to the uncertainty. A sticker without the procedure,
+result, validity conditions, and uncertainty is not the chain
+[@jcgm2012vim; @nisttraceability].
+
+Traceability answers “how does this result relate to a reference?” It does not
+answer “is this method suitable?” A traceably calibrated 10 MΩ DMM can still be
+the wrong instrument for an 80 kΩ source if an uncorrected 0.8 % loading error is
+too large for the decision.
+
+## Accuracy, precision, resolution, and uncertainty are distinct
+
+The vocabulary matters because each word points to a different failure mode.
+The definitions below follow the VIM [@jcgm2012vim].
+
+| Term | Meaning in a measurement | What it does **not** establish |
+|---|---|---|
+| **Accuracy** | qualitative closeness between a measured value and the measurand's true quantity value | a numerical “± accuracy” quantity; the VIM states accuracy is not itself a quantity |
+| **Precision** | closeness among replicate indications or measured values under stated conditions, commonly expressed by a standard deviation | closeness to the measurand; a stable bias can be very precise |
+| **Repeatability** | precision under the same procedure, operator, system, conditions, location, and short time interval | reproducibility after changing laboratories, operators, or systems |
+| **Resolution** | smallest change in the measured quantity that causes a perceptible change in indication | uncertainty, accuracy, or freedom from loading |
+| **Measurement error** | measured quantity value minus a reference quantity value | a generally knowable number; the relevant reference value is normally unknown |
+| **Correction** | compensation for an estimated systematic effect | perfect removal of that effect; the correction itself has uncertainty |
+| **Uncertainty** | non-negative parameter describing the dispersion of values attributed to the measurand | a mistake, a tolerance, or proof that all important effects were included |
+
+Suppose five repeated indications are 3.963, 3.964, 3.965, 3.964, and 3.963 V.
+They are tightly grouped: the measurement is precise under those repeatability
+conditions. They can nevertheless all be about 32 mV below the unloaded
+measurand because the same DMM loads the node on every trial. Repetition estimates
+scatter; it does not reveal a stable loading effect.
+
+**Intermediate precision** allows selected conditions such as day, operator, or
+instrument to change within one laboratory, while **reproducibility** evaluates
+precision under explicitly changed locations, operators, or measuring systems.
+**Adjustment** changes a measuring system to provide prescribed indications;
+**verification** supplies objective evidence that stated requirements are met.
+Neither is calibration, and adjustment usually invalidates the previous
+calibration relation until calibration is repeated [@jcgm2012vim].
+
+Manufacturers often use the label **accuracy specification** for a bound such as
+“±(0.05 % of reading + 2 counts).” Preserve that label when citing a datasheet,
+but classify its numerical role correctly: it is a stated limit under specified
+conditions, not automatically a standard uncertainty and not automatically a
+$k=2$ expanded uncertainty. Temperature, time since calibration, range, crest
+factor, frequency, and other conditions may alter the limit. The actual manual,
+not a remembered rule of thumb, governs a real instrument.
+
+::: {.callout-important title="Uncertainty is not permission to ignore bias"}
+When a significant effect is known, correct it when practical and carry the
+uncertainty of the correction. Do not hide a predictable 32 mV loading shift
+inside a 1 mV repeatability figure. If a correction cannot be made, report the
+uncorrected effect explicitly and use a method appropriate to the decision; the
+GUM framework assumes recognized significant systematic effects have been
+addressed [@jcgm2008gum].
+:::
+
+## Standard uncertainty from repeated and prior information
+
+The GUM separates uncertainty components by **method of evaluation**, not by
+imagined “random” and “systematic” kinds of error [@jcgm2008gum;
+@nist1994tn1297]. A Type A evaluation uses statistical analysis of observations.
+A Type B evaluation uses other information: calibration certificates,
+manufacturer limits, resolution, previous data, physical bounds, or engineering
+knowledge. Either type can describe an effect that varies or one that remains
+stable over a run.
+
+### Type A evaluation of a stable series
+
+Let $x_i$ be $n$ independent observations of a stable quantity under stated
+repeatability conditions. The arithmetic mean is the estimate
+
+$$
+\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i,
+$$ {#eq-mean}
+
+and the experimental standard deviation of the observations is
+
+$$
+s(x)=\sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2}.
+$$ {#eq-sample-standard-deviation}
+
+If the arithmetic mean is used as the estimate of a stable measurand, its Type A
+standard uncertainty is
+
+$$
+u_A(\bar{x})=\frac{s(x)}{\sqrt{n}}.
+$$ {#eq-standard-error}
+
+Every term in @eq-sample-standard-deviation has the same unit as $x$ after the
+square root; $u_A$ therefore also has that unit. The $1/\sqrt{n}$ reduction
+requires effectively independent observations from a stable process. It fails
+for drift, autocorrelation, periodic interference sampled at one phase, or a
+changing measurand. Ten thousand readings from one biased, drifting instrument
+do not create traceability.
+
+For the five illustrative voltage indications above,
+
+$$
+\bar{x}=3.9638~\text{V},\qquad
+s(x)=0.00084~\text{V},\qquad
+u_A(\bar{x})=0.00037~\text{V}.
+$$
+
+For this arithmetic example only, the observations are assigned as independent
+samples of a stable operating state. Authentic data would need timestamps and a
+time plot, plus checks for drift, periodicity, and autocorrelation before the
+$1/\sqrt{n}$ reduction was accepted.
+
+The last digits are retained here to make the subsequent budget reproducible;
+the final result will be rounded according to its uncertainty.
+
+### Type B conversion to standard uncertainty
+
+Every Type B input needs a stated information source and an assumed distribution.
+If only a symmetric bound $\pm a$ is known and values throughout that interval
+are judged equally plausible, the rectangular-distribution standard uncertainty
+is
+
+$$
+u=\frac{a}{\sqrt{3}}.
+$$ {#eq-rectangular}
+
+This follows from the variance definition. For probability density
+$p(e)=1/(2a)$ on $-a\le e\le a$ and zero elsewhere, symmetry gives mean zero and
+
+$$
+u^2=\int_{-a}^{a}e^2p(e)\,de
+=\frac{1}{2a}\left[\frac{e^3}{3}\right]_{-a}^{a}
+=\frac{a^2}{3}.
+$$
+
+If a display rounds to the nearest step $q$, its quantization error lies from
+$-q/2$ to $+q/2$. Under the same rectangular assumption,
+$u_\text{res}=q/\sqrt{12}$. Do not add that term if the calibration or instrument
+limit already includes the same quantization effect; uncertainty budgets must not
+count one effect twice.
+
+The distribution is a reasoned assumption, not a property of the ± symbol. A
+calibration certificate might already state a standard uncertainty, an expanded
+uncertainty and coverage factor, or a non-rectangular distribution. Use the
+information actually supplied.
+
+## Propagation through a measurement equation
+
+For the measurement equation $y=f(x_1,\ldots,x_N)$, linearize about the input
+estimates. The sensitivity coefficient for input $x_i$ is
+
+$$
+c_i=\frac{\partial f}{\partial x_i}.
+$$
+
+The derivative is the limiting output change per input change. Without
+differential calculus, estimate it by a centered finite change,
+
+$$
+c_i\approx
+\frac{f(\ldots,x_i+\Delta x_i,\ldots)
+-f(\ldots,x_i-\Delta x_i,\ldots)}{2\Delta x_i},
+$$
+
+choosing $\Delta x_i$ small enough to represent local behavior but large enough
+to avoid numerical roundoff. Its units are the unit of $y$ divided by the unit of
+$x_i$.
+
+The general first-order law of propagation of uncertainty is
+
+$$
+u_c^2(y)=
+\sum_{i=1}^{N}c_i^2u^2(x_i)
++2\sum_{i=1}^{N-1}\sum_{j=i+1}^{N}
+c_i c_j u(x_i,x_j),
+$$ {#eq-general-propagation}
+
+where $u(x_i,x_j)$ is the estimated covariance. This is an approximation from a
+first-order Taylor expansion, valid when the function is sufficiently linear
+over the input uncertainty ranges and the probability description is adequate
+[@jcgm2008gum]. For independent inputs all covariances are zero, giving the
+root-sum-of-squares relation
+
+$$
+u_c(y)=\sqrt{\sum_{i=1}^{N}\left[c_i u(x_i)\right]^2}.
+$$ {#eq-independent-propagation}
+
+The terms $c_i u(x_i)$ must all have the unit of $y$, so their squares can be
+added. Correlation cannot be discarded merely for convenience. The same ambient
+temperature can shift two resistor values in the same direction; one calibration
+reference can bias several channels together. Ignoring positive covariance can
+understate or overstate uncertainty: for positive covariance it increases output
+variance when the sensitivity coefficients have the same sign and decreases it
+when their signs oppose.
+
+For example, let two channels each have standard uncertainty 1.0 mV and
+correlation coefficient $\rho=0.90$. For their difference $d=x_1-x_2$, the
+sensitivity signs oppose, so
+
+$$
+u(d)=\sqrt{u_1^2+u_2^2-2\rho u_1u_2}
+=0.45~\text{mV}.
+$$
+
+Treating the same channels as independent would give 1.41 mV. Shared effects can
+cancel in a difference while remaining large in either absolute channel; a sum
+would have same-sign sensitivities and a larger uncertainty instead.
+
+The first-order approximation should be checked when inputs have large relative
+uncertainties, the equation is strongly nonlinear, a denominator can approach
+zero, or the output distribution is strongly asymmetric. Direct evaluation at
+bounds, sensitivity studies, or Monte Carlo propagation may then be more
+appropriate; M03 develops those methods. As a limiting check, if every input
+uncertainty tends to zero, @eq-general-propagation makes $u_c(y)$ tend to zero.
+
+### Expanded uncertainty and honest reporting
+
+An expanded uncertainty is defined by
+
+$$
+U=k u_c,
+$$ {#eq-expanded-uncertainty}
+
+where $k$ is the coverage factor. Reporting $y\pm U$ is incomplete unless $k$
+and the coverage basis are stated. The familiar $k=2$ interval corresponds to
+about 95 % coverage only under suitable distribution and degrees-of-freedom
+conditions; it is not a universal conversion from every limit to “95 %
+confidence” [@jcgm2008gum; @nist1994tn1297]. Report enough information to
+reconstruct the result: the measurand, estimate, $u_c$ or $U$, units, $k$, method,
+conditions, corrections, and significant inputs.
+
+## Worked uncertainty budget: correcting divider loading
+
+Return to the opening divider. This entire case is **synthetic and
+illustrative**. It teaches calculation, reconciliation, and fault discrimination;
+it does not qualify any physical divider or instrument.
+
+The nominal circuit uses $R_1=100$ kΩ from the 5 V source at TP\_S to TP1 and
+$R_2=400$ kΩ from TP1 to TP0. Define all voltages as DC averages positive at the
+named test point relative to TP0. The synthetic characterized inputs are:
+
+- source indication $V_S=5.001$ V at TP\_S;
+- de-energized resistance indications $R_1=100.2$ kΩ and $R_2=399.1$ kΩ;
+- $R_\text{th}=R_1\parallel R_2=80.09$ kΩ;
+- DMM input resistance $R_\text{in}=10.00$ MΩ; and
+- repeated TP1 indications 3.963, 3.964, 3.965, 3.964, and 3.963 V.
+
+The resistance values are assumed to be obtained only after the source is
+disconnected, storage is proven discharged, and one terminal is isolated where
+parallel circuit paths would otherwise change the measurand. Their uncertainty
+bounds are stated below.
+
+The physical divider description predicts the unloaded value
+
+$$
+V_{0,\text{pred}}
+=V_S\frac{R_2}{R_1+R_2}
+=(5.001~\text{V})\frac{399.1~\text{k}\Omega}
+{100.2~\text{k}\Omega+399.1~\text{k}\Omega}
+=3.9974~\text{V}.
+$$ {#eq-divider-prediction}
+
+The DMM joins that circuit. Its predicted loaded indication is
+
+$$
+x_\text{pred}=V_{0,\text{pred}}
+\frac{10.00~\text{M}\Omega}
+{10.00~\text{M}\Omega+80.09~\text{k}\Omega}
+=3.9656~\text{V}.
+$$ {#eq-dmm-loaded-prediction}
+
+The observed mean, 3.9638 V, is close to that loaded prediction. For an
+illustrative DMM limit of ±(0.05 % of reading + 2 counts) with a 1 mV least
+significant count, the half-width at 3.9638 V is
+
+$$
+a_\text{DMM}=0.0005(3.9638~\text{V})+2(0.001~\text{V})
+=0.003982~\text{V}.
+$$
+
+This is an assumed manufacturer-style bound, not a measured error and not an
+expanded uncertainty. With no calibration detail, this teaching example assigns
+a rectangular distribution, giving
+$u_\text{DMM}=0.003982/\sqrt{3}=0.00230$ V. An additional unresolved change
+between the bracketing source check and the TP1 series is expressed as an
+equivalent TP1 indication bound of ±0.0008 V and treated as rectangular. It is
+explicitly assumed not to overlap the within-series scatter or the illustrative
+DMM limit. If it were instead a source-voltage bound, its contribution would need
+the loaded divider sensitivity $\partial x/\partial V_S$; if it occurred within
+the five readings, the stability assumption behind @eq-standard-error would need
+reassessment. The budget for the mean indication is:
+
+| Input effect | Evaluation | Stated information | Standard uncertainty at $x$ |
+|---|---|---:|---:|
+| repeatability of the mean | Type A | $s/\sqrt{5}$ | 0.00037 V |
+| DMM indication limit | Type B, rectangular assumption | ±0.003982 V | 0.00230 V |
+| unresolved change, equivalent at TP1 | Type B, rectangular assumption | ±0.0008 V | 0.00046 V |
+| **combined indication** | independent RSS | — | **0.00237 V** |
+
+: Illustrative uncertainty budget for the synthetic DMM indication. The assumed DMM bound is not a calibration result, and the listed effects are pedagogical inputs rather than evidence about real hardware. {#tbl-indication-budget}
+
+The intended measurand is the unloaded voltage, so use
+@eq-loading-correction. For
+
+$$
+V_0=x\left(1+\frac{R_\text{th}}{R_\text{in}}\right),
+$$
+
+the sensitivity coefficients are
+
+$$
+c_x=1+\frac{R_\text{th}}{R_\text{in}},\qquad
+c_{R_\text{th}}=\frac{x}{R_\text{in}},\qquad
+c_{R_\text{in}}=-\frac{xR_\text{th}}{R_\text{in}^2}.
+$$
+
+Assume the characterized bounds are
+$R_\text{th}=(80.09\pm0.50)$ kΩ and
+$R_\text{in}=(10.00\pm0.10)$ MΩ, both rectangular and independent. Substitution
+gives the corrected result
+
+$$
+V_0=(3.9638~\text{V})
+\left(1+\frac{80.09~\text{k}\Omega}{10.00~\text{M}\Omega}\right)
+=3.9955~\text{V}.
+$$
+
+| Input | Sensitivity contribution $|c_i|u(x_i)$ |
+|---|---:|
+| mean indication and its budget | 0.00239 V |
+| divider Thévenin resistance | 0.00011 V |
+| DMM input resistance | 0.00018 V |
+| **combined corrected result** | **0.00240 V** |
+
+: Propagation through the synthetic loading correction. Values use independent inputs and the first-order relation in @eq-independent-propagation. {#tbl-corrected-budget}
+
+Using $k=2$ as the declared teaching coverage factor,
+$U=2u_c=0.00481$ V. Round the uncertainty to one significant digit here and the
+estimate to the same decimal place:
+
+$$
+\boxed{V_0=(3.996\pm0.005)~\text{V},\quad k=2.}
+$$ {#eq-reported-divider}
+
+The coverage is approximately 95 % only to the extent that the stated
+distributional and effective-degrees-of-freedom assumptions support that
+interpretation. A real report would replace every illustrative input with the
+actual instrument identity, range, calibration state, environmental record, raw
+observations, and defensible uncertainty source.
+
+The standard-library program below reproduces the central arithmetic. It is
+**executable calculation**, not physical simulation or measurement.
+
+```python
+# f06_uncertainty.py -- synthetic divider uncertainty calculation.
+import math
+import statistics
+
+readings_v = [3.963, 3.964, 3.965, 3.964, 3.963]
+r_th_ohm = 80.09e3
+r_in_ohm = 10.00e6
+
+mean_v = statistics.fmean(readings_v)
+s_v = statistics.stdev(readings_v)
+u_repeat_v = s_v / math.sqrt(len(readings_v))
+
+limit_v = 0.0005 * mean_v + 2 * 0.001
+u_dmm_v = limit_v / math.sqrt(3)
+u_change_v = 0.0008 / math.sqrt(3)
+u_x_v = math.hypot(u_repeat_v, u_dmm_v, u_change_v)
+
+u_r_th_ohm = 0.50e3 / math.sqrt(3)
+u_r_in_ohm = 0.10e6 / math.sqrt(3)
+correction = 1 + r_th_ohm / r_in_ohm
+v_unloaded = mean_v * correction
+
+terms_v = (
+    correction * u_x_v,
+    mean_v / r_in_ohm * u_r_th_ohm,
+    mean_v * r_th_ohm / r_in_ohm**2 * u_r_in_ohm,
+)
+u_unloaded_v = math.sqrt(sum(term**2 for term in terms_v))
+
+print(f"mean = {mean_v:.4f} V")
+print(f"s = {s_v:.5f} V; u_A(mean) = {u_repeat_v:.5f} V")
+print(f"u_c(indication) = {u_x_v:.5f} V")
+print(f"corrected V0 = {v_unloaded:.4f} V")
+print(f"u_c(V0) = {u_unloaded_v:.5f} V")
+print(f"U(k=2) = {2 * u_unloaded_v:.5f} V")
+```
+
+```text
+# Expected output:
+# mean = 3.9638 V
+# s = 0.00084 V; u_A(mean) = 0.00037 V
+# u_c(indication) = 0.00237 V
+# corrected V0 = 3.9955 V
+# u_c(V0) = 0.00240 V
+# U(k=2) = 0.00481 V
+```
+
+## Instruments alter amplitude, timing, and reference
+
+Input resistance is only the DC beginning. A measurement connection can alter
+the circuit by adding resistance, capacitance, inductance, a series burden, or a
+new return path. It can also fail to reproduce the input because its bandwidth,
+sampling, or common-mode range is inadequate.
+
+### Voltage and resistance measurements
+
+A voltmeter connects in parallel and should have input impedance high compared
+with the source impedance over the signal's frequency range. At DC, the exact
+resistive loading fraction is
+
+$$
+\varepsilon_L
+=\frac{x-V_0}{V_0}
+=-\frac{R_\text{th}}{R_\text{th}+R_\text{in}}.
+$$ {#eq-loading-fraction}
+
+The sign is negative for positive finite resistances. In the opening divider,
+the 10 MΩ DMM gives about −0.79 % loading, while a 1 MΩ oscilloscope input gives
+
+$$
+V_\text{scope}=3.9974~\text{V}
+\frac{1.000~\text{M}\Omega}
+{1.000~\text{M}\Omega+80.09~\text{k}\Omega}
+=3.7010~\text{V}.
+$$
+
+The two instruments disagree because they create two different operating points.
+The discrepancy is predicted by the source–load description; it is not evidence
+that either display is noisy.
+
+Resistance and continuity functions inject a test current or voltage. They are
+for de-energized circuits, after discharge has been proved. An in-circuit
+resistance indication includes every parallel path between the probes; “0 Ω” can
+mean the intended wire, a solder bridge, a closed semiconductor junction under
+the test stimulus, or a path through another component. Continuity is a topology
+screen, not a precise low-resistance measurement. For small resistances, lead and
+contact resistance require a relative/null method or four-terminal connection
+[@fluke87manual; @horowitz2015art].
+
+### Current measurements and burden voltage
+
+An ammeter connects in series and introduces an internal shunt and protection
+network. Declare positive current as entering the meter's red terminal and leaving
+COM. Define $V_\text{th}$ positive in the direction that drives this reference
+current through the series branch. If the original branch is driven by that
+Thévenin source through
+$R_\text{th}$ and load $R_L$, adding ammeter resistance $R_A$ changes the current
+from
+
+$$
+I_0=\frac{V_\text{th}}{R_\text{th}+R_L}
+\quad\text{to}\quad
+I_\text{read}=\frac{V_\text{th}}
+{R_\text{th}+R_L+R_A}.
+$$
+
+![Ammeter insertion and its first-order burden representation. The meter is not placed across the source: the branch is opened and the instrument is inserted in series. The effective $R_A$ represents the selected range's burden within this linear DC description.](../../../build/circuits/f06-ammeter-insertion.png){#fig-f06-ammeter-insertion fig-alt="A Thevenin source V_th and resistance R_th drive a series loop through an ammeter, its effective burden resistance R_A, and load R_L. Indicated current I_read enters the RED terminal and leaves COM. Burden voltage V_B is positive from RED to COM."}
+
+Under the passive sign convention, define the burden voltage
+$V_B=V_\text{red}-V_\text{COM}=I_\text{read}R_A$. Its
+units are amperes times ohms, hence volts. If $R_A\to0$, intrusion vanishes. If
+the branch resistance is comparable to $R_A$, the indicated current can be far
+below the pre-insertion current. Range changes can select different shunts, so
+the chosen terminal and range belong in the record. A manufacturer manual also
+warns that current measurement creates burden voltage and can affect precision
+circuits [@fluke87manual].
+
+Whenever possible, infer current from a characterized series resistor by measuring
+its voltage, or use a current probe appropriate to the bandwidth and magnitude.
+That alternative moves rather than eliminates intrusion: the resistor changes the
+circuit and its value and temperature require uncertainty terms.
+
+### Bandwidth and rise time
+
+Suppose an instrument's small-signal amplitude response can be approximated by a
+single-pole low-pass relation with DC gain one and cutoff $f_c$
+[@oppenheim1996signals]:
+
+$$
+|H(f)|=\frac{1}{\sqrt{1+(f/f_c)^2}}.
+$$ {#eq-one-pole-amplitude}
+
+This is an **approximation** for a linear, time-invariant, first-order response;
+real probes and oscilloscopes can have multiple poles, peaking, and range-dependent
+limits. At $f=0$, $|H|=1$. At $f=f_c$, the indicated sinusoidal amplitude is
+$1/\sqrt{2}=0.707$ of the input, conventionally −3.01 dB. A 100 MHz bandwidth is
+therefore not a promise of exact amplitude at 100 MHz.
+
+For the corresponding step response
+$v(t)=V_f(1-e^{-2\pi f_c t})$, define rise time from 10 % to 90 % of the final
+value. Solving for those two times gives
+
+$$
+t_r=t_{90}-t_{10}
+=\frac{\ln 9}{2\pi f_c}
+\approx\frac{0.35}{f_c}.
+$$ {#eq-rise-time-bandwidth}
+
+Hertz is s$^{-1}$, so $1/f_c$ has units of seconds. The relation is exact only
+for the stated one-pole response and the 10–90 % definition. Fast edges also make probe
+ground-lead inductance, input capacitance, compensation, and test-point geometry
+part of the circuit.
+
+### Sampling, triggering, and aliasing
+
+Bandwidth limits the analog path; sample rate limits the recorded time series.
+Sampling a sinusoid above half the sample rate can make a different lower
+frequency produce the same sample sequence. That is aliasing, not a real low
+frequency in the circuit. For a sinusoid of frequency $f$ sampled at $f_s$, an
+alias can appear at
+
+$$
+f_\text{alias}=|f-mf_s|,
+$$
+
+where integer $m$ is chosen so the result lies from 0 to $f_s/2$. Anti-alias
+filtering and a sample rate chosen for the signal bandwidth are therefore part of
+the measurement procedure [@oppenheim1996signals]. A stable but
+mis-triggered display can likewise hide intermittent behavior, and an “average”
+acquisition can suppress rare faults.
+
+Record sample rate, record length, analog bandwidth limit, probe attenuation and
+compensation state, coupling, vertical scale, time base, trigger source/level/
+slope, and whether displayed amplitude is instantaneous, peak, peak-to-peak, RMS,
+average, or spectral density. A screenshot without those settings is weak
+evidence.
+
+### Reference connections and common-mode limits
+
+Every voltage is between two points. A bench oscilloscope's probe ground may be
+conductively connected to protective earth. Attaching it to a non-earth node can
+short that node to earth, change the return-current path, damage equipment, and
+create a hazard. Differential probes and isolated instruments have their own
+common-mode voltage, differential voltage, bandwidth, and category limits; the
+word “differential” does not remove them. Verify the instrument manual and the
+circuit reference before connection [@tektronix2024tds3000csafety; @iec61010].
+
+## A measurement plan preserves evidence
+
+Improvised probing makes configuration changes invisible. A measurement plan is
+short enough to use at the bench and complete enough that another competent
+person can reconstruct the result. Before energizing, record:
+
+1. **Question and decision.** What will the result decide, and what consequence
+   follows from a wrong decision?
+2. **Measurand.** Quantity, test points, polarity or current direction, amplitude
+   type, operating state, settling interval, temperature, bandwidth, and load.
+3. **Prediction.** Nominal value, credible bounds, governing relation, and the
+   observation that would contradict it.
+4. **Safety boundary.** Source voltage and current limits, stored energy,
+   grounding, instrument ratings, local authorization, and stop conditions.
+5. **Method and intrusion.** Instrument, serial or asset identity, function,
+   range, probe, input impedance or burden, connection order, and expected
+   loading.
+6. **Uncertainty basis.** Calibration status, manufacturer limits, resolution,
+   repeatability plan, influence quantities, corrections, correlations, and
+   target uncertainty.
+7. **Raw record.** Configuration and revision, timestamps, unrounded indications,
+   settings, environmental observations, anomalies, and operator.
+8. **Decision rule.** Specification limits, guard band, equality treatment, and
+   the evidence rung required.
+
+For the divider, a completed compact plan looks like this:
+
+| Plan field | Declared entry for the synthetic teaching case |
+|---|---|
+| question and decision | decide whether unloaded TP1 satisfies a strict single-point 3.900–4.100 V requirement |
+| measurand | DC average $V_0=V_{\mathrm{TP1}}-V_{\mathrm{TP0}}$, no external load, $V_S=5.001$ V, 60 s settling, synthetic ambient 23 °C |
+| prediction | nominal 4.00 V; calculate with synthetic $V_S,R_1,R_2$ indications; a change with $R_\text{in}$ supports loading |
+| safety | current-limited 5 V source; de-energize and prove discharge before resistance tests; stop on current limit, heating, smell, or unstable readings |
+| method and intrusion | DMM at TP1–TP0, 10.00 MΩ characterized input; correct loading with @eq-loading-correction |
+| uncertainty | five timestamped readings; stated indication, change, resistance, and input-resistance bounds; target $U\le0.010$ V at $k=2$ |
+| raw record | circuit revision, TP names, source settings, synthetic readings, instrument/range, timestamps, and ambient condition |
+| decision rule | use retained precision; pass only if $y-U>3.900$ V and $y+U<4.100$ V |
+
+: Completed measurement-plan exemplar. Every entry is illustrative; a physical plan must identify actual instruments, calibration state, authorization, and observations. {#tbl-divider-plan}
+
+Preserve raw indications separately from corrected or averaged values. Never
+overwrite an inconvenient observation. A result without the “as-tested” circuit
+revision, firmware, supply settings, and probe placement cannot reliably be
+reproduced; [T03](../appendices/t03-reproducible-engineering.qmd) develops the
+full record and release discipline.
+
+Instrument qualification should bracket the test when practical: inspect leads
+and fuses, verify the function and terminal, observe a suitable known reference,
+perform the measurement, then verify the reference again. This can detect a
+failed lead or accidental range/terminal change. It does not replace calibration
+and it does not authorize hazardous live–dead–live work beyond this chapter's
+low-energy boundary [@nisttraceability].
+
+## Hypothesis-driven fault isolation
+
+Debugging begins when a prediction and an observation fail a pre-declared
+compatibility or decision rule that uses the relevant uncertainties and coverage
+basis. The disagreement says that at least one declared
+description is incomplete or wrong: physical assembly, schematic, component
+value, source state, firmware, stimulus, instrument connection, data reduction,
+or requirement. Calling the board “bad” localizes nothing.
+
+The disciplined loop is:
+
+```{mermaid}
+%%| label: fig-debug-loop
+%%| fig-cap: "Hypothesis-driven debugging preserves the original discrepancy, lists competing explanations, and chooses a safe test whose predicted outcomes differ. A surviving explanation is challenged again; a repair is accepted only after the original requirement and relevant neighboring behavior are retested."
+%%| fig-alt: "A vertical loop from preserving the symptom through prediction, competing hypotheses, a discriminating test, evidence, cause correction, and retest. Failed retest returns to the hypotheses; accepted retest ends in a qualified claim."
+flowchart TB
+  O["Preserve symptom and configuration"]
+  P["Predict healthy behavior"]
+  H["List competing hypotheses"]
+  T["Choose safe discriminating test"]
+  E["Collect raw evidence"]
+  R["Eliminate or refine"]
+  F["Change one identified cause"]
+  A["Retest requirement and neighbors"]
+  Q["Accepted qualified claim"]
+  O --> P --> H --> T --> E --> R
+  R -->|one cause supported| F --> A
+  R -->|several survive| T
+  A -->|not accepted| H
+  A -->|accepted| Q
+```
+
+### Hypotheses must predict different observations
+
+“Maybe it is the resistor” is useful only after it becomes a prediction. For the
+divider:
+
+| Hypothesis | Prediction at TP1 | Discriminating evidence |
+|---|---|---|
+| source voltage is low | every high-impedance reading scales low; TP\_S is low | measure $V_{\mathrm{TP\_S}}-V_{\mathrm{TP0}}$ without changing source load materially |
+| $R_2$ is lower than intended | TP1 stays low with either sufficiently high-input instrument | de-energize, isolate as needed, and measure $R_1$ and $R_2$ |
+| instrument loading dominates | reading changes predictably with $R_\text{in}$ | repeat with a characterized higher input resistance or buffer |
+| oscillation or ripple fools the DC reading | time-domain waveform exceeds the allowed ripple or DMM bandwidth assumptions | use a correctly referenced, compensated probe with adequate bandwidth |
+| intermittent connection | indications change with controlled mechanical or thermal stimulus | inspect, continuity-test de-energized, and reproduce without pressing with the probe |
+
+Choose the next test by **discriminating power**, not convenience. A good test
+makes the leading hypotheses predict observably different outcomes, has uncertainty
+small enough to tell those outcomes apart, and does not destroy the symptom or
+create a new hazard. Start with non-invasive observations and divide the system at
+interfaces: input power, references, rails, reset, clock, signal path, and load.
+
+### Continuity, voltage, current, and waveform strategies
+
+Each instrument function answers a different question:
+
+- **Visual inspection and continuity, de-energized:** “Is the intended topology
+  physically plausible?” Check wrong orientation, missing parts, solder bridges,
+  cracked joints, connector pinout, and net-to-net continuity. An audible beep
+  does not establish low resistance or correct behavior under load.
+- **Voltage, energized within the approved boundary:** “Does each node have the
+  predicted potential difference in this operating state?” Measure supply and
+  reference nodes first, then move from a known-good boundary toward the fault.
+  State polarity and input loading.
+- **Current, preferably inferred:** “Does a branch exchange the predicted charge
+  per time?” Use source current limiting and a characterized shunt or current
+  probe where possible. Breaking a branch to insert an ammeter changes the
+  circuit and creates a misconnection opportunity.
+- **Waveform:** “Is the amplitude changing in time in the predicted way?” State
+  probe reference, bandwidth, sample rate, trigger, and amplitude definition.
+  A DC mean can pass while ripple, ringing, dropout, or intermittent reset fails.
+- **Substitution or injection:** “Does the downstream block work when given a
+  known-good input?” Apply only within ratings and isolation boundaries. A
+  substituted module can mask loading or grounding interactions, so record what
+  the substitution removed.
+
+Do not begin with the most detailed signal. If an upstream rail or reference is
+wrong, decoding a downstream waveform wastes time and may invite false
+explanations. Conversely, do not replace a component merely because it is warm or
+because probing it changes the symptom; those observations generate hypotheses,
+not verdicts.
+
+## Worked investigation: discrepancy caused by the instruments
+
+The observations in @tbl-divider-debug are **synthetic and illustrative**. Small
+offsets were chosen to exercise the method. They are not physical measurements
+and do not qualify any claim about a DMM, oscilloscope, resistor, or divider.
+
+| Step and configuration | Synthetic observation compared with prediction | Inference |
+|---|---|---|
+| 1. DMM at TP\_S–TP0, 10 MΩ input | 5.001 V DC; source predicted near 5.000 V | low-source hypothesis weakened |
+| 2. DMM at TP1–TP0 | series 3.963, 3.964, 3.965, 3.964, 3.963 V; loaded prediction 3.9656 V | loading hypothesis survives |
+| 3. 1 MΩ oscilloscope at TP1–TP0, DC coupled | 3.701 V mean; 1 MΩ loading prediction 3.7010 V | instrument-dependent shift strongly supports loading |
+| 4. source off, discharge proved, resistors isolated as required | $R_1=100.2$ kΩ and $R_2=399.1$ kΩ; predicted near 100 kΩ and 400 kΩ | gross resistor fault weakened |
+| 5. DMM result corrected with characterized $R_\text{in}$ and $R_\text{th}$ | $(3.996\pm0.005)$ V, $k=2$; calculation from synthetic $V_S,R_1,R_2$ gives 3.9974 V | central values differ by 1.9 mV; joint residual evaluated below |
+
+: Synthetic fault-isolation record for the divider. All voltages are DC averages, positive at the first named test point relative to TP0. The table teaches evidence structure only. {#tbl-divider-debug}
+
+This sequence does not prove that every conceivable fault is absent. It shows
+that the two surprising indications are quantitatively explained by instrument
+loading. The lower oscilloscope result is
+especially discriminating because changing only $R_\text{in}$ produces the
+predicted direction and magnitude.
+
+### Paired case: a physical connection fault
+
+Instrument intrusion is not always the answer. In a second **synthetic** run,
+suppose a 20.0 kΩ connection resistance $R_C$ appears in series between TP\_S
+and $R_1$. The evidence sequence is:
+
+1. A loading-corrected DMM estimate gives $V_0=(3.843\pm0.006)$ V, $k=2$, below
+   the strict 3.900 V lower limit. A characterized 100 MΩ instrument indicates
+   3.840 V, close to the 3.8399 V loading prediction with $R_C$ present; the
+   discrepancy persists when loading becomes small.
+2. TP\_S remains 5.001 V. Define the connector-drop polarity as upstream minus
+   downstream. Its energized DC drop is +0.193 V, close to
+   $(9.63~\mu\text{A})(20.0~\text{k}\Omega)=0.193$ V. The source hypothesis is
+   weakened and the connection hypothesis is localized.
+3. After de-energizing and proving discharge, an isolated connection-resistance
+   test indicates 20.0 kΩ. Reworking that identified connection—not replacing
+   the divider resistors—reduces it below the illustrative 0.2 Ω screen.
+4. The original test then gives $V_0=(3.996\pm0.005)$ V, $k=2$. A neighboring
+   check finds divider source current 10.02 µA, consistent with
+   $5.001~\text{V}/(100.2+399.1)~\text{k}\Omega=10.02~\mu\text{A}$.
+
+The first case isolates a measurement mistake; the paired case isolates a
+physical fault, changes one supported cause, and retests both the requirement and
+a neighboring quantity. Both remain teaching constructions rather than physical
+evidence.
+
+### Residuals locate disagreement, not causes
+
+Define the signed comparison residual with the measurement estimate first:
+
+$$
+r=y_\text{meas}-y_\text{pred}.
+$$ {#eq-comparison-residual}
+
+For the corrected synthetic result and the resistance-based prediction,
+$r=3.9955-3.9974=-0.0019$ V. The negative sign means the measurement estimate is
+lower under the declared reference; it does not mean the arithmetic is invalid.
+
+If the two estimates are independent and have standard uncertainties $u_m$ and
+$u_p$, an approximate compatibility screen is
+
+$$
+|r|\le k\sqrt{u_m^2+u_p^2}.
+$$ {#eq-compatibility-screen}
+
+This is a **screening rule**, not a universal hypothesis test. It assumes the
+measurands and conditions match, recognized corrections have been applied, the
+uncertainties are comparable, and the chosen $k$ has a justified coverage
+interpretation. Correlation requires covariance terms.
+
+That independent-output shortcut is **not** valid for the divider comparison:
+the correction and prediction share $R_1$ and $R_2$. Instead propagate the
+residual once from its input quantities,
+
+$$
+r(x,V_S,R_1,R_2,R_\text{in})=
+x\left[1+\frac{R_1R_2}{(R_1+R_2)R_\text{in}}\right]
+-V_S\frac{R_2}{R_1+R_2}.
+$$ {#eq-joint-residual}
+
+For a reproducible teaching screen, assign independent standard uncertainties
+$u(x)=0.00237$ V,
+$u(V_S)=0.005/\sqrt{3}$ V,
+$u(R_1)=0.50/\sqrt{3}$ kΩ,
+$u(R_2)=1.0/\sqrt{3}$ kΩ, and
+$u(R_\text{in})=0.10/\sqrt{3}$ MΩ. First-order propagation of the *single*
+function in @eq-joint-residual gives sensitivity contributions 2.39, −2.31,
+2.38, −1.15, and −0.18 mV, respectively. Thus
+
+$$
+u(r)=4.25~\text{mV},\qquad 2u(r)=8.51~\text{mV}.
+$$
+
+Because $|r|=1.85$ mV is less than 8.51 mV, the two descriptions are compatible
+under this explicit $k=2$ screen. This calculation handles their shared resistor
+inputs without pretending the two output estimates are independent. It still
+assumes the five input estimates are independent. If the same DMM or source state
+creates correlation between $x$ and $V_S$, the relevant covariance must be added
+before making a physical claim.
+
+Terminology prevents false certainty. If only some possible effects have been
+inventoried, the unexplained difference is an **unallocated discrepancy**; it is
+not yet a resistor error, instrument fault, or “loss.” A **closure residual** is
+appropriate only after all declared terms have been assigned independently and
+the comparison is expected to close. Defining the final unknown as the remainder
+and then reporting zero closure is an identity, not evidence.
+
+## Guarded decisions and qualified claims
+
+A specification and a measurement result serve different roles. A tolerance
+states what an item is allowed to do. Uncertainty states how well the test knows
+what it did. Conformity assessment requires a declared rule for combining them;
+there is no automatic pass merely because the display lies between two limits
+[@jcgm2012conformity].
+
+Suppose the divider requirement is:
+
+> At the single recorded operating point $V_S=5.001$ V DC and 23 °C, with no
+> external load and 60 s settling, the strict requirement is
+> $3.900~\text{V}<V_0<4.100~\text{V}$.
+
+Choose the simple guard-band rule that the entire reported expanded interval must
+lie inside the specification:
+
+$$
+y-U>T_L
+\quad\text{and}\quad
+y+U<T_H,
+$$ {#eq-guarded-rule}
+
+where $T_L$ and $T_H$ are the lower and upper specification limits. This rule
+uses $g=U$ as a symmetric guard band. It is a declared risk policy, not the only
+possible conformity rule. Different consumer/producer risks, asymmetric losses,
+or regulatory requirements can require a different rule
+[@jcgm2012conformity].
+
+Make the decision with retained precision, before formatting the result:
+$3.995546\pm0.004807$ V gives 3.990739 V to 4.000353 V. That interval lies
+strictly inside 3.900 V to 4.100 V, so the **synthetic case passes this declared
+single-point rule**. The rounded report remains @eq-reported-divider. Equality at
+either strict boundary would not pass. A value between the
+specification limits whose uncertainty interval crosses a boundary is
+indeterminate or fails according to the pre-declared policy; it must never be
+rounded into a pass.
+
+The supported claim is deliberately narrow:
+
+> Under the illustrative inputs, linear DC loading correction, independence and
+> distribution assumptions, and $k=2$ reporting convention stated in this
+> chapter, the synthetic estimate of the unloaded TP1 voltage at $V_S=5.001$ V,
+> 23 °C, and 60 s settling satisfies the stated single-point 3.900–4.100 V
+> decision rule.
+
+It does **not** claim that physical hardware passed, that the divider meets its
+limits over all temperatures or time, that the instrument is calibrated, or that
+other waveform requirements are satisfied. A physical claim needs the actual
+configuration and raw evidence from Lab L01/L02. Production or field claims need
+repeated units, time, environments, and the stronger metrology and reliability
+methods of R05.
+
+## Trustworthy evidence as a reusable practice
+
+A trustworthy number is not a display with many digits. It is an estimate of a
+defined measurand, obtained by a recorded procedure, corrected for recognized
+effects, accompanied by an uncertainty that can be reconstructed, and interpreted
+through a declared decision rule. Debugging uses the same structure: preserve the
+symptom, make competing explanations predict different observations, choose the
+safest discriminating test, and let disagreement refine the description.
+
+The circuit is one object expressed as physical assembly, schematic, equations,
+instrument configuration, raw data, uncertainty budget, and requirement. In the
+worked divider, those languages initially disagreed. Adding the instruments to
+the source–load description reconciled them without inventing a component fault.
+That is the capability F06 hands to every later chapter: disagreement is useful
+only when the evidence is strong enough to say what it rules out.
+
+## Exercises
+
+Use the definitions and declared references in the chapter. Unless a problem says
+otherwise, all numerical scenarios are illustrative and do not describe physical
+measurements. Full solutions and assessment variants remain outside the public
+book; selected self-check results are included.
+
+**Quick check (multiple choice)**
+
+Choose one best answer. The key follows.
+
+1. A DMM displays 4.0000 V. This establishes that
+   a. the measurand is known to ±0.0001 V;
+   b. the display uses 0.1 mV increments on that range, but metrological
+      resolution and uncertainty still require evaluation;
+   c. loading is zero;
+   d. the meter is traceable.
+2. Five closely grouped readings that are all shifted by instrument loading are
+   a. precise but not necessarily accurate;
+   b. accurate but not precise;
+   c. uncertain only because of resolution;
+   d. proof that the circuit is faulty.
+3. A Type B uncertainty evaluation is
+   a. always less reliable than Type A;
+   b. the standard deviation of repeated readings only;
+   c. an evaluation using information other than statistical analysis of the
+      current observation series;
+   d. a systematic error that should be ignored.
+4. A 1 MΩ oscilloscope input is connected to a positive 4 V DC node with 80 kΩ
+   Thévenin resistance. Relative to the unloaded node, the indication should be
+   a. higher;
+   b. lower;
+   c. unchanged;
+   d. negative.
+5. A manufacturer limit of ±(0.1 % of reading + 2 counts) is automatically
+   a. a $k=2$ expanded uncertainty;
+   b. a standard uncertainty;
+   c. a 95 % confidence interval;
+   d. none of the above; its role and distribution must be justified.
+6. For a strict upper limit $T_H$, a guarded rule requiring the full interval
+   inside specification passes when
+   a. $y<T_H$;
+   b. $y+U<T_H$;
+   c. $y-U<T_H$;
+   d. the display rounds to $T_H$.
+
+*[Key: 1-b, 2-a, 3-c, 4-b, 5-d, 6-b.]*
+
+**Retrieval and explanation**
+
+1. Define measurand, indication, measurement error, correction, standard
+   uncertainty, and expanded uncertainty. Explain why an indication is not yet a
+   measurement result [@jcgm2012vim].
+2. Distinguish repeatability, intermediate precision, and reproducibility by
+   naming which conditions are held fixed or changed.
+3. Explain why calibration, adjustment, verification, and traceability are not
+   synonyms. What information must accompany a traceability claim?
+4. List the eight elements of the measurement plan in this chapter. Which three
+   would most quickly expose use of the wrong oscilloscope reference connection?
+
+**Estimation and calculation**
+
+5. A 3.30 V node has $R_\text{th}=220$ kΩ. Estimate the indication with (a) a
+   10 MΩ DMM and (b) a 1 MΩ oscilloscope. Which meets a 1 % maximum loading
+   requirement? *[Self-check: approximately 3.23 V and 2.70 V; neither is below
+   1 % loading.]*
+6. A current meter with 10 Ω effective burden resistance is inserted into a
+   branch originally containing a 5.00 V Thévenin source, 90 Ω source resistance,
+   and 900 Ω load. Calculate the pre-insertion current, indicated current, burden
+   voltage, and fractional intrusion. *[Self-check: 5.0505 mA before insertion,
+   5.0000 mA indicated, 50 mV burden, and −1.00 % intrusion.]*
+7. An oscilloscope is approximated by one pole at 20 MHz. Calculate its indicated
+   amplitude for a 1.00 V peak sinusoid at 2 MHz, 20 MHz, and 100 MHz using
+   Equation @eq-one-pole-amplitude. Estimate its 10–90 % rise time. State why the
+   answers do not fully characterize a real oscilloscope.
+
+**Derivation and uncertainty**
+
+8. Starting with a uniform density on $[-q/2,q/2]$, derive
+   $u_\text{res}=q/\sqrt{12}$. State the assumption that can make the derivation
+   inappropriate.
+9. Derive @eq-loading-correction and its three sensitivity coefficients. Reverse
+   the voltage reference to $V_{\mathrm{TP0}}-V_{\mathrm{TP1}}$ and show what
+   changes in the reported estimate and what does not change in its standard
+   uncertainty.
+10. A temperature is calculated from $T=(V-b)/S$, with independent inputs
+    $V=(1.2500\pm0.0010)$ V, $b=(0.5000\pm0.0006)$ V, and
+    $S=(10.00\pm0.05)$ mV/K; all ± values are standard uncertainties. Derive the
+    sensitivity coefficients, calculate $T$ and $u_c(T)$, and identify the
+    dominant input. What happens as $S\to0$? *[Self-check: $T=75.0$ K and
+    $u_c(T)\approx0.39$ K; the sensitivity uncertainty dominates.]*
+11. Two channels use the same voltage reference. Explain qualitatively how
+    positive covariance changes the uncertainty of their sum and their
+    difference. Give a circuit-measurement example in which ignoring that
+    correlation would be misleading.
+
+**Data interpretation**
+
+12. Ten readings drift monotonically from 2.500 V to 2.518 V. A colleague uses
+    $s/\sqrt{10}$ and claims that more samples will settle the result. Diagnose
+    the violated assumptions and propose a time-aware measurement plan.
+13. An instrument certificate reports a correction of +1.2 mV and expanded
+    uncertainty 0.8 mV with $k=2$. A later datasheet limit is ±3 mV. Explain how
+    each item enters—or does not automatically enter—a measurement equation and
+    uncertainty budget. Identify any information still missing.
+14. A calculated rail is $(3.300\pm0.006)$ V, $k=2$, and an independent
+    measurement is $(3.287\pm0.010)$ V, $k=2$. Under the approximate assumptions
+    of @eq-compatibility-screen, test compatibility at $k=2$. If they are not
+    compatible, list four categories of explanation before naming a failed
+    component. *[Self-check: 13 mV residual versus an 11.7 mV threshold; not
+    compatible under the stated screen.]*
+
+**Debugging**
+
+15. A 3.3 V sensor output reads correctly on a DMM but collapses when an
+    oscilloscope is connected. Construct at least four hypotheses, a predicted
+    observation for each, and an ordered test sequence. Include probe input
+    impedance, ground reference, oscillation, and an intermittent connector.
+16. A board draws twice its predicted supply current. Design a safe isolation
+    strategy beginning with the current-limited source. Explain why inserting an
+    ammeter in the suspected branch may change the symptom and how a shunt-voltage
+    measurement could improve or worsen the test.
+17. A logic signal appears to be a stable 1 MHz waveform at a 2.4 MS/s sample
+    rate. Give two actual frequencies that could alias near 1 MHz, then specify
+    analog-bandwidth, sample-rate, record-length, and trigger changes that would
+    discriminate an alias from circuit behavior.
+
+**Open design**
+
+18. Write a one-page measurement plan for deciding whether an unfamiliar
+    current-limited 5 V board meets a strict 4.85–5.15 V rail requirement at its
+    load. Define the measurand, test points, polarity, loading, temperature,
+    settling, uncertainty target, stop conditions, raw record, and guarded
+    decision rule.
+19. Design a fault-insertion teaching exercise in which exactly one of these is
+    changed: source voltage, divider resistance, connection resistance, DMM input
+    resistance, or waveform ripple. Provide a hypothesis table whose tests can
+    identify the inserted cause without replacing parts. State what synthetic
+    data may teach and what only physical lab evidence could establish.
 
 ## Connections
 
-Chapter ID: `F06`. Prerequisites and downstream course mappings are maintained in
-[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
-provides reader-facing routes and the practice spine.
+Chapter ID: `F06`. Its prerequisites are
+[F03](f03-sources-loads-resistance.qmd), which supplies source–load operating
+points and instrument loading, and
+[M03](../appendices/m03-probability-numerical.qmd), which supplies probability,
+statistics, covariance, and numerical propagation. The
+[Part I introduction](index.qmd) identifies F06 as the end of the measurement
+spine F01 → F02 → F03 → F06, and the
+[reading roadmap](../roadmap.qmd) maps it into later routes.
+
+The immediate downstream chapters are
+[A05](../02-analog/a05-sensors-instrumentation.qmd), where a complete sensor chain
+is calibrated;
+[R04](../06-realization/r04-manufacture-bringup.qmd), where staged bring-up
+applies fault isolation to new assemblies; and
+[R05](../06-realization/r05-metrology-reliability-test.qmd), where uncertainty,
+guard bands, variation, and test coverage support claims over multiple units and
+time. [T03](../appendices/t03-reproducible-engineering.qmd) develops the record
+needed for reproduction and audit.
+
+Aligned practical evidence comes from **L01 — Bench safety and instrument
+qualification**, **L02 — Source, load, resistance, and meter loading**, **L03 —
+Network conservation and equivalents**, **L04 — Power, efficiency, and
+temperature rise**, and **L08 — Sensor calibration and uncertainty**, all at
+safety level L1. The integrating milestone is **M1 —
+Measure an energy-and-light system**, whose result is a safe measurement plan,
+calibrated observations, and a qualified energy claim. These IDs state learning
+and evidence goals; they do not authorize practical work.
+
+## References
+
+Definitions of measurand, accuracy, precision, error, calibration, traceability,
+and uncertainty follow the VIM [@jcgm2012vim]. Evaluation, propagation, coverage,
+and reporting of uncertainty follow the GUM and its NIST implementation guidance
+[@jcgm2008gum; @nist1994tn1297]. Guarded conformity decisions follow JCGM 106
+[@jcgm2012conformity]. Instrument-loading examples are derived in the chapter and
+anchored to a manufacturer manual that documents finite input impedance and burden
+voltage [@fluke87manual]; measurement-equipment safety boundaries rest on IEC
+61010-1 and the named oscilloscope safety instructions
+[@iec61010; @tektronix2024tds3000csafety]. The complete
+[bibliography](../references.qmd) collects these and the book's other sources.

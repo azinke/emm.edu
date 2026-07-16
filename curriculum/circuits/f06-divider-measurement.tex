@@ -1,0 +1,33 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % F06 teaching divider. TP0 is the declared voltage reference.
+  \draw (0,0) node[ground] {}
+    to[V, l_={$V_S=5\,\mathrm{V}$}] (0,3)
+    -- (3.5,3)
+    to[R, l_={$R_1=100\,\mathrm{k}\Omega$}] (3.5,1.5)
+    to[R, l_={$R_2=400\,\mathrm{k}\Omega$}] (3.5,0)
+    -- (0,0);
+
+  % Explicit dots at every junction with three or more conductors.
+  \node[circ] (src) at (3.5,3) {};
+  \node[circ] (mid) at (3.5,1.5) {};
+  \node[circ] (rtn) at (3.5,0) {};
+
+  % Test points are brought away from components and labelled in clear space.
+  \draw (src) -- (5,3)
+    node[ocirc, label={[font=\small]above:{$\mathrm{TP_S}$}}] {};
+  \draw (mid) -- (7.5,1.5)
+    node[ocirc, label={[font=\small]above:{TP1 ($+$)}}] {};
+  \draw (rtn) -- (7.5,0)
+    node[ocirc, label={[font=\small]below:{TP0 ($-$)}}] {};
+
+  % The finite meter input joins TP1 and TP0 in parallel with R2.
+  \draw (mid) -- (5.5,1.5) node[circ] {}
+    to[voltmeter, l=$R_{\mathrm{in}}$] (5.5,0)
+    -- (rtn);
+
+\end{circuitikz}
+\end{document}

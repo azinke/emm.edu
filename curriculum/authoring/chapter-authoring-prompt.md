@@ -133,7 +133,10 @@ stakes allow.
   and never paste generic template labels into the middle of every chapter.
 - **Mermaid:** vertical `flowchart TB`, concise nodes, detail in caption/alt, **no
   `$…$`** — Unicode subscripts (`Rₜₕ`, `Rᵢₙ ∥ Cᵢₙ`) or plain names. Every figure has
-  caption + alt text.
+  a label, caption, and alt text. In a dependency diagram, define the arrow
+  semantics and match direct prerequisites to `chapters.toml`; do not mix them
+  with page order, conceptual spines, or downstream handoffs. Give a wide figure
+  an explicit print width and inspect both HTML and PDF.
 - **Code:** standard-library, parameterized, runnable, with an expected-output
   block; lines short enough to survive print without awkward wrapping. Run it,
   compare actual and expected output, and keep variable names synchronized with the

@@ -88,6 +88,16 @@
 - Draw Mermaid flowcharts vertically (`flowchart TB`) with concise node text so
   they do not scale off the PDF page; carry longer descriptions in the caption
   and alt text rather than in wide nodes.
+- Use a dependency diagram when branching or merging is materially clearer than
+  a short list. Give every arrow one declared meaning and make direct
+  prerequisite edges match `book/chapters.toml` exactly. Keep canonical page
+  order, conceptual spines, and downstream handoffs out of that graph unless
+  they are visually and semantically distinguished; prose is usually clearer
+  for those routes.
+- Give every Mermaid figure a label, caption, and alt text. If its natural width
+  exceeds the PDF text block, set an explicit `fig-width`, then inspect both the
+  HTML and PDF render for clipping, crossed labels, unreadable type, and
+  ambiguous edges.
 - Mermaid renders no math: write symbols in node text as Unicode subscripts
   (`Rₜₕ`, `Rᵢₙ ∥ Cᵢₙ`) or plain names, never `$…$`. Put any real math in the
   caption or alt text, where LaTeX/MathML does render.

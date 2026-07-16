@@ -132,23 +132,46 @@ The genuine dependencies — including the just-in-time appendix hooks — are
 smaller than the page order suggests, so a reader who already holds a
 prerequisite can enter partway without breaking anything.
 
-```text
-page order:   F01 → F02 → F03 → F04 → F05 → F06 → F07 → F08
+```{mermaid}
+%%| label: fig-foundation-dependencies
+%%| fig-cap: "The direct prerequisite graph for Part I. Each arrow matches one prerequisite in the chapter registry. Appendix nodes are just-in-time inputs; page order, named spines, and downstream handoffs are described separately."
+%%| fig-alt: "A vertical prerequisite graph. F01 leads to F02. F02 and M01 lead to F03. F03 leads separately to F04, F05, and F06, while M03 also leads to F06. F04, F05, and M02 lead to F07. F07 and M01 lead to F08."
+%%| fig-width: 6.1
+flowchart TB
+  M01["Appendix · M01<br/>algebra and units"]
+  M02["Appendix · M02<br/>calculus and dynamics"]
+  M03["Appendix · M03<br/>probability and statistics"]
 
-what each chapter genuinely needs:
-  F01  safe practice, units, bench ....... (nothing)
-  F02  charge, voltage, current .......... F01
-  F03  sources, loads, resistance ........ F02, M01
-  F04  networks, Kirchhoff, equivalents .. F03
-  F05  energy, power, heat ............... F03
-  F06  measurement, uncertainty, debug ... F03, M03
-  F07  storage and transients ............ F04, F05, M02
-  F08  impedance and frequency response .. F07, M01
+  F01["F01 · Safe practice"]
+  F02["F02 · Electrical quantities"]
+  F03["F03 · Operating points"]
+  F04["F04 · Networks"]
+  F05["F05 · Power and heat"]
+  F06["F06 · Measurement"]
+  F07["F07 · Transients"]
+  F08["F08 · Frequency response"]
 
-named spines:
-  measurement   F01 → F02 → F03 → F06         (a trustworthy number, early)
-  dynamics      F04 → F07 → F08 → S01 …       (time, then frequency, then signals)
+  F01 --> F02
+  F02 --> F03
+  M01 --> F03
+  F03 --> F04
+  F03 --> F05
+  F03 --> F06
+  M03 --> F06
+  F04 --> F07
+  F05 --> F07
+  M02 --> F07
+  F07 --> F08
+  M01 --> F08
 ```
+
+The arrows in @fig-foundation-dependencies encode direct prerequisites only.
+They do not assert that every adjacent page depends on the previous page: the
+canonical page order remains F01 through F08, while F04–F06 are parallel
+developments after F03. The two spines above are purposeful reader routes. The
+measurement spine selects F01, F02, F03, and F06 to reach trustworthy evidence
+early; the dynamics spine selects F04, F07, and F08, with F05 and M02 feeding
+the transient step and M01 supporting the final frequency-domain step.
 
 ## How to read each chapter
 

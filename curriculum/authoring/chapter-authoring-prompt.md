@@ -84,7 +84,10 @@ stakes allow.
 - A design that merely equals a strict limit does not pass it. Carry tolerances,
   environmental effects, parasitics, connection losses, and measurement uncertainty
   far enough to decide whether margin is real; otherwise label the result a nominal
-  feasibility estimate rather than a verified design.
+  feasibility estimate rather than a verified design. Round a derived strict bound
+  inward (conservatively), or mark the displayed value approximate and retain the
+  unrounded value for the decision; never let display rounding admit a value that
+  the unrounded inequality rejects.
 
 ## Invariant 3 — conventions (identical across all chapters)
 - **Front matter:** `title` (registry), one-sentence `description`, `chapter-id`,
@@ -118,7 +121,10 @@ stakes allow.
   environmental conditions, instrument loading, accuracy/calibration inputs,
   uncertainty basis, guard band, and explicit pass/fail decision rule. A display
   inside the specification is not a pass when the guarded interval crosses a
-  boundary; equality does not satisfy a strict limit.
+  boundary; equality does not satisfy a strict limit. When the instrument changes
+  the measurand in the favorable direction — for example, a probe that accelerates
+  a capacitor discharge — correct the result or add an explicit one-sided loading
+  bound to the decision rule rather than hiding the effect in generic uncertainty.
 - **Headings:** build a textbook skeleton, not a sequence of blog headlines. Use
   compact, chapter-specific noun phrases or precise declarative claims that name
   the concept, method, operating region, or decision. A reader scanning only the
@@ -140,11 +146,24 @@ stakes allow.
   `catalog.toml`, referenced as `../../../build/circuits/<id>.png`; explicit
   connection dot at every 3+ conductor junction; test-point labels off wires and
   components; regenerate with `python3 curriculum/tools/render_circuits.py --id <id>`
-  and verify visually.
-- **Exercises:** open with a **multiple-choice quick check** (5–6 items, options a–d,
-  with an answer key), then retrieval, estimation, derivation, data interpretation,
-  debugging, and open design; a few self-check answers inline; full solutions stay
-  out of the public book.
+  and verify visually. Trace every post-switch current and stored-energy path on
+  the rendered schematic and confirm that it contains exactly the elements in the
+  governing equation — a clamp drawn across $L$ is not equivalent to one drawn
+  across $R_w+L$. Leave a visible lead between a multiway junction and a component
+  body so a wire cannot appear to pass through the symbol, and move labels rather
+  than accepting collisions. Give portrait or unusually large figures an explicit
+  QMD `width` and inspect their size in the rendered chapter, not only as standalone
+  PNGs.
+- **Exercises:** open with `### Quick check` — do not put “multiple choice” in the
+  heading — containing 5–6 one-best-answer items with options a–d and an answer
+  key. Follow with retrieval, estimation, derivation, data interpretation,
+  debugging, and open design; include a few inline self-check answers, while full
+  solutions stay out of the public book.
+- **Quarto cross-references in lists:** never begin an indented ordered-list
+  continuation line with `@eq-`, `@fig-`, or `@tbl-`; Pandoc can interpret that
+  token as example-list syntax and silently corrupt numbering. Keep the reference
+  on the preceding physical line or prefix it with ordinary prose, then inspect the
+  rendered list.
 - **Representations stay synchronized** (schematic ↔ equations ↔ code ↔ data ↔ test).
   If a diagram is intentionally architectural rather than a component schematic,
   say so; use the same boundary names, test points, quantities, and assumptions in
@@ -239,9 +258,12 @@ prose that never gives the reader enough mathematics to reproduce the result.
 5. Audit evidence. Separate prediction, synthetic teaching data, simulation,
    authentic measurement, and qualified claim. Make the prose say exactly which
    rung has actually been reached.
-6. Author and render any circuits. Inspect the rendered images, not just the source,
-   for arrow direction, polarity, junction dots, legible labels, and correspondence
-   with the equations and test points.
+6. Author and render any circuits. Inspect the standalone images and their final
+   chapter placement for arrow direction, polarity, junction dots, legible labels,
+   wire/component overlap, appropriate page scale, and correspondence with the
+   equations and test points. For every switched or clamped circuit, trace the
+   pre-switch and post-switch loops and confirm each loop against the differential
+   equation and energy account.
 7. Run every code listing and compare it with its expected-output block. Confirm
    that code names preserve the distinctions and assumptions made in the prose.
 8. Start independent review passes on the **completed draft** when review agents
@@ -255,13 +277,17 @@ prose that never gives the reader enough mathematics to reproduce the result.
    Apply substantiated improvements, then repeat the affected calculation or
    render checks; a review of the outline alone is not a final review.
 9. Re-read the final heading list and every point-of-use citation. Verify that
-   bibliography keys resolve and that the final `## References` note is not the
-   first citation for a consequential claim.
+   bibliography keys resolve, inspect newly rendered bibliography entries for
+   broken TeX/UTF-8 escaping in names and organizations, and confirm that the final
+   `## References` note is not the first citation for a consequential claim.
 10. `python3 curriculum/tools/validate.py` — must pass.
 11. `quarto render curriculum/book/<file> --to html` — must succeed; verify no
    "model" in headings, `[1]` citations, `TB` mermaid with Unicode subscripts, the
    MCQ with a–d options, figures resolving, equations rendering, and no missing or
-   duplicate internal targets.
+   duplicate internal targets. Compare `git status --short` before and after the
+   render so generated `.html` or `site_libs/` artifacts are not left in the source
+   tree; use the declared single-file command unless full-project output placement
+   has been explicitly verified.
 12. Read the rendered chapter once as a student: can every central result be
    recomputed, can every sign be interpreted, and is it clear what is exact,
    illustrative, measured, assumed, or still unverified? Read the table of contents

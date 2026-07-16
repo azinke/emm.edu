@@ -1,0 +1,57 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Ideal analysis circuit.
+  \draw (0,0)
+    to[sV, l_=$v_{\mathrm{in}}(t)$] (0,3)
+    to[R, l=$R$] (3.0,3)
+    -- (4.2,3)
+    to[C, l=$C$, i>^=$i_C$] (4.2,0)
+    -- (0,0);
+  \node[circ] at (4.2,3) {};
+  \node[circ] at (4.2,0) {};
+  \node[circ] at (0,3) {};
+  \draw (0,3) -- (0,3.45)
+    node[ocirc, label={[font=\small]left:{TP1}}] {};
+  \draw (4.2,3) -- (5.1,3)
+    node[ocirc, label={[font=\small]right:{TP2: $v_{\mathrm{out}}$}}] {};
+  \draw (4.2,0) -- (5.1,0)
+    node[ocirc, label={[font=\small]right:{TP0: $0$~V}}] {};
+  \node[font=\small] at (2.25,3.75) {(a) ideal low-pass analysis};
+  \node[font=\small] at (3.86,2.72) {$+$};
+  \node[font=\small] at (3.86,0.28) {$-$};
+
+  % Loaded measurement circuit.
+  \draw (7.0,0)
+    to[sV, l_=$v_S(t)$] (7.0,3)
+    to[R, l=$R_S$] (9.0,3)
+    to[R, l=$R$] (11.0,3)
+    -- (12.0,3);
+  \draw (12.0,3) to[C, l=$C$] (12.0,0) -- (7.0,0);
+  \draw (12.0,3) -- (13.2,3)
+    to[R, l=$R_L$] (13.2,0) -- (12.0,0);
+  \draw (13.2,3) -- (14.4,3)
+    to[R, l=$R_p$] (14.4,0) -- (13.2,0);
+  \draw (14.4,3) -- (15.6,3)
+    to[C, l=$C_p$] (15.6,0) -- (14.4,0);
+  \node[circ] at (12.0,3) {};
+  \node[circ] at (9.0,3) {};
+  \node[circ] at (13.2,3) {};
+  \node[circ] at (14.4,3) {};
+  \node[circ] at (12.0,0) {};
+  \node[circ] at (13.2,0) {};
+  \node[circ] at (14.4,0) {};
+  \draw (12.0,3) -- (12.0,3.45)
+    node[ocirc, label={[font=\small]above:{TP2}}] {};
+  \draw (9.0,3) -- (9.0,3.45)
+    node[ocirc, label={[font=\small]left:{TP1}}] {};
+  \draw (15.6,0) -- (16.2,0)
+    node[ocirc, label={[font=\small]right:{TP0: $0$~V}}] {};
+  \node[font=\small] at (11.25,3.95)
+    {(b) source, load, and probe included};
+  \draw[dashed, rounded corners] (13.75,-0.45) rectangle (16.0,3.55);
+  \node[font=\small] at (14.88,-0.78) {probe input};
+\end{circuitikz}
+\end{document}

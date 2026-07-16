@@ -125,3 +125,24 @@ source = "f07-leaky-rc.tex"
 chapter_id = "F07"
 caption = "A leakage resistance in parallel with the capacitor changes both the final voltage and the time constant."
 alt = "A 5 volt source drives TP1 through a 10 kilohm resistor. A 10 microfarad capacitor and leakage resistance R_leak connect in parallel from TP1 to TP0, the zero volt reference."
+
+[[circuit]]
+id = "f08-rc-frequency"
+source = "f08-rc-frequency.tex"
+chapter_id = "F08"
+caption = "An RC low-pass first as the ideal analysis circuit, then with source resistance, load resistance, and probe resistance and capacitance made explicit."
+alt = "Panel a shows a sinusoidal source driving resistor R and capacitor C, with output TP2 measured across C relative to TP0. Panel b adds source resistance R_S, load resistance R_L, and the probe input represented by parallel resistance R_p and capacitance C_p. TP1 is the source-side test point and TP2 is the loaded output node."
+
+[[circuit]]
+id = "f08-series-rlc"
+source = "f08-series-rlc.tex"
+chapter_id = "F08"
+caption = "A series RLC circuit separates measured resistance from an equivalent resistance representing all other approximately constant series loss over the resonance band."
+alt = "A sinusoidal source drives measured resistor R_M, equivalent loss resistor R_loss, inductor L, and capacitor C in one loop. Current i is referenced clockwise. TP1 and TP2 span only R_M so v_M is positive where current enters; TP0 is the zero-volt return."
+
+[[circuit]]
+id = "f08-rl-frequency"
+source = "f08-rl-frequency.tex"
+chapter_id = "F08"
+caption = "A series RL circuit exposes both resistor and inductor output polarities, showing complementary first-order low-pass and high-pass responses."
+alt = "A sinusoidal source drives resistor R and inductor L in series. Current i is referenced clockwise. TP1 and TP2 span resistor R with v_R positive where current enters; v_L is positive at TP2 relative to the return TP0."

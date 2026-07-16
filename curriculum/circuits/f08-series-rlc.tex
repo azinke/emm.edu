@@ -1,0 +1,28 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \draw (0,0)
+    to[sV, l_=$v_{\mathrm{in}}(t)$] (0,3)
+    to[R, l=$R_M$, i>^=$i(t)$] (2.6,3)
+    to[R, l=$R_{\mathrm{loss}}$] (5.0,3)
+    to[L, l=$L$] (7.0,3)
+    to[C, l=$C$] (9.0,3)
+    -- (9.0,0)
+    -- (0,0);
+  \node[circ] at (0,3) {};
+  \node[circ] at (2.6,3) {};
+  \node[circ] at (0,0) {};
+  \draw (0,3) -- (0,3.65)
+    node[ocirc, label={[font=\small]above:{TP1}}] {};
+  \draw (2.6,3) -- (2.6,3.65)
+    node[ocirc, label={[font=\small]above:{TP2}}] {};
+  \draw (9.0,0) -- (9.7,0)
+    node[ocirc, label={[font=\small]right:{TP0: $0$~V}}] {};
+  \node[font=\small] at (0.55,2.55) {$+$};
+  \node[font=\small] at (2.05,2.55) {$-$};
+  \node[font=\small] at (1.30,2.35) {$v_M(t)$};
+  \node[font=\scriptsize] at (3.8,2.25) {equivalent loss};
+\end{circuitikz}
+\end{document}

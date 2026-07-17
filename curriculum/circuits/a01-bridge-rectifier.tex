@@ -1,0 +1,36 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \coordinate (AC1) at (0,2.4);
+  \coordinate (OUTP) at (3.0,4.8);
+  \coordinate (AC2) at (6.0,2.4);
+  \coordinate (OUTN) at (3.0,0);
+
+  \draw (AC1) to[D, l={$D_1$}] (OUTP);
+  \draw (AC2) to[D, l_={$D_2$}] (OUTP);
+  \draw (OUTN) to[D, l={$D_3$}] (AC1);
+  \draw (OUTN) to[D, l_={$D_4$}] (AC2);
+
+  \draw (OUTP) -- (9.0,4.8)
+    to[R, l={$R_L$}, i>^=$i_L$] (9.0,0)
+    -- (OUTN);
+
+  \node[circ] at (OUTP) {};
+  \node[circ] at (OUTN) {};
+  \node[circ] at (AC1) {};
+  \node[circ] at (AC2) {};
+  \draw (AC1) -- (-0.8,2.4)
+    node[ocirc, label={[font=\small]left:{TPA: $v_a$}}] {};
+  \draw (AC2) -- (6.8,2.4)
+    node[ocirc, label={[font=\small]right:{TPB: $v_b$}}] {};
+  \draw (OUTP) -- (3.0,5.55)
+    node[ocirc, label={[font=\small]above:{TP$+$: $v_o$}}] {};
+  \draw (OUTN) -- (3.0,-0.75)
+    node[ocirc, label={[font=\small]below:{TP$-$: reference}}] {};
+
+  \node[font=\small] at (8.35,4.25) {$+$};
+  \node[font=\small] at (8.35,0.55) {$-$};
+\end{circuitikz}
+\end{document}

@@ -1,0 +1,30 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % LED current-limited forward operation.
+  \draw (0,0) node[ground] {}
+    to[V, l_={$V_S$}] (0,4)
+    to[R, l={$R_{LED}$}, i>^=$I_F$] (3.2,4)
+    -- (4.2,4)
+    to[leD, l={$D_{LED}$}] (4.2,0)
+    -- (0,0);
+  \node[font=\small] at (2.1,-1.05) {(a) forward-driven LED};
+
+  % Reverse-biased photodiode with resistive readout.
+  \draw (7.0,0) node[ground] {}
+    to[V, l_={$V_B$}] (7.0,4)
+    -- (9.0,4)
+    to[R, l={$R_L$}] (9.0,2.1)
+    -- (9.0,1.5);
+  \draw (9.0,0) node[ground] {}
+    to[pD, l={$D_{PD}$}] (9.0,1.5);
+  \draw[->, thick] (10.45,1.25) -- (10.45,0.45)
+    node[midway, right, font=\small] {$I_{ph}$};
+  \node[circ] at (9.0,1.5) {};
+  \draw (9.0,1.5) -- (10.2,1.5)
+    node[ocirc, label={[font=\small]right:{TP1: $V_O$}}] {};
+  \node[font=\small] at (8.5,-1.05) {(b) reverse-biased photodiode};
+\end{circuitikz}
+\end{document}

@@ -1,0 +1,31 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}
+  % Common schematic symbols. A family name is not a complete part specification.
+  \draw (0,3.0) to[D] (2.0,3.0);
+  \node[font=\small, align=center] at (1.0,2.35) {ordinary p--n\\rectifier, PIN};
+
+  \draw (3.1,3.0) to[zD] (5.1,3.0);
+  \node[font=\small, align=center] at (4.1,2.35) {Zener / avalanche\\unidirectional TVS};
+
+  \draw (6.2,3.0) to[sD] (8.2,3.0);
+  \node[font=\small, align=center] at (7.2,2.35) {Schottky};
+
+  \draw (9.3,3.0) to[VC] (11.3,3.0);
+  \node[font=\small, align=center] at (10.3,2.35) {varactor\\(varicap)};
+
+  \draw (1.55,0.7) to[tD] (3.55,0.7);
+  \node[font=\small, align=center] at (2.55,0.05) {tunnel};
+
+  \draw (4.65,0.7) to[leD] (6.65,0.7);
+  \node[font=\small, align=center] at (5.65,0.05) {LED};
+
+  \draw (7.75,0.7) to[pD] (9.75,0.7);
+  \node[font=\small, align=center] at (8.75,0.05) {photodiode};
+
+  \node[font=\small] at (0,3.45) {A};
+  \node[font=\small] at (2.0,3.45) {K};
+\end{circuitikz}
+\end{document}

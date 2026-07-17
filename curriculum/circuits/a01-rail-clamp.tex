@@ -1,0 +1,36 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \draw (0,0) node[ground] {}
+    to[V, l_={$V_{IN}$}] (0,3)
+    to[R, l={$R_S$}, i>^=$I_S$] (3.4,3)
+    -- (5.0,3);
+
+  \draw (5.0,3)
+    to[D, l={$D_H$}, i>^=$I_H$] (5.0,5.5)
+    -- (7.2,5.5)
+    node[right, font=\small] {$V_{DD}$};
+
+  \draw (5.0,0) node[ground] {}
+    to[D, l={$D_L$}, i>^=$I_L$] (5.0,3);
+
+  \node[circ] at (5.0,3) {};
+  \node[circ] at (5.0,5.5) {};
+  \node[circ] at (0,3) {};
+  \node[circ] at (5.0,0) {};
+
+  \draw (5.0,3) -- (6.15,3)
+    node[ocirc, label={[font=\small]above:{TP1: $V_P$}}] {};
+  \draw (5.0,0) -- (6.15,0)
+    node[ocirc, label={[font=\small]right:{TP0: $0$~V}}] {};
+  \draw (0,3) -- (0,3.8)
+    node[ocirc, label={[font=\small]above:{TP$_{IN}$}}] {};
+
+  \node[draw, minimum width=1.7cm, minimum height=0.9cm,
+        align=center, font=\small] at (8.0,3)
+        {protected\\input};
+  \draw (6.15,3) -- (7.15,3);
+\end{circuitikz}
+\end{document}

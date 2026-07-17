@@ -1,6 +1,55 @@
 version = 1
 
 [[circuit]]
+id = "a01-diode-operating-point"
+source = "a01-diode-operating-point.tex"
+chapter_id = "A01"
+caption = "A Thévenin source drives a diode through a series resistance; the source line and diode terminal relation share the operating point."
+alt = "A voltage source V S drives resistor R S and diode D1 in series. Diode current I D is referenced clockwise and enters the diode anode. Diode voltage V D is positive at the anode relative to the cathode. Test points TP S, TP1, and TP0 expose the source, diode anode, and zero volt reference."
+
+[[circuit]]
+id = "a01-half-wave-rectifier"
+source = "a01-half-wave-rectifier.tex"
+chapter_id = "A01"
+caption = "A half-wave rectifier routes one source polarity through the diode and load while blocking the other in the ideal approximation."
+alt = "A time-varying voltage source v s drives diode D1 and load resistor R L in series. Diode current i D points from source to load. Output voltage v o is positive at TP2 relative to zero volt test point TP0; TP1 observes the source."
+
+[[circuit]]
+id = "a01-bridge-rectifier"
+source = "a01-bridge-rectifier.tex"
+chapter_id = "A01"
+caption = "A four-diode bridge routes either input polarity through the load from the positive output node to the negative output node."
+alt = "Four diodes form a diamond between alternating input terminals TPA and TPB and output terminals TP plus and TP minus. Load resistor R L connects from TP plus to TP minus, and load current points downward. When TPA is positive, D1 and D4 conduct; when TPB is positive, D2 and D3 conduct."
+
+[[circuit]]
+id = "a01-rail-clamp"
+source = "a01-rail-clamp.tex"
+chapter_id = "A01"
+caption = "A series resistor limits fault current while two diodes divert excursions beyond the supply rails; the receiving circuit and rail sink capability remain part of the protection boundary."
+alt = "Input voltage V IN drives protected node TP1 through series resistor R S. Upper diode D H has its anode at TP1 and cathode at V DD, with I H directed from TP1 to V DD. Lower diode D L has its anode at zero volts and cathode at TP1, with I L directed from TP0 toward TP1."
+
+[[circuit]]
+id = "a01-optojunctions"
+source = "a01-optojunctions.tex"
+chapter_id = "A01"
+caption = "Basic electrical interfaces for optical junctions: a resistor limits LED forward current, while a reverse-biased photodiode converts light-generated current into an output-voltage change across a load resistor."
+alt = "Panel a shows source V S, current-limiting resistor R LED, and LED D LED in series, with forward current I F. Panel b shows bias source V B feeding resistor R L and output TP1; photodiode D PD is reverse biased from the output node to ground, and light-generated current I ph points from the output toward ground."
+
+[[circuit]]
+id = "a01-diode-family-symbols"
+source = "a01-diode-family-symbols.tex"
+chapter_id = "A01"
+caption = "Common diode-family schematic symbols. The generic diode symbol is shared by several structures and application classes, so the reference designator and part specification remain essential."
+alt = "Two rows of common diode symbols. The upper row shows an ordinary p-n diode, a Zener or avalanche diode, a Schottky diode, and a varactor. The lower row shows a tunnel diode, an LED, and a photodiode. Anode A and cathode K are marked on the ordinary diode."
+
+[[circuit]]
+id = "a01-zener-reference"
+source = "a01-zener-reference.tex"
+chapter_id = "A01"
+caption = "A shunt breakdown reference requires a source resistor and a feasible current window: resistor current divides between the reverse-operated Zener diode and the load."
+alt = "Voltage source V S drives series resistor R S to output test point TP1. Reverse-operated Zener diode D Z connects from TP1 to ground, with its cathode at TP1. Load resistor R L is in parallel with the Zener. Resistor current I R divides into downward Zener current I Z and load current I L."
+
+[[circuit]]
 id = "f01-shock-path"
 source = "f01-shock-path.tex"
 chapter_id = "F01"

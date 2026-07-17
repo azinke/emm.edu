@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="520" viewBox="0 0 1100 520">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="black"/>
+    </marker>
+  </defs>
+  <rect width="1100" height="520" fill="white"/>
+  <g font-family="sans-serif" fill="black" stroke="black">
+    <rect x="100" y="70" width="400" height="350" fill="#eeeeee" stroke-width="2"/>
+    <rect x="500" y="70" width="400" height="350" fill="#fafafa" stroke-width="2"/>
+    <rect x="420" y="70" width="160" height="350" fill="white" stroke-width="2" stroke-dasharray="8 6"/>
+
+    <text x="250" y="110" font-size="28" text-anchor="middle" stroke="none">p-type region</text>
+    <text x="750" y="110" font-size="28" text-anchor="middle" stroke="none">n-type region</text>
+    <text x="500" y="52" font-size="23" text-anchor="middle" stroke="none">depletion region</text>
+    <text x="125" y="455" font-size="24" text-anchor="middle" stroke="none">A</text>
+    <text x="125" y="482" font-size="18" text-anchor="middle" stroke="none">anode</text>
+    <text x="875" y="455" font-size="24" text-anchor="middle" stroke="none">K</text>
+    <text x="875" y="482" font-size="18" text-anchor="middle" stroke="none">cathode</text>
+    <line x1="70" y1="245" x2="100" y2="245" stroke-width="4"/>
+    <line x1="900" y1="245" x2="930" y2="245" stroke-width="4"/>
+
+    <g font-size="28" text-anchor="middle" stroke="none">
+      <text x="445" y="145">−</text><text x="475" y="145">−</text>
+      <text x="445" y="205">−</text><text x="475" y="205">−</text>
+      <text x="445" y="265">−</text><text x="475" y="265">−</text>
+      <text x="445" y="325">−</text><text x="475" y="325">−</text>
+      <text x="445" y="385">−</text><text x="475" y="385">−</text>
+      <text x="525" y="145">+</text><text x="555" y="145">+</text>
+      <text x="525" y="205">+</text><text x="555" y="205">+</text>
+      <text x="525" y="265">+</text><text x="555" y="265">+</text>
+      <text x="525" y="325">+</text><text x="555" y="325">+</text>
+      <text x="525" y="385">+</text><text x="555" y="385">+</text>
+    </g>
+    <text x="375" y="400" font-size="17" text-anchor="end" stroke="none">fixed acceptor ions</text>
+    <text x="625" y="400" font-size="17" stroke="none">fixed donor ions</text>
+
+    <line x1="565" y1="120" x2="435" y2="120" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="500" y="103" font-size="19" text-anchor="middle" stroke="none">built-in field E</text>
+
+    <line x1="290" y1="235" x2="390" y2="235" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="275" y="230" font-size="18" text-anchor="end" stroke="none">hole diffusion</text>
+    <line x1="710" y1="275" x2="610" y2="275" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="725" y="270" font-size="18" stroke="none">electron diffusion</text>
+
+    <line x1="390" y1="315" x2="290" y2="315" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="275" y="310" font-size="18" text-anchor="end" stroke="none">hole drift</text>
+    <line x1="610" y1="355" x2="710" y2="355" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="725" y="350" font-size="18" stroke="none">electron drift</text>
+
+    <text x="500" y="500" font-size="21" text-anchor="middle" stroke="none">Terminal reference: Vᴅ = Vᴀ − Vₖ; positive current Iᴅ is A → K</text>
+  </g>
+</svg>

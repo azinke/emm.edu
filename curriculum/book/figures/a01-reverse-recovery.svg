@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="520" viewBox="0 0 1100 520">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3"
+            orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#111"/>
+    </marker>
+  </defs>
+  <rect width="1100" height="520" fill="white"/>
+  <g font-family="sans-serif" fill="#111" stroke="#111">
+    <line x1="95" y1="245" x2="1030" y2="245" stroke-width="3"
+          marker-end="url(#arrow)"/>
+    <line x1="170" y1="440" x2="170" y2="55" stroke-width="3"
+          marker-end="url(#arrow)"/>
+    <text x="1045" y="253" font-size="24" stroke="none">t</text>
+    <text x="145" y="48" font-size="24" stroke="none">i<tspan baseline-shift="sub" font-size="17">D</tspan></text>
+    <text x="145" y="272" font-size="20" stroke="none">0</text>
+
+    <path d="M170 125 L400 125
+             C435 125, 465 185, 495 245
+             C530 315, 565 385, 610 385
+             C675 385, 730 300, 790 270
+             C845 247, 910 245, 1000 245"
+          fill="none" stroke-width="5"/>
+
+    <line x1="495" y1="245" x2="495" y2="455" stroke-width="2"
+          stroke-dasharray="8 7"/>
+    <line x1="610" y1="385" x2="610" y2="445" stroke-width="2"
+          stroke-dasharray="8 7"/>
+    <line x1="790" y1="270" x2="790" y2="455" stroke-width="2"
+          stroke-dasharray="8 7"/>
+    <line x1="170" y1="385" x2="610" y2="385" stroke-width="2"
+          stroke-dasharray="8 7"/>
+    <line x1="170" y1="270" x2="790" y2="270" stroke-width="2"
+          stroke-dasharray="8 7"/>
+
+    <line x1="495" y1="455" x2="790" y2="455" stroke-width="3"/>
+    <line x1="495" y1="445" x2="495" y2="465" stroke-width="3"/>
+    <line x1="790" y1="445" x2="790" y2="465" stroke-width="3"/>
+
+    <g font-size="21" stroke="none">
+      <text x="220" y="105">forward current I<tspan baseline-shift="sub" font-size="15">F</tspan></text>
+      <text x="110" y="392">−I<tspan baseline-shift="sub" font-size="15">RM</tspan></text>
+      <text x="65" y="277">−0.1I<tspan baseline-shift="sub" font-size="15">RM</tspan></text>
+      <text x="495" y="220" text-anchor="middle">zero crossing</text>
+      <text x="585" y="420">reverse peak</text>
+      <text x="796" y="297">example 10% endpoint</text>
+      <text x="625" y="492" text-anchor="middle">t<tspan baseline-shift="sub" font-size="15">rr</tspan></text>
+    </g>
+  </g>
+</svg>

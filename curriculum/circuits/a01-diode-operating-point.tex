@@ -1,0 +1,31 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \draw (0,0) node[ground] {}
+    to[V, l_={$V_S$}] (0,4)
+    to[R, l={$R_S$}, i>^=$I_D$] (3.2,4)
+    -- (4.5,4)
+    to[D, l_={$D_1$}] (4.5,0)
+    -- (0,0);
+
+  \node[font=\small] at (-0.35,3.25) {$+$};
+  \node[font=\small] at (-0.35,0.75) {$-$};
+  \node[circ] at (0,4) {};
+  \node[circ] at (0,0) {};
+  \node[circ] at (4.5,4) {};
+  \node[circ] at (4.5,0) {};
+
+  \draw (0,4) -- (0,4.75)
+    node[ocirc, label={[font=\small]above:{TP$_S$: $V_S$}}] {};
+  \draw (4.5,4) -- (5.35,4)
+    node[ocirc, label={[font=\small]right:{TP1: $V_D$}}] {};
+  \draw (4.5,0) -- (5.35,0)
+    node[ocirc, label={[font=\small]right:{TP0: $0$~V}}] {};
+
+  \node[font=\small, align=right] at (3.55,2.30) {A, $+$};
+  \node[font=\small, align=right] at (3.55,1.70) {K, $-$};
+  \node[font=\small] at (5.20,2.0) {$V_D$};
+\end{circuitikz}
+\end{document}

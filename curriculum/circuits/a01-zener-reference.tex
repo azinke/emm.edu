@@ -1,0 +1,21 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \draw (0,0) node[ground] {}
+    to[V, l_={$V_S$}] (0,3)
+    to[R, l={$R_S$}, i>^=$I_R$] (3.2,3)
+    -- (4.4,3);
+  \draw (4.4,0) node[ground] {}
+    to[zD, l_={$D_Z$}] (4.4,3);
+  \draw (4.4,3) -- (6.8,3)
+    to[R, l={$R_L$}, i>_=$I_L$] (6.8,0)
+    node[ground] {};
+  \draw[->, thick] (5.6,2.3) -- (5.6,0.8)
+    node[midway, right, font=\small] {$I_Z$};
+  \node[circ] at (4.4,3) {};
+  \draw (4.4,3) -- (4.4,3.8)
+    node[ocirc, label={[font=\small]above:{TP1: $V_O$}}] {};
+\end{circuitikz}
+\end{document}

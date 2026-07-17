@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="850"
+     viewBox="0 0 1800 850" role="img"
+     aria-labelledby="title desc">
+  <title id="title">Equilibrium energy-band diagram of a p-n junction</title>
+  <desc id="desc">Electron energy is vertical and physical position is
+  horizontal. The conduction- and valence-band edges bend downward from the
+  p-type side to the n-type side through the depletion region. The equilibrium
+  Fermi level is flat, and the band-edge difference across the junction is the
+  built-in electron-energy barrier.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6"
+            orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L12,6 L0,12 z" fill="#171717"/>
+    </marker>
+    <marker id="arrow-start" markerWidth="12" markerHeight="12" refX="2" refY="6"
+            orient="auto" markerUnits="strokeWidth">
+      <path d="M12,0 L0,6 L12,12 z" fill="#171717"/>
+    </marker>
+    <style>
+      .axis { stroke:#171717; stroke-width:3; marker-end:url(#arrow); }
+      .boundary { stroke:#555; stroke-width:2; stroke-dasharray:8 7; }
+      .band { stroke:#171717; stroke-width:5; fill:none; }
+      .fermi { stroke:#171717; stroke-width:3; stroke-dasharray:13 8; }
+      .measure { stroke:#171717; stroke-width:3; marker-start:url(#arrow-start);
+                 marker-end:url(#arrow); }
+      .field { stroke:#171717; stroke-width:4; marker-end:url(#arrow); }
+      text { font-family:Inter,Arial,sans-serif; fill:#171717; }
+      .heading { font-size:34px; font-weight:600; }
+      .label { font-size:29px; }
+      .small { font-size:25px; }
+      .note { font-size:27px; font-weight:600; }
+    </style>
+  </defs>
+
+  <rect x="20" y="20" width="1760" height="810" rx="18"
+        fill="#fffaf7" stroke="#1b1b1b" stroke-width="2.5"/>
+
+  <text x="70" y="70" class="heading">
+    Equilibrium band view of the same p–n junction
+  </text>
+
+  <rect x="250" y="105" width="470" height="610" fill="#fff4f0"/>
+  <rect x="720" y="105" width="390" height="610" fill="#f3f3f3"/>
+  <rect x="1110" y="105" width="440" height="610" fill="#f2f7fb"/>
+  <line x1="720" y1="105" x2="720" y2="715" class="boundary"/>
+  <line x1="1110" y1="105" x2="1110" y2="715" class="boundary"/>
+
+  <line x1="135" y1="705" x2="135" y2="125" class="axis"/>
+  <text x="75" y="115" class="label">electron energy E</text>
+  <line x1="250" y1="755" x2="1585" y2="755" class="axis"/>
+  <text x="1540" y="742" text-anchor="end" class="label">physical position x</text>
+
+  <text x="485" y="145" text-anchor="middle" class="heading">p-type</text>
+  <text x="915" y="145" text-anchor="middle" class="heading">depletion region</text>
+  <text x="1330" y="145" text-anchor="middle" class="heading">n-type</text>
+
+  <path d="M250 270 H650
+           C735 270, 760 305, 815 345
+           C900 410, 985 450, 1110 450
+           H1550" class="band"/>
+  <path d="M250 535 H650
+           C735 535, 760 570, 815 610
+           C900 675, 985 715, 1110 715
+           H1550" class="band"/>
+  <line x1="250" y1="495" x2="1550" y2="495" class="fermi"/>
+
+  <text x="300" y="250" class="note">
+    E<tspan baseline-shift="sub" font-size="17">C</tspan>
+    : conduction-band edge
+  </text>
+  <text x="300" y="570" class="note">
+    E<tspan baseline-shift="sub" font-size="17">V</tspan>
+    : valence-band edge
+  </text>
+  <text x="1160" y="485" class="note">
+    E<tspan baseline-shift="sub" font-size="17">F</tspan>
+    : flat at equilibrium
+  </text>
+
+  <line x1="1465" y1="285" x2="1465" y2="435" class="measure"/>
+  <text x="1490" y="350" class="note">
+    qV<tspan baseline-shift="sub" font-size="17">bi</tspan>
+  </text>
+  <text x="1490" y="382" class="small">electron-energy barrier</text>
+
+  <line x1="1035" y1="205" x2="790" y2="205" class="field"/>
+  <text x="915" y="190" text-anchor="middle" class="note">
+    built-in electric field
+  </text>
+  <text x="915" y="240" text-anchor="middle" class="small">points n → p</text>
+
+  <text x="480" y="640" text-anchor="middle" class="small">
+    E<tspan baseline-shift="sub" font-size="15">F</tspan>
+    lies nearer E<tspan baseline-shift="sub" font-size="15">V</tspan>
+  </text>
+  <text x="1325" y="600" text-anchor="middle" class="small">
+    E<tspan baseline-shift="sub" font-size="15">F</tspan>
+    lies nearer E<tspan baseline-shift="sub" font-size="15">C</tspan>
+  </text>
+
+  <text x="900" y="805" text-anchor="middle" class="note">
+    The curves are allowed-state boundaries versus position, not carrier trajectories.
+  </text>
+</svg>

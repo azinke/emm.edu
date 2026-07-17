@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="820"
+     viewBox="0 0 1800 820" role="img"
+     aria-labelledby="title desc">
+  <title id="title">Allowed energy bands and an interband transition</title>
+  <desc id="desc">The left panel shows discrete atomic energy levels splitting
+  into dense allowed bands in a crystal. The right panel shows absorption
+  raising an electron from the valence band to the conduction band and leaving
+  a hole, while recombination releases energy.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6"
+            orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L12,6 L0,12 z" fill="#171717"/>
+    </marker>
+    <pattern id="states" width="12" height="16" patternUnits="userSpaceOnUse">
+      <path d="M0 1 H12" stroke="#808080" stroke-width="1"/>
+    </pattern>
+    <style>
+      .panel { fill:#fffaf7; stroke:#1b1b1b; stroke-width:2.5; }
+      .axis { stroke:#171717; stroke-width:3; marker-end:url(#arrow); }
+      .edge { stroke:#171717; stroke-width:4; }
+      .level { stroke:#404040; stroke-width:3; }
+      .guide { stroke:#666; stroke-width:2; stroke-dasharray:8 7; }
+      .arrow { stroke:#171717; stroke-width:4; fill:none;
+               marker-end:url(#arrow); }
+      .electron { fill:#171717; stroke:#171717; stroke-width:2; }
+      .hole { fill:#fffaf7; stroke:#171717; stroke-width:4; }
+      text { font-family:Inter,Arial,sans-serif; fill:#171717; }
+      .heading { font-size:34px; font-weight:600; }
+      .label { font-size:28px; }
+      .small { font-size:24px; }
+      .note { font-size:26px; font-weight:600; }
+    </style>
+  </defs>
+
+  <rect x="20" y="20" width="850" height="780" rx="18" class="panel"/>
+  <rect x="900" y="20" width="880" height="780" rx="18" class="panel"/>
+
+  <text x="55" y="68" class="heading">(a) From atomic levels to crystal bands</text>
+  <line x1="90" y1="700" x2="90" y2="115" class="axis"/>
+  <text x="55" y="105" class="label">E</text>
+  <text x="45" y="735" class="small">higher upward</text>
+
+  <text x="245" y="125" text-anchor="middle" class="label">isolated atom</text>
+  <line x1="160" y1="245" x2="330" y2="245" class="level"/>
+  <line x1="160" y1="430" x2="330" y2="430" class="level"/>
+  <line x1="160" y1="610" x2="330" y2="610" class="level"/>
+  <circle cx="205" cy="600" r="8" class="electron"/>
+  <circle cx="245" cy="600" r="8" class="electron"/>
+  <circle cx="285" cy="600" r="8" class="electron"/>
+  <text x="245" y="655" text-anchor="middle" class="small">discrete allowed levels</text>
+
+  <line x1="355" y1="410" x2="475" y2="410" class="arrow"/>
+  <text x="415" y="355" text-anchor="middle" class="small">many atoms</text>
+  <text x="415" y="382" text-anchor="middle" class="small">interact</text>
+
+  <text x="650" y="125" text-anchor="middle" class="label">crystal</text>
+  <rect x="500" y="175" width="300" height="150" fill="url(#states)"
+        stroke="#171717" stroke-width="2"/>
+  <text x="650" y="220" text-anchor="middle" class="note">conduction band</text>
+  <text x="650" y="250" text-anchor="middle" class="small">dense allowed states</text>
+
+  <rect x="500" y="485" width="300" height="185" fill="url(#states)"
+        stroke="#171717" stroke-width="2"/>
+  <text x="650" y="545" text-anchor="middle" class="note">valence band</text>
+  <text x="650" y="575" text-anchor="middle" class="small">dense allowed states</text>
+  <circle cx="555" cy="642" r="7" class="electron"/>
+  <circle cx="590" cy="642" r="7" class="electron"/>
+  <circle cx="625" cy="642" r="7" class="electron"/>
+  <circle cx="660" cy="642" r="7" class="electron"/>
+  <circle cx="695" cy="642" r="7" class="electron"/>
+  <circle cx="730" cy="642" r="7" class="electron"/>
+
+  <line x1="820" y1="325" x2="820" y2="485" class="guide"/>
+  <text x="770" y="390" text-anchor="end" class="note">band gap</text>
+  <text x="770" y="420" text-anchor="end" class="small">no allowed bulk states</text>
+
+  <text x="935" y="68" class="heading">(b) Excitation and recombination</text>
+  <line x1="975" y1="700" x2="975" y2="115" class="axis"/>
+  <text x="940" y="105" class="label">E</text>
+
+  <rect x="1040" y="140" width="665" height="150" fill="url(#states)"
+        stroke="#171717" stroke-width="2"/>
+  <line x1="1040" y1="290" x2="1705" y2="290" class="edge"/>
+  <text x="1060" y="188" class="note">allowed conduction-band states</text>
+  <text x="1660" y="278" text-anchor="end" class="label">
+    E<tspan baseline-shift="sub" font-size="17">C</tspan>
+  </text>
+
+  <line x1="1040" y1="555" x2="1705" y2="555" class="edge"/>
+  <rect x="1040" y="555" width="665" height="130" fill="url(#states)"
+        stroke="#171717" stroke-width="2"/>
+  <text x="1060" y="625" class="note">allowed valence-band states</text>
+  <text x="1660" y="545" text-anchor="end" class="label">
+    E<tspan baseline-shift="sub" font-size="17">V</tspan>
+  </text>
+
+  <line x1="1090" y1="290" x2="1090" y2="555" class="guide"/>
+  <text x="1110" y="478" class="note">
+    E<tspan baseline-shift="sub" font-size="17">g</tspan>
+  </text>
+  <text x="1110" y="510" class="small">no extended</text>
+  <text x="1110" y="538" class="small">bulk states</text>
+
+  <line x1="1280" y1="535" x2="1280" y2="245" class="arrow"/>
+  <circle cx="1280" cy="230" r="11" class="electron"/>
+  <circle cx="1280" cy="575" r="13" class="hole"/>
+  <text x="1240" y="345" text-anchor="end" class="note">absorption</text>
+  <text x="1240" y="377" text-anchor="end" class="small">electron promoted</text>
+  <text x="1240" y="407" text-anchor="end" class="small">hole remains</text>
+  <text x="1305" y="225" class="small">electron</text>
+  <text x="1305" y="583" class="small">hole</text>
+
+  <line x1="1500" y1="245" x2="1500" y2="535" class="arrow"/>
+  <text x="1530" y="370" class="note">recombination</text>
+  <text x="1530" y="402" class="small">energy to light</text>
+  <text x="1530" y="432" class="small">and/or the lattice</text>
+
+  <text x="1340" y="745" text-anchor="middle" class="note">
+    Vertical motion here means a change of allowed state and energy,
+  </text>
+  <text x="1340" y="777" text-anchor="middle" class="note">
+    not travel upward through the device.
+  </text>
+</svg>

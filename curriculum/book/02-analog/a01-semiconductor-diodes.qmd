@@ -86,23 +86,62 @@ chapter, you should be able to:
 
 ## Energy bands, mobile carriers, and doping
 
-An isolated atom has discrete electron energies. In a crystal, interaction among
-many atoms broadens these into allowed **bands** separated by forbidden energy
-ranges. For electronics the important bands are the nearly filled **valence
-band** and the higher **conduction band**. Their separation is the band gap
-$E_g$. A completely filled band cannot easily change its collective momentum;
-mobile conduction appears when electrons occupy available states in a partially
-filled band or when unoccupied states exist in an otherwise nearly full band
-[@kittel2005solidstate; @sze2006physics].
+An energy-band diagram is first of all an **energy map**. Its vertical coordinate
+is electron energy, not height or position inside a component. A **band** is a
+range containing many quantum-mechanically allowed electron states distributed
+through the crystal; it is not a material layer that an electron physically
+climbs into.
 
-Thermal energy can raise an electron across the band gap, leaving an empty
-valence-band state. The conduction-band electron has charge $-q_e$, where
+An isolated atom has discrete allowed electron energies. When a large number of
+atoms form a crystal, interactions among them split each relevant atomic level
+into an enormous number of closely spaced levels. At circuit scales those levels
+are treated as allowed bands. For an ideal semiconductor, the important bands
+are the nearly filled **valence band** and the higher, nearly empty
+**conduction band**. Let $E_C$ be the lowest conduction-band energy and $E_V$ the
+highest valence-band energy. Their difference
+
+$$
+E_g\equiv E_C-E_V
+$$
+
+is the **band gap**. The gap contains no extended allowed states in the ideal
+bulk crystal, although defects and deliberately introduced dopants can add
+localized states [@kittel2005solidstate; @sze2006physics].
+
+![Allowed energy states in an atom and crystal, and the meaning of an interband transition.](../figures/a01-energy-bands.png){#fig-a01-energy-bands fig-alt="Two energy-axis panels. The first shows discrete allowed levels of an isolated atom becoming dense valence and conduction bands when many atoms interact in a crystal, with a band gap between them. The second shows energy absorption promoting an electron from a valence-band state to a conduction-band state and leaving a hole; a reverse recombination transition releases energy. A note emphasizes that vertical motion is a change of state and energy, not upward travel through the device." width="98%"}
+
+In @fig-a01-energy-bands, the horizontal lines represent possible states, while
+the filled dots represent electrons occupying some of them. A completely filled
+band cannot provide ordinary net conduction: changes available to one occupied
+state are cancelled or blocked by the occupation of the other states. Conduction
+becomes possible when a band contains both occupied states and nearby empty
+states into which carriers can respond to a field.
+
+An **interband excitation** changes an electron's quantum state and energy.
+Thermal or optical energy can promote an electron from the valence band into an
+available conduction-band state when energy and any required momentum conditions
+are met. The missing valence-band electron is described as a mobile positive
+**hole**. The reverse process, **recombination**, fills a hole with a
+conduction-band electron and transfers energy to emitted light, lattice
+vibration, or both. Neither arrow means that the electron has moved upward in
+physical space. After excitation, real-space drift or diffusion can move the
+electron through the crystal while it remains a conduction-band carrier
+[@sze2006physics].
+
+The conduction-band electron has charge $-q_e$, where
 $q_e=1.602\,176\,634\times10^{-19}$ C is the exact positive magnitude of the
-elementary charge in SI. The unoccupied valence-band state behaves collectively
-as a mobile positive **hole**. A hole is not a separate elementary particle
-stored in the crystal; it is a useful description of many valence-electron
-transitions. Conventional current follows positive-charge motion and is opposite
-the average electron drift direction [@bipm2019si].
+elementary charge in SI. A hole is not a separate elementary particle stored in
+the crystal; it is a collective description of unoccupied valence-band states.
+Conventional current follows positive-charge motion and is opposite the average
+electron drift direction [@bipm2019si].
+
+The **Fermi level** $E_F$ is an equilibrium occupancy reference, more precisely
+the electron chemical potential. It is not a third band and need not equal the
+energy of a particular electron. At equilibrium it is spatially constant through
+a connected structure. Its position relative to $E_C$ and $E_V$ indicates how
+likely states near those band edges are to be occupied: $E_F$ lies nearer $E_C$
+in ordinary n-type material and nearer $E_V$ in ordinary p-type material
+[@kittel2005solidstate; @sze2006physics].
 
 Two mechanisms move carriers:
 
@@ -119,17 +158,22 @@ move [@sze2006physics].
 Pure semiconductor material is **intrinsic**. Controlled substitutional
 impurities make it **extrinsic**:
 
-- donor atoms contribute electrons that are readily promoted to the conduction
-  band, producing **n-type** material whose majority carriers are electrons; and
-- acceptor atoms create readily occupied valence-band states, producing
-  **p-type** material whose majority carriers are holes.
+- donor atoms add weakly bound electron states near the conduction band. When a
+  donor electron is promoted into the conduction band, the donor remains as a
+  fixed positive ion, producing **n-type** material whose majority carriers are
+  electrons; and
+- acceptor atoms add available states near the valence band. When an acceptor
+  takes a valence-band electron, it becomes a fixed negative ion and leaves a
+  mobile hole, producing **p-type** material whose majority carriers are holes.
 
 The words *n-type* and *p-type* do not mean the bulk material carries a large net
 negative or positive charge. Away from junctions, the mobile majority-carrier
 charge is approximately balanced by the ionized dopant charge, so the material
 remains nearly neutral. Both carrier types remain present: the less numerous type
-is the **minority carrier**. Temperature, illumination, and injection can change
-their concentrations [@sze2006physics].
+is the **minority carrier**. Doping primarily changes state occupancy and carrier
+concentration; it does not turn the valence and conduction bands into different
+physical layers. Temperature, illumination, and injection can also change the
+carrier concentrations [@sze2006physics].
 
 ## The p–n junction
 
@@ -162,19 +206,41 @@ references used throughout the chapter. At equilibrium the shown diffusion and
 drift contributions cancel in net terminal current; the arrows do not imply that
 individual carriers stop moving [@sze2006physics].
 
+The same junction can be represented on two axes at once. In the band diagram
+below, the horizontal position $x$ runs from the p region to the n region, while
+the vertical coordinate remains electron energy. The electrostatic potential
+varies across the depletion region, so the electron potential energy
+and both band edges bend with position. The edges shift together; their vertical
+separation remains approximately the material band gap $E_g$. At equilibrium,
+the Fermi level is flat. The difference between the conduction-band edges in the
+neutral n and p regions is the built-in electron-energy barrier $q_eV_{bi}$.
+
+![Equilibrium band-edge variation across the same p–n junction.](../figures/a01-junction-bands.png){#fig-a01-junction-bands fig-alt="An equilibrium energy-band diagram uses electron energy vertically and physical position horizontally from a p-type region through the depletion region to an n-type region. The conduction- and valence-band edges bend downward together from p to n, maintaining an approximately constant band gap. The equilibrium Fermi level is horizontal. A bracket marks the built-in electron-energy barrier, and an arrow shows the electric field from n toward p. The curves are allowed-state boundaries, not carrier paths." width="98%"}
+
+The band-edge curves are not particle trajectories. In ordinary forward
+injection, an electron that crosses spatially from the n region into the p region
+is still a conduction-band electron; only when it later recombines with a hole
+does it make the interband transition illustrated in @fig-a01-energy-bands. This
+distinction separates **transport across a junction** from **transition between
+bands**.
+
 ### Forward and reverse bias
 
 Call the p-side terminal the **anode** A and the n-side terminal the **cathode** K.
 Applying a positive external voltage to A relative to K lowers the junction
 barrier and narrows the depletion region. Majority carriers are injected across
 the junction and become minority carriers on the other side; their diffusion and
-recombination produce a rapidly increasing **forward current**.
+recombination produce a rapidly increasing **forward current**. In the idealized
+band picture, forward voltage $V_D>0$ reduces the equilibrium barrier from
+$q_eV_{bi}$ toward $q_e(V_{bi}-V_D)$; this is a barrier-energy interpretation,
+not a claim that every electron gains exactly that energy.
 
 Applying a negative anode-to-cathode voltage raises the barrier and widens the
 depletion region. Majority-carrier injection becomes small. Thermally generated
 minority carriers still produce **reverse leakage**, so reverse current is not
 identically zero. The widened depletion region also stores electric-field energy
-and therefore has capacitance [@sze2006physics].
+and therefore has capacitance. In the same first-order picture, $V_D<0$ increases
+the barrier because $V_{bi}-V_D>V_{bi}$ [@sze2006physics].
 
 At a sufficiently large reverse field, carrier multiplication by impact
 ionization (**avalanche breakdown**) or quantum-mechanical tunnelling
@@ -497,16 +563,16 @@ Reconcile in this order:
    tolerance, meter burden, contacts, and self-heating.
 
 A typical datasheet curve represents typical manufacturer characterization, not
-a guaranteed limit for every unit. A chapter-generated curve from
-@eq-a01-diode-fit is synthetic. Neither is a measurement of the bench specimen.
+a guaranteed limit for every unit. A chapter-generated curve from @eq-a01-diode-fit
+is synthetic. Neither is a measurement of the bench specimen.
 The evidence labels must remain visible even when all three curves look similar.
 
 ## Rectification
 
 A rectifier makes current through a load predominantly one-directional. It does
 not by itself regulate the output, remove ripple, or provide isolation.
-@fig-a01-half-wave-rectifier shows the simplest case with a resistive load and no
-energy-storage element.
+The circuit in @fig-a01-half-wave-rectifier shows the simplest case with a
+resistive load and no energy-storage element.
 
 ![A diode and resistor forming an unsmoothed half-wave rectifier.](../../../build/circuits/a01-half-wave-rectifier.png){#fig-a01-half-wave-rectifier fig-alt="A time-varying voltage source v s drives diode D1 and load resistor R L in series. Diode current i D points from source to load. Output voltage v o is positive at TP2 relative to zero volt test point TP0; TP1 observes the source." width="85%"}
 
@@ -719,9 +785,12 @@ element converts a polarity mistake into a high-current short.
 
 ## Light emission and detection at a junction
 
-An electron dropping from a higher to a lower energy state can release energy as
-a photon; a photon can also create an electron–hole pair if its energy and the
-material's allowed transitions permit. Photon energy is
+The interband processes introduced in @fig-a01-energy-bands are the bridge to
+optoelectronics. A conduction-band electron recombining into an empty
+valence-band state can release energy as a photon or into the lattice. In the
+opposite direction, an absorbed photon can create an electron–hole pair if its
+energy and the material's allowed energy-and-momentum transitions permit. Photon
+energy is
 
 $$
 E_\gamma=h\nu=\frac{hc}{\lambda},
@@ -1236,6 +1305,11 @@ should be asked when a simple diode approximation disagrees with hardware.
 
 ## Summary
 
+- An energy band is a range of allowed electron states, not a physical layer.
+  Vertical motion on a band-only diagram means a change of state and energy;
+  transport across a junction is motion through position and can occur while a
+  carrier remains in the same band. At equilibrium the Fermi level is flat, while
+  electrostatic potential makes the band edges bend across a depletion region.
 - Doping changes carrier concentrations without making the bulk semiconductor a
   reservoir of net charge. At a p–n junction, diffusion exposes fixed ions, the
   depletion field drives opposing drift, and equilibrium has zero net terminal
@@ -1271,61 +1345,66 @@ limits. State any additional assumptions you introduce.
 
 Choose the one best answer in each case.
 
-1. An n-type region is normally electrically neutral because:
+1. On an energy-band diagram with no position axis, an upward transition from a
+   valence-band state to a conduction-band state means:
+   a. the electron physically moved toward the top surface of the device;
+   b. the electron necessarily crossed a p–n junction;
+   c. the electron changed allowed state and gained energy;
+   d. the band gap collapsed to zero.
+
+2. An n-type region is normally electrically neutral because:
    a. it contains no holes;
    b. mobile electron charge is approximately balanced by ionized donor charge;
    c. every donor captures a conduction electron permanently;
    d. diffusion has stopped.
 
-2. With $V_D=V_A-V_K$ and $I_D$ defined from A to K, a reverse-leakage operating
+3. With $V_D=V_A-V_K$ and $I_D$ defined from A to K, a reverse-leakage operating
    point normally has:
    a. $V_D>0$, $I_D>0$;
    b. $V_D>0$, $I_D<0$;
    c. $V_D<0$, $I_D<0$;
    d. $V_D<0$, $I_D=0$ exactly.
 
-3. The statement “a silicon diode drops $0.7$ V” is best classified as:
+4. The statement “a silicon diode drops $0.7$ V” is best classified as:
    a. an exact conservation law;
    b. a universal material constant;
    c. a rule-of-thumb approximation requiring an operating range;
    d. a guaranteed minimum from every datasheet.
 
-4. A datasheet's reverse recovery time can be compared directly with a circuit
+5. A datasheet's reverse recovery time can be compared directly with a circuit
    requirement only when:
    a. both values are called $t_{rr}$;
    b. the test currents, reverse drive, load, and endpoint criterion are relevant;
    c. the diode is silicon;
    d. average diode power is zero.
 
-5. A rail-clamp diode from a signal node to $V_{DD}$ conducts fault current into
+6. A rail-clamp diode from a signal node to $V_{DD}$ conducts fault current into
    the rail. A complete protection claim therefore also requires:
    a. only the diode's color band;
    b. proof that the rail can absorb the current without leaving its range;
    c. an infinite source resistance;
    d. zero junction capacitance.
 
-6. A photodiode under illumination is most usefully introduced as:
-   a. an exact light-dependent resistance;
-   b. a fixed voltage source independent of load;
-   c. a junction relation with an opposing light-generated current;
-   d. an LED operated below threshold.
-
-**Answer key:** 1 b; 2 c; 3 c; 4 b; 5 b; 6 c.
+**Answer key:** 1 c; 2 b; 3 c; 4 c; 5 b; 6 b.
 
 ### Retrieval and explanation
 
-1. Explain how diffusion, fixed ionized dopants, the depletion field, and drift
+1. Explain what the vertical axis, horizontal axis, band-edge curves, occupied
+   state dots, and transition arrows mean in @fig-a01-energy-bands and
+   @fig-a01-junction-bands. In particular, distinguish an electron crossing a
+   junction from an electron changing bands.
+2. Explain how diffusion, fixed ionized dopants, the depletion field, and drift
    establish equilibrium at a p–n junction. State which quantities remain in
    motion even when net terminal current is zero.
-2. Distinguish majority carriers, minority carriers, and net material charge in
+3. Distinguish majority carriers, minority carriers, and net material charge in
    p-type and n-type regions.
-3. Define forward conduction, reverse leakage, and reverse breakdown using the
+4. Define forward conduction, reverse leakage, and reverse breakdown using the
    declared $V_D$ and $I_D$ references.
-4. Explain why an ideal diode is a circuit approximation rather than a physical
+5. Explain why an ideal diode is a circuit approximation rather than a physical
    claim that the device literally becomes a wire or an empty gap.
-5. Distinguish a typical curve, a guaranteed electrical maximum, an absolute
+6. Distinguish a typical curve, a guaranteed electrical maximum, an absolute
    maximum rating, and a chapter calculation.
-6. Classify each name by what it primarily describes—structure/mechanism,
+7. Classify each name by what it primarily describes—structure/mechanism,
    material, application role, or optimization—and identify overlaps:
    Schottky, SiC, fast-recovery, freewheel, PIN, TVS, and photodiode.
 

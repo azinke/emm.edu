@@ -156,7 +156,10 @@
   is not a measurement. State the evidence status of every executable result.
 - Quarto cross-references already supply their configured prefix. Write “from
   `@eq-name`” and “as shown in `@fig-name`,” not “from equation `@eq-name`” or
-  “Figure `@fig-name`,” which render duplicated prefixes.
+  “Figure `@fig-name`,” which render duplicated prefixes. Do not begin a physical
+  source line with a cross-reference token; Pandoc can misread it as example-list
+  syntax and emit a bare number. Inspect forward references; if one renders as a
+  bare number, introduce the labelled target first or use “the figure below.”
 
 ## Circuits
 

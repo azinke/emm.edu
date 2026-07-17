@@ -196,11 +196,14 @@ stakes allow.
   key. Follow with retrieval, estimation, derivation, data interpretation,
   debugging, and open design; include a few inline self-check answers, while full
   solutions stay out of the public book.
-- **Quarto cross-references in lists:** never begin an indented ordered-list
-  continuation line with `@eq-`, `@fig-`, or `@tbl-`; Pandoc can interpret that
-  token as example-list syntax and silently corrupt numbering. Keep the reference
-  on the preceding physical line or prefix it with ordinary prose, then inspect the
-  rendered list.
+- **Quarto cross-references at line starts:** never begin a physical line with
+  `@eq-`, `@fig-`, or `@tbl-`, especially an indented ordered-list continuation.
+  Pandoc can interpret that token as example-list syntax and silently replace a
+  cross-reference with a bare number. Keep the reference on the preceding physical
+  line or prefix the same line with ordinary prose, then inspect the rendered text.
+  Inspect forward references especially: if a reference before its target renders
+  as a bare number, move the target earlier or use unambiguous prose such as “the
+  figure below” until the labelled figure has been introduced.
 - **Quarto cross-reference wording:** `@eq-...`, `@fig-...`, and `@tbl-...`
   already render the configured prefix. Write “from @eq-name” or “as shown in
   @fig-name,” not “from equation @eq-name” or “Figure @fig-name,” which produces

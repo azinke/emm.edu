@@ -10,6 +10,10 @@
 - Label axes, units, test points, bandwidth, references, and uncertainty on data
   figures.
 - Prefer recoverable source and data over screenshots.
+- Keep required static figure assets inside the Quarto project. Commit editable
+  source and any render-ready derivative directly referenced by QMD unless a
+  documented pre-render step generates it; treat copies under `build/` as
+  generated output.
 - Use reference designators and named signals consistently across circuit,
   equation, code, PCB, and test procedure.
 - Give diagrams useful captions and alternative text. Add a prose description
@@ -39,6 +43,16 @@
   calculated in the chapter, which was specified by a manufacturer or standard,
   and which was measured. Derive a result before using it in a datasheet or
   acceptance comparison.
+- A datasheet value and its test condition are one statement. Keep current,
+  voltage, temperature, pulse width, waveform, load, and endpoint attached to the
+  number. Do not multiply or otherwise combine limits from incompatible test
+  conditions as if they bound one operating point. Where the required corner is
+  absent, use a justified one-sided or source-network bound, or label the result
+  as a feasibility screen.
+- When charge storage or field energy contributes to terminal current, define the
+  signed stored charge and separate conduction current from
+  charge-rate/displacement current. State explicitly when either component is
+  negligible.
 - Show at least one limiting case and one second-order effect that breaks each
   first-order model. Where something is genuinely approximate or contested, say so
   with the bound rather than smoothing it over.
@@ -65,6 +79,19 @@
   reconcile with evidence, expose failure modes, and end in a bounded decision.
   These are functions to fulfil, not sections to stamp.
 
+## Device-family scope
+
+- When introducing a device class, provide a system-oriented selection map, not
+  merely the historically central device. Classify names by structure or
+  mechanism, material, application role, and optimization; these axes overlap.
+- Include the families a designer is likely to encounter, their distinctive
+  terminal behavior, decisive datasheet evidence, important naming traps, and
+  commonly named exceptions that do not share the assumed structure.
+- Keep the overview broad enough to support selection, then link specialist
+  analysis and circuit design to the downstream chapter that owns it. An
+  exhaustive recognition map does not require duplicating every later design
+  treatment.
+
 ## Evidence and decisions
 
 - Label invented or generated values **illustrative** or **synthetic** beside the
@@ -82,6 +109,15 @@
   and explicit decision rule. Equality does not satisfy a strict limit, and a
   typical specification does not become a worst-case guarantee through
   calculation.
+- Do not use “no abnormal heating” or a similar undefined observation as a pass
+  criterion. Define a temperature measurand and guarded limit, or identify smoke,
+  odor, discoloration, and unplanned rapid temperature rise as safety stop
+  conditions rather than acceptance evidence.
+- A protection decision covers the entire current and energy path: source and
+  impedance, limiting element, protection device, protected receiver or load,
+  rail source/sink behavior, return path, and relevant parasitics. Bound current
+  and power in every participating element; a clamp voltage alone is not a
+  complete protection claim.
 
 ## Diagrams and code that survive print
 
@@ -98,6 +134,14 @@
   exceeds the PDF text block, set an explicit `fig-width`, then inspect both the
   HTML and PDF render for clipping, crossed labels, unreadable type, and
   ambiguous edges.
+- If a diagram remains unstable, oversized, or unreadable under Mermaid layout,
+  replace it with recoverable static vector source and a controlled render
+  derivative. Keep the asset within `curriculum/book/figures/`; a path outside
+  the Quarto project may render in one format yet fail to be packaged for HTML.
+- Treat HTML and PDF as separate acceptance targets. Confirm that every rendered
+  HTML image `src` exists and loads; for PDF, inspect the actual full-book page,
+  not only the standalone image or the renderer's exit status. Check wide
+  figures, long tables, captions, and page breaks visually.
 - Mermaid renders no math: write symbols in node text as Unicode subscripts
   (`Rₜₕ`, `Rᵢₙ ∥ Cᵢₙ`) or plain names, never `$…$`. Put any real math in the
   caption or alt text, where LaTeX/MathML does render.
@@ -110,14 +154,22 @@
   variable name.
 - Executable arithmetic is not automatically a simulation, and generated output
   is not a measurement. State the evidence status of every executable result.
+- Quarto cross-references already supply their configured prefix. Write “from
+  `@eq-name`” and “as shown in `@fig-name`,” not “from equation `@eq-name`” or
+  “Figure `@fig-name`,” which render duplicated prefixes.
 
 ## Circuits
 
 - Place an explicit connection dot at every junction where three or more
   conductors meet (`node[circ]` / the `*` node in CircuitikZ), so a genuine node
-  is never ambiguous with a crossing.
+  is never ambiguous with a crossing. Do not place decorative dots at ordinary
+  two-terminal component joins or ground-symbol connections.
 - Bring test points out to clear space and place their labels off the wires and
   components — never draw a label over a conductor or symbol.
+- In limiting, bias, clamp, and protection circuits, rate the mandatory resistor,
+  fuse, bias network, rail sink, or other supporting element as well as the named
+  device. Trace the complete current path and confirm that the schematic,
+  equations, and acceptance boundary contain the same elements.
 
 ## Citation
 

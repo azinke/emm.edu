@@ -63,6 +63,14 @@ stakes allow.
   which was specified by the manufacturer, and which — if any — was measured.
   Present the derivation before using its result in a rating or acceptance
   comparison.
+- Treat the **test condition as part of every datasheet number**. Do not combine a
+  voltage limit at one current, temperature, pulse width, or waveform with a
+  current limit from another condition as though they describe one operating
+  point. If the needed corner is not specified, use a justified one-sided
+  monotonic bound, a source-network available-power bound, a cited curve with its
+  evidence class, or mark the result as an unqualified screen. Rate every mandatory
+  current-limiting, biasing, or energy-absorbing element as well as the named
+  device.
 - Demonstrate governing equations when doing so helps the reader form the concept.
   A useful demonstration normally includes: declared references; numerical
   substitution; units; an honest number of significant figures; interpretation in
@@ -79,6 +87,11 @@ stakes allow.
   physical behavior versus instrument indication. State whether a claim concerns
   steady state, a switching transient, sinusoidal steady state, or a bounded time
   interval.
+- When stored charge or field energy contributes at a terminal, separate total
+  terminal current into its conduction and charge-rate or displacement components.
+  Define which terminal owns the signed charge before writing its time derivative,
+  and state the condition under which one component may be neglected; do not
+  silently equate total current with only the capacitive or stored-charge term.
 - If something is genuinely uncertain, contested, or approximate, say so with the
   bound — don't smooth it over.
 - A design that merely equals a strict limit does not pass it. Carry tolerances,
@@ -88,6 +101,12 @@ stakes allow.
   inward (conservatively), or mark the displayed value approximate and retain the
   unrounded value for the decision; never let display rounding admit a value that
   the unrounded inequality rejects.
+- A protection or limiting claim includes the complete current and energy path:
+  source and source impedance, limiting element, protection device, protected
+  load or receiver, supply-rail source/sink behavior, return path, and relevant
+  parasitics. Bound the current and power in every participating element. A clamp
+  voltage alone does not establish receiver survival, rail regulation, transient
+  capability, or thermal safety.
 
 ## Invariant 3 — conventions (identical across all chapters)
 - **Front matter:** `title` (registry), one-sentence `description`, `chapter-id`,
@@ -125,18 +144,32 @@ stakes allow.
   the measurand in the favorable direction — for example, a probe that accelerates
   a capacitor discharge — correct the result or add an explicit one-sided loading
   bound to the decision rule rather than hiding the effect in generic uncertainty.
+  Do not use undefined observations such as “no abnormal heating” as acceptance
+  criteria: define a temperature measurand and guarded limit, or label smoke, odor,
+  discoloration, and unplanned rapid temperature rise as safety stop conditions
+  rather than evidence of a pass.
 - **Headings:** build a textbook skeleton, not a sequence of blog headlines. Use
   compact, chapter-specific noun phrases or precise declarative claims that name
   the concept, method, operating region, or decision. A reader scanning only the
   table of contents should see the intellectual progression. Avoid promotional,
   teasing, conversational, or cute titles; never use the word "model" in a heading
   and never paste generic template labels into the middle of every chapter.
+- **Static figures and asset provenance:** keep recoverable figure source inside
+  the Quarto project, normally under `curriculum/book/figures/`, so HTML packaging
+  does not depend on paths outside the project. Commit the editable source and,
+  when the QMD references a derived raster and no pre-render generator creates it,
+  commit that render-ready derivative too. Copies under `build/` are generated and
+  ignored. Do not move a required chapter input into `build/` without adding and
+  documenting a deterministic generation step that runs before Quarto.
 - **Mermaid:** vertical `flowchart TB`, concise nodes, detail in caption/alt, **no
   `$…$`** — Unicode subscripts (`Rₜₕ`, `Rᵢₙ ∥ Cᵢₙ`) or plain names. Every figure has
   a label, caption, and alt text. In a dependency diagram, define the arrow
   semantics and match direct prerequisites to `chapters.toml`; do not mix them
   with page order, conceptual spines, or downstream handoffs. Give a wide figure
-  an explicit print width and inspect both HTML and PDF.
+  an explicit print width and inspect both HTML and PDF. If Mermaid layout remains
+  unstable, oversized, or unreadable after simplification, replace it with a
+  recoverable static vector figure and a controlled render derivative rather than
+  accepting renderer-dependent geometry.
 - **Code:** standard-library, parameterized, runnable, with an expected-output
   block; lines short enough to survive print without awkward wrapping. Run it,
   compare actual and expected output, and keep variable names synchronized with the
@@ -147,16 +180,17 @@ stakes allow.
   simulation.
 - **Circuits:** CircuitikZ source in `curriculum/circuits/<id>.tex`, registered in
   `catalog.toml`, referenced as `../../../build/circuits/<id>.png`; explicit
-  connection dot at every 3+ conductor junction; test-point labels off wires and
-  components; regenerate with `python3 curriculum/tools/render_circuits.py --id <id>`
-  and verify visually. Trace every post-switch current and stored-energy path on
-  the rendered schematic and confirm that it contains exactly the elements in the
-  governing equation — a clamp drawn across $L$ is not equivalent to one drawn
-  across $R_w+L$. Leave a visible lead between a multiway junction and a component
-  body so a wire cannot appear to pass through the symbol, and move labels rather
-  than accepting collisions. Give portrait or unusually large figures an explicit
-  QMD `width` and inspect their size in the rendered chapter, not only as standalone
-  PNGs.
+  connection dot at every 3+ conductor junction **and nowhere else**; ordinary
+  two-terminal component connections and ground-symbol connections do not receive
+  decorative dots. Keep test-point labels off wires and components; regenerate
+  with `python3 curriculum/tools/render_circuits.py --id <id>` and verify visually.
+  Trace every post-switch current and stored-energy path on the rendered schematic
+  and confirm that it contains exactly the elements in the governing equation — a
+  clamp drawn across $L$ is not equivalent to one drawn across $R_w+L$. Leave a
+  visible lead between a multiway junction and a component body so a wire cannot
+  appear to pass through the symbol, and move labels rather than accepting
+  collisions. Give portrait or unusually large figures an explicit QMD `width`
+  and inspect their size in the rendered chapter, not only as standalone PNGs.
 - **Exercises:** open with `### Quick check` — do not put “multiple choice” in the
   heading — containing 5–6 one-best-answer items with options a–d and an answer
   key. Follow with retrieval, estimation, derivation, data interpretation,
@@ -167,6 +201,10 @@ stakes allow.
   token as example-list syntax and silently corrupt numbering. Keep the reference
   on the preceding physical line or prefix it with ordinary prose, then inspect the
   rendered list.
+- **Quarto cross-reference wording:** `@eq-...`, `@fig-...`, and `@tbl-...`
+  already render the configured prefix. Write “from @eq-name” or “as shown in
+  @fig-name,” not “from equation @eq-name” or “Figure @fig-name,” which produces
+  duplicated text such as “equation Equation 3.2.”
 - **Representations stay synchronized** (schematic ↔ equations ↔ code ↔ data ↔ test).
   If a diagram is intentionally architectural rather than a component schematic,
   say so; use the same boundary names, test points, quantities, and assumptions in
@@ -183,7 +221,12 @@ serves clean teaching — for example:
   second-order effects and limits → a design/selection procedure;
 - a **device chapter** may add: physical structure and I–V behavior, a parameter
   table sourced from a real datasheet, large- vs. small-signal treatment, and a
-  biasing/selection example;
+  biasing/selection example. It should also give a system-oriented family map
+  broad enough for later design work: distinguish structure or mechanism,
+  material, application role, and optimization; show where names overlap or are
+  misleading; include important non-members commonly called by the family name;
+  state the decisive datasheet evidence; and hand detailed specialist design to
+  its owning downstream chapter;
 - a **design/realization chapter** may run: requirement → architecture options →
   trade-off table → procedure → verification/acceptance.
 
@@ -253,7 +296,11 @@ prose that never gives the reader enough mathematics to reproduce the result.
 3. Audit quantitative inputs. Cite real specifications or mark values
    illustrative; include temperature, frequency, tolerance, aging, geometry,
    loading, connector/contact effects, and other operating conditions whenever they
-   can change the decision. A nominal calculation is not a worst-case design.
+   can change the decision. Keep each specification attached to its test current,
+   pulse width, waveform, temperature, and endpoint definition. Do not combine
+   limits from incompatible conditions, and screen the ratings and derating of
+   every required series, bias, shunt, or energy-absorbing element. A nominal
+   calculation is not a worst-case design.
 4. Audit terminology and provenance. Distinguish unallocated quantities from
    independently evaluated closure residuals; chapter calculations from datasheet
    limits; typical values from guaranteed bounds; and surface observations from
@@ -266,36 +313,55 @@ prose that never gives the reader enough mathematics to reproduce the result.
    wire/component overlap, appropriate page scale, and correspondence with the
    equations and test points. For every switched or clamped circuit, trace the
    pre-switch and post-switch loops and confirm each loop against the differential
-   equation and energy account.
-7. Run every code listing and compare it with its expected-output block. Confirm
+   equation and energy account. Remove connection dots from ordinary two-terminal
+   joins; retain them at every genuine three-or-more-conductor branch.
+7. Author static figures from recoverable source. Keep required assets inside the
+   Quarto project, record how every derivative was produced, and commit a
+   render-ready derivative when the QMD directly references it and no pre-render
+   hook creates it. Check that the final HTML image `src` resolves to an existing
+   file; a successful render does not prove that an externally referenced image
+   was packaged. For the PDF, inspect the actual full-book page for clipping,
+   overflow, unreadable type, and bad page breaks.
+8. Run every code listing and compare it with its expected-output block. Confirm
    that code names preserve the distinctions and assumptions made in the prose.
-8. Start independent review passes on the **completed draft** when review agents
+9. Start independent review passes on the **completed draft** when review agents
    are available:
    - **technical:** recompute every central numerical result, audit signs,
-     dimensions, conservation boundaries, limiting cases, and conclusions;
+     dimensions, conservation boundaries, datasheet-condition compatibility,
+     limiting cases, complete current/power paths, and conclusions;
    - **pedagogical:** read as a learner and instructor, audit the heading skeleton,
-     prerequisite burden, misconceptions, examples, exercises, and exit capability;
+     prerequisite burden, misconceptions, family/scope completeness, examples,
+     exercises, and exit capability;
    - **repository/editorial:** audit front matter, links, citations, evidence
-     labels, diagram rules, code/output agreement, Connections, and rendering.
+     labels, diagram rules, code/output agreement, and Connections; and
+   - **rendering/accessibility:** inspect actual HTML asset resolution, alt text,
+     equation and cross-reference wording, the full-book PDF pages containing wide
+     figures or long tables, and any format-specific clipping or overflow.
    Apply substantiated improvements, then repeat the affected calculation or
    render checks; a review of the outline alone is not a final review.
-9. Re-read the final heading list and every point-of-use citation. Verify that
+10. Re-read the final heading list and every point-of-use citation. Verify that
    bibliography keys resolve, inspect newly rendered bibliography entries for
    broken TeX/UTF-8 escaping in names and organizations, and confirm that the final
    `## References` note is not the first citation for a consequential claim.
-10. `python3 curriculum/tools/validate.py` — must pass.
-11. `quarto render curriculum/book/<file> --to html` — must succeed; verify no
+11. `python3 curriculum/tools/validate.py` — must pass.
+12. `quarto render curriculum/book/<file> --to html` — must succeed; verify no
    "model" in headings, `[1]` citations, `TB` mermaid with Unicode subscripts, the
    MCQ with a–d options, figures resolving, equations rendering, and no missing or
-   duplicate internal targets. Compare `git status --short` before and after the
-   render so generated `.html` or `site_libs/` artifacts are not left in the source
-   tree; use the declared single-file command unless full-project output placement
-   has been explicitly verified.
-12. Read the rendered chapter once as a student: can every central result be
+   duplicate internal targets or duplicated prefixes such as “Equation Equation.”
+   Inspect every chapter-local image URL and confirm its target exists. Compare
+   `git status --short` before and after the render so generated `.html` or
+   `site_libs/` artifacts are not left in the source tree; use the declared
+   single-file command unless full-project output placement has been explicitly
+   verified.
+13. Render the full book to PDF when pagination, wide figures, long tables, or
+   cross-chapter numbering can affect the result. Inspect the actual pages that
+   contain new or changed material; a standalone image and a successful XeLaTeX
+   exit do not establish that content fits the page.
+14. Read the rendered chapter once as a student: can every central result be
    recomputed, can every sign be interpreted, and is it clear what is exact,
    illustrative, measured, assumed, or still unverified? Read the table of contents
    once more: does it still teach the chapter's progression?
-13. Report the layout you chose and why, meaningful review-driven corrections, any
+15. Report the layout you chose and why, meaningful review-driven corrections, any
    new `references.bib` keys, and the verification results.
 
 ## Quality bar

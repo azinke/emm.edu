@@ -1,0 +1,51 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \coordinate (B) at (4.2,3.6);
+  \coordinate (E) at (6.5,0.8);
+  \coordinate (C) at (10.8,5.6);
+
+  % Source and bias network.
+  \draw (0,0) node[ground] {}
+    to[sV, l_={$\widetilde v_{\mathrm{sig}}$}] (0,3.6)
+    to[R, l={$R_{\mathrm{sig}}$}] (B);
+  \draw (B) to[R, l_={$R_B=R_1\parallel R_2$}]
+    (4.2,0) node[ground] {};
+
+  % Hybrid-pi input and emitter degeneration.
+  \draw (B) -- (6.5,3.6)
+    to[R, l={$r_\pi$}] (E);
+  \node[font=\small] at (5.65,3.30) {$+$};
+  \node[font=\small] at (5.25,2.25) {$\widetilde v_\pi$};
+  \node[font=\small] at (5.65,1.10) {$-$};
+  \draw (E) to[R, l_={$R_{E1}$}] (6.5,-1.5) node[ground] {};
+
+  % Collector loads, output resistance, and controlled current.
+  \draw (C) -- (8.5,5.6)
+    to[R, l={$r_o$}] (8.5,0.8) -- (E);
+  \draw (C) to[cisource] (10.8,0.8) -- (E);
+  \draw[->, thick] (11.5,4.7) -- (11.5,1.7);
+  \node[font=\small, anchor=west] at (11.7,3.2)
+    {$g_m\widetilde v_\pi$};
+  \draw (C) -- (13.2,5.6)
+    to[R, l={$R_C$}] (13.2,0) node[ground] {};
+  \draw (C) -- (15.4,5.6)
+    to[R, l={$R_L$}] (15.4,0) node[ground] {};
+  \node[font=\small, anchor=south west] at (11.0,5.7)
+    {$\widetilde v_o$};
+
+  % Named node stubs.
+  \draw (B) -- (4.2,4.35)
+    node[ocirc, label={[font=\small]above:{b: TPB}}] {};
+  \draw (C) -- (10.8,6.35)
+    node[ocirc, label={[font=\small]above:{c: TPC}}] {};
+  \draw (E) -- (5.5,0.8)
+    node[ocirc, label={[font=\small]left:{e: TPE}}] {};
+  \node[circ] at (B) {};
+  \node[circ] at (C) {};
+  \node[circ] at (E) {};
+  \node[font=\small] at (14.3,-0.8) {AC reference};
+\end{circuitikz}
+\end{document}

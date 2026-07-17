@@ -1,0 +1,57 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % BJT current-sink mirror. The reference device is flipped so the
+  % bases face each other and no control wire crosses a transistor.
+  \node[npn, xscale=-1, anchor=B] (Q1) at (2.2,2.0) {};
+  \node[npn, anchor=B] (Q2) at (4.4,2.0) {};
+  \draw (Q1.E) -- (Q1.E |- 0,0) node[ground] {};
+  \draw (Q2.E) -- (Q2.E |- 0,0) node[ground] {};
+  \draw (Q1.B) -- (Q2.B);
+  \coordinate (QR) at (Q1.C |- 0,3.8);
+  \draw (Q1.C) -- (QR)
+    -- (Q1.B |- 0,3.8)
+    -- (Q1.B);
+  \draw (QR) to[R, l={$R_{\mathrm{REF}}$}, i<^={$I_{\mathrm{REF}}$}]
+    (QR |- 0,6.0) node[vcc] {$V_{CC}$};
+  \draw (Q2.C) -- (Q2.C |- 0,5.0)
+    node[ocirc, label={[font=\small]above:{TPO}}] {};
+  \draw[->] (5.9,4.7) -- (5.9,3.5)
+    node[midway, right, font=\small] {$I_O$};
+  \node[font=\small] at (6.65,4.6) {$+$};
+  \node[font=\small] at (6.65,2.5) {$V_O$};
+  \node[font=\small] at (6.65,0.5) {$-$};
+  \node[circ] at (QR) {};
+  \node[circ] at (Q1.B) {};
+  \node[font=\small] at (0.75,2.25) {$Q_1$};
+  \node[font=\small] at (5.85,2.25) {$Q_2$};
+  \node[font=\small\bfseries] at (3.3,-1.0) {(a) NPN current sink};
+
+  % MOSFET current-sink mirror, with the reference gate facing inward.
+  \node[nmos, xscale=-1, anchor=G] (M1) at (9.7,2.0) {};
+  \node[nmos, anchor=G] (M2) at (11.9,2.0) {};
+  \draw (M1.S) -- (M1.S |- 0,0) node[ground] {};
+  \draw (M2.S) -- (M2.S |- 0,0) node[ground] {};
+  \draw (M1.G) -- (M2.G);
+  \coordinate (MR) at (M1.D |- 0,3.8);
+  \draw (M1.D) -- (MR)
+    -- (M1.G |- 0,3.8)
+    -- (M1.G);
+  \draw (MR) to[R, l={$R_{\mathrm{REF}}$}, i<^={$I_{\mathrm{REF}}$}]
+    (MR |- 0,6.0) node[vcc] {$V_{DD}$};
+  \draw (M2.D) -- (M2.D |- 0,5.0)
+    node[ocirc, label={[font=\small]above:{TPO}}] {};
+  \draw[->] (13.4,4.7) -- (13.4,3.5)
+    node[midway, right, font=\small] {$I_O$};
+  \node[font=\small] at (14.15,4.6) {$+$};
+  \node[font=\small] at (14.15,2.5) {$V_O$};
+  \node[font=\small] at (14.15,0.5) {$-$};
+  \node[circ] at (MR) {};
+  \node[circ] at (M1.G) {};
+  \node[font=\small] at (8.25,2.25) {$M_1$};
+  \node[font=\small] at (13.35,2.25) {$M_2$};
+  \node[font=\small\bfseries] at (10.8,-1.0) {(b) nMOS current sink};
+\end{circuitikz}
+\end{document}

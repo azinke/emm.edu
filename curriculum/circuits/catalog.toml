@@ -1,6 +1,76 @@
 version = 1
 
 [[circuit]]
+id = "a03-common-emitter-amplifier"
+source = "a03-common-emitter-amplifier.tex"
+chapter_id = "A03"
+caption = "A voltage-divider-biased common-emitter stage with split emitter degeneration, coupling capacitors, a bypass capacitor, finite source resistance, a load, and named DC and signal test points."
+alt = "A signal source v sig at TPIN with source resistance R sig drives the base of NPN transistor Q1 through input coupling capacitor C IN. Divider resistors R1 and R2 bias base test point TPB from V CC. Collector resistor R C connects V CC to collector test point TPC. Emitter test point TPE passes through unbypassed R E1 and bypassed R E2 to TP0; capacitor C E is in parallel with R E2. Output coupling capacitor C OUT connects TPC to output test point TPO and load R L."
+
+[[circuit]]
+id = "a03-bias-strategies"
+source = "a03-bias-strategies.tex"
+chapter_id = "A03"
+caption = "Three BJT bias networks expose different feedback paths: fixed base current, collector-to-base feedback, and divider bias with emitter feedback."
+alt = "Panel a shows fixed bias: R B connects V CC to the base of an NPN transistor, R C connects V CC to its collector, and the emitter is grounded. Panel b moves R B from V CC to the collector so a collector-voltage decrease opposes base current. Panel c uses divider R1 and R2 at the base and emitter resistor R E so a current increase raises emitter voltage and reduces V BE."
+
+[[circuit]]
+id = "a03-common-emitter-midband"
+source = "a03-common-emitter-midband.tex"
+chapter_id = "A03"
+caption = "The complete midband incremental network corresponding to the canonical common-emitter stage: ideal coupling and bypass capacitors become shorts, the ideal supply becomes AC reference, and every source, bias, device, collector, emitter, and load resistance remains visible."
+alt = "An incremental source v sig and R sig drive base node b. R B equal to R1 parallel R2 connects b to AC reference. Hybrid-pi resistance r pi connects b to emitter node e, which returns through unbypassed R E1. Collector node c returns through R C and load R L to AC reference. Output resistance r o and a downward controlled current g m v pi connect c to e. Nodes b, c, and e correspond to TPB, TPC, and TPE."
+
+[[circuit]]
+id = "a03-incremental-equivalents"
+source = "a03-incremental-equivalents.tex"
+chapter_id = "A03"
+caption = "Low-frequency incremental equivalents about a declared operating point: the BJT hybrid-pi form and the MOSFET transconductance form retain input control, dependent current, and finite output resistance."
+alt = "Panel a shows a BJT hybrid-pi equivalent with r pi from base to emitter, a downward controlled current g m v pi from collector to emitter, and output resistance r o in parallel. Panel b shows a MOSFET equivalent with an open low-frequency gate control port, voltage v gs from gate to source, a downward controlled current g m v gs from drain to source, and output resistance r o in parallel."
+
+[[circuit]]
+id = "a03-common-source-amplifier"
+source = "a03-common-source-amplifier.tex"
+chapter_id = "A03"
+caption = "A voltage-divider-biased common-source stage. The gate bias network establishes the DC gate voltage; source resistance supplies local feedback; coupling capacitors keep source and load DC conditions separate."
+alt = "A signal source v sig at TPIN and resistance R sig drive the gate of n-channel MOSFET M1 through C IN. R G1 and R G2 bias gate test point TPG from V DD. Drain resistor R D connects V DD to drain test point TPD. Source test point TPS passes through R S to TP0. C OUT couples TPD to output TPO and load R L."
+
+[[circuit]]
+id = "a03-followers-and-darlington"
+source = "a03-followers-and-darlington.tex"
+chapter_id = "A03"
+caption = "Non-inverting buffer stages: an emitter follower, a source follower, and a Darlington emitter follower. Each trades voltage gain near unity for current drive and impedance transformation; the Darlington consumes additional DC headroom."
+alt = "Panel a shows an NPN emitter follower with collector at V CC, input at the base, output at the emitter, and emitter resistor to ground. Panel b shows an n-channel MOSFET source follower with drain at V DD, input at the gate, output at the source, and source resistor to ground. Panel c shows two NPN transistors in a Darlington connection, with Q1 emitter driving Q2 base, joined collectors at V CC, output at Q2 emitter, and an emitter resistor to ground."
+
+[[circuit]]
+id = "a03-simple-current-mirrors"
+source = "a03-simple-current-mirrors.tex"
+chapter_id = "A03"
+caption = "Simple two-device low-side current mirrors used as bias elements. The inward-facing reference and output devices make the shared control node explicit; output test point TPO must retain enough voltage for the stated compliance and current-error limits."
+alt = "Panel a shows inward-facing matched NPN transistors Q1 and Q2 with separate grounded emitters and a short horizontal common-base connection. An orthogonal strap above Q1 ties its collector to its base without crossing either transistor; R REF feeds that reference node from V CC. Q2 collector rises vertically to output TPO. Panel b uses the same rectangular arrangement for matched nMOS devices with common gates and grounded sources."
+
+[[circuit]]
+id = "a03-common-base-gate"
+source = "a03-common-base-gate.tex"
+chapter_id = "A03"
+caption = "Common-base and common-gate stages expose their low-resistance emitter or source input while the control terminal is bypassed to AC reference. Named control-bias ports and idealized high-incremental-resistance current sinks provide the two DC paths required to establish the operating point."
+alt = "Panel a shows an NPN common-base stage. A source and finite source resistance drive the emitter through an input capacitor, while a downward ideal bias-current sink supplies a DC emitter path. The collector connects through R C to V CC and supplies output voltage. The base connects to a DC bias port and through C B to ground, making it an AC reference at midband. Panel b shows the analogous nMOS common-gate stage with a source input, downward source-bias current sink, drain resistor R D, gate bias port, and gate bypass capacitor C G."
+
+[[circuit]]
+id = "a03-wilson-current-mirror"
+source = "a03-wilson-current-mirror.tex"
+chapter_id = "A03"
+caption = "A classic three-NPN Wilson low-side current mirror. Feedback suppresses first-order base-current transfer error and raises incremental output resistance, while the extra device and internal node consume headroom and add dynamic behavior."
+alt = "Three NPN transistors form a Wilson current sink. Matched lower devices Q1 and Q2 have grounded emitters. Their bases share a control node with diode-connected Q2 collector and output-transistor Q3 emitter. Q1 collector joins Q3 base at a separate reference node fed through R REF from V CC. Q3 collector alone rises to output test point TPO, where output current enters and output voltage is positive relative to ground."
+
+[[circuit]]
+id = "a03-bjt-cascode"
+source = "a03-bjt-cascode.tex"
+chapter_id = "A03"
+caption = "A BJT cascode stacks a lower common-emitter transconductance device beneath an upper common-base isolation device. One signal-current path crosses both devices; the upper bias holds the intermediate collector voltage comparatively still while the output moves."
+alt = "Two NPN transistors are stacked vertically. Lower Q1 receives a combined DC bias and incremental input at its base and returns through emitter resistor R E. Its collector connects directly upward to Q2 emitter at intermediate test point v x, marked as having small signal movement. Q2 base connects to bias V B2 and bypass capacitor C B to AC reference. Q2 collector connects through R C to V CC and horizontally to output v o. Labels identify Q1 as the common-emitter transconductance device and Q2 as the common-base isolation device."
+
+[[circuit]]
 id = "a02-transistor-terminal-references"
 source = "a02-transistor-terminal-references.tex"
 chapter_id = "A02"

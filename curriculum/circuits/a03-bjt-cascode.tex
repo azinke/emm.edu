@@ -1,0 +1,42 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Lower common-emitter transconductance device.
+  \node[npn, anchor=B] (Q1) at (2.8,1.9) {};
+  \draw (0.2,0 |- Q1.B)
+    node[ocirc, label={[font=\small]left:{$V_{B1}+\widetilde v_i$}}] {}
+    -- (Q1.B);
+  \draw (Q1.E) to[R, l_={$R_E$}] (Q1.E |- 0,0) node[ground] {};
+
+  % Upper common-base device on the same collector-current column.
+  \node[npn, anchor=B] (Q2) at (2.8,4.5) {};
+  \coordinate (B2BIAS) at (0.8,0 |- Q2.B);
+  \draw (B2BIAS)
+    node[ocirc, label={[font=\small]above left:{$V_{B2}$ bias}}] {}
+    -- (Q2.B);
+  \draw (B2BIAS) to[C, l_={$C_B$}] (0.8,2.8)
+    node[ground, label={[font=\small]below:{AC reference}}] {};
+
+  % Shared signal-current path and named intermediate node.
+  \draw (Q1.C) -- (Q2.E);
+  \draw (Q1.C) -- (5.7,0 |- Q1.C)
+    node[ocirc, label={[font=\small]right:{$\widetilde v_x$ small}}] {};
+  \node[circ] at (Q1.C) {};
+
+  % Collector load and output.
+  \draw (Q2.C) to[R, l={$R_C$}] (Q2.C |- 0,7.2)
+    node[vcc] {$V_{CC}$};
+  \draw (Q2.C) -- (6.2,0 |- Q2.C)
+    node[ocirc, label={[font=\small]right:{$\widetilde v_o$}}] {};
+  \node[circ] at (Q2.C) {};
+
+  \node[font=\small, align=left, anchor=west] at (4.2,1.7)
+    {$Q_1$: common-emitter\\transconductance device};
+  \node[font=\small, align=left, anchor=west] at (4.2,4.4)
+    {$Q_2$: common-base\\isolation device};
+  \node[font=\small\bfseries] at (3.2,-0.9)
+    {BJT cascode: one signal-current path};
+\end{circuitikz}
+\end{document}

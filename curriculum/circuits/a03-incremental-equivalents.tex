@@ -1,0 +1,49 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % BJT hybrid-pi equivalent.
+  \coordinate (BE) at (0,0);
+  \coordinate (BC) at (4.6,4.2);
+  \draw (-1.4,3.0) node[ocirc, label={[font=\small]left:{B}}] {}
+    to[R, l={$r_\pi$}] (-1.4,0)
+    -- (4.6,0)
+    node[ocirc, label={[font=\small]below:{E}}] {};
+  \node[font=\small] at (0.10,2.65) {$+$};
+  \node[font=\small] at (0.35,1.50) {$v_\pi$};
+  \node[font=\small] at (0.10,0.35) {$-$};
+  \draw (BC) to[cisource] (4.6,0);
+  \draw (BC) -- (4.6,4.8)
+    node[ocirc, label={[font=\small]above:{C}}] {};
+  \draw[->, thick] (5.15,3.45) -- (5.15,0.75);
+  \node[font=\small, anchor=west] at (5.35,2.10) {$g_m v_\pi$};
+  \draw (BC) -- (2.4,4.2)
+    to[R, l={$r_o$}] (2.4,0);
+  \node[circ] at (4.6,0) {};
+  \node[font=\small\bfseries] at (1.6,-1.0)
+    {(a) BJT hybrid-$\pi$ equivalent};
+
+  % MOSFET transconductance equivalent.
+  \coordinate (MS) at (8.3,0);
+  \coordinate (MD) at (12.9,4.2);
+  \draw (8.3,3.0) node[ocirc, label={[font=\small]left:{G}}] {};
+  \draw (8.9,2.45) node[font=\small] {$+$};
+  \draw (9.15,1.20) node[font=\small] {$v_{gs}$};
+  \draw (8.9,0.35) node[font=\small] {$-$};
+  \draw (8.3,0) -- (12.9,0)
+    node[ocirc, label={[font=\small]below:{S}}] {};
+  \draw (MD) to[cisource] (12.9,0);
+  \draw (MD) -- (12.9,4.8)
+    node[ocirc, label={[font=\small]above:{D}}] {};
+  \draw[->, thick] (13.45,3.45) -- (13.45,0.75);
+  \node[font=\small, anchor=west] at (13.65,2.10) {$g_m v_{gs}$};
+  \draw (MD) -- (10.7,4.2)
+    to[R, l={$r_o$}] (10.7,0);
+  \node[circ] at (12.9,0) {};
+  \node[circ] at (MD) {};
+  \node[circ] at (BC) {};
+  \node[font=\small\bfseries] at (10.6,-1.0)
+    {(b) MOSFET low-frequency equivalent};
+\end{circuitikz}
+\end{document}

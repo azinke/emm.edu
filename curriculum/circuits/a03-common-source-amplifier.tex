@@ -1,0 +1,57 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \coordinate (G) at (5.0,4.2);
+  \node[nmos, anchor=G] (M1) at (G) {};
+
+  % Signal path on the gate-height rail.
+  \draw (0,0) node[ground] {}
+    to[sV, l_={$v_{\mathrm{sig}}$}] (0,0 |- M1.G)
+    to[R, l={$R_{\mathrm{sig}}$}] (1.9,0 |- M1.G)
+    to[C, l={$C_{\mathrm{IN}}$}] (3.6,0 |- M1.G)
+    -- (M1.G);
+  \draw (0,0 |- M1.G) -- (0,4.95)
+    node[ocirc, label={[font=\small]above:{TPIN}}] {};
+
+  % Gate divider and drain branch share a clean top supply rail.
+  \coordinate (GDIV) at (4.25,0 |- M1.G);
+  \draw (GDIV) to[R, l_={$R_{G1}$}] (4.25,7.0);
+  \draw (GDIV) to[R, l={$R_{G2}$}] (4.25,0) node[ground] {};
+  \draw (GDIV) -- (M1.G);
+  \draw (M1.D) to[R, l={$R_D$}] (M1.D |- 0,7.0);
+  \draw (4.25,7.0) -- (M1.D |- 0,7.0)
+    node[midway, vcc] {$V_{DD}$};
+  \draw (M1.S) to[R, l_={$R_S$}] (M1.S |- 0,0)
+    node[ground] {};
+
+  % Output rail at the exact drain height.
+  \draw (M1.D) -- (9.0,0 |- M1.D)
+    to[C, l={$C_{\mathrm{OUT}}$}] (10.9,0 |- M1.D)
+    -- (12.0,0 |- M1.D)
+    coordinate (OUT)
+    to[R, l={$R_L$}] (12.0,0) node[ground] {};
+
+  % Orthogonal test-point stubs.
+  \draw (M1.G) -- (5.0,4.95)
+    node[ocirc, label={[font=\small]above:{TPG}}] {};
+  \draw (8.0,0 |- M1.D) -- (8.0,5.65)
+    node[ocirc, label={[font=\small]above:{TPD}}] {};
+  \draw (M1.S) -- (7.35,0 |- M1.S)
+    node[ocirc, label={[font=\small]right:{TPS}}] {};
+  \draw (OUT) -- (12.8,0 |- OUT)
+    node[ocirc, label={[font=\small]right:{TPO}}] {};
+  \draw (M1.S |- 0,0) -- (7.2,0)
+    node[ocirc, label={[font=\small]right:{TP0: $0$ V}}] {};
+
+  \node[circ] at (GDIV) {};
+  \node[circ] at (M1.G) {};
+  \node[circ] at (M1.D) {};
+  \node[circ] at (M1.S) {};
+  \node[circ] at (8.0,0 |- M1.D) {};
+  \node[circ] at (OUT) {};
+  \node[circ] at (0,0 |- M1.G) {};
+  \node[font=\small] at (6.9,4.25) {$M_1$};
+\end{circuitikz}
+\end{document}

@@ -163,16 +163,97 @@
 
 ## Circuits
 
+- Use a rectangular visual grammar. Place the positive supply toward the top,
+  the return or negative rail toward the bottom, inputs toward the left, and
+  outputs toward the right when the topology permits. Align repeated branches,
+  matched devices, test points, and corresponding BJT/MOS panels to a common
+  grid. Preserve generous white space between functional blocks rather than
+  compressing the circuit to minimize page area.
+- Route external wires as horizontal and vertical segments. A diagonal stroke is
+  acceptable inside a standard transistor, diode, op-amp, switch, or other
+  component symbol; it is not a reason to continue the wire diagonally. Avoid
+  slanted wires, arbitrary zigzags, skewed rails, diamond-shaped routing, and
+  decorative bends. If a wire cannot reach a terminal cleanly, change device
+  placement or orientation instead of adding an angled segment.
+- Connect to exact named symbol anchors. In CircuitikZ/TikZ, derive conductors
+  from anchors such as `(Q1.B)`, `(Q1.C)`, `(Q1.E)`, `(M1.G)`, `(M1.D)`, and
+  `(M1.S)`, then use `|-` and `-|` projections or named intermediate coordinates
+  for right-angle turns. Do not use a visually estimated coordinate near a
+  terminal: a small symbol, scale, or orientation change can otherwise leave a
+  gap or make a wire appear to pass through the device.
+- Rotate or mirror a device when doing so makes connected terminals face one
+  another and removes a crossing. Matched mirror devices should normally face
+  inward with a short shared-control connection; route a diode-connected strap
+  outside and above or beside the reference device, never through its body. In a
+  stacked topology, align the upper device with the lower device whose current
+  path it continues. Do not preserve a library symbol's default orientation at
+  the expense of clarity.
+- Prefer topology-preserving placement over long return paths. Nodes that have
+  different electrical roles — for example, a mirror's reference node, shared
+  control node, and output node — must remain spatially distinct. Place devices
+  so those nodes can be connected by short orthogonal paths without a wire
+  crossing another device or masquerading as a different node.
+- Eliminate wire crossings through placement, spacing, mirroring, and alignment.
+  If a crossing is genuinely unavoidable, use an explicit line jump or bridge
+  with no junction dot, explain the convention when it is not self-evident, and
+  keep the crossing far from labels and terminals. Two lines that nearly touch,
+  overlap for a short distance, or cross at a component body are never acceptable
+  substitutes for a clear connection.
 - Place an explicit connection dot at every junction where three or more
   conductors meet (`node[circ]` / the `*` node in CircuitikZ), so a genuine node
   is never ambiguous with a crossing. Do not place decorative dots at ordinary
   two-terminal component joins or ground-symbol connections.
+- Leave a visible straight lead between every multiway junction and the adjacent
+  component body. A dot on or immediately against a transistor outline can look
+  like a wire passing through the symbol. Likewise, do not place an open test
+  point directly on a crowded branch.
 - Bring test points out to clear space and place their labels off the wires and
   components — never draw a label over a conductor or symbol.
+- Keep device designators, component values, node names, polarity signs, and
+  current arrows in dedicated white space. Move the label or enlarge the drawing;
+  never accept a collision. In multi-panel figures, check the boundary between
+  panels explicitly: labels and arrows near one panel must not read as though they
+  belong to the next. Use consistent label positions and device scale across
+  analogous panels.
+- Declare current direction and voltage polarity graphically wherever the prose
+  or equations use signed quantities. Make a current-source direction visible at
+  the final print scale; if the library symbol's internal arrow becomes
+  ambiguous, add a separate adjacent direction arrow with enough clearance and
+  alignment that it cannot be mistaken for another branch or neighboring panel.
+- Draw an electrically complete circuit for every operating regime being taught.
+  Trace DC with coupling and bypass capacitors open, the declared AC range with
+  their stated impedances, and each switched state separately. A DC-bias port,
+  resistor, or idealized bias-current source must provide the required terminal
+  path; an AC source behind a coupling capacitor does not. Distinguish an
+  AC-reference path from a DC-bias path in both the drawing and caption.
+- Show idealizations explicitly. An ideal current source, AC ground, bias port,
+  or omitted load must be drawn or declared in the caption and prose. Do not
+  leave a transistor terminal apparently floating while relying on an unstated
+  external circuit to establish its operating point.
 - In limiting, bias, clamp, and protection circuits, rate the mandatory resistor,
   fuse, bias network, rail sink, or other supporting element as well as the named
   device. Trace the complete current path and confirm that the schematic,
   equations, and acceptance boundary contain the same elements.
+- Keep dual and related schematics visually homologous. A BJT and MOSFET pair
+  should use the same rail, signal, bias, and output layout unless a real device
+  difference requires otherwise. Use the same reference designators, signal
+  names, current directions, voltage polarities, and test-point vocabulary as the
+  equations, prose, code, data tables, and procedures.
+- Give each circuit a caption and alt text that state the topology, signal path,
+  bias/return path, important node roles, and any idealized source or reference.
+  Alt text should describe electrical relationships rather than merely listing
+  visible shapes.
+- Render after every geometry change with
+  `python3 curriculum/tools/render_circuits.py --id <id>`. Inspect the
+  standalone raster at full size and at its intended QMD width. When a chapter
+  contains several circuits, inspect them together as a set for inconsistent
+  scale, spacing, orientation, or visual grammar.
+- A successful compile proves only that the source is syntactically valid.
+  Visual acceptance requires checking for unintended diagonals, crossings,
+  near-connections, missing dots, extra dots, cropped labels, excessive white
+  space, compressed branches, and unreadable arrows. Then inspect the rendered
+  HTML and the actual full-book PDF page, because a clean standalone image can
+  still be too small or badly placed in the chapter.
 
 ## Citation
 

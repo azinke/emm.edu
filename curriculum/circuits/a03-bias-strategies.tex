@@ -1,0 +1,46 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Fixed base bias: every branch follows a horizontal or vertical grid line.
+  \node[npn, anchor=B] (QF) at (2.0,2.6) {};
+  \draw (QF.C) to[R, l={$R_C$}] (QF.C |- 0,5.8)
+    node[vcc] {$V_{CC}$};
+  \draw (0.0,5.8) node[vcc] {$V_{CC}$}
+    -- (0.0,0 |- QF.B)
+    to[R, l={$R_B$}] (QF.B);
+  \draw (QF.E) -- (QF.E |- 0,0) node[ground] {};
+  \node[font=\small] at (3.25,2.8) {$Q_1$};
+  \node[font=\small\bfseries] at (2.0,-0.9) {(a) Fixed base bias};
+
+  % Collector-to-base feedback: the resistor bridges two exact node heights.
+  \node[npn, anchor=B] (QC) at (7.6,2.6) {};
+  \draw (QC.C) to[R, l={$R_C$}] (QC.C |- 0,5.8)
+    node[vcc] {$V_{CC}$};
+  \draw (QC.C) -- (6.0,0 |- QC.C)
+    -- (6.0,0 |- QC.B)
+    to[R, l={$R_B$}] (QC.B);
+  \draw (QC.E) -- (QC.E |- 0,0) node[ground] {};
+  \node[circ] at (QC.C) {};
+  \node[font=\small] at (8.85,2.8) {$Q_1$};
+  \node[font=\small\bfseries] at (7.6,-0.9)
+    {(b) Collector feedback};
+
+  % Divider bias with emitter feedback.
+  \node[npn, anchor=B] (QD) at (13.5,2.6) {};
+  \draw (QD.C) to[R, l={$R_C$}] (QD.C |- 0,5.8)
+    node[vcc] {$V_{CC}$};
+  \draw (11.4,5.8) node[vcc] {$V_{CC}$}
+    to[R, l={$R_1$}] (11.4,0 |- QD.B)
+    -- (QD.B);
+  \draw (11.4,0 |- QD.B)
+    to[R, l={$R_2$}] (11.4,0) node[ground] {};
+  \draw (QD.E) to[R, l_={$R_E$}] (QD.E |- 0,0)
+    node[ground] {};
+  \node[circ] at (11.4,0 |- QD.B) {};
+  \node[font=\small] at (14.75,2.8) {$Q_1$};
+  \node[font=\small\bfseries] at (13.5,-0.9)
+    {(c) Divider and emitter feedback};
+\end{circuitikz}
+\end{document}

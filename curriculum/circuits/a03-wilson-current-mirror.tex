@@ -1,0 +1,57 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Classic three-NPN Wilson current sink. Q1 and Q2 form the matched lower
+  % pair; Q2 is diode connected; Q3 is the output device.
+  \node[npn, xscale=-1, anchor=B] (Q1) at (2.5,1.8) {};
+  \node[npn, anchor=B] (Q2) at (5.0,1.8) {};
+  \node[npn, anchor=B] (Q3) at (5.0,4.0) {};
+
+  % Common emitter reference rail for the lower pair.
+  \draw (Q1.E) -- (Q1.E |- 0,0) node[ground] {};
+  \draw (Q2.E) -- (Q2.E |- 0,0) node[ground] {};
+
+  % Shared control node B: both lower bases, diode-connected Q2 collector,
+  % and the emitter of the output device.
+  \coordinate (BNODE) at (5.0,3.0);
+  \draw (Q1.B) -- (Q1.B |- 0,3.0) -- (BNODE);
+  \draw (Q2.B) -- (BNODE);
+  \draw (Q2.C) -- (Q2.C |- 0,3.0) -- (BNODE);
+  \draw (Q3.E) -- (Q3.E |- 0,3.0) -- (BNODE);
+
+  % Reference node R: Q1 collector and Q3 base.
+  \coordinate (RNODE) at (Q1.C |- 0,4.7);
+  \draw (Q1.C) -- (RNODE)
+    -- (Q3.B |- 0,4.7)
+    -- (Q3.B);
+  \draw (RNODE) to[R, l={$R_{\mathrm{REF}}$}] (RNODE |- 0,7.0)
+    node[vcc] {$V_{CC}$};
+  \draw[->] (0.45,6.5) -- (0.45,5.25)
+    node[midway, left, font=\small] {$I_{\mathrm{REF}}$};
+
+  % Output node and declared current/voltage references.
+  \draw (Q3.C) -- (Q3.C |- 0,6.4)
+    node[ocirc, label={[font=\small]above:{TPO}}] {};
+  \draw[->] (7.0,6.1) -- (7.0,5.0)
+    node[midway, right, font=\small] {$I_O$};
+  \node[font=\small] at (7.75,5.9) {$+$};
+  \node[font=\small] at (8.25,3.9) {$V_O$};
+  \node[font=\small] at (7.75,0.5) {$-$};
+
+  \node[circ] at (BNODE) {};
+  \node[circ] at (RNODE) {};
+  \node[circ] at (Q2.C |- 0,3.0) {};
+  \node[circ] at (Q3.E |- 0,3.0) {};
+  \node[font=\small] at (1.0,2.1) {$Q_1$};
+  \node[font=\small] at (6.45,2.1) {$Q_2$};
+  \node[font=\small] at (6.45,4.2) {$Q_3$};
+  \node[font=\small, anchor=east] at (4.7,3.35)
+    {shared control node};
+  \node[font=\small, anchor=south west] at (2.5,4.85)
+    {reference node};
+  \node[font=\small\bfseries] at (4.5,-0.9)
+    {Classic three-NPN Wilson current sink};
+\end{circuitikz}
+\end{document}

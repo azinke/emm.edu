@@ -1,0 +1,71 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Common-base stage. The bias network fixes the DC base voltage; C_B makes
+  % the base an AC reference over the stated midband range.
+  \node[npn, anchor=B] (Q1) at (3.2,3.8) {};
+  \coordinate (QB) at (-1.2,0 |- Q1.B);
+  \draw (QB) -- (Q1.B);
+  \draw (QB) to[C, l_={$C_B$}] (-1.2,0) node[ground] {};
+  \draw (QB) -- (-1.2,5.4)
+    node[ocirc, label={[font=\small]above:{DC bias}}] {};
+  \draw (0,0) node[ground] {}
+    to[sV, l_={$\widetilde v_i$}] (0,1.3)
+    to[R, l={$R_{\mathrm{sig}}$}] (2.2,1.3)
+    to[C, l={$C_{\mathrm{IN}}$}] (4.2,1.3)
+    -- (4.2,0 |- Q1.E)
+    -- (Q1.E);
+  \draw (Q1.E) -- (5.5,0 |- Q1.E)
+    to[I] (5.5,0) node[ground] {};
+  \node[font=\small, anchor=east] at (5.15,1.3)
+    {$I_{\mathrm{BIAS}}$};
+  \draw[->, thick] (6.2,2.65) -- (6.2,1.35)
+    ;
+  \draw (Q1.C) to[R, l={$R_C$}] (Q1.C |- 0,6.5)
+    node[vcc] {$V_{CC}$};
+  \draw (Q1.C) -- (6.0,0 |- Q1.C)
+    node[ocirc, label={[font=\small]right:{$\widetilde v_o$}}] {};
+  \node[circ] at (QB) {};
+  \node[circ] at (Q1.E) {};
+  \node[circ] at (Q1.C) {};
+  \node[font=\small] at (5.15,3.8) {$Q_1$};
+  \node[font=\small, align=center] at (2.1,-0.8)
+    {base at AC reference};
+  \node[font=\small\bfseries] at (3.0,-1.5)
+    {(a) Common-base stage};
+
+  % Common-gate stage with the same rectangular signal and bias structure.
+  \node[nmos, anchor=G] (M1) at (11.5,3.8) {};
+  \coordinate (MG) at (7.1,0 |- M1.G);
+  \draw (MG) -- (M1.G);
+  \draw (MG) to[C, l_={$C_G$}] (7.1,0) node[ground] {};
+  \draw (MG) -- (7.1,5.4)
+    node[ocirc, label={[font=\small]above:{DC bias}}] {};
+  \draw (8.3,0) node[ground] {}
+    to[sV, l_={$\widetilde v_i$}] (8.3,1.3)
+    to[R, l={$R_{\mathrm{sig}}$}] (10.5,1.3)
+    to[C, l={$C_{\mathrm{IN}}$}] (12.5,1.3)
+    -- (12.5,0 |- M1.S)
+    -- (M1.S);
+  \draw (M1.S) -- (13.8,0 |- M1.S)
+    to[I] (13.8,0) node[ground] {};
+  \node[font=\small, anchor=east] at (13.45,1.3)
+    {$I_{\mathrm{BIAS}}$};
+  \draw[->, thick] (14.5,2.65) -- (14.5,1.35)
+    ;
+  \draw (M1.D) to[R, l={$R_D$}] (M1.D |- 0,6.5)
+    node[vcc] {$V_{DD}$};
+  \draw (M1.D) -- (14.3,0 |- M1.D)
+    node[ocirc, label={[font=\small]right:{$\widetilde v_o$}}] {};
+  \node[circ] at (MG) {};
+  \node[circ] at (M1.S) {};
+  \node[circ] at (M1.D) {};
+  \node[font=\small] at (13.45,3.8) {$M_1$};
+  \node[font=\small, align=center] at (10.4,-0.8)
+    {gate at AC reference};
+  \node[font=\small\bfseries] at (11.3,-1.5)
+    {(b) Common-gate stage};
+\end{circuitikz}
+\end{document}

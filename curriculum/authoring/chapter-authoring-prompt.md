@@ -179,18 +179,32 @@ stakes allow.
   hypothesis as an observation, or imply that executable arithmetic is a physical
   simulation.
 - **Circuits:** CircuitikZ source in `curriculum/circuits/<id>.tex`, registered in
-  `catalog.toml`, referenced as `../../../build/circuits/<id>.png`; explicit
-  connection dot at every 3+ conductor junction **and nowhere else**; ordinary
-  two-terminal component connections and ground-symbol connections do not receive
-  decorative dots. Keep test-point labels off wires and components; regenerate
-  with `python3 curriculum/tools/render_circuits.py --id <id>` and verify visually.
-  Trace every post-switch current and stored-energy path on the rendered schematic
-  and confirm that it contains exactly the elements in the governing equation — a
-  clamp drawn across $L$ is not equivalent to one drawn across $R_w+L$. Leave a
-  visible lead between a multiway junction and a component body so a wire cannot
-  appear to pass through the symbol, and move labels rather than accepting
-  collisions. Give portrait or unusually large figures an explicit QMD `width`
-  and inspect their size in the rendered chapter, not only as standalone PNGs.
+  `catalog.toml`, referenced as `../../../build/circuits/<id>.png`. Treat clean
+  rectangular geometry as an acceptance requirement: route external conductors
+  horizontally and vertically on a deliberate grid; diagonal strokes belong only
+  to the standard component symbol or to a rare, explicitly meaningful geometry.
+  Never use a diagonal wire merely to reach a terminal. Derive every device
+  connection from its exact named anchor (`B`, `C`, `E`, `G`, `D`, `S`, and so on)
+  and use orthogonal coordinate projections; do not aim a hard-coded endpoint near
+  a symbol and hope it touches. Orient or mirror devices so connected terminals
+  face one another, paired devices are visually symmetric, stacked devices align,
+  and wires do not cross a component body or one another. For example, make
+  current-mirror control terminals face inward and place a stacked output device
+  directly above the lower device it serves when that removes a long return path.
+  Use explicit connection dots at every 3+ conductor junction **and nowhere
+  else**; ordinary two-terminal component connections and ground-symbol
+  connections do not receive decorative dots. Separate functional branches and
+  panels with enough white space that labels, polarity marks, current arrows, and
+  test points never touch wires or symbols. Regenerate with
+  `python3 curriculum/tools/render_circuits.py --id <id>` after every geometry
+  change and verify the actual image visually; compilation success is not visual
+  acceptance. Trace every DC, signal, post-switch, and stored-energy path on the
+  rendered schematic and confirm that it contains exactly the elements in the
+  governing equation. A coupling capacitor that is open at DC cannot supply a
+  bias path, and a clamp drawn across $L$ is not equivalent to one drawn across
+  $R_w+L$. Give portrait or unusually large figures an explicit QMD `width` and
+  inspect their final HTML and full-book PDF placement, not only the standalone
+  PNG. Apply the complete circuit-drawing checklist in `technical-style.md`.
 - **Exercises:** open with `### Quick check` — do not put “multiple choice” in the
   heading — containing 5–6 one-best-answer items with options a–d and an answer
   key. Follow with retrieval, estimation, derivation, data interpretation,
@@ -311,13 +325,30 @@ prose that never gives the reader enough mathematics to reproduce the result.
 5. Audit evidence. Separate prediction, synthetic teaching data, simulation,
    authentic measurement, and qualified claim. Make the prose say exactly which
    rung has actually been reached.
-6. Author and render any circuits. Inspect the standalone images and their final
-   chapter placement for arrow direction, polarity, junction dots, legible labels,
-   wire/component overlap, appropriate page scale, and correspondence with the
-   equations and test points. For every switched or clamped circuit, trace the
-   pre-switch and post-switch loops and confirm each loop against the differential
-   equation and energy account. Remove connection dots from ordinary two-terminal
-   joins; retain them at every genuine three-or-more-conductor branch.
+6. Author and render any circuits. Begin with a rectangular placement plan:
+   power rail above, return rail below, signal flow left-to-right where practical,
+   repeated branches aligned, and functional panels separated. Connect exact
+   component anchors with horizontal and vertical segments; rotate or mirror
+   devices before accepting a crossing, diagonal wire, long wraparound route, or
+   compressed shape. Inspect the standalone images and their final chapter
+   placement for:
+   - an electrically complete DC path as well as the intended incremental,
+     transient, or switched path;
+   - arrow direction, voltage polarity, named nodes, and correspondence with the
+     equations and test points;
+   - junction dots only at genuine three-or-more-conductor nodes;
+   - readable labels with no wire, symbol, arrow, or neighboring-panel collision;
+   - visible leads between device bodies and junctions;
+   - consistent device scale, alignment, symmetry, and spacing; and
+   - no unintended wire crossings, wires through symbols, diagonal routing, or
+     ambiguous near-connections.
+   For every switched or clamped circuit, trace the pre-switch and post-switch
+   loops and confirm each loop against the differential equation and energy
+   account. For every capacitively coupled or bypassed circuit, trace DC with the
+   capacitors open and the claimed AC regime with their stated impedances. Render
+   again after each geometric correction. A successful CircuitikZ compile is only
+   a syntax check; acceptance requires visual inspection at the QMD width in HTML
+   and on the actual full-book PDF page.
 7. Author static figures from recoverable source. Keep required assets inside the
    Quarto project, record how every derivative was produced, and commit a
    render-ready derivative when the QMD directly references it and no pre-render

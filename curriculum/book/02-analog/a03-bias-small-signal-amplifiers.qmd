@@ -1,48 +1,2319 @@
 ---
 title: "Bias and small-signal amplifiers"
+description: "Establish a transistor operating point, derive its local incremental behavior, and design bounded voltage-gain, follower, and bias-current stages."
 chapter-id: A03
-status: outline
+status: draft
 ---
 
-::: {.callout-note title="Chapter outline"}
-The scope and dependency boundary are stable. Full exposition, worked examples,
-exercises, and tested practical evidence still need authoring and review.
+::: {.callout-note title="Chapter maturity — draft"}
+This chapter develops a complete instructional path from DC bias to
+single-transistor gain, loading, headroom, frequency limits, and a guarded
+design decision. Calculations, illustrative parameter sweeps, and executable
+arithmetic are identified as such; they are not measurements. Physical
+amplifier evidence belongs in aligned Lab **L07**. The chapter remains subject
+to technical and editorial revision. See the
+[reading roadmap](../roadmap.qmd) for the meaning of status levels.
+:::
+
+::: {.callout-warning title="Safety boundary for amplifier work"}
+Practical work in this chapter is limited to **current-limited,
+extra-low-voltage** sources, approved components, local supervision, and an
+approved procedure. Set the source current limit before connecting the circuit,
+de-energize before changing wiring, and check electrolytic-capacitor polarity
+and voltage rating before energizing. Stop for smoke, odor, discoloration,
+unexpected rapid temperature rise, or loss of current limiting. This chapter
+does not authorize mains-connected amplifiers, high-energy batteries, RF power
+amplifiers, loudspeaker power stages, medical interfaces, or connections to
+unbounded external signals [@iec61010].
 :::
 
 ## Central question
 
-How can a nonlinear transistor amplify a small changing signal predictably?
+> How can a nonlinear transistor amplify a small changing signal predictably?
+
+A transistor's collector or drain current is a curved function of its terminal
+voltages. Yet a correctly biased stage can reproduce a small input waveform at
+larger voltage or current, while a stage made from the same transistor can clip,
+drift, or stop amplifying after a modest change in temperature, load, or device.
+The apparent contradiction disappears when the DC operating point and the
+signal excursion are treated separately [@sedra2020microelectronic].
+
+Before calculating, consider a common-emitter stage connected to a 12 V supply.
+Predict what happens if:
+
+- the transistor is replaced by another of the same part number but with twice
+  the DC current gain;
+- an emitter resistor is added while the base-bias voltage is retained;
+- a capacitor bypasses that emitter resistor only at signal frequencies;
+- the load resistance is reduced from open circuit to 10 k$\Omega$; and
+- the input amplitude is increased until the collector waveform flattens.
+
+A complete answer must make the device region, DC load line, local tangent,
+schematic, source and load, frequency-dependent paths, measured test points, and
+acceptance requirement agree. Their disagreement is useful evidence: it can
+identify a wrong operating region, bias sensitivity, loading, an omitted
+capacitance, measurement intrusion, or operation outside the local linear range.
 
 ## Learning outcomes
 
-After completing this chapter, the reader should be able to:
+This chapter assumes [A02](a02-transistors.qmd): BJT and MOSFET terminal
+references, large-signal constitutive relations, operating regions, load lines,
+ratings, and thermal limits. It also assumes
+[F08](../01-foundations/f08-sinusoids-impedance-frequency.qmd): RMS phasors,
+impedance, transfer functions, loading, and frequency response. After completing
+the chapter, you should be able to:
 
-- explain the central model and the assumptions that bound its use;
-- connect physical behavior, a schematic or architecture, and quantitative reasoning;
-- interpret evidence and identify at least one credible failure mode;
-- make and defend a design or diagnostic decision;
+- establish and verify a BJT or MOSFET quiescent point using the source network,
+  device relation, and DC load line;
+- compare fixed, divider, emitter/source-resistor, collector-feedback, and
+  current-source bias by their sensitivity, headroom, and loading;
+- derive $g_m$, $r_\pi$, and $r_o$ as local derivatives, state their units and
+  validity, and distinguish DC $\beta$ from incremental current gain;
+- derive loaded gain, input resistance, and output resistance for
+  common-emitter, common-source, common-base, common-gate, emitter-follower,
+  and source-follower stages;
+- explain the useful impedance transformation and the headroom, leakage, and
+  capacitance costs of a Darlington connection;
+- analyze simple discrete current mirrors as conditional bias elements rather
+  than ideal current sources, and explain what a Wilson mirror improves and
+  what it costs;
+- choose coupling and bypass capacitors, estimate low- and high-frequency
+  limits, and identify loading, distortion, and noise mechanisms; and
+- turn amplifier requirements into a calculation, an executable cross-check,
+  a measurement plan, and an uncertainty-guarded decision.
 
-## Concept path
+The only direct prerequisites are A02 and F08. Use
+[M02](../appendices/m02-calculus-linear-differential.qmd) just in time for
+Taylor expansion and partial derivatives,
+[F05](../01-foundations/f05-energy-power-thermal.qmd) for dissipation, and
+[F06](../01-foundations/f06-measurement-uncertainty-debug.qmd) for the guarded
+decision.
 
-- DC load lines; fixed, divider, emitter/source-resistor, and feedback bias;
-- bias sensitivity, temperature drift, and polarization stability;
-- incremental and small-signal models;
-- common-emitter/source stages;
-- emitter/source followers and compound stages, including Darlington trade-offs;
-- simple discrete current sources and mirrors as bias elements;
-- gain, input resistance, output resistance, and headroom;
-- coupling and bypass networks;
-- distortion, bandwidth, noise, and multistage loading;
+::: {.callout-note title="Scope boundary — one-transistor gain here, controlled gain next"}
+[A02](a02-transistors.qmd) owns transistor physics, switching regions, drive,
+safe operating area, switching loss, and inductive protection. This chapter uses
+those results to develop DC polarization and local amplification. It introduces
+single-stage distortion, bandwidth, and noise only far enough to bound a
+transistor stage; [A06](a06-noise-nonlinearity-stability.qmd) owns chain-level
+budgets. [A04](a04-op-amps-feedback.qmd) develops general negative-feedback and
+operational-amplifier design. [A07](a07-integrated-circuits.qmd) owns precision
+mirrors, active loads, differential pairs, process variation, matching, and
+layout.
+:::
 
-## Evidence and practice
+::: {.callout-note title="Polarity duals and supply conventions"}
+The drawn NPN and nMOS devices conduct conventional current from the positive
+supply toward the reference node. The NPN and nMOS mirror circuits shown later
+are specifically low-side current sinks. PNP and pMOS stages are polarity duals
+that can source current from the positive rail. A split supply can place an
+emitter or source near zero while retaining bias headroom. These transformations
+do not justify changing signs from memory: redraw the current arrows, declare
+every terminal voltage, recheck electrolytic polarity, and solve the DC region
+again
+[@horowitz2015art; @sedra2020microelectronic].
+:::
 
-The completed chapter will include a prediction, a worked model, a simulation or
-executable check where it adds value, measured or authentic data, a fault or
-model mismatch, and a requirements-based design decision. The final exercise set
-will mix retrieval, calculation, interpretation, debugging, and open design.
+## The quiescent point places the device inside a gain region
+
+### Total quantities, DC values, and increments
+
+Retain the terminal references declared in A02. For an NPN BJT,
+$V_{BE}=V_B-V_E$ and $V_{CE}=V_C-V_E$, with $I_B$ and $I_C$ entering the base
+and collector and $I_E$ leaving the emitter. For an n-channel MOSFET,
+$V_{GS}=V_G-V_S$ and $V_{DS}=V_D-V_S$, with $I_G$ and $I_D$ entering the gate
+and drain and $I_S$ leaving the source.
+
+The **quiescent point**, or **Q point**, is the DC solution with the intended
+signal set to zero. To prevent a lowercase symbol from meaning both a complete
+waveform and a perturbation, write a total node voltage as
+
+$$
+v_X^{\mathrm{tot}}(t)=V_{XQ}+\widetilde v_X(t),
+\qquad
+i_X^{\mathrm{tot}}(t)=I_{XQ}+\widetilde i_X(t).
+$$ {#eq-a03-decomposition}
+
+Uppercase $V_{XQ}$ and $I_{XQ}$ are constant no-signal DC values. A tilde
+denotes an instantaneous departure from that Q point. A first-order response to
+a zero-mean sinusoid has zero mean; a nonlinear response need not, because
+rectification can shift the average away from the no-signal Q point. For
+sinusoidal steady state, this chapter retains F08's $e^{j\omega t}$ convention
+and uses underlined RMS phasors, for example $\underline V_o$. A peak amplitude
+is written $\widehat V_o$. These are different quantities.
+
+The decomposition in @eq-a03-decomposition is a definition, not an
+approximation. The
+approximation enters only when a nonlinear device relation is replaced by its
+local tangent.
+
+### Divider bias and the DC load line
+
+The common-emitter circuit in @fig-a03-common-emitter is the chapter's canonical
+stage. $C_{\mathrm{IN}}$ and $C_{\mathrm{OUT}}$ isolate the source and load DC
+conditions. $R_{E1}$ remains in the signal path, while $C_E$ can bypass
+$R_{E2}$ over a chosen frequency range. At DC steady state, ideal capacitors are
+open circuits, so $R_L$, $R_{\mathrm{sig}}$, and all three capacitors are absent
+from the bias calculation. The total DC emitter resistance is
+$R_E=R_{E1}+R_{E2}$.
+
+![A divider-biased common-emitter amplifier with split emitter degeneration.](../../../build/circuits/a03-common-emitter-amplifier.png){#fig-a03-common-emitter fig-alt="A signal source v sig at TPIN with source resistance R sig drives the base of NPN transistor Q1 through input coupling capacitor C IN. Divider resistors R1 and R2 bias base test point TPB from V CC. Collector resistor R C connects V CC to collector test point TPC. Emitter test point TPE passes through unbypassed R E1 and bypassed R E2 to TP0; capacitor C E is in parallel with R E2. Output coupling capacitor C OUT connects TPC to output test point TPO and load R L." width="96%"}
+
+For every signed stage result, define the node voltage positive at the named
+test point relative to TP0:
+
+$$
+\begin{aligned}
+v_{\mathrm{sig}}&\equiv V(\mathrm{TPIN})-V(\mathrm{TP0}),&
+v_b&\equiv V(\mathrm{TPB})-V(\mathrm{TP0}),\\
+v_c&\equiv V(\mathrm{TPC})-V(\mathrm{TP0}),&
+v_e&\equiv V(\mathrm{TPE})-V(\mathrm{TP0}),\\
+v_o&\equiv V(\mathrm{TPO})-V(\mathrm{TP0}).
+\end{aligned}
+$$
+
+The corresponding tilde quantities are increments with the same polarities.
+All common-emitter voltage gains below are output numerator divided by input
+denominator using these references.
+
+Replace the divider by its Thévenin equivalent as seen from TPB:
+
+$$
+V_{\mathrm{TH}}=V_{CC}\frac{R_2}{R_1+R_2},
+\qquad
+R_{\mathrm{TH}}=R_1\parallel R_2.
+$$ {#eq-a03-bias-thevenin}
+
+The voltage expression is the unloaded divider value. Base current loads the
+divider through $R_{\mathrm{TH}}$; calling $V_{\mathrm{TH}}$ the actual base
+voltage would silently discard that loading.
+
+For a first calculation, assume forward-active operation, a constant
+$V_{BEQ}$, and a constant DC current gain
+$\beta_{\mathrm{DC}}=I_{CQ}/I_{BQ}$. KVL from the Thévenin source through the
+base-emitter path and emitter resistor gives
+
+$$
+V_{\mathrm{TH}}
+=I_{BQ}R_{\mathrm{TH}}+V_{BEQ}
++(\beta_{\mathrm{DC}}+1)I_{BQ}R_E.
+$$
+
+Therefore
+
+$$
+I_{BQ}\approx
+\frac{V_{\mathrm{TH}}-V_{BEQ}}
+{R_{\mathrm{TH}}+(\beta_{\mathrm{DC}}+1)R_E},
+\quad
+I_{CQ}\approx\beta_{\mathrm{DC}}I_{BQ},
+\quad
+I_{EQ}=(\beta_{\mathrm{DC}}+1)I_{BQ}.
+$$ {#eq-a03-divider-bias}
+
+The first two equalities are constitutive approximations; the last follows from
+the exact terminal-current balance. They are usable only if the resulting
+voltages verify forward-active operation. The node voltages are
+
+$$
+V_{EQ}=I_{EQ}R_E,\qquad
+V_{CQ}=V_{CC}-I_{CQ}R_C,\qquad
+V_{CEQ}=V_{CQ}-V_{EQ}.
+$$ {#eq-a03-dc-node-voltages}
+
+The DC collector-emitter loop also gives the source/load-line relation
+
+$$
+V_{CE}=V_{CC}-I_C R_C-I_E R_E.
+$$ {#eq-a03-dc-load-line}
+
+This is KVL and is exact for the indicated lumped DC network. Replacing
+$I_E$ by $I_C$ gives the useful large-$\beta$ approximation
+$V_{CE}\approx V_{CC}-I_C(R_C+R_E)$. The Q point is where this network relation
+intersects the transistor's actual output characteristic. If the calculation
+in @eq-a03-divider-bias predicts a point in saturation or cutoff, the assumption
+used to obtain it has failed; the network must be solved in the correct region
+[@sedra2020microelectronic].
+
+### Bias strategies and sensitivity
+
+Biasing is not merely choosing a nominal current. It is choosing how strongly
+that current moves when device parameters, supply, resistance, temperature, or
+load change. Common discrete strategies are compared in @tbl-a03-bias-methods
+[@horowitz2015art; @sedra2020microelectronic].
+
+| Bias strategy | Stabilizing mechanism | Principal limitation |
+|---|---|---|
+| Fixed base resistor | Few parts; base current is set approximately by a source and resistor | $I_C$ depends strongly on $\beta_{\mathrm{DC}}$ and $V_{BE}$ |
+| Stiff voltage divider | Base voltage is less affected by base current when divider current is large | Divider consumes current; no emitter feedback if $R_E=0$ |
+| Divider plus emitter resistor | A current increase raises $V_E$, reducing $V_{BE}$ for a nearly fixed $V_B$ | Uses voltage headroom and reduces gain unless partly bypassed |
+| Collector-to-base feedback | A current increase lowers $V_C$, which reduces base drive | Input and output are coupled; available gain and headroom change |
+| Source resistor in a MOSFET | A current increase raises $V_S$ and reduces $V_{GS}$ | Uses headroom; result still depends on threshold and transfer curve |
+| Current source or mirror | Bias current can be less supply-dependent and can present high incremental resistance | Compliance, matching, temperature, and finite output resistance remain |
+
+: Common discrete bias strategies. “Stabilizing” means reduced sensitivity over
+a stated range, not independence from device or environment. {#tbl-a03-bias-methods}
+
+The first three BJT strategies are shown in @fig-a03-bias-strategies. Assume a
+constant $V_{BEQ}$, forward-active operation, and constant
+$\beta_{\mathrm{DC}}$ only long enough to compare their sensitivity.
+
+![Fixed, collector-feedback, and divider-plus-emitter BJT bias networks.](../../../build/circuits/a03-bias-strategies.png){#fig-a03-bias-strategies fig-alt="Panel a shows fixed bias: R B connects V CC to the base of an NPN transistor, R C connects V CC to its collector, and the emitter is grounded. Panel b moves R B from V CC to the collector so a collector-voltage decrease opposes base current. Panel c uses divider R1 and R2 at the base and emitter resistor R E so a current increase raises emitter voltage and reduces V BE." width="100%"}
+
+For fixed base bias, the base loop gives
+
+$$
+I_{BQ}\approx\frac{V_{CC}-V_{BEQ}}{R_B},
+\qquad
+I_{CQ}\approx
+\beta_{\mathrm{DC}}\frac{V_{CC}-V_{BEQ}}{R_B}.
+$$ {#eq-a03-fixed-bias}
+
+The collector current is directly proportional to the assumed $\beta$. The
+collector network still limits feasible current; this equation must not
+override its load line.
+
+For collector-to-base feedback, current through $R_C$ supplies both collector
+and base currents. The collector-node balance and base loop give
+
+$$
+\frac{V_{CC}-V_C}{R_C}=I_C+I_B
+=(\beta_{\mathrm{DC}}+1)I_B,
+\qquad
+I_B=\frac{V_C-V_{BEQ}}{R_B}.
+$$
+
+Eliminating $V_C$ gives
+
+$$
+I_{CQ}\approx
+\frac{\beta_{\mathrm{DC}}(V_{CC}-V_{BEQ})}
+{R_B+(\beta_{\mathrm{DC}}+1)R_C}.
+$$ {#eq-a03-collector-feedback-bias}
+
+If current rises, the drop across $R_C$ rises, collector voltage falls, and the
+base current through $R_B$ falls. That is the feedback path. It also couples
+the signal output node to the input and uses collector-voltage headroom. The
+divider-plus-emitter circuit adds feedback through $R_E$ while allowing the
+collector to serve as a less directly loaded output
+[@horowitz2015art; @sedra2020microelectronic].
+
+The feedback in an emitter resistor is visible in @eq-a03-divider-bias;
+multiplying by $\beta_{\mathrm{DC}}$ gives
+
+$$
+I_{CQ}\approx
+\frac{\beta_{\mathrm{DC}}(V_{\mathrm{TH}}-V_{BEQ})}
+{R_{\mathrm{TH}}+(\beta_{\mathrm{DC}}+1)R_E}.
+$$ {#eq-a03-bias-sensitivity}
+
+As $\beta_{\mathrm{DC}}\rightarrow\infty$,
+
+$$
+I_{CQ}\longrightarrow
+\frac{V_{\mathrm{TH}}-V_{BEQ}}{R_E}.
+$$ {#eq-a03-beta-limit}
+
+The finite limit is revealing: emitter feedback can make the current much less
+sensitive to $\beta_{\mathrm{DC}}$. It does not remove sensitivity to
+$V_{\mathrm{TH}}$, $V_{BEQ}$, $R_E$, temperature, or resistor tolerance. If
+$R_E\rightarrow0$, the stabilizing term disappears and
+$I_C\approx\beta_{\mathrm{DC}}(V_{\mathrm{TH}}-V_{BE})/R_{\mathrm{TH}}$ until a
+region boundary invalidates that expression.
+
+Temperature changes both junction injection and current gain. Over a limited
+operating range, a silicon BJT at roughly constant collector current often has
+a negative base-emitter temperature coefficient near a few millivolts per
+kelvin, but that coefficient is operating-point dependent rather than a
+universal constant. A falling $V_{BE}$ at fixed base voltage tends to raise
+current; $R_E$ makes the resulting rise in emitter voltage oppose it
+[@horowitz2015art; @sedra2020microelectronic]. Thermal stability still requires
+checking device dissipation and the thermal path from F05.
+
+### Worked example: divider-bias sensitivity
+
+Use the circuit of @fig-a03-common-emitter with these **illustrative nominal**
+values:
+
+$$
+\begin{aligned}
+V_{CC}&=12.0~\mathrm V, &
+R_1&=82.0~\mathrm{k}\Omega, &
+R_2&=15.0~\mathrm{k}\Omega,\\
+R_C&=4.70~\mathrm{k}\Omega, &
+R_{E1}&=270~\Omega, &
+R_{E2}&=680~\Omega.
+\end{aligned}
+$$
+
+Assume $V_{BEQ}=0.700$ V and $\beta_{\mathrm{DC}}=100$ only for the nominal
+screen. These are assumptions, not guaranteed 2N3904 values. Using
+the Thévenin result in @eq-a03-bias-thevenin,
+
+$$
+V_{\mathrm{TH}}
+=12.0~\mathrm V\frac{15.0}{82.0+15.0}
+=1.856~\mathrm V,
+$$
+
+and
+
+$$
+R_{\mathrm{TH}}
+=82.0~\mathrm{k}\Omega\parallel15.0~\mathrm{k}\Omega
+=12.68~\mathrm{k}\Omega.
+$$
+
+With $R_E=950~\Omega$,
+
+$$
+I_{BQ}\approx
+\frac{1.856-0.700}
+{12.68~\mathrm{k}\Omega+101(950~\Omega)}
+=10.64~\mu\mathrm A.
+$$
+
+The relations @eq-a03-divider-bias and @eq-a03-dc-node-voltages then give
+
+$$
+\begin{aligned}
+I_{CQ}&\approx1.064~\mathrm{mA},&
+V_{EQ}&\approx1.021~\mathrm V,\\
+V_{CQ}&\approx7.000~\mathrm V,&
+V_{CEQ}&\approx5.979~\mathrm V.
+\end{aligned}
+$$
+
+The current scale is about 1 mA, the collector is near the middle of a 12 V
+supply, and $V_{CEQ}$ is far from the low-voltage switching state. Those are
+useful sanity checks, not proof for all devices and temperatures.
+
+Holding the illustrative $V_{BEQ}$ fixed while changing
+$\beta_{\mathrm{DC}}$ from 70 to 200 moves $I_{CQ}$ only from 1.010 mA to
+1.135 mA. With $R_E=0$ the same algebra would predict 6.38–18.2 mA, and the
+12 V, 4.70 k$\Omega$ collector network has an ideal-short current intercept of
+only $12~\mathrm V/4.70~\mathrm{k}\Omega=2.55$ mA. Every value in the predicted
+range is therefore impossible in forward-active operation. The load line has
+rejected the assumption.
+
+### MOSFET polarization with source feedback
+
+The common-source stage in @fig-a03-common-source uses the same strategy with
+different device physics. The gate divider establishes an approximate DC
+voltage
+
+$$
+V_{GQ}\approx V_{DD}\frac{R_{G2}}{R_{G1}+R_{G2}}
+$$
+
+only when gate leakage and contamination currents are negligible relative to
+divider current. At DC,
+
+$$
+V_{GSQ}=V_{GQ}-I_{DQ}R_S,\qquad
+V_{DSQ}=V_{DD}-I_{DQ}(R_D+R_S).
+$$ {#eq-a03-mos-bias}
+
+![A divider-biased common-source amplifier with source degeneration.](../../../build/circuits/a03-common-source-amplifier.png){#fig-a03-common-source fig-alt="A signal source v sig at TPIN and resistance R sig drive the gate of n-channel MOSFET M1 through C IN. R G1 and R G2 bias gate test point TPG from V DD. Drain resistor R D connects V DD to drain test point TPD. Source test point TPS passes through R S to TP0. C OUT couples TPD to output TPO and load R L." width="94%"}
+
+For the common-source stage, define $v_g$, $v_d$, $v_s$, and $v_o$ positive
+at TPG, TPD, TPS, and TPO relative to TP0. Define $v_{\mathrm{sig}}$ at TPIN
+relative to TP0. The tilde increments retain those polarities.
+
+For the long-channel square-law approximation introduced in A02,
+
+$$
+I_D\approx\frac{k_n}{2}(V_{GS}-V_{\mathrm{th}})^2
+$$
+
+in MOSFET saturation. Substituting @eq-a03-mos-bias produces an equation in
+$I_{DQ}$ that must be solved and then checked against
+$V_{DSQ}\ge V_{GSQ}-V_{\mathrm{th}}$. Here *MOSFET saturation* is the
+controlled-current region used for common-source gain; it is not the
+low-voltage BJT saturation state. Real discrete MOSFET threshold, transfer
+curve, body effect, and channel-length modulation can make the square-law
+solution inaccurate. A source resistor reduces, but does not eliminate, that
+dependence [@sze2006physics; @sedra2020microelectronic].
+
+### Worked example: square-law bias and region verification
+
+Consider an **illustrative long-channel calculation**, not a claim about a
+named transistor:
+
+$$
+\begin{aligned}
+V_{DD}&=10.0~\mathrm V,&
+R_{G1}&=R_{G2}=1.00~\mathrm{M}\Omega,\\
+R_D&=3.30~\mathrm{k}\Omega,&
+R_S&=1.00~\mathrm{k}\Omega,\\
+k_n&=2.00~\mathrm{mA/V^2},&
+V_{\mathrm{th}}&=2.00~\mathrm V.
+\end{aligned}
+$$
+
+Negligible DC gate current gives $V_{GQ}=5.00$ V. Define the dimensionless
+number $x\equiv I_{DQ}/(1~\mathrm{mA})$. Because 1 mA through 1 k$\Omega$
+produces 1 V, substitution into the square law gives
+
+$$
+x=(3.00-x)^2.
+$$
+
+The algebraic roots are $x=1.697$ and $x=5.303$, corresponding to currents
+1.697 mA and 5.303 mA. The larger root would make
+$V_{GSQ}-V_{\mathrm{th}}<0$ and is extraneous to the assumed conduction branch.
+For the physical candidate,
+
+$$
+\begin{aligned}
+V_{SQ}&=1.697~\mathrm V,&
+V_{GSQ}&=3.303~\mathrm V,\\
+V_{\mathrm{OV}}&=1.303~\mathrm V,&
+V_{DQ}&=4.400~\mathrm V,\\
+V_{DSQ}&=2.703~\mathrm V.
+\end{aligned}
+$$
+
+Because $V_{DSQ}=2.703$ V exceeds $V_{\mathrm{OV}}=1.303$ V, the nominal
+candidate verifies the assumed MOSFET saturation region. The corresponding
+square-law transconductance is
+
+$$
+g_m=k_nV_{\mathrm{OV}}
+=(2.00~\mathrm{mA/V^2})(1.303~\mathrm V)
+=2.61~\mathrm{mS}.
+$$
+
+With $R_L=10.0$ k$\Omega$, $R_{\mathrm{sig}}=10.0$ k$\Omega$, and
+$r_o\rightarrow\infty$, the common-source result derived later gives
+$A_{v,g}\approx-1.80$. The gate divider presents 500 k$\Omega$, so source
+attenuation is $500/(500+10)=0.980$ and
+$A_{v,\mathrm{sig}}\approx-1.76$.
+
+The sensitivity screen is more important than the nominal answer. If the same
+square-law calculation uses $V_{\mathrm{th}}=1.50$ V, it proposes
+$I_D=2.06$ mA, but then $V_{DS}=1.13$ V is **less** than
+$V_{\mathrm{OV}}=1.44$ V. The assumed saturation relation fails and the circuit
+must be solved in the ohmic region. A fixed gate voltage plus source feedback
+is therefore not a guarantee against threshold spread; the actual
+condition-matched device relation still decides the Q point.
+
+## Local linearization turns curvature into incremental parameters
+
+### The tangent at the Q point
+
+Let a memoryless terminal relation near the Q point be $I=F(V)$. With
+$V=V_Q+\widetilde v$, Taylor expansion gives
+
+$$
+I_Q+\widetilde i
+=F(V_Q)
++\left.\frac{\mathrm dF}{\mathrm dV}\right|_Q\widetilde v
++\frac{1}{2}
+\left.\frac{\mathrm d^2F}{\mathrm dV^2}\right|_Q\widetilde v^2+\cdots.
+$$ {#eq-a03-taylor}
+
+Because $I_Q=F(V_Q)$, the first-order approximation is
+
+$$
+\widetilde i\approx g_m\widetilde v,
+\qquad
+g_m\equiv
+\left.\frac{\partial I_{\mathrm{out}}}
+{\partial V_{\mathrm{control}}}\right|_Q.
+$$ {#eq-a03-gm-definition}
+
+$g_m$ is **transconductance**, measured in ampere per volt, or siemens. It is a
+local slope, not a stage voltage gain. The approximation is valid only when the
+quadratic and higher terms are acceptably small over the actual signal
+excursion, while the device remains in the same operating region. A “small”
+signal is therefore small relative to the local curvature and headroom, not
+merely small in everyday units [@sedra2020microelectronic].
+
+For a multivariable output relation $I=F(V_1,V_2)$, the first-order increment is
+
+$$
+\widetilde i\approx
+\left.\frac{\partial F}{\partial V_1}\right|_Q\widetilde v_1+
+\left.\frac{\partial F}{\partial V_2}\right|_Q\widetilde v_2.
+$$ {#eq-a03-total-increment}
+
+This is why both a controlled current and a finite output resistance appear in
+the incremental equivalents of @fig-a03-incremental.
+
+![Low-frequency BJT and MOSFET incremental equivalents about a Q point.](../../../build/circuits/a03-incremental-equivalents.png){#fig-a03-incremental fig-alt="Panel a shows a BJT hybrid-pi equivalent with r pi from base to emitter, a downward controlled current g m v pi from collector to emitter, and output resistance r o in parallel. Panel b shows a MOSFET equivalent with an open low-frequency gate control port, voltage v gs from gate to source, a downward controlled current g m v gs from drain to source, and output resistance r o in parallel." width="96%"}
+
+The dependent-source directions in @fig-a03-incremental match the A02
+convention: positive $\widetilde v_\pi=\widetilde v_b-\widetilde v_e$ increases
+conventional collector current from collector to emitter, and positive
+$\widetilde v_{gs}=\widetilde v_g-\widetilde v_s$ increases conventional drain
+current from drain to source.
+
+### BJT incremental parameters
+
+Using A02's forward-active exponential approximation
+
+$$
+I_C\approx I_S\exp\left(\frac{V_{BE}}{nV_T}\right),
+\qquad V_T=\frac{kT}{q_e},
+$$
+
+differentiation at the Q point gives
+
+$$
+g_m\equiv
+\left.\frac{\partial I_C}{\partial V_{BE}}\right|_Q
+=\frac{I_{CQ}}{nV_T}.
+$$ {#eq-a03-bjt-gm}
+
+At $T=300$ K, $V_T\approx25.85$ mV. For the common ideality approximation
+$n=1$ and $I_{CQ}=1.064$ mA,
+
+$$
+g_m\approx
+\frac{1.064~\mathrm{mA}}{25.85~\mathrm{mV}}
+=41.2~\mathrm{mS}.
+$$
+
+The dimensional check is
+$\mathrm A/\mathrm V=\mathrm S$. Doubling $I_{CQ}$ doubles $g_m$ in this
+approximation, but also changes power, headroom, capacitance, and usually
+current gain.
+
+Define the incremental common-emitter current gain at the same Q point and
+frequency as
+
+$$
+\beta_{\mathrm{ac}}\equiv
+\frac{\widetilde i_c}{\widetilde i_b}.
+$$
+
+Then the hybrid-$\pi$ input resistance is
+
+$$
+r_\pi\equiv
+\frac{\widetilde v_\pi}{\widetilde i_b}
+=\frac{\beta_{\mathrm{ac}}}{g_m}.
+$$ {#eq-a03-rpi}
+
+The DC datasheet quantity $h_{FE}=I_C/I_B$ is not automatically
+$\beta_{\mathrm{ac}}$. They are ratios defined by different perturbations and
+test conditions. If $\beta_{\mathrm{ac}}=100$ is used illustratively with the
+nominal Q point, $r_\pi\approx2.43$ k$\Omega$.
+
+::: {.callout-note title="Reading legacy BJT small-signal notation"}
+Older texts, instruments, and datasheets often use hybrid parameters.
+Uppercase $h_{FE}$ commonly denotes a static ratio $I_C/I_B$, while lowercase
+$h_{fe}$ commonly denotes an incremental forward current ratio at a stated
+Q point and frequency. Under the unilateral common-emitter approximation,
+$h_{ie}\approx r_\pi$, $h_{fe}\approx\beta_{\mathrm{ac}}$, and
+$h_{oe}\approx1/r_o$; reverse parameter $h_{re}$ is then neglected. These are
+conditional mappings, not identities across test circuits or frequency.
+Always use the manufacturer's exact definition, conditions, and letter case
+[@malvino2021electronic; @onsemi2n3904; @sedra2020microelectronic].
+:::
+
+The emitter-side T-equivalent resistance
+
+$$
+r_e\equiv\frac{r_\pi}{\beta_{\mathrm{ac}}+1}
+\approx\frac{1}{g_m}
+$$ {#eq-a03-re}
+
+is a local equivalent quantity, not the physical resistor $R_E$. Here
+$1/g_m\approx24.3~\Omega$.
+
+### MOSFET incremental parameters
+
+For a MOSFET in its gain region, definitions are more durable than a particular
+square-law formula:
+
+$$
+g_m\equiv
+\left.\frac{\partial I_D}{\partial V_{GS}}\right|_Q,
+\qquad
+g_o\equiv
+\left.\frac{\partial I_D}{\partial V_{DS}}\right|_Q,
+\qquad
+r_o\equiv\frac{1}{g_o}.
+$$ {#eq-a03-mos-incremental}
+
+Under the long-channel square-law approximation,
+
+$$
+g_m=k_nV_{\mathrm{OV}}
+=\frac{2I_{DQ}}{V_{\mathrm{OV}}},
+\qquad
+V_{\mathrm{OV}}\equiv V_{GSQ}-V_{\mathrm{th}}.
+$$ {#eq-a03-mos-gm}
+
+This special case shows a useful trend: more drain current or less overdrive
+raises transconductance. It is not a universal modern-MOSFET law. Mobility
+reduction, short-channel effects, body effect, temperature, and the actual
+transfer curve can dominate; for a real design, obtain $g_m$ from a
+condition-matched curve, simulation description, or local measurement
+[@sze2006physics; @sedra2020microelectronic].
+
+At low frequency, an intact insulated gate has very high incremental input
+resistance. That does not mean infinite stage input impedance: the gate-bias
+network remains connected, leakage exists, and gate-source and gate-drain charge
+produce finite frequency-dependent current.
+
+### Finite output resistance
+
+In forward-active BJT operation, base-width modulation makes collector current
+increase somewhat with $V_{CE}$ at fixed $V_{BE}$. In MOSFET saturation,
+channel-length modulation produces the analogous dependence on $V_{DS}$
+[@sze2006physics]. A local empirical description is
+
+$$
+\widetilde i_o
+=g_m\widetilde v_{\mathrm{control}}
++g_o\widetilde v_{\mathrm{output}},
+\qquad r_o=\frac{1}{g_o}.
+$$ {#eq-a03-output-conductance}
+
+For the common BJT Early-voltage fit,
+
+$$
+r_o\approx\frac{V_A+V_{CEQ}}{I_{CQ}}
+\approx\frac{V_A}{I_{CQ}}
+\quad\text{when }V_A\gg V_{CEQ}.
+$$ {#eq-a03-bjt-ro}
+
+$V_A$ is a fitted parameter for the stated device, bias, and temperature, not a
+universal constant. The limiting case $r_o\rightarrow\infty$ recovers an ideal
+controlled current source. A finite $r_o$ lowers gain and changes output
+resistance.
+
+## Voltage-gain stages trade polarity, loading, and feedback
+
+### Common-emitter gain with degeneration
+
+At a frequency where $C_{\mathrm{IN}}$ and $C_{\mathrm{OUT}}$ have negligible
+series impedance and $C_E$ effectively bypasses $R_{E2}$, the ideal supply has
+zero incremental voltage and is therefore AC reference. The unbypassed
+$R_{E1}$ remains. The full transformation from physical circuit to incremental
+network is shown in @fig-a03-ce-midband. It retains $r_o$ so the learner can see
+where the first-order approximation later omits it.
+
+![Complete midband incremental network for the canonical common-emitter stage.](../../../build/circuits/a03-common-emitter-midband.png){#fig-a03-ce-midband fig-alt="An incremental source v sig and R sig drive base node b. R B equal to R1 parallel R2 connects b to AC reference. Hybrid-pi resistance r pi connects b to emitter node e, which returns through unbypassed R E1. Collector node c returns through R C and load R L to AC reference. Output resistance r o and a downward controlled current g m v pi connect c to e. Nodes b, c, and e correspond to TPB, TPC, and TPE." width="98%"}
+
+For the following closed-form derivation, take $r_o\rightarrow\infty$ and
+neglect reverse transfer. Define the loaded collector resistance
+
+$$
+R_C'\equiv R_C\parallel R_L.
+$$ {#eq-a03-loaded-collector}
+
+With $\widetilde v_\pi=\widetilde v_b-\widetilde v_e$, the dependent source
+gives $\widetilde i_c=g_m\widetilde v_\pi$. Since
+$\widetilde i_b=\widetilde v_\pi/r_\pi$,
+
+$$
+\widetilde i_e
+=\widetilde i_c+\widetilde i_b
+=\left(g_m+\frac{1}{r_\pi}\right)\widetilde v_\pi.
+$$
+
+The base increment is therefore
+
+$$
+\widetilde v_b
+=\widetilde v_\pi+\widetilde i_eR_{E1}
+=\widetilde v_\pi
+\left[1+\left(g_m+\frac{1}{r_\pi}\right)R_{E1}\right].
+$$
+
+The collector increment is
+$\widetilde v_c=-g_m\widetilde v_\pi R_C'$. Thus the midband
+base-to-collector voltage gain is
+
+$$
+A_{v,b}\equiv\frac{\widetilde v_c}{\widetilde v_b}
+\approx
+\frac{-g_mR_C'}
+{1+\left(g_m+1/r_\pi\right)R_{E1}}.
+$$ {#eq-a03-ce-gain}
+
+The negative sign follows the declared polarities: an increase in base voltage
+raises collector current and increases the drop across $R_C$, so collector
+voltage falls. In sinusoidal steady state, the negative midband gain corresponds
+to approximately $180^\circ$ phase inversion; it is not by itself a propagation
+delay.
+
+For large $\beta_{\mathrm{ac}}$,
+
+$$
+A_{v,b}\approx-\frac{R_C'}{r_e+R_{E1}}.
+$$ {#eq-a03-ce-gain-re}
+
+Two limiting cases teach the design trade:
+
+- if $R_{E1}=0$, $A_{v,b}\approx-g_mR_C'$ and device $g_m$ strongly controls
+  gain;
+- if $R_{E1}\gg r_e$, $A_{v,b}\approx-R_C'/R_{E1}$, so resistor ratio controls
+  gain more strongly, at the cost of smaller magnitude and emitter headroom.
+
+This local emitter feedback is called **degeneration**. It improves gain
+predictability and linearity, but it is not the full loop-gain treatment
+developed in A04 [@sedra2020microelectronic].
+
+### Input and output resistance
+
+Looking into the transistor base while the emitter sees $R_{E1}$,
+
+$$
+R_{\mathrm{in,base}}
+=\frac{\widetilde v_b}{\widetilde i_b}
+\approx r_\pi+(\beta_{\mathrm{ac}}+1)R_{E1}.
+$$ {#eq-a03-base-input-resistance}
+
+The stage input at TPB includes the bias divider:
+
+$$
+R_{\mathrm{in}}
+\approx R_1\parallel R_2\parallel R_{\mathrm{in,base}}.
+$$ {#eq-a03-stage-input-resistance}
+
+If a Thévenin source $\widetilde v_{\mathrm{sig}}$ with resistance
+$R_{\mathrm{sig}}$ drives TPB through an effectively short
+$C_{\mathrm{IN}}$, source loading gives
+
+$$
+\frac{\widetilde v_b}{\widetilde v_{\mathrm{sig}}}
+=\frac{R_{\mathrm{in}}}
+{R_{\mathrm{sig}}+R_{\mathrm{in}}},
+$$
+
+and the source-to-output gain is
+
+$$
+A_{v,\mathrm{sig}}
+\approx A_{v,b}
+\frac{R_{\mathrm{in}}}
+{R_{\mathrm{sig}}+R_{\mathrm{in}}}.
+$$ {#eq-a03-source-gain}
+
+The output resistance is a port definition: set the independent input source to
+zero, retain dependent sources, apply a test voltage at the output, and take
+$R_{\mathrm{out}}=\widetilde v_t/\widetilde i_t$. With the emitter effectively
+fixed and reverse transfer neglected,
+
+$$
+R_{\mathrm{out}}\approx R_C\parallel r_o.
+$$ {#eq-a03-ce-output-resistance}
+
+Emitter degeneration and transistor reverse effects can change this result.
+With finite $r_o$, it connects collector to the moving emitter rather than
+collector to AC reference, so it cannot simply be folded into $R_C'$. Use the
+complete network in @fig-a03-ce-midband and nodal analysis. The test-source
+definition remains valid when a shortcut is not.
+
+### Nominal midband result
+
+Continue the illustrative stage with $R_L=10.0$ k$\Omega$,
+$R_{\mathrm{sig}}=600~\Omega$, $\beta_{\mathrm{ac}}=100$, and initially neglect
+$r_o$. Then
+
+$$
+R_C'=4.70~\mathrm{k}\Omega\parallel10.0~\mathrm{k}\Omega
+=3.197~\mathrm{k}\Omega.
+$$
+
+Using $g_m=41.2$ mS and $r_\pi=2.43$ k$\Omega$ in @eq-a03-ce-gain gives
+
+$$
+A_{v,b}\approx-10.77.
+$$
+
+The results in @eq-a03-base-input-resistance and the following stage-input
+relation, @eq-a03-stage-input-resistance, give
+
+$$
+R_{\mathrm{in,base}}\approx29.7~\mathrm{k}\Omega,
+\qquad
+R_{\mathrm{in}}\approx8.89~\mathrm{k}\Omega.
+$$
+
+The source attenuation is $8.89/(8.89+0.600)=0.937$, so
+
+$$
+A_{v,\mathrm{sig}}\approx-10.08.
+$$
+
+This result is a nominal local prediction. It is not a guarantee of gain
+accuracy, distortion, or bandwidth for a physical 2N3904.
+
+### Common-source gain
+
+For @fig-a03-common-source, define
+
+$$
+R_D'\equiv R_D\parallel R_L.
+$$
+
+At midband, with unbypassed $R_S$, $r_o\rightarrow\infty$, and body effect
+neglected,
+$\widetilde i_d=g_m\widetilde v_{gs}$,
+$\widetilde v_s\approx\widetilde i_dR_S$, and
+$\widetilde v_g=\widetilde v_{gs}+\widetilde v_s$. Therefore
+
+$$
+A_{v,g}\equiv\frac{\widetilde v_d}{\widetilde v_g}
+\approx\frac{-g_mR_D'}{1+g_mR_S}.
+$$ {#eq-a03-cs-gain}
+
+Retaining finite $r_o$ in the same low-frequency equivalent gives, by drain and
+source nodal analysis,
+
+$$
+A_{v,g}
+\approx
+\frac{-g_mR_D'}
+{1+g_mR_S+(R_D'+R_S)/r_o}.
+$$ {#eq-a03-cs-gain-ro}
+
+If $g_mR_S\gg1$, the gain approaches $-R_D'/R_S$. If $R_S=0$, it approaches
+$-g_mR_D'$. The midband stage input is approximately
+$R_{G1}\parallel R_{G2}$, not infinity, and high-frequency input current also
+flows through device capacitances. Body effect increases the incremental
+source-to-channel control and lowers source-follower or degenerated-stage gain;
+finite $r_o$ also lowers gain [@sedra2020microelectronic].
+
+With the source increment fixed at AC reference, a first-order common-source
+output resistance is $R_D\parallel r_o$. Source degeneration changes the
+transistor-side resistance, so the general result again comes from nulling the
+independent input, applying an output test source, and retaining the dependent
+source.
+
+### Common-base and common-gate stages accept current at a low-resistance port
+
+Common-emitter and common-source are not the only voltage-gain arrangements.
+In @fig-a03-common-base-gate, a named base or gate bias network and an
+idealized current sink provide the two DC paths needed to establish the
+operating point. The current sink is assumed to have high incremental output
+resistance; a physical resistor or mirror would add finite loading and
+compliance limits. Meanwhile, $C_B$ or $C_G$ makes the control terminal an AC
+reference only over the frequency range where its impedance is sufficiently
+small. The signal enters the emitter or source, and the output remains at the
+collector or drain.
+
+![Common-base and common-gate stages with separately declared DC bias and AC-reference paths.](../../../build/circuits/a03-common-base-gate.png){#fig-a03-common-base-gate fig-alt="Panel a shows an NPN common-base stage. A source and finite source resistance drive the emitter through an input capacitor, while a downward ideal bias-current sink supplies a DC emitter path. The collector connects through R C to V CC and supplies output voltage. The base connects to a DC bias port and through C B to ground, making it an AC reference at midband. Panel b shows the analogous nMOS common-gate stage with a source input, downward source-bias current sink, drain resistor R D, gate bias port, and gate bypass capacitor C G." width="100%"}
+
+For the BJT, take the base as AC reference, neglect $r_o$, and define
+$R_C'=R_C\parallel R_L$. Because
+$\widetilde v_\pi=-\widetilde v_e$, a positive emitter-voltage increment
+reduces collector current. The collector resistor converts that current
+decrease into a positive collector-voltage increment:
+
+$$
+A_{v,e}\equiv\frac{\widetilde v_c}{\widetilde v_e}
+\approx +g_mR_C'.
+$$ {#eq-a03-common-base-gain}
+
+The emitter input resistance and transistor current gain are approximately
+
+$$
+R_{\mathrm{in,e}}
+\approx\frac{r_\pi}{\beta_{\mathrm{ac}}+1}
+\approx\frac{1}{g_m},
+\qquad
+\alpha_{\mathrm{ac}}
+\equiv\frac{\widetilde i_c}{\widetilde i_e}
+\approx\frac{\beta_{\mathrm{ac}}}{\beta_{\mathrm{ac}}+1}.
+$$ {#eq-a03-common-base-input}
+
+Thus the common-base stage is non-inverting and accepts signal current from a
+low-resistance source; its transistor current gain is slightly below unity,
+even though its voltage gain can exceed one. $R_{\mathrm{in,e}}$ is the
+device-port resistance. The source sees it in parallel with the bias source's
+finite incremental resistance and any other emitter paths. Consequently, the
+available source-to-output gain also includes
+$R_{\mathrm{in,total}}/(R_{\mathrm{sig}}+R_{\mathrm{in,total}})$; a large
+$g_mR_C'$ does not overcome severe source attenuation.
+
+For the common-gate stage, neglect body effect and $r_o$ first, and define
+$R_D'=R_D\parallel R_L$. With the gate at AC reference,
+$\widetilde v_{gs}=-\widetilde v_s$, so
+
+$$
+A_{v,s}\equiv\frac{\widetilde v_d}{\widetilde v_s}
+\approx +g_mR_D',
+\qquad
+R_{\mathrm{in,s}}\approx\frac{1}{g_m}.
+$$ {#eq-a03-common-gate}
+
+Here $R_{\mathrm{in,s}}$ is again the device-port resistance. If the body is
+tied to the source, $\widetilde v_{bs}=0$ and there is no body-effect increment.
+If the body is instead fixed at AC reference, the corresponding approximations
+become $R_{\mathrm{in,s}}\approx1/(g_m+g_{mb})$ and
+$A_{v,s}\approx +(g_m+g_{mb})R_D'$. Finite $r_o$, source resistance,
+bias-source impedance, and loading require the complete incremental network.
+
+Output resistance also depends on the nulled input termination. Let $R_X$ be
+the incremental resistance from the emitter or source node to AC reference,
+including the nulled signal source and bias path. Under the same unilateral
+low-frequency assumptions,
+
+$$
+r_{\mathrm{out,tr,BJT}}
+\approx r_o+(1+g_mr_o)(R_X\parallel r_\pi),
+$$
+
+and, with the MOS body at AC reference,
+
+$$
+r_{\mathrm{out,tr,MOS}}
+\approx r_o+\left[1+(g_m+g_{mb})r_o\right]R_X.
+$$
+
+The stage output resistances are then screened as
+$R_C\parallel r_{\mathrm{out,tr,BJT}}$ and
+$R_D\parallel r_{\mathrm{out,tr,MOS}}$. An ideal zero-resistance nulled input
+makes the transistor-side first screen $r_o$; a finite termination can raise
+it through local feedback. The test-source method remains the authoritative
+procedure.
+
+These low-input-resistance stages are specialized when used alone, but they are
+important for low-impedance sources and current transfer
+[@malvino2021electronic; @sedra2020microelectronic].
+
+#### A cascode is not merely a cascade
+
+A **cascade** connects the output port of one ordinary stage to the input port
+of another and must include the interstage loading derived later. A
+**cascode** stacks a common-emitter with a common-base device, or a
+common-source with a common-gate device, so essentially the same signal current
+passes through both, as the BJT example in @fig-a03-bjt-cascode makes explicit.
+
+![A BJT cascode separates transconductance and isolation roles along one signal-current path.](../../../build/circuits/a03-bjt-cascode.png){#fig-a03-bjt-cascode fig-alt="Two NPN transistors are stacked vertically. Lower Q1 receives a combined DC bias and incremental input at its base and returns through emitter resistor R E. Its collector connects directly upward to Q2 emitter at intermediate test point v x, marked as having small signal movement. Q2 base connects to bias V B2 and bypass capacitor C B to AC reference. Q2 collector connects through R C to V CC and horizontally to output v o. Labels identify Q1 as the common-emitter transconductance device and Q2 as the common-base isolation device." width="64%"}
+
+The upper device holds the lower collector or drain
+increment comparatively small. That reduces reverse voltage feedback and
+Miller multiplication, improves input-output isolation, and can raise output
+resistance. The price is another bias voltage, another device, and less
+available voltage headroom. A07 develops the complete small-signal resistance,
+active-load, matching, and integrated-layout consequences
+[@horowitz2015art; @sedra2020microelectronic].
+
+### Voltage gain does not create energy
+
+The signal controlling the transistor does not supply the amplified load
+energy. The DC supply does. Over a steady periodic interval, the average stored
+energy in ideal capacitors returns to its initial value, so the supply input
+power is divided among delivered load power, resistor and device dissipation,
+and any other declared output paths. During startup, the capacitors can
+accumulate energy, so that whole-cycle steady-state simplification does not yet
+apply.
+
+A voltage-gain magnitude above one does not establish power gain unless input
+and output impedances and amplitude conventions are included. With RMS
+sinusoids and resistive ports,
+
+$$
+G_P\equiv\frac{P_L}{P_{\mathrm{in}}}
+=\frac{V_{L,\mathrm{RMS}}^2/R_L}
+{V_{\mathrm{in,RMS}}^2/R_{\mathrm{in}}}.
+$$
+
+This ratio describes the chosen signal ports; it is not an efficiency. An
+efficiency denominator must include every energy input over the interval,
+including the DC supply and any net release of stored energy
+[@sedra2020microelectronic].
+
+All canonical stages in this chapter use **class-A bias**: the device is
+intended to remain in its gain region and conduct throughout the complete
+signal cycle. It therefore dissipates DC power even with no input signal, and
+cutoff or saturation/ohmic-region approach bounds the usable excursion. Class
+B, AB, and C operation, complementary output stages, efficiency optimization,
+and power-amplifier thermal design require a separate large-signal treatment
+[@malvino2021electronic; @sedra2020microelectronic].
+
+## Followers and compound stages transform impedance
+
+As shown in @fig-a03-followers, three common non-inverting stages are useful.
+The emitter follower is also called **common collector**, and the source
+follower is also called **common drain**, because the named supply-side
+terminal is common to input and output in the incremental circuit. In each,
+the output is taken from an emitter or source, so increasing the input raises
+rather than lowers the output [@malvino2021electronic;
+@sedra2020microelectronic].
+
+![Emitter, source, and Darlington followers.](../../../build/circuits/a03-followers-and-darlington.png){#fig-a03-followers fig-alt="Panel a shows an NPN emitter follower with collector at V CC, input at the base, output at the emitter, and emitter resistor to ground. Panel b shows an n-channel MOSFET source follower with drain at V DD, input at the gate, output at the source, and source resistor to ground. Panel c shows two NPN transistors in a Darlington connection, with Q1 emitter driving Q2 base, joined collectors at V CC, output at Q2 emitter, and an emitter resistor to ground." width="100%"}
+
+### Emitter follower
+
+Let $R_E$ be the physical bias resistor shown in @fig-a03-followers, and define
+the total loaded incremental resistance
+$R_E'\equiv R_E\parallel R_L$. From
+$\widetilde v_e=(\beta_{\mathrm{ac}}+1)\widetilde i_bR_E'$ and
+$\widetilde v_b=\widetilde i_br_\pi+\widetilde v_e$,
+
+$$
+A_{v,\mathrm{EF}}\equiv
+\frac{\widetilde v_e}{\widetilde v_b}
+=\frac{(\beta_{\mathrm{ac}}+1)R_E'}
+{r_\pi+(\beta_{\mathrm{ac}}+1)R_E'}.
+$$ {#eq-a03-emitter-follower-gain}
+
+For $(\beta_{\mathrm{ac}}+1)R_E'\gg r_\pi$, the gain approaches one from below.
+The input resistance at the base is
+$r_\pi+(\beta_{\mathrm{ac}}+1)R_E'$, so a load is reflected upward by roughly
+$\beta_{\mathrm{ac}}+1$. With the load removed and an input Thévenin resistance
+$R_B'$ connected to the base, a first-order output-resistance screen is
+
+$$
+R_{\mathrm{out,EF}}
+\approx
+\left[
+\frac{r_\pi+R_B'}{\beta_{\mathrm{ac}}+1}
+\right]\parallel R_E.
+$$ {#eq-a03-emitter-follower-rout}
+
+The follower can therefore accept a signal from a relatively high-resistance
+source and drive a lower-resistance load without large voltage gain. Its
+available current and output swing remain bounded by bias current, cutoff,
+saturation, dissipation, and the source network.
+
+### Source follower
+
+Let $R_S$ be the physical source-bias resistor and
+$R_S'\equiv R_S\parallel R_L$. Ignoring body effect and $r_o$ first, the source
+follower gives
+
+$$
+A_{v,\mathrm{SF}}
+\approx\frac{g_mR_S'}{1+g_mR_S'},
+$$ {#eq-a03-source-follower-gain}
+
+The gate draws little low-frequency conduction current, but the gate-bias
+network and capacitance still define input loading. Body transconductance,
+finite $r_o$, source-resistor loading, and limited gate-to-source headroom keep
+the gain below the ideal limit [@sedra2020microelectronic].
+
+With the independent gate source nulled, body effect and $r_o$ neglected, a
+first-order source-follower output resistance is
+
+$$
+R_{\mathrm{out,SF}}\approx\frac{1}{g_m}\parallel R_S.
+$$ {#eq-a03-source-follower-rout}
+
+Finite gate-source impedance, body transconductance, and $r_o$ require the
+test-source method for a more complete result.
+
+### Darlington connection
+
+In the Darlington stage, $Q_1$ emitter current supplies $Q_2$ base current.
+Under the crude constant-gain approximation,
+
+$$
+\beta_{\mathrm{D}}
+=\frac{I_{C1}+I_{C2}}{I_{B1}}
+\approx\beta_1\beta_2+\beta_1+\beta_2.
+$$ {#eq-a03-darlington-beta}
+
+The product term can give very high input resistance and current gain. The costs
+are approximately two forward base-emitter drops from input to output, more
+capacitance and stored charge, leakage multiplication, reduced low-supply
+headroom, and parameter dependence. The pair is not one ideal transistor, and
+the $\beta_1\beta_2$ rule alone does not establish output current, linearity, or
+safe dissipation [@horowitz2015art; @sedra2020microelectronic].
+
+## Current mirrors provide conditional bias currents
+
+An amplifier often needs a bias current that changes less with node voltage than
+a resistor-fed current. As shown in @fig-a03-current-mirrors, a simple
+two-device mirror establishes a shared control voltage in a reference
+device and applies it to an output device. The shown NPN and nMOS arrangements
+are low-side current **sinks**. PNP and pMOS polarity duals can form high-side
+current sources when the load must return toward the lower rail
+[@analogdevices2021currentmirrors; @horowitz2015art].
+
+![Rectangular low-side BJT and MOSFET current mirrors used as bias elements.](../../../build/circuits/a03-simple-current-mirrors.png){#fig-a03-current-mirrors fig-alt="Panel a shows inward-facing matched NPN transistors Q1 and Q2 with separate grounded emitters and a short horizontal common-base connection. An orthogonal strap above Q1 ties its collector to its base without crossing either transistor; R REF feeds that reference node from V CC. Q2 collector rises vertically to output TPO. Panel b uses the same rectangular arrangement for matched nMOS devices with common gates and grounded sources." width="96%"}
+
+For the NPN mirror, define $I_{\mathrm{REF}}$ as conventional current downward
+through $R_{\mathrm{REF}}$, and $I_O$ as conventional current entering $Q_2$'s
+collector. Assume matched devices at the same temperature, equal collector
+currents at equal $V_{BE}$, forward-active operation, and equal finite
+$\beta_{\mathrm{DC}}$. The reference-node KCL is
+
+$$
+I_{\mathrm{REF}}
+=I_{C1}+I_{B1}+I_{B2}
+=I_O\left(1+\frac{2}{\beta_{\mathrm{DC}}}\right).
+$$
+
+Thus
+
+$$
+I_O\approx
+\frac{I_{\mathrm{REF}}}{1+2/\beta_{\mathrm{DC}}},
+\qquad
+I_{\mathrm{REF}}\approx
+\frac{V_{CC}-V_{BE}}{R_{\mathrm{REF}}}.
+$$ {#eq-a03-bjt-mirror}
+
+As $\beta_{\mathrm{DC}}\rightarrow\infty$, $I_O\rightarrow I_{\mathrm{REF}}$.
+At $\beta_{\mathrm{DC}}=100$, base currents alone make the idealized ratio
+$I_O/I_{\mathrm{REF}}\approx0.980$. Mismatch, unequal temperature, unequal
+$V_{CE}$, resistor tolerance, and Early effect add error. If output voltage
+falls too low, $Q_2$ leaves forward-active operation and the mirror loses
+compliance.
+
+For the nMOS mirror, negligible DC gate current removes the base-current error
+in the first approximation. Equal $V_{GS}$ gives equal currents only for matched
+devices at equal temperature and adequate $V_{DS}$. Threshold mismatch,
+channel-length modulation, body connection, and output compliance remain.
+
+### Four quantities keep mirror claims separate
+
+A statement such as “the mirror supplies 1 mA” is incomplete. At least four
+quantities must be distinguished:
+
+1. **Current-transfer accuracy** compares $I_O$ with $I_{\mathrm{REF}}$ under
+   declared device, temperature, and output-voltage conditions.
+2. **Incremental output resistance** holds the reference current fixed and
+   measures the local output-port slope,
+
+   $$
+   r_{\mathrm{out,mir}}
+   \equiv
+   \left.\frac{\partial v_O}{\partial i_O}\right|_{I_{\mathrm{REF}},Q},
+   \qquad
+   \Delta i_O\approx\frac{\Delta v_O}{r_{\mathrm{out,mir}}}.
+   $$ {#eq-a03-mirror-output-resistance}
+
+3. **Compliance** is the output-voltage interval over which the device remains
+   in the assumed region **and** a stated current-error limit is met.
+4. **Matching, thermal, and dynamic limits** describe device spread, unequal
+   temperature, capacitance, topology-dependent startup, and frequency
+   dependence.
+
+In the simplest first-order model,
+$r_{\mathrm{out,mir}}\approx r_o$ for the BJT output device and
+$r_{\mathrm{out,mir}}\approx1/(\lambda I_{DQ})$ for the square-law MOSFET with
+channel-length modulation. These are local slopes, not load resistors or
+guaranteed constant-current ranges. A convenient exercise condition such as
+$V_{CE}>0.30$ V is not a universal compliance specification; a defensible
+limit must be tied to region evidence and permitted current error
+[@analogdevices2021currentmirrors; @sedra2020microelectronic].
+
+### A Wilson mirror demonstrates improvement by feedback
+
+The classic three-NPN Wilson sink in @fig-a03-wilson-mirror is relevant here
+because it directly answers two simple-mirror limitations. The lower devices
+$Q_1$ and $Q_2$ are matched, $Q_2$ is diode connected, and output device $Q_3$
+feeds the shared control node through its emitter. A change at the output is
+fed back through the lower pair instead of acting only on one output
+transistor.
+
+![Classic three-NPN Wilson current sink with separate reference, control, and output nodes.](../../../build/circuits/a03-wilson-current-mirror.png){#fig-a03-wilson-mirror fig-alt="Three NPN transistors form a Wilson current sink. Matched lower devices Q1 and Q2 have grounded emitters. Their bases share a control node with diode-connected Q2 collector and output-transistor Q3 emitter. Q1 collector joins Q3 base at a separate reference node fed through R REF from V CC. Q3 collector alone rises to output test point TPO, where output current enters and output voltage is positive relative to ground." width="76%"}
+
+Assume equal $\beta_{\mathrm{DC}}=\beta$, matched $Q_1$ and $Q_2$,
+forward-active operation, and neglect Early effect for the current-transfer
+calculation. KCL then gives
+
+$$
+\frac{I_O}{I_{\mathrm{REF}}}
+=
+\frac{1}{1+2/[\beta(\beta+2)]}
+\approx 1-\frac{2}{\beta^2}
+\quad(\beta\gg1).
+$$ {#eq-a03-wilson-ratio}
+
+At $\beta_{\mathrm{DC}}=100$, this idealized ratio is about 0.99980,
+compared with 0.98039 for the simple two-NPN mirror. Independently, hold the
+reference current increment fixed and assume matched small-signal parameters,
+$\beta_{\mathrm{ac}}\gg1$, and the usual condition
+$g_mr_o\gg\beta_{\mathrm{ac}}$. A useful order estimate is
+
+$$
+r_{\mathrm{out,Wilson}}\approx\frac{\beta_{\mathrm{ac}}r_o}{2}.
+$$ {#eq-a03-wilson-output-resistance}
+
+Neither result is a discrete-circuit guarantee. The classic Wilson topology
+uses another device and internal node. Its approximate minimum output voltage
+is
+$V_{O,\min}\approx V_{BE}+V_{CE,\min}$, where $V_{CE,\min}$ is the declared
+forward-active/current-error margin rather than a universal saturation number.
+It therefore needs about one additional base-emitter drop of output headroom
+relative to a simple sink and retains mismatch, unequal-temperature,
+finite-Early-voltage, capacitance, and bandwidth errors.
+
+The shown $R_{\mathrm{REF}}$ also has finite incremental resistance. It must be
+retained when evaluating the drawn circuit's output resistance; the estimate
+in @eq-a03-wilson-output-resistance applies to the ideal current-driven
+comparison. Feedback does not convert $R_{\mathrm{REF}}$ into a regulated
+reference source. Under the same constant-junction-drop approximation, the
+Wilson reference node is near $2V_{BE}$ and
+$I_{\mathrm{REF}}\approx(V_{CC}-2V_{BE})/R_{\mathrm{REF}}$. The simple-mirror
+expression in @eq-a03-bjt-mirror therefore cannot be reused, and supply or
+junction-voltage changes still move the commanded current
+[@analogdevices2021currentmirrors; @sedra2020microelectronic;
+@wilson1968monolithic].
+
+The comparison in @tbl-a03-mirror-selection places Wilson in context without
+turning this chapter into an integrated-circuit design chapter.
+
+| Mirror approach | Principal purpose | Cost or residual limitation |
+|---|---|---|
+| Simple two-device mirror | establish a shared-control current copy | first-order BJT base-current error; finite $r_o$; matching and compliance limits |
+| Matched emitter/source degeneration | reduce sensitivity to device mismatch and raise output resistance | resistor area or parts; added voltage drop and noise |
+| Widlar source | obtain a smaller output current without an impractically large reference resistor | nonlinear temperature-dependent ratio and extra compliance voltage |
+| Wilson mirror | suppress first-order BJT base-current error and raise output resistance through feedback | extra device, internal node, headroom, and dynamic behavior |
+| Cascode mirror | raise output resistance and reduce output-voltage modulation | additional biasing and substantial headroom |
+| Wide-swing cascode variant | recover some compliance relative to an ordinary cascode | greater bias and topology complexity; matching remains |
+
+: Selection map for improved mirrors. These are design directions, not
+interchangeable precision sources. {#tbl-a03-mirror-selection}
+
+Unmatched discrete transistors in either a simple or Wilson mirror should
+therefore be treated as approximate bias elements, not precision sources. A07 owns full
+small-signal derivations, MOS and bipolar variants, active loads, process
+corners, matching, thermal gradients, and layout
+[@analogdevices2021currentmirrors; @horowitz2015art;
+@sedra2020microelectronic].
+
+## Coupling, bypass, and device capacitances set frequency limits
+
+### Coupling capacitors
+
+An ideal coupling capacitor does not “pass AC” without qualification. Its
+impedance is $1/(j\omega C)$, so it and the resistances seen from its terminals
+form a high-pass response. For a capacitor between two Thévenin resistances
+$R_A$ and $R_B$, with independent sources nulled and other capacitors treated
+according to the stated approximation,
+
+$$
+f_p\approx\frac{1}{2\pi C(R_A+R_B)}.
+$$ {#eq-a03-coupling-pole}
+
+The sum appears because the capacitor sees a path through both sides. For the
+input and output capacitors of @fig-a03-common-emitter,
+
+$$
+f_{\mathrm{IN}}\approx
+\frac{1}{2\pi C_{\mathrm{IN}}
+(R_{\mathrm{sig}}+R_{\mathrm{in}})},
+$$ {#eq-a03-input-pole}
+
+and
+
+$$
+f_{\mathrm{OUT}}\approx
+\frac{1}{2\pi C_{\mathrm{OUT}}
+(R_{\mathrm{out}}+R_L)}.
+$$ {#eq-a03-output-pole}
+
+Using $R_{\mathrm{out}}\parallel R_L$ in the second denominator would describe a
+different topology and is a common error.
+
+### Emitter bypass capacitor
+
+$C_E$ in @fig-a03-common-emitter is across $R_{E2}$, not across the complete
+emitter resistance. Its pole estimate uses the resistance seen between its own
+terminals. With the source nulled and the transistor represented incrementally,
+a useful first-order estimate is
+
+$$
+R_{C_E}\approx
+R_{E2}\parallel
+\left[
+R_{E1}
++\frac{r_\pi+(R_{\mathrm{sig}}\parallel R_{\mathrm{TH}})}
+{\beta_{\mathrm{ac}}+1}
+\right],
+$$ {#eq-a03-bypass-resistance}
+
+so
+
+$$
+f_E\approx\frac{1}{2\pi R_{C_E}C_E}.
+$$ {#eq-a03-bypass-pole}
+
+At frequencies well below $f_E$, $C_E$ is ineffective and
+$R_{E1}+R_{E2}$ degenerates the signal. Well above $f_E$, $R_{E2}$ is
+approximately bypassed and gain magnitude rises. Unlike a coupling capacitor,
+the bypass capacitor produces a gain shelf with a pole and a zero; it does not
+force gain to zero at DC. If the input, output, and bypass transitions are
+close, they cannot be treated as three independent pure high-pass factors.
+Device interaction requires nodal analysis, simulation, or a sweep
+[@sedra2020microelectronic].
+
+### High-frequency capacitance and Miller multiplication
+
+At higher frequency, BJT base-emitter and base-collector charge and MOSFET
+gate-source and gate-drain charge add frequency-dependent terminal currents.
+Let $C_\mu$ connect an inverting stage's input to output, and let
+$A_v=\widetilde v_o/\widetilde v_i$. The input current through that capacitance
+is
+
+$$
+\widetilde i_\mu
+=j\omega C_\mu(\widetilde v_i-\widetilde v_o)
+=j\omega C_\mu(1-A_v)\widetilde v_i.
+$$
+
+It therefore appears at the input as the approximate **Miller capacitance**
+
+$$
+C_{\mathrm{M,in}}\approx C_\mu(1-A_v).
+$$ {#eq-a03-miller}
+
+For negative gain, $1-A_v$ can be much larger than one. The input source
+resistance and this enlarged effective capacitance can dominate the upper
+corner. The approximation assumes one voltage gain over the frequency range in
+question; as gain acquires frequency dependence, a complete nodal transfer
+function is required.
+
+The onsemi 2N3904 datasheet, for example, specifies maximum
+$C_{obo}=4.0$ pF only at $V_{CB}=5.0$ V, $I_E=0$, and 100 kHz, and maximum
+$C_{ibo}=8.0$ pF only at $V_{EB}=0.5$ V, $I_C=0$, and 100 kHz. Its minimum
+$f_T=300$ MHz is specified at $I_C=10$ mA, $V_{CE}=20$ V, and 100 MHz
+[@onsemi2n3904]. The electrical-characteristics table states
+$T_A=25~^\circ$C unless otherwise noted. Those values prove neither the
+hybrid-$\pi$ capacitances nor
+the bandwidth of the 1 mA chapter stage. Bias, source resistance, load, Miller
+multiplication, wiring, and probe capacitance still determine the assembled
+response.
+
+## Signal excursion and distortion bound usable gain
+
+### AC load line and clipping
+
+The DC load sees $R_C$, while an AC-coupled load makes the signal current see
+$R_C\parallel R_L$. This distinction rotates the signal load line about the Q
+point. Neglecting $r_o$, define
+
+$$
+R_{CL}=R_C\parallel R_L.
+$$
+
+The cutoff-side collector-voltage rise is approximately
+
+$$
+\widehat V_{o,\mathrm{cutoff}}
+\approx I_{CQ}R_{CL},
+$$ {#eq-a03-cutoff-headroom}
+
+because collector current cannot decrease much below zero. The saturation-side
+limit must include emitter movement and the minimum usable $V_{CE}$; with
+$R_{E1}$ unbypassed,
+
+$$
+\widehat V_{o,\mathrm{sat}}
+\approx
+\frac{V_{CQ}-V_{EQ}-V_{CE,\min}}
+{R_{CL}+R_{E1}}R_{CL}.
+$$ {#eq-a03-saturation-headroom}
+
+This is a piecewise large-signal screen, not a small-signal equation. The
+nominal symmetrical peak cannot exceed the smaller of the two. A design equal
+to that boundary has no margin, and the transistor becomes nonlinear before a
+hard region boundary is reached.
+
+For the illustrative stage,
+$R_{CL}=3.197$ k$\Omega$ and
+$I_{CQ}=1.064$ mA, so the cutoff-side estimate is 3.40 V peak. Taking
+$V_{CE,\min}=0.20$ V only as an illustrative region screen gives a
+saturation-side estimate near 5.3 V peak. Cutoff therefore limits nominal
+symmetrical swing. This does not make 3.40 V peak a qualified distortion limit.
+
+### Curvature and harmonics
+
+For a BJT with $n=1$, substitute a sinusoidal
+$\widetilde v_\pi=\widehat V_\pi\cos\omega t$ into the exponential and retain
+terms through second order:
+
+$$
+\widetilde i_c
+\approx
+g_m\widehat V_\pi\cos\omega t
++\frac{I_{CQ}}{2V_T^2}
+\widehat V_\pi^2\cos^2\omega t.
+$$
+
+Since $\cos^2\omega t=(1+\cos2\omega t)/2$, the approximate ratio of
+second-harmonic peak current to fundamental peak current is
+
+$$
+\frac{\widehat I_2}{\widehat I_1}
+\approx\frac{\widehat V_\pi}{4V_T}.
+$$ {#eq-a03-bjt-second-harmonic}
+
+The same quadratic term also shifts the mean current above the no-signal Q
+value by
+
+$$
+\Delta I_{C,\mathrm{DC}}
+\approx
+\frac{I_{CQ}\widehat V_\pi^2}{4V_T^2}.
+$$
+
+This rectified DC term is why a nonlinear increment about the no-signal Q point
+need not have zero mean. At 300 K, $\widehat V_\pi=5$ mV gives about 4.8%
+second harmonic relative to the fundamental. This is a local
+single-mechanism estimate, not the complete stage THD: emitter degeneration
+changes the relationship between source voltage and $v_\pi$, the two signal
+halves are not perfectly symmetric, higher orders remain, and clipping adds
+strong harmonics. It does show why “only a few millivolts at the junction” can
+matter.
+
+## Noise and multistage loading bound usable performance
+
+### Noise as a bandwidth-dependent floor
+
+Noise is not one input offset. In the classical white-noise approximation, the
+one-sided open-circuit, series-equivalent voltage amplitude spectral density of
+a resistor at absolute temperature $T$ is
+
+$$
+e_{n,R}=\sqrt{4kTR}
+\quad\left[\frac{\mathrm V}{\sqrt{\mathrm{Hz}}}\right].
+$$ {#eq-a03-resistor-noise}
+
+For a full Poisson stream of independent charge carriers, the one-sided
+shot-noise current amplitude spectral density associated with average current
+$I$ is
+
+$$
+i_{n,\mathrm{shot}}=\sqrt{2q_eI}
+\quad\left[\frac{\mathrm A}{\sqrt{\mathrm{Hz}}}\right].
+$$ {#eq-a03-shot-noise}
+
+Correlations, partition, recombination, or circuit feedback can change the
+terminal noise from this full-shot value
+[@horowitz2015art; @sedra2020microelectronic].
+
+For $R=10.0$ k$\Omega$ at 300 K,
+$e_{n,R}\approx12.9$ nV/$\sqrt{\mathrm{Hz}}$. A flat density integrated over
+noise-equivalent bandwidth $B$ contributes an RMS value proportional to
+$\sqrt B$. Real transistor noise also includes frequency-dependent mechanisms,
+and source resistance changes how current and voltage noise combine
+[@horowitz2015art; @sedra2020microelectronic].
+
+The 2N3904's maximum 5.0 dB noise figure is specified only for
+$I_C=100~\mu$A, $V_{CE}=5.0$ V, $R_S=1.0$ k$\Omega$, and 10 Hz to 15.7 kHz
+at the table's stated $T_A=25~^\circ$C unless otherwise noted
+[@onsemi2n3904]. It is not a universal input-noise density and does not qualify
+the chapter's different bias point. A06 develops complete input-referred noise,
+bandwidth, distortion, dynamic-range, and stability budgets.
+
+### Multistage loading
+
+Suppose stage 1 has open-circuit voltage gain $A_{v1,\mathrm{oc}}$ and output
+resistance $R_{\mathrm{out1}}$, while stage 2 presents
+$R_{\mathrm{in2}}$. The loaded first-stage gain is
+
+$$
+A_{v1,\mathrm{loaded}}
+=A_{v1,\mathrm{oc}}
+\frac{R_{\mathrm{in2}}}
+{R_{\mathrm{out1}}+R_{\mathrm{in2}}}.
+$$ {#eq-a03-interstage-loading}
+
+Only after this loading is included may gains be cascaded:
+
+$$
+A_{v,\mathrm{total}}
+=A_{v1,\mathrm{loaded}}A_{v2,\mathrm{loaded}}\cdots.
+$$
+
+If $R_{\mathrm{in2}}\rightarrow\infty$, the first stage approaches its
+open-circuit gain. If $R_{\mathrm{in2}}=R_{\mathrm{out1}}$, the interstage
+divider halves the first-stage output. A follower between stages can reduce
+this loading at the cost of bias current, headroom, noise, and additional
+frequency dependence.
+
+## Evidence distinguishes bias, loading, and frequency faults
+
+A wrong output waveform does not by itself localize a cause. The physical
+circuit and its representations should be tested at discriminating points.
+The hypotheses in @tbl-a03-diagnosis form a reasoning guide, not
+measured evidence.
+
+Use a disciplined localization sequence:
+
+1. Verify supply, reference, current limit, and every stage's DC Q point before
+   injecting an AC signal.
+2. **Signal trace** from the input toward the output, comparing each named
+   stage-boundary test point with a bounded prediction.
+3. For a long chain, **split-half** by observing a safe midpoint. Continue in
+   the faulty half rather than replacing parts throughout the system.
+4. Change only one source, load, probe, amplitude, or frequency condition at a
+   time; predict the direction of change before measuring.
+5. Preserve the original failure state and raw observations until a
+   discriminating test has actually rejected a hypothesis.
+
+Signal tracing is intuitive when the input is known good; split-half can
+localize a multistage fault with fewer observations. Neither method excuses DC
+safety checks, probe-loading analysis, or stage-by-stage loading calculations
+[@horowitz2015art; @malvino2021electronic].
+
+| Observation | Competing hypotheses | Discriminating check |
+|---|---|---|
+| $V_C$ is near $V_{CC}$ with no signal | transistor cutoff; open emitter path; wrong pinout; base divider fault | measure TPB and emitter DC voltage relative to TP0, de-energize, then verify continuity and pinout |
+| $V_C$ is near $V_E$ | excessive base bias; shorted collector path; wrong resistor; transistor saturation | compare TPB, emitter voltage, and current inferred independently from $R_C$ and $R_E$ |
+| DC points agree but gain is low | load smaller than assumed; bypass capacitor ineffective; low $g_m$; probe loading | remove the load, compare gain above and below the predicted bypass corner, then change probe configuration |
+| Low-frequency gain falls early | $C_{\mathrm{IN}}$, $C_{\mathrm{OUT}}$, or $C_E$ too small; electrolytic degradation; resistance estimate wrong | vary one capacitor by a known factor and predict which corner should move |
+| High-frequency gain falls early | Miller effect; source resistance; device capacitance; wiring or probe capacitance | reduce source resistance, use a lower-capacitance probe, and compare the direction and size of the change |
+| One half-cycle clips first | asymmetric Q point; cutoff or saturation headroom; source offset | record TPB and TPC DC values, then compare positive and negative peak distances to the region boundaries |
+| Gain drifts during warm-up | junction temperature; bias-network drift; supply drift; self-heating | record supply, TPB, emitter, collector, and case-temperature proxy versus time without attributing junction temperature directly |
+
+: Hypothesis-driven amplifier diagnosis. Each row requires the same source,
+load, amplitude, frequency, and instrument configuration for comparisons.
+{#tbl-a03-diagnosis}
+
+### Worked diagnosis: low gain with valid DC bias
+
+Suppose an **illustrative synthetic record** for the canonical stage reports
+$V_B=1.76$ V, $V_E=1.05$ V, $V_C=6.92$ V, and
+$|A_v|=7.8$ at 1.00 kHz. These generated values teach reconciliation; they do
+not qualify a physical amplifier. The terminal differences are
+
+$$
+V_{BE}=1.76-1.05=0.71~\mathrm V,
+\qquad
+V_{CE}=6.92-1.05=5.87~\mathrm V.
+$$
+
+Both are plausible for forward-active operation under the chapter
+approximation. Independent resistor-path current estimates are
+
+$$
+I_C^{(R_C)}
+=\frac{12.0-6.92}{4.70~\mathrm{k}\Omega}
+=1.081~\mathrm{mA},
+$$
+
+and
+
+$$
+I_E^{(R_E)}
+=\frac{1.05}{950~\Omega}
+=1.105~\mathrm{mA}.
+$$
+
+Their 24 $\mu$A difference has the correct sign for positive base current,
+although a quantitative closure test still needs resistor and voltage
+uncertainty. The DC evidence therefore makes “wrong operating region” less
+likely than an ineffective bypass or excess signal loading; it does not prove
+either one.
+
+The next discriminating observation is the 1.00 kHz signal at TPE relative to
+TP0. A larger-than-predicted emitter signal supports an ineffective $C_E$
+path. If TPE agrees, repeat the gain measurement first without $R_L$ and then
+with a lower-capacitance probe. A gain recovery localizes loading more strongly
+than replacing the transistor at random.
+
+For current reconciliation, two independently obtained estimates can expose a
+wiring or parameter error:
+
+$$
+I_C^{(R_C)}=\frac{V_{CC}-V_C}{R_C},
+\qquad
+I_E^{(R_E)}=\frac{V_E}{R_E}.
+$$
+
+Their difference is not expected to be zero because $I_E=I_C+I_B$, and each
+estimate has measurement and resistor uncertainty. After base current and all
+declared paths are assigned, a closure residual consistent with zero within
+uncertainty supports the circuit description. Defining an unknown current as
+the remainder would create an identity, not independent evidence.
+
+## Worked design: a bounded 2N3904 voltage stage
+
+### Requirements and assumptions
+
+Design the circuit of @fig-a03-common-emitter as an extra-low-voltage teaching
+stage. @tbl-a03-design-requirements states **illustrative requirements**; they
+are not claims about an existing assembly.
+
+| Quantity | Illustrative requirement and condition |
+|---|---|
+| Supply | $12.0$ V nominal, current limited to no more than 25 mA for the bench procedure |
+| Source | $R_{\mathrm{sig}}=600~\Omega$; zero DC offset; sinusoidal amplitude stated as peak |
+| Load | $R_L=10.0$ k$\Omega$ connected through $C_{\mathrm{OUT}}$ |
+| DC region | $V_{CEQ}>4.0$ V and $0.80~\mathrm V<V_{EQ}<1.25~\mathrm V$ |
+| Midband gain | $9.0<|A_{v,\mathrm{sig}}|<11.5$ at 1.00 kHz and $\widehat V_{\mathrm{sig}}=50.0$ mV |
+| Tested passband | at every point of a logarithmic 100 Hz–20.0 kHz sweep with spacing no coarser than 1/12 octave, gain remains within 1.0 dB of its 1.00 kHz value |
+| Linearity | THD at TPO is less than 3.0% at 1.00 kHz and $\widehat V_o=0.50$ V |
+| Large-signal margin | 1 dB gain-compression output amplitude exceeds 1.50 V peak at 1.00 kHz |
+
+: Illustrative design requirements. Strict inequalities require guarded
+measurement intervals to remain inside the stated boundaries.
+{#tbl-a03-design-requirements}
+
+Choose an onsemi 2N3904 and the nominal values in @tbl-a03-design-values.
+Standard-value availability does not establish
+tolerance, temperature coefficient, voltage coefficient, or capacitor
+polarization; the actual parts must be specified before qualification.
+
+| Element | Nominal choice | Function |
+|---|---:|---|
+| $R_1$ | 82.0 k$\Omega$ | upper bias-divider resistor |
+| $R_2$ | 15.0 k$\Omega$ | lower bias-divider resistor |
+| $R_C$ | 4.70 k$\Omega$ | collector load and voltage conversion |
+| $R_{E1}$ | 270 $\Omega$ | unbypassed degeneration |
+| $R_{E2}$ | 680 $\Omega$ | DC stabilization, bypassed at midband |
+| $C_{\mathrm{IN}}$ | 1.00 $\mu$F | input DC isolation |
+| $C_{\mathrm{OUT}}$ | 1.00 $\mu$F | output DC isolation |
+| $C_E$ | 47.0 $\mu$F | midband bypass of $R_{E2}$ |
+
+: Nominal design choices. Values are calculation inputs, not measured
+component values. {#tbl-a03-design-values}
+
+The 2N3904 datasheet guarantees $h_{FE}\ge70$ at
+$I_C=1.0$ mA and $V_{CE}=1.0$ V, while its 100–300 range applies at
+$I_C=10$ mA and $V_{CE}=1.0$ V [@onsemi2n3904]. Both are pulse tests with
+pulse width no greater than 300 $\mu$s and duty cycle no greater than 2%, in
+the table stated at $T_A=25~^\circ$C unless otherwise noted. The 10 mA upper value must not
+be presented as a guaranteed 1 mA range. The design therefore uses emitter
+feedback and verifies the actual DC point rather than relying on one claimed
+$\beta$.
+
+### Executable nominal and sensitivity check
+
+The following standard-library code reproduces the chapter arithmetic. It uses
+the constant-$V_{BE}$ approximation, sweeps
+$\beta_{\mathrm{DC}}$, holds the distinct illustrative value
+$\beta_{\mathrm{ac}}=100$ fixed, and neglects $r_o$. Its output is
+**executable calculation evidence**, not simulation and not measurement.
+
+```python
+from math import log10, pi
+
+vcc = 12.0
+r1, r2 = 82e3, 15e3
+rc, re1, re2 = 4.70e3, 270.0, 680.0
+rl, r_sig = 10.0e3, 600.0
+v_be, v_t = 0.700, 25.85e-3
+c_in, c_out, c_e = 1.00e-6, 1.00e-6, 47.0e-6
+
+v_th = vcc * r2 / (r1 + r2)
+r_th = 1.0 / (1.0 / r1 + 1.0 / r2)
+r_e_dc = re1 + re2
+r_cl = 1.0 / (1.0 / rc + 1.0 / rl)
+
+beta_ac = 100.0
+print("beta_dc IC(mA)  VE(V)  VC(V)  VCE(V)  Av(sig)")
+for beta_dc in (70.0, 100.0, 200.0):
+    i_b = (v_th - v_be) / (r_th + (beta_dc + 1.0) * r_e_dc)
+    i_c = beta_dc * i_b
+    i_e = (beta_dc + 1.0) * i_b
+    v_e = i_e * r_e_dc
+    v_c = vcc - i_c * rc
+    g_m = i_c / v_t
+    r_pi = beta_ac / g_m
+    a_vb = -g_m * r_cl / (1.0 + (g_m + 1.0 / r_pi) * re1)
+    r_in_b = r_pi + (beta_ac + 1.0) * re1
+    r_in = 1.0 / (1.0 / r_th + 1.0 / r_in_b)
+    a_vsig = a_vb * r_in / (r_sig + r_in)
+    print(
+        f"{beta_dc:7.0f} {1e3*i_c:6.3f}  {v_e:5.3f}  "
+        f"{v_c:5.3f}  {v_c-v_e:6.3f}  {a_vsig:7.3f}"
+    )
+
+beta_dc = 100.0
+i_b = (v_th - v_be) / (r_th + (beta_dc + 1.0) * r_e_dc)
+i_c = beta_dc * i_b
+g_m = i_c / v_t
+r_pi = beta_ac / g_m
+r_in_b = r_pi + (beta_ac + 1.0) * re1
+r_in = 1.0 / (1.0 / r_th + 1.0 / r_in_b)
+r_base = 1.0 / (1.0 / r_sig + 1.0 / r_th)
+r_ce = 1.0 / (
+    1.0 / re2
+    + 1.0 / (re1 + (r_pi + r_base) / (beta_ac + 1.0))
+)
+
+for name, resistance, capacitance in (
+    ("input", r_sig + r_in, c_in),
+    ("output", rc + rl, c_out),
+    ("bypass", r_ce, c_e),
+):
+    corner = 1.0 / (2.0 * pi * resistance * capacitance)
+    print(f"{name:7s} pole estimate = {corner:5.2f} Hz")
+
+
+def solve_3x3(matrix, vector):
+    augmented = [
+        row[:] + [value]
+        for row, value in zip(matrix, vector)
+    ]
+    for column in range(3):
+        pivot = max(
+            range(column, 3),
+            key=lambda row: abs(augmented[row][column]),
+        )
+        augmented[column], augmented[pivot] = (
+            augmented[pivot],
+            augmented[column],
+        )
+        divisor = augmented[column][column]
+        for index in range(column, 4):
+            augmented[column][index] /= divisor
+        for row in range(3):
+            if row == column:
+                continue
+            factor = augmented[row][column]
+            for index in range(column, 4):
+                augmented[row][index] -= (
+                    factor * augmented[column][index]
+                )
+    return [augmented[row][3] for row in range(3)]
+
+
+def gain_at(frequency):
+    omega = 2.0 * pi * frequency
+    z_in = r_sig + 1.0 / (1j * omega * c_in)
+    y_in = 1.0 / z_in
+    z_emitter = re1 + 1.0 / (
+        1.0 / re2 + 1j * omega * c_e
+    )
+    z_output = rl + 1.0 / (1j * omega * c_out)
+    y_bias = 1.0 / r1 + 1.0 / r2
+    matrix = [
+        [y_in + y_bias + 1.0 / r_pi, -1.0 / r_pi, 0.0],
+        [
+            -1.0 / r_pi - g_m,
+            1.0 / z_emitter + 1.0 / r_pi + g_m,
+            0.0,
+        ],
+        [g_m, -g_m, 1.0 / rc + 1.0 / z_output],
+    ]
+    _, _, v_collector = solve_3x3(matrix, [y_in, 0.0, 0.0])
+    return v_collector * rl / z_output
+
+
+ratio = abs(gain_at(100.0) / gain_at(1000.0))
+ratio_db = 20.0 * log10(ratio)
+print(f"100 Hz / 1 kHz = {ratio:.4f} ({ratio_db:.3f} dB)")
+```
+
+Expected output:
+
+```text
+beta_dc IC(mA)  VE(V)  VC(V)  VCE(V)  Av(sig)
+     70  1.010  0.973  7.255   6.282  -10.041
+    100  1.064  1.021  7.000   5.979  -10.084
+    200  1.135  1.084  6.665   5.581  -10.135
+input   pole estimate = 16.78 Hz
+output  pole estimate = 10.83 Hz
+bypass  pole estimate = 16.28 Hz
+100 Hz / 1 kHz = 0.9645 (-0.314 dB)
+```
+
+The table teaches sensitivity within the declared approximation: a nearly
+three-to-one illustrative $\beta_{\mathrm{DC}}$ change moves calculated current
+by about 12% and source gain by about 0.94% while
+$\beta_{\mathrm{ac}}$ is held fixed. It does not predict a production
+distribution, because $V_{BE}$, $\beta_{\mathrm{ac}}$, $r_o$, temperature, and
+component values were not jointly varied.
+
+### Frequency and headroom screens
+
+The three estimated low-frequency poles lie near one another. If they were
+independent pure high-pass factors, multiplication would misrepresent the
+bypass shelf. Evaluating the complete nominal hybrid-$\pi$ network gives a
+100 Hz-to-1 kHz gain ratio of about 0.965, or $-0.31$ dB. This remains
+calculation evidence under assumed $g_m$, $r_\pi$, ideal capacitors, and
+$r_o\rightarrow\infty$; SPICE analysis with an identified device description or
+a sweep is needed before asserting the physical lower cutoff.
+
+The datasheet's conditional $f_T$ and capacitance limits make 20 kHz plausible
+but do not prove the upper-band requirement at this different bias. The
+high-frequency acceptance sweep must include the actual source, 10 k$\Omega$
+load, wiring, and probes. A simulation is useful calculated evidence only if its
+device description, temperature, parasitics, source, load, and probe
+capacitance are recorded.
+
+The nominal cutoff-side headroom is 3.40 V peak, above the 1.50 V
+gain-compression requirement. That comparison is only a feasibility screen:
+gain compression can occur before cutoff, and the result has not carried
+tolerances or temperature. The 0.50 V peak linearity test asks for only about
+50 mV peak at the source under the nominal gain, but the THD requirement still
+requires simulation or measurement.
+
+### DC power screen
+
+At the nominal Q point, collector-port transistor dissipation is approximately
+
+$$
+P_{CEQ}=V_{CEQ}I_{CQ}
+\approx(5.979~\mathrm V)(1.064~\mathrm{mA})
+=6.36~\mathrm{mW}.
+$$
+
+Base-port power is much smaller in the nominal approximation but is not
+identically zero. The collector-resistor dissipation is
+
+$$
+P_{R_C}=I_{CQ}^2R_C\approx5.32~\mathrm{mW},
+$$
+
+and the combined emitter-resistor dissipation is
+
+$$
+P_{R_E}=I_{EQ}^2(R_{E1}+R_{E2})\approx1.10~\mathrm{mW}.
+$$
+
+The loaded base voltage is $V_{BQ}\approx1.721$ V, so the mandatory divider
+resistors dissipate
+
+$$
+P_{R_1}=\frac{(V_{CC}-V_{BQ})^2}{R_1}\approx1.29~\mathrm{mW},
+\qquad
+P_{R_2}=\frac{V_{BQ}^2}{R_2}\approx0.197~\mathrm{mW}.
+$$
+
+The nominal base-port transistor power is
+$V_{BEQ}I_{BQ}\approx7.45~\mu$W. The total supply current is approximately
+$I_{CQ}+(V_{CC}-V_{BQ})/R_1=1.19$ mA.
+
+These nominal values are far below a 0.125 W resistor rating, but a final parts
+decision still needs actual resistor ratings, tolerance, ambient condition,
+spacing, and fault behavior. The transistor's 625 mW and
+$R_{\theta JA}=200~^\circ$C/W figures are listed for the TO-92 device at
+$T_A=25~^\circ$C; dissipation derates above 25 °C at 5.0 mW/°C, maximum
+ratings are based on $T_J=150~^\circ$C, and the datasheet identifies them as
+steady-state limits [@onsemi2n3904]. They cannot be multiplied into a universal
+junction-temperature guarantee. The 25 mA source limit also
+bounds many wiring faults to a much lower energy than an unrestricted supply.
+
+If polarized capacitors are used, $C_{\mathrm{IN}}$ normally has its positive
+terminal toward TPB, $C_{\mathrm{OUT}}$ toward TPC, and $C_E$ toward the top of
+$R_{E2}$ under the stated DC conditions. Reverse or bipolar signal conditions
+can invalidate that choice; use a suitable non-polar or bipolar part when
+polarity cannot be maintained.
+
+### Requirement disposition before measurement
+
+The calculation does not justify an overall pass. @tbl-a03-disposition makes
+the evidence gap explicit.
+
+| Requirement | Evidence reached | Disposition before build |
+|---|---|---|
+| DC region | nominal calculation and illustrative $\beta_{\mathrm{DC}}$ sweep; $V_{BE}$, tolerance, and temperature corners incomplete | feasible, not qualified |
+| 1 kHz gain | nominal incremental calculation with fixed $\beta_{\mathrm{ac}}$ and $r_o\rightarrow\infty$ | provisional calculation pass |
+| 100 Hz end | nominal full-network calculation predicts about $-0.31$ dB relative to 1 kHz | provisional calculation pass |
+| 20 kHz end and tested passband | conditional datasheet parameters only; no complete identified high-frequency network or sweep | unresolved |
+| THD below 3.0% | curvature mechanism identified; no condition-matched harmonic calculation or measurement | unresolved |
+| 1 dB compression above 1.50 V peak | load-line headroom screen exceeds 1.50 V; gain compression can occur earlier | feasible, not qualified |
+| Overall stage | at least three mandatory requirements remain unresolved | **not qualified** |
+
+: Requirement-by-requirement disposition. A nominal calculation can support
+feasibility but cannot replace the missing physical evidence. {#tbl-a03-disposition}
+
+## Guarded acceptance for the teaching stage
+
+The calculation reaches the estimate-and-calculation rungs of the evidence
+ladder. A physical claim requires a documented build and measurement. Use the
+exact circuit, source, load, test points, and conditions below; otherwise the
+claim concerns a different system.
+
+1. **Configuration and safety.** Use the selected 2N3904, recorded component
+   values or tolerances, a 12.0 V current-limited source set to no more than
+   25 mA, a 600 $\Omega$ source resistance, and a 10.0 k$\Omega$ load. Verify
+   transistor pinout and capacitor polarity with power removed.
+2. **DC measurands.** With zero signal, measure $V_B$, $V_E$, and $V_C$ at TPB,
+   TPE, and TPC relative to TP0. Record the DMM, range, input resistance,
+   calibration state, ambient condition, supply reading, raw observations, and
+   an uncertainty basis. Calculate $V_{CE}=V_C-V_E$ from correlated readings.
+3. **Small-signal gain.** Apply a 1.00 kHz sine of
+   $\widehat V_{\mathrm{sig}}=50.0$ mV at TPIN, the source side of
+   $R_{\mathrm{sig}}$. Measure TPIN and TPO using RMS or peak consistently; do
+   not divide a peak value by an RMS value. Record scope bandwidth, probe
+   attenuation, input resistance and capacitance, generator loading, and
+   amplitude uncertainty.
+4. **Frequency response.** Hold the TPIN amplitude constant and sweep
+   logarithmically from 100 Hz through 20.0 kHz with spacing no coarser than
+   1/12 octave. Use adequate settling time and instrument bandwidth at every
+   point, and add points around any peaking, notch, or rapid transition. The
+   reported gain is $\underline V_o/\underline V_{\mathrm{sig}}$ for the same
+   source/load/probe configuration. The claim is limited to the tested points;
+   interpolation requires a separately validated transfer description.
+5. **Linearity and compression.** At 1.00 kHz, adjust the source to obtain
+   $\widehat V_o=0.50$ V and evaluate THD with a recorded bandwidth and window.
+   Then increase amplitude gradually and define the 1 dB compression point as
+   the output amplitude at which gain magnitude is 1.00 dB below the
+   small-signal reference. Do not substitute visual “flatness” for either
+   measurand.
+6. **Stop conditions.** Remove power for smoke, odor, discoloration, unexpected
+   rapid temperature rise, loss of current limiting, oscillation outside the
+   intended test, or a capacitor-polarity violation. These observations are
+   safety stops, not evidence that a completed test passed.
+
+For each requirement, form a measurement interval using the documented
+uncertainty basis. The decision rules are:
+
+- the lower bound of the $V_{CEQ}$ interval must be **greater than** 4.0 V;
+- the complete $V_{EQ}$ interval must lie inside 0.80–1.25 V;
+- the complete 1.00 kHz $|A_v|$ interval must lie inside 9.0–11.5;
+- the complete gain-deviation interval at every tested 100 Hz–20.0 kHz point
+  must lie inside $\pm1.0$ dB relative to the 1.00 kHz result;
+- the upper bound of the THD interval must be **less than** 3.0%; and
+- the lower bound of the 1 dB-compression output-amplitude interval must be
+  **greater than** 1.50 V peak.
+
+Equality does not pass a strict limit. If an interval crosses a boundary, the
+result is indeterminate under this guarded rule, even if the displayed central
+value lies inside. Probe loading that moves a result favorably must be corrected
+or bounded explicitly, not hidden inside a generic uncertainty term
+[@jcgm2008gum; @jcgm2012conformity; @tektronixprobesprimer].
+
+A pass qualifies only the tested assembly, source, load, supply, temperature
+range, amplitude, and frequency range. It does not qualify all 2N3904 devices,
+arbitrary loads, power amplification, or operation outside the current-limited
+extra-low-voltage boundary.
+
+## Summary
+
+Bias first establishes a DC Q point by intersecting the device relation with
+the source and load network. Divider bias plus emitter or source resistance
+uses local feedback to reduce sensitivity, but it does not erase device spread,
+temperature, tolerance, or headroom. The DC solution must always be checked
+against the assumed operating region.
+
+Small-signal analysis is a Taylor expansion about that Q point. $g_m$ is the
+local control-to-output-current slope, $r_\pi$ describes BJT base input, and
+$r_o$ describes finite output dependence. They are bias- and
+condition-dependent incremental parameters, not universal device constants.
+Common-emitter and common-source stages convert controlled current into an
+inverted voltage through a loaded resistance; degeneration trades gain for
+predictability, input resistance, and linearity. Common-base and common-gate
+stages are non-inverting, present a low input resistance, and explain the upper
+device in a cascode. Followers trade voltage gain for impedance transformation,
+while a Darlington adds current gain at the cost of two junction drops and
+additional non-ideal behavior. These class-A stages dissipate DC power even
+without a signal.
+
+Simple mirrors provide conditional bias currents, not precision independent
+sources. Transfer accuracy, incremental output resistance, compliance, and
+matching or dynamic limits are distinct claims. A Wilson mirror uses feedback
+to reduce first-order BJT base-current error and raise output resistance, but
+spends device count and headroom and does not regulate its reference source.
+
+Coupling and bypass capacitors establish frequency-dependent paths rather than
+universal “AC shorts.” Device capacitance, source resistance, Miller
+multiplication, load, and probe determine the upper response. Headroom and
+curvature bound amplitude before or at cutoff and saturation; noise depends on
+bandwidth; and one stage loads the next.
+
+The schematic, DC calculation, incremental equivalent, executable arithmetic,
+datasheet conditions, frequency sweep, and guarded decision all describe one
+amplifier. Agreement supports the stated claim. Disagreement is evidence to
+locate an omitted path, wrong parameter, intrusive measurement, or exceeded
+validity range.
+
+## Exercises
+
+### Quick check
+
+Choose one best answer for each item.
+
+1. A transistor's small-signal transconductance $g_m$ is:
+
+    a. its DC current gain;
+    b. the local derivative of output current with respect to control voltage;
+    c. the resistance of its collector or drain;
+    d. its guaranteed stage voltage gain.
+
+2. In a divider-biased BJT stage, increasing emitter resistance while retaining
+   adequate headroom generally:
+
+    a. makes collector current more sensitive to $\beta$;
+    b. removes all temperature dependence;
+    c. reduces current sensitivity through local feedback;
+    d. forces the BJT into saturation.
+
+3. In midband, an ideal bypass capacitor across $R_{E2}$:
+
+    a. removes $R_{E2}$ from the DC bias calculation;
+    b. approximately removes $R_{E2}$ from the signal path but not the DC path;
+    c. shorts the collector to ground;
+    d. makes all frequencies have the same gain.
+
+4. A common-emitter stage has negative midband voltage gain because:
+
+    a. electrons travel backward in time;
+    b. increasing collector current increases the $R_C$ drop and lowers
+       collector voltage;
+    c. its power gain must be negative;
+    d. the output probe reverses polarity automatically.
+
+5. The output-coupling pole of a stage with output resistance
+   $R_{\mathrm{out}}$ and load $R_L$ is first estimated using:
+
+    a. $R_{\mathrm{out}}+R_L$;
+    b. $R_{\mathrm{out}}\parallel R_L$;
+    c. $R_{\mathrm{out}}-R_L$;
+    d. $R_L$ only.
+
+6. A 2N3904 $f_T$ value specified at 10 mA and 20 V:
+
+    a. guarantees the bandwidth of every 2N3904 amplifier;
+    b. is the exact upper corner of the chapter stage;
+    c. is conditional device evidence, not a complete stage-bandwidth
+       guarantee;
+    d. means coupling capacitors can be omitted.
+
+7. Under its stated midband approximations, a common-base stage is typically:
+
+    a. inverting with very high emitter input resistance;
+    b. non-inverting with emitter input resistance near $1/g_m$;
+    c. a unity-voltage-gain buffer;
+    d. independent of its bias network.
+
+8. A Wilson mirror is introduced here primarily because it:
+
+    a. makes a resistor-fed reference supply independent;
+    b. eliminates all mismatch and temperature error;
+    c. reduces first-order BJT base-current error and raises output resistance,
+       while spending headroom and complexity;
+    d. guarantees a precision current for unmatched discrete transistors.
+
+**Answer key:** 1 b; 2 c; 3 b; 4 b; 5 a; 6 c; 7 b; 8 c.
+
+### Retrieval and explanation
+
+1. Define a Q point and distinguish a total instantaneous voltage, a DC value,
+   an instantaneous increment, a peak amplitude, and an RMS phasor.
+2. Explain why the unloaded divider voltage is not automatically the transistor
+   base voltage.
+3. Distinguish $\beta_{\mathrm{DC}}$, $\beta_{\mathrm{ac}}$, $g_m$, $r_\pi$,
+   $r_e$, and $r_o$.
+4. Explain why MOSFET saturation is normally required for common-source gain,
+   while BJT saturation normally ends forward-active gain.
+5. Explain why a follower can have useful power gain even though its voltage
+   gain is below one.
+6. State four reasons that a two-transistor discrete current mirror is not a
+   precision current source.
+7. Distinguish a cascade from a cascode. State why a common-base or common-gate
+   device is useful in the latter.
+8. Distinguish mirror transfer accuracy, incremental output resistance,
+   compliance, and reference-current regulation.
+
+### Estimation and calculation
+
+1. Repeat the divider-bias example for
+   $\beta_{\mathrm{DC}}=70$ and 200. Verify the values in the executable output
+   and check the forward-active assumption.
+2. For $I_{CQ}=0.500$ mA, $n=1$, $T=300$ K, and
+   $\beta_{\mathrm{ac}}=120$, calculate $g_m$, $r_e$, and $r_\pi$.
+   **Self-check:** $g_m=19.3$ mS,
+   $r_e=r_\pi/121\approx51.3~\Omega$,
+   $1/g_m\approx51.7~\Omega$, and $r_\pi\approx6.20$ k$\Omega$.
+3. A common-emitter stage has $g_m=25.0$ mS,
+   $r_\pi=4.00$ k$\Omega$, $R_C=6.80$ k$\Omega$,
+   $R_L=10.0$ k$\Omega$, $r_o=80.0$ k$\Omega$, and
+   $R_{E1}=220~\Omega$. First take $r_o\rightarrow\infty$ and use the
+   closed-form gain. Then retain $r_o$ in the complete incremental network and
+   solve by nodal analysis. Find base input resistance and output resistance
+   under the assumptions you retain.
+4. A common-source stage has $g_m=8.00$ mS, $R_D=4.70$ k$\Omega$,
+   $R_L=10.0$ k$\Omega$, $r_o=50.0$ k$\Omega$, and
+   $R_S=330~\Omega$. Find the gate-to-drain gain.
+5. An emitter follower has $\beta_{\mathrm{ac}}=100$,
+   $r_\pi=2.50$ k$\Omega$, and $R_E'=1.00$ k$\Omega$. Find voltage gain and
+   base input resistance. **Self-check:** 0.976 and 103.5 k$\Omega$.
+6. Choose $C_{\mathrm{OUT}}$ so its individual pole estimate is no more than
+   20.0 Hz for $R_{\mathrm{out}}=3.30$ k$\Omega$ and
+   $R_L=10.0$ k$\Omega$. Round upward to a preferred available value and state
+   the consequence of capacitor tolerance.
+7. Choose $R_B$ in fixed bias and collector-feedback bias so both give
+   $I_C\approx1.00$ mA at $\beta_{\mathrm{DC}}=100$,
+   $V_{BE}=0.700$ V, $V_{CC}=12.0$ V, and $R_C=4.70$ k$\Omega$. Recalculate
+   each at $\beta_{\mathrm{DC}}=70$ and 200, verify the load line, and compare
+   sensitivity and headroom with the divider-plus-emitter stage.
+8. Reproduce the illustrative MOSFET bias example by solving both quadratic
+   roots. Repeat for $V_{\mathrm{th}}=2.50$ V and 1.50 V, and verify the
+   saturation inequality before calculating gain.
+9. A simple NPN mirror has $V_{CC}=5.00$ V,
+   $R_{\mathrm{REF}}=4.30$ k$\Omega$, $V_{BE}=0.700$ V, and
+   $\beta_{\mathrm{DC}}=100$. Estimate $I_{\mathrm{REF}}$ and $I_O$. If
+   $V_{CE}>0.30$ V is an illustrative compliance requirement, state the allowed
+   TPO voltage range and why it is not a datasheet guarantee.
+10. A common-base stage has $g_m=20.0$ mS,
+    $\beta_{\mathrm{ac}}=100$, $R_C=4.70$ k$\Omega$, and
+    $R_L=10.0$ k$\Omega$. Under the assumptions of
+    @eq-a03-common-base-gain and @eq-a03-common-base-input, estimate emitter
+    input resistance, collector current gain, and emitter-to-collector voltage
+    gain. State why a 600 $\Omega$ source would heavily attenuate the applied
+    emitter voltage. **Self-check:** $R_{\mathrm{in,e}}\approx49.5~\Omega$,
+    $\alpha_{\mathrm{ac}}\approx0.990$, and
+    $A_{v,e}\approx+63.9$ before source attenuation.
+11. At $\beta=100$, calculate the simple-mirror and Wilson-mirror current ratios
+    from @eq-a03-bjt-mirror and @eq-a03-wilson-ratio. Express each shortfall in
+    percent and name at least three errors omitted by that comparison.
+    **Self-check:** 0.98039 and 0.999804 under their common idealized
+    assumptions.
+
+### Derivation and limiting cases
+
+1. Derive @eq-a03-divider-bias from KVL and exact BJT terminal-current balance.
+   Test $\beta\rightarrow\infty$, $R_E\rightarrow0$, and
+   $R_{\mathrm{TH}}\rightarrow0$.
+2. Starting from the exponential BJT relation, derive @eq-a03-bjt-gm and
+   then derive @eq-a03-bjt-second-harmonic. State where each approximation
+   enters.
+3. Derive @eq-a03-ce-gain without assuming $\beta_{\mathrm{ac}}\rightarrow
+   \infty$. Then obtain @eq-a03-ce-gain-re.
+4. Apply a test source to derive the output resistance of a common-emitter stage
+   including $r_o$ and an unbypassed emitter resistor. Compare it with the
+   approximation @eq-a03-ce-output-resistance.
+5. Derive @eq-a03-cs-gain from the MOSFET incremental equivalent. Add body
+   transconductance $g_{mb}$ and state how the result changes.
+6. Derive @eq-a03-coupling-pole by replacing the networks on both capacitor
+   terminals by Thévenin resistances. Explain why the resistances add.
+7. Derive @eq-a03-common-base-gain and @eq-a03-common-base-input from the
+   hybrid-$\pi$ equivalent. Retain finite $\beta_{\mathrm{ac}}$ until the final
+   approximation.
+8. Apply KCL at the reference and shared-control nodes of
+   @fig-a03-wilson-mirror to derive @eq-a03-wilson-ratio. Identify precisely
+   where matching, equal $\beta$, and neglected Early effect enter.
+
+### Data interpretation
+
+1. The onsemi 2N3904 datasheet gives $h_{FE}\ge70$ at 1 mA and
+   $100\le h_{FE}\le300$ at 10 mA, both at $V_{CE}=1$ V,
+   $T_A=25~^\circ$C unless otherwise noted, and under the specified
+   $\le300~\mu$s, $\le2\%$ pulse test. Which of these bounds
+   may be used directly at the chapter's nominal 1 mA point, and what remains
+   unbounded?
+2. A **synthetic** stage record gives
+   $V_B=1.76$ V, $V_E=1.05$ V, $V_C=6.92$ V, and
+   $|A_v|=7.8$ at 1 kHz. The values are generated for practice and do not
+   qualify a physical amplifier. Calculate $V_{BE}$ and $V_{CE}$, then rank
+   load error, ineffective bypass, and wrong DC bias as hypotheses. State the
+   next discriminating measurement.
+3. A sweep has gain magnitude 10.0 at 1 kHz, 9.9 at 100 Hz, and 7.0 at 20 kHz.
+   Explain why changing $C_{\mathrm{IN}}$ is unlikely to repair the high-end
+   result. Propose tests for source resistance, probe capacitance, and Miller
+   effect.
+4. Two stages each have unloaded gain $-20$. Stage 1 has
+   $R_{\mathrm{out1}}=5.0$ k$\Omega$ and stage 2 has
+   $R_{\mathrm{in2}}=5.0$ k$\Omega$. Find the loaded total gain if stage 2's
+   own loaded gain remains $-20$. Explain why multiplying the two unloaded
+   gains was wrong.
+5. A synthetic acceptance record gives
+   $|A_v|=10.2\pm0.4$ and $\mathrm{THD}=(2.7\pm0.5)\%$, with each interval
+   already expanded under a documented basis. Apply the chapter's guarded
+   rules. State the individual and overall dispositions. **Self-check:** gain
+   passes; THD is indeterminate because its interval crosses 3.0%; the stage is
+   not qualified overall.
+6. With $I_{\mathrm{REF}}$ fixed, a synthetic simple-mirror sweep gives
+   $I_O=0.984$ mA at $V_O=1.00$ V and $I_O=1.012$ mA at $V_O=5.00$ V.
+   Estimate the average incremental output resistance over that interval.
+   Decide whether the data meet a requirement that current vary by less than
+   1.0% of 1.00 mA over the tested interval, and explain why two endpoints do
+   not establish behavior between them. **Self-check:** approximately
+   143 k$\Omega$ and a 2.8% endpoint-to-endpoint change, so the stated limit
+   fails.
+7. A legacy small-signal data table, at one stated Q point and frequency, gives
+   $h_{ie}=2.40$ k$\Omega$, $h_{fe}=96$, and
+   $h_{oe}=20.0~\mu$S. Under the unilateral hybrid-$\pi$ correspondence stated
+   in this chapter, estimate $r_\pi$, $\beta_{\mathrm{ac}}$, and $r_o$.
+   Explain why a separate datasheet value of $h_{FE}=180$ cannot replace
+   $h_{fe}$ without further evidence. **Self-check:** 2.40 k$\Omega$, 96, and
+   50.0 k$\Omega$.
+8. A synthetic comparison holds device transconductance and collector load
+   fixed. A common-emitter stage has an effective input capacitance of 70 pF,
+   while a cascode version has 12 pF; the cascode also reduces available
+   symmetrical output swing from 6.0 V peak to 4.2 V peak. For the same
+   10 k$\Omega$ source resistance, estimate the corresponding single-pole
+   input corner frequencies. Then state the bandwidth--headroom trade rather
+   than declaring either circuit universally better. **Self-check:**
+   approximately 227 kHz and 1.33 MHz.
+
+### Debugging
+
+1. A stage worked until a scope probe was attached, after which its upper
+   corner fell by a factor of three. Draw the probe as
+   $R_p\parallel C_p$ at the measured node and develop two tests that separate
+   probe capacitance from a loose connection.
+2. A student's calculated collector current from $R_C$ is 1.2 mA, while emitter
+   current from $R_E$ is 0.7 mA. Build an uncertainty-aware hypothesis list that
+   includes resistor misidentification, wrong reference node, parallel paths,
+   meter loading, and transistor pinout.
+3. A common-source stage is biased with $V_{DS}$ below
+   $V_{GS}-V_{\mathrm{th}}$. Explain why applying the saturation-region gain
+   formula is inconsistent, and show how the drain waveform can distinguish
+   ohmic-region operation from cutoff.
+4. A Darlington follower's output rests about 1.4 V below its input and clips
+   early on a 3.3 V supply. Explain the headroom path before proposing a
+   different circuit.
+5. A four-stage amplifier has the correct input and a final-output signal is
+   present, but the measured overall gain is below its bounded prediction.
+   Write a DC-first, split-half procedure using named stage-boundary test
+   points. Include the prediction that determines which half is tested next
+   and one check for probe-induced loading.
+
+### Open design
+
+1. Design a divider-biased common-emitter stage for a specified source, load,
+   supply, gain, lower corner, output peak, temperature range, and resistor
+   tolerance. Include DC and AC load lines, both clipping boundaries, power,
+   capacitor polarity, and a guarded acceptance rule.
+2. Design a common-source stage using a real small-signal MOSFET. Treat
+   threshold, transfer curve, and $g_m$ only under their datasheet conditions;
+   state where characterization or simulation is required.
+3. Compare a common-emitter stage followed by an emitter follower with two
+   directly coupled common-emitter stages. Allocate gain, loading, headroom,
+   low-frequency poles, noise, and current consumption, then recommend one for
+   a stated requirement.
+4. Design an L1-safe procedure for Lab **L07** to measure bias, gain, input and
+   output resistance, lower and upper corners, THD, and 1 dB compression.
+   Include instruments, loading, calibration state, raw observations,
+   uncertainty, stop conditions, and explicit decision rules.
+5. Compare simple and Wilson NPN current sinks at the same nominal
+   $I_{\mathrm{REF}}$. Choose $R_{\mathrm{REF}}$ separately because the simple
+   and Wilson reference nodes sit near $V_{BE}$ and $2V_{BE}$, respectively.
+   Specify a safe $V_O$ sweep, current-error and compliance requirements,
+   output-resistance extraction, temperature observations, and the headroom
+   and bandwidth evidence needed before selecting either circuit.
 
 ## Connections
 
-Chapter ID: `A03`. Prerequisites and downstream course mappings are maintained in
-[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
-provides reader-facing routes and the practice spine.
+Chapter ID: `A03`.
+
+- **Direct prerequisites:** [A02 — Transistors as switches and controlled
+  sources](a02-transistors.qmd) supplies device regions, large-signal
+  constitutive relations, load lines, ratings, and thermal boundaries;
+  [F08 — Sinusoids, impedance, and frequency
+  response](../01-foundations/f08-sinusoids-impedance-frequency.qmd) supplies
+  RMS phasors, impedance, transfer functions, Bode reasoning, and loading.
+- **Direct downstream chapters:** [A04 — Operational amplifiers and
+  feedback](a04-op-amps-feedback.qmd) starts from finite transistor gain,
+  loading, headroom, and local feedback; [A07 — Integrated-circuit building
+  blocks and layout](a07-integrated-circuits.qmd) develops mirrors,
+  differential pairs, active loads, matching, process variation, and layout.
+- **Related limits:** [A06 — Noise, nonlinearity, bandwidth, and
+  stability](a06-noise-nonlinearity-stability.qmd) turns the single-stage
+  mechanisms introduced here into signal-chain budgets.
+- **Practice:** Lab **L07 — Amplifier gain, limits, and feedback** supplies
+  physical DC bias, small-signal gain, frequency-response, clipping, noise, and
+  stability evidence. The [practice and project
+  spine](../roadmap.qmd#practice-and-project-spine) carries A03–A06 into
+  milestone **M3**, a precision instrument.
+- **Just-in-time support:** [F05 — Energy, power, efficiency, and
+  heat](../01-foundations/f05-energy-power-thermal.qmd) supports dissipation and
+  thermal screens; [F06 — Measurement, uncertainty, and systematic
+  debugging](../01-foundations/f06-measurement-uncertainty-debug.qmd) supports
+  the acceptance decision; [M02 — Calculus, linearization, and differential
+  equations](../appendices/m02-calculus-linear-differential.qmd) supports the
+  Taylor expansion and local derivatives; [T01 — Datasheets, standards, and
+  evidence](../appendices/t01-datasheets-standards.qmd) supports
+  condition-matched parameter use.
+
+## References
+
+Point-of-use citations above identify the canonical microelectronics and
+practical circuit texts, a publisher-documented teaching progression, the
+original Wilson-mirror paper, semiconductor-device physics,
+manufacturer-primary 2N3904 data, probe-loading guidance, safety requirements,
+and conformity guidance used in this chapter. The complete
+[bibliography](../references.qmd) contains full details. These sources support
+the stated theory and conditional specifications; they do not replace
+characterization, a local safety review, or physical verification of a
+particular amplifier.

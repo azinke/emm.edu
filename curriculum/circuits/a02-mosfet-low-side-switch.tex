@@ -1,0 +1,34 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \draw (0,0) node[ground] {}
+    to[V, l_={$V_{\mathrm{DRV}}$}] (0,3.0)
+    to[R, l={$R_{\mathrm{OUT}}$}] (2.0,3.0)
+    to[R, l={$R_G$}, i>^={$I_{RG}$}] (4.0,3.0)
+    -- (4.8,3.0);
+
+  \node[nmos, anchor=G] (Q1) at (4.8,3.0) {};
+  \draw (Q1.S) |- (4.8,0) -- (0,0);
+  \coordinate (LOAD_BOTTOM) at (Q1.D |- 0,4.8);
+  \coordinate (LOAD_TOP) at (Q1.D |- 0,7.0);
+  \draw (Q1.D) -- (LOAD_BOTTOM)
+    to[R, l_={$R_L$}, i<^={$I_D$}] (LOAD_TOP)
+    -- (8.2,7.0)
+    to[V, l_={$V_{DD}$}] (8.2,0)
+    -- (0,0);
+
+  \draw (Q1.G) -- (4.8,1.8) to[R, l_={$R_{GS}$}] (4.8,0);
+  \draw (Q1.G) -- ++(0,0.75)
+    node[ocirc, label={[font=\small]above:{TPG: $V_{GS}$}}] {};
+  \draw (Q1.D) -- ++(1.2,0)
+    node[ocirc, label={[font=\small]above:{TPD: $V_{DS}$}}] {};
+  \draw (4.8,0) -- ++(0.8,0)
+    node[ocirc, label={[font=\small]right:{TP0: $0$~V}}] {};
+  \node[circ] at (Q1.G) {};
+  \node[circ] at (Q1.D) {};
+  \node[circ] at (4.8,0) {};
+  \node[font=\small] at (5.55,3.0) {$Q_1$};
+\end{circuitikz}
+\end{document}

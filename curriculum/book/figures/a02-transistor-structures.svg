@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="760" viewBox="0 0 1600 760">
+  <defs>
+    <marker id="arrow-black" markerWidth="10" markerHeight="10" refX="8" refY="3"
+            orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#111"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="3"
+            orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#145da0"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3"
+            orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#a33a2b"/>
+    </marker>
+    <pattern id="depletion" width="12" height="12" patternUnits="userSpaceOnUse"
+             patternTransform="rotate(45)">
+      <rect width="12" height="12" fill="#fff"/>
+      <line x1="0" y1="0" x2="0" y2="12" stroke="#b8b8b8" stroke-width="4"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="760" fill="white"/>
+  <g font-family="sans-serif" fill="#111" stroke="#111">
+    <text x="400" y="45" font-size="30" font-weight="bold" text-anchor="middle"
+          stroke="none">(a) NPN BJT in forward-active operation</text>
+    <text x="1200" y="45" font-size="30" font-weight="bold" text-anchor="middle"
+          stroke="none">(b) Enhancement n-MOSF with an inversion channel</text>
+
+    <!-- NPN BJT -->
+    <rect x="80" y="150" width="210" height="360" fill="#e2eef8" stroke-width="2"/>
+    <rect x="290" y="150" width="120" height="360" fill="#f6e2e0" stroke-width="2"/>
+    <rect x="410" y="150" width="330" height="360" fill="#e2eef8" stroke-width="2"/>
+    <rect x="274" y="150" width="30" height="360" fill="url(#depletion)"
+          stroke="#777" stroke-width="1.5" stroke-dasharray="7 5"/>
+    <rect x="382" y="150" width="64" height="360" fill="url(#depletion)"
+          stroke="#777" stroke-width="1.5" stroke-dasharray="7 5"/>
+
+    <text x="175" y="195" font-size="27" text-anchor="middle" stroke="none">n⁺ emitter</text>
+    <text x="350" y="195" font-size="25" text-anchor="middle" stroke="none">thin p base</text>
+    <text x="575" y="195" font-size="27" text-anchor="middle" stroke="none">n collector</text>
+    <text x="289" y="545" font-size="18" text-anchor="middle" stroke="none">
+      narrow B–E depletion region
+    </text>
+    <text x="414" y="573" font-size="18" text-anchor="middle" stroke="none">
+      wider B–C depletion region
+    </text>
+
+    <line x1="35" y1="330" x2="80" y2="330" stroke-width="5"/>
+    <line x1="350" y1="95" x2="350" y2="150" stroke-width="5"/>
+    <line x1="740" y1="330" x2="785" y2="330" stroke-width="5"/>
+    <text x="28" y="322" font-size="26" text-anchor="end" stroke="none">E</text>
+    <text x="350" y="84" font-size="26" text-anchor="middle" stroke="none">B</text>
+    <text x="794" y="322" font-size="26" stroke="none">C</text>
+
+    <line x1="155" y1="285" x2="330" y2="285" stroke="#145da0" stroke-width="5"
+          marker-end="url(#arrow-blue)"/>
+    <line x1="330" y1="285" x2="665" y2="285" stroke="#145da0" stroke-width="5"
+          marker-end="url(#arrow-blue)"/>
+    <text x="220" y="260" font-size="20" text-anchor="middle" fill="#145da0"
+          stroke="none">electron injection</text>
+    <text x="535" y="260" font-size="20" text-anchor="middle" fill="#145da0"
+          stroke="none">diffusion and field collection</text>
+
+    <line x1="350" y1="105" x2="350" y2="242" stroke="#a33a2b" stroke-width="4"
+          marker-end="url(#arrow-red)"/>
+    <line x1="350" y1="370" x2="245" y2="370" stroke="#a33a2b" stroke-width="4"
+          marker-end="url(#arrow-red)"/>
+    <text x="365" y="122" font-size="19" fill="#a33a2b" stroke="none">
+      base current supplies holes
+    </text>
+    <text x="335" y="405" font-size="19" text-anchor="middle" fill="#a33a2b"
+          stroke="none">recombination and hole injection</text>
+
+    <line x1="175" y1="615" x2="345" y2="615" stroke-width="3"
+          marker-end="url(#arrow-black)"/>
+    <text x="260" y="602" font-size="20" text-anchor="middle" stroke="none">
+      forward bias lowers barrier
+    </text>
+    <line x1="655" y1="645" x2="440" y2="645" stroke-width="3"
+          marker-end="url(#arrow-black)"/>
+    <text x="550" y="632" font-size="20" text-anchor="middle" stroke="none">
+      reverse-bias field points toward base
+    </text>
+    <text x="400" y="700" font-size="21" text-anchor="middle" stroke="none">
+      Electron motion is E → C; conventional collector current enters C.
+    </text>
+
+    <!-- Enhancement n-MOSF -->
+    <rect x="870" y="260" width="650" height="300" fill="#f6e2e0" stroke-width="2"/>
+    <text x="1195" y="530" font-size="27" text-anchor="middle" stroke="none">p-type body</text>
+
+    <rect x="930" y="300" width="145" height="180" fill="#e2eef8" stroke-width="2"/>
+    <rect x="1315" y="300" width="145" height="180" fill="#e2eef8" stroke-width="2"/>
+    <text x="1002" y="345" font-size="25" text-anchor="middle" stroke="none">n⁺ source</text>
+    <text x="1388" y="345" font-size="25" text-anchor="middle" stroke="none">n⁺ drain</text>
+
+    <rect x="1050" y="220" width="335" height="36" fill="#f4f4f4" stroke-width="2"/>
+    <text x="1398" y="246" font-size="18" stroke="none">gate oxide</text>
+    <rect x="1080" y="150" width="275" height="54" fill="#d8d8d8" stroke-width="2"/>
+    <text x="1217" y="185" font-size="24" text-anchor="middle" stroke="none">metal gate</text>
+    <line x1="1217" y1="92" x2="1217" y2="150" stroke-width="5"/>
+    <text x="1217" y="80" font-size="26" text-anchor="middle" stroke="none">G</text>
+
+    <g font-size="28" text-anchor="middle" stroke="none">
+      <text x="1115" y="190">+</text>
+      <text x="1320" y="190">+</text>
+    </g>
+    <line x1="1130" y1="205" x2="1130" y2="275" stroke-width="3"
+          marker-end="url(#arrow-black)"/>
+    <line x1="1217" y1="205" x2="1217" y2="275" stroke-width="3"
+          marker-end="url(#arrow-black)"/>
+    <line x1="1305" y1="205" x2="1305" y2="275" stroke-width="3"
+          marker-end="url(#arrow-black)"/>
+    <text x="1450" y="135" font-size="19" text-anchor="middle" stroke="none">
+      positive V<tspan baseline-shift="sub" font-size="14">GS</tspan> &gt; V<tspan baseline-shift="sub" font-size="14">th</tspan>
+    </text>
+
+    <rect x="1075" y="278" width="240" height="34" fill="#c8def0" stroke="#145da0"
+          stroke-width="2"/>
+    <rect x="1065" y="312" width="260" height="75" fill="url(#depletion)"
+          stroke="#777" stroke-width="1.5" stroke-dasharray="7 5"/>
+    <text x="1195" y="362" font-size="18" text-anchor="middle" stroke="none">
+      depleted body charge
+    </text>
+    <g font-size="25" text-anchor="middle" fill="#145da0" stroke="none">
+      <text x="1100" y="303">−</text>
+      <text x="1165" y="303">−</text>
+      <text x="1230" y="303">−</text>
+      <text x="1295" y="303">−</text>
+    </g>
+
+    <line x1="838" y1="390" x2="930" y2="390" stroke-width="5"/>
+    <line x1="1460" y1="390" x2="1552" y2="390" stroke-width="5"/>
+    <text x="826" y="382" font-size="26" text-anchor="end" stroke="none">S</text>
+    <text x="1562" y="382" font-size="26" stroke="none">D</text>
+
+    <line x1="995" y1="295" x2="1400" y2="295" stroke="#145da0" stroke-width="5"
+          marker-end="url(#arrow-blue)"/>
+    <text x="1195" y="415" font-size="20" text-anchor="middle" fill="#145da0"
+          stroke="none">electrons move S → D through the inversion channel</text>
+    <line x1="1390" y1="600" x2="1000" y2="600" stroke-width="4"
+          marker-end="url(#arrow-black)"/>
+    <text x="1195" y="585" font-size="20" text-anchor="middle" stroke="none">
+      conventional drain current: D → S
+    </text>
+    <text x="1195" y="645" font-size="20" text-anchor="middle" stroke="none">
+      The insulated gate supplies charge and electric field, not steady channel current.
+    </text>
+    <text x="1195" y="690" font-size="20" text-anchor="middle" stroke="none">
+      Conceptual planar cross-section; not to scale.
+    </text>
+    <text x="1195" y="720" font-size="20" text-anchor="middle" stroke="none">
+      Discrete power MOSFETs usually use repeated vertical cells.
+    </text>
+  </g>
+</svg>

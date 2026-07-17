@@ -1,0 +1,26 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \draw (0,0) node[ground] {}
+    to[V, l_={$v_{\mathrm{DRV}}(t)$}] (0,3.0)
+    to[R, l={$R_{\mathrm{OUT}}$}] (2.0,3.0)
+    to[R, l={$R_G$}, i>^={$i_G$}] (4.0,3.0)
+    -- (5.0,3.0) node[circ] (G) {};
+  \draw (G) to[C] (5.0,0);
+  \draw (G) to[C, l={$C_{GD}(v)$}] (7.5,3.0)
+    node[circ] (D) {};
+  \draw (D) to[C] (7.5,0) -- (0,0);
+  \draw (D) -- (7.5,4.0)
+    node[ocirc, label={[font=\small]above:{TPD}}] {};
+  \draw (G) -- (5.0,4.0)
+    node[ocirc, label={[font=\small]above:{TPG}}] {};
+  \draw (7.5,0) -- (8.3,0)
+    node[ocirc, label={[font=\small]right:{TP0}}] {};
+  \node[font=\small] at (4.0,1.5) {$C_{GS}(v)$};
+  \node[font=\small] at (8.5,1.5) {$C_{DS}(v)$};
+  \node[circ] at (5.0,0) {};
+  \node[circ] at (7.5,0) {};
+\end{circuitikz}
+\end{document}

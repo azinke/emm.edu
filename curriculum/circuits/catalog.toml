@@ -1,6 +1,62 @@
 version = 1
 
 [[circuit]]
+id = "a02-transistor-terminal-references"
+source = "a02-transistor-terminal-references.tex"
+chapter_id = "A02"
+caption = "Declared terminal references for an NPN BJT and an n-channel enhancement MOSFET; the explicitly drawn body diode shows the reverse source-to-drain path of a discrete n-channel power MOSFET."
+alt = "Two panels show an NPN BJT and an n-channel enhancement MOSFET. BJT base and collector currents enter their terminals and emitter current leaves; V BE and V CE are positive at base and collector relative to emitter. MOSFET gate and drain currents enter and source current leaves; V GS and V DS are positive at gate and drain relative to source. An explicit body diode has anode at source and cathode at drain."
+
+[[circuit]]
+id = "a02-bjt-low-side-switch"
+source = "a02-bjt-low-side-switch.tex"
+chapter_id = "A02"
+caption = "A bounded NPN low-side interface includes the driver's output resistance, mandatory base resistor, optional base-emitter discharge resistor, load, supply, and named test points."
+alt = "Driver voltage V DRV and output resistance R OUT feed base resistor R B and the base of NPN transistor Q1. Optional resistor R BE connects base to emitter. Load R L connects from supply V CC to the collector. Emitter and driver return share TP0. TPB and TPC expose distinct base and collector voltages; resistor current I RB and collector current I C are marked."
+
+[[circuit]]
+id = "a02-controlled-source-load-line"
+source = "a02-controlled-source-load-line.tex"
+chapter_id = "A02"
+caption = "A transistor's large-signal controlled-source representation and an illustrative family of output characteristics. The source/load line, control value, and device relation jointly select each operating point."
+alt = "Panel a shows load supply V S and resistor R L feeding a controlled current source I Q of control u, where u can be BJT base current or MOSFET gate-source voltage. The control port is separate from the load-power loop. Panel b plots three illustrative output-current curves for increasing control values and a descending source/load line; their intersections are the operating points."
+
+[[circuit]]
+id = "a02-mosfet-low-side-switch"
+source = "a02-mosfet-low-side-switch.tex"
+chapter_id = "A02"
+caption = "An n-channel MOSFET low-side switch with a finite driver, series gate resistor, gate-source pull-down, resistive load, and test points for the gate and drain waveforms."
+alt = "Driver voltage V DRV and output resistance R OUT feed gate resistor R G and the gate of n-channel MOSFET Q1. Pull-down R GS connects gate to source. Load R L connects from V DD to the drain. The source and driver share TP0. TPG exposes V GS and TPD exposes V DS."
+
+[[circuit]]
+id = "a02-mosfet-dynamic-equivalent"
+source = "a02-mosfet-dynamic-equivalent.tex"
+chapter_id = "A02"
+caption = "A conceptual charge-path equivalent for MOSFET switching. Voltage-dependent C GS, C GD, and C DS organize terminal charge and the Miller interval; they are not constant, independent capacitors over a large transition."
+alt = "A time-varying driver with output resistance and gate resistor drives TPG. Voltage-dependent capacitors C GS from gate to source, C GD from gate to drain, and C DS from drain to source connect the three MOSFET terminals. TPD and TP0 name drain and source test points."
+
+[[circuit]]
+id = "a02-high-side-complementary-stages"
+source = "a02-high-side-complementary-stages.tex"
+chapter_id = "A02"
+caption = "A P-channel high-side switch and a complementary half-bridge. Gate voltage is always referenced to each device's source; simultaneous half-bridge conduction creates a supply-to-return cross-conduction path."
+alt = "Panel a shows a P-channel MOSFET between V DD and load R L, with gate resistor and gate-source pull-up. Panel b shows a P-channel high-side MOSFET and n-channel low-side MOSFET connected at switch node TPSW, which drives a load to ground. Separate high- and low-side drives are shown."
+
+[[circuit]]
+id = "a02-mosfet-inductive-load"
+source = "a02-mosfet-inductive-load.tex"
+chapter_id = "A02"
+caption = "The complete current paths for a low-side MOSFET driving a winding represented by R w in series with L. The flyback diode spans the complete winding branch; local bypass capacitance and the shared return remain inside the switching boundary."
+alt = "A V DD supply feeds winding resistance R w and inductance L, then drain test point TPD and n-channel MOSFET Q1 to TP0. Flyback diode D F runs from TPD back to the supply across both R w and L. Bypass capacitor C BYP spans the supply and return. A finite driver, gate resistor, pull-down, and TPG are shown. Current arrows identify downward on-state winding current and upward turn-off return current through the diode."
+
+[[circuit]]
+id = "a02-bjt-relay-interface"
+source = "a02-bjt-relay-interface.tex"
+chapter_id = "A02"
+caption = "The datasheet-based relay interface used for the final decision: a 5 V GPIO drives a 2N3904 through a bounded base resistor, and a 1N5819 returns the retained winding current I w to the locally bypassed 12 V rail at turn-off."
+alt = "A 5 volt GPIO drives the base of 2N3904 Q1 through a 560 ohm resistor; a 100 kilohm base-emitter resistor defines the off state. The collector drives a G2RL 12 volt coil represented by winding resistance R w and inductance L w, with winding current I w marked. A 1N5819 flyback diode spans the complete coil, with anode at collector test point TPC and cathode at the locally bypassed 12 volt rail. TPB and TP0 are also marked."
+
+[[circuit]]
 id = "a01-diode-operating-point"
 source = "a01-diode-operating-point.tex"
 chapter_id = "A01"

@@ -1,0 +1,46 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \draw (0,0) node[ground] {}
+    to[V, l_={$V_{\mathrm{GPIO}}$}] (0,3.0)
+    to[R, l={$R_B=560~\Omega$}, i>^={$I_{RB}$}] (3.2,3.0)
+    -- (3.7,3.0) coordinate (BASE_NODE)
+    -- (4.2,3.0);
+  \node[npn, anchor=B] (Q1) at (4.2,3.0) {};
+  \draw (Q1.E) |- (4.2,0) -- (0,0);
+  \draw (BASE_NODE) -- (3.7,1.7)
+    to[R, l_={$R_{BE}=100~\mathrm{k}\Omega\ \pm5\%$}] (3.7,0);
+
+  \coordinate (COL) at (Q1.C |- 0,4.5);
+  \draw (Q1.C) -- (COL);
+  \node[circ] at (COL) {};
+  \draw (COL) -- ++(0,0.5)
+    to[L, l_={$L_w$}, i<^={$I_w$}] ++(0,1.6)
+    to[R, l_={$R_w$}] ++(0,1.6)
+    -- ++(0,0.6) coordinate (SUPPLY);
+  \draw (COL) -- (7.0,4.5)
+    to[D, l_={$D_F:\ 1\mathrm{N}5819$}, i>^={$I_F$}] (7.0,8.8)
+    -- (SUPPLY);
+  \draw (SUPPLY) -- (9.0,8.8)
+    to[C, l_={$C_{\mathrm{BYP}}$}] (9.0,0) -- (4.2,0);
+  \draw (SUPPLY) -- (10.8,8.8)
+    to[V, l={$V_{CC}=12~\mathrm V$}] (10.8,0)
+    -- (4.2,0);
+
+  \draw (BASE_NODE) -- ++(0,0.75)
+    node[ocirc, label={[font=\small]above:{TPB}}] {};
+  \draw (COL) -- ++(-0.9,0)
+    node[ocirc, label={[font=\small]left:{TPC}}] {};
+  \draw (4.2,0) -- ++(0.9,0)
+    node[ocirc, label={[font=\small]right:{TP0}}] {};
+  \node[circ] at (BASE_NODE) {};
+  \node[circ] at (3.7,0) {};
+  \node[circ] at (7.0,8.8) {};
+  \node[circ] at (9.0,8.8) {};
+  \node[circ] at (9.0,0) {};
+  \node[font=\small] at (5.0,3.0) {$Q_1$};
+  \node[font=\small] at (5.8,8.25) {G2RL 12 V coil};
+\end{circuitikz}
+\end{document}

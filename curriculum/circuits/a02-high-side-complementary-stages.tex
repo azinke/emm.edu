@@ -1,0 +1,41 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \draw (0,0) node[ground] {}
+    to[R, l_={$R_L$}] (0,2.6)
+    -- (0,3.4);
+  \node[pmos, anchor=D] (QH) at (0,3.4) {};
+  \draw (QH.S) -- (0,6.2)
+    node[vcc] {$V_{DD}$};
+  \draw (QH.G) -- ++(-0.45,0) coordinate (HG)
+    to[R, l_={$R_G$}] ++(-2.3,0)
+    node[ocirc, label={[font=\small]left:{drive}}] {};
+  \draw (HG) to[R, l={$R_{GS}$}] ++(0,1.95) -| (QH.S);
+  \node[circ] at (HG) {};
+  \draw (0,2.6) -- (1.0,2.6)
+    node[ocirc, label={[font=\small]right:{TPH}}] {};
+  \node[circ] at (0,2.6) {};
+  \node[font=\small\bfseries] at (0,-0.65)
+    {(a) P-channel high-side switch};
+
+  \node[pmos] (QP) at (7.0,4.8) {};
+  \node[nmos] (QN) at (7.0,1.8) {};
+  \draw (QP.S) -- (7.0,6.2) node[vcc] {$V_{DD}$};
+  \draw (QP.D) -- (7.0,3.3) node[circ] (SW) {};
+  \draw (QN.D) -- (SW);
+  \draw (QN.S) -- (7.0,0) node[ground] {};
+  \draw (SW) -- (7.8,3.3) -- (7.8,4.0)
+    node[ocirc, label={[font=\small]above:{TPSW}}] {};
+  \node[circ] at (7.8,3.3) {};
+  \draw (QP.G) -- (5.6,4.8)
+    node[ocirc, label={[font=\small]left:{high-side drive}}] {};
+  \draw (QN.G) -- (5.6,1.8)
+    node[ocirc, label={[font=\small]left:{low-side drive}}] {};
+  \draw (SW) to[R, l_={$R_L$}] (10.0,3.3)
+    -- (10.0,0) node[ground] {};
+  \node[font=\small\bfseries] at (7.0,-0.65)
+    {(b) Complementary half-bridge};
+\end{circuitikz}
+\end{document}

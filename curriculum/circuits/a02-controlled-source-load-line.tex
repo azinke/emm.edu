@@ -1,0 +1,47 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Controlled-source representation.
+  \draw (0,0) node[ground] {}
+    to[I, invert] (0,3.0)
+    to[R, l={$R_L$}] (0,5.3)
+    -- (2.4,5.3)
+    to[V, l={$V_S$}] (2.4,0)
+    -- (0,0);
+  \draw (-2.8,1.5)
+    node[ocirc, label={[font=\small]left:{$u$}}] {};
+  \draw[->, thick] (-2.65,1.5) -- (-0.45,1.5);
+  \node[font=\small] at (0.9,2.2) {$I_Q=F(u)$};
+  \node[font=\small\bfseries] at (0,-1.05)
+    {(a) Large-signal controlled source};
+
+  % Illustrative output characteristics and source/load line.
+  \draw[->] (4.2,0) -- (9.7,0)
+    node[right, font=\small] {$V_Q$};
+  \draw[->] (4.2,0) -- (4.2,5.4)
+    node[above, font=\small] {$I_Q$};
+  \draw[very thick] (4.2,4.8) -- (9.2,0)
+    node[pos=0.88, above, sloped, fill=white, inner sep=1pt, font=\small]
+    {load line};
+  \draw[thick] (4.2,0.45)
+    .. controls (4.38,1.15) and (4.65,1.40) .. (5.0,1.40)
+    -- (9.25,1.40);
+  \draw[thick] (4.2,0.75)
+    .. controls (4.38,2.25) and (4.65,2.70) .. (5.0,2.70)
+    -- (9.25,2.70);
+  \draw[thick] (4.2,1.00)
+    .. controls (4.38,3.15) and (4.65,3.80) .. (5.0,3.80)
+    -- (9.25,3.80);
+  \node[font=\small, right] at (9.25,1.40) {$u_1$};
+  \node[font=\small, right] at (9.25,2.70) {$u_2$};
+  \node[font=\small, right] at (9.25,3.80) {$u_3$};
+  \fill (7.742,1.40) circle (2pt);
+  \fill (6.388,2.70) circle (2pt);
+  \fill (5.242,3.80) circle (2pt);
+  \node[font=\small, above right] at (6.388,2.70) {$Q_2$};
+  \node[font=\small] at (6.9,-1.05)
+    {(b) Illustrative intersections, $u_3>u_2>u_1$};
+\end{circuitikz}
+\end{document}

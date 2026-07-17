@@ -1,0 +1,55 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \node[npn] (QB) at (0,2.3) {};
+  \draw (QB.C) -- ++(0,1.2)
+    node[ocirc, label={[font=\small]above:{C}}] {};
+  \draw (QB.E) -- ++(0,-1.2)
+    node[ocirc, label={[font=\small]below:{E}}] {};
+  \draw (QB.B) -- ++(-1.2,0)
+    node[ocirc, label={[font=\small]left:{B}}] {};
+  \draw[->] ($(QB.C)+(0,1.0)$) -- ($(QB.C)+(0,0.25)$)
+    node[midway,right,font=\small] {$I_C$};
+  \draw[->] ($(QB.B)+(-1.0,0)$) -- ($(QB.B)+(-0.25,0)$)
+    node[midway,above,font=\small] {$I_B$};
+  \draw[->] ($(QB.E)+(0,-0.25)$) -- ($(QB.E)+(0,-1.0)$)
+    node[midway,right,font=\small] {$I_E$};
+  \node[font=\small] at (1.25,2.3) {$V_{CE}$};
+  \node[font=\small] at (0.75,3.18) {$+$};
+  \node[font=\small] at (0.75,1.42) {$-$};
+  \node[font=\small] at (-1.02,2.82) {$V_{BE}$};
+  \node[font=\small] at (-0.42,2.72) {$+$};
+  \node[font=\small] at (-0.42,1.88) {$-$};
+  \node[font=\small\bfseries] at (0,-0.65) {(a) NPN BJT};
+
+  \node[nmos] (QM) at (6.2,2.3) {};
+  \draw (QM.D) -- ++(0,1.2)
+    node[ocirc, label={[font=\small]above:{D}}] {};
+  \draw (QM.S) -- ++(0,-1.2)
+    node[ocirc, label={[font=\small]below:{S}}] {};
+  \draw (QM.G) -- ++(-1.2,0)
+    node[ocirc, label={[font=\small]left:{G}}] {};
+  \draw[->] ($(QM.D)+(0,1.0)$) -- ($(QM.D)+(0,0.25)$)
+    node[midway,right,font=\small] {$I_D$};
+  \draw[->] ($(QM.G)+(-1.0,0)$) -- ($(QM.G)+(-0.25,0)$)
+    node[midway,above,font=\small] {$I_G$};
+  \draw[->] ($(QM.S)+(0,-0.25)$) -- ($(QM.S)+(0,-1.0)$)
+    node[midway,right,font=\small] {$I_S$};
+  \draw ($(QM.S)+(1.25,0)$) to[D, l_={$D_B$}]
+    ($(QM.D)+(1.25,0)$);
+  \draw ($(QM.D)+(1.25,0)$) -- (QM.D);
+  \draw ($(QM.S)+(1.25,0)$) -- (QM.S);
+  \node[circ] at (QM.D) {};
+  \node[circ] at (QM.S) {};
+  \node[font=\small] at (7.15,2.3) {$V_{DS}$};
+  \node[font=\small] at (6.78,3.18) {$+$};
+  \node[font=\small] at (6.78,1.42) {$-$};
+  \node[font=\small] at (5.18,2.82) {$V_{GS}$};
+  \node[font=\small] at (5.78,2.72) {$+$};
+  \node[font=\small] at (5.78,1.88) {$-$};
+  \node[font=\small\bfseries] at (6.2,-0.65)
+    {(b) n-channel enhancement MOSFET};
+\end{circuitikz}
+\end{document}

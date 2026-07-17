@@ -24,9 +24,12 @@ After completing this chapter, the reader should be able to:
 
 ## Concept path
 
-- bias points and sensitivity;
+- DC load lines; fixed, divider, emitter/source-resistor, and feedback bias;
+- bias sensitivity, temperature drift, and polarization stability;
 - incremental and small-signal models;
 - common-emitter/source stages;
+- emitter/source followers and compound stages, including Darlington trade-offs;
+- simple discrete current sources and mirrors as bias elements;
 - gain, input resistance, output resistance, and headroom;
 - coupling and bypass networks;
 - distortion, bandwidth, noise, and multistage loading;

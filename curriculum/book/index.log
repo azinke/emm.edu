@@ -1,0 +1,3842 @@
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.7.14)  17 JUL 2026 18:50
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**index.tex
+(./index.tex
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-06-18>
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/koma-script/scrreprt.cls
+Document Class: scrreprt 2026/02/02 v3.49.2 KOMA-Script document class (report)
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/koma-script/scrkbase.sty
+Package: scrkbase 2026/02/02 v3.49.2 KOMA-Script package (KOMA-Script-dependent basics and keyval usage)
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/koma-script/scrbase.sty
+Package: scrbase 2026/02/02 v3.49.2 KOMA-Script package (KOMA-Script-independent basics and keyval usage)
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/koma-script/scrlfile.sty
+Package: scrlfile 2026/02/02 v3.49.2 KOMA-Script package (file load hooks)
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/koma-script/scrlfile-hook.sty
+Package: scrlfile-hook 2026/02/02 v3.49.2 KOMA-Script package (using LaTeX hooks)
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/koma-script/scrlogo.sty
+Package: scrlogo 2026/02/02 v3.49.2 KOMA-Script package (logo)
+))) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2026-05-17 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
+)
+Applying: [2021/05/01] Usage of raw or classic option list on input line 254.
+Already applied: [0000/00/00] Usage of raw or classic option list on input line 370.
+)) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/koma-script/tocbasic.sty
+Package: tocbasic 2026/02/02 v3.49.2 KOMA-Script package (handling toc-files)
+\scr@dte@tocline@numberwidth=\skip49
+\scr@dte@tocline@numbox=\box53
+)
+Package tocbasic Info: omitting babel extension for `toc'
+(tocbasic)             because of feature `nobabel' available
+(tocbasic)             for `toc' on input line 143.
+Package scrreprt Info: You've used standard option `12pt'.
+(scrreprt)             This is correct!
+(scrreprt)             Internally I'm using `fontsize=12pt'.
+(scrreprt)             If you'd like to set the option with \KOMAoptions,
+(scrreprt)             you'd have to use `fontsize=12pt' there
+(scrreprt)             instead of `12pt', too.
+Class scrreprt Info: File `scrsize12pt.clo' used to setup font sizes on input line 2710.
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/koma-script/scrsize12pt.clo
+File: scrsize12pt.clo 2026/02/02 v3.49.2 KOMA-Script font size class option (12pt)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/koma-script/typearea.sty
+Package: typearea 2026/02/02 v3.49.2 KOMA-Script package (type area)
+\ta@bcor=\skip50
+\ta@div=\count273
+Package typearea Info: You've used standard option `letterpaper'.
+(typearea)             This is correct!
+(typearea)             Internally I'm using `paper=letter'.
+(typearea)             If you'd like to set the option with \KOMAoptions,
+(typearea)             you'd have to use `paper=letter' there
+(typearea)             instead of `letterpaper', too.
+\ta@hblk=\skip51
+\ta@vblk=\skip52
+\ta@temp=\skip53
+\footheight=\skip54
+Package typearea Info: These are the values describing the layout:
+(typearea)             DIV  = 11
+(typearea)             BCOR = 0.0pt
+(typearea)             \paperwidth      = 614.295pt
+(typearea)              \textwidth      = 446.76004pt
+(typearea)              DIV departure   = -6%
+(typearea)              \evensidemargin = 11.49748pt
+(typearea)              \oddsidemargin  = 11.49748pt
+(typearea)             \paperheight     = 794.96999pt
+(typearea)              \textheight     = 592.0pt
+(typearea)              \topmargin      = -39.875pt
+(typearea)              \headheight     = 18.125pt
+(typearea)              \headsep        = 21.75pt
+(typearea)              \topskip        = 12.0pt
+(typearea)              \footskip       = 50.75pt
+(typearea)              \baselineskip   = 14.5pt
+(typearea)              on input line 1810.
+)
+\c@part=\count274
+\c@chapter=\count275
+\c@section=\count276
+\c@subsection=\count277
+\c@subsubsection=\count278
+\c@paragraph=\count279
+\c@subparagraph=\count280
+\scr@dte@chapter@maxnumwidth=\skip55
+Class scrreprt Info: using compatibility default `afterindent=bysign'
+(scrreprt)           for `\chapter on input line 5934.
+\scr@dte@section@maxnumwidth=\skip56
+Class scrreprt Info: using compatibility default `runin=bysign'
+(scrreprt)           for `\section on input line 5945.
+Class scrreprt Info: using compatibility default `afterindent=bysign'
+(scrreprt)           for `\section on input line 5945.
+\scr@dte@part@maxnumwidth=\skip57
+Class scrreprt Info: using compatibility default `afterindent=true'
+(scrreprt)           for `\part on input line 5954.
+\scr@dte@subsection@maxnumwidth=\skip58
+Class scrreprt Info: using compatibility default `runin=bysign'
+(scrreprt)           for `\subsection on input line 5964.
+Class scrreprt Info: using compatibility default `afterindent=bysign'
+(scrreprt)           for `\subsection on input line 5964.
+\scr@dte@subsubsection@maxnumwidth=\skip59
+Class scrreprt Info: using compatibility default `runin=bysign'
+(scrreprt)           for `\subsubsection on input line 5974.
+Class scrreprt Info: using compatibility default `afterindent=bysign'
+(scrreprt)           for `\subsubsection on input line 5974.
+\scr@dte@paragraph@maxnumwidth=\skip60
+Class scrreprt Info: using compatibility default `runin=bysign'
+(scrreprt)           for `\paragraph on input line 5985.
+Class scrreprt Info: using compatibility default `afterindent=bysign'
+(scrreprt)           for `\paragraph on input line 5985.
+\scr@dte@subparagraph@maxnumwidth=\skip61
+Class scrreprt Info: using compatibility default `runin=bysign'
+(scrreprt)           for `\subparagraph on input line 5995.
+Class scrreprt Info: using compatibility default `afterindent=bysign'
+(scrreprt)           for `\subparagraph on input line 5995.
+\abovecaptionskip=\skip62
+\belowcaptionskip=\skip63
+\c@pti@nb@sid@b@x=\box54
+Package tocbasic Info: omitting babel extension for `lof'
+(tocbasic)             because of feature `nobabel' available
+(tocbasic)             for `lof' on input line 7225.
+\scr@dte@figure@maxnumwidth=\skip64
+\c@figure=\count281
+Package tocbasic Info: omitting babel extension for `lot'
+(tocbasic)             because of feature `nobabel' available
+(tocbasic)             for `lot' on input line 7238.
+\scr@dte@table@maxnumwidth=\skip65
+\c@table=\count282
+Class scrreprt Info: Redefining `\numberline' on input line 7409.
+\bibindent=\dimen150
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: xetex.def on input line 274.
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/graphics-def/xetex.def
+File: xetex.def 2025/11/01 v5.0p Graphics/color driver for xetex
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/graphics/dvipsnam.def
+File: dvipsnam.def 2026-05-17 v3.0m Driver-dependent file (DPC,SPQR)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/xcolor/svgnam.def
+File: svgnam.def 2024/09/29 v3.02 Predefined colors according to SVG 1.1 (UK)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/xcolor/x11nam.def
+File: x11nam.def 2024/09/29 v3.02 Predefined colors according to Unix/X11 (UK)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2026/03/07 v6.0 Page Geometry
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+))
+\Gm@cnth=\count283
+\Gm@cntv=\count284
+\c@Gm@tempcnt=\count285
+\Gm@bindingoffset=\dimen151
+\Gm@wd@mp=\dimen152
+\Gm@odd@mp=\dimen153
+\Gm@even@mp=\dimen154
+\Gm@layoutwidth=\dimen155
+\Gm@layoutheight=\dimen156
+\Gm@layouthoffset=\dimen157
+\Gm@layoutvoffset=\dimen158
+\Gm@dimlist=\toks18
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2026/05/19 v2.18d AMS math features
+\@mathmargin=\skip66
+For additional information on amsmath, use the `?' option.
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2024/11/17 v2.01 AMS text
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks19
+\ex@=\dimen159
+)) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen160
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count286
+LaTeX Info: Redefining \frac on input line 233.
+\uproot@=\count287
+\leftroot@=\count288
+LaTeX Info: Redefining \overline on input line 398.
+LaTeX Info: Redefining \colon on input line 409.
+\classnum@=\count289
+\DOTSCASE@=\count290
+LaTeX Info: Redefining \ldots on input line 495.
+LaTeX Info: Redefining \dots on input line 498.
+LaTeX Info: Redefining \cdots on input line 619.
+\Mathstrutbox@=\box55
+\strutbox@=\box56
+LaTeX Info: Redefining \big on input line 721.
+LaTeX Info: Redefining \Big on input line 722.
+LaTeX Info: Redefining \bigg on input line 723.
+LaTeX Info: Redefining \Bigg on input line 724.
+\big@size=\dimen161
+LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
+\macc@depth=\count291
+LaTeX Info: Redefining \bmod on input line 904.
+LaTeX Info: Redefining \pmod on input line 909.
+LaTeX Info: Redefining \smash on input line 939.
+LaTeX Info: Redefining \relbar on input line 969.
+LaTeX Info: Redefining \Relbar on input line 970.
+\c@MaxMatrixCols=\count292
+\dotsspace@=\muskip17
+\c@parentequation=\count293
+\dspbrk@lvl=\count294
+\tag@help=\toks20
+\row@=\count295
+\column@=\count296
+\maxfields@=\count297
+\andhelp@=\toks21
+\eqnshift@=\dimen162
+\alignsep@=\dimen163
+\tagshift@=\dimen164
+\tagwidth@=\dimen165
+\totwidth@=\dimen166
+\lineht@=\dimen167
+\@envbody=\toks22
+\multlinegap=\skip67
+\multlinetaggap=\skip68
+\mathdisplay@stack=\toks23
+LaTeX Info: Redefining \[ on input line 2965.
+LaTeX Info: Redefining \] on input line 2966.
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math.sty (/home/azinke/.TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2026-06-18 L3 programming layer (loader) 
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
+File: l3backend-xetex.def 2026-02-18 L3 backend support: XeTeX
+\g__graphics_track_int=\count298
+\g__pdfannot_backend_int=\count299
+\g__pdfannot_backend_link_int=\count300
+))
+Package: unicode-math 2023/08/13 v0.8r Unicode maths in XeLaTeX and LuaLaTeX
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math-xetex.sty
+Package: unicode-math-xetex 2023/08/13 v0.8r Unicode maths in XeLaTeX and LuaLaTeX
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+Package: xparse 2025-10-09 L3 Experimental document command parser
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
+Package: l3keys2e 2025-10-09 LaTeX2e option processing using LaTeX3 keys
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/fontspec/fontspec.sty
+Package: fontspec 2025/09/29 v2.9g Font selection for XeLaTeX and LuaLaTeX
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
+Package: fontspec-xetex 2025/09/29 v2.9g Font selection for XeLaTeX and LuaLaTeX
+\l__fontspec_script_int=\count301
+\l__fontspec_language_int=\count302
+\l__fontspec_strnum_int=\count303
+\l__fontspec_tmp_int=\count304
+\l__fontspec_tmpa_int=\count305
+\l__fontspec_tmpb_int=\count306
+\l__fontspec_tmpc_int=\count307
+\l__fontspec_em_int=\count308
+\l__fontspec_emdef_int=\count309
+\l__fontspec_strong_int=\count310
+\l__fontspec_strongdef_int=\count311
+\l__fontspec_tmpa_dim=\dimen168
+\l__fontspec_tmpb_dim=\dimen169
+\l__fontspec_tmpc_dim=\dimen170
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/fontspec/fontspec.cfg))) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/base/fix-cm.sty
+Package: fix-cm 2020/11/24 v1.1t fixes to LaTeX
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/base/ts1enc.def
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding TS1 on input line 47.
+LaTeX Encoding Info:    Redeclaring text command \capitalcedilla (encoding TS1) on input line 49.
+LaTeX Encoding Info:    Redeclaring text command \capitalogonek (encoding TS1) on input line 52.
+LaTeX Encoding Info:    Redeclaring text command \capitalgrave (encoding TS1) on input line 55.
+LaTeX Encoding Info:    Redeclaring text command \capitalacute (encoding TS1) on input line 56.
+LaTeX Encoding Info:    Redeclaring text command \capitalcircumflex (encoding TS1) on input line 57.
+LaTeX Encoding Info:    Redeclaring text command \capitaltilde (encoding TS1) on input line 58.
+LaTeX Encoding Info:    Redeclaring text command \capitaldieresis (encoding TS1) on input line 59.
+LaTeX Encoding Info:    Redeclaring text command \capitalhungarumlaut (encoding TS1) on input line 60.
+LaTeX Encoding Info:    Redeclaring text command \capitalring (encoding TS1) on input line 61.
+LaTeX Encoding Info:    Redeclaring text command \capitalcaron (encoding TS1) on input line 62.
+LaTeX Encoding Info:    Redeclaring text command \capitalbreve (encoding TS1) on input line 63.
+LaTeX Encoding Info:    Redeclaring text command \capitalmacron (encoding TS1) on input line 64.
+LaTeX Encoding Info:    Redeclaring text command \capitaldotaccent (encoding TS1) on input line 65.
+LaTeX Encoding Info:    Redeclaring text command \t (encoding TS1) on input line 66.
+LaTeX Encoding Info:    Redeclaring text command \capitaltie (encoding TS1) on input line 67.
+LaTeX Encoding Info:    Redeclaring text command \newtie (encoding TS1) on input line 68.
+LaTeX Encoding Info:    Redeclaring text command \capitalnewtie (encoding TS1) on input line 69.
+LaTeX Encoding Info:    Redeclaring text symbol \textcapitalcompwordmark (encoding TS1) on input line 70.
+LaTeX Encoding Info:    Redeclaring text symbol \textascendercompwordmark (encoding TS1) on input line 71.
+LaTeX Encoding Info:    Redeclaring text symbol \textquotestraightbase (encoding TS1) on input line 72.
+LaTeX Encoding Info:    Redeclaring text symbol \textquotestraightdblbase (encoding TS1) on input line 73.
+LaTeX Encoding Info:    Redeclaring text symbol \texttwelveudash (encoding TS1) on input line 74.
+LaTeX Encoding Info:    Redeclaring text symbol \textthreequartersemdash (encoding TS1) on input line 75.
+LaTeX Encoding Info:    Redeclaring text symbol \textleftarrow (encoding TS1) on input line 76.
+LaTeX Encoding Info:    Redeclaring text symbol \textrightarrow (encoding TS1) on input line 77.
+LaTeX Encoding Info:    Redeclaring text symbol \textblank (encoding TS1) on input line 78.
+LaTeX Encoding Info:    Redeclaring text symbol \textdollar (encoding TS1) on input line 79.
+LaTeX Encoding Info:    Redeclaring text symbol \textquotesingle (encoding TS1) on input line 80.
+LaTeX Encoding Info:    Redeclaring text command \textasteriskcentered (encoding TS1) on input line 81.
+LaTeX Encoding Info:    Redeclaring text symbol \textdblhyphen (encoding TS1) on input line 92.
+LaTeX Encoding Info:    Redeclaring text symbol \textfractionsolidus (encoding TS1) on input line 93.
+LaTeX Encoding Info:    Redeclaring text symbol \textzerooldstyle (encoding TS1) on input line 94.
+LaTeX Encoding Info:    Redeclaring text symbol \textoneoldstyle (encoding TS1) on input line 95.
+LaTeX Encoding Info:    Redeclaring text symbol \texttwooldstyle (encoding TS1) on input line 96.
+LaTeX Encoding Info:    Redeclaring text symbol \textthreeoldstyle (encoding TS1) on input line 97.
+LaTeX Encoding Info:    Redeclaring text symbol \textfouroldstyle (encoding TS1) on input line 98.
+LaTeX Encoding Info:    Redeclaring text symbol \textfiveoldstyle (encoding TS1) on input line 99.
+LaTeX Encoding Info:    Redeclaring text symbol \textsixoldstyle (encoding TS1) on input line 100.
+LaTeX Encoding Info:    Redeclaring text symbol \textsevenoldstyle (encoding TS1) on input line 101.
+LaTeX Encoding Info:    Redeclaring text symbol \texteightoldstyle (encoding TS1) on input line 102.
+LaTeX Encoding Info:    Redeclaring text symbol \textnineoldstyle (encoding TS1) on input line 103.
+LaTeX Encoding Info:    Redeclaring text symbol \textlangle (encoding TS1) on input line 104.
+LaTeX Encoding Info:    Redeclaring text symbol \textminus (encoding TS1) on input line 105.
+LaTeX Encoding Info:    Redeclaring text symbol \textrangle (encoding TS1) on input line 106.
+LaTeX Encoding Info:    Redeclaring text symbol \textmho (encoding TS1) on input line 107.
+LaTeX Encoding Info:    Redeclaring text symbol \textbigcircle (encoding TS1) on input line 108.
+LaTeX Encoding Info:    Redeclaring text command \textcircled (encoding TS1) on input line 109.
+LaTeX Encoding Info:    Redeclaring text symbol \textohm (encoding TS1) on input line 115.
+LaTeX Encoding Info:    Redeclaring text symbol \textlbrackdbl (encoding TS1) on input line 116.
+LaTeX Encoding Info:    Redeclaring text symbol \textrbrackdbl (encoding TS1) on input line 117.
+LaTeX Encoding Info:    Redeclaring text symbol \textuparrow (encoding TS1) on input line 118.
+LaTeX Encoding Info:    Redeclaring text symbol \textdownarrow (encoding TS1) on input line 119.
+LaTeX Encoding Info:    Redeclaring text symbol \textasciigrave (encoding TS1) on input line 120.
+LaTeX Encoding Info:    Redeclaring text symbol \textborn (encoding TS1) on input line 121.
+LaTeX Encoding Info:    Redeclaring text symbol \textdivorced (encoding TS1) on input line 122.
+LaTeX Encoding Info:    Redeclaring text symbol \textdied (encoding TS1) on input line 123.
+LaTeX Encoding Info:    Redeclaring text symbol \textleaf (encoding TS1) on input line 124.
+LaTeX Encoding Info:    Redeclaring text symbol \textmarried (encoding TS1) on input line 125.
+LaTeX Encoding Info:    Redeclaring text symbol \textmusicalnote (encoding TS1) on input line 126.
+LaTeX Encoding Info:    Redeclaring text symbol \texttildelow (encoding TS1) on input line 127.
+LaTeX Encoding Info:    Redeclaring text symbol \textdblhyphenchar (encoding TS1) on input line 128.
+LaTeX Encoding Info:    Redeclaring text symbol \textasciibreve (encoding TS1) on input line 129.
+LaTeX Encoding Info:    Redeclaring text symbol \textasciicaron (encoding TS1) on input line 130.
+LaTeX Encoding Info:    Redeclaring text symbol \textacutedbl (encoding TS1) on input line 131.
+LaTeX Encoding Info:    Redeclaring text symbol \textgravedbl (encoding TS1) on input line 132.
+LaTeX Encoding Info:    Redeclaring text symbol \textdagger (encoding TS1) on input line 133.
+LaTeX Encoding Info:    Redeclaring text symbol \textdaggerdbl (encoding TS1) on input line 134.
+LaTeX Encoding Info:    Redeclaring text symbol \textbardbl (encoding TS1) on input line 135.
+LaTeX Encoding Info:    Redeclaring text symbol \textperthousand (encoding TS1) on input line 136.
+LaTeX Encoding Info:    Redeclaring text symbol \textbullet (encoding TS1) on input line 137.
+LaTeX Encoding Info:    Redeclaring text symbol \textcelsius (encoding TS1) on input line 138.
+LaTeX Encoding Info:    Redeclaring text symbol \textdollaroldstyle (encoding TS1) on input line 139.
+LaTeX Encoding Info:    Redeclaring text symbol \textcentoldstyle (encoding TS1) on input line 140.
+LaTeX Encoding Info:    Redeclaring text symbol \textflorin (encoding TS1) on input line 141.
+LaTeX Encoding Info:    Redeclaring text symbol \textcolonmonetary (encoding TS1) on input line 142.
+LaTeX Encoding Info:    Redeclaring text symbol \textwon (encoding TS1) on input line 143.
+LaTeX Encoding Info:    Redeclaring text symbol \textnaira (encoding TS1) on input line 144.
+LaTeX Encoding Info:    Redeclaring text symbol \textguarani (encoding TS1) on input line 145.
+LaTeX Encoding Info:    Redeclaring text symbol \textpeso (encoding TS1) on input line 146.
+LaTeX Encoding Info:    Redeclaring text symbol \textlira (encoding TS1) on input line 147.
+LaTeX Encoding Info:    Redeclaring text symbol \textrecipe (encoding TS1) on input line 148.
+LaTeX Encoding Info:    Redeclaring text symbol \textinterrobang (encoding TS1) on input line 149.
+LaTeX Encoding Info:    Redeclaring text symbol \textinterrobangdown (encoding TS1) on input line 150.
+LaTeX Encoding Info:    Redeclaring text symbol \textdong (encoding TS1) on input line 151.
+LaTeX Encoding Info:    Redeclaring text symbol \texttrademark (encoding TS1) on input line 152.
+LaTeX Encoding Info:    Redeclaring text symbol \textpertenthousand (encoding TS1) on input line 153.
+LaTeX Encoding Info:    Redeclaring text symbol \textpilcrow (encoding TS1) on input line 154.
+LaTeX Encoding Info:    Redeclaring text symbol \textbaht (encoding TS1) on input line 155.
+LaTeX Encoding Info:    Redeclaring text symbol \textnumero (encoding TS1) on input line 156.
+LaTeX Encoding Info:    Redeclaring text symbol \textdiscount (encoding TS1) on input line 157.
+LaTeX Encoding Info:    Redeclaring text symbol \textestimated (encoding TS1) on input line 158.
+LaTeX Encoding Info:    Redeclaring text symbol \textopenbullet (encoding TS1) on input line 159.
+LaTeX Encoding Info:    Redeclaring text symbol \textservicemark (encoding TS1) on input line 160.
+LaTeX Encoding Info:    Redeclaring text symbol \textlquill (encoding TS1) on input line 161.
+LaTeX Encoding Info:    Redeclaring text symbol \textrquill (encoding TS1) on input line 162.
+LaTeX Encoding Info:    Redeclaring text symbol \textcent (encoding TS1) on input line 163.
+LaTeX Encoding Info:    Redeclaring text symbol \textsterling (encoding TS1) on input line 164.
+LaTeX Encoding Info:    Redeclaring text symbol \textcurrency (encoding TS1) on input line 165.
+LaTeX Encoding Info:    Redeclaring text symbol \textyen (encoding TS1) on input line 166.
+LaTeX Encoding Info:    Redeclaring text symbol \textbrokenbar (encoding TS1) on input line 167.
+LaTeX Encoding Info:    Redeclaring text symbol \textsection (encoding TS1) on input line 168.
+LaTeX Encoding Info:    Redeclaring text symbol \textasciidieresis (encoding TS1) on input line 169.
+LaTeX Encoding Info:    Redeclaring text symbol \textcopyright (encoding TS1) on input line 170.
+LaTeX Encoding Info:    Redeclaring text symbol \textordfeminine (encoding TS1) on input line 171.
+LaTeX Encoding Info:    Redeclaring text symbol \textcopyleft (encoding TS1) on input line 172.
+LaTeX Encoding Info:    Redeclaring text symbol \textlnot (encoding TS1) on input line 173.
+LaTeX Encoding Info:    Redeclaring text symbol \textcircledP (encoding TS1) on input line 174.
+LaTeX Encoding Info:    Redeclaring text symbol \textregistered (encoding TS1) on input line 175.
+LaTeX Encoding Info:    Redeclaring text symbol \textasciimacron (encoding TS1) on input line 176.
+LaTeX Encoding Info:    Redeclaring text symbol \textdegree (encoding TS1) on input line 177.
+LaTeX Encoding Info:    Redeclaring text symbol \textpm (encoding TS1) on input line 178.
+LaTeX Encoding Info:    Redeclaring text symbol \texttwosuperior (encoding TS1) on input line 179.
+LaTeX Encoding Info:    Redeclaring text symbol \textthreesuperior (encoding TS1) on input line 180.
+LaTeX Encoding Info:    Redeclaring text symbol \textasciiacute (encoding TS1) on input line 181.
+LaTeX Encoding Info:    Redeclaring text symbol \textmu (encoding TS1) on input line 182.
+LaTeX Encoding Info:    Redeclaring text symbol \textparagraph (encoding TS1) on input line 183.
+LaTeX Encoding Info:    Redeclaring text symbol \textperiodcentered (encoding TS1) on input line 184.
+LaTeX Encoding Info:    Redeclaring text symbol \textreferencemark (encoding TS1) on input line 185.
+LaTeX Encoding Info:    Redeclaring text symbol \textonesuperior (encoding TS1) on input line 186.
+LaTeX Encoding Info:    Redeclaring text symbol \textordmasculine (encoding TS1) on input line 187.
+LaTeX Encoding Info:    Redeclaring text symbol \textsurd (encoding TS1) on input line 188.
+LaTeX Encoding Info:    Redeclaring text symbol \textonequarter (encoding TS1) on input line 189.
+LaTeX Encoding Info:    Redeclaring text symbol \textonehalf (encoding TS1) on input line 190.
+LaTeX Encoding Info:    Redeclaring text symbol \textthreequarters (encoding TS1) on input line 191.
+LaTeX Encoding Info:    Redeclaring text symbol \texteuro (encoding TS1) on input line 192.
+LaTeX Encoding Info:    Redeclaring text symbol \texttimes (encoding TS1) on input line 193.
+LaTeX Encoding Info:    Redeclaring text symbol \textdiv (encoding TS1) on input line 194.
+))
+\g__um_fam_int=\count312
+\g__um_fonts_used_int=\count313
+\l__um_primecount_int=\count314
+\g__um_primekern_muskip=\muskip18
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math-table.tex))) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
+Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/lmm/m/it on input line 23.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/lmsy/m/n on input line 24.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 25.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 26.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/lmm/b/it on input line 27.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/lmsy/b/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 29.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 31.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 32.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/lmr/m/it on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/lmss/bx/n on input line 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
+)
+
+Package fontspec Info: 
+(fontspec)             Caladea scale = 0.9229085265407813.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea scale = 1.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea scale = 0.9229085265407813.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea scale = 1.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea/B scale = 0.8904932297167358.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea/B scale = 1.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea/I scale = 0.9229085265407813.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea/I scale = 1.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea/BI scale = 0.8904932297167358.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea/BI scale = 1.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'Caladea(0)' created for font 'Caladea'
+(fontspec)             with options
+(fontspec)             [Scale=MatchLowercase,Ligatures=TeX,Scale=1].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[1]"Caladea/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[1]"Caladea/B/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'italic' (m/it) with NFSS spec.:
+(fontspec)             <->s*[1]"Caladea/I/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.:
+(fontspec)             <->s*[1]"Caladea/BI/OT:script=latn;language=dflt;mapping=tex-text;"
+
+LaTeX Font Info:    Font shape `TU/Caladea(0)/m/n' will be
+(Font)              scaled to size 12.0pt on input line 31.
+
+Package fontspec Info: 
+(fontspec)             Caladea scale = 0.9999972771704356.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea scale = 0.9999972771704356.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea/B scale = 0.9648743937745971.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea/I scale = 0.9999972771704356.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea/BI scale = 0.9648743937745971.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'Caladea(1)' created for font 'Caladea'
+(fontspec)             with options [Scale=MatchLowercase].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[0.9999972771704356]"Caladea/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.9648743937745971]"Caladea/B/OT:script=latn;language=dflt;"
+(fontspec)             - 'italic' (m/it) with NFSS spec.:
+(fontspec)             <->s*[0.9999972771704356]"Caladea/I/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.:
+(fontspec)             <->s*[0.9648743937745971]"Caladea/BI/OT:script=latn;language=dflt;"
+
+LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
+(Font)                  OT1/lmr/m/n --> TU/Caladea(1)/m/n on input line 31.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/lmr/m/it --> TU/Caladea(1)/m/it on input line 31.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/lmr/bx/n --> TU/Caladea(1)/b/n on input line 31.
+
+Package fontspec Info: 
+(fontspec)             Inter scale = 0.8554690866570545.
+
+
+Package fontspec Info: 
+(fontspec)             Inter scale = 0.8554690866570545.
+
+
+Package fontspec Info: 
+(fontspec)             Inter/B scale = 0.8554690866570545.
+
+
+Package fontspec Info: 
+(fontspec)             Inter/I scale = 0.8554690866570545.
+
+
+Package fontspec Info: 
+(fontspec)             Inter/BI scale = 0.8554690866570545.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'Inter(0)' created for font 'Inter' with
+(fontspec)             options [Scale=MatchLowercase,Ligatures=TeX].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[0.8554690866570545]"Inter/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.8554690866570545]"Inter/B/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'italic' (m/it) with NFSS spec.:
+(fontspec)             <->s*[0.8554690866570545]"Inter/I/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.:
+(fontspec)             <->s*[0.8554690866570545]"Inter/BI/OT:script=latn;language=dflt;mapping=tex-text;"
+
+
+Package fontspec Info: 
+(fontspec)             Inter scale = 0.8554690866570545.
+
+
+Package fontspec Info: 
+(fontspec)             Inter scale = 0.8554690866570545.
+
+
+Package fontspec Info: 
+(fontspec)             Inter/B scale = 0.8554690866570545.
+
+
+Package fontspec Info: 
+(fontspec)             Inter/I scale = 0.8554690866570545.
+
+
+Package fontspec Info: 
+(fontspec)             Inter/BI scale = 0.8554690866570545.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'Inter(1)' created for font 'Inter' with
+(fontspec)             options [Scale=MatchLowercase].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[0.8554690866570545]"Inter/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.8554690866570545]"Inter/B/OT:script=latn;language=dflt;"
+(fontspec)             - 'italic' (m/it) with NFSS spec.:
+(fontspec)             <->s*[0.8554690866570545]"Inter/I/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.:
+(fontspec)             <->s*[0.8554690866570545]"Inter/BI/OT:script=latn;language=dflt;"
+
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/lmss/m/n --> TU/Inter(1)/m/n on input line 32.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/lmss/bx/n --> TU/Inter(1)/b/n on input line 32.
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro scale = 0.9609033848150347.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro scale = 0.85.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro scale = 0.9609033848150347.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro scale = 0.85.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro/B scale = 0.9415311571483139.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro/B scale = 0.85.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro/I scale = 0.9609033848150347.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro/I scale = 0.85.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro/BI scale = 0.9415311571483139.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro/BI scale = 0.85.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'SourceCodePro(0)' created for font 'Source
+(fontspec)             Code Pro' with options
+(fontspec)             [Scale=MatchLowercase,WordSpace={1,0,0},HyphenChar=None,PunctuationSpace=WordSpace,Scale=0.85].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.: <->s*[0.85]"Source
+(fontspec)             Code Pro/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.: <->s*[0.85]"Source Code
+(fontspec)             Pro/B/OT:script=latn;language=dflt;"
+(fontspec)             - 'italic' (m/it) with NFSS spec.: <->s*[0.85]"Source
+(fontspec)             Code Pro/I/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.:
+(fontspec)             <->s*[0.85]"Source Code
+(fontspec)             Pro/BI/OT:script=latn;language=dflt;"
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro scale = 0.9609033848150347.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro scale = 0.85.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro scale = 0.9609033848150347.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro scale = 0.85.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro/B scale = 0.9415311571483139.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro/B scale = 0.85.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro/I scale = 0.9609033848150347.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro/I scale = 0.85.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro/BI scale = 0.9415311571483139.
+
+
+Package fontspec Info: 
+(fontspec)             Source Code Pro/BI scale = 0.85.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'SourceCodePro(1)' created for font 'Source
+(fontspec)             Code Pro' with options
+(fontspec)             [Scale=MatchLowercase,Scale=0.85].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.: <->s*[0.85]"Source
+(fontspec)             Code Pro/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.: <->s*[0.85]"Source Code
+(fontspec)             Pro/B/OT:script=latn;language=dflt;"
+(fontspec)             - 'italic' (m/it) with NFSS spec.: <->s*[0.85]"Source
+(fontspec)             Code Pro/I/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.:
+(fontspec)             <->s*[0.85]"Source Code
+(fontspec)             Pro/BI/OT:script=latn;language=dflt;"
+
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/lmtt/m/n --> TU/SourceCodePro(1)/m/n on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/lmtt/m/n --> TU/SourceCodePro(1)/b/n on input line 33.
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/upquote/upquote.sty
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2024/04/24 v2.1b Standard LaTeX package
+)) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/microtype/microtype.sty
+Package: microtype 2026/03/01 v3.2d Micro-typographical refinements (RS)
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count315
+)
+\MT@toks=\toks24
+\MT@tempbox=\box57
+\MT@count=\count316
+LaTeX Info: Redefining \noprotrusionifhmode on input line 1084.
+LaTeX Info: Redefining \leftprotrusion on input line 1085.
+\MT@prot@toks=\toks25
+LaTeX Info: Redefining \rightprotrusion on input line 1104.
+LaTeX Info: Redefining \textls on input line 1449.
+\MT@outer@kern=\dimen171
+LaTeX Info: Redefining \microtypecontext on input line 2053.
+LaTeX Info: Redefining \textmicrotypecontext on input line 2070.
+\MT@listname@count=\count317
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/microtype/microtype-xetex.def
+File: microtype-xetex.def 2026/03/01 v3.2d Definitions specific to xetex (RS)
+LaTeX Info: Redefining \lsstyle on input line 443.
+LaTeX Info: Redefining \lslig on input line 451.
+\MT@outer@space=\skip69
+)
+Package microtype Info: Loading configuration file microtype.cfg.
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/microtype/microtype.cfg
+File: microtype.cfg 2026/03/01 v3.2d microtype main configuration file (RS)
+)
+LaTeX Info: Redefining \microtypesetup on input line 3065.
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2022/12/04 v6.7b set line spacing
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2026/04/16 4.6a verbatim text (tvz,hv)
+\FV@CodeLineNo=\count318
+\FV@InFile=\read2
+\FV@TabBox=\box58
+\c@FancyVerbLine=\count319
+\FV@StepNumber=\count320
+\FV@OutFile=\write3
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/framed/framed.sty
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip70
+\fb@frw=\dimen172
+\fb@frh=\dimen173
+\FrameRule=\dimen174
+\FrameSep=\dimen175
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2026-01-28 v4.27 Multi-page Table package (DPC)
+\LTleft=\skip71
+\LTright=\skip72
+\LTpre=\skip73
+\LTpost=\skip74
+\LTchunksize=\count321
+\LTcapwidth=\dimen176
+\LT@head=\box59
+\LT@firsthead=\box60
+\LT@foot=\box61
+\LT@lastfoot=\box62
+\LT@gbox=\box63
+\LT@cols=\count322
+\LT@rows=\count323
+\c@LT@tables=\count324
+\c@LT@chunks=\count325
+\LT@p@ftn=\toks26
+)
+Class scrreprt Info: longtable captions redefined on input line 117.
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen177
+\lightrulewidth=\dimen178
+\cmidrulewidth=\dimen179
+\belowrulesep=\dimen180
+\belowbottomsep=\dimen181
+\aboverulesep=\dimen182
+\abovetopsep=\dimen183
+\cmidrulesep=\dimen184
+\cmidrulekern=\dimen185
+\defaultaddspace=\dimen186
+\@cmidla=\count326
+\@cmidlb=\count327
+\@aboverulesep=\dimen187
+\@belowrulesep=\dimen188
+\@thisruleclass=\count328
+\@lastruleclass=\count329
+\@thisrulewidth=\dimen189
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/tools/array.sty
+Package: array 2026/02/24 v2.7b Tabular extension package (FMi)
+\col@sep=\dimen190
+\ar@mcellbox=\box64
+\extrarowheight=\dimen191
+\NC@list=\toks27
+\extratabsurround=\skip75
+\backup@length=\skip76
+\ar@cellbox=\box65
+)
+\c@none=\count330
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2025/03/01 v4.3b Infix arithmetic (KKT,FJ)
+\calc@Acount=\count331
+\calc@Bcount=\count332
+\calc@Adimen=\dimen192
+\calc@Bdimen=\dimen193
+\calc@Askip=\skip77
+\calc@Bskip=\skip78
+LaTeX Info: Redefining \setlength on input line 86.
+LaTeX Info: Redefining \addtolength on input line 87.
+\calc@Ccount=\count333
+\calc@Cskip=\skip79
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/mdwtools/footnote.sty
+Package: footnote 1997/01/28 1.13 Save footnotes around boxes
+\fn@notes=\box66
+\fn@width=\dimen194
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2026-05-17 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2026-05-17 v1.4h Standard LaTeX Graphics (DPC,SPQR)
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: xetex.def on input line 106.
+)
+\Gin@req@height=\dimen195
+\Gin@req@width=\dimen196
+)
+\pandoc@box=\box67
+\cslhangindent=\skip80
+\csllabelwidth=\skip81
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2026/06/14 v26.9 The multilingual framework for LuaLaTeX, pdfLaTeX and XeLaTeX
+\babel@savecnt=\count334
+LaTeX Encoding Info:    Redeclaring text command \ij (encoding OT1) on input line 2084.
+LaTeX Encoding Info:    Redeclaring text command \IJ (encoding OT1) on input line 2086.
+LaTeX Encoding Info:    Redeclaring text command \ij (encoding T1) on input line 2088.
+LaTeX Encoding Info:    Redeclaring text command \IJ (encoding T1) on input line 2089.
+LaTeX Encoding Info:    Ignoring declaration for text command \ij (encoding ?) on input line 2090.
+LaTeX Encoding Info:    Ignoring declaration for text command \IJ (encoding ?) on input line 2092.
+LaTeX Encoding Info:    Ignoring declaration for text command \SS (encoding ?) on input line 2117.
+\U@D=\dimen197
+\l@unhyphenated=\language6
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/babel/xebabel.def)
+\bbl@readstream=\read3
+\bbl@dirlevel=\count335
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/babel/locale/en/babel-english.tex)
+Package babel Info: Importing font and identification data for 'english'
+(babel)             from babel-en.ini. Reported on input line 4380.
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/babel-english/english.ldf
+Language: english 2017/06/06 v3.3r English support from the babel system
+Package babel Info: Hyphen rules for 'canadian' set to \l@english
+(babel)             (\language0). Reported on input line 102.
+Package babel Info: Hyphen rules for 'australian' set to \l@ukenglish
+(babel)             (\language3). Reported on input line 105.
+Package babel Info: Hyphen rules for 'newzealand' set to \l@ukenglish
+(babel)             (\language3). Reported on input line 108.
+))
+
+Package fontspec Info: 
+(fontspec)             Language 'English' not explicitly supported within font
+(fontspec)             'Caladea' with script 'Latin'. Check the typeset
+(fontspec)             output, and if it is okay then ignore this warning.
+(fontspec)             Otherwise a different font should be chosen.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea scale = 0.9999972771704356.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea scale = 1.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea scale = 0.9999972771704356.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea scale = 1.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea/B scale = 0.9648743937745971.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea/B scale = 1.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea/I scale = 0.9999972771704356.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea/I scale = 1.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea/BI scale = 0.9648743937745971.
+
+
+Package fontspec Info: 
+(fontspec)             Caladea/BI scale = 1.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'Caladea(2)' created for font 'Caladea'
+(fontspec)             with options
+(fontspec)             [Scale=MatchLowercase,Ligatures=TeX,Scale=1,Script=Latin,Language=English].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[1]"Caladea/OT:script=latn;language=ENG;mapping=tex-text;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[1]"Caladea/B/OT:script=latn;language=ENG;mapping=tex-text;"
+(fontspec)             - 'italic' (m/it) with NFSS spec.:
+(fontspec)             <->s*[1]"Caladea/I/OT:script=latn;language=ENG;mapping=tex-text;"
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.:
+(fontspec)             <->s*[1]"Caladea/BI/OT:script=latn;language=ENG;mapping=tex-text;"
+
+LaTeX Font Info:    Font shape `TU/Caladea(2)/m/n' will be
+(Font)              scaled to size 12.0pt on input line 186.
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/fvextra/fvextra.sty
+Package: fvextra 2026/02/25 v1.14.0 fvextra - extensions and patches for fancyvrb
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/lineno/lineno.sty
+Package: lineno 2026/03/08 line numbers on paragraphs v5.9
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+))
+\linenopenalty=\count336
+\output=\toks28
+\linenoprevgraf=\count337
+\linenumbersep=\dimen198
+\linenumberwidth=\dimen199
+\c@linenumber=\count338
+\c@pagewiselinenumber=\count339
+\c@LN@truepage=\count340
+\c@internallinenumber=\count341
+\c@internallinenumbers=\count342
+\quotelinenumbersep=\dimen256
+\bframerule=\dimen257
+\bframesep=\dimen258
+\bframebox=\box68
+\@LN@amsmath@ams@eqpen=\count343
+)
+\c@FancyVerbWriteLine=\count344
+\c@FancyVerbBufferLine=\count345
+\c@FV@TrueTabGroupLevel=\count346
+\c@FV@TrueTabCounter=\count347
+\FV@TabBox@Group=\box69
+\FV@bgcolorstructbox=\box70
+\FV@TmpLength=\skip82
+\c@FV@HighlightLinesStart=\count348
+\c@FV@HighlightLinesStop=\count349
+\FV@LoopCount=\count350
+\FV@NCharsBox=\box71
+\FV@BreakIndent=\dimen259
+\FV@BreakIndentNChars=\count351
+\FV@BreakSymbolSepLeft=\dimen260
+\FV@BreakSymbolSepLeftNChars=\count352
+\FV@BreakSymbolSepRight=\dimen261
+\FV@BreakSymbolSepRightNChars=\count353
+\FV@BreakSymbolIndentLeft=\dimen262
+\FV@BreakSymbolIndentLeftNChars=\count354
+\FV@BreakSymbolIndentRight=\dimen263
+\FV@BreakSymbolIndentRightNChars=\count355
+\c@FancyVerbLineBreakLast=\count356
+\FV@LineBox=\box72
+\FV@LineIndentBox=\box73
+\c@FV@BreakBufferDepth=\count357
+\FV@LineWidth=\dimen264
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty
+Package: tcolorbox 2026/05/28 version 6.10.0 text color boxes
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty (/home/azinke/.TinyTeX/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty (/home/azinke/.TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
+\pgfutil@everybye=\toks29
+\pgfutil@tempdima=\dimen265
+\pgfutil@tempdimb=\dimen266
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
+\pgfutil@abb=\box74
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/pgf.revision.tex)
+Package: pgfrcs 2025-08-29 v3.1.11a (3.1.11a)
+))
+Package: pgf 2025-08-29 v3.1.11a (3.1.11a)
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty (/home/azinke/.TinyTeX/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks30
+\pgfkeys@temptoks=\toks31
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered.code.tex
+\pgfkeys@tmptoks=\toks32
+))
+\pgf@x=\dimen267
+\pgf@y=\dimen268
+\pgf@xa=\dimen269
+\pgf@ya=\dimen270
+\pgf@xb=\dimen271
+\pgf@yb=\dimen272
+\pgf@xc=\dimen273
+\pgf@yc=\dimen274
+\pgf@xd=\dimen275
+\pgf@yd=\dimen276
+\w@pgf@writea=\write4
+\r@pgf@reada=\read4
+\c@pgf@counta=\count358
+\c@pgf@countb=\count359
+\c@pgf@countc=\count360
+\c@pgf@countd=\count361
+\t@pgf@toka=\toks33
+\t@pgf@tokb=\toks34
+\t@pgf@tokc=\toks35
+\pgf@sys@id@count=\count362
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2025-08-29 v3.1.11a (3.1.11a)
+)
+Driver file for pgf: pgfsys-xetex.def
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-xetex.def
+File: pgfsys-xetex.def 2025-08-29 v3.1.11a (3.1.11a)
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-dvipdfmx.def
+File: pgfsys-dvipdfmx.def 2025-08-29 v3.1.11a (3.1.11a)
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2025-08-29 v3.1.11a (3.1.11a)
+)
+\pgfsys@objnum=\count363
+))) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfsyssoftpath@smallbuffer@items=\count364
+\pgfsyssoftpath@bigbuffer@items=\count365
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+Package: pgfcore 2025-08-29 v3.1.11a (3.1.11a)
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
+\pgfmath@dimen=\dimen277
+\pgfmath@count=\count366
+\pgfmath@box=\box75
+\pgfmath@toks=\toks36
+\pgfmath@stack@operand=\toks37
+\pgfmath@stack@operation=\toks38
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.tex) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonometric.code.tex) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.code.tex) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison.code.tex) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code.tex) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithmetics.code.tex) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count367
+)) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfint.code.tex) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@picminx=\dimen278
+\pgf@picmaxx=\dimen279
+\pgf@picminy=\dimen280
+\pgf@picmaxy=\dimen281
+\pgf@pathminx=\dimen282
+\pgf@pathmaxx=\dimen283
+\pgf@pathminy=\dimen284
+\pgf@pathmaxy=\dimen285
+\pgf@xx=\dimen286
+\pgf@xy=\dimen287
+\pgf@yx=\dimen288
+\pgf@yy=\dimen289
+\pgf@zx=\dimen290
+\pgf@zy=\dimen291
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@path@lastx=\dimen292
+\pgf@path@lasty=\dimen293
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.tex
+File: pgfcorepathusage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@shorten@end@additional=\dimen294
+\pgf@shorten@start@additional=\dimen295
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfpic=\box76
+\pgf@hbox=\box77
+\pgf@layerbox@main=\box78
+\pgf@picture@serial@count=\count368
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgflinewidth=\dimen296
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.code.tex
+File: pgfcoretransformations.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@pt@x=\dimen297
+\pgf@pt@y=\dimen298
+\pgf@pt@temp=\dimen299
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfarrowsep=\dimen300
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@max=\dimen301
+\pgf@sys@shading@range@num=\count369
+\pgf@shadingcount=\count370
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfexternal@startupbox=\box79
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code.tex
+File: pgfcoretransparency.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfnodeparttextbox=\box80
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.sty
+Package: pgfcomp-version-0-65 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@nodesepstart=\dimen302
+\pgf@nodesepend=\dimen303
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.sty
+Package: pgfcomp-version-1-18 2025-08-29 v3.1.11a (3.1.11a)
+)) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgffor.sty (/home/azinke/.TinyTeX/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex)) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/pgf/math/pgfmath.sty (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2025-08-29 v3.1.11a (3.1.11a)
+\pgffor@iter=\dimen304
+\pgffor@skip=\dimen305
+\pgffor@stack=\toks39
+\pgffor@toks=\toks40
+)) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
+Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@plot@mark@count=\count371
+\pgfplotmarksize=\dimen306
+)
+\tikz@lastx=\dimen307
+\tikz@lasty=\dimen308
+\tikz@lastxsaved=\dimen309
+\tikz@lastysaved=\dimen310
+\tikz@lastmovetox=\dimen311
+\tikz@lastmovetoy=\dimen312
+\tikzleveldistance=\dimen313
+\tikzsiblingdistance=\dimen314
+\tikz@figbox=\box81
+\tikz@figbox@bg=\box82
+\tikz@tempbox=\box83
+\tikz@tempbox@bg=\box84
+\tikztreelevel=\count372
+\tikznumberofchildren=\count373
+\tikznumberofcurrentchild=\count374
+\tikz@fig@count=\count375
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfmatrixcurrentrow=\count376
+\pgfmatrixcurrentcolumn=\count377
+\pgf@matrix@numberofcolumns=\count378
+)
+\tikz@expandcount=\count379
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2024-01-22 v1.5x LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks41
+\verbatim@line=\toks42
+\verbatim@in@stream=\read5
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\tcb@titlebox=\box85
+\tcb@upperbox=\box86
+\tcb@lowerbox=\box87
+\tcb@phantombox=\box88
+\c@tcbbreakpart=\count380
+\c@tcblayer=\count381
+\c@tcolorbox@number=\count382
+\l__tcobox_tmpa_box=\box89
+\l__tcobox_tmpa_dim=\dimen315
+\tcb@temp=\box90
+\tcb@temp=\box91
+\tcb@temp=\box92
+\tcb@temp=\box93
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbskins.code.tex
+Library (tcolorbox): 'tcbskins.code.tex' version '6.10.0'
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/tikzfill/tikzfill.image.sty
+Package: tikzfill.image 2026/04/23 v1.2.0 Image filling library for TikZ
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/tikzfill/tikzlibraryfill.image.code.tex
+File: tikzlibraryfill.image.code.tex 2026/04/23 v1.2.0 Image filling library
+\l__tikzfill_tmpa_dim=\dimen316
+\l__tikzfill_tmpb_dim=\dimen317
+\l__tikzfill_img_box=\box94
+)) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbskinsjigsaw.code.tex
+Library (tcolorbox): 'tcbskinsjigsaw.code.tex' version '6.10.0'
+)) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbbreakable.code.tex
+Library (tcolorbox): 'tcbbreakable.code.tex' version '6.10.0'
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/pdfcol/pdfcol.sty
+Package: pdfcol 2026-06-20 v1.8 Handle new color stacks for pdfTeX (HO)
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdfcol Info: Interface disabled because of missing PDF mode of pdfTeX.
+)
+Package pdfcol Info: pdfTeX's color stacks are not available.
+\tcb@testbox=\box95
+\tcb@totalupperbox=\box96
+\tcb@totallowerbox=\box97
+)) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/fontawesome5/fontawesome5.sty
+Package: fontawesome5 2022/05/02 v5.15.4 Font Awesome 5
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/fontawesome5/fontawesome5-utex-helper.sty
+Package: fontawesome5-utex-helper 2022/05/02 v5.15.4 uTeX helper for fontawesome5
+LaTeX Font Info:    Trying to load font information for TU+fontawesomefree on input line 69.
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/fontawesome5/tufontawesomefree.fd)
+LaTeX Font Info:    Trying to load font information for TU+fontawesomebrands on input line 70.
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/fontawesome5/tufontawesomebrands.fd))) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/bookmark/bookmark.sty
+Package: bookmark 2026-05-21 v1.32 PDF bookmarks (HO)
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2026-06-17 v7.01r Hypertext links for LaTeX
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode not found.
+)) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2026-01-29 v2.58 Cross-referencing by name of section
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count383
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
+)
+\@linkdim=\dimen318
+\Hy@linkcounter=\count384
+\Hy@pagecounter=\count385
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2026-06-17 v7.01r Hyperref: PDFDocEncoding definition (HO)
+) (/home/azinke/.TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count386
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2026-06-17 v7.01r Hyperref: PDF Unicode definition (HO)
+)
+Package hyperref Info: Option `unicode' set `true' on input line 4070.
+Package hyperref Info: Hyper figures OFF on input line 4199.
+Package hyperref Info: Link nesting OFF on input line 4204.
+Package hyperref Info: Hyper index ON on input line 4207.
+Package hyperref Info: Plain pages OFF on input line 4214.
+Package hyperref Info: Backreferencing OFF on input line 4219.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4466.
+\c@Hy@tempcnt=\count387
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip19
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4805.
+\XeTeXLinkMargin=\dimen319
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+))
+\Fld@menulength=\count388
+\Field@Width=\dimen320
+\Fld@charsize=\dimen321
+Package hyperref Info: Hyper figures OFF on input line 6091.
+Package hyperref Info: Link nesting OFF on input line 6096.
+Package hyperref Info: Hyper index ON on input line 6099.
+Package hyperref Info: backreferencing OFF on input line 6106.
+Package hyperref Info: Link coloring OFF on input line 6111.
+Package hyperref Info: Link coloring with OCG OFF on input line 6116.
+Package hyperref Info: PDF/A mode OFF on input line 6121.
+\Hy@abspage=\count389
+\c@Item=\count390
+\c@Hfootnote=\count391
+)
+Package hyperref Info: Driver (autodetected): hxetex.
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/hyperref/hxetex.def
+File: hxetex.def 2026-06-17 v7.01r Hyperref driver for XeTeX
+\pdfm@box=\box98
+\c@Hy@AnnotLevel=\count392
+\HyField@AnnotCount=\count393
+\Fld@listcount=\count394
+\c@bookmark@seq@number=\count395
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
+(/home/azinke/.TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 284.
+)
+\Hy@SectionHShift=\skip83
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/bookmark/bkm-xetex.def
+File: bkm-xetex.def 2026-05-21 v1.32 bookmark driver for xetex (HO)
+\BKM@id=\count396
+)) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+
+Package tocbasic Info: Loading of class-dependent code for package caption3
+(tocbasic)             prevented on line 50.
+
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen322
+\captionmargin=\dimen323
+\caption@leftmargin=\dimen324
+\caption@rightmargin=\dimen325
+\caption@width=\dimen326
+\caption@indent=\dimen327
+\caption@parindent=\dimen328
+\caption@hangindent=\dimen329
+)
+\c@caption@flags=\count397
+\c@continuedfloat=\count398
+Package caption Info: hyperref package is loaded.
+Package caption Info: longtable package is loaded.
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
+)) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count399
+\float@exts=\toks43
+\float@box=\box99
+\@float@everytoks=\toks44
+\@floatcapt=\box100
+)
+\@float@every@codelisting=\toks45
+\c@codelisting=\count400
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
+Package caption Info: New subtype `subfigure' on input line 238.
+\c@subfigure=\count401
+Package caption Info: New subtype `subtable' on input line 238.
+\c@subtable=\count402
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 277.
+No file index.aux.
+\openout1 = `index.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 290.
+LaTeX Font Info:    ... okay on input line 290.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 290.
+LaTeX Font Info:    ... okay on input line 290.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 290.
+LaTeX Font Info:    ... okay on input line 290.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 290.
+LaTeX Font Info:    ... okay on input line 290.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 290.
+LaTeX Font Info:    ... okay on input line 290.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 290.
+LaTeX Font Info:    ... okay on input line 290.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 290.
+LaTeX Font Info:    ... okay on input line 290.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 290.
+LaTeX Font Info:    ... okay on input line 290.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 290.
+LaTeX Font Info:    ... okay on input line 290.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 290.
+LaTeX Font Info:    ... okay on input line 290.
+Package scrbase Info: activating english \abstractname on input line 290.
+Package scrbase Info: activating english \partname on input line 290.
+Package scrbase Info: activating english \chaptername on input line 290.
+Package scrbase Info: activating english \appendixname on input line 290.
+Package scrbase Info: activating english \figurename on input line 290.
+Package scrbase Info: activating english \tablename on input line 290.
+Package scrbase Info: activating english \contentsname on input line 290.
+Package scrbase Info: activating english \listfigurename on input line 290.
+Package scrbase Info: activating english \listtablename on input line 290.
+Package scrbase Info: activating english \bibname on input line 290.
+Package scrbase Info: activating english \indexname on input line 290.
+*geometry* driver: auto-detecting
+*geometry* detected driver: xetex
+*geometry* verbose mode - [ preamble ] result:
+* driver: xetex
+* paper: letterpaper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(79.66771pt, 454.95958pt, 79.66771pt)
+* v-part:(T,H,B)=(79.66771pt, 635.63457pt, 79.66771pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=454.95958pt
+* \textheight=635.63457pt
+* \oddsidemargin=7.39772pt
+* \evensidemargin=7.39772pt
+* \topmargin=-32.47728pt
+* \headheight=18.125pt
+* \headsep=21.75pt
+* \topskip=12.0pt
+* \footskip=50.75pt
+* \marginparwidth=55.84499pt
+* \marginparsep=12.8401pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'latinmodern-math.otf(0)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,BoldFont={latinmodern-math.otf}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[1.08352485447835]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[1.08352485447835]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
+
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
+(Font)              scaled to size 13.00232pt on input line 290.
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'latinmodern-math.otf(1)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.2-10.2,Font=latinmodern-math.otf,Style=MathScript},{Size=-7.2,Font=latinmodern-math.otf,Style=MathScriptScript}},BoldFont={latinmodern-math.otf}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.2->s*[1.08352485447835]"[latinmodern-math.otf]/OT:script=math;language=dflt;"<7.2-10.2>s*[1.08352485447835]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=0;"<-7.2>s*[1.08352485447835]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[1.08352485447835]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
+
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 13.00232pt on input line 290.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `normal' on input line 290.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 290.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `bold' on input line 290.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 290.
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.083633206963798.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.083633206963798.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.083633206963798.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.083633206963798.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.083633206963798.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'latinmodern-math.otf(2)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.2-10.2,Font=latinmodern-math.otf,Style=MathScript},{Size=-7.2,Font=latinmodern-math.otf,Style=MathScriptScript}},BoldFont={latinmodern-math.otf},ScaleAgain=1.0001,FontAdjustment={\fontdimen
+(fontspec)             8\font =8.80257pt\relax \fontdimen 9\font
+(fontspec)             =5.12291pt\relax \fontdimen 10\font =5.77303pt\relax
+(fontspec)             \fontdimen 11\font =8.91959pt\relax \fontdimen 12\font
+(fontspec)             =4.4858pt\relax \fontdimen 13\font =4.71985pt\relax
+(fontspec)             \fontdimen 14\font =4.71985pt\relax \fontdimen 15\font
+(fontspec)             =3.75768pt\relax \fontdimen 16\font =3.21158pt\relax
+(fontspec)             \fontdimen 17\font =3.21158pt\relax \fontdimen 18\font
+(fontspec)             =3.25058pt\relax \fontdimen 19\font =2.60046pt\relax
+(fontspec)             \fontdimen 22\font =3.25058pt\relax \fontdimen 20\font
+(fontspec)             =0pt\relax \fontdimen 21\font =0pt\relax }].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.2->s*[1.083633206963798]"[latinmodern-math.otf]/OT:script=math;language=dflt;"<7.2-10.2>s*[1.083633206963798]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=0;"<-7.2>s*[1.083633206963798]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[1.083633206963798]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
+
+LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
+(Font)              `symbols' in the math version `normal' on input line 290.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 290.
+LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
+(Font)              `symbols' in the math version `bold' on input line 290.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 290.
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.083416501992902.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.083416501992902.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.083416501992902.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.083416501992902.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.08352485447835.
+
+
+Package fontspec Info: 
+(fontspec)             latinmodern-math scale = 1.083416501992902.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'latinmodern-math.otf(3)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.2-10.2,Font=latinmodern-math.otf,Style=MathScript},{Size=-7.2,Font=latinmodern-math.otf,Style=MathScriptScript}},BoldFont={latinmodern-math.otf},ScaleAgain=0.9999,FontAdjustment={\fontdimen
+(fontspec)             8\font =0.5201pt\relax \fontdimen 9\font
+(fontspec)             =2.60046pt\relax \fontdimen 10\font =2.17139pt\relax
+(fontspec)             \fontdimen 11\font =1.44325pt\relax \fontdimen 12\font
+(fontspec)             =7.80139pt\relax \fontdimen 13\font =0pt\relax }].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.2->s*[1.083416501992902]"[latinmodern-math.otf]/OT:script=math;language=dflt;"<7.2-10.2>s*[1.083416501992902]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=0;"<-7.2>s*[1.083416501992902]"[latinmodern-math.otf]/OT:script=math;language=dflt;+ssty=1;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[1.083416501992902]"[latinmodern-math.otf]/OT:script=math;language=dflt;"
+
+LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
+(Font)              `largesymbols' in the math version `normal' on input line 290.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 290.
+LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
+(Font)              `largesymbols' in the math version `bold' on input line 290.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 290.
+LaTeX Info: Redefining \microtypecontext on input line 290.
+Package microtype Info: Applying patch `item' on input line 290.
+Package microtype Info: Applying patch `toc' on input line 290.
+Package microtype Info: Applying patch `eqnum' on input line 290.
+Package microtype Info: Applying patch `footnote' on input line 290.
+Package microtype Info: Applying patch `verbatim' on input line 290.
+LaTeX Info: Redefining \microtypesetup on input line 290.
+Package microtype Info: Character protrusion enabled (level 2).
+Package microtype Info: Using protrusion set `basicmath'.
+Package microtype Info: No adjustment of tracking.
+Package microtype Info: No adjustment of spacing.
+Package microtype Info: No adjustment of kerning.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `Caladea' (encoding: TU).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Font shape `TU/Inter(0)/m/n' will be
+(Font)              scaled to size 10.26563pt on input line 290.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `Inter' (encoding: TU).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Font shape `TU/SourceCodePro(0)/m/n' will be
+(Font)              scaled to size 10.20007pt on input line 290.
+
+Package babel Info: The following font families will use the default
+(babel)             settings for all or some languages:
+(babel)             * \sffamily = Inter(0)
+(babel)               "Inter Regular/OT:script=latn;language=dflt;mapping=tex-text;" at 10.26563pt
+(babel)             * \ttfamily = SourceCodePro(0)
+(babel)               "Source Code Pro/OT:script=latn;language=dflt;" at 10.20007pt
+(babel)             There is nothing intrinsically wrong with it, but
+(babel)             'babel' will no set Script and Language, which could
+(babel)             be relevant in some languages. If your document uses
+(babel)             these families, consider redefining them with \babelfont.
+(babel)             Reported on input line 290.
+
+Package hyperref Info: Link coloring ON on input line 290.
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
+
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: End \AtBeginDocument code.
+Package babel Info: Main language set to 'english'.
+LaTeX Font Info:    Font shape `TU/Inter(0)/b/n' will be
+(Font)              scaled to size 10.26563pt on input line 292.
+LaTeX Font Info:    Font shape `TU/Inter(0)/b/n' will be
+(Font)              scaled to size 21.28406pt on input line 292.
+LaTeX Font Info:    Font shape `TU/Inter(0)/b/n' will be
+(Font)              scaled to size 12.31874pt on input line 292.
+LaTeX Font Info:    Font shape `TU/Caladea(2)/m/n' will be
+(Font)              scaled to size 17.28pt on input line 292.
+[1
+
+
+
+]
+Package tocbasic Info: character protrusion at toc deactivated on input line 296.
+No file index.toc.
+\tf@toc=\write5
+\openout5 = `index.toc'.
+
+[2
+
+]
+chapter 1.
+[3
+
+]
+chapter 2.
+LaTeX Font Info:    Font shape `TU/Inter(0)/b/n' will be
+(Font)              scaled to size 14.78249pt on input line 329.
+LaTeX Font Info:    Font shape `TU/Caladea(2)/m/it' will be
+(Font)              scaled to size 12.0pt on input line 331.
+[4
+
+] [5] [6] (/home/azinke/.TinyTeX/texmf-dist/tex/latex/microtype/mt-TU-empty.cfg
+File: mt-TU-empty.cfg 2021/06/22 v1.1 microtype config. file: fonts with nonstandard glyph set (RS)
+) [7]
+chapter 3.
+[8
+
+] [9
+
+]
+LaTeX Font Info:    Font shape `TU/Caladea(2)/b/n' will be
+(Font)              scaled to size 12.0pt on input line 547.
+[10] [11] [12] [13] [14]
+chapter 4.
+[15
+
+] [16
+
+] [17]
+
+LaTeX Warning: Hyper reference `follow-a-paced-institutional-route' on page 18 undefined on input line 870.
+
+[18] [19] [20] [21]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in none 6 on input line 1062.
+
+[22] [23] [24]
+part I.
+Package scrkbase Info: You've told me to use the font selection of the element
+(scrkbase)             `partprefix' that is an alias of element `partnumber'
+(scrkbase)              on input line 1169.
+[25
+
+] [26] [27] [28] [29]
+File: 01-foundations/index_files/figure-latex/mermaid-figure-1.png Graphic file (type bmp)
+<01-foundations/index_files/figure-latex/mermaid-figure-1.png>
+
+LaTeX Warning: Reference `fig-foundation-dependencies' on page 30 undefined on input line 1409.
+
+[30] [31]
+
+LaTeX Warning: Hyper reference `practice-and-project-spine' on page 32 undefined on input line 1500.
+
+[32]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 33 undefined on input line 1568.
+
+[33]
+chapter 5.
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 34 undefined on input line 1583.
+
+[34
+
+]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[35]
+
+LaTeX Warning: Reference `fig-hazard-model' on page 36 undefined on input line 1703.
+
+File: 01-foundations/f01-safe-practice_files/figure-latex/mermaid-figure-1.png Graphic file (type bmp)
+<01-foundations/f01-safe-practice_files/figure-latex/mermaid-figure-1.png>
+
+LaTeX Warning: Reference `tbl-body-current' on page 36 undefined on input line 1731.
+
+[36] [37]
+
+LaTeX Warning: Reference `fig-shock-path' on page 38 undefined on input line 1781.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 9.10161pt on input line 1785.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 6.50116pt on input line 1785.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1785.
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
+File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 13.0036pt on input line 1785.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 9.10251pt on input line 1785.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 6.5018pt on input line 1785.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 13.00104pt on input line 1785.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 9.10071pt on input line 1785.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 6.50052pt on input line 1785.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 1785.
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
+File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 1785.
+(/home/azinke/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) (/home/azinke/.TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.cfg
+File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
+)
+LaTeX Font Info:    Font shape `TU/Caladea(2)/m/n' will be
+(Font)              scaled to size 8.4pt on input line 1786.
+LaTeX Font Info:    Font shape `TU/Caladea(2)/m/n' will be
+(Font)              scaled to size 6.0pt on input line 1786.
+File: 01-foundations/../../../build/circuits/f01-shock-path.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f01-shock-path.png>
+
+LaTeX Warning: Reference `tbl-body-current' on page 38 undefined on input line 1806.
+
+LaTeX Font Info:    Font shape `TU/Caladea(2)/m/it' will be
+(Font)              scaled to size 8.4pt on input line 1821.
+[38] [39]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in none 10 on input line 1891.
+
+Missing character: There is no ⁻ (U+207B) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ⁻ (U+207B) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+Package longtable Warning: Column widths have changed
+(longtable)                in none 11 on input line 1917.
+
+[40]
+Missing character: There is no ⁻ (U+207B) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ⁻ (U+207B) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ⁹ (U+2079) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ⁻ (U+207B) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ⁶ (U+2076) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ⁻ (U+207B) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ⁶ (U+2076) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ⁹ (U+2079) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+Package longtable Warning: Column widths have changed
+(longtable)                in none 12 on input line 1934.
+
+LaTeX Font Info:    Font shape `TU/SourceCodePro(0)/b/n' will be
+(Font)              scaled to size 10.20007pt on input line 1941.
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[41]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `fig-measurement-loop' on page 42 undefined on input line 2030.
+
+[42]
+File: 01-foundations/f01-safe-practice_files/figure-latex/mermaid-figure-2.png Graphic file (type bmp)
+<01-foundations/f01-safe-practice_files/figure-latex/mermaid-figure-2.png>
+File: 01-foundations/../../../build/circuits/f01-divider-loading.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f01-divider-loading.png>
+
+LaTeX Warning: Reference `eq-loading' on page 43 undefined on input line 2072.
+
+
+LaTeX Warning: Reference `eq-loading' on page 43 undefined on input line 2072.
+
+
+LaTeX Warning: Reference `fig-divider-loading' on page 43 undefined on input line 2076.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[43] [44]
+
+LaTeX Warning: Reference `fig-shock-path' on page 45 undefined on input line 2155.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ✓ (U+2713) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[45]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ✓ (U+2713) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `fig-capacitor-bleed' on page 46 undefined on input line 2222.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[46]
+File: 01-foundations/../../../build/circuits/f01-capacitor-bleed.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f01-capacitor-bleed.png>
+Missing character: There is no ✓ (U+2713) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `fig-divider-loading' on page 47 undefined on input line 2269.
+
+
+LaTeX Warning: Reference `eq-loading' on page 47 undefined on input line 2271.
+
+[47]
+Missing character: There is no ✓ (U+2713) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ✓ (U+2713) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ✓ (U+2713) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ✓ (U+2713) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[48]
+LaTeX Font Info:    Font shape `TU/SourceCodePro(0)/m/n' will be
+(Font)              scaled to size 5.10004pt on input line 2396.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 5.41763pt on input line 2396.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 5.41817pt on input line 2396.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 5.4171pt on input line 2396.
+LaTeX Font Info:    Font shape `TU/SourceCodePro(0)/m/n' will be
+(Font)              scaled to size 8.50006pt on input line 2402.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 10.83527pt on input line 2402.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 7.58469pt on input line 2402.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 10.83633pt on input line 2402.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 7.58543pt on input line 2402.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 10.8342pt on input line 2402.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 7.58394pt on input line 2402.
+LaTeX Font Info:    Font shape `TU/Caladea(2)/m/n' will be
+(Font)              scaled to size 10.0pt on input line 2402.
+[49] [50]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-loading' on page 51 undefined on input line 2473.
+
+[51]
+
+LaTeX Warning: Reference `eq-loading' on page 52 undefined on input line 2503.
+
+LaTeX Font Info:    Font shape `TU/Caladea(2)/b/n' will be
+(Font)              scaled to size 8.4pt on input line 2520.
+LaTeX Font Info:    Font shape `TU/Caladea(2)/b/n' will be
+(Font)              scaled to size 6.0pt on input line 2520.
+[52]
+
+LaTeX Warning: Hyper reference `i-electrical-foundations' on page 53 undefined on input line 2580.
+
+[53]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[54]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-loading' on page 55 undefined on input line 2755.
+
+[55]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-loading' on page 56 undefined on input line 2788.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 56 undefined on input line 2824.
+
+
+LaTeX Warning: Hyper reference `i-electrical-foundations' on page 56 undefined on input line 2827.
+
+[56] [57]
+chapter 6.
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 58 undefined on input line 2867.
+
+
+LaTeX Warning: Hyper reference `safe-bench-practice-and-trustworthy-measurement' on page 58 undefined on input line 2875.
+
+
+LaTeX Warning: Hyper reference `safe-bench-practice-and-trustworthy-measurement' on page 58 undefined on input line 2904.
+
+[58
+
+]
+
+LaTeX Warning: Hyper reference `safe-bench-practice-and-trustworthy-measurement' on page 59 undefined on input line 2928.
+
+[59]
+
+LaTeX Warning: Reference `fig-quantity-chain' on page 60 undefined on input line 2974.
+
+File: 01-foundations/f02-charge-voltage-current_files/figure-latex/mermaid-figure-1.png Graphic file (type bmp)
+<01-foundations/f02-charge-voltage-current_files/figure-latex/mermaid-figure-1.png>
+
+LaTeX Warning: Reference `tbl-quantities' on page 60 undefined on input line 2997.
+
+LaTeX Font Info:    Font shape `TU/Caladea(1)/m/n' will be
+(Font)              scaled to size 12.0pt on input line 3050.
+LaTeX Font Info:    Font shape `TU/Caladea(1)/m/n' will be
+(Font)              scaled to size 8.4pt on input line 3050.
+LaTeX Font Info:    Font shape `TU/Caladea(1)/m/n' will be
+(Font)              scaled to size 6.0pt on input line 3050.
+[60] [61] [62]
+
+LaTeX Warning: Reference `eq-coulomb' on page 63 undefined on input line 3098.
+
+Missing character: There is no ✓ (U+2713) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ✓ (U+2713) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[63] [64]
+
+LaTeX Warning: Reference `eq-voltage' on page 65 undefined on input line 3188.
+
+
+LaTeX Warning: Reference `eq-voltage' on page 65 undefined on input line 3213.
+
+[65]
+
+LaTeX Warning: Reference `eq-coulomb' on page 66 undefined on input line 3251.
+
+
+LaTeX Warning: Reference `fig-reference-directions' on page 66 undefined on input line 3288.
+
+[66]
+File: 01-foundations/../../../build/circuits/f02-reference-directions.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f02-reference-directions.png>
+
+LaTeX Warning: Reference `fig-reference-directions' on page 67 undefined on input line 3311.
+
+[67]
+
+LaTeX Warning: Reference `eq-drift' on page 68 undefined on input line 3381.
+
+
+Overfull \hbox (50.3602pt too wide) detected at line 3386
+[][][][] [] [] [] [] [] [][][] [] [][][] [] [] [][][][] [][]
+ []
+
+Missing character: There is no ✓ (U+2713) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[68]
+
+LaTeX Warning: Reference `eq-drift' on page 69 undefined on input line 3429.
+
+[69]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ⁻ (U+207B) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ⁻ (U+207B) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[70] [71]
+
+LaTeX Warning: Reference `fig-node-currents' on page 72 undefined on input line 3553.
+
+
+LaTeX Warning: Reference `fig-node-currents' on page 72 undefined on input line 3566.
+
+[72]
+File: 01-foundations/../../../build/circuits/f02-node-currents.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f02-node-currents.png>
+
+LaTeX Warning: Reference `fig-lumped-validity' on page 73 undefined on input line 3615.
+
+File: 01-foundations/f02-charge-voltage-current_files/figure-latex/mermaid-figure-2.png Graphic file (type bmp)
+<01-foundations/f02-charge-voltage-current_files/figure-latex/mermaid-figure-2.png>
+Missing character: There is no λ (U+03BB) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no λ (U+03BB) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-lumped' on page 73 undefined on input line 3642.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3642--3649
+[]\TU/Caladea(2)/m/it/12 Calculate. \TU/Caladea(2)/m/n/12 The screening boundary from Equation [] is $[] []$
+ []
+
+
+Underfull \hbox (badness 1077) in paragraph at lines 3642--3649
+$[][][][][][][] []$\TU/Caladea(2)/m/n/12 (3×10^{8})/(10×0.30) = 1.0×10^{8}~[] = 100~[]$. On an FR4
+ []
+
+Missing character: There is no ✓ (U+2713) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[73] [74]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[75]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `tbl-current-continuity' on page 76 undefined on input line 3756.
+
+[76]
+Underfull \vbox (badness 10000) detected at line 3825
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 3825
+ []
+
+[77]
+
+LaTeX Warning: Reference `tbl-current-continuity' on page 78 undefined on input line 3841.
+
+
+LaTeX Warning: Reference `fig-shared-return' on page 78 undefined on input line 3867.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[78]
+File: 01-foundations/../../../build/circuits/f02-shared-return.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f02-shared-return.png>
+[79]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no ⁻ (U+207B) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[80] [81]
+Underfull \hbox (badness 1270) in paragraph at lines 4062--4067
+[]\TU/Caladea(2)/m/n/12 conservation first gives $[] [][] [] [][][][][][]$; KCL is the lumped, negligible-
+ []
+
+
+LaTeX Warning: Reference `eq-kcl' on page 82 undefined on input line 4084.
+
+
+LaTeX Warning: Reference `eq-voltage' on page 82 undefined on input line 4087.
+
+
+LaTeX Warning: Reference `eq-lumped' on page 82 undefined on input line 4099.
+
+[82]
+
+LaTeX Warning: Hyper reference `i-electrical-foundations' on page 83 undefined on input line 4106.
+
+[83]
+
+LaTeX Warning: Reference `tbl-current-continuity' on page 84 undefined on input line 4229.
+
+
+LaTeX Warning: Reference `eq-voltage' on page 84 undefined on input line 4229.
+
+
+LaTeX Warning: Reference `eq-lumped' on page 84 undefined on input line 4229.
+
+[84]
+
+LaTeX Warning: Reference `eq-drift' on page 85 undefined on input line 4262.
+
+
+LaTeX Warning: Reference `eq-drift' on page 85 undefined on input line 4282.
+
+
+Underfull \hbox (badness 4181) in paragraph at lines 4281--4287
+[]\TU/Caladea(2)/m/n/12 Starting from “count the carriers in a signed slab of length $[][] [][]$,” derive
+ []
+
+
+LaTeX Warning: Reference `eq-ved' on page 85 undefined on input line 4288.
+
+
+LaTeX Warning: Reference `tbl-current-continuity' on page 85 undefined on input line 4301.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-lumped' on page 85 undefined on input line 4330.
+
+[85]
+
+LaTeX Warning: Hyper reference `safe-bench-practice-and-trustworthy-measurement' on page 86 undefined on input line 4358.
+
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 86 undefined on input line 4366.
+
+
+LaTeX Warning: Hyper reference `i-electrical-foundations' on page 86 undefined on input line 4371.
+
+[86] [87]
+chapter 7.
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 88 undefined on input line 4430.
+
+
+LaTeX Warning: Hyper reference `safe-bench-practice-and-trustworthy-measurement' on page 88 undefined on input line 4446.
+
+[88
+
+]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Hyper reference `charge-voltage-current-and-reference-directions' on page 89 undefined on input line 4488.
+
+[89] [90]
+
+LaTeX Warning: Reference `eq-ohm' on page 91 undefined on input line 4625.
+
+[91] [92]
+
+LaTeX Warning: Reference `eq-source-line' on page 93 undefined on input line 4705.
+
+
+LaTeX Warning: Reference `eq-load-line' on page 93 undefined on input line 4706.
+
+
+LaTeX Warning: Reference `eq-source-load' on page 93 undefined on input line 4718.
+
+File: 01-foundations/../../../build/circuits/f03-source-load.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f03-source-load.png>
+[93]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-source-line' on page 94 undefined on input line 4786.
+
+
+LaTeX Warning: Reference `eq-source-line' on page 94 undefined on input line 4797.
+
+[94] [95] [96]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `fig-voltage-divider' on page 97 undefined on input line 4954.
+
+[97]
+File: 01-foundations/../../../build/circuits/f03-voltage-divider.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f03-voltage-divider.png>
+[98]
+
+LaTeX Warning: Reference `eq-loaded-divider' on page 99 undefined on input line 5004.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-divider-loading' on page 99 undefined on input line 5055.
+
+[99] [100]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[101]
+Underfull \vbox (badness 10000) detected at line 5231
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 5231
+ []
+
+[102]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+Underfull \hbox (badness 1571) in paragraph at lines 5270--5270
+\TU/Caladea(2)/m/n/12 mative coding rules, additional cases, tolerance colours, and temperature-
+ []
+
+[103]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 7.2 on input line 5293.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+Underfull \hbox (badness 5316) in paragraph at lines 5313--5320
+[]\TU/Caladea(2)/m/n/12 Preferred \TU/Caladea(2)/b/n/12 E-series \TU/Caladea(2)/m/n/12 values distribute nominal values approximately logarithmically
+ []
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[104]
+Missing character: There is no ⁻ (U+207B) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[105]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[106]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[107] [108]
+Underfull \hbox (badness 1152) in paragraph at lines 5563--5566
+[]\TU/Caladea(2)/m/n/12 include tolerances, ratings, temperature, wiring, and instrument resistance far
+ []
+
+[109]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[110]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-meter-requirement' on page 111 undefined on input line 5733.
+
+
+LaTeX Warning: Reference `eq-source-load' on page 111 undefined on input line 5747.
+
+
+LaTeX Warning: Reference `eq-source-line' on page 111 undefined on input line 5748.
+
+
+LaTeX Warning: Reference `eq-load-line' on page 111 undefined on input line 5748.
+
+
+LaTeX Warning: Reference `eq-series' on page 111 undefined on input line 5752.
+
+
+LaTeX Warning: Reference `eq-parallel' on page 111 undefined on input line 5752.
+
+
+LaTeX Warning: Reference `eq-source-resistance' on page 111 undefined on input line 5759.
+
+LaTeX Font Info:    Font shape `TU/Caladea(2)/m/it' will be
+(Font)              scaled to size 6.0pt on input line 5761.
+
+LaTeX Warning: Reference `eq-divider-loading' on page 111 undefined on input line 5763.
+
+
+LaTeX Warning: Reference `eq-loaded-divider' on page 111 undefined on input line 5764.
+
+[111]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `tbl-source-synthetic' on page 112 undefined on input line 5785.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[112]
+Underfull \hbox (badness 1371) in paragraph at lines 5840--5846
+\TU/Caladea(2)/m/n/12 ments, references, stop conditions, calculations, uncertainty, and the evidence
+ []
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Hyper reference `charge-voltage-current-and-reference-directions' on page 113 undefined on input line 5857.
+
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 113 undefined on input line 5872.
+
+
+LaTeX Warning: Hyper reference `i-electrical-foundations' on page 113 undefined on input line 5873.
+
+[113] [114]
+chapter 8.
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 115 undefined on input line 5899.
+
+
+LaTeX Warning: Hyper reference `safe-bench-practice-and-trustworthy-measurement' on page 115 undefined on input line 5914.
+
+
+LaTeX Warning: Hyper reference `sourceload-operating-points-and-resistance' on page 115 undefined on input line 5929.
+
+[115
+
+]
+
+LaTeX Warning: Reference `fig-f04-bridge' on page 116 undefined on input line 5933.
+
+File: 01-foundations/../../../build/circuits/f04-bridge.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f04-bridge.png>
+
+LaTeX Warning: Hyper reference `sourceload-operating-points-and-resistance' on page 116 undefined on input line 5969.
+
+[116] [117] [118]
+
+LaTeX Warning: Reference `eq-f04-continuity' on page 119 undefined on input line 6101.
+
+
+LaTeX Warning: Hyper reference `nodes-ideal-wires-and-the-reach-of-a-lumped-description' on page 119 undefined on input line 6118.
+
+[119]
+
+LaTeX Warning: Reference `eq-f04-faraday' on page 120 undefined on input line 6176.
+
+[120]
+
+LaTeX Warning: Reference `eq-f04-node-general' on page 121 undefined on input line 6209.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `fig-f04-one-port' on page 121 undefined on input line 6250.
+
+[121]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `fig-f04-bridge' on page 122 undefined on input line 6298.
+
+[122] [123]
+
+LaTeX Warning: Reference `fig-f04-two-mesh' on page 124 undefined on input line 6393.
+
+File: 01-foundations/../../../build/circuits/f04-two-mesh.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f04-two-mesh.png>
+[124] [125] [126]
+
+LaTeX Warning: Reference `fig-f04-one-port' on page 127 undefined on input line 6537.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+File: 01-foundations/../../../build/circuits/f04-one-port.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f04-one-port.png>
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[127]
+
+LaTeX Warning: Reference `eq-f04-thevenin-line' on page 128 undefined on input line 6618.
+
+[128]
+
+LaTeX Warning: Reference `fig-f04-one-port' on page 129 undefined on input line 6665.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[129] [130]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[131]
+Underfull \vbox (badness 10000) detected at line 6846
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 6846
+ []
+
+[132]
+
+LaTeX Warning: Reference `fig-f04-one-port' on page 133 undefined on input line 6872.
+
+
+Underfull \hbox (badness 2698) in paragraph at lines 6883--6887
+[]\TU/Caladea(2)/m/n/12 record the apparent open-circuit voltage with the voltmeter input resistance
+ []
+
+[133]
+
+LaTeX Warning: Reference `tbl-f04-synthetic' on page 134 undefined on input line 6899.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+Underfull \hbox (badness 2409) in paragraph at lines 6967--6973
+\TU/Caladea(2)/m/n/12 Record source indicators and measure at multiple separated points because those
+ []
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[134]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-f04-port-design' on page 135 undefined on input line 7028.
+
+[135]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[136] [137] [138]
+
+LaTeX Warning: Reference `eq-f04-continuity' on page 139 undefined on input line 7244.
+
+
+LaTeX Warning: Reference `eq-f04-kcl-lumped' on page 139 undefined on input line 7245.
+
+
+LaTeX Warning: Reference `eq-f04-kvl-lumped' on page 139 undefined on input line 7248.
+
+
+LaTeX Warning: Reference `eq-f04-faraday' on page 139 undefined on input line 7249.
+
+
+LaTeX Warning: Reference `fig-f04-bridge' on page 139 undefined on input line 7265.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-f04-bridge-node1' on page 139 undefined on input line 7286.
+
+
+LaTeX Warning: Reference `eq-f04-bridge-node2' on page 139 undefined on input line 7287.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-f04-two-mesh-system' on page 139 undefined on input line 7302.
+
+[139]
+
+LaTeX Warning: Reference `eq-f04-thevenin-line' on page 140 undefined on input line 7310.
+
+
+LaTeX Warning: Reference `eq-f04-max-power' on page 140 undefined on input line 7315.
+
+
+LaTeX Warning: Reference `fig-f04-one-port' on page 140 undefined on input line 7327.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-f04-millman' on page 140 undefined on input line 7328.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `tbl-f04-synthetic' on page 140 undefined on input line 7355.
+
+
+LaTeX Warning: Reference `fig-f04-one-port' on page 140 undefined on input line 7379.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[140]
+Underfull \hbox (badness 1939) in paragraph at lines 7416--7422
+\TU/Caladea(2)/m/n/12 Specify loads and power ratings, voltage/current references, instruments and
+ []
+
+
+Underfull \hbox (badness 1642) in paragraph at lines 7416--7422
+\TU/Caladea(2)/m/n/12 ranges, source current limit, test points, raw records, uncertainty basis, stop
+ []
+
+
+LaTeX Warning: Hyper reference `sourceload-operating-points-and-resistance' on page 141 undefined on input line 7432.
+
+[141]
+
+LaTeX Warning: Hyper reference `i-electrical-foundations' on page 142 undefined on input line 7456.
+
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 142 undefined on input line 7457.
+
+[142]
+chapter 9.
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 143 undefined on input line 7484.
+
+[143
+
+]
+
+LaTeX Warning: Hyper reference `sourceload-operating-points-and-resistance' on page 144 undefined on input line 7544.
+
+[144] [145]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[146]
+
+LaTeX Warning: Reference `eq-f05-energy-integral' on page 147 undefined on input line 7710.
+
+
+LaTeX Warning: Reference `eq-f05-energy-integral' on page 147 undefined on input line 7735.
+
+[147]
+
+LaTeX Warning: Reference `eq-f05-instantaneous-power' on page 148 undefined on input line 7773.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[148] [149]
+
+LaTeX Warning: Reference `fig-f05-energy-boundary' on page 150 undefined on input line 7884.
+
+File: 01-foundations/f05-energy-power-thermal_files/figure-latex/mermaid-figure-1.png Graphic file (type bmp)
+<01-foundations/f05-energy-power-thermal_files/figure-latex/mermaid-figure-1.png>
+
+Overfull \hbox (68.96767pt too wide) in paragraph at lines 7891--7892
+ [][] 
+ []
+
+
+LaTeX Warning: Reference `fig-f05-opening-architecture' on page 150 undefined on input line 7912.
+
+File: 01-foundations/f05-energy-power-thermal_files/figure-latex/mermaid-figure-2.png Graphic file (type bmp)
+<01-foundations/f05-energy-power-thermal_files/figure-latex/mermaid-figure-2.png>
+
+Overfull \hbox (36.47214pt too wide) in paragraph at lines 7918--7919
+ [][] 
+ []
+
+[150] [151] [152]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 9.1 on input line 7949.
+
+
+LaTeX Warning: Reference `tbl-f05-opening-budget' on page 153 undefined on input line 7951.
+
+
+LaTeX Warning: Reference `tbl-f05-opening-budget' on page 153 undefined on input line 7976.
+
+[153] [154]
+Underfull \hbox (badness 1117) in paragraph at lines 8088--8093
+\TU/Caladea(2)/b/n/12 steady-state constitutive approximation \TU/Caladea(2)/m/n/12 defines thermal resistance between those
+ []
+
+[155]
+
+LaTeX Warning: Reference `eq-f05-thermal-resistance-definition' on page 156 undefined on input line 8123.
+
+[156] [157]
+
+LaTeX Warning: Reference `eq-f05-steady-temperature' on page 158 undefined on input line 8222.
+
+
+LaTeX Warning: Reference `eq-f05-thermal-step' on page 158 undefined on input line 8249.
+
+
+LaTeX Warning: Reference `eq-f05-thermal-step' on page 158 undefined on input line 8249.
+
+[158] [159] [160] [161]
+Underfull \hbox (badness 3039) in paragraph at lines 8400--8410
+[]\TU/Caladea(2)/m/n/12 in addition to—not instead of—voltage, pulse, film/junction-temperature, and life-
+ []
+
+
+Underfull \hbox (badness 4886) in paragraph at lines 8400--8410
+\TU/Caladea(2)/m/n/12 time checks. For the worked design that follows, the cited datasheet supplies
+ []
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[162] [163] [164] [165] [166]
+
+LaTeX Warning: Reference `eq-f05-mode-budget' on page 167 undefined on input line 8778.
+
+[167]
+
+LaTeX Warning: Reference `eq-f05-instantaneous-power' on page 168 undefined on input line 8809.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-f05-resistor-power' on page 168 undefined on input line 8816.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-f05-cascade-efficiency' on page 168 undefined on input line 8825.
+
+
+LaTeX Warning: Reference `eq-f05-thermal-step' on page 168 undefined on input line 8829.
+
+
+LaTeX Warning: Reference `eq-f05-thermal-balance' on page 168 undefined on input line 8830.
+
+
+LaTeX Warning: Reference `eq-f05-conduction-resistance' on page 168 undefined on input line 8834.
+
+
+LaTeX Warning: Reference `tbl-f05-synthetic-temperature' on page 168 undefined on input line 8846.
+
+
+LaTeX Warning: Reference `eq-f05-thermal-step' on page 168 undefined on input line 8847.
+
+[168] [169]
+
+LaTeX Warning: Hyper reference `sourceload-operating-points-and-resistance' on page 170 undefined on input line 8937.
+
+
+LaTeX Warning: Hyper reference `i-electrical-foundations' on page 170 undefined on input line 8964.
+
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 170 undefined on input line 8965.
+
+
+Underfull \hbox (badness 1102) in paragraph at lines 8969--8980
+\TU/Caladea(2)/m/n/12 uncertainty language follows [4]. The complete [][]bibliography[][] collects these sources.
+ []
+
+[170] [171]
+chapter 10.
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 172 undefined on input line 8992.
+
+[172
+
+]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Hyper reference `sourceload-operating-points-and-resistance' on page 173 undefined on input line 9055.
+
+[173] [174]
+File: 01-foundations/../../../build/circuits/f06-divider-measurement.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f06-divider-measurement.png>
+
+LaTeX Warning: Reference `eq-loading-correction' on page 175 undefined on input line 9171.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[175]
+File: 01-foundations/f06-measurement-uncertainty-debug_files/figure-latex/mermaid-figure-1.png Graphic file (type bmp)
+<01-foundations/f06-measurement-uncertainty-debug_files/figure-latex/mermaid-figure-1.png>
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[176] [177] [178] [179]
+
+LaTeX Warning: Reference `eq-sample-standard-deviation' on page 180 undefined on input line 9335.
+
+[180] [181]
+
+LaTeX Warning: Reference `eq-general-propagation' on page 182 undefined on input line 9464.
+
+[182]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[183]
+
+LaTeX Warning: Reference `eq-standard-error' on page 184 undefined on input line 9555.
+
+
+LaTeX Warning: Reference `eq-loading-correction' on page 184 undefined on input line 9603.
+
+[184]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-independent-propagation' on page 185 undefined on input line 9630.
+
+
+LaTeX Warning: Reference `eq-independent-propagation' on page 185 undefined on input line 9630.
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 10.2 on input line 9645.
+
+[185] [186]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[187]
+File: 01-foundations/../../../build/circuits/f06-ammeter-insertion.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f06-ammeter-insertion.png>
+[188] [189] [190]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-loading-correction' on page 191 undefined on input line 9963.
+
+[191]
+Underfull \hbox (badness 1762) in paragraph at lines 9980--9987
+[]\TU/Caladea(2)/m/n/12 Instrument qualification should bracket the test when practical: inspect leads and
+ []
+
+File: 01-foundations/f06-measurement-uncertainty-debug_files/figure-latex/mermaid-figure-2.png Graphic file (type bmp)
+<01-foundations/f06-measurement-uncertainty-debug_files/figure-latex/mermaid-figure-2.png>
+
+LaTeX Warning: Float too large for page by 238.16791pt on input line 10015.
+
+[192] [193] [194]
+
+LaTeX Warning: Reference `tbl-divider-debug' on page 195 undefined on input line 10111.
+
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[195]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[196]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[197]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-joint-residual' on page 198 undefined on input line 10248.
+
+[198]
+
+LaTeX Warning: Reference `eq-reported-divider' on page 199 undefined on input line 10308.
+
+[199] [200]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[201]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Reference `eq-one-pole-amplitude' on page 202 undefined on input line 10510.
+
+
+LaTeX Warning: Reference `eq-loading-correction' on page 202 undefined on input line 10526.
+
+[202]
+
+LaTeX Warning: Reference `eq-compatibility-screen' on page 203 undefined on input line 10566.
+
+
+LaTeX Warning: Hyper reference `sourceload-operating-points-and-resistance' on page 203 undefined on input line 10622.
+
+
+LaTeX Warning: Hyper reference `i-electrical-foundations' on page 203 undefined on input line 10626.
+
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 203 undefined on input line 10628.
+
+[203] [204]
+chapter 11.
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 205 undefined on input line 10677.
+
+
+Underfull \hbox (badness 1062) in paragraph at lines 10670--10679
+[]\TU/Caladea(2)/m/n/12 This chapter provides a complete instructional path: constitutive relations and
+ []
+
+
+Underfull \hbox (badness 1127) in paragraph at lines 10684--10695
+[]\TU/Caladea(2)/m/n/12 Practical work discussed here is limited to \TU/Caladea(2)/b/n/12 current-limited, extra-low-voltage
+ []
+
+[205
+
+]
+
+LaTeX Warning: Hyper reference `network-conservation-and-equivalent-circuits' on page 206 undefined on input line 10744.
+
+
+LaTeX Warning: Hyper reference `energy-power-efficiency-and-heat' on page 206 undefined on input line 10746.
+
+[206]
+
+LaTeX Warning: Reference `eq-f07-qcv' on page 207 undefined on input line 10829.
+
+[207]
+
+LaTeX Warning: Reference `eq-f07-qcv' on page 208 undefined on input line 10853.
+
+
+LaTeX Warning: Reference `eq-f07-capacitor-iv' on page 208 undefined on input line 10864.
+
+[208]
+
+LaTeX Warning: Reference `eq-f07-inductor-energy' on page 209 undefined on input line 10956.
+
+[209]
+
+LaTeX Warning: Reference `eq-f07-capacitor-iv' on page 210 undefined on input line 11003.
+
+[210]
+
+LaTeX Warning: Reference `eq-f07-inductor-iv' on page 211 undefined on input line 11023.
+
+
+LaTeX Warning: Reference `fig-f07-rc' on page 211 undefined on input line 11058.
+
+File: 01-foundations/../../../build/circuits/f07-rc-transient.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f07-rc-transient.png>
+[211]
+
+LaTeX Warning: Reference `eq-f07-capacitor-iv' on page 212 undefined on input line 11085.
+
+[212] [213]
+
+LaTeX Warning: Reference `fig-f07-thevenin' on page 214 undefined on input line 11197.
+
+File: 01-foundations/../../../build/circuits/f07-thevenin-transient.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f07-thevenin-transient.png>
+[214] [215]
+
+LaTeX Warning: Reference `eq-f07-rc-complete' on page 216 undefined on input line 11292.
+
+
+LaTeX Warning: Reference `fig-f07-rl' on page 216 undefined on input line 11303.
+
+File: 01-foundations/../../../build/circuits/f07-rl-transient.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f07-rl-transient.png>
+
+LaTeX Warning: Reference `fig-f07-rl' on page 216 undefined on input line 11329.
+
+[216] [217]
+
+LaTeX Warning: Reference `eq-f07-rl-complete' on page 218 undefined on input line 11431.
+
+[218] [219]
+
+LaTeX Warning: Reference `eq-f07-rc-power-balance' on page 220 undefined on input line 11567.
+
+[220]
+
+LaTeX Warning: Reference `fig-f07-flyback' on page 221 undefined on input line 11614.
+
+File: 01-foundations/../../../build/circuits/f07-flyback-clamp.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f07-flyback-clamp.png>
+[221] [222] [223] [224] [225]
+
+LaTeX Warning: Reference `eq-f07-first-order-solution' on page 226 undefined on input line 11869.
+
+[226] [227]
+
+LaTeX Warning: Reference `fig-f07-leaky' on page 228 undefined on input line 11979.
+
+[228]
+File: 01-foundations/../../../build/circuits/f07-leaky-rc.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f07-leaky-rc.png>
+
+Overfull \hbox (7.87277pt too wide) in paragraph at lines 12016--12025
+[]\TU/Caladea(2)/m/n/12 The predicted effective time constant is then approximately $[][][][][] [][] [] [][][] [][][][][][][][] [][][] []$
+ []
+
+
+LaTeX Warning: Reference `fig-f07-bleed' on page 229 undefined on input line 12029.
+
+File: 01-foundations/../../../build/circuits/f01-capacitor-bleed.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f01-capacitor-bleed.png>
+[229] [230] [231] [232] [233]
+
+LaTeX Warning: Reference `eq-f07-rc-complete' on page 234 undefined on input line 12366.
+
+[234]
+
+LaTeX Warning: Reference `eq-f07-rl-complete' on page 235 undefined on input line 12370.
+
+
+LaTeX Warning: Reference `eq-f07-rc-power-balance' on page 235 undefined on input line 12373.
+
+
+LaTeX Warning: Reference `eq-f07-rc-charge-energy' on page 235 undefined on input line 12374.
+
+
+LaTeX Warning: Reference `eq-f07-flyback-ode' on page 235 undefined on input line 12381.
+
+[235]
+
+LaTeX Warning: Hyper reference `network-conservation-and-equivalent-circuits' on page 236 undefined on input line 12472.
+
+
+LaTeX Warning: Hyper reference `energy-power-efficiency-and-heat' on page 236 undefined on input line 12474.
+
+[236]
+
+LaTeX Warning: Hyper reference `practice-and-project-spine' on page 237 undefined on input line 12494.
+
+
+LaTeX Warning: Hyper reference `measurement-uncertainty-and-systematic-debugging' on page 237 undefined on input line 12499.
+
+[237]
+chapter 12.
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 238 undefined on input line 12526.
+
+[238
+
+]
+
+LaTeX Warning: Hyper reference `capacitors-inductors-and-transients' on page 239 undefined on input line 12594.
+
+[239]
+
+LaTeX Warning: Reference `eq-f08-amplitudes' on page 240 undefined on input line 12671.
+
+[240] [241]
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 15.60277pt on input line 12742.
+LaTeX Font Info:    Font shape `TU/Caladea(1)/m/n' will be
+(Font)              scaled to size 14.4pt on input line 12742.
+LaTeX Font Info:    Font shape `TU/Caladea(1)/m/n' will be
+(Font)              scaled to size 10.0pt on input line 12742.
+LaTeX Font Info:    Font shape `TU/Caladea(1)/m/n' will be
+(Font)              scaled to size 7.0pt on input line 12742.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 15.60431pt on input line 12742.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 15.60123pt on input line 12742.
+
+LaTeX Warning: Reference `eq-f08-phasor-definition' on page 242 undefined on input line 12744.
+
+
+LaTeX Warning: Reference `eq-f08-derivative-phasor' on page 242 undefined on input line 12773.
+
+[242] [243]
+File: 01-foundations/f08-sinusoids-impedance-frequency_files/figure-latex/mermaid-figure-1.png Graphic file (type bmp)
+<01-foundations/f08-sinusoids-impedance-frequency_files/figure-latex/mermaid-figure-1.png>
+
+LaTeX Warning: Reference `fig-f08-rc-frequency' on page 244 undefined on input line 12896.
+
+File: 01-foundations/../../../build/circuits/f08-rc-frequency.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f08-rc-frequency.png>
+[244] [245]
+
+LaTeX Warning: Reference `eq-f08-impedance-divider' on page 246 undefined on input line 12946.
+
+[246]
+Underfull \hbox (badness 2150) in paragraph at lines 12989--12999
+\TU/Caladea(2)/m/n/12 source’s positive terminal, so under passive references the source instead absorbs
+ []
+
+
+LaTeX Warning: Reference `fig-f08-rc-frequency' on page 247 undefined on input line 13005.
+
+[247] [248]
+
+LaTeX Warning: Reference `fig-f08-bode' on page 249 undefined on input line 13095.
+
+
+LaTeX Warning: Reference `eq-f08-rc-lowpass-mag-phase' on page 249 undefined on input line 13098.
+
+File: 01-foundations/../../figures/f08-rc-bode.png Graphic file (type bmp)
+<01-foundations/../../figures/f08-rc-bode.png>
+
+LaTeX Warning: Reference `eq-f08-rc-lowpass-mag-phase' on page 249 undefined on input line 13123.
+
+[249]
+
+LaTeX Warning: Reference `fig-f08-rl-frequency' on page 250 undefined on input line 13156.
+
+File: 01-foundations/../../../build/circuits/f08-rl-frequency.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f08-rl-frequency.png>
+[250]
+
+LaTeX Warning: Reference `fig-f08-series-rlc' on page 251 undefined on input line 13211.
+
+File: 01-foundations/../../../build/circuits/f08-series-rlc.png Graphic file (type bmp)
+<01-foundations/../../../build/circuits/f08-series-rlc.png>
+[251] [252]
+
+LaTeX Warning: Reference `eq-f08-series-q' on page 253 undefined on input line 13307.
+
+
+LaTeX Warning: Reference `eq-f08-complex-power' on page 253 undefined on input line 13312.
+
+
+LaTeX Warning: Reference `eq-f08-series-q' on page 253 undefined on input line 13313.
+
+
+LaTeX Warning: Reference `fig-f08-rc-frequency' on page 253 undefined on input line 13348.
+
+[253] [254] [255]
+
+LaTeX Warning: Reference `eq-f08-measured-lowpass' on page 256 undefined on input line 13482.
+
+[256]
+Underfull \vbox (badness 10000) detected at line 13577
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 13577
+ []
+
+[257] [258] [259]
+
+LaTeX Warning: Reference `eq-f08-measured-lowpass' on page 260 undefined on input line 13689.
+
+[260] [261] [262] [263]
+
+LaTeX Warning: Reference `eq-f08-resonance' on page 264 undefined on input line 13899.
+
+
+LaTeX Warning: Reference `eq-f08-rlc-bandwidth' on page 264 undefined on input line 13900.
+
+
+LaTeX Warning: Reference `eq-f08-series-q' on page 264 undefined on input line 13900.
+
+
+LaTeX Warning: Reference `eq-f08-phasor-definition' on page 264 undefined on input line 13911.
+
+[264]
+
+LaTeX Warning: Reference `eq-f08-rms' on page 265 undefined on input line 13972.
+
+
+LaTeX Warning: Reference `eq-f08-average-ac-power' on page 265 undefined on input line 13975.
+
+
+LaTeX Warning: Reference `eq-f08-rc-lowpass-mag-phase' on page 265 undefined on input line 13979.
+
+
+LaTeX Warning: Reference `eq-f08-series-rlc-z' on page 265 undefined on input line 13982.
+
+
+LaTeX Warning: Reference `eq-f08-rlc-bandwidth' on page 265 undefined on input line 13983.
+
+
+LaTeX Warning: Reference `eq-f08-loaded-lowpass' on page 265 undefined on input line 13986.
+
+
+LaTeX Warning: Reference `eq-f08-loaded-lowpass' on page 265 undefined on input line 14002.
+
+[265] [266]
+
+LaTeX Warning: Hyper reference `capacitors-inductors-and-transients' on page 267 undefined on input line 14074.
+
+
+LaTeX Warning: Hyper reference `practice-and-project-spine' on page 267 undefined on input line 14099.
+
+
+LaTeX Warning: Hyper reference `measurement-uncertainty-and-systematic-debugging' on page 267 undefined on input line 14105.
+
+[267]
+part II.
+Package scrkbase Info: You've told me to use the font selection of the element
+(scrkbase)             `partprefix' that is an alias of element `partnumber'
+(scrkbase)              on input line 14119.
+[268
+
+] [269] [270] [271] [272] [273] [274] [275]
+File: 02-analog/index_files/figure-latex/mermaid-figure-1.png Graphic file (type bmp)
+<02-analog/index_files/figure-latex/mermaid-figure-1.png>
+
+LaTeX Warning: Reference `fig-analog-dependencies' on page 276 undefined on input line 14433.
+
+[276] [277] [278]
+
+LaTeX Warning: Hyper reference `practice-and-project-spine' on page 279 undefined on input line 14583.
+
+[279]
+Underfull \hbox (badness 1275) in paragraph at lines 14616--14620
+[]\TU/Caladea(2)/m/n/12 select diode, BJT, MOSFET, op-amp, sensor, and optoelectronic approximations
+ []
+
+[280]
+
+LaTeX Warning: Hyper reference `interpret-chapter-status' on page 281 undefined on input line 14681.
+
+[281]
+chapter 13.
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 282 undefined on input line 14697.
+
+
+Underfull \hbox (badness 1406) in paragraph at lines 14704--14715
+\TU/Caladea(2)/m/n/12 the current limit before connecting a diode; a diode connected without series
+ []
+
+[282
+
+]
+
+LaTeX Warning: Hyper reference `network-conservation-and-equivalent-circuits' on page 283 undefined on input line 14759.
+
+
+LaTeX Warning: Hyper reference `energy-power-efficiency-and-heat' on page 283 undefined on input line 14761.
+
+[283]
+File: 02-analog/../figures/a01-energy-bands.png Graphic file (type bmp)
+<02-analog/../figures/a01-energy-bands.png>
+
+LaTeX Warning: Reference `fig-a01-energy-bands' on page 284 undefined on input line 14838.
+
+[284] [285]
+File: 02-analog/../figures/a01-junction-causal.png Graphic file (type bmp)
+<02-analog/../figures/a01-junction-causal.png>
+[286]
+
+LaTeX Warning: Reference `fig-a01-junction-formation' on page 287 undefined on input line 14950.
+
+File: 02-analog/../figures/a01-pn-junction.png Graphic file (type bmp)
+<02-analog/../figures/a01-pn-junction.png>
+
+LaTeX Warning: Reference `fig-a01-pn-junction' on page 287 undefined on input line 14969.
+
+[287]
+File: 02-analog/../figures/a01-junction-bands.png Graphic file (type bmp)
+<02-analog/../figures/a01-junction-bands.png>
+
+LaTeX Warning: Reference `fig-a01-energy-bands' on page 288 undefined on input line 15003.
+
+[288] [289] [290]
+
+LaTeX Warning: Reference `eq-a01-diode-fit' on page 291 undefined on input line 15121.
+
+
+LaTeX Warning: Reference `eq-a01-diode-fit' on page 291 undefined on input line 15156.
+
+[291]
+
+LaTeX Warning: Reference `eq-a01-diode-fit' on page 292 undefined on input line 15250.
+
+[292]
+
+LaTeX Warning: Reference `tbl-a01-approximations' on page 293 undefined on input line 15263.
+
+
+LaTeX Warning: Reference `fig-a01-diode-operating-point' on page 293 undefined on input line 15278.
+
+File: 02-analog/../../../build/circuits/a01-diode-operating-point.png Graphic file (type bmp)
+<02-analog/../../../build/circuits/a01-diode-operating-point.png>
+[293]
+
+LaTeX Warning: Reference `eq-a01-load-line' on page 294 undefined on input line 15302.
+
+File: 02-analog/../figures/a01-diode-curves.png Graphic file (type bmp)
+<02-analog/../figures/a01-diode-curves.png>
+
+LaTeX Warning: Reference `fig-a01-diode-curves' on page 294 undefined on input line 15323.
+
+
+LaTeX Warning: Reference `eq-a01-load-line' on page 294 undefined on input line 15328.
+
+[294] [295] [296]
+
+LaTeX Warning: Reference `eq-a01-diode-fit' on page 297 undefined on input line 15467.
+
+[297]
+
+LaTeX Warning: Reference `fig-a01-half-wave-rectifier' on page 298 undefined on input line 15475.
+
+File: 02-analog/../../../build/circuits/a01-half-wave-rectifier.png Graphic file (type bmp)
+<02-analog/../../../build/circuits/a01-half-wave-rectifier.png>
+[298]
+
+LaTeX Warning: Reference `eq-a01-incremental-resistance' on page 299 undefined on input line 15532.
+
+
+LaTeX Warning: Reference `fig-a01-bridge-rectifier' on page 299 undefined on input line 15549.
+
+File: 02-analog/../../../build/circuits/a01-bridge-rectifier.png Graphic file (type bmp)
+<02-analog/../../../build/circuits/a01-bridge-rectifier.png>
+
+LaTeX Warning: Hyper reference `capacitors-inductors-and-transients' on page 299 undefined on input line 15579.
+
+[299]
+
+LaTeX Warning: Reference `fig-a01-rail-clamp' on page 300 undefined on input line 15593.
+
+File: 02-analog/../../../build/circuits/a01-rail-clamp.png Graphic file (type bmp)
+<02-analog/../../../build/circuits/a01-rail-clamp.png>
+[300] [301]
+
+LaTeX Warning: Reference `fig-a01-zener-reference' on page 302 undefined on input line 15654.
+
+File: 02-analog/../../../build/circuits/a01-zener-reference.png Graphic file (type bmp)
+<02-analog/../../../build/circuits/a01-zener-reference.png>
+[302] [303]
+
+LaTeX Warning: Reference `fig-a01-energy-bands' on page 304 undefined on input line 15752.
+
+
+LaTeX Warning: Reference `fig-a01-optojunctions' on page 304 undefined on input line 15771.
+
+[304]
+File: 02-analog/../../../build/circuits/a01-optojunctions.png Graphic file (type bmp)
+<02-analog/../../../build/circuits/a01-optojunctions.png>
+[305]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[306]
+File: 02-analog/../figures/a01-reverse-recovery.png Graphic file (type bmp)
+<02-analog/../figures/a01-reverse-recovery.png>
+
+LaTeX Warning: Reference `fig-a01-reverse-recovery' on page 307 undefined on input line 15901.
+
+[307]
+Overfull \hbox (0.17123pt too wide) in paragraph at lines 15925--15935
+\TU/Caladea(2)/m/n/12 from applicable data. At fixed applied voltage, a lower forward voltage can increase current,
+ []
+
+
+LaTeX Warning: Hyper reference `energy-power-efficiency-and-heat' on page 308 undefined on input line 15942.
+
+[308]
+File: 02-analog/../../../build/circuits/a01-diode-family-symbols.png Graphic file (type bmp)
+<02-analog/../../../build/circuits/a01-diode-family-symbols.png>
+
+LaTeX Warning: Reference `fig-a01-diode-family-symbols' on page 309 undefined on input line 15990.
+
+[309] [310] [311] [312] [313] [314] [315]
+
+LaTeX Warning: Reference `eq-a01-diode-fit' on page 316 undefined on input line 16236.
+
+[316]
+Underfull \hbox (badness 2990) in paragraph at lines 16296--16300
+\TU/Caladea(2)/m/n/12 Electrical-characteristic maxima are guaranteed only under their stated conditions.
+ []
+
+
+LaTeX Warning: Reference `fig-a01-rail-clamp' on page 317 undefined on input line 16304.
+
+[317]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+[318] [319]
+
+LaTeX Warning: Hyper reference `measurement-uncertainty-and-systematic-debugging' on page 320 undefined on input line 16482.
+
+[320] [321]
+Underfull \hbox (badness 1005) in paragraph at lines 16591--16596
+\TU/Caladea(2)/m/n/12 Schottky, varactor, PIN, tunnel, optical, and microwave devices retain different
+ []
+
+[322] [323]
+
+LaTeX Warning: Reference `fig-a01-energy-bands' on page 324 undefined on input line 16735.
+
+[324]
+
+LaTeX Warning: Reference `eq-a01-diode-fit' on page 325 undefined on input line 16798.
+
+
+LaTeX Warning: Reference `eq-a01-load-line' on page 325 undefined on input line 16799.
+
+
+LaTeX Warning: Reference `eq-a01-incremental-resistance' on page 325 undefined on input line 16803.
+
+[325]
+
+LaTeX Warning: Reference `eq-a01-varactor-charge' on page 326 undefined on input line 16820.
+
+[326]
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+Missing character: There is no Ω (U+03A9) in font Caladea/OT:script=latn;language=ENG;mapping=tex-text;!
+
+LaTeX Warning: Hyper reference `network-conservation-and-equivalent-circuits' on page 327 undefined on input line 16932.
+
+
+LaTeX Warning: Hyper reference `energy-power-efficiency-and-heat' on page 327 undefined on input line 16934.
+
+
+LaTeX Warning: Hyper reference `measurement-uncertainty-and-systematic-debugging' on page 327 undefined on input line 16936.
+
+[327]
+
+LaTeX Warning: Hyper reference `turn-reading-into-evidence' on page 328 undefined on input line 16948.
+
+
+LaTeX Warning: Hyper reference `practice-and-project-spine' on page 328 undefined on input line 16952.
+
+[328]
+chapter 14.
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 329 undefined on input line 16986.
+
+
+Underfull \hbox (badness 1009) in paragraph at lines 16993--17005
+[]\TU/Caladea(2)/m/n/12 Practical work in this chapter is limited to \TU/Caladea(2)/b/n/12 current-limited, extra-low-voltage
+ []
+
+[329
+
+]
+Underfull \hbox (badness 1348) in paragraph at lines 17042--17048
+\TU/Caladea(2)/m/n/12 equations, datasheet conditions, switching waveforms, and thermal boundary agree.
+ []
+
+
+LaTeX Warning: Hyper reference `semiconductor-behavior-and-diodes' on page 330 undefined on input line 17051.
+
+
+LaTeX Warning: Hyper reference `energy-power-efficiency-and-heat' on page 330 undefined on input line 17054.
+
+
+LaTeX Warning: Hyper reference `capacitors-inductors-and-transients' on page 330 undefined on input line 17056.
+
+[330] [331]
+
+LaTeX Warning: Reference `fig-a02-terminal-references' on page 332 undefined on input line 17138.
+
+File: 02-analog/../../../build/circuits/a02-transistor-terminal-references.png Graphic file (type bmp)
+<02-analog/../../../build/circuits/a02-transistor-terminal-references.png>
+
+LaTeX Warning: Reference `fig-a02-terminal-references' on page 332 undefined on input line 17194.
+
+[332]
+
+LaTeX Warning: Reference `fig-a02-transistor-structures' on page 333 undefined on input line 17210.
+
+File: 02-analog/../figures/a02-transistor-structures.png Graphic file (type bmp)
+<02-analog/../figures/a02-transistor-structures.png>
+[333]
+
+LaTeX Warning: Reference `fig-a02-transistor-structures' on page 334 undefined on input line 17245.
+
+
+Underfull \hbox (badness 1715) in paragraph at lines 17245--17252
+\TU/Caladea(2)/m/n/12 the reverse-biased base–collector depletion field sweeps arriving electrons into the
+ []
+
+[334]
+
+LaTeX Warning: Reference `fig-a02-transistor-structures' on page 335 undefined on input line 17287.
+
+[335] [336] [337] [338] [339] [340]
+
+LaTeX Warning: Reference `fig-a02-bjt-low-side' on page 341 undefined on input line 17554.
+
+File: 02-analog/../../../build/circuits/a02-bjt-low-side-switch.png Graphic file (type bmp)
+<02-analog/../../../build/circuits/a02-bjt-low-side-switch.png>
+[341]
+
+LaTeX Warning: Reference `eq-a02-bjt-load-line' on page 342 undefined on input line 17590.
+
+
+LaTeX Warning: Reference `fig-a02-controlled-source-load-line' on page 342 undefined on input line 17594.
+
+File: 02-analog/../../../build/circuits/a02-controlled-source-load-line.png Graphic file (type bmp)
+<02-analog/../../../build/circuits/a02-controlled-source-load-line.png>
+
+LaTeX Warning: Reference `eq-a02-bjt-active' on page 342 undefined on input line 17616.
+
+[342]
+
+LaTeX Warning: Reference `fig-a02-mos-low-side' on page 343 undefined on input line 17637.
+
+
+LaTeX Warning: Reference `eq-a02-mos-conduction' on page 343 undefined on input line 17639.
+
+File: 02-analog/../../../build/circuits/a02-mosfet-low-side-switch.png Graphic file (type bmp)
+<02-analog/../../../build/circuits/a02-mosfet-low-side-switch.png>
+
+LaTeX Warning: Reference `eq-a02-square-law' on page 343 undefined on input line 17666.
+
+
+LaTeX Warning: Reference `fig-a02-bjt-low-side' on page 343 undefined on input line 17686.
+
+[343] [344] [345] [346]
+
+LaTeX Warning: Reference `fig-a02-high-side' on page 347 undefined on input line 17846.
+
+[347]
+File: 02-analog/../../../build/circuits/a02-high-side-complementary-stages.png Graphic file (type bmp)
+<02-analog/../../../build/circuits/a02-high-side-complementary-stages.png>
+
+LaTeX Warning: Reference `fig-a02-high-side' on page 348 undefined on input line 17884.
+
+[348]
+Underfull \hbox (badness 1308) in paragraph at lines 17916--17922
+[]\TU/Caladea(2)/m/n/12 The invalid state creates a current path containing both transistors and the supply
+ []
+
+
+LaTeX Warning: Hyper reference `capacitors-inductors-and-transients' on page 349 undefined on input line 17932.
+
+
+LaTeX Warning: Reference `fig-a02-inductive-load' on page 349 undefined on input line 17937.
+
+File: 02-analog/../../../build/circuits/a02-mosfet-inductive-load.png Graphic file (type bmp)
+<02-analog/../../../build/circuits/a02-mosfet-inductive-load.png>
+[349] [350]
+
+LaTeX Warning: Reference `eq-a02-coil-off' on page 351 undefined on input line 17991.
+
+[351]
+
+LaTeX Warning: Reference `eq-a02-flyback-current' on page 352 undefined on input line 18035.
+
+[352]
+
+LaTeX Warning: Reference `fig-a02-mos-charge' on page 353 undefined on input line 18091.
+
+File: 02-analog/../../../build/circuits/a02-mosfet-dynamic-equivalent.png Graphic file (type bmp)
+<02-analog/../../../build/circuits/a02-mosfet-dynamic-equivalent.png>
+[353] [354]
+
+LaTeX Warning: Reference `eq-a02-switch-energy' on page 355 undefined on input line 18224.
+
+[355]
+Underfull \hbox (badness 1112) in paragraph at lines 18248--18251
+[]\TU/Caladea(2)/m/n/12 MOSFET linear-region hot spots and temperature-dependent threshold/current
+ []
+
+[356]
+Underfull \hbox (badness 2809) in paragraph at lines 18287--18289
+[]\TU/Caladea(2)/m/n/12 For a rectangular pulse, replace steady resistance by applicable transient thermal
+ []
+
+
+LaTeX Warning: Reference `eq-a02-gate-peak' on page 357 undefined on input line 18340.
+
+[357] [358] [359]
+
+LaTeX Warning: Reference `fig-a02-relay-interface' on page 360 undefined on input line 18491.
+
+File: 02-analog/../../../build/circuits/a02-bjt-relay-interface.png Graphic file (type bmp)
+<02-analog/../../../build/circuits/a02-bjt-relay-interface.png>
+[360] [361] [362] [363] [364]
+
+LaTeX Warning: Reference `fig-a02-relay-interface' on page 365 undefined on input line 18730.
+
+[365] [366]
+
+LaTeX Warning: Reference `eq-a02-coil-off' on page 367 undefined on input line 18856.
+
+[367] [368] [369]
+
+LaTeX Warning: Reference `fig-a02-terminal-references' on page 370 undefined on input line 19050.
+
+
+LaTeX Warning: Reference `eq-a02-bjt-kcl' on page 370 undefined on input line 19051.
+
+[370]
+
+LaTeX Warning: Reference `fig-a02-high-side' on page 371 undefined on input line 19063.
+
+
+LaTeX Warning: Reference `eq-a02-gate-drive-power' on page 371 undefined on input line 19090.
+
+
+LaTeX Warning: Reference `eq-a02-bjt-load-line' on page 371 undefined on input line 19107.
+
+[371]
+
+LaTeX Warning: Reference `eq-a02-base-window' on page 372 undefined on input line 19114.
+
+
+LaTeX Warning: Reference `eq-a02-mos-load-current' on page 372 undefined on input line 19119.
+
+
+LaTeX Warning: Reference `eq-a02-coil-off' on page 372 undefined on input line 19123.
+
+
+LaTeX Warning: Reference `eq-a02-flyback-current' on page 372 undefined on input line 19124.
+
+
+LaTeX Warning: Reference `eq-a02-flyback-time' on page 372 undefined on input line 19125.
+
+
+LaTeX Warning: Reference `eq-a02-switch-energy' on page 372 undefined on input line 19143.
+
+[372] [373]
+
+LaTeX Warning: Hyper reference `semiconductor-behavior-and-diodes' on page 374 undefined on input line 19253.
+
+
+LaTeX Warning: Hyper reference `energy-power-efficiency-and-heat' on page 374 undefined on input line 19255.
+
+
+LaTeX Warning: Hyper reference `capacitors-inductors-and-transients' on page 374 undefined on input line 19257.
+
+
+LaTeX Warning: Hyper reference `turn-reading-into-evidence' on page 374 undefined on input line 19274.
+
+
+LaTeX Warning: Hyper reference `practice-and-project-spine' on page 374 undefined on input line 19277.
+
+
+LaTeX Warning: Hyper reference `measurement-uncertainty-and-systematic-debugging' on page 374 undefined on input line 19282.
+
+[374] [375]
+chapter 15.
+[376
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 377 undefined on input line 19372.
+
+[377]
+chapter 16.
+[378
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 379 undefined on input line 19438.
+
+[379]
+chapter 17.
+[380
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 381 undefined on input line 19504.
+
+[381]
+chapter 18.
+[382
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 383 undefined on input line 19570.
+
+[383]
+chapter 19.
+[384
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 385 undefined on input line 19638.
+
+[385]
+chapter 20.
+[386
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 387 undefined on input line 19708.
+
+[387]
+part III.
+Package scrkbase Info: You've told me to use the font selection of the element
+(scrkbase)             `partprefix' that is an alias of element `partnumber'
+(scrkbase)              on input line 19711.
+[388
+
+] [389]
+
+LaTeX Warning: Hyper reference `practice-and-project-spine' on page 390 undefined on input line 19781.
+
+[390]
+chapter 21.
+[391
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 392 undefined on input line 19846.
+
+[392]
+chapter 22.
+[393
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 394 undefined on input line 19912.
+
+[394]
+chapter 23.
+[395
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 396 undefined on input line 19976.
+
+[396]
+chapter 24.
+[397
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 398 undefined on input line 20042.
+
+[398]
+chapter 25.
+[399
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 400 undefined on input line 20108.
+
+[400]
+chapter 26.
+[401
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 402 undefined on input line 20174.
+
+[402]
+part IV.
+Package scrkbase Info: You've told me to use the font selection of the element
+(scrkbase)             `partprefix' that is an alias of element `partnumber'
+(scrkbase)              on input line 20177.
+[403
+
+]
+Underfull \hbox (badness 1708) in paragraph at lines 20198--20204
+\TU/Caladea(2)/m/n/12 You should understand logic levels, state, timing, basic computer architecture, and
+ []
+
+
+Underfull \hbox (badness 1728) in paragraph at lines 20198--20204
+\TU/Caladea(2)/m/n/12 assumed by code examples; [][]T03[][] supports reproducible firmware releases and test
+ []
+
+[404]
+
+LaTeX Warning: Hyper reference `practice-and-project-spine' on page 405 undefined on input line 20249.
+
+[405]
+chapter 27.
+[406
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 407 undefined on input line 20315.
+
+[407]
+chapter 28.
+[408
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 409 undefined on input line 20381.
+
+[409]
+chapter 29.
+[410
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 411 undefined on input line 20447.
+
+[411]
+chapter 30.
+[412
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 413 undefined on input line 20513.
+
+[413]
+chapter 31.
+[414
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 415 undefined on input line 20578.
+
+[415]
+chapter 32.
+[416
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 417 undefined on input line 20644.
+
+[417]
+part V.
+Package scrkbase Info: You've told me to use the font selection of the element
+(scrkbase)             `partprefix' that is an alias of element `partnumber'
+(scrkbase)              on input line 20647.
+[418
+
+] [419]
+
+LaTeX Warning: Hyper reference `practice-and-project-spine' on page 420 undefined on input line 20723.
+
+[420]
+chapter 33.
+[421
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 422 undefined on input line 20788.
+
+[422]
+chapter 34.
+[423
+
+]
+
+LaTeX Warning: Hyper reference `reading-roadmap' on page 424 undefined on input line 20855.
+
+[424]
+chapter 35.
+! Interruption.
+<to be read again> 
+                   \global 
+l.20866 \end{tcolorbox}
+                       
+You rang?
+Try to insert an instruction for me (e.g., `I\showlists'),
+unless you just want to quit by typing `X'.
+
+ 
+Here is how much of TeX's memory you used:
+ 43765 strings out of 469776
+ 911539 string charact

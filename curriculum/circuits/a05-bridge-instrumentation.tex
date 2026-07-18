@@ -1,0 +1,106 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Remote, voltage-excited Wheatstone bridge with explicit return.
+  \draw[dashed] (-0.55,-0.55) rectangle (3.90,7.15);
+  \node[font=\small\bfseries] at (1.68,7.60) {remote bridge sensor};
+  \draw (-2.10,0) node[ground] {}
+    to[V, l_={$V_{\mathrm{EX}}$}] (-2.10,6.50)
+    -- (3.15,6.50);
+  \draw (-2.10,0) -- (3.15,0);
+  \draw (0.00,6.50)
+    to[R, l_={$R_1$}] (0.00,4.65)
+    to[R, l_={$R_2$}] (0.00,2.80)
+    -- (0.00,0);
+  \draw (3.15,6.50)
+    to[R, l_={$R_3$}] (3.15,4.65)
+    to[R, l_={$R_4$}] (3.15,2.80)
+    -- (3.15,0);
+
+  % The two midpoint-signal leads leave the remote boundary as a balanced
+  % differential pair; the excitation and return conductors are separate.
+  \draw (0.00,4.65) -- (2.75,4.65)
+    to[crossing] (3.55,4.65)
+    -- (4.65,4.65)
+    to[R, l={$R_{F+}=R_F$}] (7.25,4.65)
+    -- (11.00,4.65);
+  \draw (3.15,2.80) -- (4.65,2.80)
+    to[R, l_={$R_{F-}=R_F$}] (7.25,2.80)
+    -- (11.00,2.80);
+  \node[font=\scriptsize, align=center] at (5.95,6.05)
+    {matched series\\input resistors};
+  \node[font=\scriptsize, align=center] at (4.90,1.55)
+    {balanced\\differential\\signal pair};
+
+  % Differential capacitor and matched common-mode capacitors.
+  \draw (8.25,4.65)
+    to[C, l_={$C_D$}] (8.25,2.80);
+  \draw (9.20,4.65)
+    to[C, l={$C_{CM+}$}] (9.20,0);
+  \draw (10.15,2.80)
+    to[C, l={$C_{CM-}$}] (10.15,0);
+  \draw (3.15,0) -- (10.15,0);
+  \node[font=\small, align=center] at (8.85,-0.65)
+    {$C_{CM+}=C_{CM-}$; filter return};
+
+  % A triangular amplifier symbol shows the functional differential-amplifier
+  % behavior. The dashed package boundary carries the INA-specific RG and REF
+  % pins that an ordinary op amp does not have.
+  \draw[dashed] (11.55,1.10) rectangle (15.25,6.35);
+  \node[op amp, noinv input up, scale=1.89, anchor=center]
+    (A1) at (13.25,3.725) {};
+  \node[font=\scriptsize\bfseries, align=center] at (14.10,5.80)
+    {A1\\INA};
+  \draw (11.00,4.65) -- (A1.+);
+  \draw (11.00,2.80) -- (A1.-);
+
+  % Gain-set pins and resistor terminate at the package boundary.
+  \coordinate (RGP) at (12.55,6.35);
+  \coordinate (RGM) at (13.45,6.35);
+  \draw (RGP) -- (12.55,6.85)
+    to[R, l={$R_G$}] (13.45,6.85)
+    -- (RGM);
+  \node[font=\scriptsize, anchor=north] at (RGP) {RG};
+  \node[font=\scriptsize, anchor=north] at (RGM) {RG};
+
+  % Explicit supplies, output load, and output test point.
+  \draw (A1.up) -- (14.90,0 |- A1.up)
+    -- (14.90,7.20) node[vcc] {$V_{S+}$};
+  \draw (A1.down) -- (A1.down |- 0,0.45) node[vee] {$V_{S-}$};
+  \draw (A1.out) -- (16.60,3.73)
+    node[ocirc, label={[font=\small]right:{TPO: $v_o$}}] {};
+  \draw (15.75,3.73)
+    to[R, l^={$R_L$}] (15.75,0)
+    node[ground, label={[font=\small]right:{TP0: $0$ V}}] {};
+
+  % The REF pin is driven from an explicitly low-impedance source.
+  \coordinate (AREF) at (14.25,1.10);
+  \draw (AREF) -- (AREF |- 0,1.00)
+    -- (14.45,1.00)
+    to[V, l={$V_{\mathrm{REF}}$}] (14.45,0)
+    node[ground] {};
+  \node[font=\scriptsize, anchor=south] at (AREF) {REF};
+  \node[font=\small, align=center] at (14.45,-0.70)
+    {low-impedance reference};
+
+  % Test points and required junction dots.
+  \draw (7.25,4.65) -- (7.25,5.25)
+    node[ocirc, label={[font=\small]above:{TP$+$}}] {};
+  \draw (7.25,2.80) -- (7.25,2.20)
+    node[ocirc, label={[font=\small]below:{TP$-$}}] {};
+  \node[circ] at (0.00,6.50) {};
+  \node[circ] at (0.00,4.65) {};
+  \node[circ] at (0.00,0) {};
+  \node[circ] at (3.15,2.80) {};
+  \node[circ] at (3.15,0) {};
+  \node[circ] at (7.25,4.65) {};
+  \node[circ] at (7.25,2.80) {};
+  \node[circ] at (8.25,4.65) {};
+  \node[circ] at (8.25,2.80) {};
+  \node[circ] at (9.20,4.65) {};
+  \node[circ] at (10.15,2.80) {};
+  \node[circ] at (15.75,3.73) {};
+\end{circuitikz}
+\end{document}

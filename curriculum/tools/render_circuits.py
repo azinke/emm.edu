@@ -14,6 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 CIRCUIT_DIR = ROOT / "curriculum" / "circuits"
 BUILD_DIR = ROOT / "build" / "circuits"
+PUBLISH_DIR = ROOT / "curriculum" / "book" / "figures"
 
 
 def require_tool(name: str) -> str:
@@ -32,7 +33,7 @@ def require_tex_packages(kpsewhich: str) -> None:
             raise RuntimeError(f"required TeX package not found: {package}")
 
 
-def render(circuit_id: str, source: Path, xelatex: str, pdftoppm: str) -> None:
+def render(circuit_id: str, source: Path, xelatex: str, pdftoppm: str) -> Path:
     BUILD_DIR.mkdir(parents=True, exist_ok=True)
     subprocess.run(
         [
@@ -59,11 +60,17 @@ def render(circuit_id: str, source: Path, xelatex: str, pdftoppm: str) -> None:
         ],
         check=True,
     )
+    return BUILD_DIR / f"{circuit_id}.png"
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--id", help="render only one circuit ID")
+    parser.add_argument(
+        "--publish",
+        action="store_true",
+        help="also copy the PNG to curriculum/book/figures",
+    )
     parser.add_argument(
         "--check-tools", action="store_true", help="check dependencies without rendering"
     )
@@ -87,7 +94,12 @@ def main() -> int:
         for record in selected:
             source = CIRCUIT_DIR / record["source"]
             print(f"rendering {record['id']} from {source.relative_to(ROOT)}")
-            render(record["id"], source, xelatex, pdftoppm)
+            png = render(record["id"], source, xelatex, pdftoppm)
+            if args.publish:
+                PUBLISH_DIR.mkdir(parents=True, exist_ok=True)
+                published = PUBLISH_DIR / png.name
+                shutil.copy2(png, published)
+                print(f"published {published.relative_to(ROOT)}")
     except (OSError, KeyError, RuntimeError, subprocess.CalledProcessError) as error:
         print(f"circuit render failed: {error}", file=sys.stderr)
         return 1

@@ -1,0 +1,52 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Piezoelectric Norton equivalent: generated charge-rate current, sensor
+  % capacitance, and leakage share the input node.
+  \coordinate (TP0) at (0,0);
+  \coordinate (TPIN) at (0,3.5);
+  \draw (TP0) node[ground] {}
+    to[I] (TPIN);
+  \draw[->] (-0.80,1.00) -- (-0.80,2.80);
+  \node[font=\small, align=right, anchor=east] at (-1.05,1.75)
+    {$i_q=\mathrm{d}q_s/\mathrm{d}t$};
+  \draw (1.5,0)
+    to[C] (1.5,3.5);
+  \node[font=\small, anchor=west] at (1.90,2.10) {$C_P$};
+  \draw (3.0,0)
+    to[R] (3.0,3.5);
+  \node[font=\small, anchor=west] at (3.45,1.75) {$R_P$};
+  \draw (TPIN) -- (3.0,3.5);
+  \draw (TP0) -- (3.0,0);
+
+  % Align the inverting input with the sensor node so the signal and both
+  % feedback paths meet at one unambiguous summing junction.
+  \node[op amp, scale=1.25, anchor=center] (A1) at (7.1,2.90) {};
+  \draw (3.0,3.5) -- (A1.-);
+  \draw (A1.+) -- (A1.+ |- 0,0) node[ground] {};
+
+  % Feedback capacitance converts charge to voltage; RF supplies a DC path.
+  \coordinate (FBOUT) at (9.7,2.90);
+  \draw (A1.out) -- (FBOUT)
+    node[ocirc, label={[font=\small]right:{TPO: $v_o$}}] {};
+  \draw (A1.-) -- (A1.- |- 0,5.80)
+    to[C] (FBOUT |- 0,5.80)
+    -- (FBOUT);
+  \draw (A1.-) -- (A1.- |- 0,4.55)
+    to[R] (FBOUT |- 0,4.55)
+    -- (FBOUT);
+  \node[font=\small] at (8.0,6.5) {$C_F$};
+  \node[font=\small] at (8.0,4.95) {$R_F$};
+
+  \node[font=\small\bfseries] at (1.5,6.15)
+    {piezoelectric terminal equivalent};
+  \node[circ] at (0,3.5) {};
+  \node[circ] at (0,0) {};
+  \node[circ] at (3.0,3.5) {};
+  \node[circ] at (3.0,0) {};
+  \node[circ] at (A1.-) {};
+  \node[circ] at (FBOUT) {};
+\end{circuitikz}
+\end{document}

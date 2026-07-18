@@ -391,3 +391,38 @@ source = "a04-static-input-errors.tex"
 chapter_id = "A04"
 caption = "An illustrative, sign-declared DC input-error equivalent for an inverting stage, including source and reference Thevenin resistances, input offset voltage, both input bias currents, and first-order bias-current compensation."
 alt = "A signal Thevenin source V TH and resistance R TH drive the op amp inverting input through R IN, with R F returning output v o to the summing node. Bias current I B minus points into the inverting pin. A reference Thevenin source V REF TH and resistance R REF TH drive the non-inverting path through compensation resistor R B and a series offset source V OS whose op-amp-side terminal is positive. Bias current I B plus points into the non-inverting pin. The output drives load R L to TP0. Notes declare the offset-source polarity and the approximate resistance match used to reduce bias-current error."
+
+[[circuit]]
+id = "a05-wheatstone-bridge"
+source = "a05-wheatstone-bridge.tex"
+chapter_id = "A05"
+caption = "A voltage-excited Wheatstone bridge with four resistive arms, a complete excitation-return loop, and an explicitly signed differential output."
+alt = "Excitation voltage V EX is applied between the top rail and the zero-volt return of two parallel divider legs. R1 and R2 form the left leg, whose midpoint is TP plus at v plus; R3 and R4 form the right leg, whose midpoint is TP minus at v minus. A polarity bracket defines bridge output v d as v plus minus v minus."
+
+[[circuit]]
+id = "a05-bridge-instrumentation"
+source = "a05-bridge-instrumentation.tex"
+chapter_id = "A05"
+caption = "A locally excited remote bridge sends a balanced differential signal pair through matched filtering to a triangular instrumentation-amplifier symbol. A dashed package boundary exposes the INA-specific gain-setting and low-impedance reference pins."
+alt = "A local V EX source drives a remote four-resistor bridge through separate excitation and return conductors. The bridge sends its two midpoint voltages over a balanced differential signal pair. Equal resistors R F plus and R F minus feed the positive and negative inputs of triangular instrumentation amplifier A1. Differential capacitor C D spans the filtered input pair, while equal capacitors C CM plus and C CM minus return each input to TP0. A dashed package boundary surrounds the triangle. External resistor R G connects its two gain pins. Explicit positive and negative supplies power A1; a low-impedance V REF source drives its REF pin. Output TPO drives load R L to TP0."
+
+[[circuit]]
+id = "a05-rtd-four-wire"
+source = "a05-rtd-four-wire.tex"
+chapter_id = "A05"
+caption = "A four-wire RTD separates the excitation-current conductors from the high-impedance differential sense pair, suppressing first-order force-lead voltage drop without claiming that sense current or leakage is exactly zero."
+alt = "An ideal excitation current source drives remote RTD resistance R RTD through force-lead resistances R LF plus and R LF minus. Separate sense leads with resistances R LS plus and R LS minus connect directly at the two RTD terminals to the positive and negative inputs of a high-input-impedance differential amplifier. The output is v RTD. Sense currents are marked approximately zero."
+
+[[circuit]]
+id = "a05-thermocouple-interface"
+source = "a05-thermocouple-interface.tex"
+chapter_id = "A05"
+caption = "A thermocouple interface needs two observations: a high-impedance differential measurement of thermocouple EMF and a temperature measurement at the isothermal cold-junction connection region."
+alt = "A thermocouple EMF source depending on hot-junction temperature T H and cold-junction temperature T CJ drives a differential amplifier through thermocouple resistance. A separate cold-junction sensor measures T CJ. The amplified EMF and T CJ enter a reference-function correction block that reports T H."
+
+[[circuit]]
+id = "a05-piezo-charge-amplifier"
+source = "a05-piezo-charge-amplifier.tex"
+chapter_id = "A05"
+caption = "A piezoelectric terminal equivalent drives a charge amplifier. Generated charge-rate current shares the input node with sensor capacitance and leakage; feedback capacitance sets charge gain while feedback resistance supplies the finite DC return. Op-amp supply and decoupling connections are intentionally omitted from this topology view."
+alt = "A generated current source i q equal to d q s over d t is in parallel with piezoelectric sensor capacitance C P and leakage resistance R P. The shared node drives the inverting input of op amp A1, whose non-inverting input is grounded. Feedback capacitor C F and resistor R F connect from output to the inverting input. Output TPO is v o."

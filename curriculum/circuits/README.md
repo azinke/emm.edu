@@ -29,6 +29,17 @@ python3 curriculum/tools/render_circuits.py
 The command writes `build/circuits/<id>.pdf` and
 `build/circuits/<id>.png`. Both are disposable build products.
 
+When a chapter must build from a clean checkout without first running the
+CircuitikZ toolchain, package its reviewed PNG as a tracked chapter input:
+
+```sh
+python3 curriculum/tools/render_circuits.py --id <id> --publish
+```
+
+This additionally writes `curriculum/book/figures/<id>.png`. The `.tex` file
+remains the canonical editable source; rerun the command after every source or
+geometry change and commit the refreshed published derivative with the chapter.
+
 ## Authoring rules
 
 - Prefer IEC/european resistor symbols; state deliberate alternatives.

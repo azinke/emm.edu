@@ -1,0 +1,45 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Separate force and sense conductors expose the Kelvin connection.
+  \draw (0,0) node[ground] {}
+    to[I, l_={$I_{\mathrm{EX}}$}] (0,5)
+    to[R, l_={$R_{LF+}$}] (3.2,5)
+    -- (3.2,4.2);
+  \draw (3.2,0.8) -- (3.2,0)
+    to[R, l_={$R_{LF-}$}] (0,0);
+  \draw[->] (-0.55,1.45) -- (-0.55,3.55);
+  \draw (3.2,4.2)
+    to[R, l_={$R_{\mathrm{RTD}}(T)$}] (3.2,0.8);
+
+  % High-impedance sense pair leaves from the RTD terminals, not the source.
+  \node[op amp, noinv input up, scale=1.35, anchor=center]
+    (A1) at (8.8,2.5) {};
+  \draw (3.2,4.2)
+    to[R, l_={$R_{LS+}$}] (6.2,4.2)
+    -- (7.05,4.2)
+    -- (7.05,0 |- A1.+) -- (A1.+);
+  \draw (3.2,0.8)
+    to[R, l_={$R_{LS-}$}] (6.2,0.8)
+    -- (7.05,0.8)
+    -- (7.05,0 |- A1.-) -- (A1.-);
+  \draw (A1.out) -- (11.6,2.5)
+    node[ocirc, label={[font=\small]right:{TPO: $v_{\mathrm{RTD}}$}}] {};
+  \draw (A1.up) -- (A1.up |- 0,5.8) node[vcc] {$V_{S+}$};
+  \draw (A1.down) -- (A1.down |- 0,-0.4) node[vee] {$V_{S-}$};
+
+  \node[font=\small\bfseries] at (3.2,6.25)
+    {remote four-wire RTD};
+  \node[font=\scriptsize\bfseries, align=center] at (8.7,2.5)
+    {A1\\INA};
+  \node[font=\small, align=center] at (3.6,-1.05)
+    {high-input-impedance differential readout\\
+     $I_{S+}\approx I_{S-}\approx 0$};
+
+  % Dots mark the four-wire junctions at the sensor terminals.
+  \node[circ] at (3.2,4.2) {};
+  \node[circ] at (3.2,0.8) {};
+\end{circuitikz}
+\end{document}

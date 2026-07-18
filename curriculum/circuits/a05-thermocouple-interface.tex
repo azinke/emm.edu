@@ -1,0 +1,39 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Thermocouple EMF and lead resistance feed a high-impedance differential
+  % amplifier. The cold-junction sensor is a separate measurement input.
+  \draw (0,0) node[ground] {}
+    to[V, l_={$E_{\mathrm{TC}}(T_H,T_{\mathrm{CJ}})$}] (0,4.6)
+    to[R, l_={$R_{\mathrm{TC}}$}] (3.0,4.6);
+  \draw (0,0) -- (3.0,0);
+
+  \node[op amp, noinv input up, scale=1.35, anchor=center]
+    (A1) at (6.8,2.3) {};
+  \draw (3.0,4.6) -- (4.75,4.6)
+    -- (4.75,0 |- A1.+) -- (A1.+);
+  \draw (3.0,0) -- (4.75,0)
+    -- (4.75,0 |- A1.-) -- (A1.-);
+  \draw (A1.up) -- (A1.up |- 0,5.7) node[vcc] {$V_{S+}$};
+  \draw (A1.down) -- (A1.down |- 0,-0.7) node[vee] {$V_{S-}$};
+  \node[font=\scriptsize\bfseries, align=center] at (6.7,2.3)
+    {A1\\INA};
+
+  \node[draw, minimum width=2.3cm, minimum height=1.1cm,
+        align=center, font=\small] (CJC) at (10.8,0.3)
+    {cold-junction\\sensor $T_{\mathrm{CJ}}$};
+  \node[draw, minimum width=2.6cm, minimum height=1.2cm,
+        align=center, font=\small] (CORR) at (10.8,3.1)
+    {reference function\\and correction};
+  \draw (A1.out) -- (8.65,0 |- A1.out)
+    -- (8.65,0 |- CORR.west) -- (CORR.west);
+  \draw (CJC.north) -- (CORR.south);
+  \draw (CORR.east) -- (13.6,3.1)
+    node[ocirc, label={[font=\small]right:{reported $T_H$}}] {};
+
+  \node[font=\small\bfseries] at (1.5,5.8)
+    {thermocouple and isothermal connection region};
+\end{circuitikz}
+\end{document}

@@ -1,0 +1,70 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Panel (a): the feedback path senses the op-amp side of R_iso.
+  \node[op amp, anchor=center] (U1A) at (3.9,3.5) {};
+  \coordinate (PREA) at (5.5,0 |- U1A.out);
+  \coordinate (LOADA) at (8.2,0 |- U1A.out);
+
+  \draw (0.6,0 |- U1A.+)
+    node[ocirc, label={[font=\small]left:{TPIN: $v_i$}}] {}
+    -- (U1A.+);
+  \draw (U1A.out) -- (PREA)
+    to[R, l={$R_{\mathrm{iso}}$}] (LOADA)
+    -- (9.0,0 |- LOADA)
+    node[ocirc, label={[font=\small]right:{TPL: $v_L$}}] {};
+  \draw (PREA) -- (5.5,6.2)
+    -- (1.9,6.2)
+    -- (1.9,0 |- U1A.-)
+    -- (U1A.-);
+  \draw (LOADA) to[C, l_={$C_L$}] (8.2,0) node[ground] {};
+  \node[font=\small,anchor=west] at (8.55,-0.15) {TP0: $0$ V};
+  \draw (U1A.up) -- (U1A.up |- 0,5.2) node[vcc] {$+V_S$};
+  \draw (U1A.down) -- (U1A.down |- 0,1.8) node[vee] {$-V_S$};
+
+  \node[circ] at (PREA) {};
+  \node[circ] at (LOADA) {};
+  \node[ocirc, label={[font=\small]above:{TPA: $v_o$}}] at (PREA) {};
+  \node[font=\small,anchor=west] at (4.35,4.55) {$U_1$};
+  \node[font=\small] at (3.8,6.7)
+    {feedback senses $v_o$ before $R_{\mathrm{iso}}$};
+  \node[font=\small\bfseries] at (4.7,-0.9)
+    {(a) Load capacitance outside the sensed node};
+
+  % Panel (b): the feedback path senses the load side of R_iso.
+  \node[op amp, anchor=center] (U1B) at (14.5,3.5) {};
+  \coordinate (PREB) at (16.1,0 |- U1B.out);
+  \coordinate (LOADB) at (18.8,0 |- U1B.out);
+
+  \draw (11.2,0 |- U1B.+)
+    node[ocirc, label={[font=\small]left:{TPIN: $v_i$}}] {}
+    -- (U1B.+);
+  \draw (U1B.out) -- (PREB)
+    to[R, l={$R_{\mathrm{iso}}$}] (LOADB)
+    -- (19.6,0 |- LOADB)
+    node[ocirc, label={[font=\small]right:{TPL: $v_L$}}] {};
+  \draw (LOADB) -- (18.8,6.2)
+    -- (12.5,6.2)
+    -- (12.5,0 |- U1B.-)
+    -- (U1B.-);
+  \draw (LOADB) to[C, l_={$C_L$}] (18.8,0) node[ground] {};
+  \node[font=\small,anchor=west] at (19.15,-0.15) {TP0: $0$ V};
+  \draw (U1B.up) -- (U1B.up |- 0,5.2) node[vcc] {$+V_S$};
+  \draw (U1B.down) -- (U1B.down |- 0,1.8) node[vee] {$-V_S$};
+
+  \node[circ] at (PREB) {};
+  \node[circ] at (LOADB) {};
+  \node[ocirc, label={[font=\small]above:{TPA: $v_o$}}] at (PREB) {};
+  \node[font=\small,anchor=west] at (14.95,4.55) {$U_1$};
+  \node[font=\small] at (15.6,6.7)
+    {feedback senses $v_L$ after $R_{\mathrm{iso}}$};
+  \node[font=\small\bfseries] at (15.4,-0.9)
+    {(b) $R_{\mathrm{iso}}$ and $C_L$ lie inside the loop};
+
+  \node[draw,rounded corners,align=center,font=\small] at (9.8,-2.0)
+    {The sensing point changes the loop gain;\\
+     $R_{\mathrm{iso}}$ is optional and must be checked for the chosen op amp and load.};
+\end{circuitikz}
+\end{document}

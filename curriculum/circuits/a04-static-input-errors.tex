@@ -1,0 +1,68 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Illustrative DC input-error equivalent for an inverting stage. The
+  % offset source and bias currents are signed model quantities, not a
+  % transistor-level or device-specific internal schematic.
+  \node[font=\small\bfseries] at (6.0,9.45)
+    {Illustrative inverting-stage DC input-error equivalent};
+  \node[font=\small] at (6.0,8.90)
+    {(sign-declared teaching model---not device-specific)};
+
+  \node[op amp, scale=1.15, anchor=center] (U1) at (8.8,4.55) {};
+  \coordinate (JM) at (6.15,0 |- U1.-);
+  \coordinate (OUT) at (10.55,0 |- U1.out);
+  \coordinate (STH) at (0.70,0 |- U1.-);
+
+  % Signal-source Thevenin equivalent and the explicit inverting input
+  % resistor. I_B- is positive into the physical op-amp input pin.
+  \draw (0.70,0) node[ground] {}
+    to[V, l={$V_{\mathrm{TH}}$}] (STH)
+    to[R, l={$R_{\mathrm{TH}}$}] (3.05,0 |- STH)
+    to[R, l={$R_{\mathrm{IN}}$}] (JM);
+  \draw (JM) to[short, i>^={$I_{B-}$}] (U1.-);
+  \draw (JM) -- (6.15,7.65)
+    to[R, l={$R_F$}] (10.55,7.65)
+    -- (OUT);
+  \node[circ] at (JM) {};
+  \node[font=\small, anchor=south east] at (JM) {$v_-$};
+
+  % Non-inverting reference Thevenin model, optional bias-current
+  % compensation resistor, and the signed series input-offset source.
+  \coordinate (RTHP) at (2.10,0 |- U1.+);
+  \coordinate (RREFEND) at (3.70,0 |- U1.+);
+  \coordinate (RBEND) at (5.10,0 |- U1.+);
+  \coordinate (OSOUT) at (6.35,0 |- U1.+);
+  \draw (2.10,0) node[ground] {}
+    to[V, l_={$V_{\mathrm{REF,TH}}$}] (RTHP)
+    to[R, l={$R_{\mathrm{REF,TH}}$}] (RREFEND)
+    to[R, l={$R_B$}] (RBEND)
+    to[V, l_={$V_{\mathrm{OS}}$}] (OSOUT);
+  \draw (OSOUT) to[short, i>_={$I_{B+}$}] (U1.+);
+  \node[font=\small] at (5.25,4.58) {$-$};
+  \node[font=\small] at (6.20,4.58) {$+$};
+  \node[font=\small, anchor=south east] at (U1.+) {$v_+$};
+
+  % Output, finite load, supplies, and the declared circuit reference.
+  \draw (U1.out) -- (OUT)
+    -- (11.75,0 |- OUT)
+    node[ocirc, label={[font=\small]right:{TPO: $v_o$}}] {};
+  \draw (OUT) to[R, l_={$R_L$}] (10.55,0)
+    node[ground, label={[font=\small]right:{TP0: $0$ V}}] {};
+  \draw (U1.up) -- (U1.up |- 0,6.15) node[vcc] {$V_{S+}$};
+  \draw (U1.down) -- (U1.down |- 0,2.85) node[vee] {$V_{S-}$};
+  \node[circ] at (OUT) {};
+  \node[font=\small, anchor=west] at (9.35,5.65) {$U_1$};
+
+  % Explicit sign and first-order compensation declarations.
+  \node[draw, fill=white, align=center, font=\small] at (6.0,-1.15)
+    {$V(\mathrm{OS+})-V(\mathrm{OS-})\equiv V_{\mathrm{OS}}$;
+     \quad $I_{B+},I_{B-}>0$ into the input pins};
+  \node[draw, fill=white, align=center, font=\small] at (6.0,-2.05)
+    {with independent voltage sources set to zero:
+     \quad $R_{\mathrm{REF,TH}}+R_B
+       \approx R_F\parallel(R_{\mathrm{IN}}+R_{\mathrm{TH}})$};
+\end{circuitikz}
+\end{document}

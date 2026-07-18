@@ -1,0 +1,53 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \node[op amp, anchor=center] (U1) at (7.2,3.7) {};
+  \coordinate (SUM) at (5.8,0 |- U1.-);
+  \coordinate (OUT) at (8.8,0 |- U1.out);
+
+  % The declared source-current reference is positive into the summing node.
+  \draw (0.8,0)
+    to[I, l_={$i_s$}] (0.8,0 |- SUM)
+    -- (SUM)
+    -- (U1.-);
+  \draw[->,>=latex] (1.45,4.55) -- (3.75,4.55)
+    node[midway,above,font=\small] {$i_s>0$ into TP$-$};
+
+  % Source shunt capacitance raises the high-frequency noise gain.
+  \draw (3.25,0 |- SUM)
+    to[C, l={$C_S$}] (3.25,0);
+
+  % Low-impedance reference applied to the non-inverting terminal.
+  \draw (3.9,0 |- U1.+)
+    node[ocirc, label={[font=\small]left:{TPREF: $V_{\mathrm{REF}}$}}] {}
+    -- (U1.+);
+
+  % General feedback impedance and output port.
+  \draw (SUM) -- (5.8,7.0)
+    to[generic, l={$Z_F(s)$}] (8.8,7.0)
+    -- (OUT);
+  \draw (U1.out) -- (OUT)
+    -- (10.2,0 |- OUT)
+    node[ocirc, label={[font=\small]right:{TPO: $v_o$}}] {};
+
+  % Explicit supply and circuit-reference terminals.
+  \draw (U1.up) -- (U1.up |- 0,5.55) node[vcc] {$+V_S$};
+  \draw (U1.down) -- (U1.down |- 0,1.85) node[vee] {$-V_S$};
+  \draw (0.8,0) -- (4.7,0);
+  \draw (4.0,0) node[ground] {};
+  \draw (4.7,0)
+    node[ocirc, label={[font=\small]right:{TP0: $0$ V}}] {};
+
+  % Every three-way connection carries an explicit junction dot.
+  \node[circ] at (SUM) {};
+  \node[circ] at (OUT) {};
+  \node[circ] at (3.25,0 |- SUM) {};
+  \node[circ] at (3.25,0) {};
+  \node[font=\small, anchor=north east] at (SUM) {TP$-$};
+  \node[font=\small,anchor=west] at (7.65,4.75) {$U_1$};
+  \node[font=\small] at (5.5,-1.0)
+    {$i_s>0$ enters TP$-$; therefore $v_o\approx V_{\mathrm{REF}}-i_s Z_F$};
+\end{circuitikz}
+\end{document}

@@ -1,0 +1,57 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Voltage-feedback op-amp terminal references. TP0 is the circuit's
+  % declared voltage reference; it is not the lower supply terminal.
+  \node[op amp, scale=1.35, anchor=center] (U1) at (7.0,4.3) {};
+
+  % Input test points and positive input-current reference directions.
+  \coordinate (TPM) at (3.6,0 |- U1.-);
+  \coordinate (TPP) at (3.6,0 |- U1.+);
+  \draw (TPM)
+    node[ocirc, label={[font=\small]left:{TP$-$: $v_-$}}] {}
+    to[short, i>^={$i_-$}] (U1.-);
+  \draw (TPP)
+    node[ocirc, label={[font=\small]left:{TP$+$: $v_+$}}] {}
+    to[short, i>_={$i_+$}] (U1.+);
+
+  % Explicit differential-voltage polarity. The labels, rather than an
+  % ambiguous voltage arrow, define v_d unambiguously.
+  \draw (1.15,0 |- TPM) -- (0.85,0 |- TPM)
+    -- (0.85,0 |- TPP) -- (1.15,0 |- TPP);
+  \node[font=\small, anchor=east] at (0.70,0 |- TPM) {$-$};
+  \node[font=\small, anchor=east] at (0.70,0 |- TPP) {$+$};
+  \node[font=\small, align=right, anchor=east] at (0.45,4.3)
+    {$v_d\equiv v_+-v_-$\\(input difference)};
+
+  % Both power pins are shown explicitly.
+  \draw (U1.up) -- (U1.up |- 0,7.15) node[vcc] {$V_{S+}$};
+  \draw (U1.down) -- (U1.down |- 0,1.75) node[vee] {};
+  \node[font=\small, align=right, anchor=east] at (6.65,1.25)
+    {$V_{S-}$: lower supply rail\\(not the circuit reference)};
+
+  % Loaded output with declared output-current and voltage references.
+  \coordinate (TPO) at (11.1,0 |- U1.out);
+  \coordinate (TPZ) at (11.1,0.0);
+  \draw (U1.out) to[short, i>^={$i_o$}] (TPO)
+    node[ocirc, label={[font=\small]above:{TPO: $v_o$}}] {};
+  \draw (TPO) to[R, l_={$R_L$}] (TPZ)
+    node[ocirc, label={[font=\small]below:{TP$_0$: $0$ V}}] {};
+
+  % Output-voltage polarity is positive at TPO relative to TP0.
+  \draw (12.65,0.25) -- (12.95,0.25)
+    -- (12.95,4.3) -- (12.65,4.3);
+  \node[font=\small] at (13.25,4.3) {$+$};
+  \node[font=\small] at (13.25,0.25) {$-$};
+  \node[font=\small, align=left, anchor=west] at (13.55,2.25)
+    {$v_o\equiv V(\mathrm{TPO})$\\with $V(\mathrm{TP}_{0})\equiv 0$};
+  \node[font=\small, align=center] at (11.1,-0.95)
+    {circuit voltage reference};
+
+  \node[font=\small, anchor=west] at (7.65,5.45) {$U_1$};
+  \node[font=\small\bfseries] at (7.0,8.65)
+    {Op-amp terminal quantities and declared reference directions};
+\end{circuitikz}
+\end{document}

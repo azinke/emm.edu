@@ -1,0 +1,69 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Two-input inverting summing amplifier.
+  \node[op amp, anchor=center] (USA) at (4.6,3.2) {};
+  \coordinate (JSA) at (3.2,0 |- USA.-);
+  \coordinate (OUTSA) at (6.2,0 |- USA.out);
+
+  % Both input branches meet one vertical bus, so the only shared connection
+  % is an explicitly dotted junction rather than an implied crossing.
+  \draw (0,0) node[ground] {}
+    to[sV, l_={$v_1$}] (0,5.6)
+    to[R, l={$R_1$}] (2.6,5.6);
+  \draw (1.3,0) node[ground] {}
+    to[sV, l_={$v_2$}] (1.3,4.4)
+    to[R, l={$R_2$}] (2.6,4.4);
+  \draw (2.6,5.6) -- (2.6,0 |- JSA) -- (JSA);
+  \node[circ] at (2.6,4.4) {};
+  \draw (JSA) -- (USA.-);
+  \draw (USA.+) -- (USA.+ |- 0,0) node[ground] {};
+  \draw (JSA) -- (3.2,6.3)
+    to[R, l={$R_F$}] (6.2,6.3)
+    -- (OUTSA);
+  \draw (USA.out) -- (OUTSA)
+    -- (7.2,0 |- OUTSA)
+    node[ocirc, label={[font=\small]right:{TPO: $v_o$}}] {};
+  \draw (USA.up) -- (USA.up |- 0,4.85) node[vcc] {$+V_S$};
+  \draw (USA.down) -- (USA.down |- 0,1.45) node[vee] {$-V_S$};
+  \node[circ] at (JSA) {};
+  \node[circ] at (OUTSA) {};
+  \node[font=\small, anchor=west] at (5.05,4.25) {$U_1$};
+  \node[font=\small\bfseries] at (3.6,-1.0)
+    {(a) Inverting summer};
+
+  % Difference amplifier with four-resistor ratio condition.
+  \node[op amp, anchor=center] (UDB) at (12.7,3.2) {};
+  \coordinate (JDBM) at (11.3,0 |- UDB.-);
+  \coordinate (JDBP) at (11.3,0 |- UDB.+);
+  \coordinate (OUTDB) at (14.3,0 |- UDB.out);
+
+  \draw (7.6,0) node[ground] {}
+    to[sV, l_={$v_1$}] (7.6,0 |- JDBM)
+    to[R, l={$R_1$}] (JDBM)
+    -- (UDB.-);
+  \draw (7.6,0) -- (8.9,0)
+    to[sV, l_={$v_2$}] (8.9,0 |- JDBP)
+    to[R, l={$R_3$}] (JDBP)
+    -- (UDB.+);
+  \draw (JDBP) to[R, l={$R_4$}] (11.3,0) node[ground] {};
+  \draw (JDBM) -- (11.3,6.3)
+    to[R, l={$R_2$}] (14.3,6.3)
+    -- (OUTDB);
+  \draw (UDB.out) -- (OUTDB)
+    -- (15.3,0 |- OUTDB)
+    node[ocirc, label={[font=\small]right:{TPO: $v_o$}}] {};
+  \draw (UDB.up) -- (UDB.up |- 0,4.85) node[vcc] {$+V_S$};
+  \draw (UDB.down) -- (UDB.down |- 0,1.45) node[vee] {$-V_S$};
+  \node[circ] at (JDBM) {};
+  \node[circ] at (JDBP) {};
+  \node[circ] at (OUTDB) {};
+  \node[font=\small, anchor=west] at (13.15,4.25) {$U_1$};
+  \node[font=\small, anchor=west] at (13.6,1.75)
+    {$R_2/R_1=R_4/R_3$};
+  \node[font=\small\bfseries] at (12.0,-1.0)
+    {(b) Difference amplifier};
+\end{circuitikz}
+\end{document}

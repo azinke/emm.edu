@@ -1,0 +1,62 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \node[op amp, anchor=center] (U1) at (7.4,4.0) {};
+  \coordinate (INPUT) at (4.6,0 |- U1.+);
+  \coordinate (PLUS) at (6.0,0 |- U1.+);
+  \coordinate (MINUS) at (5.8,0 |- U1.-);
+  \coordinate (OUT) at (9.2,0 |- U1.out);
+  \coordinate (VREF) at (3.0,1.2);
+
+  % The finite source resistance supplies the non-inverting bias-current return.
+  \draw (4.6,0) node[ground] {}
+    to[sV, l_={$v_i$}] (INPUT)
+    to[R, l_={$R_{\mathrm{sig}}$}] (PLUS)
+    -- (U1.+);
+  \draw (INPUT) -- (3.9,0 |- INPUT)
+    node[ocirc, label={[font=\small]above:{TPIN}}] {};
+  \draw (PLUS) -- (6.0,2.8)
+    node[ocirc, label={[font=\small]below:{TP$+$}}] {};
+
+  % Explicit boundary of the external low-impedance reference generator.
+  % i_REF is positive into that external port: the reference must be able to
+  % sink or source feedback-divider current without appreciable voltage shift.
+  \draw[dashed] (-0.80,0.55) rectangle (1.70,2.10);
+  \node[font=\small, align=center, anchor=south] at (0.10,2.25)
+    {external low-impedance\\$V_{\mathrm{REF}}$ generator};
+  \draw (VREF) to[short, i>^={$i_{\mathrm{REF}}$}] (1.7,1.2)
+    node[ocirc, label={[font=\small]above right:{TPREF}}] {};
+  \draw (MINUS) -- (VREF |- MINUS)
+    to[R, l_={$R_G$}] (VREF);
+  \draw (MINUS) -- (U1.-);
+  % TP- is an in-line test point on the summing-node wire, so it is not drawn
+  % as a stub that would run collinearly with the R_G branch.
+  \node[ocirc, label={[font=\small]above:{TP$-$}}] at (4.0,0 |- MINUS) {};
+  \draw (MINUS) -- (5.8,7.0)
+    to[R, l={$R_F$}] (9.2,7.0)
+    -- (OUT);
+
+  % DC-coupled output and load.
+  \draw (U1.out) -- (OUT)
+    -- (10.3,0 |- OUT)
+    node[ocirc, label={[font=\small]right:{TPO: $v_o$}}] {};
+  \draw (OUT) to[R, l_={$R_L$}] (9.2,0)
+    node[ground, label={[font=\small]right:{TP0: $0$ V}}] {};
+
+  % Single-supply power pins and local rail decoupling.
+  \draw (U1.up) -- (U1.up |- 0,5.5) node[vcc] {$V_{DD}$};
+  \draw (U1.down) -- (U1.down |- 0,2.35) node[ground] {};
+  \draw (11.4,6.45) node[vcc] {$V_{DD}$}
+    to[C, l_={$C_{\mathrm{DEC}}$}] (11.4,5.05) node[ground] {};
+  \node[font=\small, anchor=west, align=left] at (11.9,5.75)
+    {local decoupling:\\place close to $U_1$};
+
+  \node[circ] at (PLUS) {};
+  \node[circ] at (INPUT) {};
+  \node[circ] at (MINUS) {};
+  \node[circ] at (OUT) {};
+  \node[font=\small, anchor=west] at (7.85,5.05) {$U_1$};
+\end{circuitikz}
+\end{document}

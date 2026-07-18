@@ -1,0 +1,62 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Idealized open-loop comparison.
+  \node[op amp, anchor=center] (UCMP) at (3.8,3.4) {};
+  \coordinate (OUTC) at (5.4,0 |- UCMP.out);
+
+  \draw (0.4,0 |- UCMP.+)
+    node[ocirc, label={[font=\small]left:{$v_i$}}] {}
+    -- (UCMP.+);
+  \draw (0.4,0 |- UCMP.-)
+    node[ocirc, label={[font=\small]left:{$V_{\mathrm{REF}}$}}] {}
+    -- (UCMP.-);
+  \draw (UCMP.out) -- (OUTC)
+    -- (6.4,0 |- OUTC)
+    node[ocirc, label={[font=\small]right:{TPO: $v_o$}}] {};
+  \draw (OUTC) to[R, l_={$R_L$}] (5.4,0) node[ground] {};
+  \draw (UCMP.up) -- (UCMP.up |- 0,5.8) node[vcc] {$+V_S$};
+  \draw (UCMP.down) -- (UCMP.down |- 0,1.55) node[vee] {$-V_S$};
+  \node[circ] at (OUTC) {};
+  \node[font=\small, anchor=west] at (4.25,4.45) {$U_1$};
+  \node[font=\small] at (5.0,5.1)
+    {$v_o\in\{V_{OL},V_{OH}\}$};
+  \node[font=\small\bfseries] at (3.4,-1.0)
+    {(a) Open-loop comparison};
+
+  % Inverting Schmitt trigger with positive feedback at the threshold node.
+  \node[op amp, anchor=center] (USCH) at (11.9,3.4) {};
+  \coordinate (JSCH) at (10.5,0 |- USCH.+);
+  \coordinate (OUTS) at (13.5,0 |- USCH.out);
+
+  \draw (8.0,0 |- USCH.-)
+    node[ocirc, label={[font=\small]left:{$v_i$}}] {}
+    -- (USCH.-);
+  \draw (8.0,0 |- JSCH)
+    node[ocirc, label={[font=\small]left:{$V_{\mathrm{REF}}$}}] {}
+    to[R, l={$R_B$}] (JSCH)
+    -- (USCH.+);
+  \draw (USCH.out) -- (OUTS)
+    -- (14.5,0 |- OUTS)
+    node[ocirc, label={[font=\small]right:{TPO: $v_o$}}] {};
+  \draw (OUTS) -- (13.5,0.55)
+    to[R, l={$R_H$}] (10.5,0.55)
+    -- (JSCH);
+  \node[font=\small, anchor=south east] at (JSCH) {$v_T$};
+  \node[font=\small, align=center] at (9.4,1.90) {positive\\feedback};
+  \draw (14.2,0 |- OUTS) to[R, l={$R_L$}] (14.2,0)
+    node[ground] {};
+  \draw (USCH.up) -- (USCH.up |- 0,5.8) node[vcc] {$+V_S$};
+  \draw (USCH.down) -- (USCH.down |- 0,2.2) node[vee] {$-V_S$};
+  \node[circ] at (JSCH) {};
+  \node[circ] at (OUTS) {};
+  \node[circ] at (14.2,0 |- OUTS) {};
+  \node[font=\small, anchor=west] at (12.35,4.45) {$U_1$};
+  \node[font=\small] at (13.0,5.1)
+    {$V_{T,L}<V_{T,H}$};
+  \node[font=\small\bfseries] at (11.4,-1.0)
+    {(b) Inverting Schmitt trigger};
+\end{circuitikz}
+\end{document}

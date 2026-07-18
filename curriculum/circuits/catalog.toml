@@ -321,3 +321,73 @@ source = "f08-rl-frequency.tex"
 chapter_id = "F08"
 caption = "A series RL circuit exposes both resistor and inductor output polarities, showing complementary first-order low-pass and high-pass responses."
 alt = "A sinusoidal source drives resistor R and inductor L in series. Current i is referenced clockwise. TP1 and TP2 span resistor R with v_R positive where current enters; v_L is positive at TP2 relative to the return TP0."
+
+[[circuit]]
+id = "a04-inverting-noninverting"
+source = "a04-inverting-noninverting.tex"
+chapter_id = "A04"
+caption = "Canonical inverting and non-inverting voltage-feedback stages with finite loads and explicit bipolar supply connections."
+alt = "Panel a shows an input source and R in driving the inverting input, the non-inverting input grounded, and R F returning the loaded output to the inverting summing node. Panel b drives the non-inverting input directly; R F and R G form the output-to-ground divider that returns a fraction of the output to the inverting input. Both op amps show positive and negative supply connections and output test points."
+
+[[circuit]]
+id = "a04-summing-difference"
+source = "a04-summing-difference.tex"
+chapter_id = "A04"
+caption = "Two linear op-amp combinations: an inverting weighted summer and a four-resistor difference amplifier whose resistor ratios must match."
+alt = "Panel a routes v1 through R1 and v2 through R2 into one inverting summing junction, with R F providing feedback and the non-inverting input grounded. Panel b routes v1 through R1 to the inverting input and v2 through R3 to the non-inverting input; R2 is the feedback resistor and R4 returns the non-inverting input to ground. The displayed condition is R2 over R1 equals R4 over R3."
+
+[[circuit]]
+id = "a04-filter-integrator"
+source = "a04-filter-integrator.tex"
+chapter_id = "A04"
+caption = "First-order active functions: an inverting low-pass and a practical inverting integrator, each using capacitive feedback with a parallel resistor that bounds the DC gain."
+alt = "Panel a shows an inverting stage with R in at the summing node and C F in parallel with R F from output to the summing node, producing a finite-DC-gain first-order low-pass. Panel b uses the same capacitive feedback form but names the parallel DC feedback resistor R P; C F dominates integration over the intended frequency range."
+
+[[circuit]]
+id = "a04-comparator-hysteresis"
+source = "a04-comparator-hysteresis.tex"
+chapter_id = "A04"
+caption = "Open-loop comparison and inverting Schmitt hysteresis shown with explicit output levels, reference input, positive feedback, supplies, and load."
+alt = "Panel a compares v in at the non-inverting input with V REF at the inverting input and drives the output to V OH or V OL without feedback. Panel b drives the inverting input directly with v in. R B connects V REF to the non-inverting threshold node and R H returns positive feedback from the output to that same node, producing distinct lower and upper switching thresholds."
+
+[[circuit]]
+id = "a04-single-supply-design"
+source = "a04-single-supply-design.tex"
+chapter_id = "A04"
+caption = "A complete DC-coupled, single-supply non-inverting stage referenced to an external low-impedance voltage, with finite source resistance, feedback return, local supply decoupling, load, and named test points."
+alt = "A grounded input source v i drives the non-inverting input through finite resistance R sig, which also supplies that input's DC bias-current return. R G connects the inverting input to the externally generated low-impedance V REF port, and R F connects output TPO to the inverting input. Load R L connects TPO directly to TP0. The op amp is powered from V DD and TP0, and C DEC bypasses V DD to TP0. Test points identify the input, both op-amp inputs, the reference, output, and zero-volt return."
+
+[[circuit]]
+id = "a04-terminal-references"
+source = "a04-terminal-references.tex"
+chapter_id = "A04"
+caption = "Op-amp terminal quantities with explicit input-current directions, differential-input and output-voltage polarities, both supply rails, a finite load, and a circuit reference that is distinct from the negative supply."
+alt = "One voltage-feedback op-amp has test points v plus and v minus at its inputs, with i plus and i minus arrows directed into the respective pins. A bracket defines v d as v plus minus v minus. The upper and lower supply pins connect separately to V S plus and V S minus. Output current i o leaves the output test point, load R L returns to TP0, and a second bracket defines v o as the voltage at TPO relative to TP0. Labels emphasize that TP0 is the zero-volt circuit reference and is not the lower supply rail."
+
+[[circuit]]
+id = "a04-internal-stages"
+source = "a04-internal-stages.tex"
+chapter_id = "A04"
+caption = "An illustrative BJT voltage-feedback op-amp architecture—not a transistor-level schematic of the TLV9061—showing differential conversion, active loading, voltage gain, compensation, and buffered output drive."
+alt = "Matched NPN transistors Q1 and Q2 form a differential input pair with v minus applied to Q1, v plus applied to Q2, and a common tail-current sink to minus V S. PNP transistors Q3 and Q4 form a current-mirror active load connected to plus V S and convert the differential current to single-ended high-resistance node v x. A powered inverting voltage-gain and level-shift block has compensation capacitor C C connected around it. A separately powered class-AB buffer drives output v o and load R L to TP0. A sign cue states that increasing v plus relative to v minus increases Q2 collector current, decreases Q1 and mirrored Q4 current, lowers v x, and ultimately raises v o."
+
+[[circuit]]
+id = "a04-transimpedance"
+source = "a04-transimpedance.tex"
+chapter_id = "A04"
+caption = "A transimpedance stage with the signal-current reference declared positive into the inverting summing node, a general feedback impedance, and source shunt capacitance made explicit."
+alt = "Current source i s drives test point TP minus at the op amp inverting input, with a rightward arrow declaring positive current into the summing node. Feedback impedance Z F of s connects output v o back to TP minus. The non-inverting input is held at low-impedance reference V REF. Source shunt capacitance C S connects from TP minus to TP0. The displayed sign relation is v o approximately V REF minus i s times Z F."
+
+[[circuit]]
+id = "a04-capacitive-load"
+source = "a04-capacitive-load.tex"
+chapter_id = "A04"
+caption = "Two capacitive-load connections distinguish feedback sensing before and after an optional output-isolation resistor; moving the sensed node changes the loop."
+alt = "Panel a shows a voltage follower whose feedback senses op amp output v o before isolation resistor R iso, while load capacitor C L is connected at load voltage v L after the resistor. Panel b moves feedback sensing to v L after R iso, placing both resistor and capacitor inside the loop. A warning states that the sensing point changes loop gain and that R iso must be checked for the chosen op amp and load."
+
+[[circuit]]
+id = "a04-static-input-errors"
+source = "a04-static-input-errors.tex"
+chapter_id = "A04"
+caption = "An illustrative, sign-declared DC input-error equivalent for an inverting stage, including source and reference Thevenin resistances, input offset voltage, both input bias currents, and first-order bias-current compensation."
+alt = "A signal Thevenin source V TH and resistance R TH drive the op amp inverting input through R IN, with R F returning output v o to the summing node. Bias current I B minus points into the inverting pin. A reference Thevenin source V REF TH and resistance R REF TH drive the non-inverting path through compensation resistor R B and a series offset source V OS whose op-amp-side terminal is positive. Bias current I B plus points into the non-inverting pin. The output drives load R L to TP0. Notes declare the offset-source polarity and the approximate resistance match used to reduce bias-current error."

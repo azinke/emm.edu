@@ -1,0 +1,116 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Illustrative voltage-feedback BJT op-amp architecture. This is a
+  % teaching topology, not a transistor-level schematic of the TLV9061.
+  \node[font=\small\bfseries] at (9.3,10.85)
+    {Illustrative BJT voltage-feedback op-amp architecture};
+  \node[font=\small] at (9.3,10.25)
+    {(teaching topology---not the TLV9061 transistor-level schematic)};
+
+  % Matched NPN differential input pair. The devices face inward at their
+  % collector/emitter terminals while their base leads remain accessible.
+  \node[npn, anchor=B] (Q1) at (2.8,3.75) {};
+  \node[npn, xscale=-1, anchor=B] (Q2) at (7.0,3.75) {};
+  \draw (0.75,0 |- Q1.B)
+    node[ocirc, label={[font=\small]left:{$v_-$}}] {} -- (Q1.B);
+  \draw (9.05,0 |- Q2.B)
+    node[ocirc, label={[font=\small]right:{$v_+$}}] {} -- (Q2.B);
+  \node[font=\small, anchor=east] at (2.45,3.1) {$Q_1$};
+  \node[font=\small, anchor=west] at (7.35,3.1) {$Q_2$};
+  \node[font=\small, align=right, anchor=east] at (2.30,2.50)
+    {matched NPN\\differential pair};
+
+  % Common emitter node and explicit tail-current sink to the negative rail.
+  \coordinate (TAIL) at (4.9,2.15);
+  \draw (Q1.E) -- (Q1.E |- 0,2.15) -- (TAIL);
+  \draw (Q2.E) -- (Q2.E |- 0,2.15) -- (TAIL);
+  \draw (TAIL) to[american current source, l_={$I_T$}]
+    (4.9,0.45) node[vee] {$-V_S$};
+  \draw[->] (5.85,1.95) -- (5.85,0.72)
+    node[midway, right, font=\small] {tail-current path};
+  \node[circ] at (TAIL) {};
+
+  % PNP current-mirror active load. Q3 is diode connected; Q4 mirrors its
+  % current into the Q2 collector node, creating a single-ended output.
+  \node[pnp, xscale=-1, anchor=B] (Q3) at (4.1,6.45) {};
+  \node[pnp, anchor=B] (Q4) at (5.9,6.45) {};
+  \coordinate (MREF) at (Q3.C |- 0,5.30);
+  \coordinate (VX) at (Q4.C |- 0,5.30);
+  \draw (Q1.C) -- (MREF);
+  \draw (Q2.C) -- (VX);
+  \draw (Q3.C) -- (MREF)
+    -- (Q3.B |- 0,5.30) -- (Q3.B);
+  \draw (Q3.B) -- (Q4.B);
+  \draw (Q4.C) -- (VX);
+  \draw (Q3.E) -- (Q3.E |- 0,8.10);
+  \draw (Q4.E) -- (Q4.E |- 0,8.10);
+  \draw (Q3.E |- 0,8.10) -- (Q4.E |- 0,8.10)
+    node[midway, vcc] {$+V_S$};
+  \draw[->] (1.90,7.92) -- (1.90,6.85)
+    node[midway, left, font=\small] {mirror bias};
+  \node[font=\small, anchor=east] at (2.95,6.65) {$Q_3$};
+  \node[font=\small, anchor=west] at (6.85,6.65) {$Q_4$};
+  \node[font=\small, align=center] at (4.9,7.25)
+    {PNP current-mirror\\active load};
+  \node[circ] at (MREF) {};
+  \node[circ] at (VX) {};
+  \node[font=\small, align=right, anchor=east] at (2.05,5.35)
+    {mirror reference\\($Q_3$ diode connected)};
+
+  % Single-ended high-resistance node and second voltage-gain/level-shift
+  % stage. The arrow states the small-signal sign from the non-inverting
+  % input through the front end.
+  \node[draw, rounded corners, minimum width=3.2cm, minimum height=2.0cm,
+        align=center, font=\small] (VAS) at (11.3,5.30)
+    {additional voltage gain\\and level shift\\(inverting high gain)};
+  \draw[->] (VX) -- (VAS.west)
+    node[midway, above, font=\small] {$v_x$ (high-$R$ node)};
+
+  % Explicit stage supplies and quiescent-bias current paths.
+  \draw (VAS.north) -- (VAS.north |- 0,6.75)
+    -- (9.95,6.75) -- (9.95,7.30) node[vcc] {$+V_S$};
+  \draw (VAS.south) -- (VAS.south |- 0,0.45) node[vee] {$-V_S$};
+  \draw[->] (10.10,6.65) -- (10.10,6.28)
+    node[midway, left, font=\small] {$I_{\mathrm{bias},2}$};
+
+  % Miller-style compensation around the additional gain stage.
+  \coordinate (CBRANCH) at (9.35,0 |- VX);
+  \coordinate (VY) at (13.25,5.30);
+  \draw (VX) -- (CBRANCH) -- (CBRANCH |- 0,8.75)
+    to[C, l_={$C_C$}] (13.25,8.75) -- (VY);
+  \draw (VAS.east) -- (VY);
+  \node[circ] at (VX) {};
+  \node[circ] at (CBRANCH) {};
+  \node[circ] at (VY) {};
+  \node[font=\small, anchor=south] at (11.3,9.18)
+    {dominant-pole (Miller) compensation};
+
+  % Explicitly powered class-AB output buffer and finite load.
+  \node[draw, rounded corners, minimum width=2.8cm, minimum height=2.0cm,
+        align=center, font=\small] (BUF) at (15.2,5.30)
+    {class-AB\\output buffer\\(low $R_{\mathrm{out}}$)};
+  \draw[->] (VY) -- (BUF.west) node[midway, above, font=\small] {$v_y$};
+  \draw (BUF.north) -- (BUF.north |- 0,8.10) node[vcc] {$+V_S$};
+  \draw (BUF.south) -- (BUF.south |- 0,0.45) node[vee] {$-V_S$};
+  \draw[->] (14.45,7.88) -- (14.45,6.45)
+    node[midway, left, font=\small] {$I_Q$};
+
+  \coordinate (VO) at (18.0,0 |- BUF.east);
+  \coordinate (TPZ) at (18.0,0.45);
+  \draw (BUF.east) to[short, i>^={$i_o$}] (VO)
+    node[ocirc, label={[font=\small]right:{$v_o$}}] {};
+  \draw (VO) to[R, l_={$R_L$}] (TPZ)
+    node[ocirc, label={[font=\small]below:{TP$_0$: $0$ V}}] {};
+
+  % Sign cue: increasing v+ steers current into Q2. Q1 and therefore Q4
+  % conduct less while Q2 sinks more, so v_x falls. The following inverting
+  % voltage-gain stage restores the non-inverting overall input-to-output sign.
+  \node[draw, fill=white, align=center, font=\small] at (9.3,-1.65)
+    {$v_+ \uparrow$ relative to $v_-$
+     $\Rightarrow i_{C2}\uparrow,\ i_{C1}\downarrow
+     \Rightarrow v_x\downarrow \Rightarrow v_o\uparrow$};
+\end{circuitikz}
+\end{document}

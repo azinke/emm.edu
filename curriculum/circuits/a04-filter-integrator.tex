@@ -1,0 +1,86 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Inverting first-order active low-pass.
+  \node[op amp, anchor=center] (ULP) at (4.4,3.1) {};
+  \coordinate (JLP) at (3.0,0 |- ULP.-);
+  \coordinate (OUTLP) at (6.0,0 |- ULP.out);
+  \coordinate (FLL) at (3.0,6.2);
+  \coordinate (FLR) at (6.0,6.2);
+
+  \draw (0,0) node[ground] {}
+    to[sV, l_={$v_i$}] (0,0 |- JLP)
+    to[R, l={$R_{\mathrm{IN}}$}] (JLP)
+    -- (ULP.-);
+  \draw (ULP.+) -- (ULP.+ |- 0,0) node[ground] {};
+  \draw (JLP) -- (3.0,7.4)
+    to[C, i>^={$i_C$}] (6.0,7.4)
+    -- (OUTLP);
+  \node[font=\small] at (4.20,7.80) {$+$};
+  \node[font=\small] at (4.80,7.80) {$-$};
+  \node[font=\small] at (4.50,8.25) {$v_C$};
+  \node[font=\small, anchor=west] at (5.05,7.05) {$C_F$};
+  \draw (FLL) to[R, l={$R_F$}] (FLR);
+  \draw (ULP.out) -- (OUTLP)
+    -- (7.0,0 |- OUTLP)
+    node[ocirc, label={[font=\small]right:{TPO: $v_o$}}] {};
+  \draw (OUTLP) to[R, l_={$R_L$}] (6.0,0) node[ground] {};
+  \draw (ULP.up) -- (ULP.up |- 0,4.55) node[vcc] {$+V_S$};
+  \draw (ULP.down) -- (ULP.down |- 0,1.35) node[vee] {$-V_S$};
+  \node[circ] at (JLP) {};
+  \node[circ] at (OUTLP) {};
+  \node[circ] at (FLL) {};
+  \node[circ] at (FLR) {};
+  \node[font=\small, anchor=west] at (4.85,4.15) {$U_1$};
+  \node[font=\small\bfseries] at (3.5,-1.0)
+    {(a) Inverting active low-pass};
+
+  % Practical inverting integrator: R_F bounds the DC gain.
+  \node[op amp, anchor=center] (UINT) at (12.1,3.1) {};
+  \coordinate (JINT) at (10.7,0 |- UINT.-);
+  \coordinate (OUTINT) at (13.7,0 |- UINT.out);
+  \coordinate (FBL) at (10.7,6.2);
+  \coordinate (FBR) at (13.7,6.2);
+
+  \draw (8.0,0) node[ground] {}
+    to[sV, l_={$v_i$}] (8.0,0 |- JINT)
+    to[R, l={$R_{\mathrm{IN}}$}] (JINT)
+    -- (UINT.-);
+  \draw (UINT.+) -- (UINT.+ |- 0,0) node[ground] {};
+  \draw (JINT) -- (10.7,7.4)
+    to[C, i>^={$i_C$}] (13.7,7.4)
+    -- (OUTINT);
+  \node[font=\small] at (11.90,7.80) {$+$};
+  \node[font=\small] at (12.50,7.80) {$-$};
+  \node[font=\small] at (12.20,8.25) {$v_C$};
+  \node[font=\small, anchor=west] at (12.75,7.05) {$C_F$};
+  \draw (FBL) to[R, l={$R_P$}] (FBR);
+  \draw (UINT.out) -- (OUTINT)
+    -- (14.7,0 |- OUTINT)
+    node[ocirc, label={[font=\small]right:{TPO: $v_o$}}] {};
+  \draw (OUTINT) to[R, l_={$R_L$}] (13.7,0) node[ground] {};
+  \draw (UINT.up) -- (UINT.up |- 0,4.55) node[vcc] {$+V_S$};
+  \draw (UINT.down) -- (UINT.down |- 0,1.35) node[vee] {$-V_S$};
+  \node[circ] at (JINT) {};
+  \node[circ] at (OUTINT) {};
+  \node[circ] at (FBL) {};
+  \node[circ] at (FBR) {};
+  \node[font=\small, anchor=west] at (12.55,4.15) {$U_1$};
+  \node[font=\small\bfseries] at (11.5,-1.0)
+    {(b) Practical inverting integrator};
+
+  % Both panels contain the same parallel R-C feedback network. The labels
+  % state the passive capacitor references and distinguish the intended bands.
+  \node[font=\small\bfseries] at (7.35,9.35)
+    {Same $R_{\mathrm{DC}}\parallel C_F$ feedback topology; different frequency regimes};
+  \node[font=\small] at (3.5,8.75)
+    {low-pass view: $R_{\mathrm{DC}}=R_F$};
+  \node[font=\small] at (11.5,8.75)
+    {integrating band: $\left|1/(j\omega C_F)\right|\ll R_P$};
+  \node[font=\small] at (7.35,-1.65)
+    {$v_C\equiv v_- -v_o,\qquad q_C=C_Fv_C,\qquad
+      i_C=C_F\,\mathrm{d}v_C/\mathrm{d}t$};
+\end{circuitikz}
+\end{document}

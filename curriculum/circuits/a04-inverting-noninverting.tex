@@ -1,0 +1,64 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Inverting amplifier.
+  \node[op amp, anchor=center] (U1A) at (4.2,3.0) {};
+  \coordinate (J1A) at (2.8,0 |- U1A.-);
+  \coordinate (OUTA) at (5.8,0 |- U1A.out);
+  \coordinate (IN1A) at (0,0 |- J1A);
+
+  \draw (0,0) node[ground, label={[font=\small]below:{TP0}}] {}
+    to[sV, l_={$v_i$}] (IN1A)
+    node[ocirc, label={[font=\small]left:{TPI}}] {}
+    to[R, l={$R_{\mathrm{IN}}$}, i>^={$i_{\mathrm{IN}}$}] (J1A)
+    -- (U1A.-);
+  \draw (U1A.+) -- (U1A.+ |- 0,0) node[ground] {};
+  \draw (J1A) -- (2.8,6.1)
+    to[R, l={$R_F$}, i>^={$i_F$}] (5.8,6.1)
+    -- (OUTA);
+  \draw (J1A) -- (2.8,2.35)
+    node[ocirc, label={[font=\small]left:{TP$-$}}] {};
+  \draw (U1A.out) -- (OUTA)
+    -- (6.8,0 |- OUTA)
+    node[ocirc, label={[font=\small]right:{TPO: $v_o$}}] {};
+  \draw (OUTA) to[R, l_={$R_L$}] (5.8,0) node[ground] {};
+  \draw (U1A.up) -- (U1A.up |- 0,4.65) node[vcc] {$+V_S$};
+  \draw (U1A.down) -- (U1A.down |- 0,1.35) node[vee] {$-V_S$};
+  \node[circ] at (J1A) {};
+  \node[circ] at (OUTA) {};
+  \node[font=\small, anchor=west] at (4.65,4.05) {$U_1$};
+  \node[font=\small\bfseries] at (3.4,-1.0)
+    {(a) Inverting feedback};
+
+  % Non-inverting amplifier.
+  \node[op amp, anchor=center] (U1B) at (12.0,3.0) {};
+  \coordinate (J1B) at (9.4,0 |- U1B.-);
+  \coordinate (OUTB) at (13.6,0 |- U1B.out);
+  \coordinate (IN1B) at (10.2,0 |- U1B.+);
+
+  \draw (10.2,0) node[ground, label={[font=\small]below:{TP0}}] {}
+    to[sV, l_={$v_i$}] (IN1B)
+    node[ocirc, label={[font=\small]above:{TPI}}] {}
+    -- (U1B.+);
+  \draw (U1B.-) -- (J1B)
+    to[R, l_={$R_G$}] (9.4,0) node[ground] {};
+  \draw (J1B) -- (9.4,6.1)
+    to[R, l={$R_F$}, i<^={$i_F$}] (13.6,6.1)
+    -- (OUTB);
+  \draw (J1B) -- (8.75,0 |- J1B)
+    node[ocirc, label={[font=\small]left:{TP$-$}}] {};
+  \draw (U1B.out) -- (OUTB)
+    -- (14.6,0 |- OUTB)
+    node[ocirc, label={[font=\small]right:{TPO: $v_o$}}] {};
+  \draw (OUTB) to[R, l_={$R_L$}] (13.6,0) node[ground] {};
+  \draw (U1B.up) -- (U1B.up |- 0,4.65) node[vcc] {$+V_S$};
+  \draw (U1B.down) -- (U1B.down |- 0,1.35) node[vee] {$-V_S$};
+  \node[circ] at (J1B) {};
+  \node[circ] at (OUTB) {};
+  \node[font=\small, anchor=west] at (12.45,4.05) {$U_1$};
+  \node[font=\small\bfseries] at (11.2,-1.0)
+    {(b) Non-inverting feedback};
+\end{circuitikz}
+\end{document}

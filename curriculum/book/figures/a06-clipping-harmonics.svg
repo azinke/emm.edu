@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="430" viewBox="0 0 1000 430" role="img" aria-labelledby="title desc">
+  <title id="title">Linear and clipped sine-wave behavior</title>
+  <desc id="desc">The left panel compares an unclipped sine wave with a larger sine wave limited at positive and negative output bounds. The right panel shows the corresponding conceptual spectrum: a linear sine has only a fundamental, while symmetric clipping adds odd harmonics. The drawing is explanatory and is not measured data.</desc>
+  <style>
+    .axis{stroke:#222;stroke-width:2;fill:none}.grid{stroke:#bbb;stroke-width:1;stroke-dasharray:5 5}
+    .linear{stroke:#2369a1;stroke-width:4;fill:none}.clip{stroke:#c53d35;stroke-width:4;fill:none}
+    .bar1{stroke:#2369a1;stroke-width:12}.bar2{stroke:#c53d35;stroke-width:12}
+    text{font-family:Arial,sans-serif;fill:#222;font-size:20px}.small{font-size:17px}.label{font-weight:700}
+  </style>
+  <text x="250" y="30" text-anchor="middle" class="label">Time waveform</text>
+  <line x1="55" y1="215" x2="480" y2="215" class="axis"/>
+  <line x1="70" y1="55" x2="70" y2="375" class="axis"/>
+  <line x1="70" y1="105" x2="470" y2="105" class="grid"/>
+  <line x1="70" y1="325" x2="470" y2="325" class="grid"/>
+  <text x="78" y="96" class="small">upper limit</text>
+  <text x="78" y="348" class="small">lower limit</text>
+  <path d="M70 215 C103 125 137 125 170 215 S237 305 270 215 S337 125 370 215 S437 305 470 215" class="linear"/>
+  <path d="M70 215 C90 150 108 105 135 105 L155 105 C180 105 195 150 220 215 C245 280 260 325 285 325 L305 325 C330 325 345 280 370 215 C395 150 410 105 435 105 L455 105 C463 105 468 160 470 215" class="clip"/>
+  <text x="285" y="404" text-anchor="middle" class="small">time</text>
+  <text x="20" y="215" text-anchor="middle" transform="rotate(-90 20 215)" class="small">output voltage</text>
+
+  <text x="750" y="30" text-anchor="middle" class="label">Conceptual RMS spectrum</text>
+  <line x1="555" y1="360" x2="965" y2="360" class="axis"/>
+  <line x1="575" y1="65" x2="575" y2="370" class="axis"/>
+  <line x1="650" y1="360" x2="650" y2="105" class="bar1"/>
+  <line x1="735" y1="360" x2="735" y2="205" class="bar2"/>
+  <line x1="820" y1="360" x2="820" y2="270" class="bar2"/>
+  <line x1="905" y1="360" x2="905" y2="305" class="bar2"/>
+  <text x="650" y="390" text-anchor="middle" class="small">f₀</text>
+  <text x="735" y="390" text-anchor="middle" class="small">3f₀</text>
+  <text x="820" y="390" text-anchor="middle" class="small">5f₀</text>
+  <text x="905" y="390" text-anchor="middle" class="small">7f₀</text>
+  <text x="760" y="420" text-anchor="middle" class="small">frequency</text>
+  <text x="530" y="215" text-anchor="middle" transform="rotate(-90 530 215)" class="small">RMS amplitude</text>
+  <line x1="610" y1="73" x2="635" y2="73" class="linear"/>
+  <text x="645" y="80" class="small">linear fundamental</text>
+  <line x1="610" y1="105" x2="635" y2="105" class="clip"/>
+  <text x="645" y="112" class="small">added clipping products</text>
+</svg>

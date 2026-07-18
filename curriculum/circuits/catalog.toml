@@ -1,6 +1,20 @@
 version = 1
 
 [[circuit]]
+id = "a06-noise-budget-amplifier"
+source = "a06-noise-budget-amplifier.tex"
+chapter_id = "A06"
+caption = "A non-inverting amplifier and post-amplifier RC low-pass with every first-order source used in the white-noise budget: source resistance, op-amp voltage and current noise, feedback-resistor thermal noise, and output-filter resistor thermal noise."
+alt = "A voltage source v s and source resistance R S drive the non-inverting input of op amp U1. Feedback resistor R F connects the unfiltered output TPU to the inverting node, and R G connects that node to TP0. Series resistor R LP and shunt capacitor C LP form a post-amplifier low-pass from TPU to filtered output TPO. Labels identify thermal noise and equivalent op-amp voltage and current noise."
+
+[[circuit]]
+id = "a06-parasitic-feedback"
+source = "a06-parasitic-feedback.tex"
+chapter_id = "A06"
+caption = "A non-inverting amplifier with an unintended capacitive path from output to the source-side input node. The parasitic path and shared physical return can alter the complete loop even though neither appears in the intended feedback ratio."
+alt = "A voltage source and source resistance drive the non-inverting input of op amp U1. R F and R G form the intended negative-feedback network. A dashed path containing parasitic capacitance C P returns from the output to the source-side non-inverting input node, showing unintended frequency-dependent feedback."
+
+[[circuit]]
 id = "a03-common-emitter-amplifier"
 source = "a03-common-emitter-amplifier.tex"
 chapter_id = "A03"

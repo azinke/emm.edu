@@ -1,0 +1,49 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \node[op amp, anchor=center] (U1) at (7.4,3.5) {};
+  \coordinate (PLUS) at (0,0 |- U1.+);
+  \coordinate (MINUS) at (5.5,0 |- U1.-);
+  \coordinate (UOUT) at (9.0,0 |- U1.out);
+  \coordinate (FOUT) at (12.0,0 |- U1.out);
+
+  \draw (0,0) node[ground, label={[font=\small]below:{TP0}}] {}
+    to[sV, l_={$v_s$}] (PLUS)
+    node[ocirc, label={[font=\small]left:{TPS}}] {}
+    to[R, l={$R_S$}] (3.0,0 |- PLUS)
+    -- (U1.+);
+  \draw (MINUS) -- (U1.-);
+  \draw (MINUS) to[R, l={$R_G$}] (3.3,0 |- MINUS)
+    node[ocirc, label={[font=\small]left:{TP0}}] {};
+  \draw (MINUS) -- (5.5,6.3)
+    to[R, l={$R_F$}] (9.0,6.3)
+    -- (UOUT);
+  \draw (U1.out) -- (UOUT)
+    to[R, l={$R_{\mathrm{LP}}$}] (FOUT)
+    -- (12.8,0 |- FOUT)
+    node[ocirc, label={[font=\small]right:{TPO: $v_o$}}] {};
+  \draw (FOUT) to[C, l_={$C_{\mathrm{LP}}$}] (12.0,0) node[ground] {};
+  \draw (U1.up) -- (U1.up |- 0,5.15) node[vcc] {$+V_S$};
+  \draw (U1.down) -- (U1.down |- 0,1.85) node[vee] {$-V_S$};
+
+  \node[circ] at (MINUS) {};
+  \node[circ] at (UOUT) {};
+  \node[circ] at (FOUT) {};
+  \node[ocirc, label={[font=\small]above:{TPU}}] at (UOUT) {};
+  \node[font=\small, anchor=west] at (7.85,4.55) {$U_1$};
+  \node[font=\small, align=left, anchor=west] at (0.4,5.55)
+    {$R_S$: thermal noise\\
+     $U_1$: $e_n$, $i_{n+}$, $i_{n-}$};
+  \node[font=\small, align=left, anchor=west] at (7.0,7.25)
+    {$R_G,R_F$: thermal noise\\
+     $G_N=1+R_F/R_G$};
+  \node[font=\small, align=left, anchor=west] at (10.0,5.6)
+    {$R_{\mathrm{LP}},C_{\mathrm{LP}}$:\\
+     one-pole output filter};
+  \node[font=\small, align=center] at (5.2,-1.05)
+    {All noise densities require a stated frequency, temperature,\\
+     source impedance, closed-loop transfer, and measurement bandwidth.};
+\end{circuitikz}
+\end{document}

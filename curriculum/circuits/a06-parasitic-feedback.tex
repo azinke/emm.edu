@@ -1,0 +1,44 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \node[op amp, anchor=center] (U1) at (6.6,3.5) {};
+  \coordinate (PLUS) at (1.0,0 |- U1.+);
+  \coordinate (MINUS) at (4.6,0 |- U1.-);
+  \coordinate (OUT) at (8.2,0 |- U1.out);
+  \coordinate (SRCRET) at (1.0,0);
+  \coordinate (LOADRET) at (9.8,0);
+
+  \draw (SRCRET) node[ground, label={[font=\small]below:{TP0}}] {}
+    to[sV, l_={$v_s$}] (PLUS)
+    node[ocirc, label={[font=\small]left:{TPS}}] {}
+    to[R, l={$R_S$}] (3.0,0 |- PLUS)
+    -- (U1.+);
+  \draw (MINUS) -- (U1.-);
+  \draw (MINUS) to[R, l={$R_G$}] (2.8,0 |- MINUS)
+    node[ocirc, label={[font=\small]left:{TP0}}] {};
+  \draw (MINUS) -- (4.6,6.4)
+    to[R, l={$R_F$}] (8.2,6.4)
+    -- (OUT);
+  \draw (U1.out) -- (OUT)
+    -- (9.8,0 |- OUT)
+    node[ocirc, label={[font=\small]right:{TPO}}] {};
+  \draw (9.8,0 |- OUT) to[R, l_={$R_L$}] (LOADRET) node[ground] {};
+
+  \draw[dashed] (8.2,0 |- OUT) -- (8.2,7.9)
+    to[C, l={$C_P$}] (3.0,7.9)
+    -- (3.0,0 |- PLUS);
+  \node[circ] at (OUT) {};
+  \node[circ] at (MINUS) {};
+  \node[circ] at (3.0,0 |- PLUS) {};
+  \node[font=\small, anchor=west] at (7.05,4.55) {$U_1$};
+  \node[font=\small, align=center] at (5.6,8.75)
+    {Dashed path: unintended output-to-input coupling};
+  \node[font=\small, align=center] at (5.2,-1.1)
+    {Board geometry, probe capacitance, cable coupling, and shared return impedance\\
+     can add a frequency-dependent path that is absent from the intended schematic.};
+  \draw (U1.up) -- (U1.up |- 0,5.15) node[vcc] {$+V_S$};
+  \draw (U1.down) -- (U1.down |- 0,1.85) node[vee] {$-V_S$};
+\end{circuitikz}
+\end{document}

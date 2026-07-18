@@ -13,6 +13,21 @@ Use [`chapter-template.qmd`](chapter-template.qmd) for new chapters.
 `chapters.toml` is also the canonical reading order. Keep `_quarto.yml` in the
 same order; validation rejects drift between the registry and rendered book.
 
+## Write for a student working alone
+
+Use the reader-facing voice and pacing rules in
+[`technical-style.md`](technical-style.md). Write as an expert peer: active
+voice, direct sentences, and first-use definitions in plain language. Build each
+new abstraction from an observable circuit behavior. When the explanation moves
+from a component to a circuit or from a circuit to a system, state that bridge
+in prose.
+
+A self-studying reader should always know what to inspect, predict, calculate,
+and conclude. Put a schematic beside topology, a waveform beside time behavior,
+and a graph or table beside a trend. If an essential visual is not ready, leave
+an explicit diagram, waveform, or graph cue in the draft and replace it before
+review.
+
 ## Maintain the reader's map
 
 Each top-level part has an `index.qmd` with `page-role: part` and a `part-id`

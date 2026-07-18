@@ -65,10 +65,11 @@ be able to:
   not an immutable component type;
 - **derive terminal resistance from material behavior**, distinguish resistance
   from resistivity and conductance, and state when Ohm's law is a useful linear
-  constitutive relation rather than a universal law;
+  component relation rather than a universal law;
 - **find the DC operating point** of a resistive load driven by a source with
   finite source resistance, interpret limiting cases, and recognize current limit
-  or compliance as a change of operating region;
+  or **compliance limit** (the maximum voltage a current source can produce) as
+  a change of operating region;
 - **reduce series and parallel resistor combinations**, derive unloaded and
   loaded voltage-divider relations, and carry component tolerances far enough to
   bound a result;
@@ -348,7 +349,7 @@ unbounded voltage; the resulting infinity is a warning about the idealization, n
 a physical prediction.
 
 Voltage-source current limit and current-source voltage compliance express the
-same engineering truth: a real source can regulate one terminal quantity only
+same constraint. A real source regulates its chosen terminal quantity only
 inside a bounded region of the $(V,I)$ plane.
 
 ## Series paths add resistance; parallel paths add conductance
@@ -744,12 +745,14 @@ approximation assumes a sufficiently linear range. A magnitude limit of
 50 ppm/K over 50 K permits a resistance shift of up to
 $50\times10^{-6}\times50=0.0025$, or 0.25 %, in this first-order screen.
 
-The **rated dissipation** is not simply “power the resistor always survives.” It
-depends on ambient temperature, heat flow through leads or pads, board layout,
-permitted film temperature, duration, and derating. A separate **maximum operating
-voltage** can dominate for high resistance values even when $V^2/R$ is below the
-nominal power rating. Pulse-energy, overload, insulation, noise, voltage
-coefficient, and long-term drift can matter in their own applications.
+The **rated dissipation** is the permitted resistor power under stated thermal
+conditions. It is not a promise that the resistor survives that power in every
+circuit. Ambient temperature, heat flow through leads or pads, board layout,
+permitted film temperature, duration, and derating all affect the limit. A
+separate **maximum operating voltage** can dominate for high resistance values
+even when $V^2/R$ is below the nominal power rating. Pulse energy, overload,
+insulation, noise, voltage coefficient, and long-term drift can also constrain a
+design.
 
 As an authentic example, the Vishay MRS25 leaded metal-film resistor datasheet
 specifies a 1 Ω to 10 MΩ range, ±1 % tolerance, ±50 ppm/K TCR, rated dissipation
@@ -772,10 +775,12 @@ P=VI=\frac{V^2}{R}=I^2R.
 $$
 
 Consequently, $P=V^2/R\le P_\text{rated}$ implies
-$|V|\le\sqrt{P_\text{rated}R}$, but the permitted magnitude is the smaller of that
-result and the applicable voltage rating, after derating and pulse conditions are
-applied. F05 develops power, temperature rise, and margin rigorously; here the
-lesson is simply that “correct resistance” is not a complete selection.
+$|V|\le\sqrt{P_\text{rated}R}$. This is only the power-based voltage limit.
+After applying derating and pulse conditions, compare it with the resistor's
+separate operating-voltage rating. The smaller permitted value controls.
+[F05](f05-energy-power-thermal.qmd) develops power, temperature rise, and margin.
+Here the conclusion is that a correct resistance value is only one part of
+resistor selection.
 
 ## Worked design: loaded divider with tolerance and temperature bounds
 
@@ -849,11 +854,10 @@ therefore be more discriminating than the margin. A defensible test is:
 The calculation establishes a **worst-case feasibility claim under stated
 independent bounds**. It does not establish production yield, long-term stability,
 or physical compliance. Those require measurements and, at higher stakes,
-repeated test and independent reproduction. If the complete 2 mV guard-band
-requirement or temperature stabilization cannot be achieved, the present
-acceptance plan is not capable of protecting the roughly 7 mV lower design margin;
-the correct decision is to increase design margin or improve the test, not to
-round the result into passing.
+repeated test and independent reproduction. If the complete 2 mV guard band or
+temperature stabilization cannot be achieved, the test cannot protect the
+roughly 7 mV lower design margin. Increase the design margin or improve the
+test. Rounding cannot turn an inconclusive result into a pass.
 
 ## Validity limits of linear resistive source–load analysis
 

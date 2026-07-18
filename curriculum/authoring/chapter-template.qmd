@@ -6,20 +6,24 @@ status: outline
 ---
 
 <!--
-The headings below name the editorial FUNCTION each section performs; they are
-not fixed labels. Retitle every one for this chapter. A heading should read as a
-natural, specific claim about the system at hand — not a generic phrase pasted
-into every chapter — and it should not lean on the word "model" as a crutch.
-See authoring/README.md and authoring/technical-style.md for the conventions on
-headings, diagrams, code listings, and citation.
+Keep the opening `Central question` and `Learning outcomes` headings and the
+closing `Exercises`, `Connections`, and `References` headings. The other headings
+below name editorial FUNCTIONS. Retitle them for this chapter. Each heading
+should name a specific concept, mechanism, operating region, or decision. See
+authoring/README.md and authoring/technical-style.md for voice, pacing, diagrams,
+code listings, and citations.
 -->
 
-## The system question
+## Central question
 
 Open with an observable behavior, discrepancy, failure, or real design need.
 Collect a prediction before introducing the governing idea.
 
-## What you will be able to do
+Define the central technical term in **bold** and plain language when it first
+appears. Use direct, active sentences. If the chapter moves from a component to
+a circuit or system, write the bridge explicitly.
+
+## Learning outcomes
 
 Write three to five observable outcomes. Name the prerequisite idea that each
 outcome builds on. Avoid generic outcomes that could be pasted into every
@@ -29,8 +33,9 @@ chapter.
 
 Define quantities, reference directions, units, assumptions, and the domain of
 validity. Connect the physical view, circuit or architecture, words, and
-equations. Draw any flowchart with a vertical (`flowchart TB`) layout and concise
-node text so it fits the page in print; put supporting detail in the caption.
+equations. Place a circuit diagram beside topology, a waveform beside time
+behavior, and a graph or table beside an operating trend. Tell the reader what
+to inspect before each visual and interpret it afterward.
 
 ## Work an example
 
@@ -62,6 +67,11 @@ Open with a short multiple-choice quick check — one best answer each, followed
 an answer key — aimed at the chapter's common misconceptions. Then include
 retrieval, estimation, derivation, data interpretation, debugging, and open
 design. Keep live-assessment variants and full solutions outside the public book.
+
+## Connections
+
+Link prerequisites, downstream chapters, aligned labs and projects, and
+just-in-time appendices by ID. State what each connection contributes.
 
 ## References
 

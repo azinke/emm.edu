@@ -8,9 +8,10 @@ status: draft
 ::: {.callout-note title="Chapter maturity — draft"}
 This chapter presents a complete instructional path: definitions, derivations,
 worked uncertainty budgets, executable arithmetic, an explicitly synthetic fault
-investigation, a guarded decision, and a full exercise set. It remains subject to
-technical and editorial revision. Physical claims require the aligned laboratory
-evidence; the teaching data in this chapter do not provide it. See the
+investigation, an uncertainty-aware decision, and a full exercise set. It
+remains subject to technical and editorial revision. Physical claims require the
+aligned laboratory evidence; the teaching data in this chapter do not provide
+it. See the
 [reading roadmap](../roadmap.qmd) for the meaning of status levels.
 :::
 
@@ -32,10 +33,10 @@ or local authorization is uncertain [@iec61010].
 > What evidence is strong enough to distinguish a circuit fault from a
 > measurement mistake?
 
-An **illustrative** divider is intended to produce 4.00 V DC at test point TP1
-relative to TP0. A digital multimeter (DMM) indicates 3.964 V. An oscilloscope
-then indicates 3.70 V. The schematic, two instruments, and two displays appear to
-describe three different circuits.
+An **illustrative** divider should produce 4.00 V DC at test point TP1 relative
+to TP0. A **digital multimeter (DMM)**, an instrument that converts an electrical
+quantity into a numeric display, indicates 3.964 V. An oscilloscope then
+indicates 3.70 V. We now have one schematic and two conflicting observations.
 
 There are many plausible explanations: the source is low, a resistor is wrong,
 a connection is resistive, the circuit is oscillating, either instrument is out
@@ -64,12 +65,13 @@ supports a bounded conclusion.
 
 This chapter assumes the source–load and instrument-loading reasoning of
 [F03](f03-sources-loads-resistance.qmd) and the elementary statistics introduced
-just in time in [M03](../appendices/m03-probability-numerical.qmd). After
+in [M03](../appendices/m03-probability-numerical.qmd). After
 completing it, you should be able to:
 
-- **define a measurand and measurement procedure** with test points, polarity,
-  operating conditions, bandwidth, and instrument loading stated before a
-  reading is taken [@jcgm2012vim];
+- **define a measurand**, the specific quantity intended to be measured, and a
+  measurement procedure with test points, polarity, operating conditions,
+  bandwidth, and instrument loading stated before a reading is taken
+  [@jcgm2012vim];
 - **distinguish accuracy, precision, resolution, repeatability, error,
   correction, and uncertainty**, and explain why none can be inferred from the
   number of display digits alone [@jcgm2012vim];
@@ -105,7 +107,7 @@ Here “allowed” denotes an operating-condition interval, not a standard or
 expanded uncertainty. “No external load” excludes the measuring instrument:
 $V_0$ is inferred by a validated correction or by a sufficiently non-intrusive
 method rather than observed without interaction.
-Changing one can change the value rather than merely reveal “noise.” The VIM
+Changing one can change the value rather than merely reveal “noise.” The VIM (_Vocabulaire International de Métrologie_)
 therefore treats measurement as a process that experimentally obtains quantity
 values that can reasonably be attributed to a measurand, not as reading a display
 [@jcgm2012vim].
@@ -391,7 +393,7 @@ bounds, sensitivity studies, or Monte Carlo propagation may then be more
 appropriate; M03 develops those methods. As a limiting check, if every input
 uncertainty tends to zero, @eq-general-propagation makes $u_c(y)$ tend to zero.
 
-### Expanded uncertainty and honest reporting
+### Expanded uncertainty and supported reporting
 
 An expanded uncertainty is defined by
 

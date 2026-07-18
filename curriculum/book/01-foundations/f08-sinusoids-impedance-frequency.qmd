@@ -6,12 +6,13 @@ status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter presents a complete instructional path: phasor and impedance
-derivations, worked network and resonance examples, executable arithmetic,
-explicitly synthetic sweep data, a guarded filter decision, and a full exercise
-set. It remains subject to technical and editorial revision. The synthetic data
-teach analysis but do not qualify physical hardware; Lab **L05** supplies the
-aligned evidence. See the [reading roadmap](../roadmap.qmd) for status meanings.
+This chapter presents a complete instructional path: sinusoidal representation,
+impedance derivations, worked network and resonance examples, executable
+arithmetic, explicitly synthetic sweep data, a filter decision that includes
+uncertainty margin, and a full exercise set. It remains subject to technical and
+editorial revision. The synthetic data teach analysis but do not qualify
+physical hardware; Lab **L05** supplies the aligned evidence. See the
+[reading roadmap](../roadmap.qmd) for status meanings.
 :::
 
 ::: {.callout-warning title="Safety boundary for frequency-response work"}
@@ -42,14 +43,15 @@ three different results:
 | 1.59 kHz | 0.707 V RMS | $-45.0^\circ$ |
 | 10.0 kHz | 0.157 V RMS | $-81.0^\circ$ |
 
-These are calculations, not measurements. The chapter develops them from the
-same capacitor relation used in F07, carries that reasoning into impedance and
-frequency response, and then asks whether source resistance, load, component
-tolerance, and the probe leave enough margin for a design decision. Sinusoidal
-steady-state analysis is a standard way to characterize linear circuits because
-a linear time-invariant circuit driven by one sinusoid responds at that same
-frequency after its transient has decayed [@sedra2020microelectronic;
-@oppenheim1996signals].
+These are calculations, not measurements. We will derive them from the capacitor
+relation in [F07](f07-capacitors-inductors-transients.qmd). That relation leads to
+impedance and frequency response. We then add source resistance, load, component
+tolerance, and probe loading to see whether the design still has margin.
+
+**Sinusoidal steady state** is the condition after startup transients have
+decayed while a circuit is driven by a continuing sine wave. A linear
+time-invariant circuit then responds at the input frequency, although amplitude
+and phase can change [@sedra2020microelectronic; @oppenheim1996signals].
 
 ::: {.callout-tip title="Predict before calculating"}
 At very low frequency the capacitor has ample time to charge and discharge with
@@ -69,10 +71,12 @@ should be able to:
 
 - distinguish instantaneous, peak, peak-to-peak, average, and RMS values, and
   infer phase from a declared time reference;
-- represent one-frequency sinusoidal steady state with RMS phasors using the
-  $e^{j\omega t}$ convention;
-- derive and use $Z_R$, $Z_C$, $Z_L$, admittance, complex KCL, and complex KVL
-  with declared voltage and current references;
+- represent one-frequency sinusoidal steady state with RMS **phasors**, complex
+  numbers that record sinusoid magnitude and phase, using the $e^{j\omega t}$
+  convention;
+- derive and use $Z_R$, $Z_C$, $Z_L$, **admittance** (the reciprocal of
+  impedance), complex KCL, and complex KVL with declared voltage and current
+  references;
 - derive a loaded transfer function and interpret magnitude, phase, decibels,
   corner frequency, bandwidth, and Bode asymptotes;
 - calculate series-resonant frequency, half-power bandwidth, and loaded quality

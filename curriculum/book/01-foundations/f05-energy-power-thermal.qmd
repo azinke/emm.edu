@@ -9,7 +9,8 @@ status: draft
 This chapter presents a complete instructional path: signed power and energy
 derivations, DC and pulsed examples, a system budget, executable arithmetic,
 explicitly synthetic thermal data, authentic manufacturer specifications, a
-failure diagnosis, and a guarded design decision. It remains subject to technical
+failure diagnosis, and a design decision that includes uncertainty margin. It
+remains subject to technical
 and editorial revision. The synthetic data teach analysis but do not qualify a
 physical assembly; physical evidence belongs in aligned Lab **L04**. See the
 [reading roadmap](../roadmap.qmd) for the meaning of status levels.
@@ -71,17 +72,19 @@ you should be able to:
   settling behavior;
 - read power, temperature, voltage, and pulse ratings as simultaneous conditional
   limits rather than interchangeable targets; and
-- plan measurements and apply a guarded decision rule that distinguishes a
-  nominal feasibility estimate from verified thermal performance.
+- plan measurements and apply a **guarded decision rule**, a pass/fail rule that
+  reserves margin for measurement uncertainty, to distinguish a nominal
+  feasibility estimate from verified thermal performance.
 
-The thermal step response can be used and checked with algebra and an exponential;
-[M02](../appendices/m02-calculus-linear-differential.qmd) is just-in-time support
-only for its optional differential-equation derivation.
+We can use and check the thermal step response with algebra and an exponential.
+[M02](../appendices/m02-calculus-linear-differential.qmd) supplies the
+differential-equation derivation when needed.
 
-The chapter proceeds in the same order as an engineering decision: establish the
-sign of terminal power, accumulate energy over time, close a system boundary,
-define useful output and efficiency, predict temperature rise, and finally compare
-the result with conditional ratings and a guarded acceptance rule.
+The chapter follows the order of an engineering decision. We first establish the
+sign of terminal power and accumulate energy over time. We then close a system
+boundary, define useful output and efficiency, and predict temperature rise.
+Finally, we compare the result with conditional ratings and a guarded acceptance
+rule.
 
 ## Terminal power and the passive sign convention
 
@@ -163,10 +166,11 @@ Real source resistance, leads, and contacts would add positive absorbed powers,
 reducing what reaches the load.
 :::
 
-This terminal description does not mean charge carriers race from the source to
-the load carrying packets of energy. Charge continuity and electromagnetic energy
-transfer are distinct descriptions; F02 established their boundary. Here the
-terminal product $vi$ is the correct lumped quantity for accounting.
+This terminal description does not assign a packet of energy to each carrier.
+Charge transport and electromagnetic energy transfer are different physical
+descriptions, as [F02](f02-charge-voltage-current.qmd) established. For a lumped
+circuit, the terminal product $vi$ gives the rate of energy transfer across the
+chosen port.
 
 ## Energy and average power over an interval
 
@@ -344,8 +348,8 @@ At true steady state, system energy does not change, so the accumulation term is
 zero. In periodic steady operation, stored energy may rise and fall within every
 cycle while its **cycle-average change** is zero. Startup, shutdown, charging, and
 discharging do not permit that simplification. F07 develops the electrical storage
-elements; here $\Delta E_\text{system}$ keeps the budget honest without
-pre-empting their details.
+elements. Here $\Delta E_\text{system}$ keeps stored energy explicit so that the
+budget remains complete.
 
 The three destinations in @fig-f05-energy-boundary keep outward transfer and
 internal accumulation visually separate.

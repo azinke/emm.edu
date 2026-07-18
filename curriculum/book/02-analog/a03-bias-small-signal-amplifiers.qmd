@@ -1,17 +1,17 @@
 ---
 title: "Bias and small-signal amplifiers"
-description: "Establish a transistor operating point, derive its local incremental behavior, and design bounded voltage-gain, follower, and bias-current stages."
+description: "Establish a transistor operating point, derive its local small-signal behavior, and design bounded voltage-gain, follower, and bias-current stages."
 chapter-id: A03
 status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
 This chapter develops a complete instructional path from DC bias to
-single-transistor gain, loading, headroom, frequency limits, and a guarded
-design decision. Calculations, illustrative parameter sweeps, and executable
-arithmetic are identified as such; they are not measurements. Physical
-amplifier evidence belongs in aligned Lab **L07**. The chapter remains subject
-to technical and editorial revision. See the
+single-transistor gain, loading, available signal range, frequency limits, and a
+design decision that includes uncertainty margin. Calculations, illustrative
+parameter sweeps, and executable arithmetic are identified as such; they are not
+measurements. Physical amplifier evidence belongs in aligned Lab **L07**. The
+chapter remains subject to technical and editorial revision. See the
 [reading roadmap](../roadmap.qmd) for the meaning of status levels.
 :::
 
@@ -32,11 +32,15 @@ unbounded external signals [@iec61010].
 > How can a nonlinear transistor amplify a small changing signal predictably?
 
 A transistor's collector or drain current is a curved function of its terminal
-voltages. Yet a correctly biased stage can reproduce a small input waveform at
-larger voltage or current, while a stage made from the same transistor can clip,
-drift, or stop amplifying after a modest change in temperature, load, or device.
-The apparent contradiction disappears when the DC operating point and the
-signal excursion are treated separately [@sedra2020microelectronic].
+voltages. **Bias** sets the steady voltages and currents before the signal
+arrives. It places the device at a chosen **quiescent point**, or no-signal
+operating point. Around that point, a small input waveform can produce a larger
+output waveform.
+
+The same transistor can clip, drift, or stop amplifying after a modest change in
+temperature, load, or device parameters. We resolve that behavior by separating
+the DC operating point from the signal excursion
+[@sedra2020microelectronic].
 
 Before calculating, consider a common-emitter stage connected to a 12 V supply.
 Predict what happens if:
@@ -82,9 +86,9 @@ the chapter, you should be able to:
 - turn amplifier requirements into a calculation, an executable cross-check,
   a measurement plan, and an uncertainty-guarded decision.
 
-The only direct prerequisites are A02 and F08. Use
-[M02](../appendices/m02-calculus-linear-differential.qmd) just in time for
-Taylor expansion and partial derivatives,
+The only direct prerequisites are A02 and F08. Refer to
+[M02](../appendices/m02-calculus-linear-differential.qmd) when the chapter first
+uses Taylor expansion and partial derivatives,
 [F05](../01-foundations/f05-energy-power-thermal.qmd) for dissipation, and
 [F06](../01-foundations/f06-measurement-uncertainty-debug.qmd) for the guarded
 decision.
@@ -526,8 +530,9 @@ $g_m$ is **transconductance**, measured in ampere per volt, or siemens. It is a
 local slope, not a stage voltage gain. The approximation is valid only when the
 quadratic and higher terms are acceptably small over the actual signal
 excursion, while the device remains in the same operating region. A “small”
-signal is therefore small relative to the local curvature and headroom, not
-merely small in everyday units [@sedra2020microelectronic].
+signal is therefore small relative to the local curvature and available
+headroom. Its value in volts or amperes alone does not establish that condition
+[@sedra2020microelectronic].
 
 For a multivariable output relation $I=F(V_1,V_2)$, the first-order increment is
 
@@ -805,7 +810,8 @@ $$ {#eq-a03-ce-output-resistance}
 
 Emitter degeneration and transistor reverse effects can change this result.
 With finite $r_o$, it connects collector to the moving emitter rather than
-collector to AC reference, so it cannot simply be folded into $R_C'$. Use the
+collector to AC reference. We therefore cannot combine it with $R_C'$ as a
+parallel resistance. Use the
 complete network in @fig-a03-ce-midband and nodal analysis. The test-source
 definition remains valid when a shortcut is not.
 
@@ -978,7 +984,7 @@ These low-input-resistance stages are specialized when used alone, but they are
 important for low-impedance sources and current transfer
 [@malvino2021electronic; @sedra2020microelectronic].
 
-#### A cascode is not merely a cascade
+#### Cascode and cascade connections are different
 
 A **cascade** connects the output port of one ordinary stage to the input port
 of another and must include the interstage loading derived later. A

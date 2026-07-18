@@ -6,11 +6,11 @@ status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter provides a complete instructional path: constitutive relations and
+This chapter provides a complete instructional path: device terminal relations and
 stored-energy derivations, initial-condition reasoning, RC and RL step responses,
 an executable cross-check, explicitly synthetic diagnostic data, switching
-protection, non-ideal behavior, a guarded discharge design, and a full exercise
-set. It remains subject to technical and editorial revision. Physical evidence
+protection, non-ideal behavior, a discharge design with uncertainty margin, and
+a full exercise set. It remains subject to technical and editorial revision. Physical evidence
 belongs in aligned Lab **L05**; calculations and synthetic data here do not
 qualify hardware. See the [reading roadmap](../roadmap.qmd) for status meanings.
 :::
@@ -37,8 +37,10 @@ capacitor voltage does not jump immediately to the source voltage; it approaches
 it. Replace the capacitor by an inductor. Now the branch current, rather than the
 element voltage, approaches its final value. Open the switch again and both
 elements can continue affecting the circuit after the source connection has
-changed. The schematic has changed instantaneously, but an energy-storing state
-has not.
+changed. A **state variable** is a quantity that records stored energy and helps
+determine what the circuit does next. Capacitor voltage and inductor current are
+state variables. The switch changes the topology at once, but these variables
+cannot jump unless the circuit applies an unbounded current or voltage impulse.
 
 Before calculating, predict the following for the circuits in this chapter.
 
@@ -90,7 +92,7 @@ Resistance relates voltage and current at an instant. An ideal capacitor or
 inductor relates a terminal quantity to the **rate of change** of an internal
 state. That state is what gives a first-order circuit memory.
 
-| Element | Stored state | Linear constitutive relation | Terminal relation | Energy for zero reference state |
+| Element | Stored state | Defining stored-quantity relation | Terminal relation | Energy for zero reference state |
 |---|---|---|---|---|
 | capacitor | charge separation $q$ | $q=Cv_C$ | $i_C=C\,\mathrm dv_C/\mathrm dt$ | $W_C=\tfrac12 Cv_C^2$ |
 | inductor | flux linkage $\lambda$ | $\lambda=Li_L$ | $v_L=L\,\mathrm di_L/\mathrm dt$ | $W_L=\tfrac12 Li_L^2$ |
@@ -472,7 +474,7 @@ $t=0^+$ agrees: TP1 is held initially at 0 V by the capacitor state, giving
 $(9.00~\text{V})/(2.00~\text{k}\Omega)=4.50$ mA through $R_1$ and zero through
 $R_2$. At final DC, the capacitor current is zero and both resistor currents are
 1.50 mA. Initial condition, final divider, Thévenin reduction, slope, and KCL
-therefore tell one consistent story.
+therefore give one consistent description of the circuit.
 
 ### Initial and final value procedure
 
@@ -1201,7 +1203,8 @@ divider final value and reduces the resistance seen by $C$.
 6. Name four records needed to make an oscilloscope transient reproducible.
 7. State the conditions under which series capacitors and parallel inductors may
    be replaced by the simple equivalents in the chapter table. Give one initial
-   charge/current or coupling condition that invalidates a naive reduction.
+   charge/current or coupling condition that invalidates this first-order
+   reduction.
 
 ### Estimation and calculation
 

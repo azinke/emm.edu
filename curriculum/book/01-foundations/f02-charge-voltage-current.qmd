@@ -31,16 +31,17 @@ touching metal [@iec60479; @iec61010].
 > quantity is actually moving, what is merely changing, and how fast does each one
 > happen?
 
-Ask three careful people what "flows" in a wire and you will get three answers:
-electrons, current, and energy. All three are involved, none of them is a synonym
-for the others, and the differences between them are exactly what a beginner keeps
-getting wrong — that a bulb "uses up current," that electrons "race at the speed of
-light," that a wire is always at "one voltage." This chapter replaces those slogans
-with four precisely defined quantities — **charge, electric field, potential
-difference, and current** — and, just as importantly, with the **reference
-directions** that let a signed measurement mean something. [F01](f01-safe-practice.qmd)
-promised that the sign of a reading is a claim about a direction you chose in
-advance; this is the chapter that makes good on it.
+Ask what "flows" in a wire and you may hear three answers: electrons, current,
+and energy. All three take part, but they are not synonyms. A lamp converts
+energy; it does not use up current. Individual electrons drift slowly; the
+electromagnetic disturbance propagates quickly. A real wire can also develop a
+voltage difference along its length.
+
+We will separate these ideas with four quantities: **charge, electric field,
+potential difference, and current**. We will also declare a **reference
+direction**, the direction we choose as positive before assigning a sign to a
+measurement. [F01](f01-safe-practice.qmd) introduced that habit. This chapter
+builds the physical meaning behind it.
 
 ::: {.callout-tip title="Make a prediction first"}
 A lamp sits at the far end of a 3 m cord. You close the switch. Commit to three
@@ -85,12 +86,11 @@ be able to:
 
 ## Relations among charge, electric field, voltage, and current
 
-Charge is the conserved property at the centre of the story; the other quantities
-describe its interaction or transport. @fig-quantity-chain lays out the vocabulary
-on one page: the **field** is force *per unit charge*, **potential difference** is
-energy transferred *per unit charge*, and **current** is the net charge crossing a
-chosen surface *per unit time*. Keep those distinctions; the rest of the chapter
-develops them.
+Charge is the conserved property from which we build the other quantities.
+@fig-quantity-chain connects the definitions on one page. The **field** is force
+per unit charge. **Potential difference** is energy transferred per unit charge.
+**Current** is the net charge crossing a chosen surface per unit time. The rest
+of the chapter develops each connection.
 
 ```{mermaid}
 %%| label: fig-quantity-chain
@@ -120,8 +120,8 @@ each "defining relation" column occupy the next three sections.
 
 ## Electric charge and conservation
 
-**Charge is a property of matter, like mass, but it comes in two signs and it is
-conserved.** Two facts make it the bedrock of the whole subject.
+**Charge is a conserved property of matter that comes in positive and negative
+signs.** Two facts make charge the starting point for circuit analysis.
 
 *Ordinary circuit charge transfer is quantized.* Electrons and ions carry charge
 in integer multiples of the elementary charge $e$, whose value the 2019 SI
@@ -131,9 +131,10 @@ e = 1.602176634\times10^{-19}~\text{C}.
 $$
 A proton carries $+e$ and an electron $-e$. Net charge transferred through an
 ordinary wire is therefore counted in steps of $e$. (Fractionally charged quarks
-are not isolated circuit carriers; some advanced solid-state systems have
-fractional *quasiparticle* excitations, outside this chapter's scope.) The coulomb
-is a very large count: one coulomb corresponds to
+do not appear as isolated circuit carriers. Some solid-state systems produce
+collective excitations with fractional effective charge, but ordinary wires and
+components do not require that description.) The coulomb is a very large count:
+one coulomb corresponds to
 $$
 \frac{1~\text{C}}{e} = \frac{1}{1.602176634\times10^{-19}}
    \approx 6.24\times10^{18}\ \text{elementary charges}.
@@ -537,15 +538,15 @@ accumulation; it is the zero-accumulation operating case of the conservation law
 
 ![Charge conservation at a junction. With the declared arrows, $I_1-I_2-I_3$ equals the rate of charge accumulation in the enclosed node region; the ideal-node approximation sets that rate to zero and gives $I_1=I_2+I_3$. The explicit dot marks a genuine three-conductor junction.](../../../build/circuits/f02-node-currents.png){#fig-node-currents fig-alt="Three resistor branches meet at a connection dot labelled node a. Current I1 points into the node; I2 and I3 point out. Their signed imbalance equals the rate of charge accumulation, and becomes zero for an ideal lumped node."}
 
-The single-potential node and the "same current everywhere in series" both rest on a
-hidden assumption: that the circuit is **lumped** — small enough that a signal crosses
-it in a time short compared with how fast the signal itself changes, so that "the
-voltage here" and "the voltage there" are the same *now*. Concretely, the lumped,
-ideal-wire description holds while the physical size $L$ of the relevant current
-loop is much smaller than the wavelength $\lambda = v/f$ of the highest significant
-frequency $f$
-(propagation speed $v\approx c$ on loose wire, slower in a dielectric)
-[@ulaby2015electromagnetics]; the common engineering line is
+The single-potential node and the "same current everywhere in series" both use a
+**lumped-circuit approximation**. In this approximation, a signal crosses the
+circuit much faster than the signal itself changes. We can then treat separated
+points on an ideal wire as having the same voltage at the same instant.
+
+To screen this approximation, compare the physical loop size $L$ with the
+wavelength $\lambda=v/f$ at the highest significant frequency $f$. The
+propagation speed $v$ is about $c$ on loose wire and lower in a dielectric
+[@ulaby2015electromagnetics]. The initial engineering screen is
 $$
 L \ll \lambda, \qquad
 L < \frac{\lambda}{10}\ \text{as an initial screening rule}
@@ -726,8 +727,8 @@ they are the same physics (moving $-q$ left $\equiv$ moving $+q$ right). The onl
 is *mixing* them mid-calculation. Pick conventional current, as this book does, and
 stay in it.
 
-The genuine failure is subtler and expensive, and it attacks the idealization at the
-heart of the chapter — that a wire is one node.
+The more useful failure case occurs when the ideal-wire approximation breaks.
+Then two points joined by a conductor no longer behave as one node.
 
 ::: {.callout-caution title="Worked diagnosis — one ground, or two?"}
 A 3.3 V sensor board shares a single return wire with a 0.5 A actuator back to the
@@ -745,21 +746,21 @@ These make different predictions, so a discriminating test exists. Estimate the
 suspect offset: a thin return, $R_\text{ret}\approx 25$ mΩ, at $I = 0.5$ A gives
 $I R_\text{ret} = 12.5$ mV — matching the symptom. Now vary the actuator current: drop
 it to 0.1 A and the offset falls to $\approx 2.5$ mV; raise it and the offset climbs
-in proportion. It tracks $I$ → the ground shift is confirmed and the sensor is
-exonerated. (The clinching direct measurement: a voltmeter from $G_1$ to $G_0$ reads
-the offset outright — the two "grounds" are simply not the same node.) This is the
-method of [F06](f06-measurement-uncertainty-debug.qmd) in miniature: *isolate a cause
-by finding evidence that separates it from its rivals.*
+in proportion. The dependence on $I$ supports the shared-return hypothesis
+rather than a fixed sensor offset. A direct voltmeter reading from $G_1$ to
+$G_0$ confirms the same voltage difference: the two points labelled "ground"
+are not the same node. This is the method of
+[F06](f06-measurement-uncertainty-debug.qmd) in miniature: isolate a cause with
+evidence that separates it from the alternatives.
 :::
 
 ![The failure of the single-node idealization. The return conductor has real resistance $R_\text{ret}$ and carries the full load current $I$, so the load-side ground $G_1$ is not at the reference potential $G_0$ but above it by $I R_\text{ret}$. Two points both labelled "ground" are then at different voltages — the equipotential-node assumption has quietly failed.](../../../build/circuits/f02-shared-return.png){#fig-shared-return fig-alt="A source VS drives current I through a load resistor R_L, which returns through a resistor R_ret representing the shared return conductor back to the reference ground G0. The load-side return node G1 is brought out to a labelled test point; the voltage from G1 to G0 equals I times R_ret rather than zero."}
 
 ## Worked design: return-conductor sizing and voltage-drop margin
 
-Engineering is deciding under constraints and defending the choice. The decision this
-chapter equips you to make is a small but ubiquitous one: **size a shared return
-conductor so that the "single ground node" idealization holds to within a declared
-budget** — turning the fault above from an accident into a specified margin.
+We will now use these ideas to **size a shared return conductor so that its
+voltage drop stays within a declared budget**. The calculation turns the
+ideal-wire assumption into a measurable design requirement.
 
 *Requirements (measurable, declared in advance).*
 
@@ -1023,21 +1024,20 @@ current-limited, extra-low-voltage boundary stated at its head.
 
 ## References
 
-Claims are cited at the point of use and prefer primary or canonical sources. The
-exact elementary charge, the ampere's 2019 definition, and SI usage rest on the
-defining brochure and the NIST guide [@bipm2019si; @nist811]; the first-principles
-treatment of charge, Coulomb's law, the electric field, the conservative electrostatic
-potential, and current density follows the standard electrodynamics reference
-[@griffiths2017electrodynamics]; free-carrier densities and resistivities of real
-materials are drawn from the standard solid-state reference [@kittel2005solidstate],
-nominal AWG dimensions from the NBS copper-wire tables
-[@nbs1956copperwire], and intrinsic-semiconductor behavior from a canonical
-microelectronics text [@sedra2020microelectronic]; the
-lumped-versus-distributed criterion and signal-propagation speed follow an
-applied-electromagnetics reference
-[@ulaby2015electromagnetics]; and the bench-first working method and the danger of
-low-voltage energy follow the standard practical reference and the physiological-current
-and laboratory-equipment safety standards
-[@horowitz2015art; @iec60479; @iec61010]. The complete, growing
-[bibliography](../references.qmd) collects these. None of them, and neither this book,
-substitutes for a datasheet, a governing standard, or supervised laboratory training.
+Claims are cited at the point of use. The main sources serve these roles:
+
+- the SI brochure and NIST guide define the elementary charge, ampere, and unit
+  conventions [@bipm2019si; @nist811];
+- the electrodynamics reference supports charge, fields, potential, and current
+  density [@griffiths2017electrodynamics];
+- the solid-state and microelectronics references support material and
+  semiconductor behavior [@kittel2005solidstate; @sedra2020microelectronic];
+- the NBS tables provide nominal AWG dimensions [@nbs1956copperwire];
+- the applied-electromagnetics reference supports propagation speed and the
+  lumped-versus-distributed screen [@ulaby2015electromagnetics]; and
+- the practical and safety references support the bench method and its safety
+  boundary [@horowitz2015art; @iec60479; @iec61010].
+
+The complete [bibliography](../references.qmd) collects these sources. Neither
+the sources nor this book replace a device datasheet, a governing standard, or
+supervised laboratory training.

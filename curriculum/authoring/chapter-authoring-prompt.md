@@ -5,6 +5,10 @@ taking it from outline to a complete, teachable `draft` that reads as clean lect
 material. Later chapters are more technical than the foundations — so the layout is
 yours to design, but the conventions and the factual bar below are fixed.
 
+Write in the reader-facing style of *Dive Into Systems*: an expert peer builds
+the idea with the student, one visible step at a time. Technical depth must make
+the explanation clearer, not more distant.
+
 ## Chapter to write
 - **Chapter ID:** `<CHAPTER_ID>`   (e.g. A01)
 - **Working directory:** `/home/azinke/versioned/github/emm.edu`
@@ -21,6 +25,42 @@ yours to design, but the conventions and the factual bar below are fixed.
 6. The nearest completed prerequisite chapter and relevant downstream outlines —
    preserve notation, do not re-teach their scope, and hand forward exactly what
    later chapters expect.
+
+## Invariant 0 — teach the reader in the room
+
+- Use active voice. Name what acts: the source drives current, the transistor
+  changes the load current, we choose a reference, and you compare the
+  prediction with the measurement.
+- Keep sentences punchy and direct. Give each sentence one main job. Split a
+  sentence that tries to introduce a mechanism, qualify it, and state its
+  consequence at once.
+- Define each technical term in **bold** at first use in the chapter, followed
+  immediately by a plain-language meaning. Add the formal definition or equation
+  after the reader knows what physical idea the term names.
+- Build every abstraction from something observable. Use the sequence physical
+  object → terminal behavior → compact description → circuit interaction →
+  system consequence → test whenever it fits the topic.
+- Bridge every scale change in prose. When a diode becomes a rectifier, explain
+  how its one-way terminal behavior selects parts of the input waveform. When a
+  transistor becomes an amplifier, explain how bias places the device where a
+  small input change can control a larger output change. Never make the schematic
+  carry that conceptual jump by itself.
+- Ask for a sign, direction, trend, limiting case, or order-of-magnitude
+  prediction before a central calculation. Reconcile the result with that
+  prediction afterward.
+- Avoid localized idioms, decorative metaphors, inflated vocabulary, and
+  throat-clearing. Do not write “It is important to note,” “Obviously,”
+  “Simply,” or “As we all know.”
+- Never use “beyond the scope” as a substitute for explanation. Give the shortest
+  causal account that supports the current result. Then link to the later chapter
+  and state what deeper question it answers.
+- Keep paragraphs focused. Use bullets for alternatives, features, or failure
+  modes. Use numbered lists only when order matters.
+- Anchor topology with a circuit diagram, time behavior with a waveform, and
+  operating regions or trade-offs with a graph or table. Introduce what the reader
+  should inspect, then interpret what the visual shows. During drafting, leave an
+  explicit `[Diagram cue: ...]`, `[Waveform cue: ...]`, or `[Graph cue: ...]`
+  when an essential visual is missing; replace it before review.
 
 ## Invariant 1 — the book's thesis (must run through every chapter)
 A circuit is **one object described in many languages** (physical, schematic,
@@ -321,7 +361,10 @@ prose that never gives the reader enough mathematics to reproduce the result.
 4. Audit terminology and provenance. Distinguish unallocated quantities from
    independently evaluated closure residuals; chapter calculations from datasheet
    limits; typical values from guaranteed bounds; and surface observations from
-   inaccessible internal quantities.
+   inaccessible internal quantities. Include front matter, learning outcomes,
+   callouts, captions, tables, and exercises in the first-use terminology audit.
+   A term introduced in a learning outcome still needs a plain-language
+   definition there or must be moved to the main explanation.
 5. Audit evidence. Separate prediction, synthetic teaching data, simulation,
    authentic measurement, and qualified claim. Make the prose say exactly which
    rung has actually been reached.
@@ -394,14 +437,18 @@ prose that never gives the reader enough mathematics to reproduce the result.
 14. Read the rendered chapter once as a student: can every central result be
    recomputed, can every sign be interpreted, and is it clear what is exact,
    illustrative, measured, assumed, or still unverified? Read the table of contents
-   once more: does it still teach the chapter's progression?
+   once more: does it still teach the chapter's progression? Inspect sentences
+   longer than about 35 words and semicolon chains. Split them unless their
+   structure genuinely helps the reader. Check that no idiom or metaphor carries
+   a technical claim that should be stated literally.
 15. Report the layout you chose and why, meaningful review-driven corrections, any
    new `references.bib` keys, and the verification results.
 
 ## Quality bar
 Correct, specific, and thorough — quality lecture material a student could learn
 from and an instructor could teach from unchanged. Depth and factual precision beat
-brevity; a generic or hand-wavy chapter is a failed chapter. Completeness does not
+brevity, but precision does not excuse dense or detached prose. A generic,
+hand-wavy, or needlessly difficult chapter is a failed chapter. Completeness does not
 mean mentioning every adjacent topic. It means that the chapter's promised exit
 capability is fully supported: prerequisites are named, central quantities are
 defined, equations are derived and demonstrated, evidence is honestly classified,

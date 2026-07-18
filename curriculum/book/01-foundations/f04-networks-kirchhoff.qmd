@@ -65,9 +65,10 @@ should be able to:
 - **identify nodes, branches, paths, loops, meshes, and ports**, select a
   reference node without confusing it with protective earth, and declare all
   signed quantities before using them;
-- **derive and apply KCL and KVL within the lumped-circuit boundary**, combining
-  them with resistor and source relations to solve and verify one- and two-node
-  networks, including Millman's shortcut for parallel source branches;
+- **derive and apply Kirchhoff's current law (KCL) and Kirchhoff's voltage law
+  (KVL) within the lumped-circuit boundary**, combining them with resistor and
+  source relations to solve and verify one- and two-node networks, including
+  Millman's shortcut for parallel source branches;
 - **choose between node-voltage and planar mesh-current analysis**, including
   the supernode and supermesh extensions, and interpret a negative solution;
 - **use superposition only for linear voltage and current responses**, deactivate
@@ -97,11 +98,11 @@ connectivity. The following vocabulary makes that statement precise:
 - A **port** is a pair of terminals through which an external circuit interacts
   with a network. Port voltage and port current must be declared together.
 
-The **reference node** is assigned $0$ V so every other node voltage has a common
-coordinate. This is an algebraic choice. It need not be earth, chassis, protective
-earth, or a magical sink into which current disappears. Choosing another
-reference shifts all node potentials by one constant but leaves every branch
-voltage and current unchanged.
+The **reference node** is the node we assign $0$ V so that every other node
+voltage has a common coordinate. This is an algebraic choice. The reference node
+need not be earth, chassis, or protective earth, and current does not disappear
+there. Choosing another reference shifts every node potential by one constant.
+It leaves every branch voltage and current unchanged.
 
 For a connected network with $n$ nodes and $b$ branches, there are $n-1$
 independent node conservation equations and $b-n+1$ independent loop equations.
@@ -187,10 +188,12 @@ $$
 $$ {#eq-f04-kvl-lumped}
 
 This is an exact algebraic consequence of single-valued node potentials inside
-the lumped description. A practical sign rule is simple: while traversing a
-branch, crossing from its marked $-$ terminal to $+$ is a rise and contributes
-$+v$; crossing from $+$ to $-$ is a drop and contributes $-v$. One may reverse
-all traversal signs and obtain the same physical solution.
+the lumped description. Use this sign rule while traversing a branch:
+
+- crossing from its marked $-$ terminal to $+$ is a rise and contributes $+v$;
+- crossing from $+$ to $-$ is a drop and contributes $-v$.
+
+Reversing every traversal sign gives the same physical solution.
 
 The electromagnetic boundary matters. Give the loop an orientation and choose
 its positive surface normal by the right-hand rule. Faraday's law states
@@ -201,8 +204,9 @@ $$
 $$ {#eq-f04-faraday}
 
 Significant changing magnetic flux linked by the physical loop makes the electric
-field path-dependent. A naïve zero-sum treatment of resistor drops then omits an
-induced electromotive contribution. Lumped circuit analysis remains useful when
+field path-dependent. A zero-sum calculation that includes only resistor drops
+then omits the induced electromotive contribution. Lumped circuit analysis
+remains useful when
 geometry is electrically small and induced or stored-energy effects are
 negligible at the timescale of interest, or when those effects are represented by
 explicit inductive and coupled branches [@griffiths2017electrodynamics;
@@ -214,7 +218,8 @@ networks, so the right side of @eq-f04-faraday is zero.
 Node-voltage analysis is usually the first method to try because a circuit with
 $n$ nodes needs only $n-1$ unknown node voltages. Choose node $0$ as the
 reference. For a resistor $R_{km}$ from node $k$ to node $m$, declare branch
-current $i_{km}$ positive from $k$ to $m$. The linear constitutive relation is
+current $i_{km}$ positive from $k$ to $m$. The linear **component relation**, the
+equation that connects the resistor's terminal voltage and current, is
 
 $$
 i_{km}=\frac{v_k-v_m}{R_{km}}
@@ -445,14 +450,14 @@ A current source shared by two meshes prevents writing a voltage drop for that
 branch. Form a **supermesh** around the outer perimeter, omitting the current
 source from the KVL traversal, and add its current constraint. For a source
 $I_X$ directed with mesh 1 and against mesh 2 in the shared branch,
-$I_1-I_2=I_X$. A source on the outer boundary simply fixes the adjacent mesh
-current.
+$I_1-I_2=I_X$. A current source on the outer boundary directly sets the
+adjacent mesh current.
 
 ### Choosing between node-voltage and mesh-current analysis
 
 | Situation | Usually efficient | Reason |
 |---|---|---|
-| Obvious series/parallel structure | direct reduction | fewest equations and clearest physical reading |
+| Clear series/parallel structure | direct reduction | fewest equations and clearest physical reading |
 | Few essential nodes; many current sources | node voltage | roughly one unknown per non-reference node |
 | Planar circuit; few meshes; many voltage sources | mesh current | roughly one unknown per mesh |
 | Need each source's contribution | superposition | isolates linear cause while retaining the same network |
@@ -526,7 +531,8 @@ Their sum is $6.000$ V, exactly the direct solution.
 Power does **not** superpose because it is a product. For the load,
 $P_L=v^2/R_L=12.0$ mW using the total voltage. Squaring the two separate
 contributions and adding gives only $10.0$ mW; the missing cross-term
-$2v_{V_S}v_{I_S}/R_L$ is why source-by-source powers cannot simply be added.
+$2v_{V_S}v_{I_S}/R_L$ shows why adding source-by-source powers gives the wrong
+total.
 
 ## Thévenin and Norton equivalents preserve linear port behavior
 

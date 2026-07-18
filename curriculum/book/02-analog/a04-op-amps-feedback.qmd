@@ -8,7 +8,7 @@ status: draft
 ::: {.callout-note title="Chapter maturity — draft"}
 This chapter develops a complete instructional path from differential gain and
 loop gain to closed-loop amplifier functions, frequency shaping, practical
-limits, a datasheet-based design, and a guarded acceptance decision. Numerical
+limits, a datasheet-based design, and an uncertainty-aware acceptance decision. Numerical
 records identified as **illustrative** or **synthetic** are not measurements.
 Physical evidence belongs in aligned Lab **L07**. The chapter remains subject to
 technical and editorial revision; see the
@@ -61,12 +61,12 @@ amplifier:
 - the inverting and non-inverting input connections are exchanged.
 
 “The op amp makes its inputs equal” cannot answer these questions. The device
-produces output from the **difference** between its input voltages; the closed
-loop can make that difference small only while the loop has the correct sign,
-enough gain, and enough **phase margin** (the angular distance between the loop
-phase and $-180^\circ$ where the loop-gain magnitude equals one). The output
-must also have an attainable operating point. The useful engineering habit is
-therefore:
+produces output from the **difference** between its input voltages. The closed
+loop can make that difference small only while the loop has the correct sign and
+enough gain. It also needs enough **phase margin**, the angular distance from the
+loop phase to $-180^\circ$ at the frequency where loop-gain magnitude equals
+one. Finally, the demanded output must lie inside the device's attainable
+voltage and current range. We will use this engineering habit:
 
 > Assume closed-loop operation, derive the demanded voltages and currents, then
 > verify every condition that made the assumption possible.
@@ -85,12 +85,14 @@ After completing the chapter, you should be able to:
   constraint, and the conditions under which “virtual short” and “virtual
   ground” are valid approximations;
 - derive and use inverting, non-inverting, follower, summing, difference,
-  transimpedance, low-pass, and practical integrating configurations;
+  **transimpedance** (output voltage per input current), low-pass, and practical
+  integrating configurations;
 - use an illustrative differential-pair, compensated-gain-stage, and output
   buffer model to connect internal mechanisms to external specifications
   without mistaking that model for a commercial-device schematic;
 - distinguish a feedback amplifier from an open-loop comparator and design
-  simple hysteresis with declared thresholds;
+  simple **hysteresis**, two switching thresholds that depend on sweep direction,
+  with declared threshold values;
 - calculate static error from finite open-loop gain, input offset voltage,
   input bias current, resistor tolerance, common-mode rejection, and output
   loading;
@@ -110,9 +112,11 @@ noise, distortion, and stability where they bound those stages.
 nonlinearity, dynamic-range, bandwidth, and stability budgets. Dedicated
 comparators, instrumentation amplifiers, sensor excitation, calibration,
 grounding, shielding, and protection belong principally to
-[A05](a05-sensors-instrumentation.qmd). Current-feedback amplifiers and
-specialized RF techniques require their own device methods and are not covered
-by the constant gain-bandwidth approximation used here.
+[A05](a05-sensors-instrumentation.qmd). A current-feedback amplifier controls its
+internal correction current differently from the voltage-feedback devices used
+here, so the constant gain-bandwidth approximation does not describe it.
+Specialized RF amplifiers also require device-specific feedback and stability
+methods.
 Detailed differential pairs, current mirrors, active loads, output stages, and
 IC process and layout choices belong to
 [A07](a07-integrated-circuits.qmd).
@@ -169,11 +173,13 @@ $$ {#eq-a04-open-loop}
 where $v_o$ is positive at output TPO relative to TP0 and
 $A_{\mathrm{OL}}>0$ is dimensionless incremental open-loop voltage gain.
 Equivalently,
-$v_o-V_{OQ}=A_{\mathrm{OL}}(v_d-V_{dQ})$. The affine form is essential:
-$v_d$ is reference-invariant, whereas the numerical value of $v_o$ changes if
-TP0 changes. The equation is not a conservation law and is not valid for
-arbitrary output. It describes a bounded linear operating region. The supply
-rails deliver the output energy; the input signal controls that delivery.
+$v_o-V_{OQ}=A_{\mathrm{OL}}(v_d-V_{dQ})$. This is an **affine relation**: a
+linear change is added to a fixed operating-point offset. That form matters
+because $v_d$ does not change when we choose a different reference, whereas the
+numerical value of $v_o$ does. The equation is not a conservation law and is
+not valid for arbitrary output. It describes a bounded linear operating region.
+The supply rails deliver the output energy; the input signal controls that
+delivery.
 
 The conceptual transfer in @fig-a04-open-loop-transfer shows why open-loop
 linear operation is so difficult to observe. If the loaded output interval is
@@ -1352,8 +1358,8 @@ isolation resistor can separate the capacitive load from the output at high
 frequency, but it also creates load-dependent output error and must be chosen
 from device-specific analysis or guidance [@king1997capacitive].
 
-The comparison in @fig-a04-capacitive-load shows why the phrase “add an isolation resistor” is
-incomplete. Sensing before $R_{\mathrm{iso}}$ leaves the load capacitor
+The comparison in @fig-a04-capacitive-load shows why “add an isolation resistor”
+is not a complete design rule. Sensing before $R_{\mathrm{iso}}$ leaves the load capacitor
 largely outside the high-frequency feedback path but permits load-dependent
 voltage error after the resistor. Remote sensing after $R_{\mathrm{iso}}$
 corrects low-frequency load error, yet places the resistor–capacitor network
@@ -1788,13 +1794,18 @@ stage, and output buffer explain the causal origins of open-loop gain, offset,
 common-mode range, GBP, slew rate, recovery, and output limits without
 pretending to reproduce a commercial CMOS device.
 
-Every ideal result demands checks of input common mode, differential input,
-output swing and current, source and load, offset and bias currents, resistor
-tolerance, bandwidth, slew rate, settling, overload recovery, noise gain,
-random-noise bandwidth, small-signal distortion, stability, thermal
-dissipation, supply decoupling, layout, and measurement loading. Typical
-datasheet values establish expectations, not guarantees. A defensible design
-keeps schematic, equations, executable arithmetic, datasheet conditions,
+Every ideal result requires checks in four groups:
+
+- **input and output range:** common-mode voltage, differential input, output
+  swing, output current, source, and load;
+- **static error:** offset, bias current, and resistor tolerance;
+- **dynamic behavior:** bandwidth, slew rate, settling, overload recovery, noise
+  gain, noise bandwidth, distortion, and stability; and
+- **physical realization:** dissipation, supply decoupling, layout, and
+  measurement loading.
+
+Typical datasheet values establish expectations, not guarantees. A defensible
+design keeps schematic, equations, executable arithmetic, datasheet conditions,
 physical test points, uncertainty, and decision rule synchronized.
 
 ## Exercises

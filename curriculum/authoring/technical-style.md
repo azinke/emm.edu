@@ -1,5 +1,97 @@
 # Technical style
 
+## Reader-facing voice
+
+- Write as a knowledgeable peer who is working through the circuit with the
+  reader. Use **we** when author and reader take a reasoning step together, and
+  use **you** for a prediction, check, or action the reader performs. Do not
+  address the reader merely to make a warning sound conversational.
+- Prefer active voice and name the actor: “We measure TP1 relative to TP0,” “the
+  source drives current,” and “the probe adds capacitance.” Use passive voice
+  only when the actor is unknown or genuinely irrelevant.
+- Keep sentences direct. Put one main claim in each sentence. Split a sentence
+  when it carries a mechanism, a qualification, and a consequence at once.
+  Short sentences should still show the logical link: *because*, *therefore*,
+  *but*, and *so* are useful engineering words.
+- Open with the physical situation or question. Then give the term, mechanism,
+  or equation that explains it. Avoid throat-clearing such as “It is important
+  to note,” “Clearly,” “Obviously,” or “As everyone knows.”
+- Avoid localized idioms, cute metaphors, and inflated vocabulary. A short
+  physical analogy can help, but state where it stops matching the circuit.
+- Define a technical term at first use in the chapter. Bold the term and give a
+  compact plain-language meaning in the same sentence: “**Impedance** is the
+  total opposition a circuit presents to sinusoidal current.” Follow with the
+  precise mathematical definition when the chapter needs it.
+- Do not use “just,” “simply,” “trivial,” or “obvious” to hide a reasoning step.
+  If the step is short, show it. If it depends on earlier material, name the
+  exact result and link to it.
+- Do not dismiss a mechanism with “beyond the scope” or a similar placeholder.
+  Explain the minimum causal chain needed for the present result. Then name the
+  later chapter that develops the topic and state what that later treatment
+  adds.
+
+## Conceptual pacing
+
+- Move in visible steps: physical object → terminal behavior → compact
+  description → circuit interaction → system consequence → test. When a chapter
+  moves from a component to a circuit or from a circuit to a system, add the
+  bridge in prose. Never rely on the schematic alone to make that connection.
+- Introduce one new abstraction at a time. Tie it to a quantity the reader can
+  point to on a schematic, waveform, table, or physical assembly before using it
+  in a longer derivation.
+- Before a central calculation, ask for a sign, trend, limiting case, or order of
+  magnitude. After the calculation, compare the result with that prediction and
+  explain what the number means in the circuit.
+- State why each non-ideal effect enters. For example, do not only add an output
+  resistance to an amplifier equivalent; explain which internal or terminal
+  behavior makes the ideal zero-resistance assumption fail.
+- When an explanation branches into several cases, use bullets for alternatives
+  and numbered steps for a sequence. Keep paragraphs focused enough that a
+  self-studying reader can stop and check one claim at a time.
+
+## Visual anchors
+
+- Place a schematic beside the first explanation that depends on topology. Place
+  a waveform beside the first explanation that depends on time, phase, clipping,
+  or switching order. Place a graph or table beside the first comparison that
+  depends on a trend or operating region.
+- Lead into every visual with a question or observation that tells the reader
+  what to inspect. Follow it with the conclusion the visual supports. A figure
+  must participate in the explanation; it is not decoration.
+- During drafting, use an explicit bracketed cue such as
+  `[Diagram cue: show the source, return path, and declared current direction.]`
+  when the required visual does not yet exist. Replace the cue with a sourced,
+  accessible figure before the chapter reaches review status.
+- Use a small ASCII schematic only when it remains unambiguous in plain text and
+  print. Use CircuitikZ for component-level circuits and a recoverable vector
+  figure for waveforms or diagrams whose geometry carries meaning.
+
+## Readability pass
+
+- Read each paragraph as a self-study unit. Its first sentence should establish
+  the point, its middle should explain or demonstrate it, and its last sentence
+  should interpret the result or hand the reader to the next step.
+- Include front matter, learning outcomes, callouts, captions, tables, and
+  exercises in the readability pass. These locations often introduce a term
+  before the main explanation does.
+- Break dense blocks before the reader must track more than one equation,
+  operating condition, or causal branch at once.
+- Inspect every sentence longer than about 35 words. Length alone is not an
+  error, but a long sentence often contains several claims that should become
+  separate sentences or a list.
+- Treat semicolons as a warning during revision. Keep one when it makes a
+  two-part comparison clearer. Replace a chain of semicolons with bullets or
+  shorter sentences.
+- Use bold text for a term when it is first defined, not as general emphasis.
+  Use italics sparingly for a contrast or a named assumption.
+- Keep notation precise, but prefer words when a symbol would appear only once.
+  Never make the reader decode notation that does no later work.
+- Write for readers who may be learning electronics and technical English at the
+  same time. Prefer literal descriptions over idioms such as “the reading is
+  fiction,” “the design has no legs,” or “this buys headroom.”
+- Keep the correct technical term when it matters. Define it in plain language
+  rather than replacing it with a vague everyday word.
+
 - Define voltage polarity and current direction before applying sign
   conventions.
 - Use SI units, dimensional checks, and honest significant figures.

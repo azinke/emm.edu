@@ -33,14 +33,17 @@ isolation, fault analysis, and qualified procedures [@iec61010].
 
 > How can a small electrical signal control a larger current or voltage safely?
 
-Connect a transistor between a current-limited supply and a lamp, resistor, or
-relay coil. A control signal too small to power the load directly can command
-nearly the entire load current. Remove the control and the current nearly stops.
-That observable behavior tempts two incomplete explanations: “a transistor is a
-switch,” or “a transistor amplifies current.” Neither statement says which
-terminal controls which path, which operating region is intended, how much drive
-is required, where the load line places the operating point, or what happens
-during the transition.
+A **transistor** is a semiconductor device in which one terminal signal controls
+current through another terminal path. Connect one between a current-limited
+supply and a lamp, resistor, or relay coil. A control signal too small to power
+the load directly can command nearly the entire load current. Remove the control
+and the current nearly stops.
+
+This behavior can lead to two incomplete explanations: “a transistor is a
+switch,” or “a transistor amplifies current.” Neither statement identifies the control
+terminal, the controlled path, or the intended operating region. Neither tells
+us how much drive the device needs, where the load line places the operating
+point, or what happens during the transition.
 
 Before reading further, predict four changes:
 
@@ -55,7 +58,7 @@ Before reading further, predict four changes:
 The useful explanation will make the physical device, terminal references,
 schematic, equations, datasheet conditions, switching waveforms, and thermal
 boundary agree. A mismatch among them is evidence of a wrong operating region,
-insufficient drive, stored charge, parasitic inductance, temperature rise, or a
+insufficient drive, stored charge, stray inductance, temperature rise, or a
 rating used outside its test condition.
 
 ## Learning outcomes
@@ -64,8 +67,8 @@ This chapter assumes [A01](a01-semiconductor-diodes.qmd): junction bias,
 depletion, operating points, diode recovery, and conditional datasheet evidence.
 It also assumes [F05](../01-foundations/f05-energy-power-thermal.qmd): signed
 power, stored energy, thermal resistance, and margin. Use
-[F07](../01-foundations/f07-capacitors-inductors-transients.qmd) as
-just-in-time support for exponentials, inductor-current continuity, and charge,
+[F07](../01-foundations/f07-capacitors-inductors-transients.qmd) when the analysis
+needs exponentials, inductor-current continuity, and charge,
 and [M02](../appendices/m02-calculus-linear-differential.qmd) for derivatives
 and integrals. After completing the chapter, you should be able to:
 
@@ -83,10 +86,12 @@ and integrals. After completing the chapter, you should be able to:
 - trace an inductive load's current and energy before and after turn-off, then
   select and verify a complete clamp or freewheel path;
 - separate conduction, transition, control-drive, and leakage loss; screen
-  voltage, current, safe operating area, and temperature without multiplying
-  unrelated headline ratings; and
-- turn a switching requirement into a datasheet-based selection and a guarded
-  acceptance test with explicit limits, conditions, loading, and uncertainty.
+  voltage, current, **safe operating area** (the allowed combinations of device
+  voltage, current, and time), and temperature without multiplying unrelated
+  headline ratings; and
+- turn a switching requirement into a datasheet-based selection and an
+  acceptance test that includes explicit limits, conditions, loading, and
+  uncertainty.
 
 ::: {.callout-note title="Scope boundary — switching here, amplification next"}
 This chapter establishes transistor physics, large-signal regions, controlled
@@ -206,7 +211,7 @@ sweeps arriving electrons into the collector. Base current is still required:
 it supplies the hole-injection and recombination components that the simplified
 blue electron path does not erase.
 
-In that region, a useful large-signal constitutive approximation is
+In that region, a useful large-signal terminal approximation is
 
 $$
 I_C\approx I_S\exp\left(\frac{V_{BE}}{nV_T}\right),
@@ -224,9 +229,10 @@ and junction temperature all change it. A datasheet $h_{FE}$ test in
 forward-active operation does not guarantee saturation behavior
 [@sedra2020microelectronic; @onsemi2n3904].
 
-The base current is therefore not a steering current that magically releases an
-unbounded collector current. The external collector circuit and the transistor
-output characteristics jointly set the operating point.
+Base current does not release an unbounded collector current. It changes the
+transistor's collector characteristic. The external collector circuit then
+intersects that characteristic at the operating point, so the device and the
+load set the current together.
 
 ### Field-effect channel control and insulated-gate charge
 
@@ -303,7 +309,7 @@ Transistor names combine several axes: carrier mechanism, terminal structure,
 semiconductor material, application role, and optimization. They are not one
 exclusive taxonomy [@sze2006physics; @baliga2019power].
 
-| Family or name | Control and characteristic behavior | Decisive datasheet evidence | Important boundary or trap |
+| Family or name | Control and characteristic behavior | Decisive datasheet evidence | Important design limit |
 |---|---|---|---|
 | NPN / PNP BJT | base–emitter injection controls collector current | $V_{CEO}$, $I_C$, $h_{FE}$ conditions, forced-drive $V_{CE(sat)}$, switching storage, SOA | $h_{FE}$ is not fixed; reverse base–emitter voltage is usually small |
 | Darlington pair | two BJTs multiply current gain | required base current, larger $V_{CE(sat)}$, stored charge, integrated resistors | high gain does not imply low on-state loss or fast turn-off |

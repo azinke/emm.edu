@@ -27,13 +27,12 @@ the safety boundary is inadequate, the correct engineering action is to
 > How do you investigate an electrical system without creating a new hazard or
 > corrupting the evidence?
 
-Two failures haunt every bench. The first is **physical**: a circuit that was
-supposed to teach you something injures you, damages an instrument, or destroys
-the very part you were studying. The second is quieter and, over a career, far
-more common: the measurement itself changes the system, and you draw a confident
-conclusion from a number that was never true. A good engineer is recognizable
-long before the design review — by how they approach a powered board and how
-much they trust their own meter.
+Two kinds of failure can occur at the bench. The first is **physical**: the
+circuit injures someone, damages an instrument, or destroys the part under test.
+The second is **evidential**: the measurement changes the circuit, but we treat
+the displayed number as though it described the undisturbed system. Safe,
+trustworthy work requires us to control both failures before we touch a probe to
+the circuit.
 
 Picture the situation concretely. A small development board is in front of you,
 a bench supply on its left, a digital multimeter on its right. A colleague says a
@@ -75,8 +74,9 @@ comfort with algebra, ratios, and scientific notation
   current limits, and state explicit *stop conditions* before applying power
   (builds on the energy model above);
 - **reason quantitatively in SI**, carrying units through a calculation,
-  checking dimensional homogeneity, and reporting an honest number of
-  significant figures [@bipm2019si; @nist811];
+  checking that both sides of an equation have compatible units, and reporting
+  only as many significant figures as the evidence supports
+  [@bipm2019si; @nist811];
 - **distinguish equality, approximation, tolerance, bound, and uncertainty**,
   and attach a defensible uncertainty to a measured value [@jcgm2008gum;
   @jcgm2012vim];
@@ -94,11 +94,10 @@ later part of the book.
 
 ## Energy paths and hazard control
 
-A hazard is not a mystical property of "electricity." It is **energy that can
-reach a target along a path**. Break any one link — the source, the path, or the
-exposure — and the hazard is controlled. That is the whole logic of electrical
-safety, drawn in @fig-hazard-model: under each stage sits the control that weakens
-or removes it.
+An electrical **hazard** is energy that can reach a target along a path. We can
+control the hazard by limiting the source, interrupting the path, or protecting
+the target. The diagram below separates those three parts. Under each part, it
+shows a control that weakens or removes the energy path.
 
 ```{mermaid}
 %%| label: fig-hazard-model
@@ -170,7 +169,7 @@ limit, never intentional body contact, and stop conditions fixed before power.
 ::: {.callout-important title="Current limiting bounds sustained fault current"}
 A bench power supply has two knobs, and the second one is the safety feature. Set
 the **voltage limit** to the value the circuit needs; set the **current limit**
-(sometimes labelled *I~limit~* or *compliance*) to just above the current the
+(sometimes labelled *I~limit~*) to just above the current the
 healthy circuit should draw. On a sustained low-resistance fault, the control
 loop leaves constant-voltage mode, reduces its output, and indicates CC or
 current-limit operation. The specified limit bounds the regulated steady fault
@@ -180,18 +179,23 @@ limiting is therefore a central low-voltage bench control, not a substitute for
 bounding stored energy, contact heating, and the complete fault path.
 :::
 
-**Stored energy outlives the switch.** "Powered off" is not "safe." A capacitor
+**Stored energy remains after switching off.** "Powered off" is not "safe." A capacitor
 holds energy $E=\tfrac12 C V^2$ after the supply is disconnected, and it will
 deliver that energy into the first low-resistance path it finds — including a
 finger or a shorting screwdriver. A de-energized board is only genuinely
-de-energized once its storage elements are *proven* discharged. The disciplined
-version of this, scaled down from installation practice, is the **five-step
-de-energizing sequence** [@en50110]: (1) disconnect the source completely;
-(2) secure it against reconnection; (3) *verify* the absence of voltage with a
-tester you have just checked works; (4) discharge and, where relevant, ground
-stored energy; and (5) protect against anything still live nearby. On a hobby
-bench that collapses to *unplug, wait, and measure to confirm zero before you
-trust it* — but the logic is identical, and step 3 is never optional.
+de-energized once its storage elements are *proven* discharged. Installation
+practice uses a five-step de-energizing sequence [@en50110]:
+
+1. Disconnect the source completely.
+2. Secure the source against reconnection.
+3. Verify the absence of voltage with a tester whose operation you have checked.
+4. Discharge stored energy and, where required, connect it to ground.
+5. Protect the work area from anything nearby that remains energized.
+
+At an extra-low-voltage teaching bench, we apply the same logic: disconnect,
+wait for the stated discharge time, and measure before touching. We verify the
+absence of voltage instead of assuming that the switch removed every energy
+source.
 
 **Authorization and stop conditions come before power, not after trouble.** Two
 sentences, written in your notebook before you energize, prevent most bench
@@ -201,15 +205,15 @@ incidents:
   level** using **this apparatus**." A chapter, a datasheet, or a forum post is
   never authorization; a supervisor, a lab rule, or a signed procedure is.
 - *Stop conditions:* the pre-declared observations that end the experiment
-  immediately — a smell, a sound, a temperature you can no longer touch, a
-  current limit that trips, a reading outside a range you predicted, or simply
-  the boundary of what you were authorized to do.
+  immediately — smoke, odor, discoloration, an unexpected sound, unplanned rapid
+  temperature rise, a current limit that trips, a reading outside the predicted
+  range, or the boundary of the authorized work.
 
 ## SI units and quantitative discipline
 
-The second sub-model is arithmetic hygiene. Engineering runs on the International
-System of Units, and the discipline is not bureaucratic: it is how you catch an
-error at your desk instead of on the bench.
+The second control is disciplined arithmetic. Engineering uses the
+International System of Units (SI). Carrying those units through a calculation
+helps us catch an error before the circuit exposes it.
 
 Seven base units define everything else [@bipm2019si]:
 
@@ -248,18 +252,17 @@ rather than trailing zeros. The ones you will meet daily:
 | Prefix | pico | nano | micro | milli | kilo | mega | giga | tera |
 | Symbol | p | n | µ | m | k | M | G | T |
 
-(The SI even added `ronna`/`quetta` and `ronto`/`quecto` at 10^±27 and 10^±30 in
-2022 — a reminder that the system is maintained, not frozen [@bipm2019si].) Note
-the case discipline that trips up beginners: **`m` is milli, `M` is mega** — a
-factor of $10^{9}$ between them. A "1 mΩ" shunt and a "1 MΩ" isolation resistor
-differ by a billion; writing one for the other is not a typo, it is a design
-fault.
+Letter case changes the multiplier: **`m` is milli and `M` is mega**. They
+differ by a factor of $10^{9}$. A 1 mΩ shunt and a 1 MΩ isolation resistor
+therefore differ by a billion. Confusing the symbols changes the circuit, not
+only its notation.
 
 Three habits make units *do work* for you:
 
-**Dimensional homogeneity.** Both sides of a correct equation, and every term in
-a sum, must carry the same units. This catches errors for free. Is the time
-constant $\tau = RC$ really a time? Check:
+**Dimensional homogeneity** means that both sides of an equation, and every term
+in a sum, have compatible units. This check can expose an algebra or unit
+conversion error before we use the result. Is the time constant $\tau = RC$
+really a time? Check:
 
 $$
 [\,R\,][\,C\,] = \Omega \cdot \text{F}
@@ -268,9 +271,8 @@ $$
    = \frac{\text{A}\cdot\text{s}}{\text{A}} = \text{s}. \qquad\checkmark
 $$
 
-If a derivation ever hands you an "RC" measured in ohm-farads that do *not*
-reduce to seconds, you have made an algebra mistake — and you found it without a
-single measurement. This same check will save you repeatedly in
+If an $RC$ expression does not reduce to seconds, the derivation or its units
+contain an error. The same check appears repeatedly in
 [F07](f07-capacitors-inductors-transients.qmd), where $\tau=RC$ governs every
 transient.
 
@@ -281,12 +283,12 @@ so it runs at its thermal limit with no margin and you should choose a larger
 part or a smaller voltage. A ten-second estimate prevented a scorched component;
 [F05](f05-energy-power-thermal.qmd) turns this reflex into a full power budget.
 
-**Honest significant figures.** A number's digits are a claim about how well you
-know it. A multimeter that displays `4.286 V` is asserting millivolt resolution;
-if the measurement's uncertainty is ±0.05 V, reporting `4.286 V` is dishonest and
-`4.29 V ± 0.05 V` (or `4.29(5) V`) is truthful. Resolution is what the instrument
-*shows*; uncertainty is what you actually *know*. They are not the same number,
-and confusing them is the most common way a good measurement becomes a bad claim.
+**Significant figures** should match the precision supported by the evidence. A
+multimeter display of `4.286 V` shows millivolt resolution. If the measurement
+uncertainty is ±0.05 V, the last two displayed digits are not supported. Report
+`4.29 V ± 0.05 V` (or `4.29(5) V`) instead. **Resolution** is the smallest
+displayed step. **Uncertainty** describes how widely values consistent with the
+measurement may vary. The two quantities are not interchangeable.
 
 ::: {.callout-note title="Five words that are not synonyms"}
 Precision of language is precision of thought. Keep these distinct, in prose and
@@ -307,21 +309,23 @@ One more convention this book insists on from the start: **state what an
 amplitude is**. "5 V" is ambiguous until you say whether it is DC, a peak, a
 peak-to-peak swing, or an RMS value — a 5 V RMS sinusoid has a 7.07 V peak and a
 14.14 V peak-to-peak span, and a fuse, a rating, or a shock hazard cares which
-one you meant. In Part I the quantities are mostly DC; the habit of labelling them
-is what makes [F08](f08-sinusoids-impedance-frequency.qmd) survivable.
+one you meant. In Part I the quantities are mostly DC. Labelling amplitude now
+prepares us for the sinusoidal quantities in
+[F08](f08-sinusoids-impedance-frequency.qmd).
 
 ## Instrument loading and reference directions
 
-The third sub-model is the one beginners resist longest: **you cannot observe a
-circuit without joining it, and joining it changes it.** An ideal voltmeter draws
-no current; a real one has a finite input resistance and draws a little. An ideal
-oscilloscope probe is invisible; a real one adds capacitance and its own ground
-path. The instrument becomes part of the circuit under test the instant you
-connect it, and the reading is the behavior of *circuit-plus-instrument*, not of
-the circuit you meant to study. Good measurement is the craft of keeping that
-intrusion small enough to ignore — and of *knowing when you cannot* — because,
-as @fig-measurement-loop shows, the probe and its return close a loop and what
-you read is the behavior of that whole loop.
+The third control concerns **instrument loading**, the change an instrument
+causes when we connect it to a circuit. An ideal voltmeter draws no current. A
+real voltmeter has finite input resistance and draws some current. An ideal
+oscilloscope probe adds nothing to the circuit. A real probe adds capacitance
+and a return path.
+
+The instrument therefore becomes part of the circuit under test. The reading
+describes the joined circuit-plus-instrument system. In the diagram below, trace
+the path from the node through the probe and instrument, then back through the
+shared return. That closed loop explains why the instrument can change the
+quantity it measures.
 
 ```{mermaid}
 %%| label: fig-measurement-loop
@@ -347,17 +351,16 @@ $$ {#eq-loading}
 
 ![A voltmeter loads the node it measures. Its finite input resistance $R_\text{in}$ sits in parallel with $R_2$, so the value read at TP1 is the *loaded* divider — below the unloaded $V_S\,R_2/(R_1+R_2)$ by the fraction in @eq-loading, where $R_\text{th}=R_1\Vert R_2$ is the resistance the node presents to the meter.](../../../build/circuits/f01-divider-loading.png){#fig-divider-loading fig-alt="Voltage source V_S drives series resistors R1 and R2 to ground, with output test point TP1 at their junction; a voltmeter of input resistance R_in is connected from TP1 to the 0 V rail, in parallel with R2."}
 
-Two consequences fall straight out of @fig-divider-loading. When
-$R_\text{in} \gg R_\text{th}$ the error
-is negligible and the reading is honest; when the node is *high-impedance*
-($R_\text{th}$ comparable to $R_\text{in}$) the meter drags the node down and the
-reading is fiction. This is why your earlier prediction — "measuring a 1 MΩ
-divider will read **too low**" — is the correct sign: the loading term is always
-negative. We put numbers on it in the next section. The same reasoning governs
-oscilloscope bandwidth, probe capacitance, and common-mode and ground-loop errors
-that [F06](f06-measurement-uncertainty-debug.qmd) treats in full; here we only
-plant the reflex: *before you trust a reading, ask what the instrument did to the
-node.*
+The diagram and @eq-loading give two cases. When
+$R_\text{in} \gg R_\text{th}$, loading is negligible. When
+$R_\text{th}$ is comparable to $R_\text{in}$, the meter pulls the node voltage
+down. This confirms the earlier prediction: measuring the 1 MΩ divider produces
+a value that is too low because the loading term is negative.
+
+The same reasoning applies to oscilloscope bandwidth, probe capacitance,
+common-mode error, and ground loops. [F06](f06-measurement-uncertainty-debug.qmd)
+develops those cases. For now, ask one question before using a reading: *How did
+the instrument change this node?*
 
 **Reference directions make a sign mean something.** A meter answers a question
 you posed with your leads. Put the red lead on node A and black on node B and a
@@ -385,8 +388,8 @@ A breadboard deserves one specific warning about energy and the return path: its
 long power rails have real resistance and inductance, its spring contacts are
 intermittent, and its shared returns invite ground loops. Inspect the topology
 and the return path *de-energized* — trace where current will actually flow —
-before you apply power. Many "mysterious" first-project faults are simply a
-half-seated jumper or a rail powered from the wrong end.
+before you apply power. A half-seated jumper or a rail powered from the wrong
+end can otherwise look like a component fault.
 
 ## Worked examples: hazard, stored energy, and loading
 
@@ -456,8 +459,11 @@ limits are set and verified before connection.
 ### Worked example: stored capacitor energy after disconnect
 
 *Estimate.* A board holds a $C = 1000~\mu\text{F}$ bulk capacitor charged to 30 V
-when you switch off (@fig-capacitor-bleed). Is the stored energy trivial? $E=\tfrac12 CV^2$ with rough
-numbers is $\sim\tfrac12(10^{-3})(10^3)=0.5$ J — small but not nothing.
+when you switch off (@fig-capacitor-bleed). Does the stored energy still require
+a controlled discharge? Using rough numbers,
+$E=\tfrac12 CV^2\sim\tfrac12(10^{-3})(10^3)=0.5$ J. That energy remains
+available to the discharge path, so the path and its component ratings still
+matter after disconnection.
 
 *Calculate.* Precisely,
 $E=\tfrac12(1000\times10^{-6}~\text{F})(30~\text{V})^2 = 0.45~\text{J}$, still
@@ -499,7 +505,7 @@ redo the divider — you also get 4.29 V, confirming the shortcut.)
 
 *Check.* Units: a ratio of resistances is dimensionless. ✓ Limit: if
 $R_\text{in}=10~\text{G}\Omega$ (an electrometer), the error is $-5\times10^{-5}$,
-i.e. negligible — high input resistance buys honesty.
+i.e. negligible. The higher input resistance reduces loading.
 
 *Interpret.* The 0.21 V discrepancy is **not explained by noise or a component
 fault**; within the stated equivalent it is a predictable systematic effect of
@@ -512,11 +518,11 @@ voltage without noting that your meter pulled it there.
 
 ## Prediction–measurement reconciliation
 
-A prediction you never check is a belief. Example D gives a clean, cheap
-reconciliation, so we make it the chapter's worked test: **predict, measure,
-compare within uncertainty.** The physical version of this is Lab **L01**; here we
-show the shape of the evidence and its bookkeeping, because the *format* of a
-result is itself part of the skill.
+A prediction becomes evidence only after we test it. Example D gives a
+controlled comparison, so we use it as the chapter's worked test:
+**predict, measure, compare within uncertainty.** The physical version appears
+in Lab **L01**. Here we focus on the structure of the record because the way we
+report a result affects what another person can verify.
 
 The following configuration and observations are **synthetic and illustrative**.
 They show the form of a reproducible record and an uncertainty-aware comparison,
@@ -541,11 +547,12 @@ raw observations, operating conditions, and uncertainty basis as required by
 | Mid-node, DMM loaded | 4.29 V | 4.28 V ± 0.03 V | ✓ within $U$ |
 | Loading error $\Delta V$ | −0.21 V | −0.22 V ± 0.06 V | ✓ |
 
-The synthetic mid-node interval, $4.28 \pm 0.03$ V, contains the loaded prediction
-of 4.29 V and is decisively below the naïve 4.50 V. This constructed comparison
-shows how equation, schematic, and observation can be reconciled using an explicit
-reference direction (red on the mid-node, black on the supply return). Only the
-aligned physical lab can establish that agreement for real hardware
+The synthetic mid-node interval, $4.28 \pm 0.03$ V, contains the loaded
+prediction of 4.29 V. It does not contain the 4.50 V prediction that ignores
+meter loading. This comparison shows how equation, schematic, and observation
+can be reconciled using an explicit reference direction: red lead on the
+mid-node and black lead on the supply return. Only the aligned physical lab can
+establish that agreement for real hardware
 [@horowitz2015art].
 
 A short, dependency-free script makes the model reproducible and its parameters
@@ -606,26 +613,24 @@ a burn, or produce a startling arc when source impedance is small or stored
 energy is appreciable. "Low voltage" narrows one hazard; it does not remove the
 need to bound current, energy, temperature, and the return path.
 
-**"The meter reads the truth."** The meter reads the *joined system* — recall that
-a measurement is an intrusion. It
-loads the node (Example D); its bandwidth rolls off fast signals; its leads pick
-up hum; a shared ground creates loops that add or subtract volts you never
-sourced. A reading is evidence about *circuit-plus-instrument*, and turning it
-into evidence about the circuit is an act of reasoning, not of reading a display.
+**"The meter shows the undisturbed circuit value."** It may not. The meter loads
+the node, its bandwidth attenuates fast signals, its leads receive interference,
+and a shared return can create an additional voltage. A reading directly
+describes the circuit-plus-instrument system. To infer the undisturbed circuit
+value, we must either show that loading is negligible or correct for it.
 
-**"Units are cosmetic."** They are load-bearing. In 1999 NASA's Mars Climate
+**"Units do not affect the result."** They do. In 1999 NASA's Mars Climate
 Orbiter was lost because one team's software produced an impulse in
 pound-force-seconds while the navigation software consumed it as newton-seconds; a
 factor of 4.45 accumulated silently until the spacecraft entered the Martian
-atmosphere at the wrong altitude and was lost [@nasa1999mco]. Every dimensional
-check you run at your desk is a tiny rehearsal of the discipline that would have
-caught the mismatch.
+atmosphere at the wrong altitude and was lost [@nasa1999mco]. A dimensional
+check would have exposed the mismatch between the two software interfaces.
 
 ::: {.callout-caution title="Worked diagnosis — intrusion or fault?"}
-You measure the Example-D mid-node and read 4.28 V, not the 4.50 V a naïve divider
-predicts. Is the circuit *broken* (say $R_2$ is low), or is your *meter loading*
-the node? Do not guess — design a discriminating test. The two hypotheses make
-*different* predictions:
+You measure the Example-D mid-node and read 4.28 V, not the 4.50 V predicted
+when meter loading is ignored. Is $R_2$ lower than expected, or is the meter
+loading the node? We can separate the hypotheses because they make different
+predictions:
 
 - **Loading** predicts the error scales with the meter: repeat with a
   higher-input-resistance instrument (or a unity-gain buffer) and the reading
@@ -636,9 +641,8 @@ the node? Do not guess — design a discriminating test. The two hypotheses make
 Swap to a 10 GΩ-input electrometer: the node reads 4.500 V. Hypothesis
 "loading" survives; "fault" is refuted. The 0.22 V was the intrusion, exactly as
 @eq-loading predicted. This is the whole method of
-[F06](f06-measurement-uncertainty-debug.qmd) in miniature — *isolate a cause by
-finding evidence that separates it from its rivals*, not by staring harder at one
-number.
+[F06](f06-measurement-uncertainty-debug.qmd) in miniature: *isolate a cause by
+finding evidence that separates it from the alternatives*.
 :::
 
 ## Bench safety and measurement plan
@@ -668,9 +672,9 @@ result another person would accept.
 *Alternatives and trade-offs.* A **higher current limit** lets a hungry circuit
 settle faster and avoids nuisance trips, but widens the energy a fault can deliver
 — speed traded against safety margin. A **direct DMM** is quick but loads
-high-impedance nodes; a **buffered/high-$R_\text{in}$ probe** is honest on those
-nodes but adds parts, offset, and bandwidth limits — convenience traded against
-fidelity. Choose per node, not once for the whole session.
+high-impedance nodes; a **buffered/high-$R_\text{in}$ probe** reduces that
+loading but adds offset and bandwidth limits. Choose the instrument for each
+node rather than once for the whole session.
 
 *Acceptance test.* The plan is accepted when a dry run reproduces a characterized
 reference value—such as the loaded 4.29 V mid-node of Example D—within its stated
@@ -683,18 +687,21 @@ the unknown circuit.
 *Limit of the claim.* This plan qualifies **current-limited, extra-low-voltage
 bench investigation only.** It is explicitly *not* a method for mains, stored
 high-energy, or any hazardous system, and passing its acceptance test authorizes
-nothing beyond the energy level and apparatus it names. Stating that limit is not
-timidity; it is the difference between an engineering claim and an overreach.
+nothing beyond the energy level and apparatus it names. The stated limit keeps
+the engineering claim aligned with the evidence.
 
 ## Bench habits for later chapters
 
-The stance to carry out of this chapter is a way of working, not a formula:
-**bound the energy, reason in units, and distrust the reading.** Before power,
-you ask where the energy can go and cap it with a voltage and a current limit;
-during reasoning, you carry SI units, check dimensions, and separate what you
-*know* from what the display *shows*; and at every reading you ask what the
-instrument did to the node, because you are always measuring the joined system.
-Wrapped around all three is a record another person could follow.
+Carry three habits into every later chapter:
+
+- **Before power, bound the energy.** Trace where energy can go, then set voltage
+  and current limits.
+- **During analysis, carry the units.** Check dimensions and distinguish a
+  calculated value from a displayed value.
+- **During measurement, include the instrument.** Ask how the instrument changed
+  the node and interpret the reading as part of the joined system.
+
+Record the configuration and reasoning so that another person can follow them.
 
 Each of these three ideas is the seed of a later chapter, and the chapter is
 deliberately the root of the book's dependency graph — it has no prerequisites and
@@ -827,7 +834,7 @@ current-limit habit.]*
 
 13. Write a one-page bench safety-and-measurement plan (requirements, current
     limit, per-node instrument choice, stop conditions, and record format) for
-    measuring the quiescent current and three node voltages of an unfamiliar 3.3 V
+    measuring the steady current and three node voltages of an unfamiliar 3.3 V
     sensor board. State the limit of the claim your plan can support.
 14. Propose an acceptance test that would convince a skeptical reviewer that your
     plan in Exercise 13 actually bounds the fault energy and keeps every loading

@@ -35,12 +35,14 @@ dumps, medical equipment, or safety-critical protection [@iec61010].
 > differently with direction and voltage, and how accurately must a circuit
 > describe that behavior?
 
-Place an ordinary silicon signal diode in series with a current-limited source
-and a resistor. In an **illustrative** room-temperature sweep, at a diode voltage
-of $+0.20$ V the current may be too small for a bench meter to resolve; near
-$+0.7$ V it can be milliamperes. Reverse the diode voltage and the indicated
-steady current again becomes very small—until a reverse limit is approached.
-The transition is steep, but it is not an exact switch at $0.7$ V
+An ordinary **diode** is a two-terminal device whose current depends strongly on
+the applied voltage and its polarity. Place a silicon signal diode in series
+with a current-limited source and a resistor. In an **illustrative**
+room-temperature sweep, the current at $+0.20$ V may be too small for a bench
+meter to resolve. Near $+0.7$ V, it can reach milliamperes. Reverse the diode
+voltage and the steady current becomes small again until the circuit approaches
+a reverse limit. The transition is steep, but it is not an exact switch at
+$0.7$ V
 [@sedra2020microelectronic; @vishay1n4148].
 
 Before developing the physics, predict what happens in four changes:
@@ -55,7 +57,8 @@ motion explain the junction; the symbol declares terminal references; a curve
 and equation predict an operating point; a datasheet bounds a manufactured part;
 and a measurement tests the assembled circuit. Disagreement among these
 descriptions is not noise to hide. It tells us that the wrong region, temperature,
-time scale, parasitic, or approximation may have been chosen.
+time scale, unintended capacitance or inductance, or approximation may have been
+chosen.
 
 ## Learning outcomes
 
@@ -67,9 +70,9 @@ chapter, you should be able to:
 
 - relate energy bands, electrons and holes, doping, diffusion, drift, depletion,
   and the built-in field to forward conduction, reverse leakage, and breakdown;
-- declare diode terminal references and use the junction equation, incremental
-  resistance, or a bounded piecewise approximation without confusing one for a
-  universal law;
+- declare diode terminal references and use the junction equation,
+  **incremental resistance** (the local slope $\mathrm dV/\mathrm dI$), or a bounded
+  piecewise approximation without confusing one for a universal law;
 - find a diode operating point from the intersection of a source-network line and
   a nonlinear device relation, then calculate current, voltage, power, and useful
   limiting cases;
@@ -82,7 +85,8 @@ chapter, you should be able to:
 - explain at device level how LEDs emit and photodiodes detect light, while
   preserving electrical, radiant, and luminous quantities as distinct; and
 - translate circuit requirements into datasheet parameters, account for
-  tolerance and operating conditions, and state a guarded acceptance rule.
+  tolerance and operating conditions, and state an acceptance rule that reserves
+  margin for uncertainty.
 
 ## Energy bands, mobile carriers, and doping
 
@@ -344,9 +348,10 @@ Three limiting cases expose the relation:
 - if $V_D\gg nV_T$, the $-1$ term is negligible and forward current is
   approximately exponential.
 
-The reverse limit is especially easy to misuse. A packaged device's actual
-leakage may be much larger and more temperature-dependent than the ideal
-diffusion $I_S$, and the exponential relation does not describe breakdown.
+Do not extend the reverse-current approximation into breakdown. A packaged
+device's actual leakage may be much larger and more temperature-dependent than
+the ideal diffusion $I_S$. The exponential relation also does not describe the
+breakdown mechanism.
 
 ### Incremental resistance around an operating point
 
@@ -778,10 +783,13 @@ whose purpose and test waveform are different, is not a substitute for this
 reference calculation.
 
 Reverse-polarity protection can place a series diode between a source and load.
-The current path is obvious, but the forward drop wastes headroom and power
-$P_D=V_FI_F$. A shunt diode across the input instead requires an upstream fuse or
-current-limiting element that will act safely under the fault. Omitting that
-element converts a polarity mistake into a high-current short.
+When the polarity is correct, load current passes through the diode. Its forward
+drop reduces the voltage available to the load and dissipates power
+$P_D=V_FI_F$. A shunt diode across the input takes a different approach: it
+creates a low-voltage path under reversed polarity. That path requires an
+upstream fuse or current-limiting element that will act safely under the fault.
+Without that element, the protection circuit turns a polarity mistake into a
+high-current short.
 
 ## Light emission and detection at a junction
 
@@ -825,9 +833,13 @@ $$
 I_F\approx\frac{V_S-V_F}{R},
 $$
 
-but design bounds use the opposing extremes: maximum current uses maximum source
-voltage, minimum resistance, and the lowest defensible $V_F$; minimum current uses
-minimum source voltage, maximum resistance, and the highest defensible $V_F$.
+For design bounds, use opposing extremes:
+
+- maximum current uses maximum source voltage, minimum resistance, and the
+  lowest defensible $V_F$;
+- minimum current uses minimum source voltage, maximum resistance, and the
+  highest defensible $V_F$.
+
 Optical output must be bounded separately because luminous intensity depends on
 current, wavelength, viewing geometry, temperature, and production bin.
 
@@ -857,7 +869,8 @@ is approximately $-I_{ph}$ when $I_{ph}\gg I_S$. In reverse-biased
 **photoconductive** operation, increased field can reduce capacitance and improve
 speed, but dark current and noise remain. In zero-bias **photovoltaic** operation,
 dark current can be lower but capacitance and response may differ. A photodiode is
-therefore not simply a light-dependent resistor [@sze2006physics].
+therefore a current-generating junction device, not a light-dependent resistor
+[@sze2006physics].
 
 For the BPW34 at $25~^\circ$C, the manufacturer specifies 40 µA minimum and
 50 µA typical reverse light current at 5 V reverse bias, irradiance

@@ -1,6 +1,20 @@
 version = 1
 
 [[circuit]]
+id = "a08-led-photodiode-interface"
+source = "a08-led-photodiode-interface.tex"
+chapter_id = "A08"
+caption = "The switched indicator routes source current through a limiting resistor, LED, and low-side transistor to the source return. The photodiode returns to the same V REF node that biases the op-amp non-inverting input, so the TIA holds the diode near zero bias; parallel R F and C F set low-frequency transimpedance and shape the feedback loop. Op-amp supply pins are omitted but remain part of the range and power checks."
+alt = "Panel a shows source V S feeding a resistor, LED, and NPN low-side transistor in series. A driver reaches the transistor base through a resistor. Panel b shows a photodiode between the op-amp inverting input and V REF, the non-inverting input connected to V REF, and parallel feedback resistor R F and capacitor C F from output to inverting input."
+
+[[circuit]]
+id = "a08-optocoupler-interface"
+source = "a08-optocoupler-interface.tex"
+chapter_id = "A08"
+caption = "The input domain routes V IN through R IN and the optocoupler LED to TP0A. Light crosses the drawn barrier; the separate output domain routes V OUT through R PU and the phototransistor to TP0B. The separate references express galvanic separation but do not establish an insulation rating."
+alt = "An input source and resistor drive an LED on the left. Light arrows cross a dashed insulation barrier to a phototransistor on the right. A separate output supply and pull-up resistor feed the collector and output test point. Input and output grounds are separate."
+
+[[circuit]]
 id = "a07-cmos-inverter-switch"
 source = "a07-cmos-inverter-switch.tex"
 chapter_id = "A07"

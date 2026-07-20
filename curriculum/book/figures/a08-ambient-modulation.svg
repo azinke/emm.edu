@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700"
+     viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Ambient subtraction with and without analog headroom</title>
+  <desc id="desc">The left panel shows emitter command pulses, a slowly varying
+  ambient level, and a detector waveform that remains below the analog ceiling.
+  Off and on samples preserve their difference. The right panel shows the same
+  signal clipped at the analog ceiling; the on sample loses amplitude and its
+  subtraction underestimates the optical signal.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3"
+            orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#111"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="700" fill="white"/>
+
+  <g font-family="sans-serif" fill="#111">
+    <text x="315" y="42" font-size="25" font-weight="bold"
+          text-anchor="middle">(a) Linear receiver</text>
+    <text x="885" y="42" font-size="25" font-weight="bold"
+          text-anchor="middle">(b) Saturated receiver</text>
+    <text x="32" y="115" font-size="20">emitter</text>
+    <text x="32" y="135" font-size="20">command</text>
+    <text x="32" y="295" font-size="20">ambient</text>
+    <text x="32" y="455" font-size="20">receiver</text>
+    <text x="32" y="475" font-size="20">output</text>
+    <text x="1090" y="650" font-size="21">time</text>
+  </g>
+
+  <g stroke="#111" fill="none" stroke-width="3">
+    <path d="M95 160 H1135" marker-end="url(#arrow)"/>
+    <path d="M95 325 H1135" marker-end="url(#arrow)"/>
+    <path d="M95 520 H1135" marker-end="url(#arrow)"/>
+    <path d="M115 150 H190 V82 H310 V150 H395 V82 H515 V150 H545"/>
+    <path d="M655 150 H730 V82 H850 V150 H935 V82 H1055 V150 H1115"/>
+    <path d="M115 300 C230 285 350 270 545 245" stroke-dasharray="12 7"/>
+    <path d="M655 250 C775 235 905 215 1115 190" stroke-dasharray="12 7"/>
+    <path d="M115 490 C175 482 190 480 190 480
+             V405 H310 V470
+             C340 467 365 464 395 460 V385 H515 V450
+             C525 449 535 448 545 447" stroke-width="5"/>
+    <path d="M655 440 C710 430 730 425 730 425
+             V365 H850 V415
+             C885 410 905 405 935 400 V365 H1055 V385
+             C1075 380 1095 376 1115 373" stroke-width="5"/>
+    <path d="M935 400 V330 H1055 V385" stroke-width="2.5"
+          stroke-dasharray="6 6"/>
+    <path d="M655 365 H1115" stroke-dasharray="7 7"/>
+    <circle cx="190" cy="480" r="7" fill="white"/>
+    <circle cx="260" cy="405" r="7" fill="white"/>
+    <circle cx="730" cy="425" r="7" fill="white"/>
+    <circle cx="800" cy="365" r="7" fill="white"/>
+    <path d="M190 565 H260" marker-start="url(#arrow)"
+          marker-end="url(#arrow)"/>
+    <path d="M730 565 H800" marker-start="url(#arrow)"
+          marker-end="url(#arrow)"/>
+  </g>
+
+  <g font-family="sans-serif" font-size="20" fill="#111">
+    <text x="310" y="220">slow ambient change</text>
+    <text x="800" y="195">larger ambient load</text>
+    <text x="410" y="370">inside range</text>
+    <text x="945" y="355">analog ceiling</text>
+    <text x="760" y="315" font-size="18">would-be linear output (not observed)</text>
+    <text x="225" y="592" text-anchor="middle">off → on:
+      ΔV = R<tspan baseline-shift="sub">F</tspan>ΔI preserved</text>
+    <text x="765" y="592" text-anchor="middle">off → on:
+      input ΔI not recoverable</text>
+    <text x="315" y="675" text-anchor="middle">
+      Sample subtraction removes a slowly varying offset
+    </text>
+    <text x="885" y="675" text-anchor="middle">
+      Arithmetic cannot reconstruct the clipped peak
+    </text>
+  </g>
+</svg>

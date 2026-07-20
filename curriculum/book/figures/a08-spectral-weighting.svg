@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600"
+     viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">Qualitative spectral weighting from radiant to luminous flux</title>
+  <desc id="desc">The upper plot shows a narrow LED spectral radiant-flux
+  density curve peaking near 715 nanometres and a dashed photopic luminous
+  efficiency curve peaking near 555 nanometres. The lower plot shows their
+  product, which contributes to luminous flux. All curves are normalized and
+  qualitative rather than measured data.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3"
+            orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#111"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="600" fill="white"/>
+
+  <g stroke="#111" fill="none" stroke-width="3">
+    <path d="M105 260 V65" marker-end="url(#arrow)"/>
+    <path d="M105 260 H1110" marker-end="url(#arrow)"/>
+    <path d="M105 540 V345" marker-end="url(#arrow)"/>
+    <path d="M105 540 H1110" marker-end="url(#arrow)"/>
+    <path d="M165 258 C330 257 405 245 470 190
+             C520 145 550 102 580 102
+             C635 102 720 210 850 253 C930 260 1020 260 1080 260"
+          stroke-dasharray="13 8" stroke-width="5"/>
+    <path d="M165 260 C650 260 735 258 790 225
+             C835 197 860 105 900 105
+             C940 105 970 200 1015 232
+             C1045 252 1060 258 1080 260" stroke-width="5"/>
+    <path d="M165 540 C650 540 700 538 745 520
+             C785 502 802 470 822 470
+             C845 470 865 508 910 527
+             C970 539 1025 540 1080 540" stroke-width="5"/>
+  </g>
+
+  <g stroke="#555" stroke-width="2">
+    <path d="M270 260 V270 M470 260 V270 M670 260 V270
+             M870 260 V270 M1070 260 V270"/>
+    <path d="M270 540 V550 M470 540 V550 M670 540 V550
+             M870 540 V550 M1070 540 V550"/>
+  </g>
+
+  <g font-family="sans-serif" fill="#111">
+    <g font-size="22">
+      <text x="35" y="62">normalized</text>
+      <text x="35" y="88">quantity</text>
+      <text x="970" y="315">wavelength λ (nm)</text>
+      <text x="970" y="595">wavelength λ (nm)</text>
+      <text x="270" y="295" text-anchor="middle">400</text>
+      <text x="470" y="295" text-anchor="middle">500</text>
+      <text x="670" y="295" text-anchor="middle">600</text>
+      <text x="870" y="295" text-anchor="middle">700</text>
+      <text x="1070" y="295" text-anchor="middle">800</text>
+      <text x="270" y="575" text-anchor="middle">400</text>
+      <text x="470" y="575" text-anchor="middle">500</text>
+      <text x="670" y="575" text-anchor="middle">600</text>
+      <text x="870" y="575" text-anchor="middle">700</text>
+      <text x="1070" y="575" text-anchor="middle">800</text>
+      <text x="735" y="83">solid: Φₑ,λ(λ), emitter spectrum</text>
+      <text x="420" y="125">dashed: V(λ), photopic weighting</text>
+      <text x="650" y="405">weighted contribution:
+        KₘV(λ)Φₑ,λ(λ)</text>
+    </g>
+    <text x="600" y="35" text-anchor="middle" font-size="25"
+          font-weight="bold">
+      Luminous flux weights a radiant spectrum by a standard observer
+    </text>
+    <text x="600" y="325" text-anchor="middle" font-size="19">
+      Schematic normalized curves; emitter is illustrative; use tabulated V(λ) for calculation
+    </text>
+  </g>
+</svg>

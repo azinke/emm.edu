@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720"
+     viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Shared segment path and break-before-make timing</title>
+  <desc id="desc">The upper panel shows two common-anode digit blocks sharing
+  segment buses and per-segment current limiting. A bold path identifies digit
+  one segment A. The lower panel compares correct digit enables and segment-data
+  timing with a faulty early data transition that creates a ghost-current pulse.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3"
+            orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#111"/></marker>
+  </defs>
+  <rect width="1200" height="720" fill="white"/>
+
+  <g stroke="#111" fill="none" stroke-width="3">
+    <path d="M110 65 H1090"/>
+    <path d="M270 65 V105 M710 65 V105"/>
+    <rect x="215" y="105" width="110" height="45" fill="#e8e8e8"/>
+    <rect x="655" y="105" width="110" height="45"/>
+    <path d="M270 150 V190 M710 150 V190"/>
+    <rect x="165" y="190" width="210" height="135"/>
+    <rect x="605" y="190" width="210" height="135"/>
+    <path d="M375 230 H930 V350"/>
+    <path d="M375 290 H1030 V350"/>
+    <rect x="890" y="350" width="80" height="42"/>
+    <rect x="990" y="350" width="80" height="42"/>
+    <path d="M930 392 V425 M1030 392 V425 M870 425 H1090"/>
+    <path d="M270 150 V215 H335 V230 H930 V350" stroke-width="8"/>
+    <path d="M500 180 V220" stroke-width="2" marker-end="url(#arrow)"/>
+  </g>
+  <g font-family="sans-serif" fill="#111">
+    <text x="600" y="32" text-anchor="middle" font-size="25" font-weight="bold">
+      Shared segment buses require break-before-make switching</text>
+    <text x="80" y="72" font-size="21">V<tspan baseline-shift="sub">DD</tspan></text>
+    <text x="340" y="100" font-size="20">D1: on</text>
+    <text x="780" y="100" font-size="20">D2: off</text>
+    <text x="270" y="312" text-anchor="middle" font-size="21">digit 1</text>
+    <text x="270" y="260" text-anchor="middle" font-size="20">segments A, B</text>
+    <text x="710" y="312" text-anchor="middle" font-size="21">digit 2</text>
+    <text x="710" y="260" text-anchor="middle" font-size="20">segments A, B</text>
+    <text x="820" y="210" font-size="19">shared segment-A bus</text>
+    <text x="820" y="272" font-size="19">shared segment-B bus</text>
+    <text x="930" y="378" text-anchor="middle" font-size="18">R<tspan baseline-shift="sub">A</tspan> / sink A</text>
+    <text x="1030" y="378" text-anchor="middle" font-size="18">R<tspan baseline-shift="sub">B</tspan> / sink B</text>
+    <text x="390" y="172" font-size="19">selected LED-current path</text>
+  </g>
+
+  <rect x="95" y="450" width="1010" height="190" fill="#f6f6f6"
+        stroke="#aaa" stroke-width="1"/>
+  <g stroke="#111" fill="none" stroke-width="3">
+    <path d="M245 470 H430 V495 H1000"/>
+    <path d="M245 550 H730 V525 H915 V550 H1000"/>
+    <path d="M245 600 H545 V575 H1000"/>
+    <path d="M245 615 H430 V640 H730 V615 H915 V640 H1000"
+          stroke-width="5"/>
+    <path d="M430 455 V645 M545 455 V645 M730 455 V645"
+          stroke-dasharray="6 6"/>
+    <path d="M95 655 H1100" marker-end="url(#arrow)"/>
+  </g>
+  <g font-family="sans-serif" fill="#111" font-size="19">
+    <text x="115" y="485">D1 enable</text>
+    <text x="115" y="545">D2 enable</text>
+    <text x="115" y="595">segment data</text>
+    <text x="115" y="630">segment current</text>
+    <text x="580" y="473" text-anchor="middle">all digits off</text>
+    <text x="580" y="625" text-anchor="middle">safe data-change window</text>
+    <text x="755" y="515">D2 begins after data settles</text>
+    <text x="1050" y="680">time</text>
+  </g>
+
+  <rect x="95" y="672" width="1010" height="35" fill="#fff" stroke="none"/>
+  <g stroke="#111" fill="none" stroke-width="2.5">
+    <path d="M245 695 H390 V682 H430 V695 H545" stroke-dasharray="7 5"/>
+  </g>
+  <g font-family="sans-serif" fill="#111" font-size="18">
+    <text x="115" y="700">fault:</text>
+    <text x="455" y="680">data changes before D1 is off → brief ghost-current pulse</text>
+  </g>
+</svg>

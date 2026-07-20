@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="580"
+     viewBox="0 0 1200 580" role="img" aria-labelledby="title desc">
+  <title id="title">Far-field source and tilted-detector geometry</title>
+  <desc id="desc">A source optical axis differs from the center propagation
+  direction by theta. A ray cone reaches a tilted detector at distance r. The
+  detector surface normal differs from the propagation line by alpha. Detector
+  area and its projected solid angle are labelled.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3"
+            orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#111"/></marker>
+    <marker id="arrowback" markerWidth="10" markerHeight="10" refX="1" refY="3"
+            orient="auto"><path d="M9,0 L9,6 L0,3 z" fill="#111"/></marker>
+  </defs>
+  <rect width="1200" height="580" fill="white"/>
+  <text x="600" y="48" text-anchor="middle" font-family="sans-serif"
+        font-size="25" font-weight="bold">Direction, distance, area, and tilt set received power</text>
+
+  <g stroke="#111" fill="none" stroke-width="3">
+    <circle cx="150" cy="280" r="13" fill="#111"/>
+    <!-- Accepted ray bundle and center propagation line. -->
+    <path d="M165 270 L880 140"/>
+    <path d="M165 290 L940 420"/>
+    <path d="M150 280 H910" stroke-dasharray="9 8"/>
+    <!-- Source optical axis and theta. -->
+    <path d="M150 280 L430 190" stroke-dasharray="7 7"/>
+    <path d="M215 280 A65 65 0 0 0 212 260"/>
+    <!-- Tilted detector and its actual normal. -->
+    <path d="M880 140 L940 420" stroke-width="8"/>
+    <path d="M910 280 L1080 244" marker-end="url(#arrow)"/>
+    <path d="M910 280 H1045" stroke-dasharray="7 7"/>
+    <path d="M980 280 A70 70 0 0 0 978 265"/>
+    <!-- Active-area end marks. -->
+    <path d="M865 145 L895 139 M925 423 L955 417"/>
+    <!-- Distance dimension. -->
+    <path d="M150 475 H910" marker-start="url(#arrowback)"
+          marker-end="url(#arrow)"/>
+  </g>
+
+  <g font-family="sans-serif" fill="#111">
+    <text x="75" y="245" font-size="23">small source</text>
+    <text x="135" y="320" font-size="23">Iₑ(θ)</text>
+    <text x="245" y="252" font-size="23">θ</text>
+    <text x="300" y="190" font-size="20">source optical axis</text>
+    <text x="500" y="266" font-size="20">center propagation ray</text>
+    <text x="490" y="462" text-anchor="middle" font-size="23">r</text>
+    <text x="890" y="112" font-size="23">tilted detector</text>
+    <text x="960" y="175" font-size="22">active area A<tspan baseline-shift="sub">D</tspan></text>
+    <text x="1060" y="225" text-anchor="end" font-size="21">surface normal</text>
+    <text x="990" y="268" font-size="23">α</text>
+    <text x="400" y="125" font-size="23">Ω<tspan baseline-shift="sub">D</tspan> ≈
+      A<tspan baseline-shift="sub">D</tspan> cos α / r²</text>
+  </g>
+
+  <rect x="80" y="505" width="1040" height="55" fill="#f3f3f3"
+        stroke="#111" stroke-width="2"/>
+  <text x="600" y="538" text-anchor="middle" font-family="sans-serif"
+        font-size="20">Far-field screen: source and detector dimensions ≪ r; no lens,
+        blockage, reflection, or scattering path</text>
+</svg>

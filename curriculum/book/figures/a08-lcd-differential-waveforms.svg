@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750"
+     viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">LCD common, segment, and differential waveforms</title>
+  <desc id="desc">Five aligned traces show common voltage, an opposite-phase
+  on-segment voltage, an in-phase off-segment voltage, and their differential
+  voltages over two equal half-frames. The on differential alternates between
+  minus and plus V D and the off differential remains zero.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3"
+            orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#111"/></marker>
+  </defs>
+  <rect width="1200" height="750" fill="white"/>
+  <text x="600" y="36" text-anchor="middle" font-family="sans-serif"
+        font-size="25" font-weight="bold">LCD drive is defined between SEG and COM</text>
+
+  <g stroke="#999" fill="none" stroke-width="1.5" stroke-dasharray="5 6">
+    <path d="M270 70 V620 M690 70 V620 M1110 70 V620"/>
+    <path d="M245 130 H1110 M245 235 H1110 M245 340 H1110
+             M245 465 H1110 M245 580 H1110"/>
+  </g>
+  <g stroke="#111" fill="none" stroke-width="4">
+    <path d="M270 95 H690 V165 H1110"/>
+    <path d="M270 270 H690 V200 H1110"/>
+    <path d="M270 305 H690 V375 H1110"/>
+    <path d="M270 510 H690 V420 H1110"/>
+    <path d="M270 580 H1110"/>
+  </g>
+  <g stroke="#111" fill="none" stroke-width="2">
+    <path d="M245 620 H1135" marker-end="url(#arrow)"/>
+    <path d="M300 645 H1080" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  </g>
+
+  <g font-family="sans-serif" fill="#111" font-size="20">
+    <text x="55" y="135">v<tspan baseline-shift="sub">C</tspan></text>
+    <text x="55" y="240">v<tspan baseline-shift="sub">S,on</tspan></text>
+    <text x="55" y="345">v<tspan baseline-shift="sub">S,off</tspan></text>
+    <text x="55" y="470">v<tspan baseline-shift="sub">S,on</tspan> − v<tspan baseline-shift="sub">C</tspan></text>
+    <text x="55" y="585">v<tspan baseline-shift="sub">S,off</tspan> − v<tspan baseline-shift="sub">C</tspan></text>
+    <text x="705" y="88">+V<tspan baseline-shift="sub">D</tspan>/2</text>
+    <text x="705" y="180">−V<tspan baseline-shift="sub">D</tspan>/2</text>
+    <text x="705" y="410">+V<tspan baseline-shift="sub">D</tspan></text>
+    <text x="705" y="525">−V<tspan baseline-shift="sub">D</tspan></text>
+    <text x="700" y="605">0</text>
+    <text x="480" y="85" text-anchor="middle">first half-frame</text>
+    <text x="900" y="85" text-anchor="middle">second half-frame</text>
+    <text x="690" y="670" text-anchor="middle">one complete frame T</text>
+  </g>
+  <g font-family="sans-serif" fill="#111" font-size="19">
+    <rect x="770" y="445" width="320" height="82" fill="#f3f3f3"
+          stroke="#111" stroke-width="1.5"/>
+    <text x="790" y="475">ON: mean = 0, RMS = V<tspan baseline-shift="sub">D</tspan></text>
+    <text x="790" y="505">OFF: mean = 0, RMS = 0</text>
+    <text x="600" y="720" text-anchor="middle">Measure the differential voltage; neither pin alone is the cell voltage.</text>
+  </g>
+</svg>

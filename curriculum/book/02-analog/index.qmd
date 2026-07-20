@@ -163,7 +163,7 @@ These capabilities support digital logic, data conversion, feedback control,
 power electronics, PCB realization, metrology, and complete instruments.
 
 ::: {.callout-note title="Chapter maturity"}
-A01–A07 are teaching drafts. A08 remains an outline. The
+A01–A08 are teaching drafts. The
 [reading roadmap](../roadmap.qmd#interpret-chapter-status) explains what each
 status supports.
 :::

@@ -2,13 +2,23 @@
 
 ## Reader-facing voice
 
-- Write as a knowledgeable peer who is working through the circuit with the
-  reader. Use **we** when author and reader take a reasoning step together, and
-  use **you** for a prediction, check, or action the reader performs. Do not
-  address the reader merely to make a warning sound conversational.
-- Prefer active voice and name the actor: “We measure TP1 relative to TP0,” “the
-  source drives current,” and “the probe adds capacitance.” Use passive voice
-  only when the actor is unknown or genuinely irrelevant.
+- Aim for the practical, reader-facing directness associated with strong No
+  Starch Press engineering books. Write as an experienced peer who respects an
+  ambitious reader enough to show the exact mechanics. This tone does not relax
+  the factual bar: preserve mathematical derivations, exact definitions,
+  low-level behavior, edge cases, citations, and evidence boundaries.
+- Use **you** for a prediction, derivation step, check, build action, or decision
+  the reader performs. Use a concrete technical subject for factual claims: the
+  source drives current, the cache controller invalidates a line, the transistor
+  changes load current, and the extractor computes parasitics. Do not default to
+  **we**, “the reader,” “one,” or an abstract passive construction.
+- Prefer active voice and name the actor: “you measure TP1 relative to TP0,”
+  “the source drives current,” and “the probe adds capacitance.” Use passive
+  voice only when the actor is unknown or genuinely irrelevant.
+- Apply the voice rules to maturity and safety callouts, learning outcomes,
+  captions, alt text, table notes, requirements, procedures, exercises, and
+  answer choices. A chapter whose body prose is direct but whose surrounding
+  material remains passive has not passed the editorial review.
 - Keep sentences direct. Put one main claim in each sentence. Split a sentence
   when it carries a mechanism, a qualification, and a consequence at once.
   Short sentences should still show the logical link: *because*, *therefore*,
@@ -18,6 +28,9 @@
   to note,” “Clearly,” “Obviously,” or “As everyone knows.”
 - Avoid localized idioms, cute metaphors, and inflated vocabulary. A short
   physical analogy can help, but state where it stops matching the circuit.
+- Create warmth through useful guidance: tell the reader what to inspect,
+  calculate, compare, and decide. Do not manufacture friendliness with jokes,
+  filler, rhetorical hype, or the removal of difficult technical material.
 - Define a technical term at first use in the chapter. Bold the term and give a
   compact plain-language meaning in the same sentence: “**Impedance** is the
   total opposition a circuit presents to sinusoidal current.” Follow with the
@@ -25,6 +38,11 @@
 - Do not use “just,” “simply,” “trivial,” or “obvious” to hide a reasoning step.
   If the step is short, show it. If it depends on earlier material, name the
   exact result and link to it.
+- Remove author-centered narration such as “this is worth noting,” “the
+  trade-off is now visible,” “the important bridge is,” “the result is
+  counterintuitive,” or “the program is an oracle.” Replace it with the
+  technical content: name the trade-off, show why the result differs from the
+  prediction, or state what evidence the program provides.
 - Do not dismiss a mechanism with “beyond the scope” or a similar placeholder.
   Explain the minimum causal chain needed for the present result. Then name the
   later chapter that develops the topic and state what that later treatment
@@ -45,6 +63,16 @@
 - State why each non-ideal effect enters. For example, do not only add an output
   resistance to an amplifier equivalent; explain which internal or terminal
   behavior makes the ideal zero-resistance assumption fail.
+- When causality matters, trace an event chain instead of naming an effect. Use
+  the pattern **change → local physical or logical response → changed quantity
+  → terminal or system consequence**. For Miller compensation, for example,
+  follow both capacitor terminals as the inverting stage moves them in opposite
+  directions before introducing the multiplied input capacitance. Apply the
+  same discipline to body effect, charge injection, supply bounce, aliasing,
+  cache coherence, and software-visible hardware state.
+- After every equation that drives a design choice, explain what each variable
+  represents in the real circuit or system and how changing it propagates to the
+  measured result. Do not let a symbol remain only an algebraic placeholder.
 - When an explanation branches into several cases, use bullets for alternatives
   and numbered steps for a sequence. Keep paragraphs focused enough that a
   self-studying reader can stop and check one claim at a time.
@@ -82,6 +110,14 @@
 - Treat semicolons as a warning during revision. Keep one when it makes a
   two-part comparison clearer. Replace a chain of semicolons with bullets or
   shorter sentences.
+- Make requirement lists grammatically parallel and operational. Prefer commands
+  such as “drive,” “measure,” “report,” “require,” and “reject,” each with a
+  stated condition and endpoint. Do not mix noun fragments, passive test
+  descriptions, and decision rules in one list.
+- Make captions active and electrically informative. State what the circuit ties,
+  drives, senses, omits, or idealizes. Do not hide body connections, bias
+  networks, return paths, or omitted loads behind “is tied” or “not shown” when
+  the circuit or drawing can be named as the actor.
 - Use bold text for a term when it is first defined, not as general emphasis.
   Use italics sparingly for a contrast or a named assumption.
 - Keep notation precise, but prefer words when a symbol would appear only once.
@@ -91,6 +127,10 @@
   fiction,” “the design has no legs,” or “this buys headroom.”
 - Keep the correct technical term when it matters. Define it in plain language
   rather than replacing it with a vague everyday word.
+- A readability edit may split, reorder, or clarify a derivation. It may not
+  delete the assumptions, sign convention, domain, non-ideal terms, limiting
+  case, citation, or evidence qualification that makes the derivation correct.
+  Direct prose and deep rigor reinforce each other.
 
 - Define voltage polarity and current direction before applying sign
   conventions.
@@ -116,6 +156,9 @@
 
 - Derive relations from first principles with assumptions and validity range
   stated, or cite a primary source; never assert a technical claim from memory.
+- Before deriving a signed mismatch, offset, error, residual, or difference,
+  define the ordering of its indices or endpoints. Recompute the sign after you
+  fix that ordering. A magnitude-only check cannot validate a signed equation.
 - Identify each important relation as a definition, conservation law,
   constitutive relation, approximation, empirical fit, tolerance, bound, or
   requirement. Do not present a steady-state or small-signal special case as a
@@ -145,9 +188,28 @@
   signed stored charge and separate conduction current from
   charge-rate/displacement current. State explicitly when either component is
   negligible.
+- Keep conventional current, signed terminal charge, and carrier motion
+  separate. If you use $i\,dt=dQ$, name the terminal that owns $Q$ and the
+  positive current direction. Electrons generally move opposite positive
+  conventional current; do not use the two descriptions interchangeably.
 - Show at least one limiting case and one second-order effect that breaks each
   first-order model. Where something is genuinely approximate or contested, say so
   with the bound rather than smoothing it over.
+- Audit the full domain of every central formula. State waveform shape,
+  operating region, initial condition, loading, monotonicity, and parameter
+  inequalities that affect its coefficient or form. If the raw algebra becomes
+  nonphysical outside the domain, write a piecewise relation or an explicit
+  clamp such as $[x]_+=\max(x,0)$.
+- Before claiming independence from a design parameter, substitute all
+  intermediate definitions and state what remains fixed. For example, a gain
+  that appears independent of bias current after one cancellation may still
+  depend on that current through overdrive. Distinguish “fixed geometry” from
+  “scaled geometry at fixed current density.”
+- Attach operating conditions directly to stored-charge and switching
+  approximations. A uniform-channel charge expression may require quasi-static
+  strong inversion and $|V_{DS}|\ll V_{OV}$; an edge-loss coefficient may
+  require linear full-rail ramps. A later generic caveat does not repair an
+  equation whose local validity conditions are missing.
 
 ## Headings and structure
 
@@ -201,6 +263,20 @@
   and explicit decision rule. Equality does not satisfy a strict limit, and a
   typical specification does not become a worst-case guarantee through
   calculation.
+- A statistical result names the distribution, parameter support, correlations,
+  seed, sample count, PVT conditions, metric extraction, and failure rule.
+  Prevent or reject nonphysical samples such as negative current factors. State
+  when independent teaching draws omit process correlations. Zero observed
+  failures requires a finite-sample confidence bound; it does not prove zero
+  failure probability, yield, or coverage of missing physics.
+- A PDK-backed evidence chain records the PDK, simulator, extractor, device
+  cells, include files, commands, deterministic PVT matrix, statistical
+  descriptions, DRC/LVS status, extraction settings, and pre/post-layout metric
+  changes. Rerun the full required PVT matrix after extraction. If a requirement
+  reaches an external pin, include pad, ESD, bond/bump, and package descriptions
+  and distinguish die-pad from external-pin metrics. Never rename a synthetic
+  capacitance proxy or hand-chosen parameter perturbation as PEX, a foundry
+  corner, or yield evidence.
 - Do not use “no abnormal heating” or a similar undefined observation as a pass
   criterion. Define a temperature measurand and guarded limit, or identify smoke,
   odor, discoloration, and unplanned rapid temperature rise as safety stop

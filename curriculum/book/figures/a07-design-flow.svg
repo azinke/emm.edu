@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1204" height="176"
+     viewBox="0 0 1204 176" role="img" aria-labelledby="title desc">
+  <title id="title">The five phases of a versioned IC design flow</title>
+  <desc id="desc">Five boxes connected left to right by arrows: requirements and
+  test metrics, schematic analyses, layout with DRC and LVS, extraction and
+  reanalysis, and fabrication and test. Each arrow means that one phase supplies
+  what the next phase consumes.</desc>
+  <defs>
+    <marker id="fa" markerWidth="10" markerHeight="10" refX="9" refY="3"
+            orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#111"/>
+    </marker>
+  </defs>
+  <rect width="1204" height="176" fill="white"/>
+
+  <g fill="none" stroke="#111" stroke-width="3">
+    <rect x="4"   y="34" width="215" height="86" rx="4"/>
+    <rect x="249" y="34" width="215" height="86" rx="4"/>
+    <rect x="494" y="34" width="215" height="86" rx="4"/>
+    <rect x="739" y="34" width="215" height="86" rx="4"/>
+    <rect x="984" y="34" width="215" height="86" rx="4"/>
+  </g>
+  <g stroke="#111" stroke-width="3" fill="none" marker-end="url(#fa)">
+    <path d="M219 77 H246"/>
+    <path d="M464 77 H491"/>
+    <path d="M709 77 H736"/>
+    <path d="M954 77 H981"/>
+  </g>
+
+  <g font-family="sans-serif" font-size="23" text-anchor="middle" fill="#111">
+    <text x="111.5" y="70">Requirements and</text>
+    <text x="111.5" y="97">test metrics</text>
+    <text x="356.5" y="70">Schematic</text>
+    <text x="356.5" y="97">analyses</text>
+    <text x="601.5" y="85">Layout, DRC, LVS</text>
+    <text x="846.5" y="70">Extraction and</text>
+    <text x="846.5" y="97">reanalysis</text>
+    <text x="1091.5" y="70">Fabrication</text>
+    <text x="1091.5" y="97">and test</text>
+  </g>
+
+  <g font-family="sans-serif" font-size="20" text-anchor="middle" fill="#111"
+     font-weight="bold">
+    <text x="111.5" y="152">1</text>
+    <text x="356.5" y="152">2</text>
+    <text x="601.5" y="152">3</text>
+    <text x="846.5" y="152">4</text>
+    <text x="1091.5" y="152">5</text>
+  </g>
+</svg>

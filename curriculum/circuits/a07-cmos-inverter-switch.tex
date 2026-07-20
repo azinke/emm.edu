@@ -1,0 +1,49 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Complementary inverter.
+  \node[pmos] (MP) at (2.5,4.8) {};
+  \node[nmos] (MN) at (2.5,1.8) {};
+  \draw (MP.S) -- (2.5,6.2) node[vcc] {$V_{DD}$};
+  \draw (MP.D) -- (2.5,3.3) node[circ] (OUT) {};
+  \draw (MN.D) -- (OUT);
+  \draw (MN.S) -- (2.5,0) node[ground] {};
+  \draw (MP.G) -- (1.1,4.8) -- (1.1,1.8) -- (MN.G);
+  \draw (1.1,3.3) -- (0.1,3.3)
+    node[ocirc, label={[font=\small]left:{TPIN: $v_i$}}] {};
+  \draw (OUT) -- (5.0,3.3)
+    node[ocirc, label={[font=\small]right:{TPO: $v_o$}}] {};
+  \draw (4.0,3.3) to[C, l={$C_L$}] (4.0,0) node[ground] {};
+  \node[circ] at (1.1,3.3) {};
+  \node[circ] at (4.0,3.3) {};
+  \node[font=\small] at (3.5,5.1) {$M_P$};
+  \node[font=\small] at (3.5,1.5) {$M_N$};
+  \node[font=\small\bfseries] at (2.2,-0.8) {(a) CMOS inverter};
+
+  % Complementary transmission gate.
+  \node[nmos, rotate=90] (MSN) at (10.0,2.3) {};
+  \node[pmos, rotate=-90] (MSP) at (10.0,4.3) {};
+  \coordinate (A) at (8.4,3.3);
+  \coordinate (B) at (11.6,3.3);
+  \draw (MSN.D) -| (A);
+  \draw (MSP.D) -| (A);
+  \draw (MSN.S) -| (B);
+  \draw (MSP.S) -| (B);
+  \draw (A) -- (7.5,3.3)
+    node[ocirc, label={[font=\small]left:{TPA}}] {};
+  \draw (B) -- (12.5,3.3)
+    node[ocirc, label={[font=\small]right:{TPB}}] {};
+  \draw (MSN.G) -- (MSN.G |- 0,1.2)
+    node[ocirc, label={[font=\small]below:{$\phi$}}] {};
+  \draw (MSP.G) -- (MSP.G |- 0,5.4)
+    node[ocirc, label={[font=\small]above:{$\overline{\phi}$}}] {};
+  \node[circ] at (A) {};
+  \node[circ] at (B) {};
+  \node[font=\small] at (10.8,1.85) {$M_{SN}$};
+  \node[font=\small] at (10.8,4.75) {$M_{SP}$};
+  \node[font=\small\bfseries] at (10.0,-0.8)
+    {(b) CMOS transmission gate};
+\end{circuitikz}
+\end{document}

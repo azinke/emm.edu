@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="500"
+     viewBox="0 0 1000 500" role="img"
+     aria-labelledby="title desc">
+  <title id="title">Common-centroid device unit array</title>
+  <desc id="desc">A conceptual plan view shows dummy fingers surrounding an
+  A B B A sequence. A and B have the same centroid. Each net is routed
+  symmetrically about the array center, and dummy edges are labeled. A gradient
+  arrow shows the systematic effect that the arrangement averages to first
+  order.</desc>
+  <defs>
+    <pattern id="a" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M0 8 L8 0" stroke="#555" stroke-width="2"/>
+    </pattern>
+    <pattern id="b" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M0 0 L8 8" stroke="#555" stroke-width="2"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3"
+            orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#111"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="500" fill="white"/>
+  <g stroke="#111" stroke-width="3">
+    <rect x="100" y="150" width="110" height="210" fill="#ddd"/>
+    <rect x="220" y="150" width="130" height="210" fill="url(#a)"/>
+    <rect x="360" y="150" width="130" height="210" fill="url(#b)"/>
+    <rect x="500" y="150" width="130" height="210" fill="url(#b)"/>
+    <rect x="640" y="150" width="130" height="210" fill="url(#a)"/>
+    <rect x="780" y="150" width="110" height="210" fill="#ddd"/>
+    <path d="M285 150 V105 H705 V150" fill="none"/>
+    <path d="M425 360 V405 H565 V360" fill="none"/>
+  </g>
+  <g font-family="sans-serif" font-size="44" text-anchor="middle">
+    <text x="155" y="275">D</text><text x="285" y="275">A</text>
+    <text x="425" y="275">B</text><text x="565" y="275">B</text>
+    <text x="705" y="275">A</text><text x="835" y="275">D</text>
+  </g>
+  <g font-family="sans-serif" font-size="22">
+    <text x="92" y="392">edge dummy</text>
+    <text x="735" y="392">edge dummy</text>
+    <text x="330" y="82">A route is center-symmetric</text>
+    <text x="320" y="445">B route is center-symmetric</text>
+  </g>
+  <path d="M120 55 H870" stroke="#111" stroke-width="4"
+        marker-end="url(#arrow)"/>
+  <text x="495" y="40" font-family="sans-serif" font-size="22"
+        text-anchor="middle">illustrative linear process gradient</text>
+  <text x="500" y="485" font-family="sans-serif" font-size="20"
+        text-anchor="middle">
+    Conceptual plan view; the PDK defines legal layers, contacts, taps, and spacing
+  </text>
+</svg>

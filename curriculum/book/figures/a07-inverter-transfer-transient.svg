@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560"
+     viewBox="0 0 1200 560" role="img"
+     aria-labelledby="title desc">
+  <title id="title">Illustrative CMOS inverter transfer and transient behavior</title>
+  <desc id="desc">The left panel plots output voltage versus input voltage with
+  high and low output levels, V IL, V M, and V IH. Tangent lines touch the curve
+  where its slope is minus one, at V IL and V IH. A dotted line for output equal
+  to input meets the curve at V M on the half-supply level. The right panel plots
+  a rising input, a delayed falling output, and a supply-current pulse during the
+  input transition.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3"
+            orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#111"/>
+    </marker>
+    <marker id="arrowback" markerWidth="10" markerHeight="10" refX="1" refY="3"
+            orient="auto">
+      <path d="M9,0 L9,6 L0,3 z" fill="#111"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="560" fill="white"/>
+
+  <g stroke="#111" fill="none" stroke-width="3">
+    <path d="M90 460 V70" marker-end="url(#arrow)"/>
+    <path d="M90 460 H555" marker-end="url(#arrow)"/>
+    <path d="M105 95 C200 95 235 117 265 147
+             C295 177 307 217 320 277
+             C333 337 350 372 380 402
+             C410 432 480 437 535 437" stroke-width="5"/>
+    <path d="M200 277 H535" stroke-dasharray="8 7" stroke-width="2"/>
+    <path d="M265 460 V147 M380 460 V402" stroke-dasharray="7 7"/>
+    <path d="M320 460 V277" stroke-dasharray="4 7" stroke-width="2"/>
+    <path d="M90 460 L470 158" stroke-dasharray="3 9" stroke-width="2"/>
+    <path d="M230 112 L300 182 M340 362 L420 442" stroke-width="2"/>
+  </g>
+  <g font-family="sans-serif" font-size="22">
+    <text x="20" y="65">vₒ</text>
+    <text x="535" y="505">vᵢ</text>
+    <text x="108" y="80">V<tspan baseline-shift="sub">OH</tspan></text>
+    <text x="462" y="420">V<tspan baseline-shift="sub">OL</tspan></text>
+    <text x="95" y="285">0.5 V<tspan baseline-shift="sub">DD</tspan></text>
+    <text x="265" y="495" text-anchor="middle">V<tspan baseline-shift="sub">IL</tspan></text>
+    <text x="320" y="495" text-anchor="middle">V<tspan baseline-shift="sub">M</tspan></text>
+    <text x="380" y="495" text-anchor="middle">V<tspan baseline-shift="sub">IH</tspan></text>
+    <text x="140" y="232">slope = −1</text>
+    <text x="398" y="338">slope = −1</text>
+    <text x="535" y="130" text-anchor="end">vₒ = vᵢ</text>
+    <text x="220" y="45" font-weight="bold">(a) DC transfer</text>
+  </g>
+
+  <g stroke="#111" fill="none" stroke-width="3">
+    <path d="M655 460 V70" marker-end="url(#arrow)"/>
+    <path d="M655 460 H1135" marker-end="url(#arrow)"/>
+    <path d="M680 410 H780 L820 120 H1110" stroke-width="5"/>
+    <path d="M680 120 H815 C855 120 870 410 930 410 H1110"
+          stroke-width="5" stroke-dasharray="14 7"/>
+    <path d="M680 420 H790 C810 420 820 300 850 300
+             C880 300 890 420 920 420 H1110" stroke-width="4"/>
+    <path d="M800 460 V80 M875 460 V80" stroke-dasharray="6 8"
+          stroke-width="2"/>
+    <path d="M800 265 H875" marker-end="url(#arrow)"
+          marker-start="url(#arrowback)" stroke-width="2"/>
+  </g>
+  <g font-family="sans-serif" font-size="22">
+    <text x="600" y="95">normalized trace level</text>
+    <text x="1100" y="505">time</text>
+    <text x="1125" y="110" text-anchor="end">vᵢ</text>
+    <text x="1125" y="400" text-anchor="end">vₒ</text>
+    <text x="900" y="332">i<tspan baseline-shift="sub">DD</tspan></text>
+    <text x="837" y="248" text-anchor="middle">t<tspan baseline-shift="sub">pHL</tspan></text>
+    <text x="820" y="45" font-weight="bold">(b) Rising input</text>
+  </g>
+  <text x="600" y="548" font-family="sans-serif" font-size="20"
+        text-anchor="middle">
+    Qualitative synthetic curves; iDD uses a separate current scale
+  </text>
+</svg>

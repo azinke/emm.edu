@@ -5,9 +5,13 @@ taking it from outline to a complete, teachable `draft` that reads as clean lect
 material. Later chapters are more technical than the foundations — so the layout is
 yours to design, but the conventions and the factual bar below are fixed.
 
-Write in the reader-facing style of *Dive Into Systems*: an expert peer builds
-the idea with the student, one visible step at a time. Technical depth must make
-the explanation clearer, not more distant.
+Write with the practical directness associated with strong No Starch Press
+engineering books: an expert peer addresses an ambitious reader, exposes the
+mechanism, and then puts the idea to work. Use the visible, stepwise teaching
+approach of *Dive Into Systems*. This is an editorial target, not permission to
+be breezy. Preserve every necessary derivation, definition, assumption,
+low-level mechanism, edge case, and evidence boundary. Technical depth must
+make the explanation clearer, not more distant.
 
 ## Chapter to write
 - **Chapter ID:** `<CHAPTER_ID>`   (e.g. A01)
@@ -28,12 +32,22 @@ the explanation clearer, not more distant.
 
 ## Invariant 0 — teach the reader in the room
 
-- Use active voice. Name what acts: the source drives current, the transistor
-  changes the load current, we choose a reference, and you compare the
-  prediction with the measurement.
+- Use second person for the reader's reasoning and actions: “you choose the
+  reference,” “you calculate the bound,” and “you compare prediction with
+  measurement.” Use a concrete technical subject for physical claims: the
+  source drives current, the transistor changes load current, and the extractor
+  computes parasitics. Do not default to “we,” “the reader,” “one,” or an
+  abstract passive construction.
+- Apply active voice to the entire chapter, not only body prose. Audit maturity
+  and safety callouts, learning outcomes, captions, table notes, requirements,
+  procedures, exercises, and answer choices. Passive voice remains acceptable
+  only when the actor is unknown or genuinely irrelevant.
 - Keep sentences punchy and direct. Give each sentence one main job. Split a
   sentence that tries to introduce a mechanism, qualify it, and state its
   consequence at once.
+- Make the tone warm through guidance, not jokes or informality. Tell the reader
+  what to inspect, calculate, compare, or decide. Never trade an exact technical
+  term, equation, caveat, or failure mode for conversational ease.
 - Define each technical term in **bold** at first use in the chapter, followed
   immediately by a plain-language meaning. Add the formal definition or equation
   after the reader knows what physical idea the term names.
@@ -50,7 +64,15 @@ the explanation clearer, not more distant.
   prediction afterward.
 - Avoid localized idioms, decorative metaphors, inflated vocabulary, and
   throat-clearing. Do not write “It is important to note,” “Obviously,”
-  “Simply,” or “As we all know.”
+  “Simply,” or “As we all know.” Also remove editorial narration such as “the
+  trade-off is now visible,” “this result is worth reconciling,” “the useful
+  point is,” or “the program is an oracle.” State the trade-off, reconciliation,
+  use, or evidence status directly.
+- Explain a mechanism as an event chain whenever causality matters: name the
+  change, the physical or logical response, the next quantity that changes, and
+  the terminal or system consequence. Do not stop after naming an effect such as
+  Miller multiplication, body effect, supply bounce, charge injection, or
+  cache invalidation.
 - Never use “beyond the scope” as a substitute for explanation. Give the shortest
   causal account that supports the current result. Then link to the later chapter
   and state what deeper question it answers.
@@ -78,7 +100,10 @@ stakes allow.
 - Before writing a signed equation, declare its reference direction, polarity,
   coordinate axis, integration path, or positive surface normal as applicable. A
   symbol such as $V_{AB}$, $I$, work, gain, or phase is incomplete until its
-  reference is unambiguous.
+  reference is unambiguous. Define the ordering of every indexed difference such
+  as $\Delta V_T$, $\Delta\beta$, timing error, gain error, or residual. Recheck
+  the algebra after fixing that order; a correct magnitude with an unauditable
+  sign is not a correct result.
 - Distinguish the status of every important relation: **definition**, exact
   conservation law, constitutive relation, approximation, empirical fit,
   rule-of-thumb screen, tolerance, or requirement. Derive the general conservation
@@ -118,15 +143,34 @@ stakes allow.
   input, taking a limiting case, or changing an operating condition. Do not leave a
   central equation as a formula to memorize, but do not manufacture arithmetic for
   a relation whose meaning is already transparent.
+- Audit the mathematical domain, not only the dimensions. State waveform shape,
+  operating region, monotonicity, initial condition, loading, and parameter
+  inequalities that the derivation requires. Encode a real boundary explicitly
+  when the raw expression becomes nonphysical outside its domain—for example,
+  use a piecewise relation or $[x]_+=\max(x,0)$ instead of allowing a predicted
+  power to become negative.
+- Audit hidden dependencies before claiming that a result is independent of a
+  parameter. State which geometry, current density, temperature, bias, load, or
+  compact-description parameters remain fixed. Substitute definitions far
+  enough to expose indirect dependence; cancellation between two intermediate
+  quantities does not prove independence when both contain the parameter through
+  a third quantity.
 - Name the operating region and limits of every compact model (small-signal,
   ideal-diode, lumped, linear, etc.); show at least one limiting case and one
-  second-order effect that breaks the first-order picture.
+  second-order effect that breaks the first-order picture. Attach the validity
+  condition to the equation itself when it changes the formula—for example,
+  near-zero drain voltage for a uniform-channel charge approximation or linear
+  full-rail ramps for a switching-loss coefficient.
 - Keep distinct phenomena distinct even when casual language merges them: carrier
   motion versus electromagnetic propagation, source response versus load response,
   stored quantity versus flow rate, potential versus potential difference, and
   physical behavior versus instrument indication. State whether a claim concerns
   steady state, a switching transient, sinusoidal steady state, or a bounded time
   interval.
+- Keep conventional current, signed terminal charge, and carrier motion
+  distinct. If an energy or charge derivation uses $i\,dt=dQ$, identify the
+  terminal charge and current reference it uses. Do not describe positive
+  conventional current as electrons traveling in the same direction.
 - When stored charge or field energy contributes at a terminal, separate total
   terminal current into its conduction and charge-rate or displacement components.
   Define which terminal owns the signed charge before writing its time derivative,
@@ -170,6 +214,13 @@ stakes allow.
   claim. Authentic measurements identify configuration, instrument, range,
   calibration state, raw observations, and uncertainty basis. A datasheet accuracy
   limit is not automatically a $k=2$ expanded uncertainty.
+- **Statistical integrity:** name the sampled distribution, correlations, seed,
+  sample count, PVT conditions, metric extraction, and failure rule. Prevent or
+  reject nonphysical samples such as negative scale parameters, or choose a
+  distribution whose support enforces the physics. Independent teaching draws
+  do not represent foundry correlations. Zero observed failures requires a
+  finite-sample confidence statement and never proves zero failure probability,
+  yield, or coverage of omitted mechanisms.
 - **Residual language:** an **unallocated quantity** is what remains after only
   some paths have been inventoried; it is not yet localized to a component or
   failure. A **closure residual** compares independently obtained terms after all
@@ -217,7 +268,8 @@ stakes allow.
   consequential assumption visible in the variable assignment or adjacent prose:
   do not silently rename "unallocated" power as component "loss," treat a
   hypothesis as an observation, or imply that executable arithmetic is a physical
-  simulation.
+  simulation. When code samples physical parameters, enforce their valid support
+  and state which correlations the example omits.
 - **Circuits:** CircuitikZ source in `curriculum/circuits/<id>.tex`, registered in
   `catalog.toml`, referenced as `../../../build/circuits/<id>.png`. Treat clean
   rectangular geometry as an acceptance requirement: route external conductors
@@ -367,7 +419,16 @@ prose that never gives the reader enough mathematics to reproduce the result.
    definition there or must be moved to the main explanation.
 5. Audit evidence. Separate prediction, synthetic teaching data, simulation,
    authentic measurement, and qualified claim. Make the prose say exactly which
-   rung has actually been reached.
+   rung has actually been reached. For a PDK-backed or layout-aware chapter,
+   record the PDK, simulator, extractor, device cells, include files, commands,
+   metric definitions, deterministic PVT matrix, statistical descriptions and
+   correlations, DRC/LVS results, extraction settings, and pre/post-layout
+   comparison. Rerun the full required PVT matrix after extraction. When the
+   requirement reaches a package pin, add pad, ESD, bond/bump, and package
+   descriptions and distinguish die-pad metrics from external-pin metrics. If
+   the repository lacks those artifacts, say so in the maturity boundary and do
+   not relabel a synthetic capacitance or parameter perturbation as PDK, PEX, or
+   yield evidence.
 6. Author and render any circuits. Begin with a rectangular placement plan:
    power rail above, return rail below, signal flow left-to-right where practical,
    repeated branches aligned, and functional panels separated. Connect exact
@@ -440,7 +501,17 @@ prose that never gives the reader enough mathematics to reproduce the result.
    once more: does it still teach the chapter's progression? Inspect sentences
    longer than about 35 words and semicolon chains. Split them unless their
    structure genuinely helps the reader. Check that no idiom or metaphor carries
-   a technical claim that should be stated literally.
+   a technical claim that should be stated literally. Then run a strict
+   reader-facing edit over **every** text-bearing element:
+   - replace default “we,” “the reader,” “one can,” and avoidable passive voice
+     with “you” for reader actions or a concrete technical actor;
+   - convert mixed requirement fragments into parallel commands with measurable
+     endpoints;
+   - replace editorial narration with the actual causal or evidentiary claim;
+   - make captions state what the circuit or figure does, including omitted body,
+     bias, return, or idealized connections; and
+   - confirm that direct prose has not deleted assumptions, derivation steps,
+     edge cases, citations, or claim limitations.
 15. Report the layout you chose and why, meaningful review-driven corrections, any
    new `references.bib` keys, and the verification results.
 

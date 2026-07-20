@@ -1,6 +1,27 @@
 version = 1
 
 [[circuit]]
+id = "a07-cmos-inverter-switch"
+source = "a07-cmos-inverter-switch.tex"
+chapter_id = "A07"
+caption = "Complementary CMOS building blocks: an inverter drives a lumped load capacitance, while a transmission gate uses parallel nMOS and pMOS devices controlled by complementary signals to pass either signal polarity. The nMOS bodies are tied to the lower rail and pMOS bodies to V DD; those body connections are declared rather than drawn."
+alt = "Panel a shows a pMOS transistor from V DD to output and an nMOS transistor from output to ground. Their gates share input TPIN, their drains share output TPO, and load capacitance C L connects output to ground. Panel b shows nMOS and pMOS devices in parallel between TPA and TPB; phi drives the nMOS gate and complement phi drives the pMOS gate."
+
+[[circuit]]
+id = "a07-five-transistor-ota"
+source = "a07-five-transistor-ota.tex"
+chapter_id = "A07"
+caption = "A five-transistor CMOS operational transconductance amplifier. The nMOS differential pair steers tail current, the pMOS current-mirror active load converts differential branch-current change to a single-ended output, and the nMOS tail device establishes bias. All nMOS bodies are tied to the lower rail and pMOS bodies to V DD; those body connections are declared rather than drawn."
+alt = "Matched nMOS input transistors M1 and M2 share a source node. Tail transistor M5 sinks their shared current to the lower rail; V BIAS drives its gate. Their input gates are test points TPP and TPN. P-channel transistors M3 and M4 form a high-side current mirror load connected to V DD. M2 and M4 drains form output TPO and drive load capacitance C L."
+
+[[circuit]]
+id = "a07-two-stage-incremental"
+source = "a07-two-stage-incremental.tex"
+chapter_id = "A07"
+caption = "A two-stage incremental amplifier representation about its quiescent point. The first transconductance drives high-impedance node TPX, the inverting second transconductance drives output TPO, and compensation capacitance C C connects output to TPX. Every ground symbol is AC reference, not an omitted DC bias path."
+alt = "Differential input v d controls current G m1 v d into node TPX. R1 and C1 connect TPX to AC reference. TPX controls a downward current g m2 v x at output TPO. R2 and combined C2 plus C L connect output to AC reference. Compensation capacitor C C connects output back to TPX."
+
+[[circuit]]
 id = "a06-noise-budget-amplifier"
 source = "a06-noise-budget-amplifier.tex"
 chapter_id = "A06"

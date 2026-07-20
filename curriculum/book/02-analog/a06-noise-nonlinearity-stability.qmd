@@ -6,7 +6,7 @@ status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter provides a complete instructional path from random noise and
+This draft develops the path from random noise and
 interference through distortion, bandwidth, and feedback stability to a
 requirements-based signal-chain decision. Values marked **illustrative** and
 records marked **synthetic** are teaching evidence, not measurements. Physical
@@ -64,15 +64,14 @@ Predict before calculating:
 
 - If a flat noise amplitude density passes through twice the noise bandwidth,
   does RMS noise double or rise by $\sqrt{2}$?
-- If we double a sine-wave amplitude in a weakly nonlinear circuit, which grows
+- If you double a sine-wave amplitude in a weakly nonlinear circuit, which grows
   faster: the fundamental or a third-order distortion product?
 - If a probe adds capacitance to a feedback node, must it improve stability?
 - Can averaging remove a coherent 50 Hz component when each record starts at
   the same 50 Hz phase?
 
-The chapter answers these questions by keeping the physical sources, schematic,
-spectral description, time record, calculation, and test attached to the same
-signal chain.
+The next sections separate these mechanisms by how each changes the time
+record, spectrum, bandwidth dependence, and loop response.
 
 ## Learning outcomes
 
@@ -98,15 +97,16 @@ it, you should be able to:
 - assess feedback with loop gain, crossover, gain margin, phase margin, and
   time-domain evidence while accounting for load, layout, source impedance, and
   probe intrusion; and
-- define a bounded acceptance test that separates prediction, calculation,
+- define an acceptance test that distinguishes prediction, calculation,
   simulation, measurement, and qualified design evidence.
 
 ## Random noise and deterministic interference
 
 ### Time records, ensembles, and spectra
 
-Let $v(t)$ be a voltage measured at TPO relative to TP0. We separate it into a
-repeatable or estimated signal $s(t)$ and a residual fluctuation $n(t)$:
+Let $v(t)$ be a voltage measured at TPO relative to TP0. The decomposition used
+here separates it into a repeatable or estimated signal $s(t)$ and a residual
+fluctuation $n(t)$:
 
 $$
 v(t)=s(t)+n(t).
@@ -114,12 +114,12 @@ $$ {#eq-a06-signal-noise}
 
 This equation is a chosen decomposition, not proof that every term has been
 identified. A periodic interferer left inside $n(t)$ does not become random
-because we called the remainder noise.
+because the decomposition labels the remainder as noise.
 
 An **offset** is a repeatable displacement from the intended zero indication.
 A **drift** is a slow change of an indicated quantity with time or an influence
-such as temperature. We estimate or correct these deterministic components
-before treating the remaining fluctuation statistically.
+such as temperature. These deterministic components require estimation or
+correction before the remaining fluctuation can be treated statistically.
 
 For a wide-sense stationary noise process, the mean
 $\mu_n=\operatorname{E}\{n(t)\}$ is constant and the autocovariance depends only
@@ -430,7 +430,7 @@ contribution in a second configuration: instrument voltage and current noise,
 termination thermal noise, coupled interference, and any retained source
 noise. Only when impedance, loading, gain, range, bandwidth, grounding, and
 coupling paths remain equivalent, and the added DUT contribution is
-uncorrelated with that background, may we infer
+uncorrelated with that background, can you infer
 
 $$
 \widehat S_{\mathrm{DUT,added}}
@@ -661,7 +661,7 @@ S_{o,\mathrm{total}}(f)
 =\sum_k |H_k(f)|^2S_k(f).
 $$ {#eq-a06-uncorrelated-sum}
 
-We add variances or PSDs, not ASDs. If two sources are correlated, cross terms
+Variances or PSDs add, not ASDs. If two sources are correlated, cross terms
 remain:
 
 $$
@@ -716,8 +716,8 @@ For the later illustrative values
 $e_n=8.0$ nV/$\sqrt{\text{Hz}}$ and
 $i_n=1.0$ pA/$\sqrt{\text{Hz}}$,
 $R_{S,\mathrm{opt}}=8.0$ k$\Omega$. At 300 K the simple description gives
-$F_{\min}=1.97$ or NF $\approx2.94$ dB. This does not mean we should replace a
-sensor's 10 k$\Omega$ source by 8 k$\Omega$: doing so may load and attenuate the
+$F_{\min}=1.97$ or NF $\approx2.94$ dB. Do not replace a sensor's
+10 k$\Omega$ source by 8 k$\Omega$ on that basis: the change may load and attenuate the
 signal. Complex impedance, capacitance, voltage/current-noise correlation,
 feedback-resistor noise, bias current, leakage, and colored noise can move or
 remove this optimum. Use condition-matched device noise parameters for a real
@@ -1340,7 +1340,7 @@ Bandwidth also changes loop gain. An external filter placed after an amplifier
 can reduce measured wideband noise without improving the amplifier's internal
 stability. A capacitor placed inside the feedback network changes signal gain,
 noise gain, loop crossover, and possibly phase margin. Topology determines
-which trade-off we made.
+whether the capacitor filters the observed output or changes the feedback loop.
 
 ## Stability belongs to the complete loop
 
@@ -1732,7 +1732,7 @@ amplifier.
 : Synthetic fault patterns for separating noise, interference, nonlinearity,
 large-signal speed, and stability mechanisms. {#tbl-a06-faults}
 
-## Summary
+## Usable signal range and loop integrity
 
 A trustworthy analog chain must preserve information between two boundaries.
 At the bottom, random noise and interference obscure small signals. At the top,
@@ -1761,9 +1761,10 @@ The central working relations are:
   not as properties of an op amp separated from its source, load, layout, and
   measurement.
 
-The useful workflow is predict → calculate → build → measure → reconcile →
-decide. A mismatch is not an inconvenience. It identifies which physical,
-schematic, spectral, or measurement description is incomplete.
+A usable-range claim must identify the tested signal, bandwidth, source and
+load, operating conditions, instrument floor, uncertainty, and decision rule. A
+mismatch among the circuit, spectrum, time record, and measurement setup
+identifies the description that needs revision.
 
 ## Exercises
 

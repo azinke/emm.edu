@@ -6,13 +6,11 @@ status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter presents a complete instructional path: sinusoidal representation,
-impedance derivations, worked network and resonance examples, executable
-arithmetic, explicitly synthetic sweep data, a filter decision that includes
-uncertainty margin, and a full exercise set. It remains subject to technical and
-editorial revision. The synthetic data teach analysis but do not qualify
-physical hardware; Lab **L05** supplies the aligned evidence. See the
-[reading roadmap](../roadmap.qmd) for status meanings.
+This draft covers sinusoidal representation, impedance, network analysis,
+resonance, frequency sweeps, loading, and filter design. The synthetic sweep
+supports analysis practice, not hardware qualification; Lab **L05** provides the
+corresponding practical work. See the [reading roadmap](../roadmap.qmd) for
+status definitions.
 :::
 
 ::: {.callout-warning title="Safety boundary for frequency-response work"}
@@ -43,10 +41,10 @@ three different results:
 | 1.59 kHz | 0.707 V RMS | $-45.0^\circ$ |
 | 10.0 kHz | 0.157 V RMS | $-81.0^\circ$ |
 
-These are calculations, not measurements. We will derive them from the capacitor
-relation in [F07](f07-capacitors-inductors-transients.qmd). That relation leads to
-impedance and frequency response. We then add source resistance, load, component
-tolerance, and probe loading to see whether the design still has margin.
+These are calculations, not measurements. The capacitor relation from
+[F07](f07-capacitors-inductors-transients.qmd) leads to their impedance and
+frequency-response derivation. Source resistance, load, component tolerance, and
+probe loading then determine the design margin.
 
 **Sinusoidal steady state** is the condition after startup transients have
 decayed while a circuit is driven by a continuing sine wave. A linear
@@ -81,8 +79,7 @@ should be able to:
   corner frequency, bandwidth, and Bode asymptotes;
 - calculate series-resonant frequency, half-power bandwidth, and loaded quality
   factor while identifying the resistance included in each quantity;
-- plan a safe frequency sweep, distinguish calculation, executable arithmetic,
-  synthetic data, and measurement, and make a guarded pass/fail decision.
+- plan a safe frequency sweep and make an uncertainty-aware pass/fail decision.
 
 ## Sinusoidal quantities and phase
 
@@ -492,9 +489,9 @@ low-pass, bandwidth extends from DC to the frequency where magnitude has fallen
 to $1/\sqrt2$ of the passband plateau. If the loaded plateau is $K<1$, the
 bandwidth threshold is $K/\sqrt2$, not an absolute gain of 0.707.
 
-@fig-f08-bode shows the exact normalized response and its straight-line
-magnitude approximation. The figure is **calculated**, generated from
-@eq-f08-rc-lowpass-mag-phase by the recoverable standard-library script
+The plot in @fig-f08-bode shows the exact normalized response and its
+straight-line magnitude approximation. The figure is **calculated** from the
+relation in @eq-f08-rc-lowpass-mag-phase by the recoverable standard-library script
 `curriculum/figures/f08_bode.py`; it is not measured data.
 
 ![Calculated first-order RC low-pass Bode magnitude and phase.](../../figures/f08-rc-bode.png){#fig-f08-bode width="85%" fig-alt="Two vertically aligned plots against logarithmic normalized frequency f over corner frequency. Exact magnitude is near zero decibels at low frequency, is minus 3.010 decibels at the corner, and approaches a dashed minus 20 decibels per decade asymptote. Exact phase moves from zero degrees through minus 45 degrees at the corner toward minus 90 degrees."}
@@ -537,8 +534,8 @@ first unless buffering or impedance separation is provided.
 
 ### The RL first-order pair
 
-The time/frequency bridge is not peculiar to capacitors. In
-@fig-f08-rl-frequency, $i(t)$ is referenced clockwise, $v_R$ is positive from
+The time/frequency bridge is not peculiar to capacitors. In the RL circuit shown
+in @fig-f08-rl-frequency, $i(t)$ points clockwise and $v_R$ is positive from
 TP1 to TP2, and $v_L$ is positive from TP2 to TP0. Assume ideal constant $R$ and
 $L$, a lumped linear circuit, negligible load at both output ports, and
 sinusoidal steady state.
@@ -666,8 +663,8 @@ different resistance placement and different formulas; @eq-f08-series-q must
 not be transplanted by pattern matching.
 
 ::: {.callout-note title="Two unrelated uses of Q"}
-$Q$ in @eq-f08-complex-power means reactive power and has unit var. $Q$ in
-@eq-f08-series-q means resonator quality factor and is dimensionless. Context is
+$Q$ in @eq-f08-complex-power means reactive power and has unit var. In
+the quality-factor relation @eq-f08-series-q, $Q$ is dimensionless. Context is
 usually enough in advanced work; here, always write the unit or say “quality
 factor” so the two cannot be confused. Physically, a larger resonator $Q$ means
 less energy is lost per cycle relative to energy stored, and therefore a
@@ -806,7 +803,7 @@ For an approved L1 RC measurement using panel (b):
 6. Plot $20\log_{10}(|V_\text{out}|/|V_\text{in}|)$ and phase. Compare with the
    **loaded** prediction and its tolerance band, not only the nominal ideal line.
 7. Repeat a few points after changing probe mode or load. A shift that matches
-   Equation @eq-f08-measured-lowpass is evidence of measurement loading; it is not a DUT
+   @eq-f08-measured-lowpass supports measurement loading; it is not a DUT
    fault.
 
 Instrument bandwidth is part of the transfer chain. A scope or probe at its
@@ -815,15 +812,14 @@ combined response must be adequate at the highest frequency of interest
 [@tektronixprobesprimer]. A bandwidth number alone also does not establish phase
 accuracy, noise floor, or uncertainty.
 
-## Evidence reconciliation
+## Calculation cross-check and synthetic diagnosis
 
 ### Executable cross-check
 
-The following standard-library Python evaluates the printed relations. It is
-**executable arithmetic**, not a circuit simulator and not a measurement.
-Complex arithmetic provides an independent check on the hand calculation, while
-the explicit parameter names keep resistance, capacitance, and evidence status
-visible.
+The following standard-library Python evaluates the printed relations. It checks
+the hand calculation; it is not a circuit simulator or measurement. The
+parameter names keep resistance and capacitance visible. See
+@sec-evidence-workflow for the distinction among these forms of work.
 
 ```python
 from cmath import phase
@@ -949,7 +945,7 @@ repeat with a lower-capacitance probe, characterize the capacitor separately,
 and compare TP1 with the actual source terminal. Only after every declared path
 has been independently evaluated can a closure residual be assessed.
 
-## Worked design: a bounded low-pass response
+## Worked design: a low-pass response with margin
 
 ### Requirements and nominal selection
 
@@ -1056,7 +1052,7 @@ qualify a physical filter. Equality at a strict boundary would not pass, and a
 typical probe specification cannot be promoted into a guaranteed uncertainty
 bound [@jcgm2012conformity].
 
-## Summary
+## Frequency response in practice
 
 A sinusoid separates amplitude, frequency, and phase. RMS phasors suppress the
 common $e^{j\omega t}$ factor, turning derivatives into multiplication by
@@ -1071,12 +1067,10 @@ two inseparable parts of the response. Bode plots expose corners and asymptotic
 slopes. Adding both $L$ and $C$ permits resonance, whose frequency, bandwidth,
 and quality factor depend on topology and on every relevant loss.
 
-The physical circuit, schematic, equations, executable arithmetic, sweep, and
-decision describe one object. Source impedance, load, probe capacitance,
-component variation, parasitics, and instrument bandwidth are not cleanup
-details: they determine whether those descriptions agree. A calculation can
-support a prediction; only a documented measurement can support a claim about
-an assembly.
+Source impedance, load, probe capacitance, component variation, parasitics, and
+instrument bandwidth are not cleanup details. Each can move the measured
+response away from the ideal prediction. A calculation supports a prediction;
+a documented measurement establishes how the tested assembly behaved.
 
 ## Exercises
 
@@ -1133,13 +1127,15 @@ Choose one best answer for each item.
 
 **Answer key:** 1 b — divide peak by $\sqrt2$; 2 c — it equals
 $-j/(\omega C)$; 3 b; 4 b — probe impedance is frequency dependent; 5 c — use
-@eq-f08-resonance, @eq-f08-rlc-bandwidth, and @eq-f08-series-q; 6 c — the guarded
+the resonance, bandwidth, and quality-factor relations in @eq-f08-resonance,
+the bandwidth relation @eq-f08-rlc-bandwidth, and the quality-factor relation
+from @eq-f08-series-q; 6 c — the guarded
 interval does not establish conformity.
 
 ### Retrieval and explanation
 
 1. State the amplitude, time, and complex-exponential conventions used in
-   Equation @eq-f08-phasor-definition.
+   Use @eq-f08-phasor-definition.
 2. Distinguish instantaneous, peak, peak-to-peak, RMS, and average voltage.
 3. Explain why a phasor is not a waveform and why phasors at different
    frequencies cannot be added directly.

@@ -1,16 +1,13 @@
 ---
 title: "Network conservation and equivalent circuits"
-description: "Derive node and loop analysis from conservation, reduce linear one-ports to Thévenin and Norton equivalents, and verify network predictions with bounded evidence."
+description: "Derive node and loop analysis from conservation, reduce linear one-ports to Thévenin and Norton equivalents, and verify their predictions."
 chapter-id: F04
 status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter provides a complete instructional path: conservation statements,
-nodal and mesh derivations, worked examples, an executable cross-check, explicitly
-synthetic diagnostic data, a bounded acceptance decision, and a full exercise set.
-It remains subject to technical and editorial revision. Physical evidence belongs
-in aligned Lab **L03**; the synthetic values here do not qualify a hardware claim.
+This draft includes the chapter's derivations, worked examples, computational
+checks, and exercises. Aligned Lab **L03** supplies the physical observations.
 See the [reading roadmap](../roadmap.qmd) for the meaning of status levels.
 :::
 
@@ -98,7 +95,7 @@ connectivity. The following vocabulary makes that statement precise:
 - A **port** is a pair of terminals through which an external circuit interacts
   with a network. Port voltage and port current must be declared together.
 
-The **reference node** is the node we assign $0$ V so that every other node
+The **reference node** is the node you assign $0$ V so that every other node
 voltage has a common coordinate. This is an algebraic choice. The reference node
 need not be earth, chassis, or protective earth, and current does not disappear
 there. Choosing another reference shifts every node potential by one constant.
@@ -142,7 +139,8 @@ $$
 $$ {#eq-f04-continuity}
 
 Current has units C/s, as does $\mathrm dQ/\mathrm dt$, so the dimensions agree.
-Equation @eq-f04-continuity is not a resistor relation and it does not forbid
+The conservation law in @eq-f04-continuity is not a resistor relation and does
+not forbid
 charge accumulation. An imbalance is precisely the rate at which charge inside
 the boundary changes.
 
@@ -787,9 +785,9 @@ RL=1000.0 ohm: v=4.4000 V, i=4.4000 mA
 RL=666.7 ohm: v=3.6667 V, i=5.5000 mA
 ```
 
-The code reaches the calculation rung of the evidence ladder. Agreement with
-hand algebra catches transcription and arithmetic errors; it is not a simulation
-of non-ideal hardware and not a measurement.
+The code independently repeats the arithmetic. Agreement with hand algebra
+catches transcription and arithmetic errors, but it does not simulate non-ideal
+hardware or measure a circuit. See @sec-evidence-workflow for the distinction.
 
 ## Load-sweep evidence for the linear one-port relation
 
@@ -812,8 +810,8 @@ agreeing point; this follows the prediction-first bench practice of
 6. examine whether $v+R_\text{th}i_\text{port}$ remains consistent with one
    $V_\text{th}$.
 
-@tbl-f04-synthetic is **synthetic, illustrative data**, not a record from an
-instrument. The first four rows were generated from
+The values in @tbl-f04-synthetic are **synthetic, illustrative data**, not an
+instrument record. The first four rows were generated from
 $V_\text{th}=7.333$ V and $R_\text{th}=666.7~\Omega$, with small illustrative
 offsets. The last row deliberately imitates a source entering a current-limited
 region. Assume, only for learning how to reason from the table, a 10 MΩ voltmeter
@@ -912,13 +910,14 @@ margin. Whether the remaining margin is sufficient cannot be decided until $U$
 and omitted physical
 effects are bounded. One end-item acceptance test also cannot demonstrate every
 manufacturing corner unless component values are screened or separately bounded;
-corner coverage belongs in design qualification and production controls. That is
-the honest handoff from a network calculation to a verification claim.
+corner coverage belongs in design qualification and production controls. The
+calculation therefore supports the test design but does not verify manufactured
+hardware.
 
 ## Validity limits of lumped linear DC network analysis
 
-The methods are durable; their simple inputs are conditional. Watch for these
-failure boundaries:
+The methods depend on their element relations and lumped-circuit assumptions.
+Their main failure boundaries are:
 
 - **Unrepresented storage or coupling:** parasitic capacitance permits transient
   node accumulation; changing linked flux adds induced emf. Add the relevant
@@ -936,29 +935,28 @@ failure boundaries:
 - **Overinterpreted reduction:** a port equivalent predicts external terminal
   behavior, not internal temperature, ratings, noise, or safety.
 
-In each case, disagreement is useful. Locate which representation—physical
-assembly, schematic topology, branch relation, equation, code, or measurement—no
-longer describes the same object.
+For each failure, compare the physical assembly, schematic topology, branch
+relation, equation, code, and measurement. The first inconsistent description
+usually determines the next diagnostic test.
 
-## Reusable network-analysis workflow
+## Network analysis in practice
 
 Kirchhoff's laws are conservation constraints, not isolated recipes. KCL comes
 from charge continuity after node accumulation is made negligible or explicit;
 KVL comes from consistent potential changes after linked induction is negligible
 or represented. Element relations complete the equations.
 
-The reusable workflow is: choose references, estimate, write independent node or
-mesh equations, solve, inspect signs, calculate every branch quantity, and test
-residuals and limiting cases. Linearity then lets independent source responses
-add. At a named port, the same linear network becomes a Thévenin or Norton line
-that can be reused across loads. Maximum power occurs at a resistive match, but
-the voltage and loss consequences must serve the actual requirement.
+Network analysis starts by declaring references and estimating the expected
+signs and magnitudes. Independent node or mesh equations determine the solution;
+residuals and limiting cases then test it. Linearity allows independent source
+responses to add. At a named port, a Thévenin or Norton relation preserves the
+external voltage–current behavior across loads. Maximum power occurs at a
+resistive match, but the voltage and loss consequences must still serve the
+actual requirement.
 
-F07 adds explicit storage and transients to the same conservation structure. F08
-extends branch relations to impedance and frequency. A01 and A02 replace linear
-resistors with nonlinear and controlled devices while keeping the node equations.
-F06 turns residuals, loading, and mismatch hypotheses into defensible physical
-evidence. The topology changes; the discipline does not.
+Storage, frequency dependence, and nonlinear devices change the branch relations,
+but they do not remove the conservation equations. The `Connections` section
+below lists those extensions.
 
 ## Exercises
 
@@ -1126,9 +1124,9 @@ is [M01](../appendices/m01-algebra-units-complex.qmd); matrix methods, when need
 for larger networks, are developed just in time in
 [M02](../appendices/m02-calculus-linear-differential.qmd).
 
-This chapter begins the Part I **dynamics spine** F04 → F07 → F08: node and loop
-structure persists when [F07](f07-capacitors-inductors-transients.qmd) adds
-storage and when [F08](f08-sinusoids-impedance-frequency.qmd) adds impedance.
+The node and loop structure persists when
+[F07](f07-capacitors-inductors-transients.qmd) adds storage and when
+[F08](f08-sinusoids-impedance-frequency.qmd) adds impedance.
 It also feeds [A01](../02-analog/a01-semiconductor-diodes.qmd) and
 [A02](../02-analog/a02-transistors.qmd), where nonlinear and controlled branches
 enter the same network equations. [F06](f06-measurement-uncertainty-debug.qmd)

@@ -6,12 +6,10 @@ status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter presents a complete instructional path: first-principles derivations,
-worked examples, an executable check, explicitly synthetic diagnostic data, a real
-component-datasheet case, a bounded design decision, and a full exercise set. It is
-still subject to technical and editorial revision. Physical evidence belongs in
-the aligned laboratory; the synthetic values here do not qualify a physical claim.
-See the [reading roadmap](../roadmap.qmd) for the meaning of status levels.
+This draft includes the chapter's derivations, worked examples, computational
+checks, datasheet example, and exercises. The aligned laboratory supplies the
+physical observations. See the [reading roadmap](../roadmap.qmd) for the meaning
+of status levels.
 :::
 
 ::: {.callout-warning title="Safety boundary for this chapter"}
@@ -29,12 +27,12 @@ and target controls established in [F01](f01-safe-practice.qmd) [@iec61010].
 
 > Why does the voltage of a source change when a real load is connected?
 
-Consider a **hypothetical, illustrative observation**. A voltmeter reads 5.00 V
+Consider an illustrative case. A voltmeter reads 5.00 V
 across an unloaded bench supply. Connect one approved load and the display at the
 load reads 4.98 V. Connect a heavier load and it reads 4.2 V, or perhaps exactly
 2.0 V while a **CC** indicator lights. Which statement is right: “the source is
 5 V,” “the load pulled it down,” or “the source has become a 2 V source”? These
-numbers motivate the question; they are not presented as measured evidence.
+numbers set up the problem; they are not measurements.
 
 Each statement is incomplete because voltage and current are not properties of one
 component in isolation. The connected source and load settle at one **operating
@@ -48,8 +46,8 @@ Consider an **illustrative** 5.00 V source represented, over a limited range, by
 ideal 5.00 V source in series with 47 Ω. Predict the load voltage for (a) no load,
 (b) 1.0 kΩ, and (c) 47 Ω. Will any loaded voltage exceed 5.00 V? At what load will
 the source lose half its open-circuit voltage? Commit to directional and
-order-of-magnitude answers before doing the arithmetic. We reconcile them with a
-schematic, equations, code, and synthetic diagnostic data later.
+order-of-magnitude answers before doing the arithmetic. You will check them
+against the circuit description later.
 :::
 
 ## Learning outcomes
@@ -126,8 +124,8 @@ That pair is the operating point. It changes when either relation changes.
 
 F02 developed the local, low-field constitutive relation
 $\vec J=\sigma\vec E$ for a homogeneous, isotropic, approximately ohmic material
-at a stable temperature. Resistivity is defined as $\rho\equiv1/\sigma$. We can now
-derive a terminal relation for a uniform specimen rather than memorize one.
+at a stable temperature. Resistivity is defined as $\rho\equiv1/\sigma$. You can
+derive a terminal relation for a uniform specimen from these quantities.
 
 Take a straight specimen of length $L$ and uniform cross-sectional area $A$.
 Choose the $+x$ axis from terminal A to terminal B. Declare $V=V_A-V_B$ and current
@@ -169,11 +167,11 @@ $$
 [RI]=\Omega\!\cdot\!\text{A}=\text{V}.
 $$
 
-Equation @eq-ohm is **Ohm's law for an ohmic element**: a linear constitutive
+The relation in @eq-ohm is **Ohm's law for an ohmic element**: a linear constitutive
 relation within the operating range in which $R$ is effectively constant. It is
 not a definition that forces every device to be linear. A diode, lamp filament,
 thermistor, battery, and transistor can all have curved current–voltage relations.
-At an operating point with $I\ne0$, one may calculate the **static resistance**
+At an operating point with $I\ne0$, you can calculate the **static resistance**
 $R_\text{static}=V/I$, while the local slope defines the **differential
 resistance** $r=\mathrm dV/\mathrm dI$. They need not be equal. Only a straight
 line through the origin has one constant resistance describing every point.
@@ -298,7 +296,7 @@ value, or the constant-$R_S$ approximation.
 
 ### Two loaded measurements estimate source resistance safely
 
-Equation @eq-source-line also gives a diagnostic method. Measure two steady
+The source relation in @eq-source-line also gives a diagnostic method. Measure two steady
 operating points $(V_1,I_1)$ and $(V_2,I_2)$ inside the same linear region, with
 the same polarity and current reference. Subtraction eliminates $V_\text{OC}$:
 
@@ -602,13 +600,12 @@ $$
 
 The 100 Ω row does not imply that $R_S$ suddenly became 150 Ω. Its 19.98 mA load
 current, near the declared 20.0 mA limit, and the CC state discriminate a change of
-operating region from a constant-resistance source fault. The disagreement is the
-useful signal.
+operating region from a constant-resistance source fault.
 
 The following standard-library program reproduces the calculations and performs
 the divider worst-case check used later. It is executable arithmetic, not an
-independent simulation or measurement; it remains on the **calculation** rung of
-the evidence ladder.
+independent simulation or measurement. See @sec-evidence-workflow for this
+distinction.
 
 ```python
 # f03_operating_points.py -- reproducible F03 calculations.
@@ -861,8 +858,8 @@ test. Rounding cannot turn an inconclusive result into a pass.
 
 ## Validity limits of linear resistive source–load analysis
 
-The compact relations in this chapter are powerful because their boundaries are
-visible. Common breakdowns are diagnostic clues:
+The source–load relations apply only within their stated operating conditions.
+Common breakdowns provide diagnostic clues:
 
 - **Current limit or compliance:** a source follows one straight terminal relation
   only until its regulator reaches a current, voltage, thermal, or input-energy
@@ -895,38 +892,31 @@ chosen loads reveal a line, a knee, or inconsistency. That is the diagnostic val
 of the operating-point view: it turns “the voltage is wrong” into competing,
 testable terminal relations.
 
-## Reusable source–load reasoning
+## Source–load reasoning in practice
 
-A source and load do not negotiate vaguely; they settle at the one voltage and
-current that satisfy both terminal descriptions. Resistance turns field behavior
-into a bounded linear relation, series paths add resistance, parallel paths add
-conductance, and a finite source resistance makes load current visible as voltage
-sag. Instruments are additional loads, so a reading belongs to the source–load–
-instrument system unless loading has been shown negligible or corrected.
+A source and load settle at the voltage and current that satisfy both terminal
+relations. Resistance connects material behavior to a linear terminal relation.
+Series paths add resistance, parallel paths add conductance, and finite source
+resistance appears as voltage sag under load. Because instruments are also loads,
+a reading describes the source–load–instrument system unless loading is
+negligible or corrected.
 
-The durable working sequence is:
+In practice, source–load analysis starts with declared references and operating
+conditions, an estimate of the operating region, and a simultaneous solution of
+the source and load relations. Tolerance, ratings, temperature, wiring, and
+instrument resistance belong in the analysis whenever they can affect the
+requirement. Measurements should then distinguish the likely causes of any
+disagreement.
 
-1. declare voltage polarity, current direction, DC or other operating condition,
-   and the safety boundary;
-2. predict the operating region and order of magnitude;
-3. derive the source and load relations, then solve their common point;
-4. include tolerances, ratings, temperature, wiring, and instrument resistance far
-   enough to compare with the requirement;
-5. measure at safe, discriminating operating points and reconcile disagreement;
-6. state only the claim supported by the achieved evidence rung.
-
-F04 generalizes the reductions into Kirchhoff analysis and Thévenin/Norton
-equivalents. F05 follows the same operating point into energy, power, and heat.
-F06 turns loading, uncertainty, and competing fault hypotheses into a systematic
-measurement discipline. The simple source–resistor–load loop is therefore not a
-toy to discard; it is the smallest complete example of how the book reasons about
-systems.
+The source–resistor–load loop is the smallest circuit in which terminal
+descriptions, equations, instrument loading, and a measured operating point can
+disagree. The `Connections` section below shows where later chapters extend it.
 
 ## Exercises
 
-Use declared references, SI units, an estimate before calculation, and a statement
-of assumptions. Full solutions and live-assessment variants remain outside the
-public book; selected self-check results are included for calibration.
+Declare references, units, and assumptions, and estimate before calculating.
+Full solutions and live-assessment variants remain outside the public book;
+selected self-check results are included for calibration.
 
 ### Quick check
 
@@ -991,7 +981,7 @@ One best answer each; the key follows.
    1 kΩ resistors in parallel; (d) 1 kΩ in parallel with 10 kΩ.
 7. A 2.5 V node has 200 kΩ output resistance. Estimate the minimum voltmeter input
    resistance required for less than 1 % loading, then use
-   Equation @eq-meter-requirement to calculate it.
+   @eq-meter-requirement to calculate it.
 
 **Derivation and calculation**
 
@@ -1020,7 +1010,7 @@ One best answer each; the key follows.
     brown–black–black–brown–brown; (c) “332”; (d) “4R7.” Then state what the
     marking does **not** tell you about dissipation or temperature.
 15. Recalculate the apparent $R_S$ for every loaded row of
-    Table @tbl-source-synthetic using 4.999 V as the open-circuit value. Plot or tabulate
+    @tbl-source-synthetic using 4.999 V as the open-circuit value. Plot or tabulate
     $V$ against $I$. Which row falsifies the single straight-line relation, and
     which recorded state explains it?
 16. A real test gives $(V_1,I_1)=(4.950~\text{V},1.00~\text{mA})$ and
@@ -1072,8 +1062,7 @@ Chapter ID: `F03`. Its prerequisites are [F02](f02-charge-voltage-current.qmd)
 [M01](../appendices/m01-algebra-units-complex.qmd) (algebra, ratios, graphs, and SI
 units), as recorded in [`chapters.toml`](../chapters.toml).
 
-This chapter is the middle of the Part I **measurement spine**
-F01 → F02 → F03 → F06. It hands operating-point and loading reasoning to
+This chapter hands operating-point and loading reasoning to
 [F04](f04-networks-kirchhoff.qmd), power and resistor-rating consequences to
 [F05](f05-energy-power-thermal.qmd), and measurement intrusion plus fault
 discrimination to [F06](f06-measurement-uncertainty-debug.qmd). The aligned

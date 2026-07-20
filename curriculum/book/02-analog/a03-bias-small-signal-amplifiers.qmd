@@ -6,12 +6,9 @@ status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter develops a complete instructional path from DC bias to
-single-transistor gain, loading, available signal range, frequency limits, and a
-design decision that includes uncertainty margin. Calculations, illustrative
-parameter sweeps, and executable arithmetic are identified as such; they are not
-measurements. Physical amplifier evidence belongs in aligned Lab **L07**. The
-chapter remains subject to technical and editorial revision. See the
+This draft develops single-transistor amplifiers from the DC operating point
+through gain, loading, signal range, and frequency limits. In Lab **L07**, you
+test the resulting designs on physical circuits. See the
 [reading roadmap](../roadmap.qmd) for the meaning of status levels.
 :::
 
@@ -38,8 +35,8 @@ operating point. Around that point, a small input waveform can produce a larger
 output waveform.
 
 The same transistor can clip, drift, or stop amplifying after a modest change in
-temperature, load, or device parameters. We resolve that behavior by separating
-the DC operating point from the signal excursion
+temperature, load, or device parameters. Separating the DC operating point from
+the signal excursion identifies which limit moved
 [@sedra2020microelectronic].
 
 Before calculating, consider a common-emitter stage connected to a 12 V supply.
@@ -52,11 +49,10 @@ Predict what happens if:
 - the load resistance is reduced from open circuit to 10 k$\Omega$; and
 - the input amplitude is increased until the collector waveform flattens.
 
-A complete answer must make the device region, DC load line, local tangent,
-schematic, source and load, frequency-dependent paths, measured test points, and
-acceptance requirement agree. Their disagreement is useful evidence: it can
-identify a wrong operating region, bias sensitivity, loading, an omitted
-capacitance, measurement intrusion, or operation outside the local linear range.
+A complete explanation connects the device region, DC load line, local tangent,
+source and load, and frequency-dependent paths. Measurements at named test points
+can then distinguish a wrong operating region from bias sensitivity, loading, an
+omitted capacitance, probe intrusion, or operation beyond the local linear range.
 
 ## Learning outcomes
 
@@ -809,11 +805,10 @@ R_{\mathrm{out}}\approx R_C\parallel r_o.
 $$ {#eq-a03-ce-output-resistance}
 
 Emitter degeneration and transistor reverse effects can change this result.
-With finite $r_o$, it connects collector to the moving emitter rather than
-collector to AC reference. We therefore cannot combine it with $R_C'$ as a
-parallel resistance. Use the
-complete network in @fig-a03-ce-midband and nodal analysis. The test-source
-definition remains valid when a shortcut is not.
+With finite $r_o$, it connects the collector to the moving emitter rather than
+to AC reference. You therefore cannot combine it with $R_C'$ as a parallel
+resistance. The complete network in @fig-a03-ce-midband therefore requires nodal
+analysis. The test-source definition remains valid when a shortcut is not.
 
 ### Nominal midband result
 
@@ -1171,7 +1166,7 @@ in the first approximation. Equal $V_{GS}$ gives equal currents only for matched
 devices at equal temperature and adequate $V_{DS}$. Threshold mismatch,
 channel-length modulation, body connection, and output compliance remain.
 
-### Four quantities keep mirror claims separate
+### Current-mirror accuracy, resistance, compliance, and matching
 
 A statement such as “the mirror supplies 1 mA” is incomplete. At least four
 quantities must be distinguished:
@@ -1531,7 +1526,7 @@ divider halves the first-stage output. A follower between stages can reduce
 this loading at the cost of bias current, headroom, noise, and additional
 frequency dependence.
 
-## Evidence distinguishes bias, loading, and frequency faults
+## Test points distinguish bias, loading, and frequency faults
 
 A wrong output waveform does not by itself localize a cause. The physical
 circuit and its representations should be tested at discriminating points.
@@ -1574,8 +1569,9 @@ load, amplitude, frequency, and instrument configuration for comparisons.
 
 Suppose an **illustrative synthetic record** for the canonical stage reports
 $V_B=1.76$ V, $V_E=1.05$ V, $V_C=6.92$ V, and
-$|A_v|=7.8$ at 1.00 kHz. These generated values teach reconciliation; they do
-not qualify a physical amplifier. The terminal differences are
+$|A_v|=7.8$ at 1.00 kHz. These generated values let you separate a valid DC
+region from a low-gain fault; they do not qualify a physical amplifier. The
+terminal differences are
 
 $$
 V_{BE}=1.76-1.05=0.71~\mathrm V,
@@ -1627,13 +1623,13 @@ declared paths are assigned, a closure residual consistent with zero within
 uncertainty supports the circuit description. Defining an unknown current as
 the remainder would create an identity, not independent evidence.
 
-## Worked design: a bounded 2N3904 voltage stage
+## Worked design: a 2N3904 voltage stage
 
 ### Requirements and assumptions
 
-Design the circuit of @fig-a03-common-emitter as an extra-low-voltage teaching
-stage. @tbl-a03-design-requirements states **illustrative requirements**; they
-are not claims about an existing assembly.
+Design the circuit in @fig-a03-common-emitter as an extra-low-voltage teaching
+stage. The **illustrative requirements** in @tbl-a03-design-requirements define
+the design; no physical assembly has supplied measurements.
 
 | Quantity | Illustrative requirement and condition |
 |---|---|
@@ -1680,11 +1676,11 @@ $\beta$.
 
 ### Executable nominal and sensitivity check
 
-The following standard-library code reproduces the chapter arithmetic. It uses
+The following standard-library code reproduces the design arithmetic. It uses
 the constant-$V_{BE}$ approximation, sweeps
 $\beta_{\mathrm{DC}}$, holds the distinct illustrative value
 $\beta_{\mathrm{ac}}=100$ fixed, and neglects $r_o$. Its output is
-**executable calculation evidence**, not simulation and not measurement.
+an executable calculation, not a circuit simulation or measurement.
 
 ```python
 from math import log10, pi
@@ -1893,10 +1889,10 @@ $R_{E2}$ under the stated DC conditions. Reverse or bipolar signal conditions
 can invalidate that choice; use a suitable non-polar or bipolar part when
 polarity cannot be maintained.
 
-### Requirement disposition before measurement
+### Design status before measurement
 
-The calculation does not justify an overall pass. @tbl-a03-disposition makes
-the evidence gap explicit.
+The calculation does not justify an overall pass. The disposition table
+(@tbl-a03-disposition) shows which requirements still need physical tests.
 
 | Requirement | Evidence reached | Disposition before build |
 |---|---|---|
@@ -1911,12 +1907,13 @@ the evidence gap explicit.
 : Requirement-by-requirement disposition. A nominal calculation can support
 feasibility but cannot replace the missing physical evidence. {#tbl-a03-disposition}
 
-## Guarded acceptance for the teaching stage
+## Acceptance test for the teaching stage
 
-The calculation reaches the estimate-and-calculation rungs of the evidence
-ladder. A physical claim requires a documented build and measurement. Use the
-exact circuit, source, load, test points, and conditions below; otherwise the
-claim concerns a different system.
+The calculations support a feasible design, but they do not characterize a
+physical assembly. Continue with the
+[evidence workflow](../preface.qmd#sec-evidence-workflow) using the exact circuit,
+source, load, test points, and conditions below. Changing that boundary means you
+are testing a different system.
 
 1. **Configuration and safety.** Use the selected 2N3904, recorded component
    values or tolerances, a 12.0 V current-limited source set to no more than
@@ -1973,7 +1970,7 @@ range, amplitude, and frequency range. It does not qualify all 2N3904 devices,
 arbitrary loads, power amplification, or operation outside the current-limited
 extra-low-voltage boundary.
 
-## Summary
+## Bias, incremental gain, and usable range
 
 Bias first establishes a DC Q point by intersecting the device relation with
 the source and load network. Divider bias plus emitter or source resistance
@@ -1995,8 +1992,8 @@ additional non-ideal behavior. These class-A stages dissipate DC power even
 without a signal.
 
 Simple mirrors provide conditional bias currents, not precision independent
-sources. Transfer accuracy, incremental output resistance, compliance, and
-matching or dynamic limits are distinct claims. A Wilson mirror uses feedback
+sources. Transfer accuracy, incremental output resistance, compliance, matching,
+and dynamic limits remain separate claims. A Wilson mirror uses feedback
 to reduce first-order BJT base-current error and raise output resistance, but
 spends device count and headroom and does not regulate its reference source.
 
@@ -2007,10 +2004,9 @@ curvature bound amplitude before or at cutoff and saturation; noise depends on
 bandwidth; and one stage loads the next.
 
 The schematic, DC calculation, incremental equivalent, executable arithmetic,
-datasheet conditions, frequency sweep, and guarded decision all describe one
-amplifier. Agreement supports the stated claim. Disagreement is evidence to
-locate an omitted path, wrong parameter, intrusive measurement, or exceeded
-validity range.
+datasheet conditions, and frequency sweep all describe the same amplifier. If
+they disagree, the likely causes include an omitted path, wrong parameter,
+intrusive measurement, or operation outside an approximation's validity range.
 
 ## Exercises
 
@@ -2142,8 +2138,8 @@ Choose one best answer for each item.
    TPO voltage range and why it is not a datasheet guarantee.
 10. A common-base stage has $g_m=20.0$ mS,
     $\beta_{\mathrm{ac}}=100$, $R_C=4.70$ k$\Omega$, and
-    $R_L=10.0$ k$\Omega$. Under the assumptions of
-    @eq-a03-common-base-gain and @eq-a03-common-base-input, estimate emitter
+    $R_L=10.0$ k$\Omega$. Use @eq-a03-common-base-gain together with
+    the input relation in @eq-a03-common-base-input to estimate emitter
     input resistance, collector current gain, and emitter-to-collector voltage
     gain. State why a 600 $\Omega$ source would heavily attenuate the applied
     emitter voltage. **Self-check:** $R_{\mathrm{in,e}}\approx49.5~\Omega$,
@@ -2175,8 +2171,9 @@ Choose one best answer for each item.
 7. Derive @eq-a03-common-base-gain and @eq-a03-common-base-input from the
    hybrid-$\pi$ equivalent. Retain finite $\beta_{\mathrm{ac}}$ until the final
    approximation.
-8. Apply KCL at the reference and shared-control nodes of
-   @fig-a03-wilson-mirror to derive @eq-a03-wilson-ratio. Identify precisely
+8. Apply KCL at the reference and shared-control nodes in
+   the Wilson-mirror circuit (@fig-a03-wilson-mirror). Use that KCL result to
+   derive @eq-a03-wilson-ratio, and identify precisely
    where matching, equal $\beta$, and neglected Early effect enter.
 
 ### Data interpretation

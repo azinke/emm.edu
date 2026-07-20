@@ -6,13 +6,10 @@ status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter provides a complete instructional path from energy bands and the
-p–n junction to diode operating points, rectification, protection, optical
-junctions, dynamic limits, datasheet selection, and exercises. Calculated and
-synthetic values are identified as such; they are not measurements. Physical
-terminal-curve and recovery evidence belongs in aligned Lab **L06**. The chapter
-remains subject to technical and editorial revision. See the
-[reading roadmap](../roadmap.qmd) for the meaning of status levels.
+This draft connects junction physics to diode circuits, dynamic behavior, and
+part selection. Numerical examples and synthetic curves are labeled. You perform
+the corresponding terminal-curve and recovery measurements in Lab **L06**.
+See the [reading roadmap](../roadmap.qmd) for the meaning of status levels.
 :::
 
 ::: {.callout-warning title="Safety boundary for diode work"}
@@ -45,20 +42,18 @@ a reverse limit. The transition is steep, but it is not an exact switch at
 $0.7$ V
 [@sedra2020microelectronic; @vishay1n4148].
 
-Before developing the physics, predict what happens in four changes:
+Use four changes to test your initial model:
 
 - double the series resistance while holding source voltage constant;
 - warm the junction while holding forward current constant;
 - reverse the diode but remain far below breakdown; and
 - change from a slow DC sweep to a fast polarity reversal.
 
-A good answer needs several descriptions of one object. Doping and carrier
-motion explain the junction; the symbol declares terminal references; a curve
-and equation predict an operating point; a datasheet bounds a manufactured part;
-and a measurement tests the assembled circuit. Disagreement among these
-descriptions is not noise to hide. It tells us that the wrong region, temperature,
-time scale, unintended capacitance or inductance, or approximation may have been
-chosen.
+Each description answers a different question. Doping and carrier motion explain
+the junction. The symbol fixes terminal references. Curves and equations predict
+an operating point, while datasheets characterize manufactured parts and
+measurements test the assembled circuit. If these views disagree, check the
+operating region, temperature, time scale, parasitics, and chosen approximation.
 
 ## Learning outcomes
 
@@ -204,10 +199,11 @@ terminal-current contributions cancel.
 
 ![A spatial cross-section of a p–n junction at equilibrium.](../figures/a01-pn-junction.png){#fig-a01-pn-junction fig-alt="A horizontal p-type region connected to anode A meets an n-type region connected to cathode K. The depletion region contains fixed negative acceptor ions on the p side and fixed positive donor ions on the n side. The built-in electric field points from n to p. Hole diffusion and electron diffusion point toward the opposite regions; hole and electron drift point oppositely. The terminal reference is V D equals V A minus V K, and positive I D is from A to K." width="95%"}
 
-@Fig-a01-pn-junction is a spatial cross-section, not a band-energy plot and not
-to scale. It synchronizes the physical structure with the terminal names and
-references used throughout the chapter. At equilibrium the shown diffusion and
-drift contributions cancel in net terminal current; the arrows do not imply that
+The drawing in @fig-a01-pn-junction is a spatial cross-section, not a
+band-energy plot, and it is not to scale. It synchronizes the physical structure
+with the terminal names and references used throughout the chapter. At
+equilibrium the shown diffusion and drift contributions cancel in net terminal
+current; the arrows do not imply that
 individual carriers stop moving [@sze2006physics].
 
 The same junction can be represented on two axes at once. In the band diagram
@@ -331,7 +327,7 @@ I_D\approx I_S\left[
 $$ {#eq-a01-diode-fit}
 
 uses an **ideality factor** $n$, commonly fitted over a limited current range.
-@Eq-a01-diode-fit is a compact constitutive approximation, not a
+The relation in @eq-a01-diode-fit is a compact constitutive approximation, not a
 universal physical law. Recombination, high-level injection, bulk and contact
 resistance, leakage paths, self-heating, and breakdown each make one fitted pair
 $(I_S,n)$ fail outside its calibration range [@sze2006physics].
@@ -443,7 +439,8 @@ V_S=I_D R_S+V_D,
 I_D=\frac{V_S-V_D}{R_S}.
 $$ {#eq-a01-load-line}
 
-@Eq-a01-load-line is not a diode law. It contains every $(V_D,I_D)$ pair
+The relation in @eq-a01-load-line is not a diode law. It contains every
+$(V_D,I_D)$ pair
 the linear source network permits. The device relation contains every pair the
 chosen diode description permits. Their intersection is the operating point.
 The line has intercepts $I_D=V_S/R_S$ at $V_D=0$ and $V_D=V_S$ at $I_D=0$.
@@ -527,9 +524,9 @@ I_D = 4.325 mA
 P_D = 2.918 mW
 ```
 
-The executable result is arithmetic from an assumed constitutive fit; it is not
-a circuit simulation and not a measurement. Its value is that every assumption
-is visible and the nonlinear intersection can be reproduced.
+The code evaluates the assumed constitutive fit; it does not simulate or measure
+a physical circuit. Its explicit parameters make the nonlinear intersection
+reproducible.
 
 Interrogate the result:
 
@@ -550,27 +547,26 @@ Interrogate the result:
   forward approximation must be discarded; leakage and reverse rating become the
   relevant quantities.
 
-### Evidence from a terminal sweep
+### Planning a terminal sweep
 
-A physical DC sweep should record pairs $(V_D,I_D)$, not merely the source
-setting. The source resistance and meter loading belong in the same circuit. A
-defensible record names the diode lot or specimen, mounting, ambient and estimated
-junction temperature, source current limit, test points, instruments and ranges,
-calibration state, raw observations, and uncertainty basis.
+A physical DC sweep records pairs $(V_D,I_D)$, not merely the source setting.
+Include the source resistance and meter loading in the circuit description.
+Record the diode lot or specimen, mounting, ambient and estimated junction
+temperature, source current limit, test points, instrument ranges, calibration
+state, raw observations, and uncertainty basis.
 
-Reconcile in this order:
+Apply the [evidence workflow](../preface.qmd#sec-evidence-workflow) to the same
+terminal quantities throughout. Predict the region and order of magnitude, then
+choose and calculate with an appropriate diode approximation. Compare the result
+with manufacturer data under matching conditions before you measure $V_D$ and
+$I_D$ at the named test points. If the results disagree, check temperature,
+polarity, resistor tolerance, meter burden, contacts, and self-heating before
+you attribute the discrepancy to the diode.
 
-1. predict the region and order of magnitude;
-2. calculate with a stated approximation;
-3. compare against a manufacturer table or curve under its stated conditions;
-4. measure the same terminal quantities at named test points; and
-5. attribute a discrepancy only after checking temperature, polarity, resistor
-   tolerance, meter burden, contacts, and self-heating.
-
-A typical datasheet curve represents typical manufacturer characterization, not
-a guaranteed limit for every unit. A chapter-generated curve from @eq-a01-diode-fit
-is synthetic. Neither is a measurement of the bench specimen.
-The evidence labels must remain visible even when all three curves look similar.
+A typical datasheet curve represents manufacturer characterization, not a
+guaranteed limit for every unit. The curve generated from @eq-a01-diode-fit is
+synthetic. Neither curve measures the bench specimen, even if all three traces
+look similar.
 
 ## Rectification
 
@@ -703,8 +699,8 @@ return path, TVS, and protected load divide and dissipate the transient energy;
 the TVS does not make it disappear [@sedra2020microelectronic;
 @sze2006physics].
 
-@Fig-a01-zener-reference shows why a breakdown reference is a current-window
-problem rather than a “5 V component.” Define $V_S$ as the upper source
+The circuit in @fig-a01-zener-reference shows why a breakdown reference is a
+current-window problem rather than a “5 V component.” Define $V_S$ as the upper source
 terminal relative to the grounded return. KCL gives
 $I_R=I_Z+I_L$, where
 
@@ -810,7 +806,8 @@ $\lambda\approx hc/E_g$ connects band gap to an emission or absorption edge, but
 real spectra, indirect transitions, alloy composition, temperature, and package
 optics prevent it from being an exact color formula [@sze2006physics].
 
-@Fig-a01-optojunctions maps the two conversion directions to elementary circuits.
+The schematics in @fig-a01-optojunctions map the two conversion directions to
+elementary circuits.
 The LED branch uses the same source-line operating-point reasoning as an ordinary
 diode. In the photodiode branch, $D_{PD}$ is reverse biased; increasing
 $I_{ph}$ pulls TP1 downward through $R_L$. These are electrical interface
@@ -908,7 +905,8 @@ criterion [@vishay1n4148]. Quoting only “4 ns” discards the definition.
 
 ![A conceptual reverse-recovery current waveform and one possible endpoint definition.](../figures/a01-reverse-recovery.png){#fig-a01-reverse-recovery fig-alt="Diode current is initially a positive forward current. After commutation it crosses zero, reaches a negative reverse-current peak, and returns toward zero. Reverse-recovery time is marked from the zero crossing to an example endpoint at ten percent of the reverse peak magnitude. Dashed guides mark the peak and endpoint; actual datasheet criteria and waveforms vary." width="88%"}
 
-@Fig-a01-reverse-recovery is a definition aid, not measured data. It marks the
+The waveform in @fig-a01-reverse-recovery is a definition aid, not measured
+data. It marks the
 forward-current zero crossing, reverse peak $I_{RM}$, and an example 10% endpoint.
 Some datasheets use a fixed current rather than a percentage, and the drive
 circuit changes the waveform. Stored minority charge explains the recovery
@@ -973,7 +971,8 @@ power, temperature, and package behavior [@sze2006physics; @baliga2019power].
 
 ![Common schematic symbols for several diode families.](../../../build/circuits/a01-diode-family-symbols.png){#fig-a01-diode-family-symbols fig-alt="Two rows of common diode symbols. The upper row shows an ordinary p-n diode, a Zener or avalanche diode, a Schottky diode, and a varactor. The lower row shows a tunnel diode, an LED, and a photodiode. Anode A and cathode K are marked on the ordinary diode." width="95%"}
 
-@Fig-a01-diode-family-symbols is a recognition aid, not a complete taxonomy.
+The symbols in @fig-a01-diode-family-symbols support recognition, not a complete
+taxonomy.
 Ordinary signal, rectifier, fast-recovery, power, and many PIN devices share the
 generic symbol. A unidirectional TVS often uses a Zener-like symbol, while a
 bidirectional TVS has a two-direction variant. Symbols do not reveal material,
@@ -982,7 +981,7 @@ specified part number.
 
 ### Rectification, commutation, and protection families
 
-| Family or application class | What physically or terminally distinguishes it | Common role and decisive evidence |
+| Family or application class | What physically or terminally distinguishes it | Common role and decisive data |
 |---|---|---|
 | silicon signal or switching p–n diode | minority-carrier junction optimized for small current and charge | steering, detection, and clamps; check forward curve, leakage versus temperature, reverse rating, capacitance, and the complete recovery test |
 | general-purpose or power rectifier | larger-area junction, often with a lightly doped drift or PIN-like region to support voltage | line-frequency rectification and freewheel paths; check repetitive reverse voltage, average/RMS/peak current, surge waveform, thermal conditions, and recovery if commutated |
@@ -1002,7 +1001,7 @@ converter loss, commutation, surge, and wide-bandgap design belong in
 
 ### Voltage-controlled reactance and RF or microwave devices
 
-| Family | Distinctive behavior | Common role and decisive evidence |
+| Family | Distinctive behavior | Common role and decisive data |
 |---|---|---|
 | varactor or varicap | synonymous names for a reverse-biased junction used through voltage-dependent depletion capacitance | VCO, tunable filter, phase shifter, and impedance tuning; check $C(V)$, capacitance ratio, series resistance, Q at frequency, bias range, breakdown, leakage, and distortion |
 | PIN diode | wide, lightly doped intermediate region; stored charge can make forward-biased RF impedance behave as a bias-controlled resistance | RF switches, attenuators, limiters, photodetectors, and high-voltage rectifier structures; check carrier lifetime, RF resistance versus bias, capacitance, isolation, insertion loss, power, and thermal behavior |
@@ -1051,7 +1050,7 @@ tunnel, Gunn, and avalanche transit-time circuit design belongs in
 
 ### Optical and energy-conversion families
 
-| Family | Conversion mechanism | Common role and decisive evidence |
+| Family | Conversion mechanism | Common role and decisive data |
 |---|---|---|
 | LED | spontaneous radiative recombination under forward injection | indication, illumination, and communication; check current, $V_F$ bounds, spectrum, radiant or luminous output, geometry, binning, pulse/DC conditions, and thermal derating |
 | laser diode | stimulated emission in an optical cavity above threshold | communications, sensing, ranging, and storage; check threshold/current curves, optical power, wavelength, monitor photodiode, temperature control, and completed-product laser classification |
@@ -1084,15 +1083,15 @@ Several common labels describe a circuit role or a different internal device:
 
 Point-contact and backward diodes, hot-carrier microwave detectors, and other
 specialist structures extend the map further. The durable design habit is to ask
-which mechanism creates the useful terminal behavior, then verify every claimed
-advantage and opposing trade-off in applicable data.
+which mechanism creates the useful terminal behavior and to verify its
+advantages and trade-offs in applicable data.
 
 ## Datasheet-based diode selection
 
 Selection begins with the function and conditions, not a familiar part number.
 Translate the circuit into at least these parameter questions:
 
-| Circuit need | Datasheet evidence to seek |
+| Circuit need | Datasheet data to seek |
 |---|---|
 | low-loss forward path | $V_F$ curve and bounds at relevant current and temperature; reverse leakage and blocking; average, peak, and surge current |
 | reverse blocking | repetitive and DC reverse-voltage ratings; leakage bound at voltage and temperature; altitude or environment if the assembly makes it relevant |
@@ -1110,7 +1109,7 @@ points. Electrical-characteristic maxima are guaranteed only under their stated
 conditions. Typical curves help predict shape and trade-offs but do not bound
 every unit [@vishay1n4148].
 
-### Worked design: a bounded rail clamp
+### Worked design: a rail clamp with stated limits
 
 Design the rail clamp of @fig-a01-rail-clamp for this **illustrative requirement**:
 
@@ -1139,7 +1138,7 @@ $V_F\le1.0$ V at $I_F=10$ mA,
 $I_F=300$ mA continuous, $V_R=75$ V, $I_R\le25$ nA at $V_R=20$ V, and
 $P_{tot}=440$ mW or 500 mW only under the listed lead-temperature conditions
 [@vishay1n4148]. These are manufacturer specifications; the resistor and circuit
-results below are chapter calculations.
+values below come from the stated design calculations.
 
 The negative fault gives the stricter current-limiting requirement. Using
 $V_F\ge0$ rather than inventing an unavailable guaranteed minimum, a 5% nominal
@@ -1241,13 +1240,13 @@ $$
 Select a resistor whose manufacturer data permit at least 0.20 W continuous
 dissipation at the actual ambient, mounting, and enclosure conditions; “0.25 W”
 printed in a catalog is not enough without its derating conditions. The inactive
-diode sees less than about 6.25 V reverse voltage in this bounded scenario, well
-below 75 V. The chapter calculation supports feasibility at the cited
+diode sees less than about 6.25 V reverse voltage under these conditions, well
+below 75 V. The calculation supports feasibility at the cited
 manufacturer condition and motivates an assembly test. It does not by itself
 qualify the ambient range, dynamic transients, rail back-powering, receiver
 survival, or production variation beyond the cited bounds.
 
-### Acceptance test and limit of claim
+### Acceptance test for the rail clamp
 
 A prospective acceptance test uses the assembled clamp, actual receiving input,
 and verified rail sink. Stabilize and test at ambient temperatures of 23 °C,
@@ -1301,9 +1300,9 @@ would qualify only the stated normal transfer and slow, powered, steady faults
 within the voltage and temperature boundary; faster and unpowered cases need
 separate tests and requirements.
 
-## Reconcile the opening predictions
+## Resistance, temperature, polarity, and switching speed
 
-The four opening changes can now be answered with explicit conditions:
+The four opening changes now have condition-specific answers:
 
 | Change | Predicted observation | Governing reason and limit |
 |---|---|---|
@@ -1316,7 +1315,7 @@ The predictions are therefore not four isolated facts. Each is a change of
 operating point, temperature, region, or time scale—the same four questions that
 should be asked when a simple diode approximation disagrees with hardware.
 
-## Summary
+## Junction behavior across operating conditions
 
 - An energy band is a range of allowed electron states, not a physical layer.
   Vertical motion on a band-only diagram means a change of state and energy;
@@ -1343,10 +1342,10 @@ should be asked when a simple diode approximation disagrees with hardware.
 - Leakage, junction capacitance, stored charge, reverse recovery, and temperature
   explain many disagreements between a DC first approximation and hardware.
 - LEDs and photodiodes are junction devices that exchange electrical and optical
-  energy, but optical power, luminous response, geometry, bias, bandwidth, and
-  temperature remain separate parts of the claim.
-- Datasheet conditions and evidence status travel with every number. A bounded
-  design carries tolerance and uncertainty into an explicit decision rule.
+  energy. Optical power, luminous response, geometry, bias, bandwidth, and
+  temperature require separate specifications.
+- Each datasheet number applies under its stated test conditions. Tolerance and
+  measurement uncertainty belong in the final decision rule.
 
 ## Exercises
 
@@ -1403,9 +1402,9 @@ Choose the one best answer in each case.
 ### Retrieval and explanation
 
 1. Explain what the vertical axis, horizontal axis, band-edge curves, occupied
-   state dots, and transition arrows mean in @fig-a01-energy-bands and
-   @fig-a01-junction-bands. In particular, distinguish an electron crossing a
-   junction from an electron changing bands.
+   state dots, and transition arrows mean in @fig-a01-energy-bands and in
+   the junction-band diagram in @fig-a01-junction-bands. In particular,
+   distinguish an electron crossing a junction from an electron changing bands.
 2. Explain how diffusion, fixed ionized dopants, the depletion field, and drift
    establish equilibrium at a p–n junction. State which quantities remain in
    motion even when net terminal current is zero.
@@ -1533,7 +1532,7 @@ Choose the one best answer in each case.
   recovery in transistor switching. [A08](a08-optoelectronics-hmi.qmd) extends
   the LED and photodiode foundations into complete optical interfaces, isolation,
   displays, and human-facing evidence.
-- **Practice and project:** [Lab **L06**](index.qmd#turn-reading-into-evidence)
+- **Practice and project:** [Lab **L06**](index.qmd#practical-work)
   should obtain a diode terminal curve, record temperature and instrument loading,
   and expose either a recovery or capacitance limit without presenting synthetic
   values as measurement. [Project **M2**](../roadmap.qmd#practice-and-project-spine)

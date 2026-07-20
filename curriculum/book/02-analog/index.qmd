@@ -1,195 +1,103 @@
 ---
 title: "II — Devices and analog circuits"
-description: "From semiconductor operating regions to bounded, measured signal chains."
+description: "From semiconductor behavior to measured analog signal chains."
 page-role: part
 part-id: analog
 ---
 
-Part I made a circuit observable and its measurements defensible. Part II asks
-what happens when the circuit elements are nonlinear, active, sensitive to
-temperature and frequency, and able to convert one physical quantity into
-another. The goal is not a catalogue of ideal diode, transistor, and amplifier
-circuits. It is the ability to choose an operating region, predict which
-non-ideal effect matters, and test whether a real device or signal chain still
-meets its requirement.
-
-The same circuit remains one object described in several languages: carrier
-behavior in a material, a schematic symbol and terminal references, a current–
-voltage curve, a large- or small-signal equation, a simulation, a datasheet
-limit, a physical layout, and a measured waveform. Agreement among those
-descriptions is understanding; disagreement reveals a wrong operating region,
-an omitted parasitic, an intrusive measurement, or a claim stronger than the
-evidence. This part develops that agreement from the semiconductor junction to
-the calibrated analog signal chain [@sedra2020microelectronic].
+Part I treated sources, loads, and passive networks. Part II introduces
+components whose terminal behavior changes with operating point, temperature,
+frequency, and fabrication. You will use those devices to switch, amplify,
+condition, and sense real signals.
 
 ## The part question
 
-> How can physical devices shape, switch, amplify, sense, and present real
-> signals while remaining within finite voltage, current, power, temperature,
-> noise, bandwidth, linearity, and stability limits?
+> How can semiconductor devices shape and amplify signals while staying within
+> their electrical, thermal, noise, bandwidth, linearity, and stability limits?
 
-“Shape” includes rectification, limiting, switching, gain, filtering, and
-conversion between physical and electrical quantities. “Real signals” means
-that amplitude type, source and load impedance, bandwidth, reference, operating
-conditions, and uncertainty are stated. “Remaining within limits” means more
-than obtaining the desired nominal output: ratings, tolerances, temperature,
-parasitics, and measurement loading must leave defensible margin.
-
-## Why devices and analog circuits come second
-
-Part I supplied the conservation laws and passive-circuit methods. Active
-devices do not replace them. A diode operating point is still the intersection
-of a device relation and a source–load network; transistor dissipation still
-belongs in an energy and thermal balance; amplifier gain is meaningful only
-with defined source, load, frequency, and amplitude conditions; and a sensor
-output becomes evidence only through the measurement discipline of F06.
-
-This part adds four capabilities that the later book assumes:
-
-- **operating-region reasoning**, so a device is treated differently in cutoff,
-  forward conduction, active operation, saturation, breakdown, or recovery;
-- **incremental reasoning**, so a nonlinear device can be analyzed around a
-  declared bias point without mistaking a local relation for a global one;
-- **feedback and error budgeting**, so gain, sensitivity, noise, distortion,
-  bandwidth, and stability become allocated quantities rather than surprises;
-  and
-- **transduction and presentation**, so a physical measurand can become a
-  calibrated electrical signal and a system state can be shown to a person
-  without ambiguity.
-
-These are the bridge between the electrical foundations and digital logic,
-sampling, control, power conversion, PCB realization, and complete instruments.
+A useful answer links material behavior to terminal curves, circuit operation,
+datasheet limits, physical implementation, and test results. The connection
+matters because an active circuit can produce the expected nominal output while
+still violating a rating or losing margin at another operating condition.
 
 ## Entry knowledge
 
-The formal prerequisites are recorded in
-[`chapters.toml`](../chapters.toml), but the whole part assumes the working habits
-of Part I. In particular, you should be able to:
+Part II assumes that you can:
 
 - reduce a source–load network and find a DC operating point using F03–F04;
-- account for power, stored energy, temperature rise, and component ratings
-  using F05 and F07;
-- plan a measurement, include instrument loading, state uncertainty, and debug
-  by hypothesis using F06; and
+- account for power, stored energy, temperature, and ratings using F05 and F07;
+- plan a measurement and include instrument loading and uncertainty using F06;
 - use impedance, phasors, transfer functions, and frequency response from F08.
 
-Use [M01](../appendices/m01-algebra-units-complex.qmd) just in time for
-logarithms, decibels, complex impedance, and transfer functions. Keep
-[T01](../appendices/t01-datasheets-standards.qmd) beside the device-selection
-work: a typical curve, an absolute maximum rating, a guaranteed limit, and a
-test condition answer different questions. [M03](../appendices/m03-probability-numerical.qmd)
-provides optional support for deeper calibration, uncertainty propagation, and
-statistical-variation work in A05–A07; it is not a formal Part II prerequisite
-in the registry.
+[M01](../appendices/m01-algebra-units-complex.qmd) supports logarithms, decibels,
+complex impedance, and transfer functions.
+[T01](../appendices/t01-datasheets-standards.qmd) supports device selection, and
+M03 provides optional support for the calibration and statistical-variation work
+in A05–A07.
 
-Practical work remains current-limited and extra-low-voltage unless an approved
-laboratory procedure explicitly establishes another boundary. A component
-described as an isolator, a protected switch, or a light source does not by
-itself authorize connection to hazardous energy or direct viewing of an
-unqualified optical source.
+Practical work remains current limited and extra low voltage unless an approved
+procedure establishes another boundary. The
+[preface](../preface.qmd) states the book-wide safety and evidence conventions.
 
 ## The learning arc
 
-The eight chapters move from *device behavior* to *controlled signal chains*,
-then branch into integrated implementation and human-facing optoelectronics.
-Page order is a coherent teaching route; the exact prerequisite graph appears
-below.
+| Chapter | Main question | Capability |
+|---|---|---|
+| [A01](a01-semiconductor-diodes.qmd) | How does semiconductor structure produce direction- and voltage-dependent conduction? | relate junction physics to terminal curves and design diode circuits within device limits |
+| [A02](a02-transistors.qmd) | How can a small electrical signal control a larger current or voltage? | operate BJTs and MOSFETs as switches or controlled sources and check drive, loss, and thermal margin |
+| [A03](a03-bias-small-signal-amplifiers.qmd) | How can a nonlinear transistor amplify a small changing signal? | establish bias and predict incremental gain, loading, headroom, bandwidth, and distortion |
+| [A04](a04-op-amps-feedback.qmd) | When does feedback make amplifier behavior predictable? | design common op-amp functions and check range, offset, slew, bandwidth, recovery, and stability |
+| [A05](a05-sensors-instrumentation.qmd) | How does a physical quantity become a calibrated electrical result? | design the path from sensor and excitation through conditioning, calibration, and uncertainty |
+| [A06](a06-noise-nonlinearity-stability.qmd) | Which non-ideal effect limits a real analog chain? | refer errors to a common point and assess noise, distortion, dynamic range, bandwidth, and stability |
+| [A07](a07-integrated-circuits.qmd) | What changes when transistors and interconnect share one piece of silicon? | analyze CMOS building blocks and account for matching, variation, parasitics, layout, package, and test |
+| [A08](a08-optoelectronics-hmi.qmd) | How can a system convert between electricity and light and present state clearly? | design optical interfaces and indicators for their electrical and human operating conditions |
 
-| Chapter | Central question it answers | You leave able to | Hands forward |
-|---|---|---|---|
-| [A01](a01-semiconductor-diodes.qmd) | How does material physics produce direction- and voltage-dependent conduction? | relate junction behavior to diode curves; choose bounded approximations; design rectifying, clamping, limiting, protection, and basic light-sensitive or light-emitting circuits | junction behavior, temperature dependence, recovery, and ratings for A02 and A08 |
-| [A02](a02-transistors.qmd) | How can a small electrical signal control a larger current or voltage safely? | place a BJT or MOSFET in a declared region; design low-side, high-side, complementary, and inductive-load switching stages; check drive, loss, safe operating area, and thermal margin | controlled-source and switching behavior for A03, A07, D01, and S05 |
-| [A03](a03-bias-small-signal-amplifiers.qmd) | How can a nonlinear transistor amplify a small changing signal predictably? | establish a bias point, derive an incremental description, and predict gain, loading, headroom, bandwidth, and the onset of distortion in common-emitter or common-source stages | transistor-level gain and loading for A04 and A07 |
-| [A04](a04-op-amps-feedback.qmd) | When does feedback make amplifier behavior predictable, and when does the ideal op-amp approximation fail? | analyze inverting, non-inverting, summing, difference, filtering, integrating, and comparison functions; check range, offset, bias, slew, bandwidth, saturation, recovery, and stability | feedback-based conditioning for A05, A06, R02, and S04 |
-| [A05](a05-sensors-instrumentation.qmd) | How does a physical quantity become a calibrated electrical measurement? | construct a measurand-to-decision chain using sensors, excitation, bridges, instrumentation gain, calibration, linearization, protection, grounding, shielding, isolation, and an uncertainty budget | trustworthy analog inputs for A08, S02, R05, and X01 |
-| [A06](a06-noise-nonlinearity-stability.qmd) | Which non-ideal effect limits the smallest trustworthy signal in a real analog chain? | calculate input- and output-referred error terms; relate noise density to bandwidth; assess dynamic range, clipping, distortion, intermodulation, and stability; choose mitigation with explicit trade-offs | bounded signal-chain performance for S02, R03, R05, and X01 |
-| [A07](a07-integrated-circuits.qmd) | What changes when transistors and interconnect are designed together on silicon? | reason from CMOS structures to inverters, mirrors, differential pairs, bias and gain stages; assess matching, corners, parasitics, layout-dependent effects, hierarchy, packaging, and test | physical integrated implementation for advanced digital, mixed-signal, and realization work |
-| [A08](a08-optoelectronics-hmi.qmd) | How can a system convert between electricity and light and present state without misleading a person? | design LED and photodetector interfaces; assess optical isolation; select and drive displays; specify contrast, ambient-light behavior, power, legibility, and accessible indicator semantics | optical sensing and usable presentation for M2, embedded interfaces, and field systems |
+The progression starts with device behavior in A01–A02. A03–A04 then turn
+transistor gain into controlled gain. A05–A06 apply that gain to measurement and
+quantify the effects that limit a signal chain. A07 moves from schematic devices
+to integrated implementation, while A08 follows the optical and human-facing
+branch.
 
-Grouped by the development they carry, the arc has four movements:
+## Scope boundaries
 
-- **A01–A02 — establish device behavior and switching limits.** Energy bands,
-  carriers, doping, junctions, and current–voltage behavior lead to diode and
-  transistor operating regions. Rectifiers, clamps, protection, logic drive,
-  complementary stages, and inductive loads make the regions useful. Leakage,
-  temperature, reverse recovery, drive limits, safe operating area, switching
-  loss, and heat show where the first approximation fails.
-- **A03–A04 — turn nonlinear gain into controlled gain.** Bias fixes the point
-  around which an incremental description is valid. Source and load resistance,
-  coupling, bypassing, headroom, bandwidth, and distortion bound a transistor
-  stage. Operational amplifiers and negative feedback then make useful transfer
-  relations less dependent on device parameters, but only while open-loop gain,
-  input and output ranges, slew rate, bandwidth, saturation recovery, and loop
-  stability permit it.
-- **A05–A06 — make an analog result trustworthy.** Sensors, excitation, bridges,
-  instrumentation amplifiers, grounding, shielding, isolation, calibration, and
-  traceability form a complete path from measurand to decision. Thermal, shot,
-  and flicker noise; interference; nonlinearity; clipping; intermodulation;
-  finite bandwidth; and unintended feedback are referred to a common point and
-  combined only under stated assumptions. The result is an error budget and an
-  acceptance claim, not merely a plausible waveform [@jcgm2008gum].
-- **A07–A08 — connect circuits to physical implementation and people.** A07
-  moves inside the integrated circuit, where geometry, process variation,
-  matching, parasitics, design rules, corners, and layout verification shape
-  behavior. A08 moves across an optical and human boundary, where radiant and
-  luminous quantities, ambient light, isolation, display drive, readability,
-  accessibility, and interpretation determine whether electrical state was
-  conveyed successfully.
+Some topics appear in several chapters because each chapter asks a different
+question:
 
-## Scope boundaries and intentional overlaps
+- A01 introduces LED and photodiode junction behavior. A08 owns complete optical
+  interfaces, displays, and human-readable indication.
+- A03 introduces noise, bandwidth, and distortion in a transistor stage. A04
+  introduces feedback stability. A06 owns chain-level performance budgets.
+- A07 treats the CMOS inverter as an integrated transistor circuit. D01 starts
+  from electrical ranges and develops logic values.
+- A05 ends with a conditioned analog quantity. S02 owns sampling, quantization,
+  and converter architecture.
+- A02 introduces low-energy switching. S05 adds converter topology, magnetics,
+  control, and the hazards of a power stage.
 
-Several subjects appear in more than one chapter because the representation or
-decision changes. Their ownership is explicit:
+## Prerequisite structure
 
-- A01 introduces LED and photodiode behavior as consequences of semiconductor
-  junction physics; A08 owns complete optical emitters, detectors, isolation,
-  displays, and human-facing indication.
-- A03 introduces distortion, bandwidth, and noise where they first limit one
-  transistor amplifier; A04 introduces feedback stability and op-amp non-ideal
-  behavior; A06 owns chain-level noise, nonlinearity, bandwidth, dynamic range,
-  and stability budgets.
-- A07 treats a CMOS inverter as a transistor-level integrated block whose
-  transfer, delay, leakage, matching, and layout matter. D01 begins where ranges
-  of electrical states are abstracted into logic values, and R02 owns board-level
-  schematic capture and PCB layout.
-- A05 ends with a conditioned, calibrated analog quantity. Sampling,
-  quantization, and converter architectures belong to S02; production metrology
-  and test decisions belong to R05.
-- A02 develops device switching at current-limited bench scale. Converter
-  topologies, magnetics, switching control, and power-stage design belong to S05,
-  where their additional energy hazards are treated explicitly.
-
-The part therefore covers the continuous path from semiconductor behavior to a
-bounded analog interface. It does not attempt to absorb digital design, data
-conversion, control theory, power electronics, PCB realization, or product
-qualification merely because each depends on analog behavior.
-
-## How the chapters connect
-
-The dependency structure has a common device trunk and several purposeful
-branches. A05 and A06 are parallel developments after A04; A07 can be studied as
-soon as A02–A03 are held; A08 joins junction physics from A01 to the measurement
-chain from A05.
+Each arrow in @fig-analog-dependencies represents a direct prerequisite in
+[`chapters.toml`](../chapters.toml).
 
 ```{mermaid}
 %%| label: fig-analog-dependencies
-%%| fig-cap: "The direct prerequisite graph for Part II. Every arrow means that the source chapter is a prerequisite of the destination in `chapters.toml`; page order and broader conceptual handoffs are described separately."
-%%| fig-alt: "A vertical prerequisite graph. F04 and F05 lead to A01. A01 and F05 lead to A02. A02 and F08 lead to A03. A03 and F08 lead to A04. A04 and F06 lead to A05. A04 and F08 lead to A06. A02 and A03 lead to A07. A01 and A05 lead to A08."
+%%| fig-cap: "Direct prerequisites for Part II. Page order and conceptual handoffs are described in the text."
+%%| fig-alt: "F04 and F05 lead to A01. A01 and F05 lead to A02. A02 and F08 lead to A03. A03 and F08 lead to A04. A04 and F06 lead to A05. A04 and F08 lead to A06. A02 and A03 lead to A07. A01 and A05 lead to A08."
 %%| fig-width: 6.1
 flowchart TB
-  F04["Part I · F04<br/>network equivalents"]
-  F05["Part I · F05<br/>power and heat"]
-  F06["Part I · F06<br/>measurement"]
-  F08["Part I · F08<br/>frequency response"]
+  F04["F04<br/>network equivalents"]
+  F05["F05<br/>power and heat"]
+  F06["F06<br/>measurement"]
+  F08["F08<br/>frequency response"]
 
-  A01["A01 · Diodes"]
-  A02["A02 · Transistors"]
-  A03["A03 · Bias and gain"]
-  A04["A04 · Op-amps and feedback"]
-  A05["A05 · Instrumentation"]
-  A06["A06 · Analog limits"]
-  A07["A07 · Integrated circuits"]
-  A08["A08 · Optoelectronics and HMI"]
+  A01["A01<br/>diodes"]
+  A02["A02<br/>transistors"]
+  A03["A03<br/>bias and gain"]
+  A04["A04<br/>op-amps and feedback"]
+  A05["A05<br/>instrumentation"]
+  A06["A06<br/>analog limits"]
+  A07["A07<br/>integrated circuits"]
+  A08["A08<br/>optoelectronics and HMI"]
 
   F04 --> A01
   F05 --> A01
@@ -209,155 +117,53 @@ flowchart TB
   A05 --> A08
 ```
 
-The arrows in @fig-analog-dependencies are deliberately narrower in meaning than
-the routes below. They encode direct prerequisites, not every useful conceptual
-handoff and not the order in which the pages happen to appear. Four routes make
-the part easier to navigate:
+The main active-device route is A01 → A02 → A03 → A04. From there, A05 and A06
+develop measurement and performance analysis in parallel. You can enter A07
+after A02–A03. A08 combines the junction behavior from A01 with the measurement
+chain from A05.
 
-- **The active-device trunk — A01 → A02 → A03 → A04.** Terminal behavior leads
-  to switching, incremental gain, and feedback-controlled gain. F05 and F08 join
-  where thermal and frequency-dependent reasoning first become necessary.
-- **The precision-signal route — A03–A06.** Bias and feedback support two
-  parallel capabilities: A05 constructs the calibrated measurement chain, while
-  A06 establishes its noise, nonlinearity, bandwidth, and stability limits.
-  These capabilities meet again in [S02](../05-domains/s02-sampling-data-conversion.qmd),
-  [R05](../06-realization/r05-metrology-reliability-test.qmd), and
-  [X01](../07-systems/x01-precision-instrument.qmd), although those downstream
-  chapters retain their own exact prerequisites.
-- **The integrated branch — A02 and A03 → A07.** It can be taken before A04–A06
-  when the destination is device geometry, matching, process variation, and
-  layout-dependent circuit behavior.
-- **The optical/HMI merge — A01 and A05 → A08.** It combines junction-level
-  emission and detection with the conditioned measurement path. A01 does not
-  depend on A05, and A05 does not depend on A01; both are required only when the
-  branches meet at A08.
+## Practical work
 
-The integrated and optical/HMI branches prevent “analog” from meaning only
-board-level op-amp circuits: device geometry and human interpretation are both
-physical parts of the system.
+| Lab | Aligned chapters | What you demonstrate |
+|---|---|---|
+| **L06** Diode and transistor operating regions | A01, A02 | connect measured terminal curves and switching waveforms to operating region and device limits |
+| **L07** Amplifier gain, limits, and feedback | A03, A04, A06 | compare bias, gain, frequency response, clipping, noise, and stability with circuit predictions |
+| **L08** Sensor calibration and uncertainty | A05, F06, R05 | carry a defined measurand through conditioning and calibration to a stated decision |
 
-## How to reason through an analog design
+Milestone **M2 — build a calibrated environmental monitor** uses device
+protection, switching, sensing, and presentation. **M3 — create a precision
+instrument** combines A03–A06 with sampling and metrology. A07 uses a different
+evidence path: transistor-level analysis across process, voltage, and
+temperature, followed by layout-aware parasitic comparison. That analysis does
+not constitute measurement of fabricated hardware.
 
-The book-wide cycle remains **predict, build, measure, reconcile, decide**, but
-analog work gives each step a sharper form [@horowitz2015art]:
-
-1. **Declare the signal and boundary.** Name terminals, reference polarities and
-   current directions, source and load, amplitude type, frequency range,
-   temperature, supply range, and the quantity that must be decided.
-2. **Choose the operating region.** Mark the expected DC point and signal
-   excursion on a device curve or transfer relation. State whether the relation
-   is exact, empirical, piecewise, or a local approximation.
-3. **Predict at more than one scale.** Estimate first; calculate the DC point,
-   incremental behavior, power, and dominant error; then check a limiting case
-   and the first second-order effect likely to break the result.
-4. **Build or simulate the same named circuit.** Keep device identity,
-   references, source and load impedances, parasitics, test points, and operating
-   conditions synchronized. Simulation is calculated evidence, not measurement.
-5. **Measure without hiding intrusion.** Record configuration, instruments,
-   loading, bandwidth, raw observations, and uncertainty. Sweep the condition
-   most likely to expose cutoff, saturation, clipping, instability, thermal
-   drift, or noise.
-6. **Reconcile and decide.** Assign every discrepancy only as far as independent
-   evidence permits, then apply a requirement with margin and a stated decision
-   rule. A nominal curve or typical datasheet value is not a worst-case pass.
-
-This process keeps the physical device, schematic, equations, simulation,
-datasheet, layout, and bench result attached to the same claim.
-
-## Turn reading into evidence
-
-The principal practical sequence is L06–L08. All three are catalogued as
-current-limited, extra-low-voltage work (safety level **L1**), but each still
-requires defined apparatus, stop conditions, and local authorization before it
-becomes a deliverable.
-
-| Evidence goal | Aligned chapters | Level | What it demonstrates |
-|---|---|---|---|
-| **L06** Diode and transistor operating regions | A01, A02 | L1 | measured terminal curves and switching waveforms identify the intended region and expose temperature, drive, loading, or recovery limits |
-| **L07** Amplifier gain, limits, and feedback | A03, A04, A06 | L1 | DC bias, small-signal gain, frequency response, clipping, noise, and stability evidence agree with a bounded amplifier prediction |
-| **L08** Sensor calibration and uncertainty | A05, F06, R05 | L1 | a defined measurand passes through excitation, conditioning, calibration, and uncertainty analysis to an explicit decision |
-
-Two milestones integrate the part rather than treating it as an isolated course:
-
-- **M2 — build a calibrated environmental monitor** combines F07–F08,
-  A01–A02, A08, E01, and R01. It uses device protection, switching, optical or
-  visual presentation, calibration, and use-context requirements to produce a
-  two-variable monitor with a defensible claim.
-- **M3 — create a precision instrument** combines A03–A06 with S01–S02, R05,
-  and X01. It turns gain, feedback, sensing, noise, bandwidth, calibration, and
-  conversion into a measured signal chain with an uncertainty statement.
-
-A07's principal evidence is different: transistor-level simulation across
-process, voltage, and temperature, followed by a layout-aware parasitic
-comparison and a bounded block-level claim. That is valid design evidence, but
-it is not relabeled as a fabricated measurement. The full integration map is on
-the [practice and project spine](../roadmap.qmd#practice-and-project-spine).
-
-::: {.callout-warning title="Safety boundary"}
-The aligned analog labs are deliberately current-limited and extra-low-voltage.
-Reading these chapters is not authorization for mains-connected circuits,
-high-energy batteries, high-current inductive loads, unqualified optical
-sources, medical interfaces, or safety isolation. An optocoupler, protection
-diode, current limit, or simulator does not establish a safe system by itself.
-Use approved facilities, supervision, components, procedures, and stop
-conditions, and stop when the safety boundary or evidence is inadequate.
-:::
+The [practice and project spine](../roadmap.qmd#practice-and-project-spine)
+provides the full integration map.
 
 ## Exit capability
 
-After this part you should be able to translate a physical behavior or sensing
-requirement into a current-limited analog circuit, choose and justify its device
-operating regions, predict its DC and frequency-dependent behavior, measure the
-quantities that could falsify the prediction, and make a bounded decision from
-an error budget. Expressed as a checklist, you can:
+After Part II, you should be able to:
 
-- read a device curve and datasheet without confusing typical behavior,
-  guaranteed limits, test conditions, and absolute maximum ratings;
-- select diode, BJT, MOSFET, op-amp, sensor, and optoelectronic approximations
-  whose operating conditions and failure boundaries are explicit;
-- establish bias and headroom, derive local gain and impedances, and identify
-  cutoff, saturation, clipping, slew limitation, or thermal failure;
-- use negative feedback while checking input/output range, finite gain and
-  bandwidth, stability, saturation, and recovery;
-- construct a measurand-to-decision chain with excitation, protection,
-  calibration, linearization, grounding or isolation, and uncertainty;
-- refer noise, distortion, interference, and bandwidth limits to a common point
-  and identify the dominant term without double-counting it;
+- choose a diode, BJT, MOSFET, op-amp, or sensor approximation for stated
+  operating conditions;
+- establish bias and headroom and identify cutoff, saturation, clipping, slew
+  limitation, instability, and thermal failure;
+- design feedback circuits while checking their range, finite gain, bandwidth,
+  recovery, and stability;
+- construct a calibrated measurement chain with protection, grounding or
+  isolation, and an uncertainty budget;
+- identify which noise, distortion, interference, or bandwidth term limits the
+  chain;
 - explain how process, geometry, matching, parasitics, layout, package, and test
-  alter an integrated block; and
-- design an optical interface or indicator whose electrical margin, ambient
-  conditions, power, readability, and accessible meaning are specified.
+  alter an integrated block;
+- design an optical interface or indicator for its electrical, ambient, power,
+  readability, and accessibility requirements.
 
-The exit claim is intentionally bounded. Completing outlines or calculations
-alone does not qualify hardware. Physical performance claims require the
-appropriate rung of evidence, and hazardous or regulated applications require
-competence, facilities, standards, and authorization beyond this part.
-
-## What this hands to the rest of the book
-
-Part II makes signals controllable before later parts make them computable,
-sampled, powered, laid out, or qualified. D01 receives a transistor switch and
-electrical noise margin before introducing the bit [@harris2021digital]. S02
-receives a conditioned sensor signal and an error budget before sampling and
-quantization. S04 receives practical gain and feedback limits; S05 receives
-device switching, drive, loss, and thermal reasoning before adding power-stage
-energy and control. R02–R03 receive circuits whose source/load impedances,
-bandwidth, stability, grounding, matching, and parasitic sensitivities are
-already named. R05 and X01 receive the calibrated precision chain whose final
-claim must survive metrology and system-level verification.
-
-The durable handoff is not a list of canonical circuits. It is the ability to
-say which physical effect establishes the operating point, which approximation
-predicts the desired behavior, which non-ideal term sets the limit, which test
-would expose failure, and how much the available evidence permits you to claim.
+These capabilities support digital logic, data conversion, feedback control,
+power electronics, PCB realization, metrology, and complete instruments.
 
 ::: {.callout-note title="Chapter maturity"}
-This is a development edition. The scope, page order, prerequisite structure,
-chapter handoffs, and practical alignment of Part II are complete. A01–A08 are
-currently outlines: their central questions and concept boundaries are stable,
-but full exposition, worked results, exercises, citations, and practical
-evidence still require authoring and review. An outline is a scope commitment,
-not yet a teachable chapter or safety authorization. The
+A01–A07 are teaching drafts. A08 remains an outline. The
 [reading roadmap](../roadmap.qmd#interpret-chapter-status) explains what each
-maturity level lets a reader rely on.
+status supports.
 :::

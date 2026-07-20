@@ -1,19 +1,16 @@
 ---
 title: "Energy, power, efficiency, and heat"
-description: "Trace electrical energy through a system, close power and efficiency budgets, and turn dissipation into a defensible thermal and component-rating decision."
+description: "Trace electrical energy through a system, close power and efficiency budgets, and use dissipation to make thermal and component-rating decisions."
 chapter-id: F05
 status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter presents a complete instructional path: signed power and energy
-derivations, DC and pulsed examples, a system budget, executable arithmetic,
-explicitly synthetic thermal data, authentic manufacturer specifications, a
-failure diagnosis, and a design decision that includes uncertainty margin. It
-remains subject to technical
-and editorial revision. The synthetic data teach analysis but do not qualify a
-physical assembly; physical evidence belongs in aligned Lab **L04**. See the
-[reading roadmap](../roadmap.qmd) for the meaning of status levels.
+This draft covers signed power and energy, DC and pulsed operation, system
+budgets, thermal models, component specifications, diagnosis, and design margin.
+Its synthetic data support practice, not hardware qualification; Lab **L04**
+provides the corresponding practical work. See the
+[reading roadmap](../roadmap.qmd) for status definitions.
 :::
 
 ::: {.callout-warning title="Safety boundary for energy and thermal work"}
@@ -48,10 +45,9 @@ Before calculating, predict:
 - Does a case temperature below a datasheet limit prove that an inaccessible
   internal hot spot is below its limit?
 
-The electrical readings alone tell only part of the story. A complete account
-needs declared directions, a time interval, a system boundary, and a heat-flow
-path. The physical assembly, schematic, equations, code, temperature record, and
-acceptance rule must describe that same account.
+Electrical readings tell only part of the story. A complete energy account also
+needs declared reference directions, a time interval, a system boundary, and a
+heat-flow path.
 
 ## Learning outcomes
 
@@ -66,7 +62,7 @@ you should be able to:
 - distinguish energy, instantaneous power, average power, RMS heating, stored
   energy, dissipation, temperature, and heat transfer;
 - place a boundary around a DC or periodic system, account for accumulation, and
-  close an auditable power and efficiency budget without double-counting;
+  close a power and efficiency budget without double-counting;
 - use dissipation, ambient temperature, thermal resistance, and thermal
   capacitance within their stated limits to predict steady temperature rise and
   settling behavior;
@@ -76,15 +72,14 @@ you should be able to:
   reserves margin for measurement uncertainty, to distinguish a nominal
   feasibility estimate from verified thermal performance.
 
-We can use and check the thermal step response with algebra and an exponential.
-[M02](../appendices/m02-calculus-linear-differential.qmd) supplies the
-differential-equation derivation when needed.
+Calculating and checking the thermal step response requires only algebra and an
+exponential. [M02](../appendices/m02-calculus-linear-differential.qmd) supplies
+the differential-equation derivation when needed.
 
-The chapter follows the order of an engineering decision. We first establish the
-sign of terminal power and accumulate energy over time. We then close a system
-boundary, define useful output and efficiency, and predict temperature rise.
-Finally, we compare the result with conditional ratings and a guarded acceptance
-rule.
+The analysis begins with the sign of terminal power and then accumulates energy
+over time. A system boundary supports the efficiency account and temperature-rise
+prediction. Conditional ratings and a guarded acceptance rule determine the
+final decision.
 
 ## Terminal power and the passive sign convention
 
@@ -215,8 +210,8 @@ Use a manufacturer discharge specification for a design.
 
 Many electronic systems alternate among operating modes rather than draw one
 constant power. Suppose mode $k$ has approximately constant absorbed power $P_k$
-for duration $t_k$ during a repeated observation interval. Applying
-@eq-f05-energy-integral to each interval gives
+for duration $t_k$ during a repeated observation interval. Applying the energy
+integral in @eq-f05-energy-integral to each interval gives
 
 $$
 E_\text{interval}=\sum_k P_k t_k,
@@ -395,7 +390,7 @@ flowchart TB
 
 : Illustrative steady power budget. The values are calculated teaching inputs, not measured evidence. {#tbl-f05-opening-budget}
 
-Table @tbl-f05-opening-budget leaves one quantity unallocated rather than
+The budget in @tbl-f05-opening-budget leaves one quantity unallocated rather than
 pretending it has already been localized to a component.
 
 Define the **unallocated power** as
@@ -555,8 +550,8 @@ $$
 \dot Q=kA\frac{T_H-T_C}{L},
 $$
 
-for steady heat flow from hot to cold. Comparing with
-@eq-f05-thermal-resistance-definition gives
+for steady heat flow from hot to cold. Applying the definition
+from @eq-f05-thermal-resistance-definition gives
 
 $$
 R_{\theta,\text{cond}}=\frac{L}{kA}.
@@ -642,8 +637,8 @@ T(t)=T_A+P_D R_\theta
 $$ {#eq-f05-thermal-step}
 
 Substitution verifies the solution: at $t=0$, the rise is zero and its initial
-slope is $P_D/C_\theta$; as $t\to\infty$, the exponential vanishes and
-@eq-f05-steady-temperature returns. Dimensions also agree:
+slope is $P_D/C_\theta$; as $t\to\infty$, the exponential vanishes and the
+steady result from @eq-f05-steady-temperature returns. Dimensions also agree:
 $(\text{K/W})(\text{J/K})=\text{J/W}=\text{s}$. The calculus support is in
 [M02](../appendices/m02-calculus-linear-differential.qmd); F07 develops the same
 accumulation-versus-flow structure for electrical transients.
@@ -879,10 +874,9 @@ The thermal observation can reveal instability, inadequate settling, or mounting
 changes. It cannot strengthen the claim beyond the measurand and uncertainty that
 the setup actually supports.
 
-## Reconciling power and temperature evidence
+## Diagnosing disagreement between power and temperature
 
-Suppose, in a **hypothetical illustrative test rather than a measurement record**,
-the opening assembly's input appears to be
+Suppose an **illustrative test record** for the opening assembly reports
 0.600 W while the 0.330 W useful output and 0.050 W indicator add to 0.380 W, yet
 a temperature estimate that assigns all 0.220 W of unallocated power to one part
 is far above its observed surface temperature. Do not immediately conclude that
@@ -912,14 +906,13 @@ A useful diagnostic sequence is:
    electrical load, and observe which temperatures respond; and
 6. compare the complete time record with one- and multi-time-constant predictions.
 
-This is the chapter's working cycle: **predict → build → measure → reconcile →
-decide** [@horowitz2015art]. Calculation can establish a feasibility screen.
-Synthetic data can test analysis. Manufacturer documents can establish
-conditional ratings. Only a traceable physical test reaches evidence about the
-actual assembly, and repeated
-or qualified tests are required when the consequence warrants them.
+The discrepancy calls for new predictions, measurements, and revisions to the
+circuit and thermal descriptions until the electrical and thermal records agree
+within their uncertainties [@horowitz2015art]. Only a documented physical test can establish the
+behavior of the actual assembly; higher-consequence decisions may require
+repeated or qualified tests.
 
-## Summary
+## Energy accounts and thermal decisions
 
 - With current defined into the voltage-positive terminal,
   $p_\text{abs}(t)=v(t)i(t)$; positive means absorption and negative delivery.
@@ -937,8 +930,8 @@ or qualified tests are required when the consequence warrants them.
 - Power, voltage, pulse, temperature, mounting, and lifetime ratings apply
   together. Equality to a strict limit is not margin, and a typical thermal metric
   is not a guaranteed application bound.
-- A defensible decision names the measurand, test points, environment, instrument
-  loading, uncertainty, guard band, and explicit pass/fail rule.
+- A sound decision names the measurand, test points, environment, instrument
+  loading, uncertainty, guard band, and pass/fail rule.
 
 ## Exercises
 
@@ -1028,16 +1021,16 @@ Choose one best answer for each question.
 14. Derive @eq-f05-cascade-efficiency for three stages. Calculate total efficiency
     for 92 %, 85 %, and 96 % stages and the required input for 4.0 W useful output.
 15. **Extension.** Verify @eq-f05-thermal-step by substituting it into
-    Equation @eq-f05-thermal-balance. Interpret the limits $t=0$,
+    Use @eq-f05-thermal-balance. Interpret the limits $t=0$,
     $t=\tau_\theta$, and $t\to\infty$.
 16. **Extension.** Starting from one-dimensional Fourier conduction, derive
-    Equation @eq-f05-conduction-resistance. Predict the effect of doubling $L$,
+    Use @eq-f05-conduction-resistance. Predict the effect of doubling $L$,
     $A$, and $k$ separately.
 
 ### Data interpretation
 
 17. Recalculate every finite row of @tbl-f05-synthetic-temperature from
-    Equation @eq-f05-thermal-step. At what time is the temperature within 5 % of
+    Use @eq-f05-thermal-step. At what time is the temperature within 5 % of
     its final rise? Why can this synthetic agreement not qualify hardware?
 18. An illustrative test record (not physical evidence) gives
     $V_\text{in}=5.01$ V and $I_\text{in}=118$ mA,

@@ -32,33 +32,46 @@ make the explanation clearer, not more distant.
 
 ## Invariant 0 — teach the reader in the room
 
-- Use second person for the reader's reasoning and actions: “you choose the
-  reference,” “you calculate the bound,” and “you compare prediction with
-  measurement.” Use a concrete technical subject for physical claims: the
-  source drives current, the transistor changes load current, and the extractor
-  computes parasitics. Do not default to “we,” “the reader,” “one,” or an
-  abstract passive construction.
-- Apply active voice to the entire chapter, not only body prose. Audit maturity
-  and safety callouts, learning outcomes, captions, table notes, requirements,
-  procedures, exercises, and answer choices. Passive voice remains acceptable
-  only when the actor is unknown or genuinely irrelevant.
+- Treat person, voice, and sentence mood as separate editorial choices.
+  Declarative sentences are the default for exposition, definitions,
+  transitions, mechanisms, and conclusions. Use second person when the reader
+  genuinely reasons, predicts, calculates, compares, or decides. Use the
+  imperative only for an actual instruction, such as a procedure step, exercise,
+  prediction prompt, or explicit inspection task. Active voice does not require
+  imperative mood, and a sentence should never become a command merely to avoid
+  “we” or the passive voice.
+- Use a concrete technical subject for physical claims: the source drives
+  current, the transistor changes load current, and the extractor computes
+  parasitics. Do not default to “we,” “the reader,” “one,” or an abstract passive
+  construction. Passive voice remains acceptable when the actor is unknown or
+  genuinely irrelevant.
+- Apply these voice and mood rules to the entire chapter, not only body prose.
+  Audit maturity and safety callouts, learning outcomes, captions, table notes,
+  requirements, procedures, exercises, and answer choices. Operational lists
+  may appropriately use parallel commands; explanatory paragraphs usually
+  should not.
 - Keep sentences punchy and direct. Give each sentence one main job. Split a
   sentence that tries to introduce a mechanism, qualify it, and state its
   consequence at once.
-- Make the tone warm through guidance, not jokes or informality. Tell the reader
-  what to inspect, calculate, compare, or decide. Never trade an exact technical
-  term, equation, caveat, or failure mode for conversational ease.
+- Make the tone warm through relevant guidance, not jokes or informality. Direct
+  the reader to inspect, calculate, compare, or decide only when that action
+  advances the explanation. Otherwise state the relationship or conclusion
+  directly. Never trade an exact technical term, equation, caveat, or failure
+  mode for conversational ease.
 - Define each technical term in **bold** at first use in the chapter, followed
   immediately by a plain-language meaning. Add the formal definition or equation
   after the reader knows what physical idea the term names.
 - Build every abstraction from something observable. Use the sequence physical
   object → terminal behavior → compact description → circuit interaction →
   system consequence → test whenever it fits the topic.
-- Bridge every scale change in prose. When a diode becomes a rectifier, explain
+- Build a linear chain from one paragraph and section to the next. Establish the
+  current question, develop its explanation or derivation, interpret the result,
+  and use that result to motivate the next step. Bridge every scale change in
+  prose. When a diode becomes a rectifier, explain
   how its one-way terminal behavior selects parts of the input waveform. When a
   transistor becomes an amplifier, explain how bias places the device where a
   small input change can control a larger output change. Never make the schematic
-  carry that conceptual jump by itself.
+  or a new heading carry that conceptual jump by itself.
 - Ask for a sign, direction, trend, limiting case, or order-of-magnitude
   prediction before a central calculation. Reconcile the result with that
   prediction afterward.
@@ -88,10 +101,15 @@ make the explanation clearer, not more distant.
 A circuit is **one object described in many languages** (physical, schematic,
 equations, simulation, firmware, measurement, requirement, test); understanding is
 their agreement, and disagreement is the useful signal. Develop important results
-as **predict → build → measure → reconcile → decide**, and rest each claim on the
-evidence ladder (estimate → calculation → simulation → measurement → repeated test
-→ reproduction → field evidence → qualified claim), stopping at the lowest rung the
-stakes allow.
+through prediction, realization, observation, reconciliation, and decision, and
+qualify each claim at the lowest evidence level its stakes allow.
+
+This invariant is a design principle, not recurring boilerplate. The Preface owns
+the full evidence progression and its vocabulary. A chapter should enact that
+progression through its topic-specific reasoning and identify the evidence status
+where it changes a claim; it should not repeat the complete ladder, book thesis,
+or workflow in every introduction, summary, or callout. Link to the Preface
+sparingly when the full framework matters.
 
 ## Invariant 2 — factual rigor (this is a technical text; be correct or be silent)
 - Every equation is derivable and dimensionally correct; **derive from first
@@ -257,10 +275,14 @@ stakes allow.
   a label, caption, and alt text. In a dependency diagram, define the arrow
   semantics and match direct prerequisites to `chapters.toml`; do not mix them
   with page order, conceptual spines, or downstream handoffs. Give a wide figure
-  an explicit print width and inspect both HTML and PDF. If Mermaid layout remains
-  unstable, oversized, or unreadable after simplification, replace it with a
-  recoverable static vector figure and a controlled render derivative rather than
-  accepting renderer-dependent geometry.
+  an explicit print width and inspect both HTML and PDF. Verify document order as
+  well as appearance: a figure can compile and receive a number yet float after
+  the prose that interprets it. Use controlled placement such as `fig-pos="H"`
+  only when immediate adjacency is pedagogically necessary, and recheck page
+  breaks afterward. If Mermaid layout remains unstable, oversized, unreadable, or
+  misplaced after simplification, replace it with a recoverable static vector
+  figure and a controlled render derivative rather than accepting
+  renderer-dependent geometry.
 - **Code:** standard-library, parameterized, runnable, with an expected-output
   block; lines short enough to survive print without awkward wrapping. Run it,
   compare actual and expected output, and keep variable names synchronized with the
@@ -367,6 +389,9 @@ conceptual map and should remain useful after the examples are forgotten.
 5. Read the headings alone as a student before drafting and again after review.
    They should reveal prerequisite idea → governing relations → application →
    limits → evidence → decision without sounding promotional or conversational.
+   Do not stamp a generic `Summary` onto every chapter. Use a topic-specific
+   synthesis when the chapter needs one, or omit it when the preceding section
+   already completes the argument.
 
 ## Make equations teach
 
@@ -458,8 +483,11 @@ prose that never gives the reader enough mathematics to reproduce the result.
    render-ready derivative when the QMD directly references it and no pre-render
    hook creates it. Check that the final HTML image `src` resolves to an existing
    file; a successful render does not prove that an externally referenced image
-   was packaged. For the PDF, inspect the actual full-book page for clipping,
-   overflow, unreadable type, and bad page breaks.
+   was packaged. In both formats, confirm that each figure appears after its
+   introduction and before the prose that depends on its details; a successful
+   cross-reference does not establish correct reading order. For the PDF, inspect
+   the actual full-book page for clipping, overflow, unreadable type, and bad page
+   breaks.
 8. Run every code listing and compare it with its expected-output block. Confirm
    that code names preserve the distinctions and assumptions made in the prose.
 9. Start independent review passes on the **completed draft** when review agents
@@ -483,9 +511,10 @@ prose that never gives the reader enough mathematics to reproduce the result.
    `## References` note is not the first citation for a consequential claim.
 11. `python3 curriculum/tools/validate.py` — must pass.
 12. `quarto render curriculum/book/<file> --to html` — must succeed; verify no
-   "model" in headings, `[1]` citations, `TB` mermaid with Unicode subscripts, the
-   MCQ with a–d options, figures resolving, equations rendering, and no missing or
-   duplicate internal targets or duplicated prefixes such as “Equation Equation.”
+   "model" in headings, `[1]` citations, compliant Mermaid or recoverable static
+   vector figures, the MCQ with a–d options, figures resolving, equations
+   rendering, and no missing or duplicate internal targets or duplicated prefixes
+   such as “Equation Equation.”
    Inspect every chapter-local image URL and confirm its target exists. Compare
    `git status --short` before and after the render so generated `.html` or
    `site_libs/` artifacts are not left in the source tree; use the declared
@@ -498,13 +527,21 @@ prose that never gives the reader enough mathematics to reproduce the result.
 14. Read the rendered chapter once as a student: can every central result be
    recomputed, can every sign be interpreted, and is it clear what is exact,
    illustrative, measured, assumed, or still unverified? Read the table of contents
-   once more: does it still teach the chapter's progression? Inspect sentences
-   longer than about 35 words and semicolon chains. Split them unless their
-   structure genuinely helps the reader. Check that no idiom or metaphor carries
-   a technical claim that should be stated literally. Then run a strict
+   once more: does it still teach the chapter's progression? Then read the prose
+   without relying on the headings. Each paragraph should begin from the current
+   question or prior result, and each section change should state the conceptual
+   handoff rather than jump to a new scale, representation, or task. Inspect
+   sentences longer than about 35 words and semicolon chains. Split them unless
+   their structure genuinely helps the reader. Check that no idiom or metaphor
+   carries a technical claim that should be stated literally. Then run a strict
    reader-facing edit over **every** text-bearing element:
    - replace default “we,” “the reader,” “one can,” and avoidable passive voice
-     with “you” for reader actions or a concrete technical actor;
+     with natural declarative prose, “you” for genuine reader reasoning, or a
+     concrete technical actor as appropriate;
+   - audit sentence mood: keep exposition declarative and reserve imperatives for
+     real instructions, prediction prompts, procedures, exercises, and necessary
+     inspection tasks; never convert an ordinary statement into a command as a
+     mechanical voice edit;
    - convert mixed requirement fragments into parallel commands with measurable
      endpoints;
    - replace editorial narration with the actual causal or evidentiary claim;
@@ -525,4 +562,5 @@ capability is fully supported: prerequisites are named, central quantities are
 defined, equations are derived and demonstrated, evidence is honestly classified,
 failure boundaries are visible, exercises cover the misconceptions, the heading
 skeleton teaches the conceptual arc, citations support consequential claims at the
-point of use, and the final decision is valid under stated conditions.
+point of use, the prose moves linearly between them without relying on headings to
+hide a jump, and the final decision is valid under stated conditions.

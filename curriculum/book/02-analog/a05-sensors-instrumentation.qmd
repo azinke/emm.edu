@@ -6,7 +6,7 @@ status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter presents a complete instructional path from transduction through a
+This draft develops the path from transduction through a
 guarded measurement decision. The numerical bridge examples and calibration
 data are explicitly illustrative or synthetic. They teach the method but do not
 qualify hardware. Physical claims require the aligned laboratory evidence and
@@ -35,7 +35,7 @@ while both signal leads remain several volts above the circuit reference. A
 voltmeter can display that change, but the display does not yet establish force.
 Excitation drift, bridge self-heating, lead resistance, amplifier offset,
 common-mode interference, calibration, and instrument loading all stand between
-the physical event and a defensible result.
+the physical event and a supported result.
 
 A **sensor** is an element whose observable output changes with a physical,
 chemical, or biological quantity. A **transducer** converts energy or
@@ -51,12 +51,11 @@ the intended force range. Predict before calculating:
 - If the excitation rises by 1 %, what happens to the raw bridge output?
 - If the amplifier rejects common-mode voltage imperfectly, can a 2.5 V shared
   level matter more than a 10 mV differential signal?
-- If we calibrate only zero and full scale, what evidence would reveal
+- If you calibrate only zero and full scale, what observation would reveal
   curvature between those points?
 
-The chapter answers those questions by keeping the physical object, terminal
-behavior, equations, schematic, calibration data, uncertainty budget, and
-decision attached to one chain.
+A valid force result needs an explicit relation at every conversion from the
+mechanical load path to the guarded decision.
 
 ## Learning outcomes
 
@@ -351,9 +350,10 @@ medium, airflow, geometry, and temperature-dependent resistance. A maximum
 excitation voltage without those conditions is not a complete self-heating
 claim.
 
-If voltage excitation doubles while $R$ remains approximately constant,
-@eq-a05-self-heating predicts four times the power. This limiting trend explains
-why “more signal” can create more measurement error.
+If voltage excitation doubles while $R$ remains approximately constant, the
+self-heating relation in @eq-a05-self-heating predicts four times the power.
+This limiting trend explains why “more signal” can create more measurement
+error.
 
 ## Representative sensor interfaces
 
@@ -461,8 +461,8 @@ $$ {#eq-a05-charge-low-corner}
 
 The circuit therefore measures changing force or acceleration over a bounded
 band, not static force indefinitely. Cable capacitance affects noise, stability,
-and attainable bandwidth even though the ideal charge gain in
-@eq-a05-charge-amplifier depends on $C_F$. Leakage, dielectric behavior,
+and attainable bandwidth. Under the ideal relation
+in @eq-a05-charge-amplifier, charge gain depends on $C_F$. Leakage, dielectric behavior,
 amplifier bias current, and saturation recovery break the first-order picture
 [@pallas2001sensors; @fraden2016sensors].
 
@@ -509,9 +509,9 @@ ideal output unchanged but changes source resistance, power, noise, and loading.
 ### Quarter-bridge response and linearization
 
 Let a tensile strain gauge occupy the upper-left arm:
-$R_1=R+\Delta R$, while $R_2=R_3=R_4=R$. With the polarity in
-@fig-a05-wheatstone-bridge, a positive $\Delta R$ lowers $v_+$, so predict
-$v_d<0$. Substitution in @eq-a05-bridge-general gives
+$R_1=R+\Delta R$, while $R_2=R_3=R_4=R$.
+In @fig-a05-wheatstone-bridge, a positive $\Delta R$ lowers $v_+$. The predicted
+sign is therefore $v_d<0$. Substitution in @eq-a05-bridge-general gives
 
 $$
 \frac{v_d}{V_\text{EX}}
@@ -725,8 +725,8 @@ also lists output swing, offset, bias current, CMRR, gain error, bandwidth, and
 temperature conditions [@ti2020ina821].
 
 Suppose an illustrative full bridge has a specified nominal sensitivity
-magnitude of 2.000 mV/V at 1000 N and uses 5.000 V excitation. We declare its
-wiring so positive compression produces positive $v_d$. Its nominal full-scale
+magnitude of 2.000 mV/V at 1000 N and uses 5.000 V excitation. Its declared
+wiring makes positive compression produce positive $v_d$. The nominal full-scale
 differential output is therefore
 
 $$
@@ -735,7 +735,7 @@ v_{d,\text{FS}}=
 =10.00~\text{mV}.
 $$
 
-We want a nominal output from 0.500 V to 2.500 V, so the required span gain is
+The required nominal output spans 0.500 V to 2.500 V, so the required gain is
 
 $$
 G_\text{req}=
@@ -907,8 +907,8 @@ A 1 % excitation rise produces a 1 % raw bridge-voltage rise in the ideal
 voltage-excited bridge, while the simultaneous ratio $v_d/V_\text{EX}$ stays
 fixed. A finite-CMRR amplifier can turn a shared common-mode change into an
 error larger than the bridge signal. Zero and full-scale calibration fix two
-points by construction; only interior points such as those in
-@tbl-a05-synthetic-calibration reveal curvature between them.
+points by construction. Specifically,
+the data in @tbl-a05-synthetic-calibration show curvature at the interior points.
 :::
 
 ### Correction functions and extrapolation
@@ -926,9 +926,9 @@ relation before the arithmetic fails.
 
 ## Worked design: bridge to calibrated analog output
 
-We now connect the chapter's representations. The design input is deliberately
-an illustrative transducer requirement rather than an invented product
-datasheet.
+This worked design carries one illustrative transducer requirement through
+bridge excitation, amplification, calibration, and a guarded decision. The
+input values do not represent a product datasheet.
 
 ### Requirements and evidence status
 
@@ -972,7 +972,8 @@ The candidate must still pass these screens:
 
 ### Uncertainty budget at 500 N
 
-F06 develops propagation in detail. Here we apply it. Let the reported error be
+F06 develops uncertainty propagation in detail. The same method applies here,
+with reported error defined as
 
 $$
 e=\hat{x}-x_\text{ref}.
@@ -993,8 +994,8 @@ are independent for this illustrative screen:
 : **Illustrative uncertainty budget** for the synthetic 500 N result. The
 independence assumption must be replaced by covariance terms when inputs share a
 reference, fit, or environmental cause. This budget applies after a separate
-multipoint correction; the larger endpoint-fit residuals in
-@tbl-a05-synthetic-calibration diagnose why that correction is needed.
+multipoint correction. The residuals in @tbl-a05-synthetic-calibration show why
+that correction is needed.
 {#tbl-a05-uncertainty-budget}
 
 Under the stated independence assumption, the combined standard uncertainty is
@@ -1177,11 +1178,11 @@ A disciplined sequence is:
 6. Assign discrepancy only as far as independent evidence permits.
 
 If a bridge emulator reproduces the fault, replacing the mechanical sensor is
-weakly motivated. If the emulator passes but off-center physical loading fails,
-the mechanical installation becomes the stronger hypothesis. The disagreement
-between representations is the useful signal.
+unlikely to address the cause. If the emulator passes but off-center physical
+loading fails, test the mechanical installation next. Each mismatch narrows the
+set of plausible causes and determines the next observation.
 
-## Summary
+## From measurand to guarded decision
 
 A sensor result becomes trustworthy only when every transformation from
 measurand to decision is explicit.

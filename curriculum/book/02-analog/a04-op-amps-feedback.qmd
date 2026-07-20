@@ -6,13 +6,10 @@ status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter develops a complete instructional path from differential gain and
-loop gain to closed-loop amplifier functions, frequency shaping, practical
-limits, a datasheet-based design, and an uncertainty-aware acceptance decision. Numerical
-records identified as **illustrative** or **synthetic** are not measurements.
-Physical evidence belongs in aligned Lab **L07**. The chapter remains subject to
-technical and editorial revision; see the
-[reading roadmap](../roadmap.qmd) for the meaning of status levels.
+This draft develops op-amp circuits from differential and loop gain through
+closed-loop functions, practical limits, stability, and a datasheet-based
+design. In Lab **L07**, you perform the corresponding physical measurements.
+See the [reading roadmap](../roadmap.qmd) for the meaning of status levels.
 :::
 
 ::: {.callout-warning title="Safety boundary for op-amp work"}
@@ -65,8 +62,8 @@ produces output from the **difference** between its input voltages. The closed
 loop can make that difference small only while the loop has the correct sign and
 enough gain. It also needs enough **phase margin**, the angular distance from the
 loop phase to $-180^\circ$ at the frequency where loop-gain magnitude equals
-one. Finally, the demanded output must lie inside the device's attainable
-voltage and current range. We will use this engineering habit:
+one. The demanded output must also lie inside the device's attainable voltage
+and current range. A reliable analysis therefore follows one compact rule:
 
 > Assume closed-loop operation, derive the demanded voltages and currents, then
 > verify every condition that made the assumption possible.
@@ -159,7 +156,7 @@ v_{\mathrm{CM}}(t)\equiv
 $$ {#eq-a04-input-definitions}
 
 Both relations are definitions. Choose a **quiescent operating point**, the
-steady no-signal condition about which we analyze small changes,
+steady no-signal condition about which you analyze small changes,
 $(V_{dQ},V_{OQ})$, and define
 $\Delta v_d\equiv v_d-V_{dQ}$ and
 $\Delta v_o\equiv v_o-V_{OQ}$. A positive change in $v_d$ asks the output to
@@ -175,7 +172,7 @@ $A_{\mathrm{OL}}>0$ is dimensionless incremental open-loop voltage gain.
 Equivalently,
 $v_o-V_{OQ}=A_{\mathrm{OL}}(v_d-V_{dQ})$. This is an **affine relation**: a
 linear change is added to a fixed operating-point offset. That form matters
-because $v_d$ does not change when we choose a different reference, whereas the
+because $v_d$ does not change when you choose a different reference, whereas the
 numerical value of $v_o$ does. The equation is not a conservation law and is
 not valid for arbitrary output. It describes a bounded linear operating region.
 The supply rails deliver the output energy; the input signal controls that
@@ -255,13 +252,13 @@ flowchart TB
   F --> E
 ```
 
-This diagram is a return-loop abstraction, not a replacement for the component
-schematic. In an inverting amplifier, $\beta(s)$ is found with independent
+This diagram describes the return loop; it does not replace the component
+schematic. In an inverting amplifier, $\beta(s)$ is evaluated with independent
 signal sources set to zero; it must not be confused with the signed signal gain
-from $v_i$ to $v_o$. This chapter uses the conventional return-ratio magnitude
-and phase quantity $T=A\beta$: the explicit minus sign at the summing junction
-is factored out, so the characteristic equation is $1+T=0$. The signed product
-including that displayed subtracting operation would be $-A\beta$.
+from $v_i$ to $v_o$. This chapter defines the conventional return-ratio magnitude
+and phase as $T=A\beta$. The definition factors out the explicit minus sign at
+the summing junction, so the characteristic equation is $1+T=0$. A signed
+product that includes the displayed subtraction would instead be $-A\beta$.
 
 Consider the scalar low-frequency case. The feedback network returns
 $\Delta v_f=\beta\Delta v_o$. The dimensionless **feedback factor** $\beta$
@@ -833,8 +830,8 @@ must be budgeted separately.
 ### Input offset and bias currents
 
 **Input offset voltage** $V_{\mathrm{OS}}$ represents the small differential
-input a real op amp needs to produce its nominal balanced output. For
-first-order error analysis, we draw it as a differential voltage source.
+input a real op amp needs to produce its nominal balanced output. A differential
+voltage source represents it in the first-order error analysis.
 Its sign is generally not predictable for an untrimmed individual device.
 The equivalent circuit in @fig-a04-static-input-errors collects that signed
 source, both bias currents, source and reference Thévenin resistances, and the
@@ -1508,9 +1505,9 @@ $$ {#eq-a04-reference-ratio-corner}
 
 Evaluating $x=\pm0.500$ V, $\delta=\pm2.0$ mV, and both exact gain limits
 gives $\max|E_{R,\mathrm{REF}}|=9.015$ mV. This joint corner arithmetic avoids
-claiming that separately rounded 6.0 mV and 3.01 mV screens are independent
-bounds. @tbl-a04-dc-allocation keeps bounded, illustrative, and unqualified
-contributions visibly separate.
+treating the separately rounded 6.0 mV and 3.01 mV screens as independent
+bounds. The table in @tbl-a04-dc-allocation separates bounded, illustrative,
+and unqualified contributions.
 
 | Contribution | Output-referred screen | Status at this stage |
 |---|---:|---|
@@ -1649,7 +1646,7 @@ required slope: 0.251 V/us
 typical slew ratio: 25.9
 ```
 
-### Measurement and guarded decision
+### Measurement and acceptance decision
 
 An aligned physical test should record at minimum:
 
@@ -1728,11 +1725,13 @@ if the guarded physical tests pass; otherwise characterize, redesign, or select
 a device with condition-matched guaranteed limits.
 :::
 
-## Reconciliation and fault isolation
+## Fault isolation from measured patterns
 
-The most useful evidence is a pattern across representations, not one output
-number. @tbl-a04-diagnostic-patterns lists discriminating observations. The
-entries are hypotheses until the indicated measurement supports them.
+A fault usually changes several related quantities, not just one output number.
+The table in @tbl-a04-diagnostic-patterns pairs each observation with a
+discriminating check.
+Each proposed mechanism remains a hypothesis until the indicated measurement
+supports it.
 
 | Observation | Plausible mechanism | Discriminating next check |
 |---|---|---|
@@ -1777,7 +1776,7 @@ inputs in this circuit is not such a test because it changes the feedback sign.
 Defining the unexplained remainder as “op-amp error” would only rename an
 unallocated quantity.
 
-## Summary
+## Feedback functions and validity conditions
 
 An operational amplifier produces output from a differential input; negative
 feedback returns part of the output so large loop gain makes that differential
@@ -1804,9 +1803,10 @@ Every ideal result requires checks in four groups:
 - **physical realization:** dissipation, supply decoupling, layout, and
   measurement loading.
 
-Typical datasheet values establish expectations, not guarantees. A defensible
-design keeps schematic, equations, executable arithmetic, datasheet conditions,
-physical test points, uncertainty, and decision rule synchronized.
+Typical datasheet values establish expectations, not guarantees. The schematic,
+equations, executable arithmetic, datasheet, and physical test must refer to the
+same terminal quantities and conditions. The stated uncertainty and decision
+rule then determine the result.
 
 ## Exercises
 

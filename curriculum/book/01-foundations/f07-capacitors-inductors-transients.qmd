@@ -1,18 +1,16 @@
 ---
 title: "Capacitors, inductors, and transients"
-description: "Derive stored-energy element relations, predict first-order RC and RL transients, and make bounded switching and discharge decisions."
+description: "Derive stored-energy element relations, predict first-order RC and RL transients, and design practical switching and discharge paths."
 chapter-id: F07
 status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter provides a complete instructional path: device terminal relations and
-stored-energy derivations, initial-condition reasoning, RC and RL step responses,
-an executable cross-check, explicitly synthetic diagnostic data, switching
-protection, non-ideal behavior, a discharge design with uncertainty margin, and
-a full exercise set. It remains subject to technical and editorial revision. Physical evidence
-belongs in aligned Lab **L05**; calculations and synthetic data here do not
-qualify hardware. See the [reading roadmap](../roadmap.qmd) for status meanings.
+This draft covers stored-energy relations, initial conditions, RC and RL step
+responses, switching protection, non-ideal behavior, diagnosis, and discharge
+design. Its calculations and synthetic data support analysis; Lab **L05**
+provides the corresponding practical work. See the
+[reading roadmap](../roadmap.qmd) for status definitions.
 :::
 
 ::: {.callout-warning title="Safety boundary for stored-energy work"}
@@ -54,10 +52,7 @@ Before calculating, predict the following for the circuits in this chapter.
 - When a relay coil is switched off, where can its stored energy go?
 
 The answers follow from charge conservation, Faraday's law, and energy balance;
-they are not separate rules to memorize. The same physical circuit will be
-described as a schematic, a differential equation, an exponential waveform, an
-energy transfer, and a measurement. Agreement among those descriptions is the
-evidence that the reasoning is sound [@sedra2020microelectronic;
+you do not need to memorize them as separate rules [@sedra2020microelectronic;
 @horowitz2015art].
 
 ## Learning outcomes
@@ -137,7 +132,7 @@ $$
 =C\frac{\mathrm dv_C(t)}{\mathrm dt}.}
 $$ {#eq-f07-capacitor-iv}
 
-Equation @eq-f07-capacitor-iv is exact for the stated ideal constant-$C$
+The relation in @eq-f07-capacitor-iv is exact for the stated ideal constant-$C$
 description. Its dimensions teach the relation:
 
 $$
@@ -297,7 +292,7 @@ for particular zero initial conditions and particular surrounding networks.
 
 ## First-order RC response
 
-@fig-f07-rc keeps the same $v_C$ polarity and downward $i_C$ reference in both
+The circuit in @fig-f07-rc keeps the same $v_C$ polarity and downward $i_C$ reference in both
 configurations. During discharge the physical current flows opposite the arrow,
 so $i_C<0$; the reference does not rotate merely to keep a result positive.
 
@@ -309,8 +304,8 @@ After the switch changes at $t=0$, replace the rest of any linear resistive
 network seen by the capacitor with its Thévenin voltage $V_\text{th}$ and
 resistance $R_\text{th}>0$. Independent sources are deactivated only when finding
 $R_\text{th}$; dependent sources, if present, remain and require a test source as
-in F04. With $v_C$ positive at TP1, KVL and
-@eq-f07-capacitor-iv give
+in F04. With $v_C$ positive at TP1, substituting the capacitor relation
+from @eq-f07-capacitor-iv into KVL gives
 
 $$
 V_\text{th}=R_\text{th}i_C+v_C
@@ -494,7 +489,7 @@ generally second order and one time constant is insufficient.
 
 ## First-order RL response
 
-@fig-f07-rl retains the downward $i_L$ reference when the source is removed. The
+The circuit in @fig-f07-rl retains the downward $i_L$ reference when the source is removed. The
 natural-response loop then produces $v_L<0$: the inductor delivers stored energy
 while current continues downward and decays.
 
@@ -683,8 +678,8 @@ W_\text{source}
 =CV_S^2.
 $$
 
-The capacitor retains $W_C=\tfrac12CV_S^2$. Integrating
-@eq-f07-rc-power-balance, or subtracting the final stored energy from the only
+The capacitor retains $W_C=\tfrac12CV_S^2$. Integrating the power balance
+in @eq-f07-rc-power-balance, or subtracting the final stored energy from the only
 cross-boundary input, gives
 $W_R=W_\text{source}-W_C=\tfrac12CV_S^2$. Therefore
 
@@ -938,20 +933,9 @@ as the multiple grows, both approach but never equal their final values in
 finite time. If changing $R$ in code makes both RC and RL slower, one of the time
 constant assignments is wrong.
 
-Each representation occupies a different evidence rung:
-
-| Rung used here or downstream | What it can support | What it cannot yet support |
-|---|---|---|
-| order-of-magnitude estimate | expected timescale or stress scale | precise component behavior |
-| analytic calculation | prediction under declared ideal assumptions | a physical assembly claim |
-| executable arithmetic | check that the printed equation was implemented consistently | independent physics evidence |
-| synthetic data | practice fitting and discriminating hypotheses | a measurement claim |
-| L05 measurement | first comparison on one documented assembly | population or environmental qualification |
-| repeated units and corners | bounded reproducibility under tested conditions | untested field conditions |
-
-The evidence should stop at the lowest rung adequate for the decision. The code
-above cross-checks arithmetic; the next example teaches diagnosis; neither
-raises a physical claim to the measurement rung.
+The code above checks the printed arithmetic; the next example practices
+diagnosis with synthetic data. Neither establishes how a physical assembly
+behaves.
 
 ### Synthetic diagnosis: a charging curve stops low
 
@@ -1004,9 +988,9 @@ terminal behavior. Discriminating measurements would separately verify the
 source terminals, measure the de-energized resistance seen from TP1, repeat with the
 probe removed or changed, and inspect the component value and board condition.
 
-## Worked design: a bounded capacitor discharge
+## Worked design: a capacitor discharge path
 
-@fig-f07-bleed keeps $R_\text{bleed}$ permanently across $C$, so opening $S$
+The circuit in @fig-f07-bleed keeps $R_\text{bleed}$ permanently across $C$, so opening $S$
 removes the source without removing the intended discharge path. TP1 is the
 measurand node used in the calculation and acceptance rule.
 
@@ -1100,11 +1084,11 @@ Equality does not satisfy the strict requirement. Also apply a one-sided guarded
 rule to the initial-voltage limit—its indicated value plus the relevant expanded
 uncertainty must not exceed 12.6 V—and verify by an approved method that the
 resistance path remains present after power removal. A single pass supports only
-the tested unit and conditions; repeated units, environmental corners, aging,
-and open-circuit fault coverage require higher evidence rungs
+the tested unit and conditions. To cover multiple units, environmental corners,
+aging, or an open-circuit fault, you need tests that exercise those conditions
 [@jcgm2012conformity].
 
-## Summary
+## State, time constants, and energy paths
 
 A capacitor's charge separation is represented one-to-one by voltage in the
 linear range because $q=Cv_C$ and $i_C=C\,\mathrm dv_C/\mathrm dt$. An

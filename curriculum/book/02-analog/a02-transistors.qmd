@@ -6,13 +6,10 @@ status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter provides a complete instructional path from transistor control
-mechanisms and large-signal regions to low-side, high-side, complementary, and
-inductive-load switching. Calculated screens and illustrative assumptions are
-identified as such; they are not measurements. Physical terminal curves and
-switching-waveform evidence belong in aligned Lab **L06**. The chapter remains
-subject to technical and editorial revision. See the
-[reading roadmap](../roadmap.qmd) for the meaning of status levels.
+This draft develops transistor switching from device control and operating
+regions through drive, inductive loads, loss, and thermal limits. In Lab **L06**,
+you compare the calculations with terminal curves and switching waveforms.
+See the [reading roadmap](../roadmap.qmd) for the meaning of status levels.
 :::
 
 ::: {.callout-warning title="Safety boundary for transistor work"}
@@ -39,11 +36,11 @@ supply and a lamp, resistor, or relay coil. A control signal too small to power
 the load directly can command nearly the entire load current. Remove the control
 and the current nearly stops.
 
-This behavior can lead to two incomplete explanations: “a transistor is a
-switch,” or “a transistor amplifies current.” Neither statement identifies the control
-terminal, the controlled path, or the intended operating region. Neither tells
-us how much drive the device needs, where the load line places the operating
-point, or what happens during the transition.
+This behavior invites two shortcuts: “a transistor is a switch” and “a
+transistor amplifies current.” Neither identifies the control terminal, the
+controlled path, or the operating region. Neither shortcut tells you how much
+drive the device needs, where the load line places the operating point, or what
+happens during a transition.
 
 Before reading further, predict four changes:
 
@@ -55,11 +52,10 @@ Before reading further, predict four changes:
 - double switching frequency while leaving voltage, current, edge time, and
   duty ratio unchanged.
 
-The useful explanation will make the physical device, terminal references,
-schematic, equations, datasheet conditions, switching waveforms, and thermal
-boundary agree. A mismatch among them is evidence of a wrong operating region,
-insufficient drive, stored charge, stray inductance, temperature rise, or a
-rating used outside its test condition.
+A useful model must agree with the terminal references, schematic, datasheet
+conditions, switching waveforms, and thermal limits. A mismatch points to a
+wrong operating region, insufficient drive, stored charge, stray inductance,
+temperature rise, or a rating used outside its test condition.
 
 ## Learning outcomes
 
@@ -94,10 +90,9 @@ and integrals. After completing the chapter, you should be able to:
   uncertainty.
 
 ::: {.callout-note title="Scope boundary — switching here, amplification next"}
-This chapter establishes transistor physics, large-signal regions, controlled
-current, switching paths, drive, stress, and temperature. It deliberately stops
-before complete amplifier design. [A03](a03-bias-small-signal-amplifiers.qmd) is
-reserved for DC bias or polarization circuits, bias sensitivity and thermal
+Here you use transistor physics and large-signal regions to analyze switching
+paths, drive, stress, and temperature. [A03](a03-bias-small-signal-amplifiers.qmd)
+then develops DC bias or polarization circuits, bias sensitivity and thermal
 stability, BJT and MOSFET small-signal equivalents, common-emitter and
 common-source gain stages, emitter and source followers, coupling and bypass
 networks, headroom, distortion, and multistage loading. A simple discrete
@@ -107,8 +102,7 @@ current source or mirror may support bias design there.
 differential pairs, active loads, CMOS stages, matching, process variation, and
 layout-dependent behavior. A Darlington pair is introduced in A02 where its
 switching consequences matter; its follower and compound-amplifier use belongs
-in A03. These downstream chapters currently define the intended scope but still
-require full authoring.
+in A03.
 :::
 
 ## Transistor control, terminal references, and power
@@ -654,8 +648,8 @@ The invalid state creates a current path containing both transistors and the
 supply impedance but not the intended load. Non-overlap or **dead time** is
 introduced to prevent it. Too little dead time risks shoot-through; too much can
 force load current through a body diode, increasing loss and recovery stress.
-This chapter establishes the path; converter timing and optimization belong to
-S05.
+These mechanisms set the timing constraints. [S05](../05-domains/s05-power-electronics.qmd)
+develops converter timing and optimization.
 
 BJT emitter followers and complementary push–pull stages have analogous
 high-side/low-side structure, but base current, junction drops, and stored charge
@@ -1100,16 +1094,17 @@ integration requirement.
 
 ![Datasheet-based 5 V GPIO to 12 V relay interface.](../../../build/circuits/a02-bjt-relay-interface.png){#fig-a02-relay-interface fig-alt="A 5 volt GPIO drives the base of 2N3904 Q1 through a 560 ohm resistor; a 100 kilohm base-emitter resistor defines the off state. The collector drives a G2RL 12 volt coil represented by winding resistance R w and inductance L w, with winding current I w marked. A 1N5819 flyback diode spans the complete coil, with anode at collector test point TPC and cathode at the locally bypassed 12 volt rail. TPB and TP0 are also marked." width="88%"}
 
-### Nominal estimate
+### First-pass current and drive estimate
 
-Estimate first. A 12 V, 360 $\Omega$ coil draws about 33 mA. A forced current
-ratio of 10 needs about 3.3 mA base current. A 560 $\Omega$ resistor from a
-roughly 5 V output supplies several milliamperes, so the BJT is plausible. A
-Schottky diode rated for 40 V reverse voltage and ampere-scale forward current is
-plausible at a 33 mA initial flyback current. None of those estimates is yet a
-bounded design.
+The load current sets the first estimate. A 12 V, 360 $\Omega$ coil draws about
+33 mA. A forced current ratio of 10 needs about 3.3 mA base current. A
+560 $\Omega$ resistor from a roughly 5 V output supplies several milliamperes,
+so the BJT is plausible. A Schottky diode rated for 40 V reverse voltage and
+ampere-scale forward current is plausible at a 33 mA initial flyback current.
+These values establish a starting point, not the tolerance and temperature
+limits.
 
-### Adversarial current and drive corners
+### Worst-case current and drive
 
 The largest winding current occurs at maximum supply and minimum specified
 resistance. Treating the transistor as an ideal short gives a one-sided source
@@ -1224,8 +1219,8 @@ overshoot. “The diode is 0.6 V” is not proof that TPC remains below 13.2 V.
 
 ### Executable corner check
 
-The following standard-library arithmetic reproduces the static corner screens.
-It is **executable calculation**, not circuit simulation or measurement.
+The following standard-library code reproduces the static corner calculations.
+It evaluates the stated equations; it does not simulate or measure the circuit.
 
 ```{.python}
 # a02_switch_checks.py — A02 static design screens; standard library only.
@@ -1304,7 +1299,7 @@ for a PCB with constrained GPIO current or many channels, select the MOSFET
 after checking its board-temperature and drive conditions. The decision follows
 the implementation requirement, not a universal device ranking.
 
-### Acceptance test and limit of claim
+### Acceptance test for the relay interface
 
 No physical observations are supplied here, so the circuit is a
 **datasheet-based feasibility design**, not a verified assembly. An approved
@@ -1378,9 +1373,9 @@ Passing does not qualify relay contacts, hot-coil extremes, mechanical life,
 unpowered-rail faults, external cables, automotive transients, or safety
 functions.
 
-## Reconcile the opening predictions
+## Drive, flyback, and switching-frequency predictions
 
-| Opening change | Defensible prediction | Governing evidence and boundary |
+| Opening change | Predicted behavior | Governing mechanism and limit |
 |---|---|---|
 | replace an NPN with an n-MOSFET at the same control voltage | it may work better, worse, or not at all | compare guaranteed base-current/saturation data with $R_{DS(on)}$ at the actual $V_{GS}$; terminal pinout and off-state pull path also change |
 | drive a MOSFET only to threshold | drain current is only at the small threshold test level or in an uncontrolled transition region | $V_{GS(th)}$ defines incipient conduction, not low resistance |
@@ -1391,7 +1386,7 @@ The four changes are therefore one lesson: the control command does not define
 the device state alone. The source–load network, drive impedance, stored charge,
 current-return path, time scale, and temperature complete the operating point.
 
-## Summary
+## Operating region, drive, and energy paths
 
 - A transistor controls a source–load path; it does not supply the load's energy.
   Declared terminal references make KCL and port power unambiguous.
@@ -1629,7 +1624,7 @@ Choose the one best answer in each case.
   switch behavior into logic levels. [S05](../05-domains/s05-power-electronics.qmd)
   owns converter topologies, specialist gate drive, magnetics, PWM, and
   higher-energy switching.
-- **Practice and project:** [Lab **L06**](index.qmd#turn-reading-into-evidence)
+- **Practice and project:** [Lab **L06**](index.qmd#practical-work)
   should measure transistor terminal curves and one current-limited switching
   transient with documented loading and temperature. [Project **M2**](../roadmap.qmd#practice-and-project-spine)
   uses the chapter's bounded switch and protection reasoning in an environmental

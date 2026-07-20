@@ -4,137 +4,48 @@ description: "A free, practical guide from first measurements to complete electr
 page-role: frontmatter
 ---
 
-# Start with a voltage. End with a system.
+# From first measurements to complete systems
 
-Electronics is often taught as a pile of formulas to memorize and circuits to
-recognize. This book takes a different position: electronics becomes
-understandable when the many ways we describe a circuit stop disagreeing. The
-physical assembly, the circuit diagram, the governing equations, a simulation,
-the firmware, the measured waveform, the requirement, and the test that accepts
-it are all descriptions of one object. When they agree, you understand the
-circuit. When they disagree, one of them is wrong—and that disagreement is the
-most useful information the bench can offer.
+Electronics becomes useful when its descriptions agree. The assembly, schematic,
+equations, simulation, firmware, measured waveform, requirement, and acceptance
+test all describe the same system from different angles. Agreement gives
+confidence in the model. Disagreement tells you where to investigate.
 
-The book develops that agreement one layer at a time. It begins with safe
-measurement and simple sources and loads. It then builds through passive
-networks, semiconductor devices, analog and digital circuits, embedded software,
-signals, control, power, communication, and product realization. The final part
-uses complete systems to show why the earlier details matter. The path is long
-on purpose: a single measured voltage and a field-qualified instrument are the
-same craft practiced at different scales.
+This book develops that discipline from safe first measurements to complete
+electronic systems. You will learn to choose an appropriate model, state its
+limits, test its predictions, and make decisions that the available evidence
+supports. The emphasis is practical: important ideas lead to calculations,
+measurements, design choices, or diagnostic tests rather than ending with a
+formula.
 
-## What this book is
+## The route
 
-It is a free, practical, model-based introduction. *Practical* means results are
-earned on a bench, not asserted: every important idea is meant to be predicted,
-built, measured, and reconciled. *Model-based* means the goal is never a single
-number but a model with stated assumptions and known limits—you should always be
-able to say which approximation you are using and what would break it. In that
-spirit it follows the bench-first tradition of practical electronics
-[@horowitz2015art] while grounding device behavior in the quantitative circuit
-models developed in the standard microelectronics literature
-[@sedra2020microelectronic].
+The seven parts follow the way an electronic system grows:
 
-It is *not* a formula sheet, a cookbook of circuits to copy, or a substitute for
-a datasheet, a standard, or supervised laboratory training. Where a claim rests
-on device physics, metrology, or regulation, the book points to primary and
-canonical sources rather than restating them from memory.
-
-## The through-line: one system, many representations
-
-A worked example in this book tries to connect several of these views of the
-same system at once:
-
-- physical construction and the energy path;
-- schematic with named nodes and reference directions;
-- equations and their assumptions;
-- simulation or another executable model;
-- measured data with its uncertainty;
-- software, state, and timing;
-- requirements and the tests that accept them.
-
-Keeping these aligned is the recurring discipline of the whole text. It is why
-SI units and explicit reference directions are used throughout
-[@bipm2019si], why a negative result is read as "reality opposes my chosen
-reference" rather than "error," and why measurement uncertainty is treated as a
-first-class quantity to be estimated, not an afterthought [@jcgm2008gum]. The
-[preface](preface.qmd) states the notation and evidence conventions in full.
-
-## How the path is organized
-
-The book is seven parts and a set of working appendices. Each part answers one
-central question and hands a durable capability to the next.
-
-| Stage | Central question |
+| Part | Focus |
 |---|---|
-| Foundations | What are voltage, current, resistance, energy, and a trustworthy measurement? |
-| Devices and analog | How do physical devices shape and amplify real signals? |
-| Digital hardware | How are values, decisions, state, and computation built from circuits? |
-| Embedded systems | How does software interact with time, energy, peripherals, and failure? |
-| System domains | How do we sample, control, power, and communicate? |
-| Product realization | How does a design become reproducible, compliant, and maintainable hardware? |
-| Complete systems | How are cross-domain trade-offs verified and handed to another person? |
+| Electrical foundations | Safe practice, circuit quantities, networks, measurement, and dynamic behavior |
+| Devices and analog circuits | Semiconductor devices, amplification, feedback, sensing, and analog limits |
+| Digital hardware | Logic, state, timing, hardware description, memory, and FPGA systems |
+| Embedded systems | Software at the hardware boundary, peripherals, concurrency, networks, and dependable operation |
+| System domains | Signals, conversion, control, power, communication, and edge applications |
+| Product realization | Requirements, PCB design, integrity, manufacture, test, safety, and lifecycle |
+| Complete systems | Cross-domain projects that must be verified, documented, and handed over |
 
-The middle parts each carry a canonical reference alongside the chapter text:
-signals and sampling follow the standard signals-and-systems treatment
-[@oppenheim1996signals]; digital logic, memory, and processors build toward
-computer architecture [@harris2021digital]; feedback and control draw on modern
-feedback-systems theory [@astrom2021feedback]; and realization brings in
-electromagnetic compatibility as a design constraint, not a final test
-[@ott2009electromagnetic]. The mathematical and engineering-practice appendices
-(M01–M03, T01–T03) are working references, used just in time when a chapter first
-needs a technique—not a hurdle to clear before starting.
+The mathematics and engineering-practice appendices provide working references
+when a chapter first needs them. They are not entrance requirements.
 
-Each chapter can support self-study or classroom teaching. Course routes are
-published separately and point to the same chapters; there are no
-course-specific copies of the theory, and no chapter is forked for a particular
-semester.
+The default reading order follows the sidebar. If you already have some of the
+prerequisites or are working toward a particular application, use the
+[reading roadmap](roadmap.qmd) to choose a route without skipping a dependency.
 
-## Read, predict, test, decide
+## How to begin
 
-Do not read electronics as a list of formulas. Before a result is revealed,
-predict its direction and approximate magnitude. State the model and its limits.
-Then compare calculation, simulation, and measurement, and treat any
-disagreement as information rather than noise. Finish by deciding what the
-evidence actually permits you to claim—no stronger.
+The [preface](preface.qmd) introduces the book's notation, evidence workflow,
+and practical boundaries. [Safe bench practice](01-foundations/f01-safe-practice.qmd)
+is the first chapter on the default route.
 
-That cycle rides on an evidence ladder that runs from a rough estimate to a
-qualified claim:
-
-```text
-estimate → calculation → simulation → measurement → repeated test
-         → independent reproduction → field evidence → qualified claim
-```
-
-Not every question needs the top rung. The consequence of being wrong sets how
-much evidence is appropriate: a sign convention can rest on a calculation, while
-a safety or lifecycle claim cannot. Learning to choose the right rung is itself
-part of the engineering.
-
-## How to move through the book
-
-The default route follows the sidebar from elements to systems, and it is the
-safest route for a new reader because later parts assume the measurement habits,
-reference directions, model limits, and evidence practices established in
-Part I. Readers aiming at a specific destination—a bench investigation, an
-analog instrument, an embedded system, a custom product, or a complete field
-system—can use the [reading roadmap](roadmap.qmd) to emphasize a target while
-still respecting prerequisites. The roadmap also explains chapter maturity and
-maps the practice-and-project spine that turns reading into evidence.
-
-::: {.callout-note title="Development edition"}
-The table of contents and dependency structure are complete, but the chapters
-are currently outlines. Their front matter reports maturity explicitly; an
-outline is a scope commitment, not yet a teachable or safety-authorizing chapter.
-:::
-
-::: {.callout-warning title="Safety boundary"}
-Early practical work is deliberately low voltage and current limited. Reading a
-chapter is not authorization for mains, high-voltage, high-energy battery, RF
-power, rotating-machine, medical, or safety-critical work. Use approved
-facilities, supervision, and local procedures.
-:::
-
-Read the [preface](preface.qmd) next for the notation, evidence standard, and
-practical expectations, then begin with
-[safe practice](01-foundations/f01-safe-practice.qmd).
+The book is free and remains in active development. Each chapter identifies its
+current maturity, and the roadmap explains what that status means. No chapter
+replaces a datasheet, an applicable standard, supervised laboratory training, or
+local authorization for hazardous work.

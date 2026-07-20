@@ -6,11 +6,9 @@ status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter presents a complete instructional path: exposition, worked examples,
-an executable check, a reconciliation with data, and a full exercise set. It is
-still subject to technical and editorial revision, and the physical evidence it
-describes is collected in the aligned laboratory work, not in the prose. See how
-to interpret status levels in the [reading roadmap](../roadmap.qmd).
+This draft includes the chapter's explanations, worked examples, computational
+checks, and exercises. The aligned laboratory supplies the physical observations.
+See the [reading roadmap](../roadmap.qmd) for the meaning of status levels.
 :::
 
 ::: {.callout-warning title="Safety boundary for this chapter"}
@@ -27,28 +25,20 @@ the safety boundary is inadequate, the correct engineering action is to
 > How do you investigate an electrical system without creating a new hazard or
 > corrupting the evidence?
 
-Two kinds of failure can occur at the bench. The first is **physical**: the
-circuit injures someone, damages an instrument, or destroys the part under test.
-The second is **evidential**: the measurement changes the circuit, but we treat
-the displayed number as though it described the undisturbed system. Safe,
-trustworthy work requires us to control both failures before we touch a probe to
+Bench work can fail in two ways. A physical failure can injure someone or damage
+the circuit or instrument. A measurement failure occurs when the instrument
+changes the circuit and you mistake the displayed value for the undisturbed
+value. Safe, trustworthy bench work controls both risks before a probe touches
 the circuit.
 
-Picture the situation concretely. A small development board is in front of you,
-a bench supply on its left, a digital multimeter on its right. A colleague says a
-node "should be about 3.3 volts." The temptation is to set the supply, clip the
-probes, and read the display. This chapter argues that three questions come
-*before* the probe touches metal, and that skipping them is what separates a
-result from a guess:
+Suppose a development board sits between a bench supply and a multimeter, and a
+colleague says that one node "should be about 3.3 volts." Before you connect the
+probe, answer three questions:
 
-1. **What energy is available, and where can it go?** (So that energizing is a
-   staged, reversible act, not a gamble.)
-2. **In what units am I reasoning, and does my estimate even have the right
-   dimensions and order of magnitude?** (So that a wrong answer is caught by
-   arithmetic before it is caught by smoke.)
-3. **How much will my instrument disturb the thing I am trying to observe, and
-   how well do I actually know the number it returns?** (So that the reading is
-   evidence, not an artifact.)
+1. **What energy is available, and where can it go?**
+2. **Do the units, dimensions, and order of magnitude make sense?**
+3. **How much will the instrument disturb the circuit, and how uncertain is its
+   reading?**
 
 ::: {.callout-tip title="Make a prediction first"}
 Before reading on, commit to two directional answers. This is a calculation, not
@@ -56,9 +46,8 @@ an instruction to make body contact. **(a)** If both terminals of a 9 V battery
 were connected through an illustrative dry-finger path, would the current be
 microamps, milliamps, or amps? **(b)** If you measure a node in a 1 MΩ resistive
 divider with an ordinary multimeter, will the reading be too high, too low, or
-exactly right? Write the answers down. We reconcile them with a model and with
-data later in the chapter; the point of committing now is that a surprise you
-predicted teaches far more than one you merely observed [@horowitz2015art].
+exactly right? Write the answers down. You will compare them with the circuit
+description and illustrative data later [@horowitz2015art].
 :::
 
 ## Learning outcomes
@@ -87,17 +76,15 @@ comfort with algebra, ratios, and scientific notation
   reasoning — that another person could use to reproduce your result
   ([T03](../appendices/t03-reproducible-engineering.qmd)).
 
-This chapter has no single equation to memorize. What it offers instead is a way
-of standing in front of a bench, built from three small, sturdy ideas. Each one
-answers one of the three questions above, and each recurs, scaled up, in every
-later part of the book.
+No single equation captures safe bench practice. The three questions above
+provide the working structure for this chapter and its laboratory work.
 
 ## Energy paths and hazard control
 
-An electrical **hazard** is energy that can reach a target along a path. We can
-control the hazard by limiting the source, interrupting the path, or protecting
-the target. The diagram below separates those three parts. Under each part, it
-shows a control that weakens or removes the energy path.
+An electrical **hazard** is energy that can reach a target along a path. Hazard
+control therefore acts at one of three places: it limits the source, interrupts
+the path, or protects the target. The diagram below separates those three parts
+and identifies a control for each one.
 
 ```{mermaid}
 %%| label: fig-hazard-model
@@ -111,7 +98,7 @@ flowchart TB
   P -->|delivers energy| T
   SC(["Control: limit V and I;<br/>discharge; isolate"])
   PC(["Control: insulate;<br/>one hand back;<br/>manage the return"])
-  TC(["Control: shielding, PPE,<br/>distance; a bounded claim"])
+  TC(["Control: shielding, PPE,<br/>and distance"])
   S -.-> SC
   P -.-> PC
   T -.-> TC
@@ -161,8 +148,8 @@ The result is below the approximate perception scale in @tbl-body-current, but i
 does not establish a generally safe touch voltage: the assumed impedance is both
 condition-dependent and voltage-dependent. Replacing the source and contact
 conditions by a much higher voltage and a much lower path impedance changes the
-result by orders of magnitude. The lesson is that **safety is a claim about the
-whole source–path–target system**, not a voltage label. Practical work in Part I
+result by orders of magnitude. Safety therefore depends on the **whole
+source–path–target system**, not on a voltage label. Practical work in Part I
 therefore uses an approved, current-limited source no higher than the stated lab
 limit, never intentional body contact, and stop conditions fixed before power.
 
@@ -192,10 +179,9 @@ practice uses a five-step de-energizing sequence [@en50110]:
 4. Discharge stored energy and, where required, connect it to ground.
 5. Protect the work area from anything nearby that remains energized.
 
-At an extra-low-voltage teaching bench, we apply the same logic: disconnect,
-wait for the stated discharge time, and measure before touching. We verify the
-absence of voltage instead of assuming that the switch removed every energy
-source.
+At an extra-low-voltage teaching bench, apply the same logic: disconnect, wait
+for the stated discharge time, and measure before touching. Verify the absence
+of voltage instead of assuming that the switch removed every energy source.
 
 **Authorization and stop conditions come before power, not after trouble.** Two
 sentences, written in your notebook before you energize, prevent most bench
@@ -213,7 +199,7 @@ incidents:
 
 The second control is disciplined arithmetic. Engineering uses the
 International System of Units (SI). Carrying those units through a calculation
-helps us catch an error before the circuit exposes it.
+helps you catch an error before the circuit exposes it.
 
 Seven base units define everything else [@bipm2019si]:
 
@@ -244,7 +230,7 @@ use constantly are all *derived* from the seven:
 | energy | joule | J | W·s |
 | frequency | hertz | Hz | $s^-1$ |
 
-Real quantities span an enormous dynamic range, so we scale with **prefixes**
+Real quantities span an enormous dynamic range, so SI uses **prefixes**
 rather than trailing zeros. The ones you will meet daily:
 
 | Factor | 10⁻¹² | 10⁻⁹ | 10⁻⁶ | 10⁻³ | 10³ | 10⁶ | 10⁹ | 10¹² |
@@ -261,7 +247,7 @@ Three habits make units *do work* for you:
 
 **Dimensional homogeneity** means that both sides of an equation, and every term
 in a sum, have compatible units. This check can expose an algebra or unit
-conversion error before we use the result. Is the time constant $\tau = RC$
+conversion error before you use the result. Is the time constant $\tau = RC$
 really a time? Check:
 
 $$
@@ -301,8 +287,10 @@ in symbols [@jcgm2012vim]:
   guaranteed only to lie in [99, 101] Ω.
 - **Bound (`≤`, `≥`)** — a one-sided guarantee: "dissipation $\le 0.25$ W."
 - **Uncertainty (`± u`, coverage `k`)** — the dispersion of a *measured* value:
-  "$V = (4.29 \pm 0.05)$ V, $k=2$" means an interval expected to contain the true
-  value with ~95 % confidence [@jcgm2008gum].
+  "$V = (4.29 \pm 0.05)$ V, $k=2$" reports an expanded uncertainty with coverage
+  factor 2. Under common distributional assumptions, that interval often has
+  approximately 95 % coverage. The value of $k$ alone does not guarantee a
+  coverage probability [@jcgm2008gum].
 :::
 
 One more convention this book insists on from the start: **state what an
@@ -310,13 +298,13 @@ amplitude is**. "5 V" is ambiguous until you say whether it is DC, a peak, a
 peak-to-peak swing, or an RMS value — a 5 V RMS sinusoid has a 7.07 V peak and a
 14.14 V peak-to-peak span, and a fuse, a rating, or a shock hazard cares which
 one you meant. In Part I the quantities are mostly DC. Labelling amplitude now
-prepares us for the sinusoidal quantities in
+prepares you for the sinusoidal quantities in
 [F08](f08-sinusoids-impedance-frequency.qmd).
 
 ## Instrument loading and reference directions
 
 The third control concerns **instrument loading**, the change an instrument
-causes when we connect it to a circuit. An ideal voltmeter draws no current. A
+causes when you connect it to a circuit. An ideal voltmeter draws no current. A
 real voltmeter has finite input resistance and draws some current. An ideal
 oscilloscope probe adds nothing to the circuit. A real probe adds capacitance
 and a return path.
@@ -373,8 +361,8 @@ not "error." This convention is the whole subject of
 
 ### Bench instruments and their roles
 
-The instruments are not a shopping list; each one is a lever on one of the three
-ideas.
+Each bench instrument serves a specific role in controlling energy, preserving
+the circuit, or recording the result.
 
 | Instrument | Primary role | Which idea it serves |
 |---|---|---|
@@ -393,16 +381,16 @@ end can otherwise look like a component fault.
 
 ## Worked examples: hazard, stored energy, and loading
 
-We now put arithmetic on the three predictions, following the book's discipline
-every time: **estimate → calculate → check units and limits → interpret.**
+The following examples quantify the three opening predictions. For the full
+evidence workflow, see @sec-evidence-workflow.
 
 ### Worked example: contact current at a 24 V bench node
 
 *Estimate.* A bench node sits at 24 V DC. Dry-finger contact resistance is of
-order tens of kilohms in this deliberately simplified screen, so the body of
-@fig-shock-path becomes $R_\text{body}$ across the node. Ohm's law then suggests
-a sub-milliampere result. State that expectation before computing; do not test it
-by contact [@iec60479].
+order tens of kilohms in this deliberately simplified screen. Represent the
+contact path in @fig-shock-path as $R_\text{body}$ across the node. Ohm's law
+then suggests a sub-milliampere result. State that expectation before computing;
+do not test it by contact [@iec60479].
 
 *Calculate.* Take a mid-range dry-skin path $R_\text{body} = 40~\text{k}\Omega$:
 
@@ -516,13 +504,11 @@ measuring high-impedance nodes with a higher-$R_\text{in}$ instrument or a
 buffer. What you must *never* do is report 4.29 V as the divider's true node
 voltage without noting that your meter pulled it there.
 
-## Prediction–measurement reconciliation
+## Comparing prediction with measurement
 
-A prediction becomes evidence only after we test it. Example D gives a
-controlled comparison, so we use it as the chapter's worked test:
-**predict, measure, compare within uncertainty.** The physical version appears
-in Lab **L01**. Here we focus on the structure of the record because the way we
-report a result affects what another person can verify.
+Example D provides a controlled comparison between a loading calculation and an
+instrument reading. The physical version appears in Lab **L01**. This section
+focuses on the record needed to compare the two.
 
 The following configuration and observations are **synthetic and illustrative**.
 They show the form of a reproducible record and an uncertainty-aware comparison,
@@ -555,8 +541,8 @@ mid-node and black lead on the supply return. Only the aligned physical lab can
 establish that agreement for real hardware
 [@horowitz2015art].
 
-A short, dependency-free script makes the model reproducible and its parameters
-visible rather than hidden — the book prefers recoverable source to a screenshot:
+The dependency-free script below keeps the calculation and its parameters
+recoverable:
 
 ```python
 # f01_bench_checks.py — parameterized checks for the F01 worked examples.
@@ -595,15 +581,14 @@ if __name__ == "__main__":
 #   D: ideal 4.500 V, loaded 4.286 V, error -4.8%
 ```
 
-Change a number — the body resistance, the input impedance, the capacitor — and
-the model tells you the new consequence before the bench does. That is the loop
-this book asks you to run on every claim.
+Change the body resistance, input impedance, or capacitance to explore how each
+parameter affects the result before you use hardware.
 
 ## Failure modes in bench reasoning
 
-A working idea earns trust by naming the conditions that break it. Three
-misconceptions cause a large share of real bench damage, and one worked diagnosis
-shows how to tell an intrusion from a fault.
+Three common misconceptions cause bench damage or misleading readings. The
+worked diagnosis then shows you how to distinguish instrument loading from a
+fault.
 
 **"Low voltage is automatically safe."** False. The current-limited-source
 example showed that delivered power depends on the complete source and fault
@@ -617,7 +602,7 @@ need to bound current, energy, temperature, and the return path.
 the node, its bandwidth attenuates fast signals, its leads receive interference,
 and a shared return can create an additional voltage. A reading directly
 describes the circuit-plus-instrument system. To infer the undisturbed circuit
-value, we must either show that loading is negligible or correct for it.
+value, you must either show that loading is negligible or correct for it.
 
 **"Units do not affect the result."** They do. In 1999 NASA's Mars Climate
 Orbiter was lost because one team's software produced an impulse in
@@ -629,7 +614,7 @@ check would have exposed the mismatch between the two software interfaces.
 ::: {.callout-caution title="Worked diagnosis — intrusion or fault?"}
 You measure the Example-D mid-node and read 4.28 V, not the 4.50 V predicted
 when meter loading is ignored. Is $R_2$ lower than expected, or is the meter
-loading the node? We can separate the hypotheses because they make different
+loading the node? You can separate the hypotheses because they make different
 predictions:
 
 - **Loading** predicts the error scales with the meter: repeat with a
@@ -640,17 +625,17 @@ predictions:
 
 Swap to a 10 GΩ-input electrometer: the node reads 4.500 V. Hypothesis
 "loading" survives; "fault" is refuted. The 0.22 V was the intrusion, exactly as
-@eq-loading predicted. This is the whole method of
-[F06](f06-measurement-uncertainty-debug.qmd) in miniature: *isolate a cause by
-finding evidence that separates it from the alternatives*.
+the loading relation in @eq-loading predicted.
+The treatment in [F06](f06-measurement-uncertainty-debug.qmd) develops this
+method: isolate a cause with an observation that separates it from the
+alternatives.
 :::
 
 ## Bench safety and measurement plan
 
-Engineering is deciding under constraints and defending the choice. The decision
-this chapter equips you to make is the **bench safety-and-measurement plan** for a
-first investigation — the artifact that turns "let's probe it and see" into a
-result another person would accept.
+Before a first investigation, write a **bench safety-and-measurement plan**. It
+turns "let's probe it and see" into a controlled procedure that another person
+can inspect and repeat.
 
 *Requirements (measurable, declared before power).*
 
@@ -684,11 +669,10 @@ indicated current and voltage, and source state. If the reference or limit
 behavior cannot be reproduced, investigate the plan and apparatus before testing
 the unknown circuit.
 
-*Limit of the claim.* This plan qualifies **current-limited, extra-low-voltage
-bench investigation only.** It is explicitly *not* a method for mains, stored
-high-energy, or any hazardous system, and passing its acceptance test authorizes
-nothing beyond the energy level and apparatus it names. The stated limit keeps
-the engineering claim aligned with the evidence.
+*Scope.* This plan applies only to **current-limited, extra-low-voltage bench
+investigation.** It is not a method for mains, stored high energy, or any other
+hazardous system. Passing its acceptance test authorizes nothing beyond the
+named energy level and apparatus.
 
 ## Bench habits for later chapters
 
@@ -703,31 +687,13 @@ Carry three habits into every later chapter:
 
 Record the configuration and reasoning so that another person can follow them.
 
-Each of these three ideas is the seed of a later chapter, and the chapter is
-deliberately the root of the book's dependency graph — it has no prerequisites and
-almost everything depends on it:
-
-- the **quantities** you agreed to reason in — charge, voltage, current, and their
-  reference directions — are defined properly in
-  [F02](f02-charge-voltage-current.qmd);
-- the **Ohm's-law and loading** estimates used here become the source-and-load
-  theory of [F03](f03-sources-loads-resistance.qmd);
-- the **energy and power** bounds of Examples B–C grow into the power-and-thermal
-  budget of [F05](f05-energy-power-thermal.qmd);
-- the **uncertainty and intrusion** discipline is the whole subject of
-  [F06](f06-measurement-uncertainty-debug.qmd), the pivot of the part; and
-- the **record** you keep is formalized in
-  [T03](../appendices/t03-reproducible-engineering.qmd).
-
-That chain — F01 → F02 → F03 → F06 — is the *measurement spine* of Part I (see the
-[part introduction](index.qmd)): it reaches a *trustworthy number* as early as
-possible, because every later chapter quietly assumes you can produce one. You now
-hold the habits that make the rest of the book safe to read on a real bench.
+The [part introduction](index.qmd) shows how later chapters develop these habits.
+The `Connections` section below lists the direct handoffs.
 
 ## Exercises
 
-Work these with the estimate → calculate → check → interpret loop, and state the
-assumptions and units every time. Full solutions and live-assessment variants are
+State the assumptions and units, estimate the result, then calculate and check
+it. Full solutions and live-assessment variants are
 maintained outside the public book; a few self-check answers are given so you can
 calibrate.
 
@@ -842,12 +808,9 @@ current-limit habit.]*
 
 ## Connections
 
-Chapter ID: `F01`. Prerequisites are none — this chapter is the root of the book's
-dependency graph — and downstream course mappings are maintained in
-[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd) provides
-reader-facing routes and the practice spine; this chapter opens the **measurement
-spine** (F01 → F02 → F03 → F06) described in the
-[Part I introduction](index.qmd).
+Chapter ID: `F01`. This chapter has no prerequisites. The
+[Part I introduction](index.qmd), [reading roadmap](../roadmap.qmd), and
+[`chapters.toml`](../chapters.toml) show the downstream routes.
 
 The aligned practical evidence is **Lab L01** (bench safety and instrument
 qualification), and the integrating milestone is **Project M1** (a qualified

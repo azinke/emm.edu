@@ -6,12 +6,9 @@ status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter presents a complete instructional path: exposition, first-principles
-derivations, worked examples, an executable check, a measurement plan with an
-explicitly illustrative dataset, a fault diagnosis, and a full exercise set. It is
-still subject to technical and editorial revision, and the physical evidence it
-describes is collected in the aligned laboratory work, not in the prose. See how to
-interpret status levels in the [reading roadmap](../roadmap.qmd).
+This draft includes the chapter's derivations, worked examples, computational
+checks, and exercises. The aligned laboratory supplies the physical observations.
+See the [reading roadmap](../roadmap.qmd) for the meaning of status levels.
 :::
 
 ::: {.callout-warning title="Safety boundary for this chapter"}
@@ -37,11 +34,11 @@ energy; it does not use up current. Individual electrons drift slowly; the
 electromagnetic disturbance propagates quickly. A real wire can also develop a
 voltage difference along its length.
 
-We will separate these ideas with four quantities: **charge, electric field,
-potential difference, and current**. We will also declare a **reference
-direction**, the direction we choose as positive before assigning a sign to a
-measurement. [F01](f01-safe-practice.qmd) introduced that habit. This chapter
-builds the physical meaning behind it.
+Four quantities separate these ideas: **charge, electric field, potential
+difference, and current**. A declared **reference direction**—the direction you
+choose as positive before assigning a sign—makes their circuit use unambiguous.
+[F01](f01-safe-practice.qmd) introduced this habit; here you develop its physical
+basis.
 
 ::: {.callout-tip title="Make a prediction first"}
 A lamp sits at the far end of a 3 m cord. You close the switch. Commit to three
@@ -86,11 +83,11 @@ be able to:
 
 ## Relations among charge, electric field, voltage, and current
 
-Charge is the conserved property from which we build the other quantities.
-@fig-quantity-chain connects the definitions on one page. The **field** is force
-per unit charge. **Potential difference** is energy transferred per unit charge.
-**Current** is the net charge crossing a chosen surface per unit time. The rest
-of the chapter develops each connection.
+Charge is the conserved property from which the other quantities follow.
+The diagram in @fig-quantity-chain connects the definitions on one page. The
+**field** is force per unit charge. **Potential difference** is energy transferred per unit charge.
+**Current** is the net charge crossing a chosen surface per unit time. The
+following sections connect each definition to an observable circuit quantity.
 
 ```{mermaid}
 %%| label: fig-quantity-chain
@@ -106,8 +103,8 @@ flowchart TB
   Q -->|"rate it flows: I = dQ/dt"| I
 ```
 
-@tbl-quantities is the same map as a reference table; the derivations that justify
-each "defining relation" column occupy the next three sections.
+The reference table in @tbl-quantities presents the same map. The next three
+sections derive each defining relation.
 
 | Quantity | Symbol | SI unit | Defining relation | What it measures |
 |---|---|---|---|---|
@@ -147,7 +144,8 @@ small devices (a thread picked up in
 
 *Net electric charge is conserved.* Charged particles can be created, destroyed,
 or transformed in physical reactions, but the algebraic total charge does not
-change. At circuit scale we ordinarily move and separate existing charge: if net
+change. At circuit scale, components ordinarily move and separate existing charge:
+if net
 charge leaves a defined region, the region's stored charge falls by exactly that
 amount. This principle produces the continuity equation and, after a lumped-circuit
 approximation is stated, Kirchhoff's current law. It is an exact conservation law;
@@ -162,10 +160,10 @@ $$
 $$ {#eq-coulomb}
 where $r$ is their separation and $\varepsilon_0\approx8.854\times10^{-12}$ F/m is
 the vacuum permittivity. The force lies along the line joining the charges: like
-signs repel, unlike signs attract, and the magnitude falls as $1/r^2$. We will
-rarely compute @eq-coulomb directly — circuits are built from *fields* and
-*potentials*, which package Coulomb's law into more useful quantities — but it is the
-reason those quantities exist.
+signs repel, unlike signs attract, and the magnitude falls as $1/r^2$. You will
+rarely compute @eq-coulomb directly because fields and potentials package
+Coulomb's law into more useful quantities. The force relation is their physical
+starting point.
 
 ::: {.callout-note title="Demonstration — reading Coulomb's law"}
 Two point charges of $+1.0$ nC separated by 0.10 m in vacuum repel with
@@ -211,10 +209,10 @@ operating condition.
 ## Electric field and potential difference
 
 A bare charge tells you nothing about what it will *do*; that depends on the other
-charges around it. Rather than re-run Coulomb's law over every pair, we summarize
-"the effect of all the other charges at this point" in one vector, the **electric
-field** $\vec E$, defined using a positive test charge small enough not to perturb
-the original charge distribution:
+charges around it. The **electric field** $\vec E$ summarizes
+"the effect of all the other charges at this point" in one vector. Its definition
+uses a positive test charge small enough not to perturb the original charge
+distribution:
 $$
 \vec E = \frac{\vec F}{q}, \qquad [\,E\,] = \frac{\text{N}}{\text{C}}
    = \frac{\text{V}}{\text{m}}.
@@ -244,7 +242,7 @@ charge.
 For a **uniform electrostatic field**, choose A and B a distance $d$ apart with the
 field pointing from A toward B. The force on a positive test charge is constant, so
 the field work from A to B is $W_{A\to B}^{(E)}=qEd$. With $+$ at A and $-$ at B,
-@eq-voltage becomes
+The definition in @eq-voltage becomes
 $$
 V_{AB} = E\,d \qquad\Longleftrightarrow\qquad E = \frac{V_{AB}}{d}.
 $$ {#eq-ved}
@@ -269,7 +267,7 @@ Two properties of voltage matter for the rest of the book.
 
 **Only differences are physical; a reference is a choice.** @eq-voltage defines a
 *difference* between two points. The "voltage at a node" is shorthand for its
-difference from a **reference node** we agree to call 0 V (the "ground" or "common" of
+difference from a **reference node** that you assign 0 V (the "ground" or "common" of
 F01). Choosing a different reference shifts every node voltage by the same constant
 but changes no voltage difference, current, field, or energy difference. A
 differential measurement between the same two points is unchanged — exactly as
@@ -338,15 +336,15 @@ current enters.
 ![A single source–load loop with its reference directions declared *before* any measurement. The current reference $I$ is clockwise; the load voltage $V_R$ is marked $+$ at the terminal the reference current enters. With the current arrow entering the $+$ terminal, the *passive sign convention* applies to $R$, so a positive $V_R I$ is power the resistor *absorbs*. TP\_A and TP\_B are the test points where the two node voltages are measured against the 0 V reference.](../../../build/circuits/f02-reference-directions.png){#fig-reference-directions fig-alt="A voltage source VS with its plus terminal at the top drives a clockwise reference current I through a load resistor R and back to the 0 V reference node. The voltage across R is marked positive at the top where the current enters. Two test points, TP_A at the top node and TP_B at the 0 V node, are brought out to the right."}
 
 The choice in @fig-reference-directions is not arbitrary in one respect: for a
-*load* we conventionally point the current reference into the $+$ voltage terminal.
+*load*, the conventional current reference points into the $+$ voltage terminal.
 This is the **passive sign convention** (also called *associated* reference
 directions), and it makes the product $p = vi$ come out **positive when the element
 absorbs energy** and negative when it delivers energy. An ideal positive resistor
 always absorbs, so
 with associated references its power is positive; a source usually delivers, so its
-power comes out negative under the same convention. We only *name* the convention
-here — power itself is the subject of [F05](f05-energy-power-thermal.qmd) — but fixing
-it now is what keeps the sign of every future energy statement honest. (These
+power comes out negative under the same convention. This chapter introduces the
+convention; [F05](f05-energy-power-thermal.qmd) develops power. Fixing the reference
+now keeps the sign of every future energy statement consistent. (These
 quantities are DC or instantaneous values; when signals become sinusoidal in
 [F08](f08-sinusoids-impedance-frequency.qmd), you must additionally say whether an
 amplitude is peak, peak-to-peak, or RMS, a distinction F01 flagged and F08 formalizes.)
@@ -428,14 +426,14 @@ capacitances help establish the new fields, so currents at separated cross-secti
 need not match at the same instant. A lamp does not consume current: in steady
 operation, charge enters and leaves at equal rates while electrical energy is
 converted to light and heat. **Energy is transferred; net charge is conserved.**
-We examine the steady claim with an illustrative dataset below.
+The illustrative dataset below shows how you would examine the steady case.
 
 ## Charge transport in conductors, semiconductors, and insulators
 
 Carrier density is important, but it is not the whole classification. A carrier
 must also respond to a field. In the low-field, approximately linear regime, define
 the **mobility** $\mu$ by the magnitude relation $|v_d|=\mu|E|$. Combining it with
-@eq-drift gives, for one carrier type,
+The drift relation in @eq-drift gives, for one carrier type,
 $$
 J=\sigma E, \qquad \sigma=n|q_c|\mu, \qquad \rho\equiv\frac{1}{\sigma},
 $$ {#eq-conductivity}
@@ -488,8 +486,8 @@ steady current in the linear regime, an axial field remains to sustain the drift
 The better the conductor, the smaller that field for a given current density. In
 the limit $\rho\to0$ it vanishes: an **ideal wire** has zero field along it, hence
 zero voltage across it, hence its two ends are at *the same potential*. That
-idealization is what lets us draw a wire as a single node — and knowing it is an
-idealization is what lets us predict when it fails.
+idealization lets you draw a wire as a single node. Recognizing the idealization
+also lets you predict when it fails.
 
 ## Nodes, ideal wires, and the reach of a lumped description
 
@@ -512,7 +510,8 @@ region's charge storage is negligible or is represented explicitly by a capacito
 branch. Then $\mathrm dQ_{\text{stored}}/\mathrm dt\approx0$, giving Kirchhoff's
 current law (KCL), $\sum I_{\text{in}}=0$ for algebraically signed currents.
 
-@fig-node-currents declares $I_1$ into node $a$ and $I_2,I_3$ out, so
+The arrows in @fig-node-currents declare $I_1$ into node $a$ and $I_2,I_3$ out,
+so
 $$
 I_1-I_2-I_3=\frac{\mathrm dQ_a}{\mathrm dt}
 \quad\xrightarrow[\text{ideal node}]{}\quad
@@ -540,7 +539,7 @@ accumulation; it is the zero-accumulation operating case of the conservation law
 
 The single-potential node and the "same current everywhere in series" both use a
 **lumped-circuit approximation**. In this approximation, a signal crosses the
-circuit much faster than the signal itself changes. We can then treat separated
+circuit much faster than the signal itself changes. You can then treat separated
 points on an ideal wire as having the same voltage at the same instant.
 
 To screen this approximation, compare the physical loop size $L$ with the
@@ -599,12 +598,13 @@ the boundary of the tool you are about to use everywhere.
 
 ## Measurement procedure: steady-current continuity
 
-A prediction becomes evidence only when it is tested. A clean test of the claim
-beginners most doubt is to compare steady current at several break points around a
-series loop. The physical test belongs to Lab **L02**. The values below form a
-**synthetic teaching dataset**, chosen to be internally consistent with the stated
-setup. They demonstrate analysis and record structure; they are not observations
-and do not qualify the physical claim [@horowitz2015art].
+Compare steady current at several break points around a series loop to test
+whether current remains continuous in steady operation. The physical test belongs
+to Lab **L02**. The **synthetic teaching dataset** below is internally consistent
+with the stated setup. It demonstrates the analysis and record structure but does
+not qualify the physical claim [@horowitz2015art]. See
+@sec-evidence-workflow for the role of synthetic data in the wider evidence
+workflow.
 
 Configuration (the reproducible record
 [T03](../appendices/t03-reproducible-engineering.qmd) asks for):
@@ -636,11 +636,11 @@ Two patterns are deliberately visible in @tbl-current-continuity. First, the thr
 intervals overlap, as expected for equal steady current at all break points. Second,
 their central indications sit below the no-meter calculation and near the
 burden-inclusive calculation. The table therefore illustrates how a result could be
-consistent with charge continuity *and* meter intrusion. It does not prove either:
-that evidential rung requires real data, repeated observations, and the uncertainty
-work of F06. If real readings disagree beyond their evaluated uncertainty, preserve
-the disagreement and investigate leakage, changing source voltage, contact faults,
-range-dependent burden, or an incorrect circuit record.
+consistent with charge continuity *and* meter intrusion. It does not prove either.
+Physical support requires real data, repeated observations, and the uncertainty
+analysis developed in F06. If real readings disagree beyond their evaluated
+uncertainty, preserve the disagreement. Investigate leakage, changing source
+voltage, contact faults, range-dependent burden, or an incorrect circuit record.
 
 A short, dependency-free script makes the quantitative predictions reproducible and
 their parameters visible rather than buried in a screenshot:
@@ -699,14 +699,14 @@ if __name__ == "__main__":
 #   20 C conductor area > 0.42 mm^2 for <10 mV
 ```
 
-Change a number — the wire gauge, the current, the length — and the model reports the
-new consequence before the bench does. That is the loop this book runs on every claim.
+Change the wire gauge, current, or length to see how each parameter affects the
+predictions.
 
 ## Misconceptions and limits of the lumped description
 
-A working idea earns trust by naming what breaks it. Three slogans cause most of the
-confusion this chapter targets, and one genuine fault shows how to tell an idealization
-from a defect.
+Three common misconceptions blur the distinction between charge transport,
+signal propagation, and circuit approximations. A fault example then separates
+an invalid approximation from a physical defect.
 
 **"A load uses up current."** False in steady lumped operation. The continuity
 equation requires equal rates of charge entry and exit when the load's stored charge
@@ -749,17 +749,17 @@ it to 0.1 A and the offset falls to $\approx 2.5$ mV; raise it and the offset cl
 in proportion. The dependence on $I$ supports the shared-return hypothesis
 rather than a fixed sensor offset. A direct voltmeter reading from $G_1$ to
 $G_0$ confirms the same voltage difference: the two points labelled "ground"
-are not the same node. This is the method of
-[F06](f06-measurement-uncertainty-debug.qmd) in miniature: isolate a cause with
-evidence that separates it from the alternatives.
+are not the same node. The diagnostic method developed in
+[F06](f06-measurement-uncertainty-debug.qmd) isolates a cause with an observation
+that separates it from the alternatives.
 :::
 
 ![The failure of the single-node idealization. The return conductor has real resistance $R_\text{ret}$ and carries the full load current $I$, so the load-side ground $G_1$ is not at the reference potential $G_0$ but above it by $I R_\text{ret}$. Two points both labelled "ground" are then at different voltages — the equipotential-node assumption has quietly failed.](../../../build/circuits/f02-shared-return.png){#fig-shared-return fig-alt="A source VS drives current I through a load resistor R_L, which returns through a resistor R_ret representing the shared return conductor back to the reference ground G0. The load-side return node G1 is brought out to a labelled test point; the voltage from G1 to G0 equals I times R_ret rather than zero."}
 
 ## Worked design: return-conductor sizing and voltage-drop margin
 
-We will now use these ideas to **size a shared return conductor so that its
-voltage drop stays within a declared budget**. The calculation turns the
+Now use these ideas to **size a shared return conductor so that its voltage drop
+stays within a declared budget**. The calculation turns the
 ideal-wire assumption into a measurable design requirement.
 
 *Requirements (measurable, declared in advance).*
@@ -820,7 +820,7 @@ single result that would
 load current past the limit*, proving the return is not the near-ideal node the design
 assumed.
 
-*Limit of the claim.* This is a **DC, thermal-steady-state** claim about resistive
+*Scope.* This is a **DC, thermal-steady-state** result for resistive
 $IR$ drop for the stated length, current, temperature, and connection allowance. It
 does not establish ampacity, insulation, mechanical suitability, or transient
 performance. A fast-changing current also sees return-path inductance, and
@@ -829,10 +829,9 @@ Sizing against inductance and high-frequency return paths is the subject of
 [R03](../06-realization/r03-signal-power-integrity-emc.qmd); stating this limit is the
 difference between an engineering claim and an overreach.
 
-## Conservation, reference directions, and approximation limits
+## Conservation, references, and approximation limits
 
-Four quantities, defined once and for all, and a habit that makes their signs
-trustworthy — that is the whole of this chapter:
+The chapter's four quantities support the circuit descriptions that follow:
 
 - **charge** is a conserved property; ordinary circuit transfer occurs in elementary
   steps of $e$, though a continuous approximation is excellent for macroscopic
@@ -849,35 +848,16 @@ trustworthy — that is the whole of this chapter:
   inductance, capacitance, propagation delay, and a return path. Treating it as one
   node is a bounded engineering approximation.
 
-Each of these hands directly to a later chapter, and F02 sits early in the book's
-dependency graph for that reason:
-
-- the **reference directions and passive sign convention** are used, unchanged, to
-  read every source and load in [F03](f03-sources-loads-resistance.qmd) and to sign
-  every branch in the Kirchhoff analysis of [F04](f04-networks-kirchhoff.qmd);
-- **charge conservation at a node** (@eq-kcl) becomes Kirchhoff's current law in
-  [F04](f04-networks-kirchhoff.qmd);
-- **energy per charge** (@eq-voltage) and the passive sign convention become the power
-  budget of [F05](f05-energy-power-thermal.qmd);
-- the microscopic field-and-drift picture ($\vec J = \sigma\vec E$) becomes the
-  macroscopic Ohm's law and resistance of [F03](f03-sources-loads-resistance.qmd), and
-  the *controllable* carrier density of a semiconductor becomes the diode and
-  transistor of [A01](../02-analog/a01-semiconductor-diodes.qmd)–[A02](../02-analog/a02-transistors.qmd);
-- the **ideal-wire / distributed-interconnect screen** (@eq-lumped) marks where
-  [R03](../06-realization/r03-signal-power-integrity-emc.qmd) and
-  [S07](../05-domains/s07-communications-rf-antennas.qmd) take over.
-
-Along the book's **measurement spine** — F01 → F02 → F03 → F06 (see the
-[part introduction](index.qmd)) — this chapter is the step that turns the quantities
-you agreed to reason in into quantities you can *measure with a sign*. You now have the
-nouns and verbs of every circuit statement that follows.
+These definitions provide a consistent way to read later circuit statements:
+each signed quantity needs a declared reference, each sign needs a physical
+interpretation, and each lumped approximation needs a validity check. The
+`Connections` section below lists the direct handoffs.
 
 ## Exercises
 
-Work these with the estimate → calculate → check → interpret loop, and state the
-assumptions, reference directions, and units every time. Full solutions and
-live-assessment variants are kept outside the public book; a few self-check answers are
-given so you can calibrate.
+State your assumptions and units, estimate the result, then calculate and check
+it. Full solutions and live-assessment variants are kept outside the public
+book; a few self-check answers are given so you can calibrate.
 
 ### Quick check
 
@@ -920,9 +900,9 @@ misconceptions before the longer problems.
     d. one point is at a higher *frequency* than the other.
 
 *[Key: 1-c, 2-c, 3-b, 4-b, 5-c, 6-c. Item 1 maps to charge conservation and
-@tbl-current-continuity; 2 to the drift-velocity example; 3 to @eq-voltage; 4 to
-reference directions; 5 to the wavelength screen @eq-lumped; 6 to the shared-return
-diagnosis.]*
+the continuity data in @tbl-current-continuity; 2 to the drift-velocity example;
+3 to @eq-voltage; 4 to reference directions; 5 to the wavelength screen
+defined by @eq-lumped; 6 to the shared-return diagnosis.]*
 
 **Retrieval and reasoning**
 
@@ -1000,8 +980,7 @@ the instantaneous $i=\mathrm{d}q/\mathrm{d}t$, [M02](../appendices/m02-calculus-
 Downstream course mappings are maintained in [`chapters.toml`](../chapters.toml); the
 [reading roadmap](../roadmap.qmd) provides reader-facing routes and the practice spine.
 
-This chapter opens the middle of the **measurement spine** (F01 → F02 → F03 → F06)
-described in the [Part I introduction](index.qmd). It hands its reference directions
+This chapter hands its reference directions
 and passive sign convention to [F03](f03-sources-loads-resistance.qmd) and
 [F04](f04-networks-kirchhoff.qmd); its charge-conservation law becomes Kirchhoff's
 current law in [F04](f04-networks-kirchhoff.qmd); its energy-per-charge definition
@@ -1010,7 +989,8 @@ field-and-drift picture becomes Ohm's law in [F03](f03-sources-loads-resistance.
 and the semiconductor behavior of [A01](../02-analog/a01-semiconductor-diodes.qmd); and
 its lumped-versus-distributed limit is the entry point to
 [R03](../06-realization/r03-signal-power-integrity-emc.qmd) and
-[S07](../05-domains/s07-communications-rf-antennas.qmd).
+[S07](../05-domains/s07-communications-rf-antennas.qmd). The
+[Part I introduction](index.qmd) shows how these handoffs form the wider sequence.
 
 The aligned practical evidence is **Lab L02** (source, load, resistance, and meter
 loading), which asks you to measure series current continuity and voltage with declared

@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="780"
+     viewBox="0 0 680 780" role="img"
+     aria-labelledby="title description">
+  <title id="title">Evidence workflow from prediction to decision</title>
+  <desc id="description">Estimate, calculation, and simulation form the
+  prediction stage. Measurement and repetition form the observation stage.
+  Independent reproduction and field evidence form the corroboration stage.
+  The sequence ends in a supported decision.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3"
+            orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#263238"/>
+    </marker>
+    <style>
+      .group { fill: #f5f7f8; stroke: #607d8b; stroke-width: 2; }
+      .node { fill: #ffffff; stroke: #263238; stroke-width: 2; }
+      .arrow { fill: none; stroke: #263238; stroke-width: 2.4;
+               marker-end: url(#arrow); }
+      .group-title { font: 700 22px sans-serif; fill: #1f2933; }
+      .node-title { font: 700 18px sans-serif; fill: #111827; }
+      .node-detail { font: 15px sans-serif; fill: #374151; }
+    </style>
+  </defs>
+
+  <rect class="group" x="20" y="20" width="640" height="220" rx="16"/>
+  <text class="group-title" x="40" y="55">Predict</text>
+
+  <rect class="node" x="45" y="85" width="170" height="105" rx="12"/>
+  <text text-anchor="middle" x="130" y="125">
+    <tspan class="node-title">Estimate</tspan>
+    <tspan class="node-detail" x="130" dy="27">scale and sign</tspan>
+  </text>
+
+  <rect class="node" x="255" y="85" width="170" height="105" rx="12"/>
+  <text text-anchor="middle" x="340" y="125">
+    <tspan class="node-title">Calculate</tspan>
+    <tspan class="node-detail" x="340" dy="27">stated description</tspan>
+  </text>
+
+  <rect class="node" x="465" y="85" width="170" height="105" rx="12"/>
+  <text text-anchor="middle" x="550" y="125">
+    <tspan class="node-title">Simulate</tspan>
+    <tspan class="node-detail" x="550" dy="27">executable detail</tspan>
+  </text>
+
+  <path class="arrow" d="M215 138 H250"/>
+  <path class="arrow" d="M425 138 H460"/>
+
+  <rect class="group" x="20" y="270" width="640" height="170" rx="16"/>
+  <text class="group-title" x="40" y="305">Observe</text>
+
+  <rect class="node" x="80" y="325" width="220" height="85" rx="12"/>
+  <text text-anchor="middle" x="190" y="360">
+    <tspan class="node-title">Measure</tspan>
+    <tspan class="node-detail" x="190" dy="25">defined measurand</tspan>
+  </text>
+
+  <rect class="node" x="340" y="325" width="260" height="85" rx="12"/>
+  <text text-anchor="middle" x="470" y="360">
+    <tspan class="node-title">Repeat</tspan>
+    <tspan class="node-detail" x="470" dy="25">variation and repeatability</tspan>
+  </text>
+
+  <path class="arrow" d="M550 190 V252 H190 V320"/>
+  <path class="arrow" d="M300 368 H335"/>
+
+  <rect class="group" x="20" y="470" width="640" height="170" rx="16"/>
+  <text class="group-title" x="40" y="505">Corroborate</text>
+
+  <rect class="node" x="50" y="525" width="280" height="85" rx="12"/>
+  <text text-anchor="middle" x="190" y="560">
+    <tspan class="node-title">Reproduce independently</tspan>
+    <tspan class="node-detail" x="190" dy="25">separate implementation</tspan>
+  </text>
+
+  <rect class="node" x="350" y="525" width="280" height="85" rx="12"/>
+  <text text-anchor="middle" x="490" y="560">
+    <tspan class="node-title">Gather field evidence</tspan>
+    <tspan class="node-detail" x="490" dy="25">real operating conditions</tspan>
+  </text>
+
+  <path class="arrow" d="M470 410 V452 H190 V520"/>
+  <path class="arrow" d="M330 568 H345"/>
+
+  <rect class="node" x="185" y="680" width="310" height="80" rx="14"/>
+  <text text-anchor="middle" x="340" y="713">
+    <tspan class="node-title">Decide</tspan>
+    <tspan class="node-detail" x="340" dy="25">state only the supported claim</tspan>
+  </text>
+  <path class="arrow" d="M490 610 V660 H340 V675"/>
+</svg>

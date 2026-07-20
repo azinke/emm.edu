@@ -1,155 +1,82 @@
 ---
 title: "I — Electrical foundations"
-description: "Safe observation, circuit models, measurement, and dynamic behavior — the habits every later part quietly assumes."
+description: "Safe observation, circuit analysis, measurement, and dynamic behavior."
 page-role: part
 part-id: foundations
 ---
 
-The first part establishes the habits on which every later result depends:
-control the hazard, define what is being measured, choose reference directions,
-state the model, and compare its prediction with evidence. Nothing here is
-advanced, and that is the point. These eight chapters are the grammar of the
-rest of the book; a reader who skips them does not read faster later, only less
-carefully.
-
-The part is deliberately bench-first, in the tradition of practical electronics
-[@horowitz2015art]. You will meet each idea as an observable behavior before you
-meet its equation, predict the behavior, and only then reconcile the prediction
-with a measurement. The recurring conviction of the whole book begins here: a
-circuit is *one* object described in many languages — the physical assembly and
-its energy path, the schematic with named nodes, the governing equations, a
-simulation, and the measured waveform with its uncertainty. When those
-descriptions agree, you understand the circuit. When they disagree, one of them
-is incomplete, invalid under the stated conditions, or reported with too much
-confidence. That disagreement is often the most useful thing the bench will tell
-you all day.
+Part I gives you the working habits that every later circuit depends on. You
+learn to control the energy source, define electrical quantities and their
+reference directions, predict circuit behavior, and measure without overlooking
+the instrument's effect.
 
 ## The part question
 
-> How can a physical electrical system, a circuit model, and a set of
-> measurements be made to tell the same defensible story?
+> How can you make a physical circuit, its analysis, and its measurements
+> describe the same behavior?
 
-"The same story" means the three agree within a stated uncertainty, using an
-explicit reference direction and a model whose validity range you can name.
-"Defensible" means you can say which rung of evidence the claim rests on and why
-that rung is enough. Part I is the practice of building that agreement for the
-simplest systems — a source, a resistor, a capacitor — so that the same
-discipline is available when the system is a data logger or a field instrument.
-
-## Why the foundations come first
-
-Every later part inherits four things from this one, silently, and breaks
-quietly without them:
-
-- **a safety boundary**, so that energizing a circuit is a staged, reversible
-  act rather than a gamble;
-- **reference conventions**, so that a voltage polarity and a current direction
-  mean something before a sign is written, and a negative result reads as
-  "reality opposes my chosen reference," not "error";
-- **model limits**, so that every compact formula carries the operating
-  conditions that make it true; and
-- **an evidence standard**, so that a number is reported with its uncertainty
-  rather than to as many digits as the instrument happens to show
-  [@jcgm2008gum].
-
-Devices, digital logic, embedded timing, control loops, and product
-qualification all assume these habits are already yours. They are capabilities,
-not preliminaries to discard.
+The first answers come from circuits made with sources, resistors, capacitors,
+and inductors. These circuits are simple enough to inspect closely, but they
+already contain the central engineering problems: loading, power, uncertainty,
+stored energy, and limits on an approximation.
 
 ## Entry knowledge
 
-No prior circuit theory is assumed. Basic algebra and scientific notation are
-helpful; reach for [M01](../appendices/m01-algebra-units-complex.qmd) the moment
-units, graphs, prefixes, or equation manipulation need review, and note that SI
-units and their conventions are held to their defining reference throughout the
-book [@bipm2019si]. Two further appendices arrive on demand rather than up
-front: [M03](../appendices/m03-probability-numerical.qmd) (probability and
-statistics) is the companion to measurement and uncertainty in F06, and
-[M02](../appendices/m02-calculus-linear-differential.qmd) (calculus and
-differential equations) is the companion to transients in F07. Follow the
-prerequisite link when a chapter first needs the technique, then return.
+No prior circuit theory is assumed. Basic algebra and scientific notation help.
+[M01](../appendices/m01-algebra-units-complex.qmd) provides support for units,
+prefixes, graphs, and equation manipulation. F06 draws on probability and
+statistics from [M03](../appendices/m03-probability-numerical.qmd), while F07
+introduces calculus and differential equations with support from
+[M02](../appendices/m02-calculus-linear-differential.qmd).
 
-Practical work in this part begins only with current-limited, extra-low-voltage
-systems and locally approved procedures. Reading a chapter is never
-authorization to energize anything.
+Practical work starts with current-limited, extra-low-voltage systems and
+locally approved procedures. The [preface](../preface.qmd) states the book-wide
+safety and evidence boundaries.
 
 ## The learning arc
 
-The eight chapters move from *not getting hurt or fooled* to *predicting how a
-circuit behaves over time and frequency*. Read them in the order below unless a
-prerequisite already held lets you enter later (the dependency graph is recorded
-in [`chapters.toml`](../chapters.toml)).
+| Chapter | Main question | Capability |
+|---|---|---|
+| [F01](f01-safe-practice.qmd) | How do you investigate a circuit without creating a hazard or corrupting the observation? | prepare the bench, control energy, estimate in SI, and keep a reproducible record |
+| [F02](f02-charge-voltage-current.qmd) | What changes when a circuit transfers charge and energy? | define charge, voltage, and current with clear reference directions |
+| [F03](f03-sources-loads-resistance.qmd) | Why does a source change when you connect a real load? | find source–load operating points and account for instrument loading |
+| [F04](f04-networks-kirchhoff.qmd) | How do conservation laws determine node voltages and branch currents? | apply Kirchhoff's laws, superposition, and Thévenin/Norton equivalents |
+| [F05](f05-energy-power-thermal.qmd) | Where does energy enter, accumulate, convert, and leave? | construct power and energy balances and check thermal limits |
+| [F06](f06-measurement-uncertainty-debug.qmd) | What observation separates a circuit fault from a measurement error? | plan a measurement, state uncertainty, and isolate faults by hypothesis |
+| [F07](f07-capacitors-inductors-transients.qmd) | How does stored energy shape a circuit's response to change? | predict first-order RC and RL transients |
+| [F08](f08-sinusoids-impedance-frequency.qmd) | Why does a circuit respond differently at different frequencies? | use phasors, impedance, transfer functions, and Bode plots |
 
-| Chapter | Central question it answers | You leave able to | Hands forward |
-|---|---|---|---|
-| [F01](f01-safe-practice.qmd) | How do you investigate a system without creating a hazard or corrupting the evidence? | work a bench safely, estimate in SI, and keep a traceable record | the safety boundary and notebook every later chapter assumes |
-| [F02](f02-charge-voltage-current.qmd) | What is actually moving or changing when a circuit does work? | define charge, voltage, and current with explicit reference directions | the quantities F03–F08 manipulate |
-| [F03](f03-sources-loads-resistance.qmd) | Why does a source's voltage change when a real load is connected? | reason about sources, loads, resistance, and the operating point | Ohm's law, loading, and measurement intrusion |
-| [F04](f04-networks-kirchhoff.qmd) | How can conservation laws predict every node voltage and branch current? | apply Kirchhoff's laws, superposition, and Thévenin/Norton equivalents | the network-reduction habit used everywhere after |
-| [F05](f05-energy-power-thermal.qmd) | Where does energy enter, move through, and leave a system? | build a power budget and reason about ratings, efficiency, and heat | thermal limits that bound every real component |
-| [F06](f06-measurement-uncertainty-debug.qmd) | What evidence separates a circuit fault from a measurement mistake? | plan a measurement, state its uncertainty, and isolate a fault by hypothesis | the trustworthy-number standard for the whole book [@jcgm2008gum] |
-| [F07](f07-capacitors-inductors-transients.qmd) | How do circuits remember energy and respond when conditions change? | predict first-order RC/RL transients from initial and final values | the dynamics that make timing and filtering possible |
-| [F08](f08-sinusoids-impedance-frequency.qmd) | How does one circuit behave differently as signal frequency changes? | use phasors, impedance, transfer functions, and Bode reasoning | frequency-domain thinking for signals, control, and RF [@oppenheim1996signals] |
+The sequence has four stages:
 
-Grouped by the development they carry, the arc is four movements:
+- F01–F02 establish safe observation and define the quantities you will use.
+- F03–F05 develop static circuit analysis, operating points, power, and heat.
+- F06 makes measurement and diagnostic reasoning systematic.
+- F07–F08 extend the analysis into time and frequency.
 
-- **F01–F02 — establish safe observation and define the quantities.** Before any
-  formula, fix the hazard, the units, and the reference directions. Charge,
-  voltage, and current become measurable things with a chosen positive sense,
-  not symbols to memorize.
-- **F03–F05 — model sources, loads, networks, energy, and heat.** A real source
-  sags under load; a network obeys conservation laws; and every component
-  dissipates power and has a thermal limit. This movement turns "a circuit" into
-  a predictable operating point with a power budget.
-- **F06 — decide whether a claim is trustworthy.** The pivot of the part.
-  Accuracy, precision, resolution, and uncertainty are separated; a measurement
-  is planned rather than improvised; and a fault is isolated by discriminating
-  evidence instead of guesswork [@jcgm2008gum].
-- **F07–F08 — extend static models to time and frequency.** Stored energy gives
-  a circuit memory (transients); sinusoidal steady state gives it a
-  frequency-dependent personality (impedance and frequency response). This is
-  the bridge from DC intuition to the signals, control, and communication
-  chapters later in the book.
+## Prerequisite structure
 
-## Two spines through the foundations
-
-Page order is one valid path through the dependency graph, not the only one. Two
-chains carry most of the part's weight and are worth seeing explicitly:
-
-- **The measurement spine — F01 → F02 → F03 → F06.** It reaches a *trustworthy
-  number* as early as possible, because almost every later chapter quietly
-  assumes you can produce one. If you must prioritize, prioritize this chain; do
-  not skip it to reach a dynamics chapter faster.
-- **The dynamics spine — F04 → F07 → F08.** It carries stored energy, transient
-  response, impedance, and frequency response, and it flows directly into
-  signals and systems in Part V ([S01](../05-domains/s01-signals-systems.qmd))
-  [@oppenheim1996signals]. It is the prerequisite for data conversion, feedback
-  control, and RF further on.
-
-## How the chapters connect
-
-The genuine dependencies — including the just-in-time appendix hooks — are
-smaller than the page order suggests, so a reader who already holds a
-prerequisite can enter partway without breaking anything.
+The registry records direct prerequisites. In @fig-foundation-dependencies, the
+same structure appears as arrows from each formal prerequisite to the chapter
+that depends on it.
 
 ```{mermaid}
 %%| label: fig-foundation-dependencies
-%%| fig-cap: "The direct prerequisite graph for Part I. Each arrow matches one prerequisite in the chapter registry. Appendix nodes are just-in-time inputs; page order, named spines, and downstream handoffs are described separately."
-%%| fig-alt: "A vertical prerequisite graph. F01 leads to F02. F02 and M01 lead to F03. F03 leads separately to F04, F05, and F06, while M03 also leads to F06. F04, F05, and M02 lead to F07. F07 and M01 lead to F08."
+%%| fig-cap: "Direct prerequisites for Part I. Appendix nodes provide just-in-time mathematical support."
+%%| fig-alt: "F01 leads to F02. F02 and M01 lead to F03. F03 leads to F04, F05, and F06, while M03 also leads to F06. F04, F05, and M02 lead to F07. F07 and M01 lead to F08."
 %%| fig-width: 6.1
 flowchart TB
-  M01["Appendix · M01<br/>algebra and units"]
-  M02["Appendix · M02<br/>calculus and dynamics"]
-  M03["Appendix · M03<br/>probability and statistics"]
+  M01["M01<br/>algebra and units"]
+  M02["M02<br/>calculus and dynamics"]
+  M03["M03<br/>probability and statistics"]
 
-  F01["F01 · Safe practice"]
-  F02["F02 · Electrical quantities"]
-  F03["F03 · Operating points"]
-  F04["F04 · Networks"]
-  F05["F05 · Power and heat"]
-  F06["F06 · Measurement"]
-  F07["F07 · Transients"]
-  F08["F08 · Frequency response"]
+  F01["F01<br/>safe practice"]
+  F02["F02<br/>electrical quantities"]
+  F03["F03<br/>operating points"]
+  F04["F04<br/>networks"]
+  F05["F05<br/>power and heat"]
+  F06["F06<br/>measurement"]
+  F07["F07<br/>transients"]
+  F08["F08<br/>frequency response"]
 
   F01 --> F02
   F02 --> F03
@@ -165,106 +92,53 @@ flowchart TB
   M01 --> F08
 ```
 
-The arrows in @fig-foundation-dependencies encode direct prerequisites only.
-They do not assert that every adjacent page depends on the previous page: the
-canonical page order remains F01 through F08, while F04–F06 are parallel
-developments after F03. The two spines above are purposeful reader routes. The
-measurement spine selects F01, F02, F03, and F06 to reach trustworthy evidence
-early; the dynamics spine selects F04, F07, and F08, with F05 and M02 feeding
-the transient step and M01 supporting the final frequency-domain step.
+Page order remains the clearest route for a new learner. If you already know
+some of the material, the graph shows two useful paths:
 
-## How to read each chapter
+- F01 → F02 → F03 → F06 develops trustworthy measurement early.
+- F04 → F07 → F08 develops transient and frequency-domain analysis.
 
-Whichever route you take, read every chapter the same way — the working method
-the whole book asks of you: **predict, build, measure, reconcile, decide.**
-Before a result is revealed, state a directional prediction and its rough
-magnitude, and name the model and its limits. Then compare calculation,
-simulation where it adds value, and measurement, treating any disagreement as
-information rather than noise. Finish by deciding what the evidence actually
-permits you to claim — no stronger [@horowitz2015art].
+F05 and M02 also feed F07, so the second path becomes a complete dynamics route
+only when those prerequisites are included.
 
-That cycle rides on an evidence ladder that runs from a rough estimate to a
-qualified claim:
+## Practical work
 
-```text
-estimate → calculation → simulation → measurement → repeated test
-         → independent reproduction → field evidence → qualified claim
-```
+The foundation labs use current-limited, extra-low-voltage hardware. Each lab
+still needs defined apparatus, stop conditions, and local authorization.
 
-Not every question needs the top rung. The consequence of being wrong sets how
-much evidence is appropriate: a sign convention can rest on a calculation, while
-an energy or safety claim cannot. Choosing the right rung — and stopping there —
-is itself part of the engineering, and Part I is where the judgment is first
-practiced.
+| Lab | Aligned chapters | What you demonstrate |
+|---|---|---|
+| **L01** Bench safety and instrument qualification | F01, F06 | energize in stages and check whether the instruments suit the measurement |
+| **L02** Source, load, resistance, and meter loading | F02, F03, F06 | measure a loaded circuit and account for the meter |
+| **L03** Network conservation and equivalents | F04, F06 | compare Kirchhoff and equivalent-circuit predictions with hardware |
+| **L04** Power, efficiency, and temperature rise | F05, F06 | compare a power balance with temperature measurements |
+| **L05** RC/RL transients and frequency response | F07, F08, S01 | compare a time constant and frequency response with the bench |
 
-## Turn reading into evidence
-
-Chapters develop durable models; **labs** demand physical evidence, and the
-**project** forces several models to succeed together. The aligned practical
-sequence for this part is L01–L05, and it integrates into milestone **M1**. All
-five foundation labs are current-limited, extra-low-voltage work (safety level
-**L1**), but the level, apparatus, stop conditions, and local authorization must
-still be defined *before* a lab becomes deliverable.
-
-| Evidence goal | Aligned chapters | Level | What it demonstrates |
-|---|---|---|---|
-| **L01** Bench safety and instrument qualification | F01, F06 | L1 | you can energize in stages and trust your meters |
-| **L02** Source, load, resistance, and meter loading | F02, F03, F06 | L1 | you can measure without silently changing the quantity |
-| **L03** Network conservation and equivalents | F04, F06 | L1 | Kirchhoff and Thévenin/Norton predict a real network |
-| **L04** Power, efficiency, and temperature rise | F05, F06 | L1 | a power budget matches a measured temperature rise |
-| **L05** RC/RL transients and frequency response | F07, F08, S01 | L1 | a time constant and a Bode magnitude agree with the bench |
-
-The integrating milestone is **M1 — measure an energy-and-light system**, which
-binds F01–F06 together with reproducible records
-([T03](../appendices/t03-reproducible-engineering.qmd)) into a safe measurement
-plan, calibrated observations, and a qualified energy claim. The full practice
-map, including how M1 compounds into later milestones, is on the
-[practice and project spine](../roadmap.qmd#practice-and-project-spine).
-
-::: {.callout-warning title="Safety boundary"}
-Early practical work is deliberately low-voltage and current-limited. Reading a
-chapter is not authorization for mains, high-voltage, high-energy battery, RF
-power, rotating-machine, medical, or safety-critical work. Use approved
-facilities, supervision, and locally approved procedures, and stop when the
-evidence or the safety boundary is inadequate.
-:::
+Milestone **M1 — measure an energy-and-light system** combines F01–F06 with the
+record-keeping practices in
+[T03](../appendices/t03-reproducible-engineering.qmd). The
+[practice and project spine](../roadmap.qmd#practice-and-project-spine) provides
+the full integration map.
 
 ## Exit capability
 
-After this part you should be able to inspect and energize an approved
-low-energy circuit in stages, predict its behavior to the right order of
-magnitude, measure without silently changing the quantity of interest, reconcile
-a model with its uncertainty, and stop when the evidence or safety boundary is
-inadequate. Expressed as a checklist, you can:
+After Part I, you should be able to:
 
-- work a bench safely and keep a record another person can reproduce;
-- assign reference directions and read a signed result correctly;
-- reduce a resistive network and predict its operating point under load;
-- build a power budget and respect a component's thermal limit;
-- state a measurement with its uncertainty and isolate a fault by hypothesis;
-- predict a first-order transient and a first-order frequency response, and know
-  the operating range in which each model holds.
+- inspect and energize an approved low-energy circuit in stages;
+- assign reference directions and interpret signed results;
+- reduce a resistive network and predict its loaded operating point;
+- construct a power budget and check component thermal limits;
+- report a measurement with its uncertainty and isolate a fault by hypothesis;
+- predict first-order transient and frequency responses within their stated
+  operating ranges.
 
-## What this hands to the rest of the book
-
-These capabilities feed every later part; they are not scaffolding to be
-discarded. Devices and analog build on the operating-point and frequency
-reasoning of F03 and F08 to shape and amplify real signals
-[@sedra2020microelectronic]; digital hardware treats a logic level as an analog
-quantity governed by F05's ratings before it is a bit [@harris2021digital];
-feedback and control depend on the transient and frequency response of F07–F08
-[@astrom2021feedback]; and product realization inherits F06's evidence standard
-as the basis of test, calibration, and electromagnetic compatibility
-[@ott2009electromagnetic]. When you can say which model you are using, what would
-break it, and how much your evidence lets you claim — for a single voltage — you
-can do the same for a system.
+These skills support the active-device circuits in Part II, the timing and logic
+of Parts III–IV, the signal and control analysis of Part V, and the verification
+work in Parts VI–VII.
 
 ::: {.callout-note title="Chapter maturity"}
-This is a development edition. The scope and dependency structure of Part I are
-complete, and all eight chapters are full teaching drafts. Each chapter reports
-its own status in front matter and identifies which examples are calculations,
-synthetic teaching data, manufacturer evidence, or work reserved for an aligned
-laboratory. A draft remains subject to technical and editorial revision and is
-never safety authorization. The [reading roadmap](../roadmap.qmd) explains what
-each maturity level lets a reader rely on.
+All eight chapters are teaching drafts. They contain substantial exposition,
+worked results, and exercises, but they remain subject to technical and
+editorial review. The [reading roadmap](../roadmap.qmd#interpret-chapter-status)
+explains the status levels.
 :::

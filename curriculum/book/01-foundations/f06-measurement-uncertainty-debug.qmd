@@ -1,18 +1,15 @@
 ---
 title: "Measurement, uncertainty, and systematic debugging"
-description: "Plan minimally intrusive measurements, evaluate their uncertainty, and isolate circuit faults with discriminating evidence."
+description: "Plan minimally intrusive measurements, evaluate uncertainty, and isolate circuit faults with tests that distinguish competing causes."
 chapter-id: F06
 status: draft
 ---
 
 ::: {.callout-note title="Chapter maturity — draft"}
-This chapter presents a complete instructional path: definitions, derivations,
-worked uncertainty budgets, executable arithmetic, an explicitly synthetic fault
-investigation, an uncertainty-aware decision, and a full exercise set. It
-remains subject to technical and editorial revision. Physical claims require the
-aligned laboratory evidence; the teaching data in this chapter do not provide
-it. See the
-[reading roadmap](../roadmap.qmd) for the meaning of status levels.
+This draft develops measurement definitions, uncertainty budgets, instrument
+loading, and systematic fault isolation. The worked fault records are synthetic:
+they teach the method but do not describe laboratory hardware. See the
+[reading roadmap](../roadmap.qmd) for status definitions.
 :::
 
 ::: {.callout-warning title="Safety boundary for this chapter"}
@@ -36,7 +33,7 @@ or local authorization is uncertain [@iec61010].
 An **illustrative** divider should produce 4.00 V DC at test point TP1 relative
 to TP0. A **digital multimeter (DMM)**, an instrument that converts an electrical
 quantity into a numeric display, indicates 3.964 V. An oscilloscope then
-indicates 3.70 V. We now have one schematic and two conflicting observations.
+indicates 3.70 V. You now have one schematic and two conflicting observations.
 
 There are many plausible explanations: the source is low, a resistor is wrong,
 a connection is resistive, the circuit is oscillating, either instrument is out
@@ -51,15 +48,13 @@ the oscilloscope has 1 MΩ input resistance, should the lower-resistance
 instrument indicate a higher voltage, a lower voltage, or the same voltage at a
 high-resistance divider? Which single observation would most strongly separate
 instrument loading from a faulty resistor? The worked investigation later in the
-chapter reconciles the schematic, equations, instrument descriptions, synthetic
-data, and decision.
+chapter shows how input resistance explains the two readings.
 :::
 
-Measurement and debugging are the same intellectual task. Both begin with a
-claim about a precisely defined quantity, predict what different explanations
-would produce, and seek evidence that separates those explanations. The goal is
-not a large pile of readings. It is the smallest safe set of observations that
-supports a bounded conclusion.
+Measurement and debugging rely on the same discipline: define the quantity,
+predict what competing explanations would produce, and choose observations that
+separate them. You need the smallest safe set that supports the decision, not a
+large pile of readings.
 
 ## Learning outcomes
 
@@ -479,8 +474,7 @@ reassessment. The budget for the mean indication is:
 
 : Illustrative uncertainty budget for the synthetic DMM indication. The assumed DMM bound is not a calibration result, and the listed effects are pedagogical inputs rather than evidence about real hardware. {#tbl-indication-budget}
 
-The intended measurand is the unloaded voltage, so use
-@eq-loading-correction. For
+For the unloaded voltage measurand, @eq-loading-correction applies. For
 
 $$
 V_0=x\left(1+\frac{R_\text{th}}{R_\text{in}}\right),
@@ -719,11 +713,11 @@ common-mode voltage, differential voltage, bandwidth, and category limits; the
 word “differential” does not remove them. Verify the instrument manual and the
 circuit reference before connection [@tektronix2024tds3000csafety; @iec61010].
 
-## A measurement plan preserves evidence
+## Measurement planning
 
-Improvised probing makes configuration changes invisible. A measurement plan is
-short enough to use at the bench and complete enough that another competent
-person can reconstruct the result. Before energizing, record:
+Improvised probing hides configuration changes. Keep the plan short enough to
+use at the bench and complete enough for another competent person to reconstruct
+the result. Before energizing, record:
 
 1. **Question and decision.** What will the result decide, and what consequence
    follows from a wrong decision?
@@ -742,7 +736,8 @@ person can reconstruct the result. Before energizing, record:
 7. **Raw record.** Configuration and revision, timestamps, unrounded indications,
    settings, environmental observations, anomalies, and operator.
 8. **Decision rule.** Specification limits, guard band, equality treatment, and
-   the evidence rung required.
+   the level of verification required. See @sec-evidence-workflow for the
+   book-wide evidence workflow.
 
 For the divider, a completed compact plan looks like this:
 
@@ -1015,21 +1010,19 @@ configuration and raw evidence from Lab L01/L02. Production or field claims need
 repeated units, time, environments, and the stronger metrology and reliability
 methods of R05.
 
-## Trustworthy evidence as a reusable practice
+## Measurement and debugging practice
 
-A trustworthy number is not a display with many digits. It is an estimate of a
-defined measurand, obtained by a recorded procedure, corrected for recognized
-effects, accompanied by an uncertainty that can be reconstructed, and interpreted
-through a declared decision rule. Debugging uses the same structure: preserve the
-symptom, make competing explanations predict different observations, choose the
-safest discriminating test, and let disagreement refine the description.
+A useful measurement is more than a display with many digits. It estimates a
+defined measurand by a recorded procedure, corrects recognized effects, reports
+reconstructable uncertainty, and applies a stated decision rule. Debugging uses
+the same structure: preserve the symptom, make competing explanations predict
+different observations, choose the safest discriminating test, and refine the
+description when prediction and observation disagree.
 
-The circuit is one object expressed as physical assembly, schematic, equations,
-instrument configuration, raw data, uncertainty budget, and requirement. In the
-worked divider, those languages initially disagreed. Adding the instruments to
-the source–load description reconciled them without inventing a component fault.
-That is the capability F06 hands to every later chapter: disagreement is useful
-only when the evidence is strong enough to say what it rules out.
+In the worked divider, adding instrument input resistance to the source–load
+description explains the conflicting readings without inventing a component
+fault. The lesson carries forward: a discrepancy becomes useful when your next
+test can rule out at least one plausible cause.
 
 ## Exercises
 
@@ -1104,7 +1097,7 @@ Choose one best answer. The key follows.
    5.0000 mA indicated, 50 mV burden, and −1.00 % intrusion.]*
 7. An oscilloscope is approximated by one pole at 20 MHz. Calculate its indicated
    amplitude for a 1.00 V peak sinusoid at 2 MHz, 20 MHz, and 100 MHz using
-   Equation @eq-one-pole-amplitude. Estimate its 10–90 % rise time. State why the
+   Use @eq-one-pole-amplitude. Estimate its 10–90 % rise time. State why the
    answers do not fully characterize a real oscilloscope.
 
 **Derivation and uncertainty**

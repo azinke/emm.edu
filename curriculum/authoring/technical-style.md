@@ -7,18 +7,30 @@
   ambitious reader enough to show the exact mechanics. This tone does not relax
   the factual bar: preserve mathematical derivations, exact definitions,
   low-level behavior, edge cases, citations, and evidence boundaries.
-- Use **you** for a prediction, derivation step, check, build action, or decision
-  the reader performs. Use a concrete technical subject for factual claims: the
-  source drives current, the cache controller invalidates a line, the transistor
-  changes load current, and the extractor computes parasitics. Do not default to
-  **we**, “the reader,” “one,” or an abstract passive construction.
+- Treat grammatical person, active or passive voice, and sentence mood as
+  separate choices. Declarative sentences are the default for exposition,
+  definitions, transitions, mechanisms, and conclusions. Use **you** when the
+  reader genuinely predicts, reasons, calculates, compares, or decides. Reserve
+  imperative sentences for actual instructions: a procedure step, exercise,
+  prediction prompt, safety action, or explicit inspection task.
+- Active voice does not require imperative mood. Do not mechanically turn
+  “Equation 3 gives the current” into “Use Equation 3 to calculate the current,”
+  or “The output resistance limits the gain” into “Notice that the output
+  resistance limits the gain.” The declarative versions state the technical
+  relationship more naturally unless the reader must perform the named action.
+- Use a concrete technical subject for factual claims: the source drives current,
+  the cache controller invalidates a line, the transistor changes load current,
+  and the extractor computes parasitics. Do not default to **we**, “the reader,”
+  “one,” or an abstract passive construction.
 - Prefer active voice and name the actor: “you measure TP1 relative to TP0,”
   “the source drives current,” and “the probe adds capacitance.” Use passive
   voice only when the actor is unknown or genuinely irrelevant.
-- Apply the voice rules to maturity and safety callouts, learning outcomes,
-  captions, alt text, table notes, requirements, procedures, exercises, and
-  answer choices. A chapter whose body prose is direct but whose surrounding
-  material remains passive has not passed the editorial review.
+- Apply the person, voice, and mood rules to maturity and safety callouts,
+  learning outcomes, captions, alt text, table notes, requirements, procedures,
+  exercises, and answer choices. A chapter whose body prose is direct but whose
+  surrounding material remains awkward or inconsistent has not passed the
+  editorial review. Parallel commands suit operational requirements and
+  procedures; they usually do not suit explanatory paragraphs.
 - Keep sentences direct. Put one main claim in each sentence. Split a sentence
   when it carries a mechanism, a qualification, and a consequence at once.
   Short sentences should still show the logical link: *because*, *therefore*,
@@ -28,9 +40,11 @@
   to note,” “Clearly,” “Obviously,” or “As everyone knows.”
 - Avoid localized idioms, cute metaphors, and inflated vocabulary. A short
   physical analogy can help, but state where it stops matching the circuit.
-- Create warmth through useful guidance: tell the reader what to inspect,
-  calculate, compare, and decide. Do not manufacture friendliness with jokes,
-  filler, rhetorical hype, or the removal of difficult technical material.
+- Create warmth through relevant guidance. Direct the reader to inspect,
+  calculate, compare, or decide when that action advances the lesson; otherwise
+  state the relationship or conclusion directly. Do not manufacture friendliness
+  with jokes, filler, rhetorical hype, or the removal of difficult technical
+  material.
 - Define a technical term at first use in the chapter. Bold the term and give a
   compact plain-language meaning in the same sentence: “**Impedance** is the
   total opposition a circuit presents to sinusoidal current.” Follow with the
@@ -50,6 +64,12 @@
 
 ## Conceptual pacing
 
+- Make the reading path linear. A section normally moves from observation or
+  question to explanation or derivation, then to consequence, application, or
+  decision. Begin each paragraph from the current question or a result already
+  established. When the scale, case, representation, or task changes, state the
+  reason for the change and the connection to what came before. A heading does
+  not substitute for that transition.
 - Move in visible steps: physical object → terminal behavior → compact
   description → circuit interaction → system consequence → test. When a chapter
   moves from a component to a circuit or from a circuit to a system, add the
@@ -99,6 +119,14 @@
 - Read each paragraph as a self-study unit. Its first sentence should establish
   the point, its middle should explain or demonstrate it, and its last sentence
   should interpret the result or hand the reader to the next step.
+- Read the prose once without relying on headings. Look for a derivation followed
+  abruptly by evidence, a component followed by a system claim, or an
+  explanation followed by a procedure without a sentence that motivates the
+  change. Add the conceptual handoff or reorder the material.
+- Audit sentence mood as well as sentence length. If a normal factual statement
+  has become “Use,” “Apply,” “Define,” “Consider,” “Observe,” or “Notice,” ask
+  whether the reader must actually do something. Restore declarative exposition
+  when no action is required.
 - Include front matter, learning outcomes, callouts, captions, tables, and
   exercises in the readability pass. These locations often introduce a term
   before the main explanation does.
@@ -227,6 +255,15 @@
   `References`); arrange the middle — derivation, regions of operation, parameter
   tables, worked examples, design procedures, trade-off tables — however teaches
   the material best.
+- Do not add a generic `Summary` merely because other chapters have one. Use a
+  topic-specific synthesis when it completes the chapter's reasoning, or omit it
+  when it would only repeat the preceding conclusion.
+- Give each document level a distinct job. The landing page invites the reader
+  and shows the route through the book. The Preface owns shared notation,
+  evidence, safety, and reading conventions. A part introduction explains that
+  part's question and progression. A chapter introduction begins from its
+  chapter-specific phenomenon or decision. Do not restate the complete book
+  thesis, curriculum map, or shared conventions at every level.
 - Whatever the arrangement, still fulfil the editorial functions in
   [`chapter-template.qmd`](chapter-template.qmd): motivate from something
   observable, elicit a prediction, build the theory, work concrete numbers,
@@ -248,6 +285,12 @@
 
 ## Evidence and decisions
 
+- The Preface owns the book-wide evidence progression and its complete
+  terminology. Chapters should enact it through topic-specific predictions,
+  calculations, simulations, measurements, and decisions, and state the local
+  evidence status where it affects a claim. Do not reproduce the full ladder,
+  book thesis, or workflow in every chapter introduction, synthesis, or callout;
+  link to the Preface sparingly when the complete framework matters.
 - Label invented or generated values **illustrative** or **synthetic** beside the
   table, figure, or scenario. State what they can teach and that they do not
   qualify a physical claim.
@@ -302,6 +345,12 @@
   exceeds the PDF text block, set an explicit `fig-width`, then inspect both the
   HTML and PDF render for clipping, crossed labels, unreadable type, and
   ambiguous edges.
+- Verify a figure's position in the reading sequence, not only its existence and
+  numbering. It should follow the sentence that introduces it and precede prose
+  that interprets details the reader has not yet seen. A PDF float may violate
+  that order even when the build succeeds. Use controlled placement such as
+  `fig-pos="H"` only when immediate adjacency is necessary, then inspect the
+  resulting page breaks; do not pin every figure by default.
 - If a diagram remains unstable, oversized, or unreadable under Mermaid layout,
   replace it with recoverable static vector source and a controlled render
   derivative. Keep the asset within `curriculum/book/figures/`; a path outside

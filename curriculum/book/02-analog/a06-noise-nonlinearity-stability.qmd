@@ -29,8 +29,8 @@ systems [@iec61010; @tektronixprobesprimer].
 
 ## Central question
 
-> Which non-ideal effect limits the smallest trustworthy signal in a real
-> analog chain?
+> Which non-ideal effect limits a real analog chain, and what evidence
+> distinguishes the limiting mechanism?
 
 Suppose a sensor produces a 100 $\mu$V RMS sine wave at 100 Hz. An amplifier
 with gain 101 should produce 10.1 mV RMS. Instead, the oscilloscope trace looks

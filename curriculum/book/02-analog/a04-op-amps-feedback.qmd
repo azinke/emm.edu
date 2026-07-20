@@ -965,8 +965,8 @@ does not authorize exceeding absolute maximum terminal ratings
 
 **Noise gain is a transfer function, not a random-noise specification.** Let
 $e_n(f)$ be the op amp's input voltage-noise amplitude spectral density in
-V/$\sqrt{\mathrm{Hz}}$, and let $i_{n-}(f)$ be its inverting-input
-current-noise amplitude spectral density in A/$\sqrt{\mathrm{Hz}}$. A
+V/$\sqrt{\text{Hz}}$, and let $i_{n-}(f)$ be its inverting-input
+current-noise amplitude spectral density in A/$\sqrt{\text{Hz}}$. A
 first-order output-referred screen is
 
 $$
@@ -1920,7 +1920,7 @@ Choose one best answer for each item.
     estimate the differential output current
     for $\Delta v_d=100~\mu$V about the balanced point. Check that the
     small-signal condition is satisfied.
-13. A flat output-noise density of 40 nV/$\sqrt{\mathrm{Hz}}$ is observed from
+13. A flat output-noise density of 40 nV/$\sqrt{\text{Hz}}$ is observed from
     100 Hz to 10.0 kHz and is negligible elsewhere. Estimate RMS noise over
     that band, then state why this shortcut would fail for a $1/f$ spectrum.
 14. A centered non-inverting stage has noise gain 5, maximum

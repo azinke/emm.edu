@@ -840,14 +840,10 @@ For design bounds, use opposing extremes:
 Optical output must be bounded separately because luminous intensity depends on
 current, wavelength, viewing geometry, temperature, and production bin.
 
-The Vishay TLHK5100 red LED illustrates why conditions matter. At
-$T_{amb}=25~^\circ$C its table gives $V_F=2.0$ V typical and $2.6$ V maximum at
-$I_F=20$ mA; luminous intensity is 320 mcd minimum and 1400 mcd typical at
-20 mA, tested with a 25 ms pulse. The maximum DC current is 30 mA only for
-$T_{amb}\le65~^\circ$C, and the maximum junction temperature is
-$100~^\circ$C [@vishaytlhk5100]. A typical forward voltage is not a guaranteed
-minimum for a worst-case current calculation, and a short-pulse optical test is
-not automatically a continuous-operation claim.
+Electrical limits and optical-output specifications usually have different test
+conditions. A typical forward voltage is not a guaranteed minimum for a
+worst-case current calculation, and a short-pulse luminous-intensity test is not
+automatically a continuous-operation claim.
 
 ### Photodiodes
 
@@ -869,19 +865,16 @@ dark current can be lower but capacitance and response may differ. A photodiode 
 therefore a current-generating junction device, not a light-dependent resistor
 [@sze2006physics].
 
-For the BPW34 at $25~^\circ$C, the manufacturer specifies 40 µA minimum and
-50 µA typical reverse light current at 5 V reverse bias, irradiance
-$1~\text{mW}/\text{cm}^2$, and wavelength 950 nm. At 10 V reverse bias in the
-dark, reverse current is 2 nA typical and 30 nA maximum. Capacitance is 70 pF
-typical at zero bias and 25 pF typical, 40 pF maximum, at 3 V reverse bias, both
-at 1 MHz. The quoted 100 ns rise and fall times require 10 V reverse bias, a
-1 kΩ load, and 820 nm illumination [@vishaybpw34]. Removing those conditions
-turns a valid specification into an invalid generalization.
+Light current, dark current, capacitance, and response time are normally
+specified at different combinations of wavelength, irradiance, bias,
+temperature, frequency, and load. They cannot be combined as though they
+describe one guaranteed operating point.
 
-A08 develops optical power, responsivity, LED and detector drive, ambient-light
-rejection, isolation, displays, and human interpretation. A01's handoff is the
-junction behavior and the discipline of keeping electrical, radiant, and
-luminous quantities distinct.
+[A08](a08-optoelectronics-hmi.qmd) develops condition-matched LED and detector
+interfaces, optical power, responsivity, ambient-light rejection, isolation,
+displays, and human interpretation. A01's handoff is the junction behavior and
+the discipline of keeping electrical, radiant, and luminous quantities
+distinct.
 
 ## Charge storage and reverse recovery
 

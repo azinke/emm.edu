@@ -1470,7 +1470,7 @@ a resistor at absolute temperature $T$ is
 
 $$
 e_{n,R}=\sqrt{4kTR}
-\quad\left[\frac{\mathrm V}{\sqrt{\mathrm{Hz}}}\right].
+\quad\left[\frac{\mathrm V}{\sqrt{\text{Hz}}}\right].
 $$ {#eq-a03-resistor-noise}
 
 For a full Poisson stream of independent charge carriers, the one-sided
@@ -1479,7 +1479,7 @@ $I$ is
 
 $$
 i_{n,\mathrm{shot}}=\sqrt{2q_eI}
-\quad\left[\frac{\mathrm A}{\sqrt{\mathrm{Hz}}}\right].
+\quad\left[\frac{\mathrm A}{\sqrt{\text{Hz}}}\right].
 $$ {#eq-a03-shot-noise}
 
 Correlations, partition, recombination, or circuit feedback can change the
@@ -1487,7 +1487,7 @@ terminal noise from this full-shot value
 [@horowitz2015art; @sedra2020microelectronic].
 
 For $R=10.0$ k$\Omega$ at 300 K,
-$e_{n,R}\approx12.9$ nV/$\sqrt{\mathrm{Hz}}$. A flat density integrated over
+$e_{n,R}\approx12.9$ nV/$\sqrt{\text{Hz}}$. A flat density integrated over
 noise-equivalent bandwidth $B$ contributes an RMS value proportional to
 $\sqrt B$. Real transistor noise also includes frequency-dependent mechanisms,
 and source resistance changes how current and voltage noise combine

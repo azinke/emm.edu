@@ -248,7 +248,8 @@ The integral explains why equal radiant power at two wavelengths need not
 produce equal luminous flux. It also explains why perceived brightness cannot
 be inferred from LED current alone.
 
-@fig-a08-spectral-weighting shows the operation of the integral. Its schematic
+The spectral-weighting diagram in @fig-a08-spectral-weighting shows the
+operation of the integral. Its schematic
 curves are normalized: they explain multiplication and integration, but the
 emitter is illustrative and calculations require tabulated $V(\lambda)$.
 
@@ -998,7 +999,8 @@ That result does not authorize 20 mA. The LED pulse and DC ratings, number of
 simultaneous segments, digit-switch current, resistor power, supply droop,
 connector current, and thermal conditions must all pass.
 
-@fig-a08-multiplex-paths joins the shared current path to the waveforms that
+The multiplex diagram in @fig-a08-multiplex-paths joins the shared current path
+to the waveforms that
 control it. The safe order is: disable every digit, wait for the old switch to
 release, change segment data, allow it to settle, enable exactly one new digit,
 and hold its active interval.

@@ -630,12 +630,12 @@ develops the resulting sampling errors and converter architectures.
 
 ## Integrated current replication and bias
 
-A03 introduced the simple MOS current mirror. Integration makes matched
-geometry and shared temperature practical, but it does not make current
-replication exact. In the nMOS mirror of
-the schematic in @fig-a07-simple-mirror, $M_1$ and $M_2$ share $V_{GS}$ and body
-potential. Let both operate in saturation, and use the first-order
-channel-length-modulation relation
+[A03](a03-bias-small-signal-amplifiers.qmd#current-mirrors-provide-conditional-bias-currents)
+introduced the simple low-side MOS current mirror: diode-connected reference
+device $M_1$ and output device $M_2$ share gate, source, and body potentials.
+Integration makes matched geometry and shared temperature practical, but it
+does not make current replication exact. Let both devices operate in
+saturation, and use the first-order channel-length-modulation relation
 
 $$
 I_D
@@ -653,8 +653,6 @@ $$
 \frac{1+\lambda V_{DS,O}}
      {1+\lambda V_{DS,\mathrm{REF}}}.
 $$ {#eq-a07-mirror-ratio}
-
-![Simple BJT and MOS current-sink mirrors; the MOS panel gives the integrated starting point used here. The circuit ties both nMOS bodies to $V_{SS}=0$ V, although the schematic omits the body wires.](../../../build/circuits/a03-simple-current-mirrors.png){#fig-a07-simple-mirror fig-alt="Panel a shows a two-NPN current-sink mirror with grounded emitters, shared bases, a diode-connected reference device, and output at the second collector. Panel b shows the analogous two-nMOS mirror with common gates and sources at the lower rail. The reference drain connects to the common gate and R REF; the output drain is TPO. The nMOS bodies connect to the lower rail but are not drawn." width="92%"}
 
 If output and reference devices have equal drain voltage, equal threshold,
 mobility, temperature, and effective geometry, the second factor approaches one.

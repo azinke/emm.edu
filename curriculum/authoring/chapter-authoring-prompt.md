@@ -116,6 +116,16 @@ make the explanation clearer, not more distant.
   should inspect, then interpret what the visual shows. During drafting, leave an
   explicit `[Diagram cue: ...]`, `[Waveform cue: ...]`, or `[Graph cue: ...]`
   when an essential visual is missing; replace it before review.
+- Teach visually when topology, grouping, signal flow, or timing carries the
+  reasoning. Introduce the visual before prose depends on it, name the feature or
+  path to inspect, map its ports, groups, or stages to the governing equations
+  or stated logical or physical rule as applicable, and then state the
+  conclusion. For a hierarchical function, normally show an
+  interface view with widths, controls, active levels, outputs, and flags. When
+  its mechanism is in scope, also show a construction view with gates, repeated
+  stages, a data path, or the relevant timing path. A truth table does not
+  replace an interface or construction view when the explanation depends on
+  that view.
 
 ## Invariant 1 — the book's thesis (must run through every chapter)
 A circuit is **one object described in many languages** (physical, schematic,
@@ -242,6 +252,13 @@ sparingly when the full framework matters.
   just-in-time appendices by ID. The closing note never substitutes for a citation
   at the first consequential claim. Verify every new bibliography entry against an
   official or primary source, then audit that every citation key resolves.
+  Cite externally established symbol conventions, standards terminology,
+  canonical circuit organizations and algorithms, manufacturer limits, and
+  adapted or redrawn figures where first used. Credit an adapted or reproduced
+  figure in its caption and record its license or permission provenance. An
+  author-generated explanatory drawing still needs adjacent support when its
+  topology or notation comes from a source. Do not write “adapted from” unless
+  the figure's geometry or content was actually adapted.
 - **Notation:** SI throughout; reference directions before any signed result;
   distinguish equality / approximation / tolerance / bound / uncertainty; state the
   amplitude type (instantaneous, peak, pk-pk, RMS, average, phasor, spectral
@@ -344,6 +361,12 @@ sparingly when the full framework matters.
   key. Follow with retrieval, estimation, derivation, data interpretation,
   debugging, and open design; include a few inline self-check answers, while full
   solutions stay out of the public book.
+  When the chapter's central reasoning is schematic, spatial, or graphical,
+  include visual assessment: at least one supplied diagram to trace, analyze, or
+  debug and one task to draw, complete, group, or repair a diagram. Supply enough
+  labels, conventions, and conditions for a determinate answer; do not make the
+  learner guess layout intent. Exercise captions and alt text must describe the
+  given information without revealing the answer.
 - **Quarto cross-references at line starts:** never begin a physical line with
   `@eq-`, `@fig-`, or `@tbl-`, especially an indented ordered-list continuation.
   Pandoc can interpret that token as example-list syntax and silently replace a
@@ -491,6 +514,10 @@ prose that never gives the reader enough mathematics to reproduce the result.
    - consistent device scale, alignment, symmetry, and spacing; and
    - no unintended wire crossings, wires through symbols, diagonal routing, or
      ambiguous near-connections.
+   At final raster scale, zoom into every intended conductor-to-terminal
+   connection and trace its centerline to the exact named port. Reject a gap,
+   overshoot, doubled segment, or vertical offset even when compilation succeeds;
+   visibly mark or explain any intentionally unused terminal.
    For every switched or clamped circuit, trace the pre-switch and post-switch
    loops and confirm each loop against the differential equation and energy
    account. For every capacitively coupled or bypassed circuit, trace DC with the
@@ -517,12 +544,13 @@ prose that never gives the reader enough mathematics to reproduce the result.
      limiting cases, complete current/power paths, and conclusions;
    - **pedagogical:** read as a learner and instructor, audit the heading skeleton,
      prerequisite burden, misconceptions, family/scope completeness, examples,
-     exercises, and exit capability;
+     visual coverage, visual exercises, and exit capability;
    - **repository/editorial:** audit front matter, links, citations, evidence
      labels, diagram rules, code/output agreement, and Connections; and
    - **rendering/accessibility:** inspect actual HTML asset resolution, alt text,
      equation and cross-reference wording, the full-book PDF pages containing wide
-     figures or long tables, and any format-specific clipping or overflow.
+     figures or long tables, terminal alignment and legibility at final placed
+     size, and any format-specific clipping or overflow.
    Apply substantiated improvements, then repeat the affected calculation or
    render checks; a review of the outline alone is not a final review.
 10. Re-read the final heading list and every point-of-use citation. Verify that

@@ -1,0 +1,56 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}
+  \ctikzset{logic ports=ieee}
+  \node[font=\small\bfseries] at (6.0,6.4)
+    {(a) IEEE distinctive-shape symbols (book convention)};
+
+  \node[and port, number inputs=2] (IA) at (2.0,4.8) {};
+  \node[or port, number inputs=2] (IO) at (6.0,4.8) {};
+  \node[xor port, number inputs=2] (IX) at (10.0,4.8) {};
+  \node[not port] (IN) at (2.0,1.8) {};
+  \node[nand port, number inputs=2] (INA) at (6.0,1.8) {};
+  \node[nor port, number inputs=2] (INO) at (10.0,1.8) {};
+
+  \foreach \g in {IA,IO,IX,INA,INO} {
+    \draw (\g.in 1) -- ++(-0.65,0);
+    \draw (\g.in 2) -- ++(-0.65,0);
+    \draw (\g.out) -- ++(0.65,0);
+  }
+  \draw (IN.in) -- ++(-0.65,0);
+  \draw (IN.out) -- ++(0.65,0);
+  \node[font=\small] at (2.0,3.85) {AND};
+  \node[font=\small] at (6.0,3.85) {OR};
+  \node[font=\small] at (10.0,3.85) {XOR};
+  \node[font=\small] at (2.0,0.85) {NOT};
+  \node[font=\small] at (6.0,0.85) {NAND};
+  \node[font=\small] at (10.0,0.85) {NOR};
+
+  \ctikzset{logic ports=european}
+  \node[font=\small\bfseries] at (6.0,-0.8)
+    {(b) IEC rectangular symbols};
+
+  \node[and port, number inputs=2] (EA) at (2.0,-2.5) {};
+  \node[or port, number inputs=2] (EO) at (6.0,-2.5) {};
+  \node[xor port, number inputs=2] (EX) at (10.0,-2.5) {};
+  \node[not port] (EN) at (2.0,-5.5) {};
+  \node[nand port, number inputs=2] (ENA) at (6.0,-5.5) {};
+  \node[nor port, number inputs=2] (ENO) at (10.0,-5.5) {};
+
+  \foreach \g in {EA,EO,EX,ENA,ENO} {
+    \draw (\g.in 1) -- ++(-0.65,0);
+    \draw (\g.in 2) -- ++(-0.65,0);
+    \draw (\g.out) -- ++(0.65,0);
+  }
+  \draw (EN.in) -- ++(-0.65,0);
+  \draw (EN.out) -- ++(0.65,0);
+  \node[font=\small] at (2.0,-3.45) {AND};
+  \node[font=\small] at (6.0,-3.45) {OR};
+  \node[font=\small] at (10.0,-3.45) {XOR};
+  \node[font=\small] at (2.0,-6.45) {NOT};
+  \node[font=\small] at (6.0,-6.45) {NAND};
+  \node[font=\small] at (10.0,-6.45) {NOR};
+\end{circuitikz}
+\end{document}

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-labelledby="title desc">
+  <title id="title">Illustrative static-1 hazard waveform</title>
+  <desc id="desc">Five traces share a left-to-right time axis. A falls while B and C remain high. Product AB falls before product not-A times C rises. Their gap makes F fall briefly, while the hazard-covered output with consensus term BC remains high.</desc>
+  <style>
+    .wave { fill: none; stroke: #111; stroke-width: 3; stroke-linejoin: round; }
+    .guide { stroke: #888; stroke-width: 1; }
+    .label { font: 16px sans-serif; fill: #111; }
+    .small { font: 14px sans-serif; fill: #111; }
+  </style>
+  <line class="guide" x1="100" y1="270" x2="720" y2="270"/>
+  <text class="small" x="685" y="292">time</text>
+  <line class="guide" x1="330" y1="20" x2="330" y2="270" stroke-dasharray="5 5"/>
+  <line class="guide" x1="420" y1="20" x2="420" y2="270" stroke-dasharray="5 5"/>
+  <text class="label" x="20" y="48">A</text>
+  <polyline class="wave" points="100,28 300,28 300,58 720,58"/>
+  <text class="label" x="20" y="98">AB</text>
+  <polyline class="wave" points="100,78 330,78 330,108 720,108"/>
+  <text class="label" x="20" y="148">ĀC</text>
+  <polyline class="wave" points="100,158 420,158 420,128 720,128"/>
+  <text class="label" x="20" y="198">F</text>
+  <polyline class="wave" points="100,178 340,178 340,208 410,208 410,178 720,178"/>
+  <text class="label" x="20" y="248">F with BC</text>
+  <polyline class="wave" points="100,228 720,228"/>
+  <text class="small" x="350" y="258">hazard interval</text>
+</svg>

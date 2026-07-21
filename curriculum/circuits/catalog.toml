@@ -1,6 +1,83 @@
 version = 1
 
 [[circuit]]
+id = "d02-logic-symbols"
+source = "d02-logic-symbols.tex"
+chapter_id = "D02"
+caption = "The two symbol families used most often for binary logic diagrams. This book uses the IEEE distinctive-shape row for new logic schematics; the IEC rectangular row is included so either convention can be read. Output circles or negation marks identify logical inversion according to the selected convention."
+alt = "Two rows compare six logic-gate symbols. The upper IEEE distinctive-shape row shows AND, OR, XOR, triangular NOT, NAND, and NOR. The lower IEC row shows the same functions as rectangles with internal qualifying marks. NAND and NOR add an inversion bubble to the corresponding AND and OR outputs."
+
+[[circuit]]
+id = "d02-mux-demux-symbols"
+source = "d02-mux-demux-symbols.tex"
+chapter_id = "D02"
+caption = "Conventional tapered functional symbols for a 2-to-1 multiplexer and 1-to-2 demultiplexer. Port numbers beside the tapered edge state which route is selected; the equations below the symbols make the positive-true interface explicit."
+alt = "A tapered two-to-one multiplexer has D0 and D1 inputs on the wide left side, select S below, and output Y on the narrow right side. A reverse-tapered one-to-two demultiplexer has data D on the narrow left side, select S below, and outputs Y0 and Y1 on the wide right side."
+
+[[circuit]]
+id = "d02-kmap-worked"
+source = "d02-kmap-worked.tex"
+chapter_id = "D02"
+caption = "Worked Karnaugh-map reduction for F equal to the sum of minterms 1, 2, 3, 5, and 7. A four-cell group retains C; an overlapping two-cell group retains not-A B, giving F equals C plus not-A B."
+alt = "A two-row, four-column Karnaugh map uses Gray-code columns 00, 01, 11, 10. The required-one cells are filled. A blue rectangle surrounds the four cells where C is one, and a red rectangle surrounds the two top-row cells where A is zero and B is one. Text at right shows how changing variables disappear from each product."
+
+[[circuit]]
+id = "d02-kmap-rules"
+source = "d02-kmap-rules.tex"
+chapter_id = "D02"
+caption = "Karnaugh grouping geometry. Legal groups are rectangular and contain a power-of-two number of cells; opposite edges are adjacent. Diagonal cells are not adjacent, and a three-cell region is not a conventional implicant group."
+alt = "Three small Karnaugh maps compare a legal four-cell rectangle, a legal group wrapping between the left and right edges, and illegal diagonal and three-cell choices."
+
+[[circuit]]
+id = "d02-ripple-adder"
+source = "d02-ripple-adder.tex"
+chapter_id = "D02"
+caption = "A four-bit ripple-carry adder built from four full-adder blocks. The highlighted carry chain runs from C0 through three carry outputs before the final full adder can settle S3, giving three carry-stage delays plus one carry-to-sum delay."
+alt = "Four full-adder blocks for bits zero through three are arranged left to right. Each receives A i and B i from above and produces S i below. A highlighted horizontal carry path runs from C0 through C1, C2, and C3; the final block produces S3 and C4."
+
+[[circuit]]
+id = "d02-comparator"
+source = "d02-comparator.tex"
+chapter_id = "D02"
+caption = "Two views of four-bit comparison. Four XNOR results feed a balanced two-level AND tree for equality. The magnitude cascade carries equal-so-far and greater-so-far state from the most-significant bit to the least-significant bit; a worked trace shows the first differing bit fixing the result."
+alt = "Panel a shows four pairs of operand bits entering XNOR gates. Two pairwise AND gates and one final AND gate combine the four distinct match nets into equality. Panel b shows four comparator slices ordered from bit 3 to bit 0. Equal and greater state enters at bit 3, propagates between slices, and produces EQ, GT, and LT after bit 0. A trace compares 1010 with 1001."
+
+[[circuit]]
+id = "d02-adder-subtractor"
+source = "d02-adder-subtractor.tex"
+chapter_id = "D02"
+caption = "A shared adder-subtractor conditions every B bit with SUB and uses the same SUB as carry-in. The n-bit block exposes result, carry or no-borrow, and the two carries whose XOR reports signed overflow."
+alt = "Panel a shows B i and SUB entering an XOR gate to produce conditioned bit X i. Panel b shows A entering an n-bit adder directly, B passing through a bank of n XOR gates, and SUB controlling the XOR bank and carry-in C0. The adder produces result D, carry Cn, and carries Cn minus 1 and Cn for an overflow XOR."
+
+[[circuit]]
+id = "d02-alu-datapath"
+source = "d02-alu-datapath.tex"
+chapter_id = "D02"
+caption = "A four-bit ALU data path tied directly to its operation table. Parallel AND, OR, and shared add-subtract paths feed a four-input result multiplexer. OP0 controls subtraction, OP selects the result, and defined flag logic uses the selected result and arithmetic carries. Repeated C3 and C4 labels denote the same carry nets."
+alt = "Operands A and B fan out to bitwise AND, bitwise OR, and shared adder-subtractor blocks. Their results feed ports zero through three of a four-to-one multiplexer, with the shared arithmetic result feeding ports two and three. OP selects the result and OP0 controls subtraction. Result Y and carries C3 and C4 enter exact flag equations for C, V, N, and Z."
+
+[[circuit]]
+id = "d02-exercise-analysis"
+source = "d02-exercise-analysis.tex"
+chapter_id = "D02"
+caption = "Two author-created exercise drawings using the chapter convention: a gate network to translate into an expression and truth table, and a four-to-one multiplexer whose data inputs must be completed for a specified function."
+alt = "Panel a shows A and B entering an AND gate, C entering a NOT gate, and those two results entering an XOR gate that produces Y. Panel b shows a blank four-to-one multiplexer with data inputs D0 through D3, select S1 equal to B and S0 equal to C, and output F."
+
+[[circuit]]
+id = "d02-full-adder-gates"
+source = "d02-full-adder-gates.tex"
+chapter_id = "D02"
+caption = "A full adder in the book's IEEE distinctive-shape convention. The first XOR and AND form propagate and generate; repeated net labels avoid wire crossings; the second XOR forms the sum; the second AND and final OR form carry-out."
+alt = "Formal gate schematic for a one-bit full adder. A i and B i feed an XOR producing P i and an AND producing G i. Repeated net labels connect P i and carry-in to a second XOR producing S i and a second AND producing P i C i. An OR combines G i and P i C i into carry-out C i plus 1."
+
+[[circuit]]
+id = "d02-hazard-gates"
+source = "d02-hazard-gates.tex"
+chapter_id = "D02"
+caption = "Formal gate schematic for F equals AB plus not-A C. A splits into direct and inverted paths that reconverge at the OR gate. The dashed BC consensus path leaves the settled function unchanged and covers the illustrated static-1 hazard."
+alt = "A and B enter an upper AND gate. A also enters a NOT gate, whose output connects directly to a lower AND gate with C. Both products enter an OR gate producing F. Repeated B and C net labels feed a dashed optional consensus AND whose output reaches the third OR input."
+
+[[circuit]]
 id = "d01-bipolar-logic"
 source = "d01-bipolar-logic.tex"
 chapter_id = "D01"

@@ -1,0 +1,47 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}
+  \ctikzset{logic ports=ieee}
+  \node[and port, number inputs=2] (U) at (5.0,4.2) {};
+  \node[and port, number inputs=2] (L) at (5.0,1.4) {};
+  \node[not port, anchor=out, scale=0.75, transform shape]
+    (N) at ($(L.in 1)+(-0.7,0)$) {};
+  \node[and port, number inputs=2] (K) at (5.0,-1.8) {};
+  \node[or port, number inputs=3] (O) at (9.2,1.4) {};
+
+  \coordinate (BIN) at ($(U.in 1)+(-3.8,0)$);
+  \coordinate (AIN) at ($(U.in 2)+(-3.8,0)$);
+  \coordinate (CIN) at ($(L.in 2)+(-3.8,0)$);
+  \coordinate (AJ) at ($(AIN)+(1.4,0)$);
+
+  \draw (BIN) node[ocirc, label={[font=\small]left:{$B$}}] {}
+    -- (U.in 1);
+  \draw (AIN) node[ocirc, label={[font=\small]left:{$A$}}] {}
+    -- (U.in 2);
+  \draw (AJ) -- (AJ |- N.in) -- (N.in);
+  \node[circ] at (AJ) {};
+  \draw (CIN) node[ocirc, label={[font=\small]left:{$C$}}] {}
+    -- (L.in 2);
+  \draw (N.out) -- (L.in 1);
+
+  \draw (U.out) -- ++(1.0,0) |- (O.in 1);
+  \node[font=\small, above] at ($(U.out)+(0.8,0)$) {$AB$};
+  \draw (L.out) -- (O.in 2);
+  \node[font=\small, above] at ($(L.out)!0.45!(O.in 2)$)
+    {$\overline{A}C$};
+  \draw (O.out) -- ++(1.0,0)
+    node[ocirc, label={[font=\small]right:{$F$}}] {};
+
+  \draw[dashed] ($(K.in 1)+(-1.0,0)$)
+    node[left,font=\small] {$B$} -- (K.in 1);
+  \draw[dashed] ($(K.in 2)+(-1.0,0)$)
+    node[left,font=\small] {$C$} -- (K.in 2);
+  \draw[dashed] (K.out) -- ++(1.4,0) |- (O.in 3);
+  \node[font=\small, below] at ($(K.out)+(0.8,0)$) {$BC$};
+  \node[font=\small, align=center] at (5.0,-3.0)
+    {repeated labels denote the same nets;\\
+     dashed consensus path is optional};
+\end{circuitikz}
+\end{document}

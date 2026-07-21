@@ -1,0 +1,57 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+\usetikzlibrary{arrows.meta,calc}
+
+\begin{document}
+\begin{circuitikz}[>=Latex,font=\small]
+  \ctikzset{logic ports=ieee}
+  \node[font=\small\bfseries] at (2.8,5.3)
+    {(a) One conditioned operand bit};
+  \node[xor port,number inputs=2] (XB) at (3.2,3.2) {};
+  \draw (XB.in 1) -- ++(-1.0,0) node[left] {$B_i$};
+  \draw (XB.in 2) -- ++(-1.0,0) node[left] {$SUB$};
+  \draw (XB.out) -- ++(1.0,0) node[right] {$X_i=B_i\oplus SUB$};
+
+  \node[font=\small\bfseries] at (11.2,5.3)
+    {(b) Shared $n$-bit adder--subtractor};
+  \node[draw,minimum width=2.4cm,minimum height=1.35cm,align=center]
+    (BANK) at (9.0,2.7) {$n$ XOR gates\\as in panel (a)};
+  \node[draw,minimum width=2.5cm,minimum height=2.5cm,align=center]
+    (ADD) at (13.0,3.3) {$n$-bit\\adder};
+
+  \draw[->] ($(ADD.west)+( -4.9,0.78)$)
+    node[left] {$A[n-1:0]$} -- ($(ADD.west)+(0,0.78)$);
+  \draw[->] ($(BANK.west)+(-1.25,0)$)
+    node[left] {$B[n-1:0]$} -- (BANK.west);
+  \draw[->] (BANK.east) -- ($(ADD.west)+(0,-0.55)$)
+    node[midway,above] {$X[n-1:0]$};
+
+  \coordinate (SUBJ) at (8.0,0.55);
+  \draw (SUBJ) node[ocirc,label={[font=\small]left:{$SUB$}}] {}
+    -- (9.0,0.55) -- (9.0,2.025);
+  \node[circ] at (9.0,0.55) {};
+  \draw[->] (9.0,0.55) -- (13.0,0.55) -- ($(ADD.south)+(0,0)$)
+    node[pos=0.62,below] {$C_0=SUB$};
+
+  \draw[->] (ADD.east) -- ++(1.4,0)
+    node[right] {$D[n-1:0]$};
+  \draw[->] ($(ADD.east)+(0,0.65)$) -- ++(1.4,0)
+    node[right] {$C_n$ (carry / no borrow)};
+  \draw[->] ($(ADD.east)+(0,-0.55)$) -- ++(1.4,0)
+    node[right] {$C_{n-1}$};
+
+  \node[xor port,number inputs=2] (XV) at (17.0,1.1) {};
+  \draw[->] ($(XV.in 1)+(-1.0,0)$)
+    node[left] {$C_{n-1}$} -- (XV.in 1);
+  \draw[->] ($(XV.in 2)+(-1.0,0)$)
+    node[left] {$C_n$} -- (XV.in 2);
+  \draw[->] (XV.out) -- ++(0.8,0)
+    node[right] {$V=C_{n-1}\oplus C_n$};
+
+  \node[align=center,fill=gray!8,draw,rounded corners=3pt,inner sep=5pt]
+    at (11.1,-0.55)
+    {$SUB=0$: $D=A+B$\qquad
+     $SUB=1$: $D=A+\overline B+1=A-B\pmod{2^n}$\\
+     repeated carry labels denote the same nets};
+\end{circuitikz}
+\end{document}

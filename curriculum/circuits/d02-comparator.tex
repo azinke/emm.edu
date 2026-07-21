@@ -1,0 +1,70 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+\usetikzlibrary{arrows.meta,calc}
+
+\begin{document}
+\begin{circuitikz}[>=Latex]
+  \ctikzset{logic ports=ieee}
+
+  \node[font=\small\bfseries] at (5.0,6.3)
+    {(a) Four-bit equality};
+  \foreach \y/\i in {5.1/3,3.8/2,2.5/1,1.2/0} {
+    \node[xnor port, number inputs=2] (X\i) at (3.1,\y) {};
+    \draw (X\i.in 1) -- ++(-0.8,0)
+      node[left,font=\small] {$A_{\i}$};
+    \draw (X\i.in 2) -- ++(-0.8,0)
+      node[left,font=\small] {$B_{\i}$};
+  }
+  \node[and port, number inputs=2] (EH) at (6.0,4.45) {};
+  \node[and port, number inputs=2] (EL) at (6.0,1.85) {};
+  \node[and port, number inputs=2] (EA) at (9.0,3.15) {};
+
+  % A balanced AND tree gives every equality bit a separate, visible net.
+  \draw (X3.out) -- ++(0.80,0) |- (EH.in 1);
+  \draw (X2.out) -- ++(0.45,0) |- (EH.in 2);
+  \draw (X1.out) -- ++(0.45,0) |- (EL.in 1);
+  \draw (X0.out) -- ++(0.80,0) |- (EL.in 2);
+  \draw (EH.out) -- ++(0.85,0) |- (EA.in 1);
+  \draw (EL.out) -- ++(0.55,0) |- (EA.in 2);
+  \draw (EA.out) -- ++(0.8,0)
+    node[right,font=\small] {$E=(A=B)$};
+
+  \begin{scope}[xshift=2cm]
+  \node[font=\small\bfseries] at (18.5,6.3)
+    {(b) Unsigned magnitude cascade, MSB to LSB};
+  \tikzset{slice/.style={draw,minimum width=2.05cm,minimum height=2.0cm,
+                        align=center,font=\small}}
+  \node[slice] (S3) at (14.7,3.5) {bit 3\\compare};
+  \node[slice] (S2) at (17.4,3.5) {bit 2\\compare};
+  \node[slice] (S1) at (20.1,3.5) {bit 1\\compare};
+  \node[slice] (S0) at (22.8,3.5) {bit 0\\compare};
+
+  \foreach \nodeid/\i in {S3/3,S2/2,S1/1,S0/0} {
+    \draw[->] ($(\nodeid.north)+(-0.38,0.85)$)
+      node[above,font=\small] {$A_{\i}$} --
+      ($(\nodeid.north)+(-0.38,0)$);
+    \draw[->] ($(\nodeid.north)+(0.38,0.85)$)
+      node[above,font=\small] {$B_{\i}$} --
+      ($(\nodeid.north)+(0.38,0)$);
+  }
+
+  \draw[->] ($(S3.west)+(-1.6,0)$)
+    node[left,align=right,font=\small] {$e_4=1$\\$g_4=0$} -- (S3.west);
+  \draw[->] (S3.east) -- (S2.west)
+    node[midway,above,font=\scriptsize] {$(e_3,g_3)$};
+  \draw[->] (S2.east) -- (S1.west)
+    node[midway,above,font=\scriptsize] {$(e_2,g_2)$};
+  \draw[->,blue!70!black,line width=1.2pt] (S1.east) -- (S0.west)
+    node[midway,above,font=\scriptsize,black] {$(e_1,g_1)$};
+  \draw[->] (S0.east) -- ++(1.5,0)
+    node[right,align=left,font=\small]
+      {$EQ=e_0$\\$GT=g_0$\\$LT=\overline{e_0+g_0}$};
+
+  \node[draw,rounded corners=3pt,fill=gray!8,align=left,font=\small,
+        inner sep=6pt] at (18.7,0.45)
+    {$A=1010,\;B=1001$: bits 3 and 2 match;\\
+     bit 1 is the first difference and sets $GT=1$;\\
+     bit 0 cannot reverse that decision.};
+  \end{scope}
+\end{circuitikz}
+\end{document}

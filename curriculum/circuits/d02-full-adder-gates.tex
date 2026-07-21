@@ -1,0 +1,46 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}
+  \ctikzset{logic ports=ieee}
+  \node[xor port, number inputs=2] (X1) at (3.0,4.5) {};
+  \node[and port, number inputs=2] (A1) at (3.0,0.5) {};
+  \node[xor port, number inputs=2] (X2) at (7.0,4.2) {};
+  \node[and port, number inputs=2] (A2) at (7.0,1.8) {};
+  \node[or port, number inputs=2] (O1) at (10.8,1.2) {};
+
+  \coordinate (AIN) at ($(X1.in 1)+(-2.2,0)$);
+  \coordinate (BIN) at ($(X1.in 2)+(-2.2,0)$);
+  \draw (AIN) node[ocirc, label={[font=\small]left:{$A_i$}}] {}
+    -- (X1.in 1);
+  \draw (BIN) node[ocirc, label={[font=\small]left:{$B_i$}}] {}
+    -- (X1.in 2);
+  \draw ($(A1.in 1)+(-1.0,0)$)
+    node[ocirc, label={[font=\small]left:{$A_i$}}] {} -- (A1.in 1);
+  \draw ($(A1.in 2)+(-1.0,0)$)
+    node[ocirc, label={[font=\small]left:{$B_i$}}] {} -- (A1.in 2);
+
+  \coordinate (PJ) at ($(X1.out)+(0.7,0)$);
+  \draw (X1.out) -- (PJ) -- (PJ |- X2.in 1) -- (X2.in 1);
+  \node[font=\small, above] at ($(X1.out)!0.55!(PJ)$) {$P_i$};
+  \draw ($(A2.in 1)+(-1.0,0)$)
+    node[ocirc, label={[font=\small]left:{$P_i$}}] {} -- (A2.in 1);
+
+  \coordinate (CI) at ($(X2.in 2)+(-2.2,-0.8)$);
+  \draw (CI) node[ocirc, label={[font=\small]left:{$C_i$}}] {}
+    -- ++(0.8,0) |- (X2.in 2);
+  \draw ($(A2.in 2)+(-1.0,0)$)
+    node[ocirc, label={[font=\small]left:{$C_i$}}] {} -- (A2.in 2);
+
+  \draw (X2.out) -- ++(1.0,0)
+    node[ocirc, label={[font=\small]right:{$S_i$}}] {};
+  \coordinate (GJ) at ($(A1.out)+(5.1,0)$);
+  \draw (A1.out) -- (GJ) -- (GJ |- O1.in 2) -- (O1.in 2);
+  \node[font=\small, below] at ($(A1.out)!0.45!(GJ)$) {$G_i$};
+  \draw (A2.out) -- ++(0.7,0) |- (O1.in 1);
+  \node[font=\small, above] at ($(A2.out)+(0.9,0)$) {$P_iC_i$};
+  \draw (O1.out) -- ++(1.0,0)
+    node[ocirc, label={[font=\small]right:{$C_{i+1}$}}] {};
+\end{circuitikz}
+\end{document}

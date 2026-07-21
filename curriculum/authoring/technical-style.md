@@ -124,6 +124,12 @@
 - Lead into every visual with a question or observation that tells the reader
   what to inspect. Follow it with the conclusion the visual supports. A figure
   must participate in the explanation; it is not decoration.
+- A functional block diagram specifies an interface; an implementation
+  schematic explains a mechanism. Use both when the chapter teaches both claims.
+  Label vector widths, bit order, mode and opcode inputs, enables, active-low
+  polarity, status outputs, and signal direction as applicable. For a repeated
+  structure, expose one stage, show how the stage boundary repeats, and highlight
+  the relevant candidate or critical path under the stated delay model.
 - During drafting, use an explicit bracketed cue such as
   `[Diagram cue: show the source, return path, and declared current direction.]`
   when the required visual does not yet exist. Replace the cue with a sourced,
@@ -131,6 +137,11 @@
 - Use a small ASCII schematic only when it remains unambiguous in plain text and
   print. Use CircuitikZ for component-level circuits and a recoverable vector
   figure for waveforms or diagrams whose geometry carries meaning.
+- When the taught reasoning is graphical, exercise it graphically. Include at
+  least one supplied visual to trace, analyze, or debug and one task to draw,
+  complete, group, or repair a visual. The prompt must declare enough labels,
+  conventions, polarities, and conditions for a determinate answer. Captions and
+  alt text describe the given diagram without disclosing the solution.
 
 ## Readability pass
 
@@ -408,6 +419,31 @@
 
 ## Circuits
 
+- For binary logic schematics, use the distinctive-shape gate family introduced
+  in D02 and documented in IEEE/ANSI 91/91a-1991. The book's informal house label for this
+  family is Anglo-Saxon convention; American and Anglo-American are alternative
+  informal teaching aliases, not standards titles.
+  Do not imply that IEEE and IEC are mutually
+  exclusive names for two symbol shapes. Preserve IEC rectangular forms when
+  reproducing or comparing an IEC source, but do not mix symbol families inside
+  one ordinary schematic.
+- Draw multiplexers and demultiplexers as labeled tapered functional blocks,
+  with the multiple-port side wider than the single-port side. Show select
+  inputs, port numbers, select-bit significance, enable and inversion marks, and
+  signal direction. A tapered MUX/DEMUX is a hierarchical function symbol, not
+  an elementary gate. Other architectural blocks may use labeled rectangles
+  when they describe hierarchy rather than individual Boolean gates.
+- Use labeled functional blocks for comparators, adders/subtractors, ALUs,
+  encoders, decoders, and similar hierarchy. A block outline does not replace
+  interface detail: show operand and result widths, bit order, mode or opcode
+  inputs, carry/borrow/cascade ports, and defined flags as applicable. Follow the
+  interface view with a gate, stage, or data-path view when the prose derives
+  internal operation.
+- Draw AND, OR, XOR, buffers, and inversions with formal gate symbols. Use an
+  output bubble for logical inversion, so NAND, NOR, and XNOR remain visually
+  related to their uncomplemented gates. Keep input/output polarity, active-low
+  names, junction dots, and non-connecting crossings explicit.
+
 - Use a rectangular visual grammar. Place the positive supply toward the top,
   the return or negative rail toward the bottom, inputs toward the left, and
   outputs toward the right when the topology permits. Align repeated branches,
@@ -426,6 +462,10 @@
   for right-angle turns. Do not use a visually estimated coordinate near a
   terminal: a small symbol, scale, or orientation change can otherwise leave a
   gap or make a wire appear to pass through the device.
+- Apply exact-anchor routing to every gate and functional-block port, not only
+  transistor terminals. A wire that visually approaches a port is not connected.
+  Inspect every rendered endpoint at high zoom and at final print scale; correct
+  gaps, overshoot, doubled segments, and half-grid offsets at the source.
 - Rotate or mirror a device when doing so makes connected terminals face one
   another and removes a crossing. Matched mirror devices should normally face
   inward with a short shared-control connection; route a diode-connected strap
@@ -508,6 +548,13 @@
 - Cite the first consequential claim; a closing References note is a guide, not a
   substitute for point-of-use support. Prefer primary standards, manufacturer
   documents, and canonical technical sources.
+- Cite standards-based symbols and terminology, canonical circuit
+  organizations and algorithms, manufacturer data, and every non-original or
+  genuinely adapted figure where first used. Credit adapted or reproduced
+  figures in their captions and record their license or permission provenance.
+  An original explanatory drawing still needs adjacent support for sourced
+  topology or notation. Algebra derived completely in the chapter does not need
+  a citation after every manipulation.
 - Verify new bibliography metadata against an official or primary source and
   audit that every citation key resolves before rendering the final draft.
 - Keep `link-citations: true` and `link-bibliography: true` in the book

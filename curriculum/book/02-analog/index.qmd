@@ -1,5 +1,5 @@
 ---
-title: "II — Devices and analog circuits"
+title: "Devices and analog circuits"
 description: "From semiconductor behavior to measured analog signal chains."
 page-role: part
 part-id: analog

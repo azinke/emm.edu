@@ -26,7 +26,8 @@ After completing this chapter, the reader should be able to:
 
 - information, symbols, modulation, coding, and synchronization;
 - noise, SNR, probability of error, and channel capacity intuition;
-- link budgets, path loss, fading, interference, and coexistence;
+- link budgets across free-space and guided channels, path loss, fiber
+  dispersion consequences, fading, interference, and coexistence;
 - transmission lines, impedance matching, and RF measurement;
 - antenna patterns, polarization, efficiency, and placement;
 - legal spectrum use, protocol selection, and field validation;

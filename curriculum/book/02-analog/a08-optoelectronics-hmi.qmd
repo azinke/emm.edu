@@ -19,9 +19,11 @@ Practical work remains limited to current-limited, extra-low-voltage sources,
 approved components, local supervision, and an approved procedure. Do not stare
 into an energized emitter or view it through magnifying optics. Visible-source
 photobiological safety depends on accessible radiance, spectrum, exposure, and
-the applicable product standard [@iec62471_7_2023]. Bare laser
-diodes, unclassified optical sources, mains-connected circuits, and tests across
-unknown-energy insulation barriers are outside this chapter's boundary
+the applicable product standard [@iec62471_7_2023]. A disconnected fiber end
+can expose an invisible beam, and a viewing microscope can increase the hazard;
+inspection requires a verified de-energized source and approved procedure.
+Bare laser diodes, unclassified optical sources, mains-connected circuits, and
+tests across unknown-energy insulation barriers are outside this chapter's boundary
 [@iec60825_1_2014; @iec61010].
 
 An optical signal-transfer component in a schematic does not authorize work on
@@ -67,7 +69,7 @@ flowchart TB
   OF --> H["human perception"]
   H --> M["interpreted meaning"]
 
-  X["scene or optical source"] --> G["geometry and spectrum"]
+  X["scene or optical source"] --> G["free-space or guided path:<br/>geometry, spectrum, and loss"]
   G --> PD["photodetector"]
   PD --> A["analog interface"]
   A --> D["electrical decision"]
@@ -105,8 +107,16 @@ should be able to:
 - bound LED current and resistor dissipation across source, device, and
   resistance variation, and separate electrical safety from optical-output
   variation;
-- derive photodiode responsivity from photon conversion, design a
-  transimpedance operating point, and preserve headroom under ambient light;
+- relate photoconductivity, photovoltaic separation, transistor gain, and
+  avalanche multiplication to photodiodes, phototransistors,
+  photoresistors, and photovoltaic cells, then select a suitable detector and
+  readout from speed, linearity, sensitivity, spectrum, and history;
+- derive photodiode responsivity from photon conversion, distinguish
+  photovoltaic sensing from power delivery, design a transimpedance operating
+  point, and preserve headroom under ambient light;
+- construct a bounded optical power budget through source launch, fiber,
+  connectors, bends, and detector limits while keeping power margin distinct
+  from timing and communication evidence;
 - specify an **optocoupler**, an enclosed emitter-detector signal link, from
   guaranteed current-transfer,
   output-voltage, timing, and insulation conditions without treating one rating
@@ -294,7 +304,7 @@ An LED driver controls electrical current. The LED, package optics, temperature,
 production bin, mounting, ambient field, and observer geometry jointly control
 what the user or detector receives.
 
-Inspect the left side of @fig-a08-led-photodiode-interface. The source,
+The left side of @fig-a08-led-photodiode-interface contains the source,
 resistor, LED, switching transistor, base drive, and return all belong to the
 current path. Omitting the source tolerance or transistor voltage would change
 the calculated current.
@@ -303,9 +313,10 @@ the calculated current.
 
 ### A bounded series-resistor design
 
-Define $I_F>0$ downward through $R_{\mathrm{LED}}$, the LED, and the transistor.
-Let $V_F>0$ be the LED anode-to-cathode voltage and $V_{CE}>0$ the transistor
-collector-to-emitter voltage. KVL gives the exact lumped branch relation
+The reference current $I_F>0$ flows downward through $R_{\mathrm{LED}}$, the
+LED, and the transistor. The voltage $V_F>0$ is referenced from LED anode to
+cathode, and $V_{CE}>0$ from transistor collector to emitter. KVL gives the
+exact lumped branch relation
 
 $$
 V_S=I_FR_{\mathrm{LED}}+V_F+V_{CE}.
@@ -347,7 +358,7 @@ $$ {#eq-a08-led-current-lower}
 Both bounds require the same temperature and operating region to which the
 device-voltage limits apply.
 
-Consider a 220 $\Omega$, 5% resistor, a 4.75–5.25 V supply, and the cited
+One bounded example uses a 220 $\Omega$, 5% resistor, a 4.75–5.25 V supply, and the cited
 TLHK5100 red LED. The datasheet gives $V_F\le2.6$ V at 20 mA and
 $T_{\mathrm{amb}}=25~^\circ$C, but it does not give a guaranteed minimum
 $V_F$. Treat $V_{CE}\le0.20$ V as an illustrative transistor design
@@ -477,7 +488,7 @@ $$
 \dot N_\gamma=\frac{\Phi_{e,D}}{E_\gamma}.
 $$ {#eq-a08-photon-rate}
 
-Let $\eta_{\mathrm{ext}}$ be the **external quantum efficiency**, the average
+The **external quantum efficiency** $\eta_{\mathrm{ext}}$ is the average
 number of collected electron-hole pairs per incident photon for the stated
 wavelength and bias. When each collected pair contributes charge magnitude
 $q_e$, the photocurrent magnitude is
@@ -521,24 +532,142 @@ calculated value above $q_e\lambda/(hc)$ implies an internal gain mechanism or
 an inconsistent definition, not more than one collected primary pair per
 photon in an ordinary unity-gain photodiode.
 
-### Photodiode, phototransistor, and photoresistor behavior
+### Effects, detector families, and terminal behavior
 
-These detector names do not describe interchangeable parts:
+Photon absorption can create mobile electron--hole pairs, but the device
+structure determines what appears at its terminals. In the **photoconductive
+effect**, illumination changes carrier population and therefore the
+conductance of biased material. A photoresistor exposes this bulk effect as a
+two-terminal resistance. In the **photovoltaic effect**, a built-in junction
+field separates photocarriers, so an illuminated junction can produce current
+or voltage without an externally applied detector bias. A phototransistor adds
+transistor current gain to a primary photocurrent; an avalanche photodiode adds
+high-field carrier multiplication. A01 develops the band and junction physics
+behind these effects [@sze2006physics].
 
-| Detector | Primary electrical output | Strength | Principal limitations |
-|---|---|---|---|
-| photodiode | light-generated junction current | linearity, speed, defined responsivity | small current; capacitance, dark current, amplifier noise |
-| phototransistor | optically generated base drive produces collector current | internal current gain | wide gain spread, slower response, saturation storage, temperature dependence |
-| photoresistor | illumination changes bulk resistance | simple large resistance change | slow and history-dependent response; material and environmental restrictions |
+The word *photoconductive* requires particular care. A reverse-biased
+photodiode is conventionally said to operate in *photoconductive mode*, yet it
+remains a junction current-source device. It has not become a light-dependent
+resistor. The external field changes depletion width, capacitance, collection
+time, dark-current consequences, and available headroom; it does not create the
+primary photocurrent.
 
-Zero-bias **photovoltaic operation** often favors low dark current. Reverse-biased
-**photoconductive operation** can reduce junction capacitance and improve speed
-but generally increases dark-current consequences. Reverse bias does not create
-the primary photocurrent; absorbed photons do. Device area improves collection
-for a fixed irradiance while usually increasing capacitance
-[@sze2006physics; @fraden2016sensors].
+| Detector family | Terminal behavior and useful property | Important limits |
+|---|---|---|
+| PN or PIN photodiode | light-generated junction current; good linearity, speed, and defined responsivity | small current; capacitance, dark current, and amplifier noise |
+| analog avalanche photodiode | high-field carrier multiplication provides internal gain | high and controlled bias, excess noise, temperature dependence, and gain stability |
+| single-photon avalanche diode (SPAD) | Geiger-mode avalanche produces an event for a detected photon | quenching and reset, dead time, dark counts, afterpulsing, and event-processing readout |
+| phototransistor or photodarlington | optically generated base drive receives current gain | wide gain spread, lower linearity, slower response, saturation storage, and temperature dependence |
+| photoresistor or LDR | illumination changes bulk resistance; large, simple change for slow thresholds | slow, asymmetric, history-dependent response; spectral and material restrictions |
+| photovoltaic cell used as a sensor | illuminated junction can produce measurable current or voltage without external bias | area and capacitance, load-dependent response, leakage, and modest signal bandwidth |
+| image-sensor array | spatially resolved conversion with integrated addressing and readout | pixel nonuniformity, optics, timing, data volume, and calibration |
+| thermal detector | absorbed radiation raises temperature; potentially broad spectral response | relatively slow response, thermal drift, and reference compensation |
 
-The BPW34 demonstrates why the conditions stay attached. At 25 °C, 5 V reverse
+This map guides selection rather than ranking. A photoresistor can be effective
+for a slow ambient-light threshold, while a PIN photodiode is usually the more
+tractable choice for a linear, modulated receiver. Avalanche and array devices
+need operating and readout detail beyond this chapter [@fraden2016sensors].
+
+### Photovoltaic sensing and photovoltaic power
+
+An illuminated photodiode has three distinct terminal conditions. Using the
+A01 diode-voltage convention and the first-order illuminated-junction relation
+
+$$
+I_D=I_S\!\left(\exp\!\frac{V_D}{nV_T}-1\right)-I_{\mathrm{ph}},
+$$ {#eq-a08-illuminated-diode}
+
+a short circuit gives $V_D=0$ and $I_D\approx-I_{\mathrm{ph}}$. The figure uses
+delivered current $I_{out}\equiv-I_D$ at the positive external terminal, so its
+power-producing quadrant plots positive output current rather than the negative
+diode current used in @eq-a08-illuminated-diode. A TIA in
+**photovoltaic mode** holds the photodiode near this zero-terminal-voltage
+condition and measures current. This is not an open circuit, and zero applied
+bias does not imply that the junction lacks its internal built-in field.
+
+At open circuit, $I_D=0$. Under the single-diode law above, with shunt leakage
+and other nonideal recombination branches neglected, the voltage is
+
+$$
+V_{OC}=nV_T\ln\!\left(1+\frac{I_{\mathrm{ph}}}{I_S}\right).
+$$ {#eq-a08-open-circuit-voltage}
+
+No external current flows at this endpoint. Between short circuit and open
+circuit, a load can establish a nonzero voltage and current so that the
+illuminated junction delivers power. The maximum-power point lies between the
+two endpoints; $V_{OC}I_{SC}$ is a bounding rectangle, not the available
+maximum output power. Series resistance, shunt leakage, recombination,
+temperature, and spectrum alter the practical curve [@sze2006physics].
+
+![An illuminated junction supports near-zero-voltage current sensing, open-circuit voltage measurement, and loaded power delivery at different operating points.](../figures/a08-illuminated-junction-terminal-behavior.svg){#fig-a08-photovoltaic-operating-points fig-alt="An equivalent circuit shows a photocurrent source with a diode, shunt resistance, series resistance, and external load. A companion current-voltage plot marks short circuit at zero voltage, open circuit at zero current, a maximum-power point between them, and a near-zero-voltage TIA sensing point. The power-producing region is distinguished from the sensing endpoints." width="98%"}
+
+A sensing photodiode and a solar cell share the photovoltaic mechanism, but
+their optimization differs. A sensing device emphasizes responsivity,
+capacitance, dark current, bandwidth, and amplifier compatibility. A power cell
+emphasizes conversion efficiency, area, series and shunt losses, thermal
+behavior, and operation near a power-producing load point. This chapter uses
+the terminal curve to prevent measurement errors; S09 develops photovoltaic
+modules, fill factor, maximum-power-point tracking, storage, and energy yield.
+
+### Photoresistor interfaces retain spectrum and history
+
+A **photoresistor**, also called a **light-dependent resistor (LDR)** or
+photoconductive cell, is a passive two-terminal component. It does not generate
+a defined output voltage. Its conductance is better represented conceptually as
+
+$$
+G_{LDR}=G_{dark}+\Delta G\!\left(E_{e,\lambda}(\lambda),T,\mathcal H\right),
+$$ {#eq-a08-ldr-conductance}
+
+where the incident spectral irradiance $E_{e,\lambda}(\lambda)$, temperature
+$T$, and illumination history $\mathcal H$ all matter. A monochromatic source
+reduces the spectral argument to irradiance at one wavelength. A resistance
+quoted at a value in lux also
+inherits the source spectrum and adaptation conditions of that test: lux is
+weighted for human vision, not for the LDR's spectral responsivity. Equal-lux
+lamps with different spectra need not produce equal resistance
+[@cie2019photometry; @fraden2016sensors].
+
+@fig-a08-photoresistor-divider supplies the required bias. With an unloaded
+receiver and the LDR in the lower leg,
+
+$$
+V_O=V_S\frac{R_{LDR}}{R_S+R_{LDR}},
+\qquad
+R_{TH}=R_S\parallel R_{LDR}.
+$$ {#eq-a08-ldr-divider}
+
+Here $R_{TH}$ is the source resistance seen at $V_O$ after the ideal supply is
+set to zero and before $R_{IN}$ is attached. Increasing illumination normally lowers $R_{LDR}$ and therefore lowers $V_O$
+in this arrangement. Exchanging the two divider elements reverses the polarity.
+Finite receiver resistance replaces the lower leg by
+$R_{LDR}\parallel R_{IN}$, while input capacitance and ADC acquisition current
+make the transient response depend on source resistance as well as on the LDR.
+
+![A loaded LDR divider turns illumination-dependent resistance into a measurable voltage; the receiving circuit remains part of the divider.](../figures/a08-photoresistor-divider.png){#fig-a08-photoresistor-divider fig-alt="Supply V S drives fixed resistor R S and then a light-dependent resistor to ground. Their junction is test point TP LDR and output V O. An ADC or comparator input is represented by resistance R IN and capacitance C IN from the output to ground. Arrows illuminate the photoresistor, and divider current flows through both divider elements." width="82%"}
+
+For a concrete scale, the NSL-19M51 CdS LDR datasheet specifies 20--100
+k$\Omega$ at 10 lx under a 2854 K source, a typical 5 k$\Omega$ at 100 lx, a
+typical 550 nm spectral peak, and at least 20 M$\Omega$ dark resistance measured
+10 s after removal of light. These are condition-bound part data, not universal
+LDR properties [@advancedphotonix_nsl19m51]. With $V_S=3.3$ V,
+$R_S=47$ k$\Omega$, and $R_{IN}=1.0$ M$\Omega$, the specified 10 lx range gives
+approximately 0.97--2.18 V. Ignoring $R_{IN}$ would predict 0.99--2.24 V. A
+threshold designed from one typical resistance would therefore discard both
+part spread and measurable loading.
+
+Dark resistance depends on prior exposure and elapsed dark-adaptation time;
+rise and decay can also differ substantially. A credible interface specification
+therefore keeps the named source spectrum, light and dark resistance bounds,
+adaptation time, response curves, temperature range, voltage and dissipation
+limits, fixed-resistor tolerance, leakage, and material-compliance status
+together. For a cadmium-containing part, the named product's material
+declaration and the requirements of each target market remain explicit design
+evidence rather than assumed interchangeability. A05 owns calibration and cross-sensitivity, while A04 owns
+comparator hysteresis when the desired result is a binary threshold.
+
+Returning to the junction detector before its readout, the BPW34 demonstrates
+why the conditions stay attached. At 25 °C, 5 V reverse
 bias, 950 nm, and irradiance $1~\mathrm{mW\,cm^{-2}}$, the manufacturer
 specifies reverse light current of 40 µA minimum and 50 µA typical. At 10 V
 reverse bias in darkness, reverse current is 2 nA typical and 30 nA maximum.
@@ -567,8 +696,8 @@ Reversing the photodiode or current reference reverses the output sign. The
 relation remains valid only while the op amp input common-mode range, output
 range, slew rate, gain bandwidth, and stability conditions hold.
 
-Use the BPW34's typical 50 µA test-point current only as an authentic datasheet
-input, not as a guaranteed application current. With $R_F=47~\mathrm{k}\Omega$,
+The BPW34's typical 50 µA test-point current serves here only as an authentic
+datasheet input, not as a guaranteed application current. With $R_F=47~\mathrm{k}\Omega$,
 the predicted output change is
 
 $$
@@ -606,18 +735,18 @@ current fits? **Answer:** at most 26 µA under the declared polarity.
 
 ### Joined optical-link and receiver screen
 
-Join the earlier illustrative geometry to a narrowband detector with
-$\mathcal R_\lambda=0.55~\mathrm{A\,W^{-1}}$. The predicted 3.25 nW received
-signal gives
+Combining the earlier illustrative geometry with a narrowband detector of
+$\mathcal R_\lambda=0.55~\mathrm{A\,W^{-1}}$ gives the following current for
+the predicted 3.25 nW received signal:
 
 $$
 I_{\mathrm{sig}}=(0.55~\mathrm{A\,W^{-1}})(3.25~\mathrm{nW})
 =1.79~\mathrm{nA}.
 $$
 
-Let ambient light produce 8.0 µA, take $R_F=100~\mathrm{k}\Omega$ and
-$V_{\mathrm{REF}}=0.20$ V, and suppose the smaller op-amp/ADC upper linear
-limit is 3.0 V. Then $V_{\mathrm{off}}=1.000$ V and
+For example, ambient light produces 8.0 µA with $R_F=100~\mathrm{k}\Omega$,
+$V_{\mathrm{REF}}=0.20$ V, and a 3.0 V upper linear limit set by the smaller of
+the op-amp and ADC ranges. Then $V_{\mathrm{off}}=1.000$ V and
 $V_{\mathrm{on}}=1.000179$ V. The receiver preserves headroom, but a 12-bit,
 3.3 V ADC has an ideal code width of about 0.806 mV, larger than the 0.179 mV
 signal excursion. More gain would improve conversion resolution but consume
@@ -685,7 +814,7 @@ contributes shot noise. A06 develops the full budget.
 
 ### Ambient-light rejection
 
-Separate the received current into signal, ambient, and dark contributions:
+The received current contains signal, ambient, and dark contributions:
 
 $$
 I_{\mathrm{PD}}(t)
@@ -719,11 +848,87 @@ when wavelength shifts with temperature or angle. Modulation does not remove
 ambient components at nearby frequencies. Most decisively, subtraction happens
 too late if the photodiode interface or ADC has saturated.
 
-Read @fig-a08-ambient-modulation from top to bottom. The sample difference is
+In @fig-a08-ambient-modulation, the sample difference is
 meaningful in the left panel because both analog values remain distinct. In the
 right panel, the ceiling has erased part of the on state before subtraction.
 
 ![On/off subtraction rejects a slowly changing ambient pedestal only while the complete receiver remains linear. Clipping makes two physically different input currents indistinguishable.](../figures/a08-ambient-modulation.svg){#fig-a08-ambient-modulation fig-alt="Two sets of aligned emitter-command, ambient, and receiver-output waveforms. In the linear case, marked off and on samples retain their difference. In the saturated case, the on output reaches an analog ceiling while a dashed line shows the unobserved linear response. Notes state that arithmetic cannot reconstruct a clipped peak." width="98%"}
+
+### Guided optical paths and fiber link loss
+
+The preceding point-source geometry describes a freely spreading field. An
+**optical fiber** instead guides light in a core whose refractive index $n_1$
+exceeds the surrounding cladding index $n_2$. Total internal reflection gives a
+useful ray picture; guided electromagnetic modes provide the more complete wave
+description. For an ideal step-index fiber, the acceptance half-angle
+$\theta_a$ in an input medium of index $n_0$ satisfies
+
+$$
+\mathrm{NA}=n_0\sin\theta_a\approx\sqrt{n_1^2-n_2^2},
+$$ {#eq-a08-fiber-na}
+
+where the **numerical aperture** (NA) describes the input acceptance cone. The
+relation does not by itself predict launched power. Source wavelength, emitting
+area, spot size, angular distribution, alignment, and the overlap with supported
+fiber modes determine coupling [@agrawal2010fiber].
+
+Multimode fiber supports multiple spatial modes and can simplify coupling over
+short distances, but different modal paths can broaden a pulse. Single-mode
+fiber suppresses intermodal dispersion when its normalized frequency is below
+the next-mode cutoff ($V<2.405$ for the ideal step-index case), equivalently
+when operating wavelength is above the specified cutoff wavelength. Chromatic
+dispersion and source linewidth still matter.
+Calling a fiber “single-mode” or “multimode” is therefore not a complete link
+specification. Fiber type, wavelength, attenuation, dispersion, bend limits,
+connectors, and test conditions remain attached. ITU-T G.652, for example,
+specifies geometrical, mechanical, and transmission attributes for a class of
+single-mode fiber rather than guaranteeing an assembled link
+[@itut_g652_2024].
+
+![A guided optical link replaces inverse-square spreading with launch, propagation, connector, splice, and bend terms that must be matched to the detector.](../figures/a08-fiber-guided-link.svg){#fig-a08-fiber-guided-link fig-alt="An emitter and coupling optic launch light within a fiber acceptance cone. A core surrounded by cladding carries the guided path through a connector, splice, and bend where distinct losses are marked, then reaches a wavelength-matched detector. A boundary note assigns static optical coupling and loss to A08 and modulation, dispersion consequences, timing, and bit-error evidence to S07." width="98%"}
+
+Static power loss is conveniently assembled in decibels. Absolute optical power
+in dBm is referenced to 1 mW:
+
+$$
+P(\mathrm{dBm})=10\log_{10}\!\left(\frac{P}{1~\mathrm{mW}}\right).
+$$ {#eq-a08-dbm}
+
+A dBm value is an absolute level; a signed dB value is a ratio, gain, or loss.
+If $P_{launch}$ is the power already coupled into the fiber, a first link screen is
+
+$$
+P_R(\mathrm{dBm})=
+P_{launch}(\mathrm{dBm})
+-\alpha L
+-\sum_k L_{connector,k}
+-\sum_j L_{splice,j}
+-L_{bend},
+$$ {#eq-a08-fiber-budget}
+
+where $\alpha$ is attenuation in dB per unit length and every listed $L$ is a
+nonnegative insertion-loss allocation in dB. The $10\log_{10}$ power definition
+makes independent loss ratios additive.
+The free-space inverse-square relation must not be inserted inside the guide.
+
+For an illustrative short link, suppose $P_{launch}=-10.0$ dBm, fiber loss is
+0.8 dB, two connectors contribute 0.7 dB each, and a permitted bend contributes
+0.5 dB. Then $P_R=-12.7$ dBm. A receiver specified from -20 to -3 dBm has 7.3 dB
+of sensitivity margin and 9.7 dB of overload margin before other allocations.
+Both limits matter: excessive power can saturate a detector just as insufficient
+power can bury a signal. Engineering margin must also cover source aging,
+temperature, connector repeatability, contamination, repair splices, and
+measurement uncertainty.
+
+This screen proves neither bandwidth nor communication reliability. Modal and
+chromatic dispersion can broaden pulses even when average received power is
+adequate; reflections can disturb some sources and receivers; coding,
+modulation, timing recovery, and required error probability add further tests.
+Those system-level questions belong to S07. A08 retains the physical interface:
+launch alignment, wavelength compatibility, connector and end-face cleanliness,
+bend radius, detector headroom, and accessible-source safety. Fiber is
+dielectric, but a cable may contain conductive armor or strength members, so a
+fiber cable alone is not evidence of a rated galvanic insulation barrier.
 
 ## Optical coupling and galvanic separation
 
@@ -736,7 +941,7 @@ and detector response. An optocoupler encloses an emitter and detector so
 that a signal can cross an insulation barrier without a conductive signal
 connection.
 
-Inspect @fig-a08-optocoupler-interface. The two ground symbols name separate
+@fig-a08-optocoupler-interface uses two ground symbols to name separate
 reference domains. Joining them elsewhere may be useful for another purpose,
 but it removes galvanic separation across that connection.
 
@@ -751,8 +956,8 @@ The shown pull-up makes the logic inversion explicit:
 
 ### Current-transfer ratio and logic margin
 
-Define input forward current $I_F>0$ through the optocoupler LED and output
-collector current $I_C>0$ into the phototransistor collector. The
+The input forward current $I_F>0$ flows through the optocoupler LED, and output
+collector current $I_C>0$ enters the phototransistor collector. The
 **current-transfer ratio (CTR)** is
 
 $$
@@ -764,7 +969,7 @@ conditional transfer quantity, not an insulation-strength rating. It varies
 with input current, collector-emitter voltage, temperature, production bin,
 time, and device history.
 
-Let the output be accepted low only if $V_O\le V_{OL,\max}$. With output supply
+The receiver accepts a low output only if $V_O\le V_{OL,\max}$. With output supply
 $V_{OUT}$ and pull-up $R_{PU}$, first suppose receiver input current is
 negligible. The collector must sink at least
 
@@ -780,7 +985,7 @@ I_F\ge
 \frac{I_{C,\mathrm{req}}}{\mathrm{CTR}_{\min}}.
 $$ {#eq-a08-optocoupler-input-screen}
 
-Define $I_{\mathrm{RX,src}}>0$ as receiver current entering the output node.
+The receiver current $I_{\mathrm{RX,src}}>0$ is referenced into the output node.
 KCL then gives $I_C=I_{PU}+I_{\mathrm{RX,src}}$ in the low state. Add the
 receiver's worst-case sourced current to $I_{C,\mathrm{req}}$; if a datasheet
 instead defines current leaving the node, convert its sign before using it.
@@ -896,8 +1101,8 @@ $I_F=5$ mA, $V_{CC}=5$ V, and $R_L=75~\Omega$. A different saturated test
 lists typical turn-off time of 25 µs. Neither typical number is a guaranteed
 limit, and the circuits are not interchangeable [@vishay2025vo617a].
 
-Let $C_{\mathrm{node}}$ include receiver, phototransistor, wiring, and probe
-capacitance at TPO. After the phototransistor turns off, an otherwise unloaded
+The capacitance $C_{\mathrm{node}}$ includes receiver, phototransistor, wiring,
+and probe capacitance at TPO. After the phototransistor turns off, an otherwise unloaded
 pull-up has the first-order 10%–90% rise-time screen
 
 $$
@@ -1128,7 +1333,7 @@ For an emissive indicator viewed against reflected ambient light, define
 $L_{\mathrm{on}}$ and $L_{\mathrm{off}}$ as the indicator's own on- and
 off-state luminances toward the observer. Let $L_{\mathrm{amb}}$ be the reflected
 ambient luminance contributed equally to both states in the simplified geometry.
-Define the luminance ratio
+The luminance ratio is
 
 $$
 C_L\equiv
@@ -1172,8 +1377,8 @@ flashing patterns that can create photosensitive risk
 
 ## Worked architecture decision: an environmental monitor front panel
 
-Consider a current-limited, extra-low-voltage monitor with these
-**illustrative engineering requirements**:
+The architecture decision concerns a current-limited, extra-low-voltage monitor
+with these **illustrative engineering requirements**:
 
 - display temperature and relative humidity plus their units;
 - communicate `STARTING`, `READY`, `WARNING`, and `FAULT` without color alone;
@@ -1231,7 +1436,7 @@ test if its failure would affect a required decision.
 
 ### Electrical and semantic checks
 
-Use the 220 $\Omega$ LED branch derived earlier on the 5 V rail. Its conservative
+The 220 $\Omega$ LED branch derived earlier remains on the 5 V rail. Its conservative
 current upper bound is 25.1 mA and resistor dissipation screen is 0.132 W.
 At nominal $V_S=5.0$ V, representative $V_F=2.0$ V, and assumed
 $V_{CE}=0.20$ V, its nominal current is
@@ -1348,6 +1553,9 @@ test point that separates their internal paths:
 | LED dark | no command, open LED, reversed LED, open resistor, failed transistor, lost supply | compare TPIN, LED-rail voltage, branch current, and voltage across each element |
 | detector always high | optical overload, TIA saturation, wrong reference, open feedback path | block light; inspect summing node and output headroom before ADC data |
 | modulated receiver noisy | lamp flicker, timing error, shot noise, motion, poor shielding | compare emitter command, raw analog waveform, off sample, and spectrum |
+| LDR threshold drifts after bright exposure | slow recovery and history, source-spectrum change, loading, leakage, or temperature | record divider voltage against time after a controlled exposure; repeat with a known spectrum and disconnected receiver |
+| photovoltaic device shows normal $V_{OC}$ but cannot supply the load | low photocurrent, excessive series loss, load mismatch, or poor optical coupling | measure several loaded voltage-current points rather than open-circuit voltage alone |
+| fiber received power is low | poor launch alignment, contaminated connector, tight bend, splice loss, wavelength mismatch, or aged source | inspect safely with the source verified off; measure power at accessible path boundaries and relax bends one at a time |
 | optocoupler output never low | insufficient $I_F$, CTR shortfall, wrong pinout, pull-up too small, missing output return | measure input current and output-domain collector current separately |
 | optocoupler output releases slowly | phototransistor saturation, excessive load capacitance, weak pull-up | compare collector waveform while changing $R_{PU}$ and input overdrive within ratings |
 | multiplex display ghosts | missing blanking, overlapping digit drives, parasitic charge, leakage path | inspect segment and digit waveforms at the optical event |
@@ -1411,7 +1619,22 @@ system claim.
    c. the circuit must use an LCD.
    d. green LEDs cannot be multiplexed.
 
-**Answer key:** 1-d, 2-b, 3-c, 4-d, 5-c, 6-b.
+7. A TIA holds an illuminated photodiode near zero terminal voltage. This is
+
+   a. necessarily an open circuit.
+   b. photovoltaic-mode current sensing.
+   c. proof that the junction has no internal field.
+   d. maximum-power operation.
+
+8. Light enters a fiber successfully, but a receiver is overloaded. Which
+   statement is correct?
+
+   a. A successful sensitivity check excludes overload.
+   b. Inverse-square spreading inside the fiber will cure the overload.
+   c. Both receiver minimum and maximum input limits must be checked.
+   d. Connector loss cannot affect the operating point.
+
+**Answer key:** 1-d, 2-b, 3-c, 4-d, 5-c, 6-b, 7-b, 8-c.
 
 ### Retrieval and explanation
 
@@ -1427,36 +1650,42 @@ system claim.
 5. Distinguish CTR, dielectric test voltage, and working voltage.
 6. Explain why a bistable display can present a dangerously stale but
    plausible value.
+7. Distinguish bulk photoconductivity in an LDR from a reverse-biased
+   photodiode's photoconductive operating mode.
+8. Explain why photovoltaic-mode photodiode sensing is neither an open circuit
+   nor necessarily a power-producing operating point.
+9. Explain why a static fiber power margin does not establish pulse fidelity or
+   bit-error performance.
 
 ### Calculation and derivation
 
-7. An illustrative LED branch uses a 3.0–3.6 V source, a 150 $\Omega$ ±1%
+10. An illustrative LED branch uses a 3.0–3.6 V source, a 150 $\Omega$ ±1%
    resistor, $V_F\le2.4$ V at the minimum-current condition, and
    $V_{CE}\le0.15$ V. Calculate the conservative source-network maximum current,
    the minimum-current screen, and maximum shorted-load resistor power. State
    what additional information is required for a design decision.
 
-8. A monochromatic 850 nm photodiode has
+11. A monochromatic 850 nm photodiode has
    $\eta_{\mathrm{ext}}=0.72$ at the stated bias. Derive and calculate its
    responsivity. Check the dimensions and compare the result with the
    unity-quantum-efficiency limit.
 
-9. A TIA has $R_F=100~\mathrm{k}\Omega$, $C_F=10$ pF, and a 1.20 V output
+12. A TIA has $R_F=100~\mathrm{k}\Omega$, $C_F=10$ pF, and a 1.20 V output
    range above its reference. Calculate the first-order feedback pole and
    maximum positive photocurrent before output clipping. Explain why neither
    result proves bandwidth or stability.
 
-10. A three-digit display uses a 1.5 ms active interval and 0.10 ms blanking
+13. A three-digit display uses a 1.5 ms active interval and 0.10 ms blanking
     before every digit. Calculate frame period, frame rate, digit duty ratio,
     and average current for 18 mA peak. State the peak and total-driver checks
     still required.
 
-11. For $L_{\mathrm{on}}=120~\mathrm{cd\,m^{-2}}$,
+14. For $L_{\mathrm{on}}=120~\mathrm{cd\,m^{-2}}$,
     $L_{\mathrm{off}}=2~\mathrm{cd\,m^{-2}}$, calculate $C_L$ for
     $L_{\mathrm{amb}}=5$ and 200 cd m$^{-2}$. Reconcile the trend with the
     limit of @eq-a08-luminance-ratio.
 
-12. An ideal point source has radiant intensity
+15. An ideal point source has radiant intensity
     $0.80~\mathrm{W\,sr^{-1}}$ toward a 6.0 mm² detector 0.50 m away. Calculate
     received radiant power for normal incidence and for 60° incidence. At
     normal incidence, let detector responsivity be
@@ -1467,7 +1696,7 @@ system claim.
     whether @eq-a08-tia-headroom passes. State the geometric and spectral
     assumptions that could invalidate the result.
 
-13. In the VO617A example, explain why the CTR calculation gives 3.15 mA of
+16. In the VO617A example, explain why the CTR calculation gives 3.15 mA of
     active-region capability while the pull-up permits only about 0.979 mA near
     the low state. Which datasheet condition supports $V_O\le0.4$ V? Then use
     @eq-a08-optocoupler-high and @eq-a08-optocoupler-pullup-max to evaluate a
@@ -1475,45 +1704,68 @@ system claim.
     $V_{OH,\mathrm{req}}=4.5$ V, $I_{\mathrm{OFF,sink,max}}=15~\mu$A,
     $C_{\mathrm{node,max}}=80$ pF, and $t_{r,\max}=3~\mu$s.
 
-14. An illustrative LCD differential waveform is +3.0 V for 45% of a frame and
+17. An illustrative LCD differential waveform is +3.0 V for 45% of a frame and
     -3.0 V for 55%. Calculate its RMS and DC values. Decide whether the waveform
     meets a strict $|V_{\mathrm{seg,DC}}|<50$ mV requirement.
 
+18. The LDR divider example uses $V_S=3.3$ V, $R_S=47$ k$\Omega$, and a
+    receiver with $R_{IN}=1.0$ M$\Omega$. Calculate the loaded and unloaded
+    outputs at 20 k$\Omega$ and 100 k$\Omega$, and the Thevenin resistance seen
+    by the receiver before it is attached. Explain why a 100 lx typical value
+    cannot replace the bounded 10 lx data.
+
+19. Starting from @eq-a08-illuminated-diode, derive
+    @eq-a08-open-circuit-voltage. For an illustrative illuminated junction with
+    $I_{SC}=40$ mA, $V_{OC}=0.62$ V, and a measured maximum-power point of
+    0.50 V and 34 mA, calculate the maximum power and the ratio
+    $P_{max}/(V_{OC}I_{SC})$. Interpret the ratio without treating it as a
+    complete solar-module model. This ratio is conventionally called the
+    **fill factor**; S09 develops its system use.
+
+20. A fiber link launches -8 dBm. Fiber, two connectors, one splice, and bend
+    allocation contribute 1.2, 1.4, 0.3, and 0.8 dB respectively. Calculate
+    received power and check a receiver range of -18 to -2 dBm. Then state why
+    this result cannot establish timing margin or error probability.
+
 ### Evidence interpretation and debugging
 
-15. The VO617A-2 data used in this chapter specify CTR at 5 mA, 5 V, and 25 °C.
+21. The VO617A-2 data used in this chapter specify CTR at 5 mA, 5 V, and 25 °C.
     A design uses 0.5 mA, 0.3 V, and 85 °C. Explain why the chapter's 63% bound
     cannot be transferred. List the exact evidence needed.
 
-16. A multiplexed display shows faint segments only during pattern changes.
+22. A multiplexed display shows faint segments only during pattern changes.
     Propose an oscilloscope test that distinguishes missing blanking from
     steady leakage. Name channels, references, trigger event, and expected
     evidence.
 
-17. A reflective optical sensor works under daylight but fails under one LED
+23. A reflective optical sensor works under daylight but fails under one LED
     luminaire. The raw signal contains a large periodic component. Develop a
     diagnosis that distinguishes amplifier clipping, aliasing, and modulation
     overlap.
 
-18. An LCD looks correct, but the measured average SEG voltage is 1.2 V.
+24. An LCD looks correct, but the measured average SEG voltage is 1.2 V.
     Explain why this observation neither proves nor disproves DC stress. State
     the correct measurand.
 
+25. An LDR threshold changes when an oscilloscope probe or ADC is connected and
+    recovers slowly after a flashlight test. Develop measurements that separate
+    electrical loading from illumination history and source-spectrum effects.
+
 ### Open design
 
-19. Specify an accessible indicator for `OFF`, `STARTING`, `READY`, `WARNING`,
+26. Specify an accessible indicator for `OFF`, `STARTING`, `READY`, `WARNING`,
     and `FAULT` on a portable instrument. Include redundant codes, ambient and
     viewing conditions, power-loss behavior, current and thermal limits, and a
     guarded acceptance rule.
 
-20. Design a modulated photodiode receiver for an object detector. State source
+27. Design a modulated photodiode receiver for an object detector. State source
     wavelength, geometry, target range, ambient range, analog headroom,
     modulation frequency, bandwidth, noise requirement, fault detection, and
     evidence plan. Include a numeric worst-range link budget, headroom inequality,
     simplified SNR screen, and explicit list of effects omitted from that
     screen. Keep all practical work inside the chapter safety boundary.
 
-21. Select a display family for a battery instrument that must work in bright
+28. Select a display family for a battery instrument that must work in bright
     ambient light and darkness, update every 2 s, stay below a stated average
     power budget, cover a declared temperature and viewing-angle range, and
     prevent a retained stale value from implying health. Compare LED, LCD,
@@ -1541,7 +1793,14 @@ system claim.
   timing](../03-digital/d03-state-clock-timing.qmd) supplies synchronous scan
   implementation. [E02 — Microcontrollers and
   peripherals](../04-embedded/e02-microcontrollers-peripherals.qmd) supplies
-  timers and display interfaces. [R05 — Metrology, reliability, and
+  timers and display interfaces. [S07 — Communications, RF, and
+  antennas](../05-domains/s07-communications-rf-antennas.qmd) applies
+  modulation, dispersion, timing, coding, error-performance, and channel-budget
+  tools to free-space and guided communication links.
+  [S09 — Off-grid solar and energy
+  harvesting](../05-domains/s09-offgrid-solar-harvesting.qmd) develops
+  photovoltaic source sizing, maximum-power-point tracking, conversion,
+  storage, and energy yield. [R05 — Metrology, reliability, and
   test](../06-realization/r05-metrology-reliability-test.qmd) turns the optical
   and fault requirements into qualification evidence.
 - **Practice and project handoff:** The current lab catalog has no
@@ -1558,6 +1817,6 @@ system claim.
 
 Point-of-use citations identify the governing standards, canonical physics, and
 manufacturer conditions. The complete bibliography appears in
-[References](../references.qmd). Datasheet evidence applies to the cited parts
+[References](#sec-book-bibliography). Datasheet evidence applies to the cited parts
 and test conditions; it does not qualify an assembled optical interface,
 insulation system, or HMI.

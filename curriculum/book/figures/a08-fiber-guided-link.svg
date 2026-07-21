@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700"
+     viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Guided optical link and its loss interfaces</title>
+  <desc id="desc">An LED or laser launches light through an alignment and
+  acceptance interface into a fiber core surrounded by cladding. The guided
+  path includes a connector or splice and a bend before a photodetector and
+  receiver. Labels identify launch coupling, propagation attenuation,
+  connector or splice loss, bend loss, wavelength matching, and the boundary
+  between component-level treatment in chapter A08 and communication-link
+  analysis in chapter S07.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3"
+            orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#111"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="9" markerHeight="9" refX="7" refY="3"
+            orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="700" fill="white"/>
+
+  <g font-family="sans-serif" fill="#111">
+    <text x="600" y="42" text-anchor="middle" font-size="26"
+          font-weight="bold">A fiber guides light, but every interface still belongs in the link budget</text>
+  </g>
+
+  <!-- Source and launch interface. -->
+  <g stroke="#111" fill="none" stroke-width="3">
+    <rect x="55" y="225" width="145" height="150" rx="10" fill="#f3f3f3"/>
+    <circle cx="165" cy="300" r="24" fill="white"/>
+    <path d="M165 276 V324 M141 300 H189" stroke="#777"/>
+    <path d="M190 275 L275 240 M190 300 L275 300 M190 325 L275 360"
+          stroke="#555"/>
+    <!-- Acceptance cone and launch plane. -->
+    <path d="M205 300 L285 262 M205 300 L285 338" stroke-dasharray="7 6"/>
+    <path d="M285 205 V395" stroke-width="5"/>
+    <path d="M224 300 A50 50 0 0 0 221 279"/>
+  </g>
+
+  <!-- Fiber cladding and core, including connector and bend. -->
+  <g stroke="#111" fill="none">
+    <path d="M285 238 H620 M650 238 H835
+             C900 238 930 265 930 315
+             C930 365 960 392 1025 392"
+          stroke="#777" stroke-width="76"/>
+    <path d="M285 238 H620 M650 238 H835
+             C900 238 930 265 930 315
+             C930 365 960 392 1025 392"
+          stroke="white" stroke-width="38"/>
+    <path d="M285 238 H620 M650 238 H835
+             C900 238 930 265 930 315
+             C930 365 960 392 1025 392"
+          stroke="#111" stroke-width="3"/>
+    <!-- Connector faces and small gap. -->
+    <path d="M620 195 V281 M650 195 V281" stroke="#111" stroke-width="5"/>
+    <path d="M625 238 H645" stroke="#555" stroke-width="2" stroke-dasharray="4 4"/>
+    <!-- Guided center ray with illustrative reflections. -->
+    <path d="M285 238 L350 222 L430 254 L510 222 L590 252 L620 238
+             M650 238 L725 222 L805 252 L865 246
+             C905 252 911 283 911 315
+             C911 347 940 369 980 378 L1025 392"
+          stroke="#111" stroke-width="4"/>
+    <!-- Escaping bend rays. -->
+    <path d="M905 274 L972 224 M916 303 L995 278" stroke="#555"
+          stroke-width="3" marker-end="url(#arrow-gray)"/>
+  </g>
+
+  <!-- Detector. -->
+  <g stroke="#111" fill="none" stroke-width="3">
+    <path d="M1025 345 V440" stroke-width="6"/>
+    <rect x="1028" y="320" width="120" height="145" rx="10" fill="#f3f3f3"/>
+    <circle cx="1065" cy="392" r="24" fill="white"/>
+    <path d="M1048 375 L1082 409 M1082 375 L1048 409" stroke="#777"/>
+    <path d="M1092 392 H1170" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- Annotation leaders. -->
+  <g stroke="#555" fill="none" stroke-width="2.5">
+    <path d="M245 165 L280 220" marker-end="url(#arrow-gray)"/>
+    <path d="M430 122 L430 205" marker-end="url(#arrow-gray)"/>
+    <path d="M636 122 L636 188" marker-end="url(#arrow-gray)"/>
+    <path d="M840 122 L875 226" marker-end="url(#arrow-gray)"/>
+    <path d="M910 500 L930 400" marker-end="url(#arrow-gray)"/>
+    <path d="M1090 535 L1082 470" marker-end="url(#arrow-gray)"/>
+  </g>
+
+  <g font-family="sans-serif" fill="#111">
+    <text x="127" y="258" text-anchor="middle" font-size="21" font-weight="bold">emitter</text>
+    <text x="127" y="348" text-anchor="middle" font-size="18">LED or laser</text>
+    <text x="235" y="290" font-size="20">θ<tspan baseline-shift="sub">a</tspan></text>
+    <text x="225" y="92" text-anchor="middle" font-size="19" font-weight="bold">launch interface</text>
+    <text x="225" y="116" text-anchor="middle" font-size="18">alignment and acceptance</text>
+    <text x="430" y="92" text-anchor="middle" font-size="19" font-weight="bold">attenuation</text>
+    <text x="430" y="116" text-anchor="middle" font-size="18">α(λ) and length</text>
+    <text x="636" y="92" text-anchor="middle" font-size="19" font-weight="bold">connector or splice</text>
+    <text x="636" y="116" text-anchor="middle" font-size="18">insertion + reflection</text>
+    <text x="837" y="92" text-anchor="middle" font-size="19" font-weight="bold">core</text>
+    <text x="837" y="116" text-anchor="middle" font-size="18">guided region</text>
+    <text x="470" y="315" text-anchor="middle" font-size="19">cladding confines guided modes</text>
+    <text x="870" y="538" text-anchor="middle" font-size="19" font-weight="bold">bend</text>
+    <text x="870" y="562" text-anchor="middle" font-size="18">small radius adds loss</text>
+    <text x="1088" y="358" text-anchor="middle" font-size="20" font-weight="bold">detector</text>
+    <text x="1088" y="440" text-anchor="middle" font-size="17">photodiode</text>
+    <text x="1088" y="460" text-anchor="middle" font-size="17">and receiver</text>
+    <text x="1085" y="515" text-anchor="middle" font-size="18">spectral response and</text>
+    <text x="1085" y="538" text-anchor="middle" font-size="18">active-area alignment</text>
+  </g>
+
+  <!-- Scope boundary and accounting chain. -->
+  <rect x="55" y="605" width="520" height="80" fill="#f3f3f3"
+        stroke="#111" stroke-width="2"/>
+  <rect x="625" y="605" width="520" height="80" fill="#fafafa"
+        stroke="#111" stroke-width="2" stroke-dasharray="9 6"/>
+  <g font-family="sans-serif" fill="#111">
+    <text x="315" y="629" text-anchor="middle" font-size="19" font-weight="bold">A08 component and interface scope</text>
+    <text x="315" y="653" text-anchor="middle" font-size="17">coupling, detector match, sensitivity, overload</text>
+    <text x="315" y="675" text-anchor="middle" font-size="17">optical-power margin and safety</text>
+    <text x="885" y="629" text-anchor="middle" font-size="19" font-weight="bold">S07 communication-link scope</text>
+    <text x="885" y="653" text-anchor="middle" font-size="17">modulation, dispersion consequences, timing recovery</text>
+    <text x="885" y="675" text-anchor="middle" font-size="17">coding and error probability</text>
+    <text x="600" y="498" text-anchor="middle" font-size="20">
+      P<tspan baseline-shift="sub">rx</tspan> = P<tspan baseline-shift="sub">tx</tspan>
+      × η<tspan baseline-shift="sub">launch</tspan> × L<tspan baseline-shift="sub">fiber</tspan>
+      × L<tspan baseline-shift="sub">interfaces</tspan> × L<tspan baseline-shift="sub">bend</tspan>
+    </text>
+    <text x="600" y="588" text-anchor="middle" font-size="18">
+      Loss factors are dimensionless and no greater than one; in decibels, their losses add.
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720"
+     viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Illuminated-junction equivalent circuit and terminal operating regions</title>
+  <desc id="desc">The left panel models an illuminated photodiode or solar
+  cell as a light-generated current source in parallel with a diode and shunt
+  resistance, followed by series resistance. Delivered current is positive out
+  of the positive terminal. The right panel plots delivered current against
+  terminal voltage. Reverse bias is used for photoconductive sensing, a
+  transimpedance amplifier operates near short circuit, and a photovoltaic
+  power load operates in the positive-voltage positive-current quadrant. The
+  maximum-power point lies at the knee, not at short circuit or open circuit.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3"
+            orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#111"/>
+    </marker>
+    <marker id="arrow-light" markerWidth="9" markerHeight="9" refX="7" refY="3"
+            orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#555"/>
+    </marker>
+    <pattern id="power-area" width="8" height="8" patternUnits="userSpaceOnUse"
+             patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#999" stroke-width="3"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="720" fill="white"/>
+
+  <g font-family="sans-serif" fill="#111">
+    <text x="600" y="38" text-anchor="middle" font-size="26"
+          font-weight="bold">One illuminated junction, several terminal operating points</text>
+    <text x="285" y="78" text-anchor="middle" font-size="23"
+          font-weight="bold">(a) Terminal model and sign convention</text>
+    <text x="880" y="78" text-anchor="middle" font-size="23"
+          font-weight="bold">(b) Delivered-current characteristic</text>
+  </g>
+
+  <!-- Equivalent circuit. -->
+  <g stroke="#111" fill="none" stroke-width="3">
+    <path d="M135 190 H455"/>
+    <path d="M135 490 H475"/>
+    <path d="M135 190 V490"/>
+    <path d="M235 190 V288"/>
+    <circle cx="235" cy="340" r="52" fill="white"/>
+    <path d="M235 392 V490"/>
+    <path d="M235 385 V292" marker-end="url(#arrow)"/>
+    <path d="M340 190 V245"/>
+    <rect x="294" y="245" width="92" height="105" rx="8"
+          fill="#f3f3f3"/>
+    <path d="M340 350 V490"/>
+    <path d="M435 190 V240"/>
+    <path d="M435 240 l-18 14 36 20 -36 20 36 20 -36 20 18 14"/>
+    <path d="M435 348 V490"/>
+    <path d="M455 190 l14 -18 24 36 24 -36 24 36 14 -18 H570"/>
+    <circle cx="570" cy="190" r="5" fill="#111"/>
+    <path d="M475 490 H570"/>
+    <circle cx="570" cy="490" r="5" fill="#111"/>
+    <path d="M575 190 H650" marker-end="url(#arrow)"/>
+    <!-- Incident-light arrows. -->
+    <path d="M120 102 L190 168" stroke="#555" marker-end="url(#arrow-light)"/>
+    <path d="M168 96 L220 160" stroke="#555" marker-end="url(#arrow-light)"/>
+    <!-- Terminal voltage dimension. -->
+    <path d="M605 218 V460" marker-end="url(#arrow)"/>
+  </g>
+
+  <g font-family="sans-serif" fill="#111">
+    <text x="92" y="94" font-size="20">incident light</text>
+    <text x="235" y="348" text-anchor="middle" font-size="21">I<tspan baseline-shift="sub">ph</tspan></text>
+    <text x="340" y="292" text-anchor="middle" font-size="20">junction</text>
+    <text x="340" y="318" text-anchor="middle" font-size="20">diode</text>
+    <text x="363" y="224" font-size="19">I<tspan baseline-shift="sub">D</tspan> ↓</text>
+    <text x="454" y="294" font-size="20">R<tspan baseline-shift="sub">sh</tspan></text>
+    <text x="505" y="156" text-anchor="middle" font-size="20">R<tspan baseline-shift="sub">s</tspan></text>
+    <text x="570" y="175" text-anchor="middle" font-size="25">+</text>
+    <text x="570" y="525" text-anchor="middle" font-size="25">−</text>
+    <text x="615" y="177" font-size="20">I &gt; 0 out</text>
+    <text x="618" y="348" font-size="22">V</text>
+    <text x="285" y="558" text-anchor="middle" font-size="21">
+      I = I<tspan baseline-shift="sub">ph</tspan> − I<tspan baseline-shift="sub">D</tspan> − I<tspan baseline-shift="sub">sh</tspan>
+    </text>
+    <text x="285" y="588" text-anchor="middle" font-size="18">
+      R<tspan baseline-shift="sub">s</tspan> and R<tspan baseline-shift="sub">sh</tspan> represent nonideal loss paths
+    </text>
+  </g>
+
+  <!-- I-V axes and regions. -->
+  <rect x="690" y="128" width="190" height="380" fill="#f3f3f3"/>
+  <rect x="880" y="128" width="265" height="380" fill="#fafafa"/>
+  <g stroke="#111" fill="none" stroke-width="3">
+    <path d="M700 465 H1140" marker-end="url(#arrow)"/>
+    <path d="M880 525 V112" marker-end="url(#arrow)"/>
+    <!-- Generic illuminated-junction curve: reverse bias through PV quadrant. -->
+    <path d="M715 196 C785 196 835 198 880 202
+             C970 207 1018 227 1050 272
+             C1078 311 1092 374 1102 465" stroke-width="5"/>
+    <!-- MPP area and construction lines. -->
+    <rect x="880" y="252" width="153" height="213"
+          fill="url(#power-area)" stroke="#777" stroke-width="2"/>
+    <path d="M1033 252 V465 M880 252 H1033" stroke="#555"
+          stroke-dasharray="8 7"/>
+    <circle cx="1033" cy="252" r="8" fill="#111"/>
+    <circle cx="880" cy="202" r="7" fill="white"/>
+    <circle cx="1102" cy="465" r="7" fill="white"/>
+    <!-- Annotation leaders. -->
+    <path d="M832 170 L858 196" marker-end="url(#arrow-light)" stroke="#555"/>
+    <path d="M928 309 L887 214" marker-end="url(#arrow-light)" stroke="#555"/>
+  </g>
+
+  <g font-family="sans-serif" fill="#111">
+    <text x="1145" y="488" font-size="21">V</text>
+    <text x="856" y="116" font-size="21">I</text>
+    <text x="704" y="151" font-size="18" font-weight="bold">reverse bias</text>
+    <text x="705" y="175" font-size="18">detector bias</text>
+    <text x="721" y="536" font-size="17">external source supplies bias power</text>
+    <text x="899" y="151" font-size="18" font-weight="bold">photovoltaic quadrant</text>
+    <text x="899" y="175" font-size="18">power delivery</text>
+    <text x="842" y="195" text-anchor="end" font-size="18">I<tspan baseline-shift="sub">SC</tspan></text>
+    <text x="899" y="492" font-size="18">0</text>
+    <text x="1102" y="492" text-anchor="middle" font-size="18">V<tspan baseline-shift="sub">OC</tspan></text>
+    <text x="1000" y="229" text-anchor="end" font-size="18">I<tspan baseline-shift="sub">MP</tspan></text>
+    <text x="1033" y="492" text-anchor="middle" font-size="18">V<tspan baseline-shift="sub">MP</tspan></text>
+    <text x="1053" y="248" font-size="18" font-weight="bold">MPP</text>
+    <text x="955" y="394" text-anchor="middle" font-size="18">P<tspan baseline-shift="sub">MP</tspan>
+      = V<tspan baseline-shift="sub">MP</tspan>I<tspan baseline-shift="sub">MP</tspan></text>
+    <text x="928" y="328" font-size="17">TIA: V ≈ 0</text>
+    <text x="1105" y="420" text-anchor="end" font-size="17">open circuit:</text>
+    <text x="1105" y="442" text-anchor="end" font-size="17">I = 0</text>
+  </g>
+
+  <rect x="70" y="620" width="1060" height="70" fill="#f3f3f3"
+        stroke="#111" stroke-width="2"/>
+  <g font-family="sans-serif" fill="#111" font-size="19">
+    <text x="600" y="649" text-anchor="middle">
+      Short circuit maximizes current and open circuit maximizes voltage, but both deliver zero terminal power.
+    </text>
+    <text x="600" y="676" text-anchor="middle">
+      A sensing circuit and an energy-harvesting load therefore choose different operating points on the same device law.
+    </text>
+  </g>
+</svg>

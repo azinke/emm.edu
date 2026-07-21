@@ -4,8 +4,6 @@ description: "Ways through the book, chapter maturity, and just-in-time supporti
 page-role: frontmatter
 ---
 
-# Reading roadmap {.unnumbered}
-
 The default route follows the parts in order, from a single measured voltage to a
 qualified system. It is the safest route for a new reader because later chapters
 assume the measurement habits, reference directions, model limits, and evidence

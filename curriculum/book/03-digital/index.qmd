@@ -1,5 +1,5 @@
 ---
-title: "III — Digital hardware"
+title: "Digital hardware"
 description: "Logic, state, timing, verification, architecture, and programmable hardware."
 page-role: part
 part-id: digital

@@ -1,5 +1,5 @@
 ---
-title: "IV — Embedded systems"
+title: "Embedded systems"
 description: "Software interacting with hardware, time, energy, communication, and failure."
 page-role: part
 part-id: embedded

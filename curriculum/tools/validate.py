@@ -276,6 +276,13 @@ def main() -> int:
     listed_order = re.findall(
         r"(?m)^\s*-\s+(?:part:\s+)?([^\s]+\.qmd)\s*$", quarto
     )
+    # Quarto's native backmatter keys are scalar/list structures rather than
+    # ordinary chapter entries. Include the scalar references page in the
+    # source-coverage check, while a legacy appendices landing page may be
+    # intentionally replaced by the native ``book.appendices`` navigation.
+    listed_order.extend(
+        re.findall(r"(?m)^\s*references:\s+([^\s]+\.qmd)\s*$", quarto)
+    )
     listed = set(listed_order)
     if len(listed) != len(listed_order):
         duplicates = [
@@ -287,7 +294,9 @@ def main() -> int:
         path.relative_to(CURRICULUM / "book").as_posix()
         for path in (CURRICULUM / "book").rglob("*.qmd")
     }
-    missing_from_quarto = all_book_pages - listed
+    native_appendices = bool(re.search(r"(?m)^\s{2}appendices:\s*$", quarto))
+    native_appendix_landing = {"appendices/index.qmd"} if native_appendices else set()
+    missing_from_quarto = all_book_pages - listed - native_appendix_landing
     extra_in_quarto = listed - all_book_pages
     if missing_from_quarto:
         errors.append(
@@ -350,7 +359,9 @@ def main() -> int:
         re.findall(r"(?m)^\s*-\s+part:\s+([^\s]+\.qmd)\s*$", quarto)
     )
     declared_part_pages = {
-        paths[0] for paths in part_pages_by_id.values() if len(paths) == 1
+        paths[0]
+        for part_id, paths in part_pages_by_id.items()
+        if len(paths) == 1 and not (native_appendices and part_id == "appendices")
     }
     if quarto_part_pages != declared_part_pages:
         errors.append(

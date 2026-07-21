@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" viewBox="0 0 900 430">
+  <title>Digital input and output voltage contract</title>
+  <desc>A vertical voltage scale shows the guaranteed output-low range below V OL max, the receiver low-input range below V IL max, the indeterminate input region between V IL max and V IH min, the receiver high-input range above V IH min, and the guaranteed output-high range above V OH min. Arrows identify low and high noise margins.</desc>
+  <style>
+    text { font-family: sans-serif; fill: #17202a; }
+    .axis { stroke: #17202a; stroke-width: 3; }
+    .tick { stroke: #17202a; stroke-width: 2; }
+    .bound { stroke: #34495e; stroke-width: 2; stroke-dasharray: 7 5; }
+    .low { fill: #d9eaf7; }
+    .unknown { fill: #f4e5c2; }
+    .high { fill: #dcefdc; }
+    .out { fill: none; stroke: #17202a; stroke-width: 4; }
+    .margin { stroke: #6c3483; stroke-width: 3; marker-start: url(#a); marker-end: url(#a); }
+  </style>
+  <defs>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#6c3483"/>
+    </marker>
+  </defs>
+  <line class="axis" x1="110" y1="370" x2="110" y2="45"/>
+  <text x="45" y="35" font-size="22">voltage</text>
+  <rect class="low" x="150" y="280" width="260" height="90"/>
+  <rect class="unknown" x="150" y="150" width="260" height="130"/>
+  <rect class="high" x="150" y="45" width="260" height="105"/>
+  <text x="175" y="330" font-size="25">receiver reads 0</text>
+  <text x="175" y="220" font-size="25">not guaranteed</text>
+  <text x="175" y="102" font-size="25">receiver reads 1</text>
+  <line class="bound" x1="90" y1="280" x2="830" y2="280"/>
+  <line class="bound" x1="90" y1="150" x2="830" y2="150"/>
+  <line class="tick" x1="98" y1="345" x2="122" y2="345"/>
+  <line class="tick" x1="98" y1="100" x2="122" y2="100"/>
+  <text x="20" y="287" font-size="21">V<tspan baseline-shift="sub" font-size="15">IL,max</tspan></text>
+  <text x="20" y="157" font-size="21">V<tspan baseline-shift="sub" font-size="15">IH,min</tspan></text>
+  <text x="20" y="352" font-size="21">V<tspan baseline-shift="sub" font-size="15">OL,max</tspan></text>
+  <text x="20" y="107" font-size="21">V<tspan baseline-shift="sub" font-size="15">OH,min</tspan></text>
+  <path class="out" d="M500,370 L620,370 L620,345 L500,345"/>
+  <path class="out" d="M500,100 L620,100 L620,45 L500,45"/>
+  <text x="640" y="360" font-size="23">driver guarantees low</text>
+  <text x="640" y="80" font-size="23">driver guarantees high</text>
+  <line class="margin" x1="470" y1="345" x2="470" y2="280"/>
+  <line class="margin" x1="470" y1="150" x2="470" y2="100"/>
+  <text x="490" y="320" font-size="21">NM<tspan baseline-shift="sub" font-size="15">L</tspan></text>
+  <text x="490" y="133" font-size="21">NM<tspan baseline-shift="sub" font-size="15">H</tspan></text>
+</svg>

@@ -1,5 +1,5 @@
 ---
-title: "VI — Product realization"
+title: "Product realization"
 description: "Turning a circuit into reproducible, testable, supportable hardware."
 page-role: part
 part-id: realization

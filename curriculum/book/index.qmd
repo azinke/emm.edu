@@ -4,8 +4,6 @@ description: "A free, practical guide from first measurements to complete electr
 page-role: frontmatter
 ---
 
-# From first measurements to complete systems
-
 Electronics becomes useful when its descriptions agree. The assembly, schematic,
 equations, simulation, firmware, measured waveform, requirement, and acceptance
 test all describe the same system from different angles. Agreement gives

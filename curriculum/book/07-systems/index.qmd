@@ -1,5 +1,5 @@
 ---
-title: "VII — Complete systems"
+title: "Complete systems"
 description: "System studies that integrate models, evidence, trade-offs, and handover."
 page-role: part
 part-id: systems

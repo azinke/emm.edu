@@ -83,19 +83,20 @@ book:
         - 07-systems/x03-secure-connected-node.qmd
         - 07-systems/x04-field-system.qmd
         - 07-systems/x05-capstone-handover.qmd
-    - part: appendices/index.qmd
-      chapters:
-        - appendices/m01-algebra-units-complex.qmd
-        - appendices/m02-calculus-linear-differential.qmd
-        - appendices/m03-probability-numerical.qmd
-        - appendices/t01-datasheets-standards.qmd
-        - appendices/t02-tools-version-control.qmd
-        - appendices/t03-reproducible-engineering.qmd
-    - references.qmd
+  appendices:
+    - appendices/m01-algebra-units-complex.qmd
+    - appendices/m02-calculus-linear-differential.qmd
+    - appendices/m03-probability-numerical.qmd
+    - appendices/t01-datasheets-standards.qmd
+    - appendices/t02-tools-version-control.qmd
+    - appendices/t03-reproducible-engineering.qmd
+  references: references.qmd
 
 bibliography: references.bib
 # Bracketed-numeric citations ([1], [2]) keep references from crowding the prose.
 csl: styles/numeric.csl
+link-citations: true
+link-bibliography: true
 
 crossref:
   chapters: true

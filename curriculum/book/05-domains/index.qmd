@@ -1,5 +1,5 @@
 ---
-title: "V — Signals, control, power, and communication"
+title: "Signals, control, power, and communication"
 description: "Cross-domain models for information, inference, feedback, energy, motion, and links."
 page-role: part
 part-id: domains

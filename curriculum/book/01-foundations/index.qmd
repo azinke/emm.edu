@@ -1,5 +1,5 @@
 ---
-title: "I — Electrical foundations"
+title: "Electrical foundations"
 description: "Safe observation, circuit analysis, measurement, and dynamic behavior."
 page-role: part
 part-id: foundations

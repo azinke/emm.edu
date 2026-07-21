@@ -4,8 +4,6 @@ description: "Why this book exists, how to use it, and the notation and evidence
 page-role: frontmatter
 ---
 
-# Preface {.unnumbered}
-
 A circuit rarely fails in the tidy way suggested by an exercise. A supply sags
 under load, a probe changes the waveform, a component is outside its nominal
 conditions, or software observes the right signal at the wrong time. Solving

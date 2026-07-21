@@ -40,6 +40,21 @@ make the explanation clearer, not more distant.
   prediction prompt, or explicit inspection task. Active voice does not require
   imperative mood, and a sentence should never become a command merely to avoid
   “we” or the passive voice.
+- Control imperative *frequency*, not only correctness. Even defensible commands
+  become tiring when successive paragraphs begin with “Consider,” “Predict,”
+  “Inspect,” “Trace,” “Use,” “Define,” or “Let.” A normal explanatory passage
+  should carry the reader through a connected sequence of claims, causes, and
+  consequences. Convert scenario setup, notation, figure interpretation, and
+  worked-example narration to declarative prose unless the learner must pause
+  and perform the action. One purposeful prediction or inspection prompt may
+  anchor a central result; a chain of prompts makes lecture material read like a
+  worksheet.
+- Mathematical “let” remains available when it genuinely simplifies a formal
+  derivation, but it is not the default way to introduce every symbol. Prefer
+  forms such as “For $n\ge1$, an $n$-bit vector has the form…,” “$I_L$ denotes…,”
+  and “The worked example uses…” when they produce a more continuous explanation.
+  Never weaken a safety instruction, ordered procedure, exercise, or measurable
+  requirement merely to remove imperative mood.
 - Use a concrete technical subject for physical claims: the source drives
   current, the transistor changes load current, and the extractor computes
   parasitics. Do not default to “we,” “the reader,” “one,” or an abstract passive
@@ -524,6 +539,12 @@ prose that never gives the reader enough mathematics to reproduce the result.
    cross-chapter numbering can affect the result. Inspect the actual pages that
    contain new or changed material; a standalone image and a successful XeLaTeX
    exit do not establish that content fits the page.
+   For bibliography or book-structure changes, also verify that citation numbers
+   link internally to reference entries, DOI/URL fields link to primary sources,
+   part titles contain one automatic number, frontmatter/backmatter titles occur
+   once, and appendices use native appendix structure rather than another numbered
+   part. Semantic part titles never contain hand-written Roman numerals, and a
+   metadata title is not repeated as a body H1.
 14. Read the rendered chapter once as a student: can every central result be
    recomputed, can every sign be interpreted, and is it clear what is exact,
    illustrative, measured, assumed, or still unverified? Read the table of contents
@@ -542,6 +563,10 @@ prose that never gives the reader enough mathematics to reproduce the result.
      real instructions, prediction prompts, procedures, exercises, and necessary
      inspection tasks; never convert an ordinary statement into a command as a
      mechanical voice edit;
+   - scan paragraph openings and nearby sentences for clusters of “Consider,”
+     “Predict,” “Inspect,” “Trace,” “Use,” “Define,” and “Let”; rewrite explanatory
+     clusters as connected declarative prose, while retaining commands whose
+     reader action, order, or safety consequence is real;
    - convert mixed requirement fragments into parallel commands with measurable
      endpoints;
    - replace editorial narration with the actual causal or evidentiary claim;

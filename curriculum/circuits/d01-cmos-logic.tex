@@ -1,0 +1,48 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Panel a: inverter.
+  \node[pmos] (IP) at (2.8,4.8) {};
+  \node[nmos] (IN) at (2.8,1.8) {};
+  \draw (IP.S) -- (2.8,6.2) node[vcc] {$V_{DD}$};
+  \draw (IP.D) -- (2.8,3.3) node[circ] (IY) {};
+  \draw (IN.D) -- (IY);
+  \draw (IN.S) -- (2.8,0) node[ground] {};
+  \draw (IP.G) -- (1.3,4.8) -- (1.3,1.8) -- (IN.G);
+  \draw (1.3,3.3) -- (0.3,3.3)
+    node[ocirc, label={[font=\small]left:{$A$}}] {};
+  \draw (IY) -- (4.6,3.3)
+    node[ocirc, label={[font=\small]right:{$Y=\overline{A}$}}] {};
+  \node[circ] at (1.3,3.3) {};
+  \node[font=\small\bfseries] at (2.8,-0.8) {(a) inverter};
+
+  % Panel b: NAND pull-up and pull-down networks.
+  \node[pmos] (P1) at (8.5,4.8) {};
+  \node[pmos, xscale=-1] (P2) at (11.5,4.8) {};
+  \node[nmos] (N1) at (10.0,2.6) {};
+  \node[nmos] (N2) at (10.0,0.8) {};
+  \coordinate (RAIL) at (10.0,6.2);
+  \coordinate (NY) at (10.0,3.7);
+  \draw (RAIL) node[vcc] {$V_{DD}$} -- (8.5,6.2) -- (P1.S);
+  \draw (RAIL) -- (11.5,6.2) -- (P2.S);
+  \node[circ] at (RAIL) {};
+  \draw (P1.D) |- (NY);
+  \draw (P2.D) |- (NY);
+  \draw (NY) node[circ] {} -- (12.7,3.7)
+    node[ocirc, label={[font=\small]right:{$Y=\overline{A\!\cdot\!B}$}}] {};
+  \draw (NY) -- (N1.D);
+  \draw (N1.S) -- (N2.D);
+  \draw (N2.S) -- (10.0,-0.25) node[ground] {};
+  \draw (P1.G) -- (7.4,4.8)
+    node[ocirc, label={[font=\small]left:{$A$}}] {};
+  \draw (P2.G) -- (12.6,4.8)
+    node[ocirc, label={[font=\small]right:{$B$}}] {};
+  \draw (N1.G) -- (8.6,2.6)
+    node[ocirc, label={[font=\small]left:{$A$}}] {};
+  \draw (N2.G) -- (8.6,0.8)
+    node[ocirc, label={[font=\small]left:{$B$}}] {};
+  \node[font=\small\bfseries] at (10.0,-1.35) {(b) two-input NAND};
+\end{circuitikz}
+\end{document}

@@ -1,0 +1,28 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  \coordinate (BUS) at (5.0,4.8);
+  \draw (5.0,7.0) node[vcc] {$V_{DD}$}
+    to[R, l={$R_{PU}$}, i>_={$i_{PU}$}] (BUS);
+  \node[nmos] (M1) at (3.2,2.6) {};
+  \node[nmos, xscale=-1] (M2) at (6.8,2.6) {};
+  \draw (3.2,4.8) -- (M1.D);
+  \draw (6.8,4.8) -- (M2.D);
+  \draw (M1.S) -- (3.2,0.7) node[ground] {};
+  \draw (M2.S) -- (6.8,0.7) node[ground] {};
+  \draw (M1.G) -- (1.6,2.6)
+    node[ocirc, label={[font=\small]left:{request 1}}] {};
+  \draw (M2.G) -- (8.4,2.6)
+    node[ocirc, label={[font=\small]right:{request 2}}] {};
+  \draw[black, line width=0.8pt] (3.2,4.8) -- (8.2,4.8)
+    node[ocirc, label={[font=\small]right:{receiver input}}] {};
+  \node[circ] at (5.0,4.8) {};
+  \node[circ] at (6.8,4.8) {};
+  \node[font=\small, anchor=east] at (4.7,4.45)
+    {$\overline{\mathrm{REQ}}$};
+  \node[font=\small] at (4.0,2.2) {$M_1$};
+  \node[font=\small] at (7.6,2.2) {$M_2$};
+\end{circuitikz}
+\end{document}

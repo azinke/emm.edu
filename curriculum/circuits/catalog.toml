@@ -1,11 +1,39 @@
 version = 1
 
 [[circuit]]
+id = "d01-bipolar-logic"
+source = "d01-bipolar-logic.tex"
+chapter_id = "D01"
+caption = "Resistor-transistor logic exposes the simplest bipolar realization of inversion. One NPN transistor forms an inverter; two collector-connected NPN pull-down branches form a NOR gate. The collector resistor supplies the released high state, while any conducting transistor establishes the low state."
+alt = "Panel a shows an RTL inverter: V CC feeds output Y through collector resistor R C, NPN transistor Q1 pulls Y to ground, and input A drives its base through R B. Panel b shows an RTL NOR: V CC feeds Y through R C, and either of two NPN transistors can pull Y to ground; A and B drive their bases through separate resistors."
+
+[[circuit]]
+id = "d01-cmos-logic"
+source = "d01-cmos-logic.tex"
+chapter_id = "D01"
+caption = "Complementary CMOS realizes inversion and NAND by arranging pMOS pull-up paths and nMOS pull-down paths as dual networks. The drawings show the DC conduction paths used for logical reasoning; body connections, load capacitance, interconnect resistance, and protection structures remain part of a physical implementation."
+alt = "Panel a shows a CMOS inverter with a pMOS transistor from V DD to output Y and an nMOS transistor from Y to ground, both gates driven by A. Panel b shows a two-input CMOS NAND: two pMOS transistors in parallel connect V DD to Y, and two nMOS transistors in series connect Y to ground; inputs A and B each drive one pMOS and one nMOS."
+
+[[circuit]]
+id = "d01-open-drain-node"
+source = "d01-open-drain-node.tex"
+chapter_id = "D01"
+caption = "Two open-drain outputs share one pulled-up node. Either transistor can assert the active-low signal by sinking current; only the pull-up can establish the released high state. The receiver, both leakage paths, wiring capacitance, and pull-up resistance determine the valid levels and rise time."
+alt = "A pull-up resistor connects V DD to active-low shared node REQ. Two n-channel MOSFET drains and one receiver input connect to that node. Each MOSFET source returns to ground and has its own control input. Current through the pull-up flows downward when either transistor turns on."
+
+[[circuit]]
 id = "a08-led-photodiode-interface"
 source = "a08-led-photodiode-interface.tex"
 chapter_id = "A08"
 caption = "The switched indicator routes source current through a limiting resistor, LED, and low-side transistor to the source return. The photodiode returns to the same V REF node that biases the op-amp non-inverting input, so the TIA holds the diode near zero bias; parallel R F and C F set low-frequency transimpedance and shape the feedback loop. Op-amp supply pins are omitted but remain part of the range and power checks."
 alt = "Panel a shows source V S feeding a resistor, LED, and NPN low-side transistor in series. A driver reaches the transistor base through a resistor. Panel b shows a photodiode between the op-amp inverting input and V REF, the non-inverting input connected to V REF, and parallel feedback resistor R F and capacitor C F from output to inverting input."
+
+[[circuit]]
+id = "a08-photoresistor-divider"
+source = "a08-photoresistor-divider.tex"
+chapter_id = "A08"
+caption = "A photoresistor requires an external excitation and readout circuit. With the LDR in the lower divider leg, increasing illumination normally reduces its resistance and therefore lowers V O. The receiving input appears as finite resistance R IN and acquisition capacitance C IN; swapping the fixed resistor and LDR reverses the voltage response."
+alt = "Supply V S drives fixed resistor R S and then a light-dependent resistor to ground. Their junction is test point TP LDR and output V O. An ADC or comparator input is represented by resistance R IN and capacitance C IN from the output to ground. Arrows illuminate the photoresistor, and divider current flows through both divider elements."
 
 [[circuit]]
 id = "a08-optocoupler-interface"

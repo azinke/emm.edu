@@ -13,6 +13,19 @@
   reader genuinely predicts, reasons, calculates, compares, or decides. Reserve
   imperative sentences for actual instructions: a procedure step, exercise,
   prediction prompt, safety action, or explicit inspection task.
+- Judge imperative mood across the passage, not sentence by sentence. Repeatedly
+  opening paragraphs with “Consider,” “Predict,” “Inspect,” “Trace,” “Use,”
+  “Define,” or “Let” produces a worksheet cadence even when each command is
+  individually defensible. Exposition should normally connect the setup,
+  mechanism, result, and consequence in declarative prose. A central calculation
+  may still use one deliberate prediction prompt, and a complex visual may still
+  use one focused inspection task.
+- Scenario setup and symbol introduction are usually statements, not reader
+  actions: “The worked interface uses an SN74HC04” is more fluid than “Use an
+  SN74HC04,” and “$I_L$ denotes the load current” is more natural than “Let $I_L$
+  be the load current.” Conventional mathematical “let” is acceptable when it
+  makes a formal derivation clearer; avoid a succession of such commands in
+  ordinary teaching prose.
 - Active voice does not require imperative mood. Do not mechanically turn
   “Equation 3 gives the current” into “Use Equation 3 to calculate the current,”
   or “The output resistance limits the gain” into “Notice that the output
@@ -127,6 +140,11 @@
   has become “Use,” “Apply,” “Define,” “Consider,” “Observe,” or “Notice,” ask
   whether the reader must actually do something. Restore declarative exposition
   when no action is required.
+- Audit local command density. Search paragraph openings and adjacent sentences
+  for “Consider,” “Predict,” “Inspect,” “Trace,” “Use,” “Define,” and “Let,” then
+  read each match in context. Recast clusters as a continuous explanation; retain
+  direct commands for safety, ordered procedures, exercises, and the few
+  prediction or inspection pauses that materially improve learning.
 - Include front matter, learning outcomes, callouts, captions, tables, and
   exercises in the readability pass. These locations often introduce a term
   before the main explanation does.
@@ -482,3 +500,28 @@
   documents, and canonical technical sources.
 - Verify new bibliography metadata against an official or primary source and
   audit that every citation key resolves before rendering the final draft.
+- Keep `link-citations: true` and `link-bibliography: true` in the book
+  configuration. A PDF review must confirm that each citation number links to
+  its bibliography entry and that a DOI or URL in that entry is an external
+  verification link. A successful bibliography render alone does not establish
+  citation navigation.
+- Use a labelled cross-document target for prose that points to the consolidated
+  bibliography; a relative `.qmd` link can remain a source-file URI in the
+  merged PDF.
+
+## Book structure and numbering
+
+- Part titles contain only the semantic title. Do not embed Roman numerals or
+  other manual counters: the PDF class supplies the part number, and a manual
+  prefix produces duplicate numbering.
+- Frontmatter and backmatter pages use one metadata title. Do not repeat that
+  title as a body-level H1; doing so creates duplicate chapters and hyperlink
+  destinations. Treat numbering as a book-level concern because format metadata
+  on `index.qmd` can affect the complete combined document.
+- Place appendices in Quarto's native `book.appendices` structure and the
+  consolidated bibliography in `book.references`. Do not model appendices as
+  an ordinary additional part merely to obtain navigation.
+- Verify the extracted PDF table of contents after structural edits. It must
+  contain each frontmatter/backmatter entry once, exactly one automatic number
+  for every main part, and conventional appendix lettering rather than an
+  accidental eighth part.

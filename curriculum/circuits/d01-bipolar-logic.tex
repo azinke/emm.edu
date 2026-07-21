@@ -1,0 +1,47 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[european resistors]
+  % Panel a: one-transistor RTL inverter.
+  \node[npn] (Q1) at (2.8,2.0) {};
+  \coordinate (Y1) at (2.8,4.2);
+  \draw (2.8,6.4) node[vcc] {$V_{CC}$}
+    to[R, l={$R_C$}] (Y1);
+  \draw (Y1) -- (Q1.C);
+  \draw (Q1.E) -- (2.8,0.3) node[ground] {};
+  \draw (0.1,2.0)
+    node[ocirc, label={[font=\small]left:{$A$}}] {}
+    to[R, l={$R_B$}] (Q1.B);
+  \draw (Y1) -- (5.0,4.2)
+    node[ocirc, label={[font=\small]right:{$Y=\overline{A}$}}] {};
+  \node[circ] at (Y1) {};
+  \node[font=\small] at (3.65,1.65) {$Q_1$};
+  \node[font=\small\bfseries] at (2.8,-0.7) {(a) RTL inverter};
+
+  % Panel b: two-input RTL NOR.
+  \node[npn] (QA) at (8.4,2.0) {};
+  \node[npn, xscale=-1] (QB) at (11.4,2.0) {};
+  \coordinate (Y2) at (9.9,4.2);
+  \draw (9.9,6.4) node[vcc] {$V_{CC}$}
+    to[R, l={$R_C$}] (Y2);
+  \draw (8.4,4.2) -- (12.9,4.2)
+    node[ocirc, label={[font=\small]right:{$Y=\overline{A+B}$}}] {};
+  \draw (QA.C) -- (8.4,4.2);
+  \draw (QB.C) -- (11.4,4.2);
+  \draw (QA.E) -- (8.4,0.3) node[ground] {};
+  \draw (QB.E) -- (11.4,0.3) node[ground] {};
+  \draw (6.0,2.0)
+    node[ocirc, label={[font=\small]left:{$A$}}] {}
+    to[R, l={$R_{B1}$}] (QA.B);
+  \draw (14.3,2.0)
+    node[ocirc, label={[font=\small]right:{$B$}}] {}
+    to[R, l={$R_{B2}$}] (QB.B);
+  \node[circ] at (8.4,4.2) {};
+  \node[circ] at (Y2) {};
+  \node[circ] at (11.4,4.2) {};
+  \node[font=\small] at (9.2,1.65) {$Q_A$};
+  \node[font=\small] at (10.55,1.65) {$Q_B$};
+  \node[font=\small\bfseries] at (9.9,-0.7) {(b) two-input RTL NOR};
+\end{circuitikz}
+\end{document}

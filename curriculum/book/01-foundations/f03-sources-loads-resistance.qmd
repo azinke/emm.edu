@@ -296,9 +296,10 @@ value, or the constant-$R_S$ approximation.
 
 ### Two loaded measurements estimate source resistance safely
 
-The source relation in @eq-source-line also gives a diagnostic method. Measure two steady
-operating points $(V_1,I_1)$ and $(V_2,I_2)$ inside the same linear region, with
-the same polarity and current reference. Subtraction eliminates $V_\text{OC}$:
+Besides predicting sag, the source relation in @eq-source-line gives a diagnostic
+method. Two steady operating points $(V_1,I_1)$ and $(V_2,I_2)$ inside the same
+linear region, measured with the same polarity and current reference, allow
+subtraction to eliminate $V_\text{OC}$:
 
 $$
 V_1-V_2=(I_2-I_1)R_S,
@@ -306,9 +307,9 @@ V_1-V_2=(I_2-I_1)R_S,
 R_S=\frac{V_1-V_2}{I_2-I_1}.
 $$ {#eq-source-resistance}
 
-Choose two approved loads that keep voltage, current, component dissipation, and
-source energy inside their limits. Do **not** use a short circuit as the second
-point. Once $R_S$ is estimated,
+The two points must come from approved loads that keep voltage, current,
+component dissipation, and source energy inside their limits; a short circuit is
+not an acceptable second point. Once $R_S$ is estimated,
 $V_\text{OC}=V_1+I_1R_S$. Because this is a slope estimate, meter uncertainty and
 load tolerance matter strongly if the two currents are too close. For an ohmic,
 characterized load, measuring its terminal voltage and calculating $I=V/R_L$ can
@@ -318,7 +319,9 @@ slope would hide.
 
 ## Current sources face the dual limit: compliance
 
-Some ports are better approximated by a current source. Keep $V=V_A-V_B$ across
+Voltage sag is one side of source–load interaction. Some ports are better
+approximated by a current source and encounter the dual limit, compliance. Keep
+$V=V_A-V_B$ across
 the load and $I$ positive into its A terminal. A useful first-order description is
 an ideal current $I_S$ in parallel with a finite output resistance $R_O$. The
 source current divides between $R_O$ and $R_L$. Charge conservation at terminal A
@@ -781,8 +784,9 @@ resistor selection.
 
 ## Worked design: loaded divider with tolerance and temperature bounds
 
-Design is where nominal arithmetic meets source behavior, loading, tolerance,
-temperature, and measurement. Consider this deliberately modest requirement:
+Design brings nominal arithmetic together with source behavior, loading,
+tolerance, temperature, and measurement. The following deliberately modest
+requirement makes that combination explicit:
 
 - source terminal voltage: 5.00 V nominal, guaranteed 4.95 V to 5.05 V under the
   divider load;

@@ -44,8 +44,8 @@ error. As a result, resistor or impedance ratios can control the
 **closed-loop** function much more strongly than the op amp's internal gain
 does [@sedra2020microelectronic; @astrom2021feedback].
 
-Before calculating, predict the result of each change to a non-inverting
-amplifier:
+Six changes to a non-inverting amplifier expose the conditions hidden by an
+ideal-gain calculation. Before calculating, predict the result of each one:
 
 - the open-loop gain falls by a factor of ten while the feedback resistors stay
   fixed;
@@ -132,10 +132,10 @@ optional for precision design.
 
 ### Terminal references and attainable operation
 
-The schematic in @fig-a04-terminal-references declares the electrical boundary before any
-idealization. TP0 is the reference chosen by the surrounding circuit; it is
-not normally an op-amp terminal, and it is not automatically earth, chassis,
-or a noise-free return. In a dual-supply circuit one commonly has
+The schematic in @fig-a04-terminal-references declares the electrical boundary
+before any idealization. TP0 is the reference chosen by the surrounding
+circuit; it is not normally an op-amp terminal, and it is not automatically
+earth, chassis, or a noise-free return. In a dual-supply circuit one commonly has
 $V_{S-}<V_{\mathrm{TP0}}<V_{S+}$. In a single-supply circuit one commonly
 chooses $V_{S-}=V_{\mathrm{TP0}}$ and calls $V_{S+}=V_{DD}$, but a separate
 mid-supply signal reference may still be required. The supply pins are energy
@@ -155,9 +155,9 @@ v_{\mathrm{CM}}(t)\equiv
 \frac{v_+(t)+v_-(t)}{2}.
 $$ {#eq-a04-input-definitions}
 
-Both relations are definitions. Choose a **quiescent operating point**, the
-steady no-signal condition about which you analyze small changes,
-$(V_{dQ},V_{OQ})$, and define
+Both relations are definitions. Small-change analysis is centered on a
+**quiescent operating point**, the steady no-signal condition
+$(V_{dQ},V_{OQ})$. Relative to that point, define
 $\Delta v_d\equiv v_d-V_{dQ}$ and
 $\Delta v_o\equiv v_o-V_{OQ}$. A positive change in $v_d$ asks the output to
 move in the positive direction. The low-frequency, incremental open-loop
@@ -260,7 +260,7 @@ and phase as $T=A\beta$. The definition factors out the explicit minus sign at
 the summing junction, so the characteristic equation is $1+T=0$. A signed
 product that includes the displayed subtraction would instead be $-A\beta$.
 
-Consider the scalar low-frequency case. The feedback network returns
+In the scalar low-frequency case, the feedback network returns
 $\Delta v_f=\beta\Delta v_o$. The dimensionless **feedback factor** $\beta$
 states what fraction of an output change returns to the summing point. The
 summing relation is
@@ -495,9 +495,9 @@ guarantee follower operation [@sedra2020microelectronic].
 
 ### Weighted sums and differences
 
-The circuits in @fig-a04-summing-difference extend the same KCL reasoning. The inverting summer
-has input currents referenced from sources $v_1,\ldots,v_n$ toward the summing
-node. With the non-inverting input at TP0,
+The circuits in @fig-a04-summing-difference extend the same KCL reasoning. In
+the inverting summer, input currents are referenced from sources
+$v_1,\ldots,v_n$ toward the summing node. With the non-inverting input at TP0,
 
 $$
 v_o\approx-R_F
@@ -1238,6 +1238,9 @@ $$
 2\pi f\widehat V_o<\min(\mathrm{SR}_+,\mathrm{SR}_-),
 $$ {#eq-a04-slew-condition}
 
+This inequality links an output waveform, rather than merely a circuit gain,
+to the device's large-signal capability.
+
 The corresponding **full-power bandwidth** is the highest sine-wave frequency
 that can reach a declared peak output without exceeding the slew-rate bound.
 This is only the slew-rate-limited screen; bandwidth or output range may impose
@@ -1334,8 +1337,9 @@ corners must be checked before interpreting results as device evidence.
 
 ### Noise gain exposes hidden stability problems
 
-Set independent signal sources to zero and calculate the gain from an
-equivalent differential error source to output. That is the **noise gain**.
+The **noise gain** is found by setting independent signal sources to zero and
+calculating the gain from an equivalent differential error source to the
+output.
 For a resistive non-inverting stage it equals signal gain; for an inverting
 stage it is $1+R_F/R_{\mathrm{IN}}$; with capacitors it varies with frequency.
 
@@ -1381,10 +1385,11 @@ complete loop.
 ### Device family follows the dominant constraint
 
 “General-purpose op amp” is not a sufficient selection criterion.
-The map in @tbl-a04-family-selection is a search aid, not a guarantee: categories overlap,
-and the actual supply, common-mode, offset, bias, noise, output, stability,
-package, temperature, and lifetime specifications must still be checked in a
-current manufacturer datasheet [@horowitz2015art; @sedra2020microelectronic].
+The map in @tbl-a04-family-selection is a search aid, not a guarantee:
+categories overlap, and the actual supply, common-mode, offset, bias, noise,
+output, stability, package, temperature, and lifetime specifications must still
+be checked in a current manufacturer datasheet
+[@horowitz2015art; @sedra2020microelectronic].
 
 | Dominant design need | Family or feature worth screening | Important tradeoffs or exclusions |
 |---|---|---|
@@ -1445,11 +1450,11 @@ Design a stage for these **illustrative teaching requirements**:
 - acceptance is based on measured transfer points with a stated expanded
   uncertainty and guard band.
 
-The design schematic @fig-a04-single-supply-design uses a non-inverting stage whose lower feedback
-resistor returns to a 2.50 V reference rather than TP0. The reference must be a
-low-impedance, bypassed node over the signal band; two unbuffered equal
-resistors are not automatically adequate because feedback current would move
-their midpoint. At the input endpoints the feedback network asks the reference
+The design schematic @fig-a04-single-supply-design uses a non-inverting stage
+whose lower feedback resistor returns to a 2.50 V reference rather than TP0.
+The reference must be a low-impedance, bypassed node over the signal band; two
+unbuffered equal resistors are not automatically adequate because feedback
+current would move their midpoint. At the input endpoints the feedback network asks the reference
 port to sink or source 50.0 $\mu$A. Its $\pm2.0$ mV error limit contributes at
 most 6.013 mV at the resistor-ratio corners because
 $\max|1-G|=3.00601$. The nominal first-order value is 6.0 mV.
@@ -1476,8 +1481,8 @@ V_{\mathrm{REF}}
 (v_i-V_{\mathrm{REF}}).
 $$ {#eq-a04-level-shift}
 
-Choose $R_G=10.0$ k$\Omega$ and $R_F=30.0$ k$\Omega$, each 0.1%, so the nominal
-gain is 4.000. The exact worst-case ratio screen is
+The candidate uses $R_G=10.0$ k$\Omega$ and $R_F=30.0$ k$\Omega$, each 0.1%,
+so the nominal gain is 4.000. The exact worst-case ratio screen is
 
 $$
 G_{\max}=1+
@@ -1494,8 +1499,8 @@ interval is approximately $-0.150\%$ to $+0.150\%$, which satisfies the 0.25%
 requirement before reference and temperature effects. This is a component
 limit, not a statistical uncertainty.
 
-Before choosing a device, allocate the 20.0 mV DC output-error requirement.
-The resistor and reference errors interact. With
+Device selection depends on how the 20.0 mV DC output-error requirement is
+allocated. The resistor and reference errors interact. With
 $x=v_i-2.500~\mathrm{V}$ and
 $\delta=V_{\mathrm{REF}}-2.500~\mathrm{V}$, their combined output error is
 

@@ -42,7 +42,8 @@ controlled path, or the operating region. Neither shortcut tells you how much
 drive the device needs, where the load line places the operating point, or what
 happens during a transition.
 
-Before reading further, predict four changes:
+Before continuing, predict how each of four variations exposes the limits of
+the two shortcuts:
 
 - replace an NPN BJT with an n-channel MOSFET but retain the same control
   voltage;
@@ -409,15 +410,17 @@ resistance can be optimistic.
 
 ## Source–load intersections and controlled current
 
-Consider the NPN low-side stage in @fig-a02-bjt-low-side. $R_{\mathrm{OUT}}$
-represents the driver's finite output resistance; $R_B$ is mandatory current
-limiting. $R_{BE}$ is an optional defined-state and discharge path, not a
-substitute for a valid driver.
+The NPN low-side stage in @fig-a02-bjt-low-side connects the device
+characteristic to a source–load constraint. $R_{\mathrm{OUT}}$ represents the
+driver's finite output resistance, and $R_B$ provides mandatory current
+limiting. The optional $R_{BE}$ provides a defined state and discharge path,
+but it does not substitute for a valid driver.
 
 ![A bounded NPN low-side switching interface.](../../../build/circuits/a02-bjt-low-side-switch.png){#fig-a02-bjt-low-side fig-alt="Driver voltage V DRV and output resistance R OUT feed base resistor R B and the base of NPN transistor Q1. Optional resistor R BE connects base to emitter. Load R L connects from supply V CC to the collector. Emitter and driver return share TP0. TPB and TPC expose distinct base and collector voltages; resistor current I RB and collector current I C are marked." width="78%"}
 
-Define $V_{CC}>0$, $R_L>0$, $I_C$ downward through the load and transistor, and
-$V_{CE}$ positive at the collector. KVL gives the exact DC source line
+With $V_{CC}>0$, $R_L>0$, $I_C$ directed downward through the load and
+transistor, and $V_{CE}$ positive at the collector, KVL gives the exact DC
+source line
 
 $$
 V_{CE}=V_{CC}-I_CR_L.
@@ -929,11 +932,11 @@ automatically safe when repeated before the junction cools.
 
 ### Thermal accumulation and margin
 
-Choose a thermal boundary around the transistor and its package. Electrical
-power is converted inside the device; heat crosses through package, interface,
-heatsink or board, and ambient paths; internal energy accumulates while
-temperature changes. At thermal steady state, a simple junction-to-ambient
-screen is
+A thermal calculation first requires a boundary around the transistor and its
+package. Electrical power is converted inside that boundary; heat crosses the
+package, interface, heatsink or board, and ambient paths, while internal energy
+accumulates as temperature changes. At thermal steady state, a simple
+junction-to-ambient screen is
 
 $$
 T_J\approx T_A+P_{\mathrm{avg}}R_{\theta JA}.
@@ -1036,7 +1039,7 @@ type alone.
 | Will it remain cool enough? | $v_{CE}i_C+v_{BE}i_B$, thermal path | $i_D^2R$, transition and internal gate loss, thermal path | resistor, diode, winding, connector and board temperatures |
 | Is the evidence applicable? | current, base drive, pulse, voltage, $T_J$ | gate drive, current, pulse, duty, board, $T_J$ | all datasheet test conditions and tolerances |
 
-Use the following staged procedure:
+Those parameter questions lead to the following staged selection procedure:
 
 1. **State the load and interface bounds.** Include supply, source impedance or
    current limit, load current or resistance, inductance or startup, duty,

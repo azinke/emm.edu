@@ -242,7 +242,7 @@ charge.
 For a **uniform electrostatic field**, choose A and B a distance $d$ apart with the
 field pointing from A toward B. The force on a positive test charge is constant, so
 the field work from A to B is $W_{A\to B}^{(E)}=qEd$. With $+$ at A and $-$ at B,
-The definition in @eq-voltage becomes
+the definition in @eq-voltage becomes
 $$
 V_{AB} = E\,d \qquad\Longleftrightarrow\qquad E = \frac{V_{AB}}{d}.
 $$ {#eq-ved}
@@ -433,7 +433,7 @@ The illustrative dataset below shows how you would examine the steady case.
 Carrier density is important, but it is not the whole classification. A carrier
 must also respond to a field. In the low-field, approximately linear regime, define
 the **mobility** $\mu$ by the magnitude relation $|v_d|=\mu|E|$. Combining it with
-The drift relation in @eq-drift gives, for one carrier type,
+the drift relation in @eq-drift gives, for one carrier type,
 $$
 J=\sigma E, \qquad \sigma=n|q_c|\mu, \qquad \rho\equiv\frac{1}{\sigma},
 $$ {#eq-conductivity}
@@ -598,9 +598,9 @@ the boundary of the tool you are about to use everywhere.
 
 ## Measurement procedure: steady-current continuity
 
-Compare steady current at several break points around a series loop to test
-whether current remains continuous in steady operation. The physical test belongs
-to Lab **L02**. The **synthetic teaching dataset** below is internally consistent
+The continuity relation now suggests a direct test: compare steady current at
+several break points around a series loop. The physical test belongs to Lab
+**L02**. The **synthetic teaching dataset** below is internally consistent
 with the stated setup. It demonstrates the analysis and record structure but does
 not qualify the physical claim [@horowitz2015art]. See
 @sec-evidence-workflow for the role of synthetic data in the wider evidence
@@ -758,9 +758,9 @@ that separates it from the alternatives.
 
 ## Worked design: return-conductor sizing and voltage-drop margin
 
-Now use these ideas to **size a shared return conductor so that its voltage drop
-stays within a declared budget**. The calculation turns the
-ideal-wire assumption into a measurable design requirement.
+The shared-return diagnosis also turns the ideal-wire assumption into a design
+requirement. In the following example, the conductor is **sized so that its
+voltage drop stays within a declared budget**.
 
 *Requirements (measurable, declared in advance).*
 

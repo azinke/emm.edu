@@ -39,8 +39,8 @@ temperature, load, or device parameters. Separating the DC operating point from
 the signal excursion identifies which limit moved
 [@sedra2020microelectronic].
 
-Before calculating, consider a common-emitter stage connected to a 12 V supply.
-Predict what happens if:
+The consequences become concrete in a common-emitter stage connected to a
+12 V supply. Before calculating, predict how its response changes when:
 
 - the transistor is replaced by another of the same part number but with twice
   the DC current gain;
@@ -175,7 +175,7 @@ The corresponding tilde quantities are increments with the same polarities.
 All common-emitter voltage gains below are output numerator divided by input
 denominator using these references.
 
-Replace the divider by its Thévenin equivalent as seen from TPB:
+The divider's Thévenin equivalent as seen from TPB is
 
 $$
 V_{\mathrm{TH}}=V_{CC}\frac{R_2}{R_1+R_2},
@@ -253,9 +253,10 @@ load change. Common discrete strategies are compared in @tbl-a03-bias-methods
 : Common discrete bias strategies. “Stabilizing” means reduced sensitivity over
 a stated range, not independence from device or environment. {#tbl-a03-bias-methods}
 
-The first three BJT strategies are shown in @fig-a03-bias-strategies. Assume a
-constant $V_{BEQ}$, forward-active operation, and constant
-$\beta_{\mathrm{DC}}$ only long enough to compare their sensitivity.
+The first three BJT strategies are shown in @fig-a03-bias-strategies. Their
+sensitivity can be compared by temporarily assuming a constant $V_{BEQ}$,
+forward-active operation, and constant $\beta_{\mathrm{DC}}$; those assumptions
+will still have to be checked against the resulting operating point.
 
 ![Fixed, collector-feedback, and divider-plus-emitter BJT bias networks.](../../../build/circuits/a03-bias-strategies.png){#fig-a03-bias-strategies fig-alt="Panel a shows fixed bias: R B connects V CC to the base of an NPN transistor, R C connects V CC to its collector, and the emitter is grounded. Panel b moves R B from V CC to the collector so a collector-voltage decrease opposes base current. Panel c uses divider R1 and R2 at the base and emitter resistor R E so a current increase raises emitter voltage and reduces V BE." width="100%"}
 
@@ -331,8 +332,8 @@ checking device dissipation and the thermal path from F05.
 
 ### Worked example: divider-bias sensitivity
 
-Use the circuit of @fig-a03-common-emitter with these **illustrative nominal**
-values:
+The circuit of @fig-a03-common-emitter provides a numerical comparison with
+these **illustrative nominal** values:
 
 $$
 \begin{aligned}
@@ -501,8 +502,8 @@ condition-matched device relation still decides the Q point.
 
 ### The tangent at the Q point
 
-Let a memoryless terminal relation near the Q point be $I=F(V)$. With
-$V=V_Q+\widetilde v$, Taylor expansion gives
+For a memoryless terminal relation $I=F(V)$ near the Q point, write
+$V=V_Q+\widetilde v$. Taylor expansion then gives
 
 $$
 I_Q+\widetilde i
@@ -1087,6 +1088,9 @@ A_{v,\mathrm{SF}}
 \approx\frac{g_mR_S'}{1+g_mR_S'},
 $$ {#eq-a03-source-follower-gain}
 
+As with the emitter follower, this ratio approaches one only when the local
+transconductance and loaded source resistance make $g_mR_S'$ large.
+
 The gate draws little low-frequency conduction current, but the gate-bias
 network and capacitance still define input loading. Body transconductance,
 finite $r_o$, source-resistor loading, and limited gate-to-source headroom keep
@@ -1646,7 +1650,8 @@ the design; no physical assembly has supplied measurements.
 measurement intervals to remain inside the stated boundaries.
 {#tbl-a03-design-requirements}
 
-Choose an onsemi 2N3904 and the nominal values in @tbl-a03-design-values.
+The candidate design uses an onsemi 2N3904 and the nominal values in
+@tbl-a03-design-values.
 Standard-value availability does not establish
 tolerance, temperature coefficient, voltage coefficient, or capacitor
 polarization; the actual parts must be specified before qualification.

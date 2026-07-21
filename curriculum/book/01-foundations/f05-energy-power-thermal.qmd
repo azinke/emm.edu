@@ -257,8 +257,9 @@ temperature coefficient, voltage coefficient, non-ohmic behavior, and pulses
 large or long enough to change temperature or operating region can break that
 assumption.
 
-Now apply a 10.0 V rectangular pulse to an illustrative 100 Ω resistor for 25 %
-of every period, with zero voltage otherwise. During each on-time,
+The distinction becomes visible in an illustrative 100 Ω resistor driven by a
+10.0 V rectangular pulse for 25 % of every period and held at zero otherwise.
+During each on-time,
 $i=100$ mA and $p=1.00$ W. Over a full period,
 
 $$
@@ -477,8 +478,9 @@ rail bypasses the stage boundary.
 
 ### Linear conversion and dissipation
 
-Consider an illustrative requirement: deliver 5.00 V DC at 100 mA from 12.0 V DC.
-For an idealized **linear regulator**, define input current as output current plus
+The boundary account can now be applied to an illustrative conversion
+requirement: 5.00 V DC at 100 mA from 12.0 V DC. For an idealized **linear
+regulator**, define input current as output current plus
 ground current $I_G$. Its steady input, output, and internal powers are
 
 $$

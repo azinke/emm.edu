@@ -42,7 +42,7 @@ a reverse limit. The transition is steep, but it is not an exact switch at
 $0.7$ V
 [@sedra2020microelectronic; @vishay1n4148].
 
-Use four changes to test your initial model:
+Four variations test whether that initial picture is sufficient:
 
 - double the series resistance while holding source voltage constant;
 - warm the junction while holding forward current constant;
@@ -176,12 +176,12 @@ carrier concentrations [@sze2006physics].
 
 ## The p–n junction
 
-Join p-type and n-type regions in one crystal. Near the interface, electrons
-diffuse from the n side and holes diffuse from the p side because of their
-concentration gradients. Recombination removes some mobile carriers near the
-interface. It leaves exposed, essentially immobile ionized donors on the n side
-and ionized acceptors on the p side. This **space charge** creates an electric
-field directed from the positive donor ions toward the negative acceptor ions.
+When p-type and n-type regions meet in one crystal, their concentration
+gradients drive electrons from the n side and holes from the p side toward the
+interface. Recombination there removes some mobile carriers and exposes
+essentially immobile ionized donors on the n side and ionized acceptors on the
+p side. This **space charge** creates an electric field directed from the
+positive donor ions toward the negative acceptor ions.
 
 The field drives carriers opposite to diffusion. At thermal equilibrium, drift
 and diffusion currents cancel, leaving no net terminal current. The carrier-poor
@@ -281,16 +281,14 @@ current sign, not the physical behavior.
 
 ### The junction current relation
 
-For an ideal abrupt p–n junction under steady conditions, negligible generation
-and recombination in the depletion region, low-level injection, uniform
-temperature, and negligible series resistance, solving the minority-carrier
-transport problem gives the Shockley junction relation [@shockley1949junctions;
-@sze2006physics]:
-
-Here **low-level injection** means that the injected excess minority-carrier
-concentration remains small compared with the equilibrium majority-carrier
-concentration, so the bulk majority population and electric-field distribution
-are not substantially altered.
+For an ideal abrupt p–n junction, solving the minority-carrier transport problem
+gives the Shockley junction relation under steady conditions, negligible
+generation and recombination in the depletion region, low-level injection,
+uniform temperature, and negligible series resistance
+[@shockley1949junctions; @sze2006physics]. Here **low-level injection** means
+that the injected excess minority-carrier concentration remains small compared
+with the equilibrium majority-carrier concentration, so the bulk majority
+population and electric-field distribution are not substantially altered:
 
 $$
 I_D=I_S\left[\exp\!\left(\frac{V_D}{V_T}\right)-1\right].
@@ -425,9 +423,10 @@ exact constant.
 
 ## Operating points in source–diode networks
 
-Replace any linear source network at the diode port by its Thévenin voltage
-$V_S$ and resistance $R_S>0$, as shown in @fig-a01-diode-operating-point. Keep
-$V_D$ positive at the anode and $I_D$ entering it.
+The Thévenin equivalent connects the nonlinear device law to an otherwise
+linear circuit. In @fig-a01-diode-operating-point, the source network at the
+diode port has voltage $V_S$ and resistance $R_S>0$, while $V_D$ remains
+positive at the anode and $I_D$ enters it.
 
 ![A series source, resistance, and diode used to find a steady DC operating point.](../../../build/circuits/a01-diode-operating-point.png){#fig-a01-diode-operating-point fig-alt="A voltage source V S drives resistor R S and diode D1 in series. Diode current I D is referenced clockwise and enters the diode anode. Diode voltage V D is positive at the anode relative to the cathode. Test points TP S, TP1, and TP0 expose the source, diode anode, and zero volt reference." width="82%"}
 
@@ -830,7 +829,9 @@ $$
 I_F\approx\frac{V_S-V_F}{R},
 $$
 
-For design bounds, use opposing extremes:
+This nominal relation becomes a design interval only after the source,
+resistance, and forward-voltage ranges are carried through it. Accordingly, the
+opposing extremes are:
 
 - maximum current uses maximum source voltage, minimum resistance, and the
   lowest defensible $V_F$;
@@ -944,8 +945,9 @@ an absolute maximum rating is not a pass.
 
 ## Diode families and system roles
 
-This is the right point to build a broad family map, but a flat list would be
-misleading. Diode names mix at least four classification axes:
+The preceding junction, switching, optical, and breakdown behavior now supports
+a broader family map. A flat list would still be misleading because diode names
+mix at least four classification axes:
 
 - **physical mechanism or structure**, such as a p–n junction, metal–
   semiconductor barrier, PIN region, tunnelling junction, or bulk transferred-

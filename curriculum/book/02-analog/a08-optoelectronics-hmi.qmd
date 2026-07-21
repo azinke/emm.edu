@@ -304,10 +304,10 @@ An LED driver controls electrical current. The LED, package optics, temperature,
 production bin, mounting, ambient field, and observer geometry jointly control
 what the user or detector receives.
 
-The left side of @fig-a08-led-photodiode-interface contains the source,
-resistor, LED, switching transistor, base drive, and return all belong to the
-current path. Omitting the source tolerance or transistor voltage would change
-the calculated current.
+The left side of @fig-a08-led-photodiode-interface shows the complete emitter
+current path: source, resistor, LED, switching transistor, base drive, and
+return. Omitting the source tolerance or transistor voltage would change the
+calculated current.
 
 ![The emitter branch routes source current through its limiter, LED, switch, and return. The TIA returns its photodiode and non-inverting input to the same reference; unshown op-amp supply pins still constrain range and power.](../../../build/circuits/a08-led-photodiode-interface.png){#fig-a08-led-photodiode-interface fig-alt="Panel a shows source V S feeding a resistor, LED, and NPN low-side transistor in series. A driver reaches the transistor base through a resistor, and the emitter reaches the source return. Panel b shows a photodiode between the op-amp inverting summing node and V REF, the non-inverting input connected to V REF, and parallel feedback resistor and capacitor from output to the summing node." width="96%"}
 
@@ -1205,10 +1205,9 @@ simultaneous segments, digit-switch current, resistor power, supply droop,
 connector current, and thermal conditions must all pass.
 
 The multiplex diagram in @fig-a08-multiplex-paths joins the shared current path
-to the waveforms that
-control it. The safe order is: disable every digit, wait for the old switch to
-release, change segment data, allow it to settle, enable exactly one new digit,
-and hold its active interval.
+to the waveforms that control it. That relationship determines a safe sequence:
+disable every digit, wait for the old switch to release, change segment data,
+allow it to settle, enable exactly one new digit, and hold its active interval.
 
 ![Two digits share segment buses and current limiting. During break-before-make scanning, segment data changes only while all digit switches are off; an early change can create a ghost-current pulse through the old digit.](../figures/a08-multiplex-paths.svg){#fig-a08-multiplex-paths fig-alt="The upper panel shows two digit blocks connected to shared segment A and B buses with per-segment current limiting. A bold current path selects digit one segment A. The lower timing panel shows digit one disabled, an all-digits-off blank interval, a segment-data change, and digit two enabled after settling. A faulty early transition is labeled as a ghost pulse." width="98%"}
 

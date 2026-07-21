@@ -791,8 +791,10 @@ hardware or measure a circuit. See @sec-evidence-workflow for the distinction.
 
 ## Load-sweep evidence for the linear one-port relation
 
-The network and its equivalent predict a straight port relation. A physical test
-should challenge that prediction at several safe loads rather than celebrate one
+The executable check confirms the arithmetic, but the linear one-port claim also
+needs an observation that can challenge it. The network and its equivalent
+predict a straight port relation, so a physical test should challenge that
+prediction at several safe loads rather than celebrate one
 agreeing point; this follows the prediction-first bench practice of
 [@horowitz2015art]. For the one-port of @fig-f04-one-port, a bounded test would:
 
@@ -848,8 +850,9 @@ points because those hypotheses predict different patterns.
 
 ## Guarded acceptance decision for a port requirement
 
-Suppose the one-port is intended to drive an input guaranteed to have
-$R_L\ge3.00$ kΩ. The engineering requirement is:
+The load sweep tests the form of the port relation; an engineering decision must
+also test that relation against a requirement. Suppose the one-port is intended
+to drive an input guaranteed to have $R_L\ge3.00$ kΩ. The requirement is:
 
 > For $V_S=10.0$ V ±1%, $I_S=1.00$ mA ±2%,
 > $R_1=1.00$ kΩ ±1%, $R_2=2.00$ kΩ ±1%, and ambient conditions under which those

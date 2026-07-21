@@ -30,10 +30,10 @@ high-side circuits.
 > How can one unchanged circuit pass a slow signal almost intact, attenuate a
 > fast signal, and shift the timing between input and output?
 
-Consider a 10.0 k$\Omega$ resistor followed by a 10.0 nF capacitor. The output is
-taken across the capacitor. Apply a 1.000 V RMS sine wave. Before calculating,
-predict the output at 100 Hz, 1.59 kHz, and 10.0 kHz. The same components produce
-three different results:
+Consider a 10.0 k$\Omega$ resistor followed by a 10.0 nF capacitor, with the
+output taken across the capacitor. For a 1.000 V RMS sine-wave input, predict the
+output at 100 Hz, 1.59 kHz, and 10.0 kHz before calculating. The same components
+produce three different results:
 
 | Frequency | Ideal output magnitude | Output phase relative to input |
 |---:|---:|---:|
@@ -949,8 +949,8 @@ has been independently evaluated can a closure residual be assessed.
 
 ### Requirements and nominal selection
 
-Design the low-pass of panel (b) for 20–25 °C with these illustrative
-requirements:
+The design case applies the low-pass in panel (b) at 20–25 °C under these
+illustrative requirements:
 
 - generator output resistance $49~\Omega\le R_S\le51~\Omega$, with the actual
   TP1 input amplitude measured at every frequency;
@@ -960,8 +960,9 @@ requirements:
 - the assembly remains in its linear, lumped range and the measurement loading
   is included or corrected.
 
-Begin with synthesis rather than a guessed component pair. For a nominal
-unity-gain first-order response, the corner requirement gives
+The requirements first constrain the time constant, before a component pair is
+selected. For a nominal unity-gain first-order response, the corner requirement
+gives
 
 $$
 \frac{1}{2\pi(1.75~\text{kHz})}<\tau

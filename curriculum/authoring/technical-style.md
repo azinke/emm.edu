@@ -83,6 +83,11 @@
   established. When the scale, case, representation, or task changes, state the
   reason for the change and the connection to what came before. A heading does
   not substitute for that transition.
+- Make each handoff point in both directions. Its opening words should identify
+  the result, limitation, or question carried from the preceding passage, and
+  the rest should show why the next concept is needed. Empty sequencing such as
+  “Next, consider...” and a bare demonstrative such as “This matters” do not
+  supply either connection unless the referent and consequence are explicit.
 - Move in visible steps: physical object → terminal behavior → compact
   description → circuit interaction → system consequence → test. When a chapter
   moves from a component to a circuit or from a circuit to a system, add the
@@ -136,6 +141,11 @@
   abruptly by evidence, a component followed by a system claim, or an
   explanation followed by a procedure without a sentence that motivates the
   change. Add the conceptual handoff or reorder the material.
+- Audit orphan sentences: a sentence is orphaned when neither its subject nor a
+  clear connective ties it to the current paragraph question. Move it beside the
+  claim it qualifies, supply the missing causal or contrast relationship, or
+  remove it only when it duplicates an established point. Perform the same test
+  on the first sentence after every heading.
 - Audit sentence mood as well as sentence length. If a normal factual statement
   has become “Use,” “Apply,” “Define,” “Consider,” “Observe,” or “Notice,” ask
   whether the reader must actually do something. Restore declarative exposition

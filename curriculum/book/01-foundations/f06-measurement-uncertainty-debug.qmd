@@ -101,8 +101,9 @@ state, source condition, settling time, and temperature are part of the quantity
 Here “allowed” denotes an operating-condition interval, not a standard or
 expanded uncertainty. “No external load” excludes the measuring instrument:
 $V_0$ is inferred by a validated correction or by a sufficiently non-intrusive
-method rather than observed without interaction.
-Changing one can change the value rather than merely reveal “noise.” The VIM (_Vocabulaire International de Métrologie_)
+method rather than observed without interaction. Changing any of the defining
+conditions can change the value rather than merely reveal “noise.” The VIM
+(_Vocabulaire International de Métrologie_)
 therefore treats measurement as a process that experimentally obtains quantity
 values that can reasonably be attributed to a measurand, not as reading a display
 [@jcgm2012vim].
@@ -205,8 +206,8 @@ The definitions below follow the VIM [@jcgm2012vim].
 Suppose five repeated indications are 3.963, 3.964, 3.965, 3.964, and 3.963 V.
 They are tightly grouped: the measurement is precise under those repeatability
 conditions. They can nevertheless all be about 32 mV below the unloaded
-measurand because the same DMM loads the node on every trial. Repetition estimates
-scatter; it does not reveal a stable loading effect.
+measurand because the same DMM loads the node on every trial. Repeated
+observations estimate scatter; they do not reveal a stable loading effect.
 
 **Intermediate precision** allows selected conditions such as day, operator, or
 instrument to change within one laboratory, while **reproducibility** evaluates
@@ -965,14 +966,15 @@ what it did. Conformity assessment requires a declared rule for combining them;
 there is no automatic pass merely because the display lies between two limits
 [@jcgm2012conformity].
 
-Suppose the divider requirement is:
+With the measurement result established, the final step is to compare it with a
+declared requirement. For the divider, suppose that requirement is:
 
 > At the single recorded operating point $V_S=5.001$ V DC and 23 °C, with no
 > external load and 60 s settling, the strict requirement is
 > $3.900~\text{V}<V_0<4.100~\text{V}$.
 
-Choose the simple guard-band rule that the entire reported expanded interval must
-lie inside the specification:
+One simple guard-band rule requires the entire reported expanded interval to lie
+inside the specification:
 
 $$
 y-U>T_L
@@ -986,7 +988,7 @@ possible conformity rule. Different consumer/producer risks, asymmetric losses,
 or regulatory requirements can require a different rule
 [@jcgm2012conformity].
 
-Make the decision with retained precision, before formatting the result:
+Applying that rule with retained precision, before formatting the result,
 $3.995546\pm0.004807$ V gives 3.990739 V to 4.000353 V. That interval lies
 strictly inside 3.900 V to 4.100 V, so the **synthetic case passes this declared
 single-point rule**. The rounded report remains @eq-reported-divider. Equality at

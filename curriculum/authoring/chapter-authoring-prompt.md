@@ -87,6 +87,11 @@ make the explanation clearer, not more distant.
   transistor becomes an amplifier, explain how bias places the device where a
   small input change can control a larger output change. Never make the schematic
   or a new heading carry that conceptual jump by itself.
+- Make a transition connect backward and forward: name the result, limitation,
+  or open question inherited from the preceding passage, then state why the next
+  concept resolves or extends it. “Next, consider...” supplies only order, while
+  “This is important” leaves both the referent and consequence unclear. Replace
+  either with the actual technical relationship.
 - Ask for a sign, direction, trend, limiting case, or order-of-magnitude
   prediction before a central calculation. Reconcile the result with that
   prediction afterward.
@@ -567,6 +572,10 @@ prose that never gives the reader enough mathematics to reproduce the result.
      “Predict,” “Inspect,” “Trace,” “Use,” “Define,” and “Let”; rewrite explanatory
      clusters as connected declarative prose, while retaining commands whose
      reader action, order, or safety consequence is real;
+   - inspect the first sentence after every heading and every sentence that
+     changes subject abruptly; if it does not name a result, question, contrast,
+     or causal link from the current passage, move it beside the claim it belongs
+     to or write the missing handoff;
    - convert mixed requirement fragments into parallel commands with measurable
      endpoints;
    - replace editorial narration with the actual causal or evidentiary claim;

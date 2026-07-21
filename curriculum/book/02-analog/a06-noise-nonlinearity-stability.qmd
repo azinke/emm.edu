@@ -311,12 +311,13 @@ flowchart TB
   R -.-> O
 ```
 
-Use discriminating changes. Rotate or shrink a loop to test magnetic coupling.
-Change source impedance or add a grounded electrostatic shield to test electric
-coupling. Power the source from a different approved supply to test conduction.
-Measure differentially across the intended return to expose shared-impedance
-voltage. A low-pass filter may reduce the displayed line without proving which
-path created it.
+The candidate paths can be separated by changes that affect one coupling
+mechanism more than the others. Rotating or shrinking a loop tests magnetic
+coupling; changing source impedance or adding a grounded electrostatic shield
+tests electric coupling. Powering the source from a different approved supply
+tests conducted coupling, while a differential measurement across the intended
+return exposes shared-impedance voltage. A low-pass filter may reduce the
+displayed line without proving which path created it.
 
 ### A spectrum is an estimate made by an instrument
 
@@ -456,7 +457,8 @@ $$
 =6.0~\text{nV}/\sqrt{\text{Hz}}.
 $$ {#eq-a06-floor-example}
 
-Now assign illustrative standard uncertainties of
+To show how close floor subtraction magnifies uncertainty, assign illustrative
+standard uncertainties of
 0.5 nV/$\sqrt{\text{Hz}}$ to each ASD. First-order propagation gives
 
 $$
@@ -762,15 +764,15 @@ gain allocation must pass all of those screens at once.
 
 ### Non-inverting amplifier budget
 
-Inspect the schematic before using a noise number. The source resistance makes
-op-amp input-current noise into voltage noise. The feedback resistors generate
-thermal noise and set **noise gain**, the gain from an equivalent input-voltage
-source to the unfiltered output TPU. A physical post-amplifier low-pass then
-connects TPU to the observed output TPO. Its resistor adds thermal noise, and
-its capacitance loads TPU through that resistor. The supplies deliver output
-energy but are omitted from this small-signal noise budget; their ripple enters
-through finite supply rejection and must be added separately when
-consequential.
+The next schematic supplies the circuit context that every noise number needs.
+Its source resistance converts op-amp input-current noise into voltage noise.
+The feedback resistors generate thermal noise and set **noise gain**, the gain
+from an equivalent input-voltage source to the unfiltered output TPU. A
+physical post-amplifier low-pass then connects TPU to the observed output TPO;
+its resistor adds thermal noise, and its capacitance loads TPU through that
+resistor. The supplies deliver output energy but are omitted from this
+small-signal noise budget. Their ripple enters through finite supply rejection
+and must be added separately when consequential.
 
 ![Non-inverting amplifier and post-amplifier RC low-pass used for the input-referred noise budget.](../../../build/circuits/a06-noise-budget-amplifier.png){#fig-a06-noise-budget-amplifier fig-alt="A voltage source v s and source resistance R S drive the non-inverting input of op amp U1. Feedback resistor R F connects unfiltered output TPU to the inverting node, and R G connects that node to TP0. Series resistor R LP and shunt capacitor C LP form a post-amplifier low-pass from TPU to filtered output TPO. Labels identify resistor thermal noise and equivalent op-amp voltage and current noise." width="100%"}
 
@@ -1169,10 +1171,10 @@ small-signal extrapolated line under stated tone, load, supply, and bandwidth
 conditions. Falling incremental gain is related, but it is not the standard
 1 dB-compression measurand. Compression often precedes visibly flat peaks.
 
-Inspect the time waveform and spectrum together. The conceptual figure shows
-centered symmetric hard clipping. It emphasizes the odd products added by that
-symmetry; clipping also changes the fundamental amplitude. The drawing is
-explanatory, not device data.
+The time waveform and spectrum provide complementary evidence of clipping. The
+conceptual figure shows centered symmetric hard clipping and emphasizes the odd
+products added by that symmetry; clipping also changes the fundamental
+amplitude. The drawing is explanatory, not device data.
 
 ![Linear and clipped sine-wave behavior.](../figures/a06-clipping-harmonics.svg){#fig-a06-clipping-harmonics fig-alt="The left panel compares a sinusoidal output with a larger waveform limited at upper and lower voltage bounds. The right panel shows a conceptual spectrum: the linear sine has a fundamental, while symmetric clipping produces odd harmonics at three, five, and seven times the fundamental." width="100%"}
 
@@ -1487,7 +1489,8 @@ ratio from the responses on both sides. Injection impedance, transformer
 bandwidth, analyzer dynamic range, amplitude, and probe loading become part of
 the result [@analogdevices2019loopgain].
 
-Use at least two evidence views:
+Because any one view can hide a stability problem, a defensible assessment uses
+at least two of the following evidence views:
 
 - a frequency-domain return-ratio result over a range wide enough to reveal all
   relevant crossings;
@@ -1506,7 +1509,8 @@ measurement configuration belongs in the stability claim
 
 ## Layout, filtering, and shielding decisions
 
-The right mitigation follows the dominant mechanism. Use this sequence:
+The right mitigation follows the dominant mechanism, so the design sequence
+keeps diagnosis ahead of component changes:
 
 1. Define the signal boundary, source impedance, wanted band, allowable delay,
    largest signal, smallest signal, and required decision.

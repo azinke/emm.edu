@@ -35,14 +35,14 @@ source, return path, stored energy, temperature, and measurement connection
 
 An **integrated circuit** places electronic devices and much of their
 interconnection on one substrate through a shared fabrication sequence.
-Integration does more than make a schematic smaller. Device dimensions set
-current and capacitance.
-Nearby devices share wells, substrate, temperature, and process history.
+Integration does more than make a schematic smaller: device dimensions set
+current and capacitance, while nearby devices share wells, substrate,
+temperature, and process history.
 **Complementary MOS (CMOS)** combines n-channel and p-channel MOS devices so
 that the complementary pair can pull a node toward either supply rail.
-Micrometres of routing add
-**parasitic effects**: unintended resistance, capacitance, inductance, or
-coupling that physical construction creates. A package then inserts pads,
+Micrometres of routing add **parasitic effects**—unintended resistance,
+capacitance, inductance, or coupling that physical construction creates. A
+package then inserts pads,
 protection, leads, thermal paths, and another set of parasitics between the die
 and the board [@sze2006physics; @baker2019cmos].
 
@@ -111,12 +111,13 @@ MOSFET often connects body to source internally. When you design an IC, you
 must place each device in a substrate or well and provide an intentional body
 connection.
 
-Inspect the conceptual cross-section below. The nMOS sits in p-type material.
-The pMOS sits in an n-well. Source and drain regions form p–n junctions to those
-bodies, so normal bias keeps the junctions reverse biased. Metal reaches each
-region through contacts and vias. The drawing establishes connectivity and
-polarity; it is not a legal mask layout or an accurate process cross-section
-[@sze2006physics; @skywater2026pdk].
+The conceptual cross-section below makes the hidden body connections physical.
+The nMOS sits in p-type material, while the pMOS sits in an n-well. Source and
+drain regions form p–n junctions to those bodies, so normal bias keeps the
+junctions reverse biased. Metal reaches each region through contacts and vias.
+The drawing establishes connectivity and polarity; it is not a legal mask
+layout or an accurate process cross-section [@sze2006physics;
+@skywater2026pdk].
 
 ![A conceptual, not-to-scale bulk CMOS cross-section with body ties, wells, gates, diffusions, contacts, and metal.](../figures/a07-cmos-cross-section.svg){#fig-a07-cmos-cross-section fig-alt="An nMOS lies in a p-type substrate with n-type source and drain diffusions and a p-type substrate tie. A pMOS lies in an n-well with p-type source and drain diffusions and an n-type well tie. Thin oxide separates each gate from its channel, while contacts and metal connect terminals." width="95%"}
 
@@ -264,9 +265,9 @@ conductors and substrate. Device choice therefore depends on the PDK.
 Metal–insulator–metal, MOS, junction, poly, and fringe structures have
 different density, linearity, voltage rating, matching, and parasitic behavior.
 
-Calculate the area before deciding whether either component is compact. Take an
-**illustrative**
-poly sheet resistance $R_{\square}=200~\Omega/\square$. A 100 k$\Omega$
+Area estimates show why neither component is automatically compact. For an
+**illustrative** poly sheet resistance
+$R_{\square}=200~\Omega/\square$, a 100 k$\Omega$
 resistor needs $\ell/w=500$ squares, so at a drawn width of $w=1~\mu$m it is
 500 µm long and occupies about 500 µm² before contacts and spacing. Now take an
 illustrative MIM capacitance density of $2~\text{fF}/\mu\text{m}^2$: the 1 pF
@@ -278,9 +279,10 @@ replaces resistors with transistor loads and keeps deliberate capacitors small
 
 ## The CMOS inverter as an analog transfer block
 
-The CMOS inverter becomes a logic primitive in D01. Here you analyze it as two
-nonlinear transistors sharing an output node. Inspect the left panel of
-the inverter schematic in @fig-a07-cmos-inverter-switch. The pMOS connects the output toward $V_{DD}$.
+The CMOS inverter becomes a logic primitive in D01. Here it is analyzed as two
+nonlinear transistors sharing an output node. The left panel of
+@fig-a07-cmos-inverter-switch shows the pMOS connecting the output toward
+$V_{DD}$.
 The nMOS connects it toward the lower rail. Their common gate receives
 instantaneous input $v_i(t)$, and their common drain drives $C_L$ at output
 $v_o(t)$.
@@ -375,8 +377,9 @@ $NM_L=NM_H=0.7875$ V against the ideal rails. The later executable calculation
 reproduces these independently derived values to three decimals and confirms
 the arithmetic.
 
-Inspect the left panel of @fig-a07-inverter-curves. The two slope markers define
-$V_{IL}$ and $V_{IH}$. The intersection with the $v_o=v_i$ diagonal defines
+The qualitative transfer curve connects those definitions to visible features.
+Its two slope markers define $V_{IL}$ and $V_{IH}$, while the intersection with
+the $v_o=v_i$ diagonal defines
 $V_M$; the symmetric curve drawn here places that intersection at half-supply.
 The curves are qualitative and synthetic. They show how to read the quantities
 but do not describe a fabrication process.
@@ -429,9 +432,9 @@ time, or fall time. The right panel of @fig-a07-inverter-curves shows why these
 names matter: output crossing occurs after input crossing, while supply current
 can peak during the interval in which both devices conduct.
 
-Now consider the energy boundary containing the inverter and load capacitance.
-Define $i_{DD}$ as positive when it enters that boundary from the $V_{DD}$
-supply.
+The current relation also leads to an energy balance for a boundary containing
+the inverter and load capacitance. Let $i_{DD}$ be positive when it enters that
+boundary from the $V_{DD}$ supply.
 Charging an initially discharged ideal capacitor from an ideal constant source
 draws
 
@@ -515,8 +518,8 @@ $n$, and $V_T$. Real short-channel devices also retain drain-voltage
 sensitivity through effects such as drain-induced barrier lowering
 [@taur2021vlsi; @berkeley2025bsim4].
 
-Use **subthreshold swing** $S$ to express the gate-voltage change that changes
-off-state current by one decade:
+The gate-voltage change that changes off-state current by one decade is
+expressed by the **subthreshold swing** $S$:
 
 $$
 S
@@ -623,8 +626,8 @@ offset. A complementary pair partially cancels the injection because the two
 channels hold opposite carriers, but the cancellation is exact only at one
 signal level.
 
-Use a transmission gate as a controlled analog connection, not as an ideal
-wire. Track the direct trade-off: wider switch geometry lowers on-resistance
+These effects make a transmission gate a controlled analog connection rather
+than an ideal wire. In particular, wider switch geometry lowers on-resistance
 but stores more channel charge. [S02](../05-domains/s02-sampling-data-conversion.qmd)
 develops the resulting sampling errors and converter architectures.
 
@@ -760,7 +763,7 @@ difference into output voltage at TPO.
 
 ![Five-transistor CMOS differential stage with current-mirror active load. The circuit ties each nMOS body to $V_{SS}=0$ V and each pMOS body to $V_{DD}$; the schematic declares those connections without drawing them.](../../../build/circuits/a07-five-transistor-ota.png){#fig-a07-five-transistor-ota fig-alt="Matched nMOS M1 and M2 form a differential pair with gate inputs TPP and TPN. Tail transistor M5 sinks their shared current from the common-source node to the lower rail; V BIAS drives M5's gate. P-channel M3 and M4 form a current-mirror active load from V DD. The M2-M4 drain node is single-ended output TPO and drives C L. The nMOS bodies connect to the lower rail and pMOS bodies to V DD." width="82%"}
 
-Define input polarities before deriving a sign:
+The gain sign follows from the declared input polarities:
 
 $$
 v_d=v_p-v_n,
@@ -777,9 +780,9 @@ therefore rises for positive $v_d$ in this topology.
 
 ### Current steering
 
-Use identical long-channel nMOS devices with parameter $\beta$ and ignore
-channel-length modulation and body effect. Let the ideal tail source fix total
-current $I_T$:
+To expose the current-steering mechanism, assume identical long-channel nMOS
+devices with parameter $\beta$ and neglect channel-length modulation and body
+effect. The ideal tail source fixes total current $I_T$:
 
 $$
 i_1+i_2=I_T.
@@ -917,7 +920,8 @@ Small-signal bandwidth and large-signal slew rate are different constraints.
 
 ### Worked example: five-transistor OTA gain, bandwidth, and swing
 
-Now calculate the stage from the relations derived above. The parameters are
+The preceding relations can now be combined into one stage calculation. Its
+parameters are
 **illustrative long-channel values**, not a PDK extraction: $V_{DD}=1.8$ V,
 tail current $I_T=20~\mu$A, input-pair $\beta=200~\mu$A/V$^2$,
 $\lambda=0.10$ V$^{-1}$ for every device, and a load $C_L=1$ pF that dominates
@@ -981,7 +985,8 @@ $$
 A 1 V output step therefore cannot complete faster than about 50 ns regardless
 of what the small-signal bandwidth predicts.
 
-Finally check the operating window. With
+The gain and bandwidth results are useful only inside the operating window.
+With
 $V_{GS,\mathrm{in}}=V_{Tn}+V_{OV0}=0.45+0.316=0.77$ V and a tail overdrive of
 0.30 V, @eq-a07-cm-low gives $V_{CM,\min}\approx0+0.30+0.77=1.07$ V. Taking
 $V_{SG,p}=0.77$ V puts the load node at $V_D=1.03$ V, so @eq-a07-cm-high gives
@@ -1016,7 +1021,8 @@ V_{OS}
 \Delta V_T-\frac{V_{OV0}}{2}\frac{\Delta\beta}{\beta}.
 $$ {#eq-a07-input-offset}
 
-Read the two terms separately. Threshold mismatch appears at full weight;
+The two terms describe different mismatch mechanisms. Threshold mismatch
+appears at full weight;
 changing the bias does not reduce it. Half the overdrive scales current-factor
 mismatch, and that term carries the opposite sign: a stronger $M_1$ needs a negative
 $v_d$ to restore equal branch currents. Combining this with the
@@ -1038,8 +1044,9 @@ the comparison.
 ### Multistage gain, compensation, and output drive
 
 A later gain stage can multiply the low-frequency gain, but it also creates
-another high-impedance node. Inspect the incremental two-stage representation
-in @fig-a07-two-stage-incremental. It applies only around a valid quiescent point.
+another high-impedance node. The incremental two-stage representation in
+@fig-a07-two-stage-incremental shows that added node and applies only around a
+valid quiescent point.
 The ground symbols are AC reference; the omitted DC bias network must establish
 the stated $G_{m1}$, $g_{m2}$, $R_1$, and $R_2$.
 
@@ -1094,7 +1101,7 @@ $$
 \frac{I_{\mathrm{charge}}}{C_C}.
 $$ {#eq-a07-compensation-slew}
 
-Use this rate as an output-slew estimate only when one capacitor terminal moves
+This rate is an output-slew estimate only when one capacitor terminal moves
 comparatively little or when a derived stage relation maps $v_C$ to $v_o$.
 
 A simple two-stage topology can create a right-half-plane feed-forward zero of
@@ -1278,7 +1285,7 @@ nets. A cell may have schematic, symbol, layout, extracted, behavioral, and test
 views. Hierarchy makes review and reuse possible, but every boundary must
 preserve the same pin meaning and reference.
 
-Read the flow below from requirements to test. Each arrow means “supplies the
+The flow below connects requirements to test. Each arrow means “supplies the
 next representation or check”; no arrow guarantees correctness. The table then
 expands each phase into its stages.
 
@@ -1371,7 +1378,8 @@ references, trim elements, and known loads. These structures consume area and
 add parasitics, but you cannot directly screen performance you cannot access
 [@bushnell2000testing].
 
-Keep the evidence stages distinct:
+Because each stage supports a different claim, the evidence remains separated
+as follows:
 
 - design verification compares representations before fabrication;
 - wafer probe tests accessible die behavior before packaging;

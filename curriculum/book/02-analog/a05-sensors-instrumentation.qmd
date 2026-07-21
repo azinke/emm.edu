@@ -116,9 +116,10 @@ flowchart TB
   L -.-> X -.-> P
 ```
 
-The figure below is architectural, not a component schematic. Inspect the
-arrows. Each transformation needs a physical relation or a calibration relation,
-and each connection can add loading, variation, or uncertainty.
+The next figure broadens that mechanical view into the complete measurement
+chain. It is architectural, not a component schematic: each arrow marks a
+transformation that needs a physical or calibration relation, and each
+connection can add loading, variation, or uncertainty.
 
 ```{mermaid}
 %%| label: fig-a05-measurement-chain
@@ -210,7 +211,7 @@ electrochemical, acoustic, resonant, and inertial sensors likewise span several
 mechanisms and interfaces; the table is a selection map, not an exhaustive
 taxonomy.
 
-Use the same selection sequence for every candidate:
+Those distinctions lead to the same selection sequence for every candidate:
 
 1. Define the measurand, range, sign, spatial boundary, dynamics, and allowed
    interaction with the object.
@@ -365,8 +366,9 @@ canonical starting points, not universal finished designs.
 
 ### Four-wire resistance measurement
 
-Inspect where the sense conductors join the RTD. They connect at the sensor
-terminals, after the force-lead resistances.
+The four-wire interface makes the important connection point explicit: the
+sense conductors join at the sensor terminals, after the force-lead
+resistances.
 
 ![A four-wire RTD with separate force and sense conductors.](../figures/a05-rtd-four-wire.png){#fig-a05-rtd-four-wire fig-alt="An excitation current source drives an RTD through two force leads with resistance. Separate sense leads connect at the RTD terminals to the positive and negative inputs of a high-input-impedance instrumentation amplifier. The sense currents are approximately zero and the output is v RTD." width=82%}
 
@@ -549,7 +551,7 @@ $$
 \frac{v_d}{V_\text{EX}}\approx-\frac{k\varepsilon}{4}.
 $$ {#eq-a05-quarter-strain}
 
-Use illustrative values $R=350~\Omega$, $k=2.00$,
+For an illustrative calculation, let $R=350~\Omega$, $k=2.00$,
 $\varepsilon=1000~\mu\varepsilon=1.000\times10^{-3}$, and
 $V_\text{EX}=5.000$ V. Predict a few millivolts because the fractional
 resistance change is only 0.2 %. The linear result is
@@ -700,10 +702,10 @@ not necessarily ground. It needs a low source impedance within the device's
 allowed reference range. The signal output is referenced to TP0:
 $v_o=V_\text{TPO}-V_\text{TP0}$.
 
-Inspect the complete interface below. Equal series elements preserve symmetry;
-the common-mode and differential capacitors provide distinct return paths; both
-amplifier inputs retain DC bias-current paths through the bridge; and the
-reference driver establishes output level.
+The complete interface below shows how those constraints coexist. Equal series
+elements preserve symmetry, the common-mode and differential capacitors provide
+distinct return paths, both amplifier inputs retain DC bias-current paths
+through the bridge, and the reference driver establishes the output level.
 
 ![A balanced bridge-to-instrumentation-amplifier interface with complete bias and return paths.](../figures/a05-bridge-instrumentation.png){#fig-a05-bridge-instrumentation fig-alt="A four-resistor bridge excited from V EX to TP0 drives TP plus and TP minus through equal series filter resistors to the positive and negative inputs of instrumentation amplifier A1. Matched common-mode capacitors return each input to TP0 and one differential capacitor connects the input pair. Gain resistor R G programs A1. A low-impedance V REF source drives the reference terminal, and output TPO is measured relative to TP0. Supply and return connections are shown." width=100%}
 
@@ -1087,16 +1089,17 @@ the result.
 
 ### Differential pair and reference path
 
-Route the two signal conductors together so external fields couple as equally as
-possible. Twisting reduces loop area and improves symmetry, but it does not
-remove differential pickup or repair input-range violations. Keep excitation
-and high-current returns from sharing impedance with the signal reference.
+Routing the two signal conductors together makes external fields couple as
+equally as possible. Twisting reduces loop area and improves symmetry, but it
+does not remove differential pickup or repair input-range violations.
+Excitation and high-current returns therefore should not share impedance with
+the signal reference.
 
 A **ground loop** is not any circuit with several ground symbols. It is an
 unintended closed conductive path in which current creates an error voltage.
-Draw the shield, chassis, protective earth, signal reference, excitation return,
-and sensor body as distinct nodes until the design deliberately joins them
-[@ott2009electromagnetic].
+Keeping the shield, chassis, protective earth, signal reference, excitation
+return, and sensor body as distinct schematic nodes makes every deliberate
+connection—and its current path—visible [@ott2009electromagnetic].
 
 ### Shield and guard serve different currents
 

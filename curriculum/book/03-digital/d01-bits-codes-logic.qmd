@@ -644,6 +644,11 @@ decision mechanisms explain why a truth table can stay fixed while thresholds,
 currents, output structures, and power change. Exact design still begins with
 the named part's datasheet, not this family map.
 
+The family mechanisms therefore lead to a more precise interface question:
+which voltages and currents does a particular driver guarantee, and which ones
+will its receiver accept? The answer is an electrical contract rather than a
+family label.
+
 ## Electrical levels form a driver–receiver contract
 
 An electrical high is not one exact voltage. A driver promises output ranges
@@ -768,6 +773,11 @@ clamp current, rail sink capability, and return path.
 
 ## Signal polarity, high impedance, and shared nodes
 
+Voltage margins establish whether a driven low or high can cross a receiver's
+threshold. They do not yet say what that level means, who is driving the node,
+or what happens when a driver releases it. Polarity and output structure supply
+those missing parts of the contract.
+
 ### Active-low signals
 
 An **active-low signal** asserts its named function when its logic value is 0.
@@ -786,6 +796,8 @@ The electrical level and functional assertion must remain separate:
 
 Calling the low level “off” would invert the intended meaning. A schematic,
 equation, firmware field, and test procedure should use the same polarity name.
+Once polarity fixes the meaning of each driven level, the output structure
+determines whether the source drives that level or releases the node.
 
 ### Push-pull and three-state outputs
 
@@ -934,6 +946,9 @@ R_{PU}\ge\frac{3.5-0.4}{3.0~\mathrm{mA}}
 =1.03~\mathrm{k}\Omega,
 $$
 
+This bound covers the sink's guaranteed low-voltage operating point, but the
+complete pull-up path also has its own current limit.
+
 The independent path-current screen is tighter:
 
 $$
@@ -1006,6 +1021,9 @@ following sequence.
 | released open-drain node never reaches high | missing pull-up, excessive leakage, unpowered rail, or pull too weak | measure $V_{DD}$ and node current; substitute a bounded pull-up |
 | low state exceeds $V_{IL,\max}$ | pull too strong or sink too weak | calculate pull current and compare with guaranteed sink condition |
 | static levels pass but data fail at speed | edge, propagation, ringing, or sampling problem | preserve the static result and continue with the timed test in D03/L09 |
+
+These checks isolate plausible causes, but a diagnosis becomes an acceptance
+decision only after the test conditions and guarded limits are explicit.
 
 ### Acceptance boundary for a static interface
 
@@ -1092,9 +1110,9 @@ the C and hardware-register boundary.
 
 ## Exercises
 
-State widths, interpretations, reference nodes, and operating conditions. Estimate
-before calculating. Full solutions and assessment variants remain outside the
-public book; selected self-checks appear below.
+State widths, interpretations, reference nodes, and operating conditions.
+Estimate before calculating. Full solutions and assessment variants remain
+outside the public book; selected self-checks appear below.
 
 ### Quick check
 

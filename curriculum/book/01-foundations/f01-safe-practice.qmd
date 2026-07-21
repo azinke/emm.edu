@@ -381,8 +381,10 @@ end can otherwise look like a component fault.
 
 ## Worked examples: hazard, stored energy, and loading
 
-The following examples quantify the three opening predictions. For the full
-evidence workflow, see @sec-evidence-workflow.
+The definitions above become useful only when they guide a quantitative
+decision. The following examples apply them to the chapter's three opening
+concerns: hazard, stored energy, and instrument loading. For the full evidence
+workflow, see @sec-evidence-workflow.
 
 ### Worked example: contact current at a 24 V bench node
 
@@ -506,12 +508,14 @@ voltage without noting that your meter pulled it there.
 
 ## Comparing prediction with measurement
 
-Example D provides a controlled comparison between a loading calculation and an
-instrument reading. The physical version appears in Lab **L01**. This section
-focuses on the record needed to compare the two.
+The divider-loading example provides a controlled comparison between a
+calculation and an instrument reading. Its physical version appears in Lab
+**L01**; here the focus shifts from the calculation itself to the record needed
+to compare prediction and observation.
 
-The following configuration and observations are **synthetic and illustrative**.
-They show the form of a reproducible record and an uncertainty-aware comparison,
+For that purpose, the following configuration and observations are **synthetic
+and illustrative**. They show the form of a reproducible record and an
+uncertainty-aware comparison,
 but they do not qualify a claim about physical hardware. An authentic record in
 Lab **L01** must identify the actual instrument, range, loading, calibration state,
 raw observations, operating conditions, and uncertainty basis as required by
@@ -633,9 +637,9 @@ alternatives.
 
 ## Bench safety and measurement plan
 
-Before a first investigation, write a **bench safety-and-measurement plan**. It
-turns "let's probe it and see" into a controlled procedure that another person
-can inspect and repeat.
+The same reasoning can be assembled into a **bench safety-and-measurement plan**
+before a first investigation. Such a plan turns "let's probe it and see" into a
+controlled procedure that another person can inspect and repeat.
 
 *Requirements (measurable, declared before power).*
 

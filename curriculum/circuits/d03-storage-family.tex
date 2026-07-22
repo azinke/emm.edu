@@ -1,0 +1,75 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+\usetikzlibrary{calc}
+
+\begin{document}
+\begin{circuitikz}[font=\small,line width=0.9pt]
+  \ctikzset{tripoles/thickness=1,logic ports/thickness=1,
+    flipflops/thickness=1}
+  \tikzset{
+    block/.style={draw,rounded corners=4pt,minimum width=2.25cm,
+      minimum height=1.25cm,align=center}
+  }
+
+  \node[font=\bfseries] at (5.8,13.2) {(a) Enable-gated SR latch};
+  \node[flipflop SR,scale=1.15] (SR) at (7.2,11.0) {};
+  \node[and port,number inputs=2,scale=1.15] (AS)
+    at ($(SR.pin 1)+(-3.1,0)$) {};
+  \node[and port,number inputs=2,scale=1.15] (AR)
+    at ($(SR.pin 3)+(-3.1,0)$) {};
+  \draw ($(AS.in 1)+(-2.0,0)$) node[left] {$S$} -- (AS.in 1);
+  \draw ($(AS.in 2)+(-2.0,0)$) node[left] {$E$} -- (AS.in 2);
+  \draw ($(AR.in 1)+(-2.0,0)$) node[left] {$R$} -- (AR.in 1);
+  \draw ($(AR.in 2)+(-2.0,0)$) node[left] {$E$} -- (AR.in 2);
+  \draw (AS.out) -- (SR.pin 1)
+    node[midway,above] {$S_g=ES$};
+  \draw (AR.out) -- (SR.pin 3)
+    node[midway,below] {$R_g=ER$};
+  \draw (SR.pin 6) -- ++(1.1,0) node[right] {$Q$};
+  \draw (SR.pin 4) -- ++(1.1,0) node[right] {$\overline Q$};
+  \node[align=center] at (5.8,8.55)
+    {$E=0$: hold, because both internal requests are inactive.\\
+     $E=1$: accept set or reset; $S=R=1$ is prohibited.};
+
+  \draw[densely dashed] (0.1,7.65) -- (11.5,7.65);
+  \node[font=\bfseries] at (5.8,7.05)
+    {(b) Enable-qualified JK steering into SR storage};
+  \node[flipflop SR,scale=1.15] (SR2) at (7.2,4.6) {};
+  \node[and port,number inputs=3,scale=1.25] (AJ)
+    at ($(SR2.pin 1)+(-3.1,0)$) {};
+  \node[and port,number inputs=3,scale=1.25] (AK)
+    at ($(SR2.pin 3)+(-3.1,0)$) {};
+  \draw ($(AJ.in 1)+(-2.0,0)$) node[left] {$J$} -- (AJ.in 1);
+  \draw ($(AJ.in 2)+(-2.0,0)$) node[left] {$\overline Q$ feedback net}
+    -- (AJ.in 2);
+  \draw ($(AJ.in 3)+(-2.0,0)$) node[left] {$E$} -- (AJ.in 3);
+  \draw ($(AK.in 1)+(-2.0,0)$) node[left] {$K$} -- (AK.in 1);
+  \draw ($(AK.in 2)+(-2.0,0)$) node[left] {$Q$ feedback net}
+    -- (AK.in 2);
+  \draw ($(AK.in 3)+(-2.0,0)$) node[left] {$E$} -- (AK.in 3);
+  \draw (AJ.out) -- (SR2.pin 1)
+    node[midway,above] {$EJ\overline Q$};
+  \draw (AK.out) -- (SR2.pin 3)
+    node[midway,below] {$EKQ$};
+  \draw (SR2.pin 6) -- ++(1.1,0)
+    node[right] {$Q$ feedback net};
+  \draw (SR2.pin 4) -- ++(1.1,0)
+    node[right] {$\overline Q$ feedback net};
+  \node[align=center] at (5.8,1.75)
+    {$00$: hold\quad $10$: set\quad $01$: reset\quad $11$: toggle request.\\
+     Edge qualification or non-overlapping master--slave phases limit\\
+     the externally visible output to one update per clock event.};
+
+  \draw[densely dashed] (0.1,0.55) -- (11.5,0.55);
+  \node[font=\bfseries] at (5.8,-0.05) {(c) Useful JK input transformations};
+  \node[block] (MAPD) at (4.1,-1.55) {$J=D$\\$K=\overline D$};
+  \node[left] at (2.65,-1.55) {$D$};
+  \draw[->] (2.9,-1.55) -- (MAPD.west);
+  \node[right,align=left] at (5.4,-1.55) {JK behaves as D:\\$Q^+=D$};
+
+  \node[block] (MAPT) at (4.1,-3.25) {$J=T$\\$K=T$};
+  \node[left] at (2.65,-3.25) {$T$};
+  \draw[->] (2.9,-3.25) -- (MAPT.west);
+  \node[right,align=left] at (5.4,-3.25) {JK behaves as T:\\$Q^+=T\oplus Q$};
+\end{circuitikz}
+\end{document}

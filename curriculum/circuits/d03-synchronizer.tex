@@ -1,0 +1,43 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+\usetikzlibrary{fit,calc}
+
+\begin{document}
+\begin{circuitikz}[font=\small,line width=0.9pt]
+  \ctikzset{tripoles/thickness=1,logic ports/thickness=1,
+    flipflops/thickness=1}
+  \node[font=\bfseries] at (7.2,6.7)
+    {Two-stage single-bit synchronizer built from D flip-flops};
+
+  \node[flipflop D,scale=1.15] (S1) at (4.0,3.5) {};
+  \node[flipflop D,scale=1.15] (S2) at (8.0,3.5) {};
+  \node[above] at (S2.north) {SYNC2};
+  \node[draw,rounded corners=5pt,minimum width=2.8cm,
+    minimum height=1.8cm,align=center] (DEST) at (12.0,3.5)
+    {destination-\\domain logic};
+
+  \coordinate (AIN) at ($(S1.pin 1)+(-2.6,0)$);
+  \draw (AIN) node[left] {asynchronous level} -- (S1.pin 1);
+  \draw (S1.pin 6) -- (S2.pin 1)
+    node[pos=0.18,above,yshift=1pt,font=\scriptsize] {$Q_1$};
+  \draw (S2.pin 6) -- ++(0.45,0) coordinate (Q2B) |- (DEST.west);
+  \node[above] at (Q2B) {$Q_2$};
+
+  \draw (1.6,0.7) node[left] {destination $CLK$} -- (9.0,0.7);
+  \coordinate (C1) at ($(S1.pin 3)+(-0.35,0)$);
+  \coordinate (C2) at ($(S2.pin 3)+(-0.35,0)$);
+  \coordinate (B1) at (C1 |- 0,0.7);
+  \coordinate (B2) at (C2 |- 0,0.7);
+  \draw (B1) -- (C1) -- (S1.pin 3);
+  \draw (B2) -- (C2) -- (S2.pin 3);
+  \fill (B1) circle (1.4pt);
+  \fill (B2) circle (1.4pt);
+
+  \node[draw,dashed,inner sep=8pt,fit=(S1),
+    label={[align=center]above:{SYNC1: metastability-exposed stage}}] {};
+  \node[align=center] at (7.2,-0.25)
+    {$T_{res}$ ends at the SYNC2 setup boundary; a short $Q_1$ route preserves it.\\
+     Both clock triangles denote the same rising destination-clock edge.\\
+     SYNC2 lowers the escape probability; it does not guarantee containment.};
+\end{circuitikz}
+\end{document}

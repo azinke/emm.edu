@@ -1,45 +1,1729 @@
 ---
 title: "State, clocks, and timing"
+description: "Build reliable sequential systems by connecting stored state, clocked behavior, timing inequalities, reset, metastability, and clock-domain-crossing choices."
 chapter-id: D03
-status: outline
+status: draft
 ---
 
-::: {.callout-note title="Chapter outline"}
-The scope and dependency boundary are stable. Full exposition, worked examples,
-exercises, and tested practical evidence still need authoring and review.
+::: {.callout-note title="Chapter maturity — draft"}
+This draft develops the complete reasoning chain from feedback-held state to
+finite-state machines, synchronous timing, reset, metastability, and
+clock-domain crossings. Manufacturer data supports one bounded timing screen,
+and an executable transition check supplies abstract functional evidence.
+Neither is a physical measurement. Lab **L09** is intended to provide the
+aligned observations of logic levels, edges, timing, and state. See the
+[reading roadmap](../roadmap.qmd) for the meaning of status levels.
+:::
+
+::: {.callout-warning title="Safety boundary for this chapter"}
+The circuits and measurements discussed here assume current-limited,
+extra-low-voltage teaching hardware. Reading this chapter does not authorize
+work on mains, high-energy batteries, exposed high voltage, or safety-critical
+controls. De-energize a circuit before changing connections, use approved ESD
+handling, and follow the bench boundary established in
+[F01](../01-foundations/f01-safe-practice.qmd).
 :::
 
 ## Central question
 
-How does digital hardware remember state and coordinate events in time?
+> How can physical hardware remember earlier events and still make dependable
+> decisions at a specified time?
+
+A combinational circuit from D02 produces the same settled output whenever its
+current inputs are the same. A counter behaves differently. Its output after a
+clock edge depends on both the current enable input and the count retained from
+earlier edges. That retained information is **logical state**: the finite
+history information needed to determine what the digital system does next.
+
+Physical state and logical state describe the same hardware at different
+levels. Feedback in a storage element maintains node voltages and charge. A bit
+maps those bounded voltages to 0 or 1. A register gives the bits names and an
+ordering. A state-transition rule predicts their next values. A waveform then
+asks whether the physical signals met the rule's timing assumptions
+[@harris2021digital; @dally1998digital].
+
+One prediction exposes the central difficulty. Suppose a data input changes
+almost exactly as a storage element's clock crosses its switching threshold.
+Will the element certainly store the old value, certainly store the new value,
+or always report an invalid voltage? None of those outcomes is guaranteed.
+Reliable sequential design therefore needs two contracts:
+
+- a **functional contract** specifies the permitted present states, inputs,
+  next states, and outputs; and
+- a **timing contract** specifies when signals may change, when they must be
+  stable, and how late or early a physical response may arrive.
+
+This chapter builds both contracts, joins them at the register boundary, and
+then treats signals that cannot satisfy an ordinary synchronous timing
+relationship.
 
 ## Learning outcomes
 
-After completing this chapter, the reader should be able to:
+This chapter assumes [D02](d02-combinational-logic.qmd): Boolean functions,
+hierarchy, propagation and contamination delay, hazards, and exhaustive checks;
+and [F07](../01-foundations/f07-capacitors-inductors-transients.qmd): stored
+state, initial conditions, and physical transients. After completing it, you
+should be able to:
 
-- explain the central model and the assumptions that bound its use;
-- connect physical behavior, a schematic or architecture, and quantitative reasoning;
-- interpret evidence and identify at least one credible failure mode;
-- make and defend a design or diagnostic decision;
+- distinguish gated and ungated SR latches from edge-triggered SR, JK, D, and T
+  flip-flops, and derive their characteristic or excitation descriptions;
+- construct parallel and shift registers from D flip-flops, then trace PIPO,
+  SISO, SIPO, and PISO transfers with a declared bit order;
+- derive ripple and synchronous binary counters from toggle behavior and
+  compare their physical transition timing, then construct ring and Johnson
+  counters from common-clock D-flip-flop chains;
+- write and interpret state-transition tables, state diagrams, Moore and Mealy
+  output rules, encodings, reset states, and illegal-state behavior;
+- derive setup and hold inequalities for a register-to-register path with
+  declared clock skew and uncertainty, then interpret positive or negative
+  slack;
+- separate clock period, duty cycle, skew, jitter, enable, reset, and
+  clock-domain assumptions in a timed interface;
+- explain metastability as an analog resolution process rather than a third
+  logic value, construct a two-stage D-flip-flop synchronizer, and state what
+  that circuit can and cannot establish;
+- select an appropriate crossing structure for a persistent bit, event, data
+  word, count, stream, or reset release; and
+- define a bounded functional and timing acceptance plan without presenting
+  simulation, datasheet calculations, or finite observations as stronger
+  evidence than they are.
 
-## Concept path
+## Feedback stores a bit
 
-- latches, flip-flops, registers, and counters;
-- finite-state-machine modeling and encoding;
-- clock domains, reset, enable, and edge semantics;
-- setup, hold, propagation delay, and timing constraints;
-- metastability and synchronizers;
-- asynchronous inputs and clock-domain crossing;
+D02 excluded intentional feedback because combinational outputs must depend
+only on current inputs. Deliberate feedback changes that rule. If two restoring
+logic stages reinforce one of two stable voltage patterns, the circuit can
+retain which pattern was established earlier. The internal capacitances from
+F07 make the transition physical rather than instantaneous, while positive
+feedback restores a disturbed node toward a valid rail [@baker2019cmos;
+@harris2021digital].
 
-## Evidence and practice
+Logical state is related to, but not identical with, F07's energy-state
+description. A circuit implementation may contain many distributed charge
+storage sites. The logical abstraction keeps only the finite information needed
+by the next-state rule. That abstraction is valid only while electrical levels,
+feedback gain, supply, and timing remain within their operating conditions.
 
-The completed chapter will include a prediction, a worked model, a simulation or
-executable check where it adds value, measured or authentic data, a fault or
-model mismatch, and a requirements-based design decision. The final exercise set
-will mix retrieval, calculation, interpretation, debugging, and open design.
+### The active-high SR latch
+
+The simplest useful storage circuit makes the feedback visible. In the
+active-high **set-reset latch (SR latch, also written RS latch)**, `S=1`
+requests $Q=1$, `R=1` requests $Q=0$, and `S=R=0` retains the previously
+established state. The logic diagram in @fig-d03-sr-latch uses the distinctive
+NOR symbols and inversion bubbles introduced in D02.
+The explicit conductors make both feedback paths visible: the upper output $Q$
+returns to one input of the lower NOR gate, while the lower output $\overline Q$
+returns to one input of the upper NOR gate. The small break at their diagonal
+crossing denotes separate conductors rather than an electrical junction
+[@ieee1991logic; @harris2021digital].
+
+![Cross-coupled active-high NOR SR latch. Each output physically feeds an input of the opposite gate; the diagonal feedback conductors cross without connecting.](../../../build/circuits/d03-sr-latch.png){#fig-d03-sr-latch fig-alt="Two NOR gates are stacked vertically. Reset R enters the upper gate and set S enters the lower gate. The upper output Q branches to its output terminal and diagonally feeds the upper input of the lower NOR gate. The lower output Q bar branches to its output terminal and diagonally feeds the lower input of the upper NOR gate. A small break at the diagonal crossover indicates that the two feedback conductors are not joined." width="72%"}
+
+After propagation has settled, the two NOR relations are
+
+$$
+\begin{aligned}
+Q &= \overline{R+\overline Q},\\
+\overline Q &= \overline{S+Q}.
+\end{aligned}
+$$ {#eq-d03-sr-relations}
+
+These are Boolean constitutive relations for the gate network, not
+differential equations for the internal voltages. With $S=R=0$, both
+$(Q,\overline Q)=(1,0)$ and $(0,1)$ satisfy the settled relations. Earlier
+activity selects one of them, so the same current inputs can correspond to two
+different stored states.
+
+| $S$ | $R$ | settled action | $Q^+$ | $\overline Q^+$ |
+|---:|---:|---|---:|---:|
+| 0 | 0 | hold previous state | $Q$ | $\overline Q$ |
+| 1 | 0 | set | 1 | 0 |
+| 0 | 1 | reset | 0 | 1 |
+| 1 | 1 | prohibited for complementary operation | 0 | 0 |
+
+: Active-high NOR SR-latch behavior after settling. $Q^+$ denotes the value
+after the input change and gate delays. {#tbl-d03-sr}
+
+The final row does not create a useful third stored state. Both NOR outputs are
+forced low while $S=R=1$, so they are no longer complementary. If both inputs
+then fall together, unmatched delays and noise decide which feedback loop wins.
+The abstract table cannot predict that race. This is the first example of a
+functional relation whose validity depends on a timing condition.
+
+### Gated SR latches control when requests act
+
+An ungated SR latch reacts whenever an external request changes. A **gated SR
+latch** adds an active-high enable $E$ so the external requests reach the
+storage loop only while $E=1$:
+
+$$
+S_g=ES,\qquad R_g=ER.
+$$ {#eq-d03-gated-sr-inputs}
+
+When $E=0$, both internal requests are zero and the latch holds, regardless of
+$S$ and $R$. When $E=1$, it has the ordinary SR behavior. Over the valid input
+domain in which $E=0$ or $(S,R)\ne(1,1)$—equivalently, excluding only
+$E=S=R=1$—one compact characteristic relation is
+
+$$
+Q^+=\overline E Q+E(S+\overline RQ).
+$$ {#eq-d03-gated-sr}
+
+| $E$ | $S$ | $R$ | $Q^+$ | interpretation |
+|---:|---:|---:|---:|---|
+| 0 | $X$ | $X$ | $Q$ | hold; requests are blocked |
+| 1 | 0 | 0 | $Q$ | hold |
+| 1 | 0 | 1 | 0 | reset |
+| 1 | 1 | 0 | 1 | set |
+| 1 | 1 | 1 | prohibited | both internal requests asserted |
+
+: Gated active-high SR-latch behavior. Here $X$ means that either Boolean input
+value gives the same specified result; it is not a physical third level.
+{#tbl-d03-gated-sr}
+
+Panel (a) of @fig-d03-storage-family turns the two products in the gated-SR
+relations (@eq-d03-gated-sr-inputs) into a circuit: two conventional AND gates
+qualify the requests before they reach the labeled $S$ and $R$ pins of the
+latch. Panel (b)
+previews the JK construction by adding present-state feedback, and panel (c)
+previews two useful JK input transformations. The diagrams follow the IEEE
+distinctive-shape convention introduced in D02; the rectangular sequential
+symbol names its functional pins rather than hiding them inside a prose block
+[@ieee1991logic; @harris2021digital].
+
+The repeated $Q$ and $\overline Q$ feedback labels in panel (b) denote the same
+electrical output nets at both ends. They replace long return wires that would
+cross the request paths. Older literature may call $E$ a “clock,” but the
+circuit remains a **level-sensitive latch**: input changes can affect $Q$
+throughout the active level. A control name does not make a circuit
+edge-triggered.
+
+![Enable gating and feedback relate SR, JK, D, and T storage organizations. Matching net labels close the JK feedback paths without long crossing wires. These are functional constructions; every physical implementation retains its timing constraints.](../../../build/circuits/d03-storage-family.png){#fig-d03-storage-family fig-alt="Panel a shows S and R passing through active-high-enable AND gates into an active-high SR latch. Panel b shows three-input gates forming E J Q bar and E K Q requests, with matching Q and Q bar feedback-net labels at the storage outputs and steering inputs. Panel c maps D to J and not D to K, and separately maps T to both J and K." width="100%"}
+
+### D latches remove the conflicting request
+
+A **D latch** is a level-sensitive storage element: while its enable is active,
+its output follows data after propagation delay; while enable is inactive, it
+holds the last accepted value. Starting from @eq-d03-gated-sr-inputs, choose
+$S=D$ and $R=\overline D$, so
+
+$$
+S_g=ED,\qquad R_g=E\overline D.
+$$ {#eq-d03-d-from-sr}
+
+The internal requests cannot both be one for a valid settled $D$. The gating
+therefore derives mutually exclusive set and reset requests in the settled
+Boolean abstraction, avoiding ordinary use of the SR latch's prohibited row
+[@harris2021digital]. In a literal gate implementation, unequal delay through
+the direct and inverted paths can still briefly create overlap or a gap.
+
+For a positive-level enable $E$, the settled characteristic relation is
+
+$$
+Q^+=ED+\overline E Q.
+$$ {#eq-d03-d-latch}
+
+When $E=1$, the first product selects $D$. When $E=0$, the second product
+recirculates $Q$. The equation is exact in Boolean algebra under valid settled
+levels. It does not predict analog behavior when $D$ or $E$ changes inside the
+latch's required data-stability interval.
+
+Panel (a) of @fig-d03-state-elements makes the selection explicit. It is a
+functional feedback model: the multiplexer selects either external $D$ or old
+$Q$, while the following inverting-pair block represents restoring propagation
+delay rather than a second independently controlled memory. The feedback path
+supplies the old value when the input path is disabled. A latch is
+**transparent** during its active level, so multiple input transitions can
+propagate through it before the enable closes.
+
+![Functional construction of a D latch and a positive-edge-triggered D flip-flop. The latch selects either new data or feedback; conventional latch symbols show complementary transparent phases.](../../../build/circuits/d03-state-elements.png){#fig-d03-state-elements fig-alt="Panel a shows a conventional multiplexer selecting external D when enable is one and feedback Q when enable is zero, followed by a conceptual restoring-delay block. Panel b shows a pinned low-phase latch feeding a pinned high-phase latch. A bubble makes the first clock input active low, while the second is active high, so only one latch is transparent in either settled clock phase." width="100%"}
+
+The aligned traces in @fig-d03-latch-flipflop-waveforms expose the behavioral
+difference. A transition of $D$ during the active latch level can pass through;
+the flip-flop accepts only the value associated with a rising edge.
+
+![Level-sensitive and edge-triggered storage compared with aligned illustrative waveforms. Small horizontal offsets represent propagation delay; no interval is measured or to scale.](../../../build/circuits/d03-latch-flipflop-waveforms.png){#fig-d03-latch-flipflop-waveforms fig-alt="Clock, D, latch-output, and flip-flop-output traces share a time axis. The positive-level latch output follows every D transition during clock-high intervals and holds during clock-low intervals. The positive-edge flip-flop output changes only after rising edges." width="96%"}
+
+### Edge-triggered D flip-flops
+
+A **D flip-flop** is an edge-triggered storage element: it accepts data around a
+specified clock transition and then holds the resulting output until another
+active transition. Panel (b) of @fig-d03-state-elements shows one conceptual
+construction. The bubble on latch L1's enable denotes an active-low control, so
+L1 is transparent while $CLK=0$; L2 uses the complementary active-high phase.
+At the rising boundary, L1 closes and L2 opens, transferring one retained value
+to the output. Real integrated implementations vary, but the external timing
+contract has the same purpose [@harris2021digital; @ti2021sn74hc74].
+
+For a positive-edge-triggered element, $t_k$ denotes the time of the $k$th
+active clock threshold crossing at the element. Under valid setup, hold, pulse
+width, electrical, and operating conditions, the discrete abstraction is
+
+$$
+q[k+1]=d(t_k).
+$$ {#eq-d03-dff-sampling}
+
+The right side means the unique logical value represented by $D$ throughout the
+required stable interval around $t_k$. It does not mean that an infinitesimal
+point sample contains all relevant physics. The output also does not change at
+$t_k$; it changes after a bounded **clock-to-Q delay**, measured from the active
+clock threshold crossing to the specified output threshold or validity
+condition. Here $q[k]$ means the settled state immediately before edge $t_k$,
+and $q[k+1]$ means the settled state after that edge and its clock-to-Q response.
+
+The two-latch construction in @fig-d03-state-elements is often called a
+**master--slave** organization: one latch accepts information during one clock
+phase and the other transfers it during the opposite phase. “Edge-triggered” is
+the external contract, not a promise about one particular internal circuit.
+Integrated flip-flops may use master--slave, pulse-triggered, or dynamic
+structures. They are equivalent for a design only to the extent that the stated
+setup, hold, pulse-width, recovery/removal, and electrical conditions are met.
+The ideal two-phase explanation also assumes that the latch phases do not
+overlap and that their minimum pulse-width requirements are satisfied
+[@harris2021digital; @dally1998digital].
+
+### SR, JK, D, and T are related next-state organizations
+
+The D latch and D flip-flop reduce a storage update to accepting one data value.
+Other interfaces expose set, reset, or toggle requests directly. SR, JK, D, and
+T therefore name next-state organizations; a level-sensitive or edge-triggered
+implementation supplies the separate timing contract. An edge-triggered SR
+flip-flop applies the valid SR rule once at its active edge, whereas a gated SR
+latch can respond throughout its active level. Under a single qualified update,
+and excluding the prohibited SR input, the characteristic equations are
+
+$$
+\begin{aligned}
+Q^+_{SR} &= S+\overline RQ, &&(S,R)\ne(1,1),\\
+Q^+_{JK} &= J\overline Q+\overline KQ,\\
+Q^+_D &= D,\\
+Q^+_T &= T\oplus Q=\overline TQ+T\overline Q.
+\end{aligned}
+$$ {#eq-d03-storage-characteristics}
+
+| type | inputs | $Q=0\Rightarrow Q^+$ | $Q=1\Rightarrow Q^+$ | action |
+|---|---:|---:|---:|---|
+| SR | 00 | 0 | 1 | hold |
+| SR | 01 | 0 | 0 | reset |
+| SR | 10 | 1 | 1 | set |
+| SR | 11 | prohibited | prohibited | complementary outputs invalid |
+| JK | 00 | 0 | 1 | hold |
+| JK | 01 | 0 | 0 | reset |
+| JK | 10 | 1 | 1 | set |
+| JK | 11 | 1 | 0 | toggle |
+| D | 0 | 0 | 0 | store zero |
+| D | 1 | 1 | 1 | store one |
+| T | 0 | 0 | 1 | hold |
+| T | 1 | 1 | 0 | toggle |
+
+: Characteristic behavior after a valid active event. Present state is needed
+to interpret hold and toggle. {#tbl-d03-characteristic}
+
+The JK feedback in panel (b) of @fig-d03-storage-family makes the distinction
+from SR explicit. For an active-high qualified, level-sensitive realization,
+the internal requests are
+
+$$
+S_g=EJ\overline Q,\qquad R_g=EKQ.
+$$ {#eq-d03-jk-steering}
+
+For a valid complementary state, those internal requests cannot both be one at
+the same instant. In the edge-triggered JK characteristic rule, $J=K=1$
+produces one toggle per qualified edge. A **level-sensitive JK latch**, however,
+can suffer **race-around** if its active interval is long enough for the new
+$Q$ to feed back and request another toggle. Edge-triggering or non-overlapping
+master--slave phases restrict the externally visible output to one update per
+clock cycle or qualified event. A master--slave implementation still depends
+on its specified phase, setup, hold, and pulse-width contract; it is not an
+infinitesimal sampler. Race-around is therefore a warning about a particular
+transparent implementation, not a universal defect of every JK flip-flop
+[@harris2021digital].
+
+The chronogram in @fig-d03-flipflop-mode-chronogram follows the rule one edge at
+a time. Starting from $Q=0$, input 10 sets $Q$, 00 holds it, and 01 resets it.
+The next two edges both present 11, so the output toggles high and then low—once
+per edge, as the edge-triggered contract requires.
+
+![Edge-triggered JK operation for set, hold, reset, and toggle. Initial Q is zero, and all timing offsets are illustrative rather than measured or to scale.](../../../build/circuits/d03-flipflop-mode-chronogram.png){#fig-d03-flipflop-mode-chronogram fig-alt="Aligned clock, J, K, and Q waveforms show five rising edges. J K equals 10 sets Q, 00 holds it, 01 resets it, and two consecutive 11 inputs toggle Q high and then low. Q transitions occur after a small illustrative clock-to-Q delay." width="92%"}
+
+An **excitation table** reverses the question: given $Q$ and the required $Q^+$,
+it identifies every storage input that can realize that transition. It therefore
+supports manual next-state synthesis and exposes input choices that remain free.
+Here $X$ means design freedom—either 0 or 1 is acceptable—not an unknown HDL
+value.
+
+| desired transition | SR excitation | JK excitation | $D$ | $T$ |
+|---|---|---|---:|---:|
+| $0\rightarrow0$ | $S=0,\ R=X$ | $J=0,\ K=X$ | 0 | 0 |
+| $0\rightarrow1$ | $S=1,\ R=0$ | $J=1,\ K=X$ | 1 | 1 |
+| $1\rightarrow0$ | $S=0,\ R=1$ | $J=X,\ K=1$ | 0 | 1 |
+| $1\rightarrow1$ | $S=X,\ R=0$ | $J=X,\ K=0$ | 1 | 0 |
+
+: Excitation choices for one required state transition. Any chosen SR input
+must still avoid $S=R=1$. {#tbl-d03-excitation}
+
+Modern synchronous designs commonly express the desired next-state function at
+a D input. The other behaviors map directly:
+
+$$
+D_{JK}=J\overline Q+\overline KQ,\qquad
+D_T=T\oplus Q.
+$$ {#eq-d03-family-to-d}
+
+Equivalently, a JK device acts as D storage when $J=D$ and
+$K=\overline D$, and as T storage when $J=K=T$. Panel (c) of @fig-d03-storage-family
+shows both connections. The D connection is a JK input
+transformation that produces the same D next-state rule; it is distinct from the
+earlier gated-SR construction with $S=D$ and $R=\overline D$. T behavior is especially useful
+for deriving counters. Device-specific asynchronous preset and clear inputs
+remain separate overrides: their assertion, release, pulse-width, simultaneous-
+assertion, and priority rules come from the datasheet rather than from these
+synchronous equations [@ti2021sn74hc74].
+
+| element | control sensitivity | behavior while active | principal risk |
+|---|---|---|---|
+| SR latch | input levels | set, reset, or hold | conflicting requests and release race |
+| gated SR latch | enable level | accepts $S/R$ requests while enabled | prohibited request or release race |
+| D latch | enable level | transparent to $D$ | unintended passage through multiple latch stages |
+| SR, JK, D, or T flip-flop | selected clock edge | applies its characteristic rule once | setup, hold, pulse-width, and metastability risk |
+
+: Latches and flip-flops are not synonyms. Their timing contracts differ.
+{#tbl-d03-storage-classes}
+
+## Registers, counters, and finite-state machines
+
+One stored bit is enough to demonstrate history. Systems need named groups of
+bits and rules for changing them. A **register** is a group of storage elements
+that shares a sampling event and represents one ordered vector. An $n$-bit
+register has $2^n$ possible bit patterns, although a particular design may use
+only some of them.
+
+### Parallel registers are banks of D flip-flops
+
+The most direct $n$-bit register uses $n$ D flip-flops in parallel. Input
+$D_i$ drives the D input of stage $i$, output $Q_i$ is the stored bit, and every
+stage receives the same clock. At active edge $t_k$,
+
+$$
+Q_i[k+1]=D_i(t_k),\qquad 0\le i<n.
+$$ {#eq-d03-parallel-register}
+
+Panel (a) of @fig-d03-dff-registers shows a four-bit **parallel-in,
+parallel-out (PIPO)** register. “Parallel” describes the data access: one edge
+accepts a complete vector. The clock is also distributed to every stage, but it
+arrives with physical skew, and the outputs respond with clock-to-Q spread.
+The abstract vector update is simultaneous; the pin voltages are only bounded
+in time. In the schematic, data enters the labeled D pins, stored values leave
+the Q pins, and each clock triangle connects to the shared bottom clock line.
+Panel (b) previews the serial wiring developed next
+[@harris2021digital; @dally1998digital].
+
+![Parallel and serial registers constructed from conventional rising-edge D-flip-flop symbols. Both use one shared clock; only the data wiring changes.](../../../build/circuits/d03-dff-registers.png){#fig-d03-dff-registers fig-alt="Panel a places four rising-edge D flip-flops in parallel with separate D and Q wires and one common clock bus connected to their clock triangles. Panel b connects each Q output to the next D input from serial input through Q0 to Q3, exposes every Q tap, and retains the same common clock." width="100%"}
+
+### Serial and parallel access: shift registers
+
+A **shift register** connects stored data from one stage to the D input of the
+next. This chapter declares
+
+$$
+Q=(Q_{n-1},\ldots,Q_1,Q_0)
+$$
+
+and shifts new serial data into $Q_0$, toward increasing indices. Therefore
+
+$$
+Q_0^+=SER_{in},\qquad
+Q_i^+=Q_{i-1}\quad(1\le i<n),\qquad
+SER_{out}=Q_{n-1}.
+$$ {#eq-d03-shift-register}
+
+This explicit convention is more useful than an unqualified “left” or “right”
+shift. At one edge every stage samples its source's **old** value. A new serial
+bit advances by one stage per edge; it does not race through the whole chain.
+Panel (b) of @fig-d03-dff-registers is one physical chain with several possible
+interfaces:
+
+- **serial-in, serial-out (SISO)** uses only $SER_{in}$ and $SER_{out}$;
+- **serial-in, parallel-out (SIPO)** also observes all $Q_i$ taps;
+- **parallel-in, parallel-out (PIPO)** uses the independent D wiring in panel
+  (a); and
+- **parallel-in, serial-out (PISO)** adds a load/shift choice before every D
+  input.
+
+The PISO construction in @fig-d03-piso-register makes the choice explicit for
+four bits. The repeated $L$ labels denote the same active-high parallel-load
+control `LOAD`: $L=1$ selects $P_i$, and $L=0$ selects the shift path. Thus,
+
+$$
+\begin{aligned}
+D_0 &= LP_0+\overline L\,SER_{in},\\
+D_i &= LP_i+\overline L\,Q_{i-1},\qquad 1\le i<n.
+\end{aligned}
+$$ {#eq-d03-piso}
+
+![Four-bit PISO register with a conventional 2-to-1 multiplexer before each rising-edge D flip-flop. MUX input 1 is parallel load, input 0 is shift, and Q3 is the serial-output end.](../../../build/circuits/d03-piso-register.png){#fig-d03-piso-register fig-alt="Four stages each contain a trapezoidal 2-to-1 multiplexer followed by a rising-edge D flip-flop with labeled D, Q, and clock pins. Parallel inputs P0 through P3 enter mux inputs marked 1. The serial chain enters mux inputs marked 0. Shared active-high LOAD, denoted L, drives every select pin; one selects parallel load and zero selects shift. One clock bus drives all clock triangles, and Q3 is serial output." width="100%"}
+
+The chronogram in @fig-d03-shift-register-chronogram returns to the simple
+serial chain in panel (b) of @fig-d03-dff-registers. Starting from 0000, serial
+inputs 1, 0, 1, and 1 produce the post-edge sequence
+$0000\rightarrow0001\rightarrow0010\rightarrow0101\rightarrow1011$, directly
+following @eq-d03-shift-register. The PISO path reverses the access pattern.
+Loading $Q_3Q_2Q_1Q_0=1101$ makes the pre-shift serial output $Q_3=1$; reading
+$Q_3$ immediately before four successive shift edges yields 1, 1, 0, 1.
+
+![Four-stage shift-register chronogram. Bit order is Q3 Q2 Q1 Q0, serial input enters Q0, and the small output offsets are illustrative rather than measured or to scale.](../../../build/circuits/d03-shift-register-chronogram.png){#fig-d03-shift-register-chronogram fig-alt="Aligned clock, serial input, and Q0 through Q3 waveforms show the parallel states 0001, 0010, 0101, and 1011 after four rising edges. Every output changes only after an edge, and each stage receives the previous stage's old value." width="96%"}
+
+A **universal shift register** uses a wider selection network to support hold,
+parallel load, shift toward either end, and sometimes a synchronous clear.
+Those modes need an explicit priority and bit-order contract. SISO, SIPO, PISO,
+and PIPO describe access patterns, not four different physical laws
+[@harris2021digital].
+
+### Register enables and control priority
+
+A **clock enable** selects whether a register accepts new data at its ordinary
+active edge or retains its old data. It belongs in the data decision. For vector
+input $D[k]$, stored vector $Q[k]$, and active-high enable $E[k]$, the register
+relation is
+
+$$
+Q[k+1]=
+\begin{cases}
+D[k], & E[k]=1,\\
+Q[k], & E[k]=0.
+\end{cases}
+$$ {#eq-d03-register-enable}
+
+When a register has synchronous clear, parallel load, and enable, simultaneous
+assertions are ambiguous unless priority is declared. One possible contract is
+
+$$
+Q^+=
+\begin{cases}
+0, & CLR=1,\\
+P, & CLR=0,\ L=1,\\
+D, & CLR=0,\ L=0,\ E=1,\\
+Q, & \text{otherwise}.
+\end{cases}
+$$ {#eq-d03-register-priority}
+
+This contract gives clear priority over load, and load priority over enable. It
+does not describe an asynchronous reset, whose assertion and release have the
+separate timing contract developed later in the chapter.
+
+An implementation may use a dedicated enable pin or a multiplexer before each
+data input. Both preserve the clock network. Passing the clock through an
+ordinary AND gate is different: if enable changes while the clock is at the
+gate's active level, the result can contain a shortened pulse or an extra active
+edge. Safe gating captures enable during a non-active clock phase.
+Device-specific integrated clock-gating cells and FPGA clock resources provide
+such control only under their stated contracts [@dally1998digital;
+@amd2026ug949].
+
+### Ripple counters propagate clock events between stages
+
+A counter is a register whose next-state logic requests a patterned sequence of
+toggles. A T flip-flop with $T=1$, or a JK flip-flop with $J=K=1$, changes state
+at every active event. In a **ripple counter**—also called an asynchronous
+counter—only the least-significant stage receives the external clock. Each
+later stage is clocked by an output of the preceding stage.
+
+The two panels of @fig-d03-counter-structures expose the architectural choice.
+Panel (a) ties every T input to logic 1 and routes $Q_i$ to the next clock pin;
+the clock-input bubbles make every stage falling-edge triggered. Panel (b) uses
+actual AND gates to form the toggle conditions, but every clock triangle still
+connects only to the one rising-edge clock bus. The different active polarities
+are illustrative choices; the essential comparison is a cascade of clocks
+versus a common clock.
+
+Starting from 0000, the first external falling edge toggles $Q_0$ and produces
+0001. At the next external falling edge, $Q_0$ falls; that falling transition
+clocks stage 1, so the word settles to 0010. A positive-edge device or a
+$\overline Q_i$ connection changes the direction, which is why “Q clocks the
+next stage” is not a complete circuit specification [@harris2021digital].
+
+![Four-bit ripple and synchronous binary counters built with conventional T-flip-flop and AND-gate symbols. The ripple stages use falling edges; the synchronous stages share a rising edge. Q3 Q2 Q1 Q0 is the declared word order, Q0 is least significant, and E is the synchronous enable.](../../../build/circuits/d03-counter-structures.png){#fig-d03-counter-structures fig-alt="Panel a ties four T inputs to logic one and chains each Q output into the next flip-flop's bubbled falling-edge clock pin. Panel b sends E directly to T0 and uses two-, three-, and four-input AND gates for T1, T2, and T3. Every panel-b clock triangle connects to one rising-edge clock bus; no toggle signal drives a clock." width="100%"}
+
+Each ripple stage waits for the preceding stage's clock-to-Q response and for
+the resulting event to traverse the interstage connection. A physical
+worst-case full-chain settling bound is therefore
+
+$$
+t_{ripple,\max}
+\le \sum_{i=0}^{n-1}t_{pcq,i,\max}
++\sum_{i=0}^{n-2}\left(t_{route,i,\max}+t_{polarity,i,\max}\right).
+$$ {#eq-d03-ripple-delay}
+
+Here $t_{route,i,\max}$ bounds the connection from $Q_i$ to the next clock
+input, and $t_{polarity,i,\max}$ includes any inverter or selection logic used
+to choose $Q_i$ versus $\overline Q_i$. In a direct idealized connection, the
+corresponding extra terms are zero. Datasheet clock-to-Q maxima and routing
+analysis, rather than a typical-delay sketch, supply an implementation bound.
+
+The settled word follows a binary sequence, but intermediate physical words can
+be false counts. In @fig-d03-counter-transition-chronogram, the intended
+$0111\rightarrow1000$ transition temporarily exposes 0110, 0100, and 0000.
+A decoder can respond to those codes. The word becomes valid only after the
+cumulative ripple interval.
+
+![Falling-edge ripple and rising-edge synchronous counter timing during 0111 to 1000. Intermediate codes and transition offsets are explanatory rather than measured or to scale.](../../../build/circuits/d03-counter-transition-chronogram.png){#fig-d03-counter-transition-chronogram fig-alt="The falling-edge ripple panel shows 0111 becoming 0110, then 0100, then 0000, and finally 1000 as Q0, Q1, Q2, and Q3 change in sequence. The rising-edge synchronous panel shows all four outputs beginning their changes after one common clock edge, with a small clock-to-Q spread before 1000 is valid." width="100%"}
+
+“Asynchronous counter” does not mean unclocked. Its internal nodes are generated
+clocks with pulse-width and frequency limits, and using its divided outputs as
+clocks creates additional clock domains. Under continuous toggling, output bit
+$i$ has waveform frequency
+
+$$
+f_{Q_i}=\frac{f_{clk}}{2^{i+1}}.
+$$ {#eq-d03-counter-divider}
+
+Frequency division alone does not prove that a generated-clock interface is
+safe [@dally1998digital].
+
+### Synchronous counters derive all toggles from one edge
+
+A **synchronous counter** clocks every state bit from the same declared edge.
+Combinational logic decides which stages toggle. For an enabled binary up-counter
+with $Q_0$ least significant,
+
+$$
+T_i=E\prod_{j=0}^{i-1}Q_j\quad(i\ge0),\qquad
+Q_i^+=Q_i\oplus T_i.
+$$ {#eq-d03-synchronous-toggle}
+
+The product over no lower bits is defined as 1, so the $i=0$ base case is
+$T_0=E$. Bit $i$ toggles exactly when enabled
+and every lower bit is one. A JK implementation uses $J_i=K_i=T_i$. A D
+flip-flop implementation, normally preferred for direct next-state logic, uses
+
+$$
+D_i=Q_i\oplus\left(E\prod_{j=0}^{i-1}Q_j\right),\qquad i\ge0.
+$$ {#eq-d03-synchronous-counter-d}
+
+Panel (b) of @fig-d03-counter-structures implements those products as
+distinctive-shape AND gates. Repeated labels such as $Q_0$ denote connections
+to the corresponding present-state Q nets; they avoid crossing several long
+feedback wires. Gate outputs drive T inputs, while only the bottom line drives
+clock pins. The following rows check representative four-bit cases, with toggle
+vectors written in the order $T_3T_2T_1T_0$.
+
+| $E$ | present $Q_3Q_2Q_1Q_0$ | $T_3T_2T_1T_0$ | next $Q_3^+Q_2^+Q_1^+Q_0^+$ |
+|---:|---:|---:|---:|
+| 0 | 0101 | 0000 | 0101 |
+| 1 | 0000 | 0001 | 0001 |
+| 1 | 0001 | 0011 | 0010 |
+| 1 | 0011 | 0111 | 0100 |
+| 1 | 0111 | 1111 | 1000 |
+| 1 | 1011 | 0111 | 1100 |
+
+: Toggle derivation for selected states of a four-bit enabled synchronous
+up-counter. {#tbl-d03-counter-toggle}
+
+The same behavior has the vector rule
+
+$$
+Q[k+1]=
+\begin{cases}
+(Q[k]+1)\bmod 2^n, & E[k]=1,\\
+Q[k], & E[k]=0.
+\end{cases}
+$$ {#eq-d03-counter}
+
+The modulo operation is exact for an $n$-bit unsigned vector. Unlike the ripple
+case, combinational toggle logic and D02 routing now contribute to an ordinary
+register-to-register setup path. Higher bits can create a long lower-bit AND
+condition, so practical implementations may use structured carry chains or
+lookahead. All state bits still have clock-to-Q and routing spread; synchronous
+does not mean simultaneous pin voltage, and decoded outputs can still glitch.
+The rising-edge synchronous panel of @fig-d03-counter-transition-chronogram
+shows this short bounded spread without
+a stage-by-stage clock cascade; the falling-edge ripple panel uses the polarity
+declared earlier. The architectural contrast is common-clock sampling versus a
+ripple cascade, not a requirement that both designs use the same active polarity
+[@harris2021digital; @dally1998digital].
+
+### Count direction, modulus, load, and specialized sequences
+
+For a synchronous down-counter, bit $i$ toggles when every lower bit is zero:
+
+$$
+T_i^{down}=E\prod_{j=0}^{i-1}\overline Q_j,\qquad i\ge0,
+$$ {#eq-d03-down-counter}
+
+using the same empty-product convention, so $T_0^{down}=E$. An up/down counter
+selects between the lower-all-ones and lower-all-zeros
+conditions. Practical counters also expose clear, parallel load, terminal count,
+and carry/borrow for cascading. Their simultaneous priority must be as explicit
+as @eq-d03-register-priority.
+
+An $n$-bit binary counter has modulus $2^n$. A **modulo-$N$ counter** with
+$N<2^n$ must declare its $N$ legal states, terminal transition, and response to
+unused patterns. A synchronous modulo-10 counter, for example, can specify
+$1001\rightarrow0000$ in its next-state logic and map each of 1010 through
+1111 to a declared recovery state on the next active edge. By contrast, a
+design that decodes a ripple state and clears asynchronously can generate a
+narrow reset pulse and a release race. It is not equivalent to the synchronous
+next-state rule without pulse-width and recovery/removal evidence.
+
+Two shift-register counters make the feedback rule visible. With the chapter's
+declared shift direction, both use $D_i=Q_{i-1}$ for $1\le i<n$. A **ring
+counter** closes the chain with $D_0=Q_{n-1}$; a **Johnson counter**, also
+called a twisted-ring counter, closes it with $D_0=\overline Q_{n-1}$. The
+construction in @fig-d03-ring-johnson-counters shows that the feedback path
+enters D0 while one common rising-edge clock drives every stage.
+
+![Ring and Johnson counters made from four common-clock D flip-flops. Direct Q3 feedback circulates a one-hot word; complemented Q3 feedback fills and then empties the register.](../../../build/circuits/d03-ring-johnson-counters.png){#fig-d03-ring-johnson-counters fig-alt="Panel a shows four rising-edge D flip-flops sharing one clock. Q0 feeds D1, Q1 feeds D2, Q2 feeds D3, and Q3 feeds D0, producing 0001, 0010, 0100, 1000, and 0001. Panel b uses the Q3 bar output as D0 feedback, producing 0000, 0001, 0011, 0111, 1111, 1110, 1100, 1000, and 0000. A note requires a separate documented initialization network." width="100%"}
+
+A properly initialized one-hot ring counter traverses its $n$ legal one-hot
+states in $n$ flip-flops. Other seeds can enter shorter or different cycles; ordinary
+recirculation locks both the all-zero and all-one words. With initialization
+into its intended cycle, an $n$-stage Johnson counter traverses $2n$ states;
+other words can belong to disjoint cycles. Consequently, both circuits need a
+documented parallel-load or set/clear path and an unused-state policy. Binary,
+ring, and Johnson counters trade state capacity, decoding, transition activity,
+and recovery behavior rather than forming one universal best design
+[@harris2021digital].
+
+Binary, modulo-$N$, ring, and Johnson counters are themselves finite-state
+machines: each selects a legal-state set and a fixed next-state function. The
+next section generalizes that idea to named states whose transitions may also
+depend on external inputs.
+
+### State-transition functions
+
+A **finite-state machine (FSM)** is a sequential system with a finite set of
+states and explicit rules for moving among them. At edge index $k$, $q[k]$ is
+the settled encoded present state before edge $t_k$, and $x[k]$ is the input
+vector accepted for that transition. A deterministic next-state function $F$
+gives
+
+$$
+q[k+1]=F(q[k],x[k]).
+$$ {#eq-d03-fsm-next}
+
+A **Moore output** depends only on present state,
+
+$$
+y[k]=G_M(q[k]),
+$$ {#eq-d03-moore}
+
+whereas a **Mealy output** may also depend on the current input,
+
+$$
+y[k]=G_E(q[k],x[k]).
+$$ {#eq-d03-mealy}
+
+These are definitions. A Moore output driven directly from state bits normally
+changes after state-register clock-to-Q and output-logic delay. Moore dependence
+does not by itself make the decoded output glitch-free: if several state bits
+change, unequal clock-to-Q and route delays can expose an intermediate decode.
+A Mealy output
+can respond within a cycle to input changes, so its interface must also account
+for input glitches and combinational delay [@harris2021digital].
+
+The standard FSM architecture in @fig-d03-fsm-architecture separates the only
+storage element from two combinational functions. A **state diagram** names
+states and labels permitted transitions; a **transition table** enumerates the
+same present-state, input, next-state, and output contract.
+
+```{mermaid}
+%%| label: fig-d03-fsm-architecture
+%%| fig-cap: "Finite-state-machine architecture. Arrows show signal flow; only the state register stores history. The direct input-to-output branch exists for Mealy outputs but not for a pure Moore output."
+%%| fig-alt: "Inputs and present state enter next-state logic, whose output enters a clocked state register. Clock and reset control that register. Present state enters output logic, and a separate input branch into output logic is labeled Mealy only. Output logic produces outputs."
+%%| fig-width: 6.2
+flowchart TB
+  accTitle: Finite-state-machine architecture
+  accDescr: Inputs and present state enter next-state logic, which feeds a clocked state register. Present state enters output logic; inputs enter output logic only for a Mealy machine.
+  X["inputs x"] -->|current inputs| F["next-state logic F"]
+  R["state register q"] -->|present state| F
+  F -->|next state| R
+  C["clock and qualified reset"] -->|sampling controls| R
+  R -->|present state| G["output logic G"]
+  X -.->|Mealy path only| G
+  G --> Y["outputs y"]
+```
+
+The following illustrative acquisition controller has four states. `START`
+begins acquisition. `DONE` completes it. `TIMEOUT` takes priority over `DONE`
+while acquisition is active. `CLEAR` releases a latched fault. Outputs are Moore
+outputs, so `BUSY`, `REPORT`, and `FAULT` depend only on the present state.
+
+```{mermaid}
+%%| label: fig-d03-fsm
+%%| fig-cap: "State diagram for the illustrative acquisition controller. Each arrow label is the input condition accepted at an active edge; omitted conditions retain the current state except that REPORT returns unconditionally to IDLE."
+%%| fig-alt: "Four-state diagram. IDLE moves to ACQUIRE on START. ACQUIRE moves to FAULT on TIMEOUT or to REPORT on DONE when timeout is absent. REPORT returns to IDLE. FAULT returns to IDLE on CLEAR. Other inputs hold IDLE, ACQUIRE, or FAULT."
+%%| fig-width: 6.0
+stateDiagram-v2
+  accTitle: Acquisition controller state diagram
+  accDescr: Qualified reset enters IDLE. START begins ACQUIRE. TIMEOUT moves ACQUIRE to FAULT, while DONE without timeout moves it to REPORT. REPORT returns to IDLE and CLEAR releases FAULT.
+  [*] --> IDLE: qualified reset
+  IDLE --> ACQUIRE: START
+  ACQUIRE --> FAULT: TIMEOUT
+  ACQUIRE --> REPORT: DONE and not TIMEOUT
+  REPORT --> IDLE: next edge
+  FAULT --> IDLE: CLEAR
+```
+
+The transition table is another description of the same contract.
+
+| present state | decisive input condition | next state | `BUSY REPORT FAULT` |
+|---|---|---|---|
+| `IDLE` | `START=1` | `ACQUIRE` | `000` |
+| `IDLE` | otherwise | `IDLE` | `000` |
+| `ACQUIRE` | `TIMEOUT=1` | `FAULT` | `100` |
+| `ACQUIRE` | `TIMEOUT=0, DONE=1` | `REPORT` | `100` |
+| `ACQUIRE` | otherwise | `ACQUIRE` | `100` |
+| `REPORT` | any | `IDLE` | `010` |
+| `FAULT` | `CLEAR=1` | `IDLE` | `001` |
+| `FAULT` | otherwise | `FAULT` | `001` |
+
+: Complete transition and Moore-output table for the illustrative controller.
+The priority of `TIMEOUT` over `DONE` is explicit. {#tbl-d03-fsm}
+
+### State encoding and unused patterns
+
+**State encoding** assigns a bit pattern to each symbolic state. Four states fit
+exactly in two binary bits, while a **one-hot encoding** uses one state bit per
+state with exactly one asserted. A **Gray-oriented encoding** chooses codes so
+selected adjacent states differ in one bit. No encoding is universally
+smallest, fastest, lowest power, or
+safest. Register cost, decode depth, routing, transition activity, target
+architecture, and recovery requirements determine the result
+[@harris2021digital].
+
+| encoding | bits for $N$ states | likely advantage | required caution |
+|---|---:|---|---|
+| compact binary | $\lceil\log_2N\rceil$ | few state bits | decoding and multi-bit transitions |
+| one-hot | $N$ | simple state tests on many FPGA targets | more storage and many illegal patterns |
+| Gray-oriented | usually $\lceil\log_2N\rceil$ or more | chosen adjacent transitions can change one bit | not every arbitrary state graph admits one-bit changes on every edge |
+
+: Encoding is a realization choice, not part of the symbolic state-machine
+requirement unless the external interface exposes the code. {#tbl-d03-encoding}
+
+Unused bit patterns need declared behavior. A reset can place the machine in
+`IDLE`, but reset alone does not prove that every upset, CDC error, or partial
+power event reaches a legal state. A design may map illegal patterns to a safe
+state on the next edge, raise a fault, or deliberately leave recovery to a
+system-level reset. The choice must match the hazard analysis; adding an
+`others -> IDLE` branch does not by itself prove safe physical recovery.
+
+### Executable transition check
+
+The next program enumerates the controller's abstract transitions and checks
+reachability, reset behavior, and output exclusivity. It is standard-library
+Python. The state names remain identical to @tbl-d03-fsm so transcription
+differences are visible.
+
+```python
+from collections import deque
+from itertools import product
+
+STATES = ("IDLE", "ACQUIRE", "REPORT", "FAULT")
+INPUTS = tuple(product((0, 1), repeat=4))
+
+
+def step(state, start, done, timeout, clear):
+    if state == "IDLE":
+        return "ACQUIRE" if start else "IDLE"
+    if state == "ACQUIRE":
+        if timeout:
+            return "FAULT"
+        return "REPORT" if done else "ACQUIRE"
+    if state == "REPORT":
+        return "IDLE"
+    return "IDLE" if clear else "FAULT"
+
+
+def outputs(state):
+    return (
+        int(state == "ACQUIRE"),
+        int(state == "REPORT"),
+        int(state == "FAULT"),
+    )
+
+
+def apply_reset(_state):
+    return "IDLE"
+
+
+seen = {"IDLE"}
+queue = deque(["IDLE"])
+while queue:
+    state = queue.popleft()
+    for values in INPUTS:
+        target = step(state, *values)
+        assert target in STATES
+        if target not in seen:
+            seen.add(target)
+            queue.append(target)
+
+assert all(sum(outputs(state)) <= 1 for state in STATES)
+assert all(apply_reset(state) == "IDLE" for state in STATES)
+
+print("reachable:", ", ".join(sorted(seen)))
+print("exclusive Moore outputs: pass")
+print("reset target from every state: IDLE")
+```
+
+Expected output:
+
+```text
+reachable: ACQUIRE, FAULT, IDLE, REPORT
+exclusive Moore outputs: pass
+reset target from every state: IDLE
+```
+
+This executable check proves only the enumerated abstract properties of the
+Python description. It is not HDL simulation, synthesis, timing analysis,
+metastability analysis, or measurement. Because the transition function and
+table arise from the same chapter requirement, an error shared by both could
+also survive. D04 adds independent properties and implementation verification.
+
+## Clocks, enables, and reset
+
+The state-transition equations use an edge index, but a physical circuit sees
+a voltage waveform. A **clock** is a signal whose selected transitions define
+when a group of sequential elements attempts to accept new state. Its
+**period** $T_{clk}$ is the time between corresponding consecutive active edges,
+and its frequency is exactly
+
+$$
+f_{clk}=\frac{1}{T_{clk}}.
+$$ {#eq-d03-frequency}
+
+If $t_H$ and $t_L$ are the high and low durations measured between declared
+threshold crossings, then $T_{clk}=t_H+t_L$. The **duty cycle** is defined as
+
+$$
+D=\frac{t_H}{T_{clk}}.
+$$ {#eq-d03-duty}
+
+Both ratios are dimensionally consistent: hertz is inverse seconds, while duty
+cycle is dimensionless. Frequency alone is incomplete. Sequential devices also
+specify minimum high and low pulse widths, input transition limits, voltage
+thresholds, and operating conditions [@ti2021sn74hc74].
+
+A **clock domain** is a set of sequential elements governed by a named clock
+waveform and its timing constraints. Information crossing between two distinct
+domains is a CDC even when generated clocks are synchronously related; such a
+crossing may still be timed if their phase and uncertainty are bounded. Two
+clocks with the same nominal frequency but independent sources form an
+**asynchronous CDC** because their launch-to-capture phase is not bounded
+[@amd2026ug949].
+
+### Clock skew and jitter
+
+Registers do not receive an edge at exactly the same physical instant.
+**Clock skew** is the difference between clock arrival times at two named
+elements for corresponding edges. For the launch element $L$ and capture
+element $C$, this chapter defines signed skew as
+
+$$
+t_{skew}=\delta_C-\delta_L,
+$$ {#eq-d03-skew}
+
+where $\delta_L$ and $\delta_C$ are their edge-arrival offsets from a common
+reference. Positive skew means the capture edge arrives later than the launch
+edge. This sign convention is fixed before the timing equations below.
+
+**Clock jitter** is edge-position variation over time relative to the intended
+clock behavior. Period jitter, cycle-to-cycle jitter, phase error, and
+time-interval error are different measurands; a single unlabeled “jitter” number
+is not interchangeable among them. Timing tools commonly combine appropriate
+source variation, clock-network uncertainty, and analysis margin into a
+setup-side or hold-side uncertainty budget. This chapter names those nonnegative
+budgets $U_{setup}$ and $U_{hold}$ rather than implying a probability
+distribution [@dally1998digital].
+
+### Reset is part of the timed interface
+
+Clock timing governs reset release as well as ordinary data capture. A
+**reset** drives selected state elements toward a declared initial or recovery
+state. Assertion makes reset active; deassertion releases normal operation. An
+active-low reset is written $\overline{RESET}$ in equations and `RESET_n` in
+plain identifiers, consistent with D01.
+
+A **synchronous reset** affects state only at an active clock edge and therefore
+needs a functioning clock and ordinary input timing. An **asynchronous reset**
+can force state independently of a clock edge, after the specified
+asynchronous-control-to-Q delay, and must meet its specified minimum active
+pulse width. Its release still interacts with the clock. **Recovery time** is
+the required interval from reset deassertion to a subsequent active edge;
+**removal time** is the required interval after an active edge during which
+reset must not deassert. These roles resemble setup and hold for the
+reset-release event [@harris2021digital; @ti2021sn74hc74].
+
+Asynchronous assertion with synchronous deassertion is a common strategy when
+the design must enter reset without a clock but must leave reset coherently.
+Each destination clock domain needs its own qualified release. The strategy is
+not universal: device architecture, memory resources, clock startup, reset
+coverage, external requirements, and test access can favor another choice.
+Current FPGA guidance, for example, recommends disciplined local and
+synchronized startup rather than assuming global release is safe everywhere
+[@amd2026ug949].
+
+The architecture in @fig-d03-reset-domains shows why one released reset is not
+automatically one timed event. Each branch asserts from the common source but
+uses its destination clock to qualify local deassertion.
+
+![Per-domain reset release. The repeated `RESET_n` labels denote one external active-low net without a crossing line; each destination clock times only its local release.](../../../build/circuits/d03-reset-domains.png){#fig-d03-reset-domains fig-alt="Two noncrossing rows repeat the same external active-low reset label. In the upper row, reset and clock A enter reset synchronizer A, whose local reset output controls domain A. The lower row repeats the structure for clock and domain B." width="88%"}
+
+The block labeled “reset synchronizer” can itself be built from two D
+flip-flops, as @fig-d03-reset-synchronizer-cell shows. External `RESET_n`
+connects to both active-low asynchronous clear pins, so assertion forces
+$Q_1=Q_2=0$ after the specified clear-to-Q delay without waiting for a clock.
+When `RESET_n` rises, the asynchronous clears release. In the nominal resolved
+case, logic 1 reaches $Q_1$ after the next rising edge and $Q_2$ after the
+following edge, so `RESET_domain_n`$=Q_2$ deasserts only on a domain-clock edge.
+A release near an edge can violate recovery or removal, excite metastability in
+the release chain, and add variable latency. The second stage reduces the
+probability that this uncertainty reaches the local reset; it does not make the
+probability zero or guarantee an exact two-edge latency. The selected device
+still determines clear pulse width, recovery/removal, placement, and clock-
+startup requirements.
+
+![One asynchronous-assert, synchronous-deassert reset-release cell made from two D flip-flops. Clock and reset are separate shared nets.](../../../build/circuits/d03-reset-synchronizer-cell.png){#fig-d03-reset-synchronizer-cell fig-alt="Two rising-edge D flip-flops have the first D input tied to logic one and Q1 connected to the second D input. A domain clock connects to both clock triangles. External active-low RESET n separately connects to both bubbled asynchronous clear pins. Q2 is the local active-low domain reset." width="90%"}
+
+Reset does not repair a clock-domain crossing. It also does not guarantee a
+known power-up state unless every relevant element has documented reset or
+initialization behavior and the clock/reset sequence meets its electrical and
+timing conditions.
+
+## Setup and hold at a register boundary
+
+The clock organizes state updates only if each data path reaches the capture
+register in time and does not change too soon. D02 supplied maximum propagation
+delay $t_{pd,\max}$ and minimum contamination delay $t_{cd,\min}$ for
+combinational paths. A sequential boundary adds four quantities:
+
+- **setup time** $t_{su}$: how long data must be stable before the active
+  capture edge;
+- **hold time** $t_h$: how long data must remain stable after that edge;
+- **maximum clock-to-Q delay** $t_{pcq,\max}$: the latest guaranteed arrival of
+  the launched output; and
+- **minimum clock-to-Q delay** $t_{ccq,\min}$: the earliest permitted beginning
+  of the launched output change.
+
+The waveform in @fig-d03-timing-waveforms shows the required data-stability
+interval around the edge. Setup and hold are threshold-referenced characterized
+constraints; their sum need not equal the physical sampling aperture discussed
+in the metastability section. They are not propagation delays. The output
+remains old for at least $t_{ccq,\min}$ and becomes valid by
+$t_{pcq,\max}$ under the specified conditions [@ti2021sn74hc74;
+@harris2021digital].
+
+![Timing definitions around a positive clock edge. The drawing is an author-created explanatory waveform, not measured data; interval lengths are not to scale.](../../../build/circuits/d03-timing-waveforms.png){#fig-d03-timing-waveforms fig-alt="Clock, D, and Q traces share a time axis. D is stable from before the setup boundary until after the hold boundary. Q retains its old value through the minimum clock-to-Q interval and reaches its new value by the maximum clock-to-Q interval." width="94%"}
+
+### The launch-to-capture path
+
+The timing topology in @fig-d03-register-path contains one launch register,
+one D02 combinational path, and one capture register. The launch and capture
+clock arrivals are kept separate so skew cannot disappear inside an unnamed
+margin.
+
+![Synchronous launch-to-capture timing path with explicit D, Q, and rising-edge clock pins. The maximum-delay route governs setup; the minimum-delay route governs hold.](../../../build/circuits/d03-synchronous-path.png){#fig-d03-register-path fig-alt="A pinned rising-edge launch D flip-flop drives a combinational logic and routing block from Q L. The block drives D C of a pinned rising-edge capture D flip-flop. A common clock reference branches to both clock triangles with arrival offsets delta L and delta C. Labels distinguish maximum and minimum clock-to-Q and combinational delays." width="100%"}
+
+The derivation uses absolute event times. A reference launch edge occurs at
+$t=0$. It reaches the launch register at $\delta_L$. The next corresponding
+edge reaches the capture register at $T_{clk}+\delta_C$. Worst-case new data
+arrives at the capture input no later than
+
+$$
+t_{data,latest}
+=\delta_L+t_{pcq,\max}+t_{pd,\max}.
+$$ {#eq-d03-latest-data}
+
+Setup requires this arrival plus $t_{su}$ and nonnegative uncertainty
+$U_{setup}$ to precede the capture edge:
+
+$$
+\delta_L+t_{pcq,\max}+t_{pd,\max}+t_{su}+U_{setup}
+\le T_{clk}+\delta_C.
+$$ {#eq-d03-setup-absolute}
+
+Substituting @eq-d03-skew and collecting terms gives the setup requirement
+
+$$
+T_{clk}
+\ge
+t_{pcq,\max}+t_{pd,\max}+t_{su}-t_{skew}+U_{setup}.
+$$ {#eq-d03-setup}
+
+Every term has units of time. Positive skew helps this setup check because a
+later capture edge gives the data more time. A negative skew makes the required
+period longer. The **setup slack** is the required arrival time minus the latest
+data arrival time. In the variables used here,
+
+$$
+S_{setup}
+=T_{clk}+t_{skew}-U_{setup}
+-(t_{pcq,\max}+t_{pd,\max}+t_{su}).
+$$ {#eq-d03-setup-slack}
+
+Positive slack passes the declared inequality. Zero slack merely touches the
+limit and does not satisfy a strict positive-margin requirement.
+
+Hold compares against the same capture edge as the launch. Earliest new data
+can begin changing at
+
+$$
+t_{data,earliest}
+=\delta_L+t_{ccq,\min}+t_{cd,\min}.
+$$ {#eq-d03-earliest-data}
+
+The old data must remain through $\delta_C+t_h+U_{hold}$, so
+
+$$
+\delta_L+t_{ccq,\min}+t_{cd,\min}
+\ge \delta_C+t_h+U_{hold}.
+$$ {#eq-d03-hold-absolute}
+
+The hold requirement and slack are therefore
+
+$$
+t_{ccq,\min}+t_{cd,\min}
+\ge t_h+t_{skew}+U_{hold},
+$$ {#eq-d03-hold}
+
+$$
+S_{hold}
+=t_{ccq,\min}+t_{cd,\min}
+-t_h-t_{skew}-U_{hold}.
+$$ {#eq-d03-hold-slack}
+
+Positive skew hurts hold under the declared sign because the capture edge moves
+later while the earliest new data path does not. Clock period does not appear
+in @eq-d03-hold. Slowing the clock can repair many setup failures, but it does
+not repair this same-edge hold failure. The usual repair adds guaranteed minimum
+data-path delay or changes clock arrival, placement, or cell choice without
+breaking setup.
+
+These edge-triggered relations do not apply unchanged to a transparent-latch
+pipeline. Latches can borrow time across phase boundaries, and their analysis
+must include transparency windows, non-overlap, and all races. The simple
+flip-flop path remains the reference case for this chapter.
+
+### Worked datasheet screen
+
+The worked path uses one Texas Instruments SN74HC74 as launch and capture
+storage and one SN74HC157 multiplexer stage as combinational logic; `PRE_n` and
+`CLR_n` remain inactive. At $V_{CC}=4.5$ V over $-40~^\circ$C to $85~^\circ$C,
+the SN74HC74 table gives a 25 ns minimum data setup time and a 44 ns maximum
+clock-to-Q propagation delay with $C_L=50$ pF and input transition time
+$t_t<6$ ns. The SN74HC157 table gives a 38 ns maximum data-to-output delay at
+$V_{CC}=4.5$ V and $C_L=50$ pF using 6 ns input edges over its recommended
+free-air range [@ti2021sn74hc74; @ti2025sn74hc157].
+
+Before calculating, the three principal device contributions are roughly
+$45+40+25\approx110$ ns. An 8 MHz clock has a 125 ns period and may have modest
+arithmetic margin; a 10 MHz clock has only 100 ns and cannot pass this screen.
+
+For an illustrative setup uncertainty $U_{setup}=4$ ns and worst-case signed
+skew $t_{skew}=-2$ ns, @eq-d03-setup requires
+
+$$
+\begin{aligned}
+T_{clk,\min}
+&=44~\text{ns}+38~\text{ns}+25~\text{ns}
+-(-2~\text{ns})+4~\text{ns}\\
+&=113~\text{ns}.
+\end{aligned}
+$$ {#eq-d03-worked-period}
+
+The corresponding frequency screen is
+
+$$
+f_{clk}<\frac{1}{113~\text{ns}}\approx8.85~\text{MHz}
+$$ {#eq-d03-worked-frequency}
+
+for a strict period margin. At 8.00 MHz,
+$T_{clk}=125$ ns and @eq-d03-setup-slack gives 12 ns of arithmetic setup slack.
+At 10.0 MHz, the slack is $-13$ ns. The direction matches the estimate.
+
+This is a **component feasibility screen**, not a qualified board timing limit.
+The two datasheet maxima come from named but separate characterization
+conditions. In particular, the cited HC74 corner permits an output transition
+as long as 19 ns, whereas the cited HC157 delay row uses 6 ns input edges; the
+cascade is therefore not demonstrated to satisfy the HC157 stimulus condition.
+A complete decision must show that the actual launch output slew and load are
+compatible with the multiplexer input, that the multiplexer sees no more
+than its qualified output load including the capture input and probe, and that
+supply, temperature, routing, clock waveform, decoupling, and uncertainty cover
+the implemented path. The SN74HC74 also specifies 20 ns minimum high and low
+clock pulse duration at 4.5 V over $-40~^\circ$C to $85~^\circ$C; a nominal 50%
+duty cycle at 8 MHz gives 62.5 ns per phase, but duty distortion must still be
+bounded [@ti2021sn74hc74].
+
+The cited SN74HC74 table specifies zero minimum hold time under the stated row,
+but the manufacturer tables used here do not provide the lower bounds
+$t_{ccq,\min}$ and $t_{cd,\min}$ for this complete cascade. Maximum propagation
+delays cannot supply those minima. The worked path is therefore **not
+hold-qualified** from these data. A measured typical short-path delay would not
+repair that evidence gap; hold needs a guaranteed implementation-specific lower
+bound or a validated timing analysis.
+
+### Illustrative hold repair
+
+An extracted implementation report, not the HC74 calculation above, might give
+the following illustrative lower-bound values:
+
+$$
+t_{ccq,\min}=0.18~\text{ns},\quad
+t_{cd,\min}=0.07~\text{ns},\quad
+t_h=0.10~\text{ns},
+$$
+
+with $t_{skew}=0.20$ ns and $U_{hold}=0.05$ ns. Then
+
+$$
+S_{hold}=0.18+0.07-0.10-0.20-0.05=-0.10~\text{ns}.
+$$ {#eq-d03-illustrative-hold}
+
+The negative result fails. A cell or routed detour that adds a guaranteed
+0.14 ns to the minimum data path would raise the illustrative slack to
+$+0.04$ ns. That change also increases maximum path delay, so setup must be
+rechecked. The numbers are synthetic teaching values; they demonstrate the
+decision logic but qualify no device or process.
+
+## Metastability at an asynchronous boundary
+
+Setup and hold define when the ordinary old-or-new abstraction is guaranteed.
+The **sampling aperture** is the physical interval of relative data/clock
+arrival over which a storage element can be driven toward an ambiguous internal
+decision; it is not defined as the arithmetic sum of datasheet setup and hold
+numbers. If data changes within this vulnerable interval, internal nodes can approach the
+unstable balance between the element's two stable states. **Metastability** is
+this analog condition in which a bistable circuit takes an unusually long time
+to resolve to a valid logic level. Classic physical observations show delayed,
+oscillatory, and metastable responses in synchronizer and arbiter circuits
+[@chaney1973synchronizer].
+
+Metastability is not a third Boolean state. It is not the same thing as an HDL
+`X`, and it need not remain at exactly half supply. An aperture violation may
+produce the old value, the new value, a late transition, or a waveform that
+violates a downstream threshold or timing requirement. Ordinary RTL simulation
+does not reproduce the analog resolution distribution.
+
+The metastability traces in @fig-d03-metastability-traces show a family of possible analog responses, not
+a deterministic waveform or measured distribution. A receiver deadline can
+arrive while one realization is still outside either guaranteed logic band.
+
+![Illustrative metastability-resolution traces after a sampling-aperture violation. The paths, voltages, and time axis are conceptual and not measured or to scale.](../../../build/circuits/d03-metastability-traces.png){#fig-d03-metastability-traces fig-alt="Several possible Q-voltage traces leave a low state at a sampling edge. One reaches the valid-high band quickly; two remain near an unstable middle region longer before resolving high or low. A later receiver deadline intersects the late traces before they have reached a guaranteed logic band." width="94%"}
+
+No finite-latency binary synchronizer can guarantee that every continuous-time
+arrival resolves before a fixed deadline. A design instead reduces the
+probability that unresolved behavior reaches functional logic. Longer resolution
+time, a faster-resolving storage cell, and lower asynchronous event or sampling
+rate improve reliability [@veendrick1980synchronizers; @dally1998digital].
+
+### Resolution probability and MTBF
+
+Characterized synchronizer cells are often described by an empirical
+exponential relation of the form
+
+$$
+MTBF
+\approx
+\frac{\exp(T_{res}/\tau)}
+{f_{clk}f_{event}T_0}.
+$$ {#eq-d03-mtbf}
+
+$T_{res}$ is the usable resolution time from first-stage excitation to the next
+stage's setup boundary after subtracting first-stage clock-to-Q behavior,
+interstage route delay, next-stage setup time, and relevant skew/jitter
+uncertainty from the nominal edge spacing. $\tau$ is a fitted resolution time
+constant. $T_0$ is a fitted
+aperture-related constant with units of time, and $f_{event}$ is an applicable
+asynchronous transition rate. The denominator has units
+$\text{s}^{-1}\text{s}^{-1}\text{s}=\text{s}^{-1}$, so the result has units of
+seconds. The relation is an empirical technology-, cell-, voltage-,
+temperature-, placement-, and loading-dependent fit, not a universal law with
+portable constants [@veendrick1980synchronizers].
+
+The safest general calculation uses a ratio. If every fitted parameter and rate
+remains fixed while the resolution interval increases by $\Delta T$, then
+
+$$
+\frac{MTBF_{new}}{MTBF_{old}}
+\approx\exp\!\left(\frac{\Delta T}{\tau}\right).
+$$ {#eq-d03-mtbf-ratio}
+
+Within this fitted exponential description, an added interval
+$\Delta T=\tau\ln 10$ improves MTBF by approximately a factor of 10. That
+statement does not invent a value for $\tau$. A numerical MTBF claim
+requires characterization for the actual cell and implementation conditions.
+MTBF is a statistical mean between modeled failures, not guaranteed lifetime.
+
+### A two-stage single-bit synchronizer
+
+A **synchronizer** is a destination-domain circuit that gives a sampled
+asynchronous signal additional time to resolve before ordinary logic consumes
+it. The common two-stage circuit in @fig-d03-synchronizer is made from the same
+rising-edge D flip-flop organization introduced earlier. The asynchronous level
+enters the D pin of `SYNC1`; its $Q_1$ output directly drives the D pin of
+`SYNC2`; and both clock triangles connect to the destination clock. Only $Q_2$
+is allowed to drive ordinary destination logic.
+
+Unlike the reset-release cell in @fig-d03-reset-synchronizer-cell, this data
+synchronizer sends the asynchronous level only to `SYNC1`'s D pin; it does not
+drive asynchronous controls on both stages. Any
+reset added to `SYNC1` and `SYNC2` still needs the per-domain release policy
+established above, or destination logic must ignore $Q_2$ until the chain has
+acquired a valid level.
+
+The asynchronous transition may excite metastability in `SYNC1`. The interval
+from the first-stage response, through the short $Q_1$ route, to `SYNC2`'s setup
+boundary is the usable resolution time $T_{res}$ in @eq-d03-mtbf. Removing
+combinational logic, ordinary fanout, and unnecessary route delay preserves
+more of that interval. Approximately one destination period later, `SYNC2`
+samples whatever value `SYNC1` has reached
+[@dally1998digital; @amd2025ug574].
+
+![Two-stage destination-clock synchronizer for one persistent level, built from explicit rising-edge D-flip-flop symbols. The first-stage route is direct, and ordinary logic begins only after the second stage.](../../../build/circuits/d03-synchronizer.png){#fig-d03-synchronizer fig-alt="An asynchronous level enters the D pin of rising-edge flip-flop SYNC1. Q1 directly drives the D pin of rising-edge flip-flop SYNC2, and one destination-clock bus drives both clock triangles. Only Q2 drives destination logic. A dashed boundary identifies SYNC1 as metastability-exposed, while a note says the second stage lowers but does not eliminate escape probability." width="96%"}
+
+The dashed first-stage boundary marks where additional resolution time is
+provided; it is not a hard containment wall. If $Q_1$ remains unresolved inside
+`SYNC2`'s aperture, `SYNC2` can also be excited metastably. The second stage
+reduces the probability that unresolved behavior escapes into ordinary logic;
+it does not make that probability zero. Taking the input transition as the
+reference point, and assuming no extended metastability, `SYNC2` usually
+exposes the new level after roughly one to two destination periods, depending
+on phase. Rare longer resolution is not guaranteed away.
+Any protocol that requires an exact source-to-destination cycle count is
+incompatible with an unconstrained asynchronous arrival.
+
+A two-stage chain is suitable only when the source level persists long enough
+to be sampled and when an occasional extra destination cycle of latency is
+acceptable. It does not guarantee capture of an arbitrarily narrow pulse. It
+also does not make independently synchronized bits of a changing word coherent.
+
+## Clock-domain crossings by information type
+
+A **clock-domain crossing (CDC)** occurs whenever information moves between
+distinct clock domains. A synchronously related CDC may have a bounded
+launch-to-capture relationship and can be timed accordingly. An **asynchronous
+CDC** lacks that bounded relationship. Declaring an asynchronous path false for
+synchronous timing prevents an invalid setup calculation; it does not create a
+safe transfer circuit. The crossing architecture must preserve the meaning of
+the information [@dally1998digital; @amd2026ug949].
+
+The structures in @tbl-d03-cdc-selection use several compact terms. A **pulse
+stretcher** holds an event level active for a declared minimum interval. A
+**toggle protocol** represents each event by a persistent change of one bit. A
+**bundled-data handshake** holds a word stable while request and acknowledge
+signals transfer ownership. A **Gray code** orders adjacent values so only one
+encoded bit changes between them. A **dual-clock FIFO** stores words under one
+clock and retrieves them under another, using carefully synchronized pointer or
+status information rather than independently synchronizing the data bits
+[@amd2025ug574].
+
+| information to transfer | suitable structure | necessary contract |
+|---|---|---|
+| persistent single-bit level | two or more destination flip-flops | level persists through sampling; latency variation is acceptable |
+| occasional event or narrow pulse | source-held request plus acknowledge, pulse-stretch, or toggle protocol | source cannot overwrite an unacknowledged event; destination can distinguish events |
+| multi-bit word held stable | bundled-data handshake | source holds all data stable until destination acknowledges capture |
+| monotonic adjacent count | registered Gray code plus per-bit synchronizers | only adjacent source codes occur; bit-to-bit route skew is bounded; destination tolerates skipped counts |
+| sustained stream or bursts | dual-clock FIFO | pointer crossing, full/empty logic, depth, rate, reset, and overflow/underflow contracts are qualified |
+| reset release | reset synchronizer in each destination domain | assertion and deassertion policy, recovery/removal, and clock startup are specified |
+
+: CDC selection starts with information semantics. An implementation-specific
+primitive or IP core still needs target documentation and verification.
+{#tbl-d03-cdc-selection}
+
+The CDC comparison in @fig-d03-cdc-structures contrasts the structural mistake with two coherent-word
+transfers. The arrows describe information flow, not physical wire count.
+
+```{mermaid}
+%%| label: fig-d03-cdc-structures
+%%| fig-cap: "Multi-bit CDC structures. Independent bit synchronizers can create mixed words; a bundled-data handshake or dual-clock FIFO preserves a declared word-level contract."
+%%| fig-alt: "A changing binary bus passes through independent bit synchronizers and produces a mixed-word risk. A source-held word and request pass through a bundled-data handshake to a coherent accepted word. A source stream passes through a dual-clock FIFO to a destination stream."
+%%| fig-width: 6.4
+flowchart TB
+  accTitle: Multi-bit clock-domain-crossing choices
+  accDescr: Independent synchronizers on a changing binary bus risk mixed words. A bundled-data handshake transfers a held word coherently, while a dual-clock FIFO transfers a stream between clocks.
+  B["changing binary bus"] --> I["independent bit synchronizers"] --> M["mixed-word risk"]
+  W["source-held word plus request"] --> H["bundled-data handshake"] --> C["coherent accepted word"]
+  S["source stream"] --> F["dual-clock FIFO"] --> D["destination stream"]
+```
+
+### Why a bus cannot use independent bit synchronizers
+
+Suppose a four-bit binary counter changes from `0111` to `1000`. All four source
+bits change logically at one source edge, but physical clock-to-Q and routing
+delays differ. Independent destination synchronizers can accept different bits
+on different edges. A destination might therefore observe a mixture such as
+`0000`, `1111`, or another code that was never a stable source count. Adding
+more stages to each independent bit lowers metastability propagation but does
+not align which source event each bit represents.
+
+Gray coding reduces the number of changing bits between adjacent encoded counts
+to one. It does not remove the synchronizer, source registration, route-skew,
+rate, or interpretation requirements. If the source advances several counts
+between destination samples, skipped values remain normal. If arbitrary words
+must cross coherently, a handshake or dual-clock FIFO is the appropriate
+architecture. Current FPGA guidance likewise separates single-bit or
+Gray-coded synchronization from multi-bit transfers through an asynchronous
+FIFO [@amd2025ug574].
+
+### Events require persistence or acknowledgement
+
+A source-domain pulse shorter than one destination period can fall entirely
+between destination edges. A two-flop level synchronizer then observes no event,
+even though neither stage malfunctioned. A pulse stretcher can work when a
+proven minimum pulse duration overlaps at least one destination sampling
+opportunity for every allowed relative phase. That capture-width condition is
+separate from the later synchronizer output latency. A request/acknowledge
+handshake is stronger: the source holds a request
+until a returned acknowledgement proves that the destination accepted it.
+
+A toggle protocol represents each event by changing a persistent bit. The
+destination synchronizes that bit and detects a change. It still needs a rate
+contract: a second source event must not toggle the bit again before the
+destination has observed the first. The representation solves pulse width, not
+unbounded event throughput.
+
+### Synchronization is not debouncing
+
+An external pushbutton illustrates three distinct failure mechanisms.
+
+1. Input conditioning establishes valid voltage levels, transition rate, and
+   protection at the receiving pin.
+2. A synchronizer reduces the probability that the asynchronous transition
+   propagates metastability into the destination domain.
+3. A **debouncer** rejects multiple transitions caused by mechanical contact
+   bounce or noise according to a declared time rule.
+
+A synchronizer does not suppress a sequence of valid 0/1 transitions from a
+bouncing contact. A debouncer fed directly by the asynchronous pin does not
+remove the metastability risk at its first storage element. The HC74 datasheet
+recommends a Schmitt-trigger conditioner for a slow or noisy input; that
+conditioner can improve edge quality but does not replace a destination
+synchronizer [@ti2021sn74hc74; @horowitz2015art].
+
+## Evidence, diagnosis, and bounded decisions
+
+State and timing failures can produce similar wrong bits. Diagnosis becomes
+faster when each representation is tested at its own boundary.
+
+| observation | plausible cause | discriminating evidence |
+|---|---|---|
+| correct truth table, intermittent registered result at high frequency | setup failure or clock-quality problem | setup slack by path and corner; clock period, duty, slew, skew, and jitter at named pins |
+| failure remains after lowering clock frequency | hold, CDC, reset, electrical, or functional fault | minimum-delay analysis, crossing structure, reset release, static levels, and state trace |
+| first transaction after reset fails | unsynchronized release or incomplete initialization | recovery/removal check and per-domain reset/state waveform |
+| counter occasionally advances several times per press | contact bounce | conditioned pin waveform and debounce event log |
+| narrow source pulse is sometimes absent | event not persistent across CDC | source pulse width and phase sweep; handshake/toggle trace |
+| multi-bit word contains impossible mixtures | independent-bit CDC or unstable bundled data | source/destination word traces and protocol-valid/acknowledge timing |
+| simulation shows `X`, hardware failure not reproduced | uninitialized state, contention, pessimism, or CDC indication | reset coverage, driver analysis, and physical timing evidence rather than interpreting `X` as a voltage |
+
+: Similar symptoms require tests that separate functional, electrical, reset,
+clocking, timing, and CDC hypotheses. {#tbl-d03-diagnosis}
+
+### Requirements for a defensible sequential boundary
+
+A reviewable design states the following requirements before implementation:
+
+- identify every clock source, active edge, frequency range, duty-cycle range,
+  startup behavior, and domain relationship;
+- identify every state element's reset value, assertion polarity, release
+  policy, recovery/removal requirement, and illegal-state response;
+- require positive setup and hold slack at all declared voltage, temperature,
+  process, load, slew, and operating corners with named uncertainty;
+- classify every domain crossing by information type and require a recognized
+  structure with latency, rate, coherency, and reset behavior;
+- prohibit ordinary functional fanout from the first stage of a single-bit
+  synchronizer;
+- require minimum clock-pulse widths and input transition limits at the actual
+  device pins; and
+- define the physical test points, threshold references, probe loading,
+  bandwidth, calibration inputs, uncertainty, guard band, and pass/fail rule.
+
+The requirement to “work at 8 MHz” is incomplete. It must name the clock and
+data endpoints, permitted state and reset sequence, load and probe, environment,
+and whether 8 MHz is a strict lower capability target or only a nominal setting.
+
+### Acceptance plan for the worked path
+
+The HC74–HC157 screen supports a feasible 8 MHz target but not a qualified
+implementation. A physical acceptance test would complete the following
+bounded chain.
+
+1. Drive the implemented launch input with the declared pattern and operate the
+   complete board at the supply and temperature corners in scope.
+2. Measure the launch and capture clock threshold crossings at their device
+   pins, not only at the source connector. Record period, high/low widths,
+   edge rate, and the signed skew from @eq-d03-skew.
+3. Measure launch $Q$, multiplexer output/capture $D$, and capture $Q$ with probes
+   whose capacitance is included in the load. State instrument bandwidth,
+   sampling mode, calibration state, and timing accuracy [@tektronixprobesprimer].
+4. Compare the latest capture-$D$ transition with the setup deadline and the
+   earliest transition with the hold deadline. Apply the declared uncertainty
+   and strict positive guard band.
+5. Sweep relative data/clock phase only within the approved apparatus and use
+   the resulting observations to characterize the assembled path. Do not
+   present a finite run with no error as proof of zero metastability probability
+   or universal timing closure.
+
+Board measurements can qualify only the tested units and configured operating
+boundary; voltage and temperature sweeps do not manufacture process-corner
+coverage. A production claim additionally needs supplier timing guarantees or
+validated extracted analysis covering the declared process distribution.
+
+The decision rule is explicit: accept the tested configuration only if every
+declared corner and transition has guarded setup and hold slack strictly greater
+than zero, pulse-width and electrical requirements pass, reset releases
+correctly in every domain, and every CDC structure passes its protocol checks.
+Otherwise reject the timing claim or narrow its operating boundary. Lab L09
+provides the supervised setting for this kind of observation; this chapter does
+not invent measurements in advance.
+
+## Sequential design as a timed contract
+
+Feedback makes history available. A latch controls that feedback by level; a
+flip-flop narrows system reasoning to repeated edge boundaries. SR, JK, D, and
+T descriptions express related next-state requests. Banks and chains of D
+flip-flops form parallel and shift registers. Toggle networks form ripple and
+synchronous binary counters, while direct or complemented shift-register
+feedback forms ring and Johnson counters. FSMs generalize those stored-vector
+sequences into explicit, input-dependent behavior.
+The abstraction remains trustworthy only when maximum paths meet setup, minimum
+paths meet hold, clocks meet waveform and distribution limits, and reset release
+is timed.
+
+Asynchronous arrivals cannot satisfy an ordinary edge relationship. A
+two-D-flip-flop synchronizer gives the first sampled decision additional time
+to resolve and reduces the probability that instability escapes, while
+handshakes, Gray transfers, and FIFOs preserve different kinds of information.
+That distinction is the practical endpoint: a correct state table, a positive
+timing report, and a sensible CDC structure answer different questions, and a
+dependable system needs all three to agree with physical evidence.
+
+## Exercises
+
+State active levels, bit order, clock-edge convention, delay bounds, and whether
+data are documented, illustrative, simulated, or measured. Estimate before
+calculating. Full solutions and assessment variants remain outside the public
+book; selected self-checks appear below.
+
+For timing exercises, use the synchronous-path drawing
+(@fig-d03-register-path); for CDC exercises, use the synchronizer drawing
+(@fig-d03-synchronizer). Copy and annotate the supplied drawing when a prompt
+asks for a path or structural repair.
+
+### Quick check
+
+One best answer each; the key follows.
+
+1. An edge-triggered JK flip-flop with $J=K=1$
+    a. enters the SR prohibited condition;
+    b. toggles once at the active edge;
+    c. remains transparent for the active clock level;
+    d. always stores one.
+2. With bit order $Q_3Q_2Q_1Q_0=1010$ and the chapter's shift convention, a
+   serial one accepted into $Q_0$ produces
+    a. 1101;
+    b. 0101;
+    c. 1011;
+    d. 0010.
+3. During a ripple-counter transition from 0111 to 1000, a decoder
+    a. can observe intermediate words while stage delays accumulate;
+    b. sees only 0111 and 1000 by definition;
+    c. is protected by lowering the decode threshold;
+    d. becomes a synchronous counter.
+4. With $t_{skew}=\delta_C-\delta_L$, positive skew
+    a. helps setup and hurts hold;
+    b. hurts setup and helps hold;
+    c. helps both setup and hold;
+    d. has no effect on either inequality.
+5. A two-stage synchronizer
+    a. eliminates metastability;
+    b. guarantees capture of any pulse width;
+    c. reduces the probability that unresolved behavior reaches logic;
+    d. makes independently synchronized bus bits coherent.
+6. Four changing data bits must cross between unrelated clocks as one word. The
+   strongest ordinary choice is
+    a. four independent two-flop synchronizers;
+    b. one synchronizer on the least significant bit;
+    c. a bundled-data handshake or dual-clock FIFO;
+    d. an ordinary AND gate on the destination clock.
+
+*[Key: 1-b, 2-b, 3-a, 4-a, 5-c, 6-c.]*
+
+### Retrieval and explanation
+
+1. Define logical state, gated latch, edge-triggered flip-flop, JK and T
+   behavior, register, shift register, ripple counter, synchronous counter,
+   ring counter, Johnson counter, finite-state machine, clock domain,
+   synchronizer, setup time, hold time, and metastability. For each term, name
+   the observable signal or relationship that supplies evidence.
+2. Explain why `S=R=1` is prohibited for the active-high NOR latch even though
+   both gate outputs are definite while the inputs remain asserted.
+3. Distinguish a clock enable from gating a clock with ordinary logic.
+4. Explain why reset assertion and reset release are separate timing events.
+5. Distinguish synchronization, pulse capture, data coherency, and debouncing.
+
+### Storage, register, and counter construction
+
+6. Complete @tbl-d03-characteristic and @tbl-d03-excitation from the four
+   characteristic equations. For every $X$, exhibit both permitted Boolean
+   choices and verify that an SR choice never becomes $S=R=1$.
+7. Convert (a) $J=A\overline Q+B$ and $K=C$ for a JK flip-flop storing $Q$
+   and (b) $T_X=E(Q_0+Q_1)$ for a T flip-flop storing $Q_X$ into D-input
+   equations. State which values are present-state signals and which are
+   external inputs.
+8. Starting from 0000, use the SIPO chain in @fig-d03-dff-registers to trace
+   eight rising edges for serial sequence 10110100, presenting the leftmost bit
+   first on successive edges. Then use @fig-d03-piso-register to parallel-load
+   1101, hold $SER_{in}=0$, and read $Q_3$ immediately before
+   each of the next four shift edges. Show the four serial-output bits under the
+   chapter's declared $Q_0$-to-$Q_3$ shift direction.
+9. Draw a four-bit universal register made from D flip-flops and input
+   multiplexers. Define non-overlapping codes for hold, parallel load, shift
+   toward higher indices, and shift toward lower indices; then state reset,
+   load, and enable priority.
+10. Derive $T_0$ through $T_3$ and $D_0$ through $D_3$ for a four-bit enabled
+    synchronous up-counter. For the corresponding ripple implementation, bound
+    the 0111-to-1000 settling interval from four named clock-to-Q maxima plus
+    the three interstage routing and polarity-selection maxima, and list every
+    intermediate word in @fig-d03-counter-transition-chronogram. Finally,
+    derive $D_0$ through $D_3$ for both feedback rules in @fig-d03-ring-johnson-counters
+    and verify every state in the shown ring and Johnson cycles.
+
+### State and finite-state reasoning
+
+11. Starting from @eq-d03-sr-relations, verify both stable complementary states
+   for $S=R=0$. Then trace set and reset as causal event chains through the two
+   gates.
+12. Derive @eq-d03-d-latch from a 2-to-1 selection between new data and feedback.
+   Evaluate the two enable limits and explain why the Boolean relation says
+   nothing about a violation of the required data-stability interval.
+13. Extend the acquisition controller with a `CANCEL` input that returns
+   `ACQUIRE` to `IDLE` only when `TIMEOUT=0`. State priority among `TIMEOUT`,
+   `CANCEL`, and `DONE`; update the state diagram, transition table, and program;
+   then rerun the checks.
+14. Choose compact binary and one-hot encodings for the controller. List every
+   unused code and specify its next state. Compare register bits, decode tests,
+   and single-transition bit changes without declaring either encoding
+   universally superior.
+
+### Timing derivation and calculation
+
+15. The synchronous-path drawing (@fig-d03-register-path) supplies the
+    topology. Re-derive @eq-d03-setup and @eq-d03-hold from its absolute event
+    times, marking latest and earliest data paths in different line styles.
+    Reverse the skew definition to
+    $t'_{skew}=\delta_L-\delta_C$ and show how both signed equations change.
+16. A path has $t_{pcq,\max}=0.42$ ns, $t_{pd,\max}=2.30$ ns,
+    $t_{su}=0.18$ ns, $t_{skew}=0.10$ ns, and $U_{setup}=0.15$ ns. Estimate and
+    calculate the minimum period and strict upper frequency screen. *[Self-check:
+    $T_{min}=2.95$ ns and $1/T_{min}\approx339$ MHz; a strict design target must
+    be below that unrounded bound and still needs margin.]*
+17. For the same path, $t_{ccq,\min}=0.12$ ns,
+    $t_{cd,\min}=0.08$ ns, $t_h=0.09$ ns, and $U_{hold}=0.05$ ns. Calculate hold
+    slack. Does a slower clock repair the result? *[Self-check:
+    $S_{hold}=0.12+0.08-0.09-0.10-0.05=-0.04$ ns; no.]*
+18. Recompute the worked HC74–HC157 setup screen for
+    $t_{skew}=+3$ ns and $U_{setup}=6$ ns. State why the original hold evidence
+    gap remains unchanged.
+19. A 20 MHz clock has high duration 18 ns and low duration 32 ns at the
+    receiver thresholds. Calculate period, frequency, and duty cycle. Compare
+    both pulse widths with a 20 ns strict minimum and state the decision.
+
+### Data interpretation and debugging
+
+20. A timing report shows setup slack $+0.24$ ns and hold slack $-0.06$ ns.
+    A proposed repair changes the clock period from 5 ns to 8 ns. Explain which
+    result changes and which does not. In the synchronous-path drawing
+    (@fig-d03-register-path), annotate the minimum path and propose a repair
+    that must be rechecked for setup.
+21. A four-bit destination register occasionally reports codes absent from the
+    source log during `0111` to `1000`. Each bit has two synchronizer stages.
+    Diagnose the structural fault, then draw a repaired handshake or dual-clock
+    FIFO interface with source/destination clocks, data, valid/request,
+    acknowledge, and reset polarity labeled.
+22. An external switch produces five destination events per press. The first
+    synchronizer stage never fans out, and its clock is correct. Draw the chain
+    from connector to event pulse and mark where input conditioning,
+    synchronization, and debouncing belong. State one measurement that
+    distinguishes contact bounce from metastability propagation.
+23. A controller works after manual reset but sometimes enters an illegal state
+    at power-up. List evidence for supply ramp, clock startup, reset assertion,
+    reset release, recovery/removal, reset coverage, and state decoding. Do not
+    treat “manual reset fixes it” as proof of one cause.
+
+### Visual analysis and repair
+
+24. Copy the data synchronizer and reset-release drawings
+    (@fig-d03-synchronizer and @fig-d03-reset-synchronizer-cell). Modify the
+    data synchronizer into each of the following flawed
+    circuits, then mark the exact rule each flaw violates: (a) combinational
+    inversion between `SYNC1` and `SYNC2`; (b) ordinary logic fanout from
+    $Q_1$; (c) separate two-stage chains for every bit of a changing binary
+    count. Repair each drawing with a structure appropriate to its information,
+    then explain why shorting the reset cell's clock bus to its active-low clear
+    bus would be a structural fault.
+25. Draw aligned `CLK`, `D`, and `Q` waveforms for a positive-edge flip-flop.
+    Mark setup, hold, minimum clock-to-Q, and maximum clock-to-Q intervals. Add
+    one $D$ transition inside the sampling aperture and draw a family of possible $Q$
+    resolution traces rather than one deterministic answer. Label the family
+    illustrative, not measured.
+
+### Open design
+
+26. Specify a modulo-10 synchronous counter with enable, synchronous clear,
+    terminal-count output, and an illegal-state policy. Provide a state table,
+    state diagram, register-plus-next-state block diagram, encoding, setup/hold
+    requirements, and at least five independent functional properties.
+27. Design a source-to-destination event channel between unrelated clocks. The
+    source can produce at most one event per 12 source cycles; the destination
+    may pause. Compare pulse stretching, toggle transfer, and a full handshake.
+    State the assumptions under which each loses no event, then select one and
+    define its reset behavior and acceptance test.
+28. Write a timing and CDC review for a two-clock sensor interface carrying a
+    12-bit sample word and a `sample_ready` event. Choose bundled-data handshake
+    or dual-clock FIFO, state the rate and coherency contract, define reset in
+    both domains, and list the evidence needed to accept the implementation.
 
 ## Connections
 
-Chapter ID: `D03`. Prerequisites and downstream course mappings are maintained in
-[`chapters.toml`](../chapters.toml). The [reading roadmap](../roadmap.qmd)
-provides reader-facing routes and the practice spine.
+Chapter ID: `D03`. Its direct registry prerequisites are D02 and F07.
+
+- [D02](d02-combinational-logic.qmd) supplies combinational functions,
+  propagation and contamination bounds, critical paths, and hazards. D03 places
+  those paths between state elements and adds sampling constraints.
+- [F07](../01-foundations/f07-capacitors-inductors-transients.qmd) supplies
+  physical state, continuity, and transient behavior. D03 abstracts distributed
+  physical storage into finite logical state without equating the two.
+- [D04](d04-hdl-verification.qmd) expresses edge-triggered state and concurrent
+  logic in HDL, then adds assertions, simulation, synthesis, and verification.
+- [D05](d05-memory-computer-architecture.qmd) builds memories, datapaths,
+  controllers, and processors from registers, FSMs, and cycle timing.
+- [D06](d06-fpga-systems.qmd) owns target clock resources, placed-and-routed
+  timing closure, FPGA CDC primitives, and system implementation.
+- [E02](../04-embedded/e02-microcontrollers-peripherals.qmd) consumes clock,
+  reset, register, and peripheral timing at the microcontroller boundary.
+- [R02](../06-realization/r02-schematic-pcb.qmd) carries clock, reset, return,
+  decoupling, and timed-interface requirements into schematic capture and PCB
+  implementation.
+- [T01](../appendices/t01-datasheets-standards.qmd) supports interpretation of
+  sequential timing tables and their attached test conditions.
+- [F06](../01-foundations/f06-measurement-uncertainty-debug.qmd) supplies the
+  uncertainty and guarded-decision method required by a physical timing test.
+- **Lab L09 — Logic levels, timing, and state** is the direct practical
+  companion. It measures the physical signals whose contracts D01 and D03
+  develop. Lab L10 belongs downstream with D04 and D06. The
+  [practice and project spine](../roadmap.qmd#practice-and-project-spine)
+  identifies their course positions.
+
+## References
+
+Claims are cited at their point of use. Storage elements, registers, counters,
+FSMs, and synchronous timing follow the canonical digital-design treatment
+[@harris2021digital]. Physical timing and synchronization are supported by
+Digital Systems Engineering [@dally1998digital]. The worked values and waveform
+definitions come from current manufacturer datasheets for the SN74HC74 and
+SN74HC157 [@ti2021sn74hc74; @ti2025sn74hc157]. Metastability observations and
+the exponential failure-rate treatment use primary literature
+[@chaney1973synchronizer; @veendrick1980synchronizers]. Contemporary CDC and
+reset implementation guidance is explicitly vendor-scoped
+[@amd2025ug574; @amd2026ug949]. The complete
+[bibliography](../references.qmd) collects these sources.

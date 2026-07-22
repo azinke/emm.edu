@@ -1,0 +1,52 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+\usetikzlibrary{calc}
+
+\begin{document}
+\begin{circuitikz}[font=\small,line width=0.9pt]
+  \ctikzset{tripoles/thickness=1,logic ports/thickness=1,
+    flipflops/thickness=1}
+  \foreach \i in {0,...,3} {
+    \pgfmathsetmacro{\mx}{1.15+3.35*\i}
+    \pgfmathsetmacro{\fx}{2.83+3.35*\i}
+
+    % Conventional two-input multiplexer: wide input side, tapered output side.
+    \draw (\mx-0.48,4.42) -- (\mx+0.40,4.15) --
+      (\mx+0.40,3.55) -- (\mx-0.48,3.30) -- cycle;
+    \coordinate (MP\i) at (\mx-0.48,4.20);
+    \coordinate (MS\i) at (\mx-0.48,3.48);
+    % Exact intersection of x=mx with the lower MUX edge from
+    % (mx-0.48,3.30) to (mx+0.40,3.55).
+    \coordinate (MC\i) at (\mx,3.43636);
+    \node at (\mx-0.28,4.20) {1};
+    \node at (\mx-0.28,3.48) {0};
+    \node[font=\scriptsize] at (\mx+0.05,3.85) {MUX};
+
+    \node[flipflop D,scale=0.78] (F\i) at (\fx,3.40) {};
+    \coordinate (MO\i) at (\mx+0.40,0 |- F\i.pin 1);
+    \node[above] at (F\i.north) {stage $\i$};
+    \draw (MO\i) -- (F\i.pin 1);
+    \pgfmathsetmacro{\px}{\mx-0.82}
+    \draw (\px,4.85) node[above] {$P_{\i}$} |- (MP\i);
+    \draw (MC\i) -- (\mx,2.92) -- (\mx-0.42,2.92)
+      node[left] {$L$};
+  }
+
+  \draw (0.05,3.48) node[left] {$SER_{in}$} -- (MS0);
+  \foreach \i/\j in {0/1,1/2,2/3} {
+    \coordinate (QS\i) at ($(MS\j)+(-0.45,0)$);
+    \draw (F\i.pin 6) -- (F\i.pin 6 -| QS\i)
+      -- (QS\i) -- (MS\j);
+  }
+  \draw (F3.pin 6) -- ++(0.55,0)
+    node[right] {$SER_{out}$};
+
+  \draw (0.05,1.05) node[left] {$CLK$} -- (13.60,1.05);
+  \foreach \i in {0,...,3} {
+    \coordinate (FC\i) at ($(F\i.pin 3)+(-0.10,0)$);
+    \coordinate (FB\i) at (FC\i |- 0,1.05);
+    \draw (FB\i) -- (FC\i) -- (F\i.pin 3);
+    \fill (FB\i) circle (1.4pt);
+  }
+\end{circuitikz}
+\end{document}

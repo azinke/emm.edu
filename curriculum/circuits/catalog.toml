@@ -78,6 +78,125 @@ caption = "Formal gate schematic for F equals AB plus not-A C. A splits into dir
 alt = "A and B enter an upper AND gate. A also enters a NOT gate, whose output connects directly to a lower AND gate with C. Both products enter an OR gate producing F. Repeated B and C net labels feed a dashed optional consensus AND whose output reaches the third OR input."
 
 [[circuit]]
+id = "d03-state-elements"
+source = "d03-state-elements.tex"
+chapter_id = "D03"
+caption = "A functional D-latch model recirculates its stored output while disabled; two conventional latch symbols with complementary active levels form a positive-edge-triggered D flip-flop."
+alt = "Panel a shows a two-input multiplexer selecting external D when enable is one and fed-back Q when enable is zero, followed by a conceptual storage-delay block. Panel b cascades two pinned latch symbols. The first has a bubbled active-low clock input and the second an active-high clock input, so external Q changes only at the rising boundary apart from propagation delay."
+
+[[circuit]]
+id = "d03-sr-latch"
+source = "d03-sr-latch.tex"
+chapter_id = "D03"
+caption = "An active-high SR latch uses cross-coupled NOR gates so each output reinforces the other gate's input after the external set or reset request returns low."
+alt = "Two NOR gates are stacked vertically. Reset R enters the upper gate and set S enters the lower gate. The upper output Q branches to the output terminal and diagonally feeds the upper input of the lower gate. The lower output Q bar branches to its output terminal and diagonally feeds the lower input of the upper gate. A small break at the diagonal crossover indicates that the feedback conductors are not joined."
+
+[[circuit]]
+id = "d03-synchronous-path"
+source = "d03-synchronous-path.tex"
+chapter_id = "D03"
+caption = "One synchronous register-to-register path uses explicit D, Q, and rising-edge clock pins to separate launch clock-to-Q delay, combinational delay, and capture setup and hold requirements."
+alt = "A conventional rising-edge launch D flip-flop drives a combinational logic cloud from Q L, and the cloud drives D C of a conventional rising-edge capture D flip-flop. A clock source branches separately to their clock triangles. Labels mark delta L, delta C, maximum and minimum clock-to-Q delay, and maximum propagation and minimum contamination delay."
+
+[[circuit]]
+id = "d03-synchronizer"
+source = "d03-synchronizer.tex"
+chapter_id = "D03"
+caption = "A single-bit destination-clock synchronizer uses two explicit rising-edge D flip-flops and a short direct Q1 route to preserve resolution time before Q2 feeds ordinary logic."
+alt = "An asynchronous level drives D of rising-edge flip-flop SYNC1. Q1 directly drives D of rising-edge flip-flop SYNC2, and both clock triangles use the destination clock. Only Q2 fans out to destination logic. A dashed boundary marks SYNC1 as metastability-exposed, and a note says the second stage lowers but does not eliminate escape probability."
+
+[[circuit]]
+id = "d03-timing-waveforms"
+source = "d03-timing-waveforms.tex"
+chapter_id = "D03"
+caption = "Declared threshold crossings define the setup interval before the active edge, the hold interval after it, and the bounded clock-to-Q response."
+alt = "Clock, data D, and output Q traces share a time axis. Data becomes stable before the rising clock edge and remains stable afterward. A shaded required data-stability interval around the edge is divided into setup and hold intervals. Q retains its old value through a minimum clock-to-Q interval and reaches its new valid value by the maximum clock-to-Q interval."
+
+[[circuit]]
+id = "d03-latch-flipflop-waveforms"
+source = "d03-latch-flipflop-waveforms.tex"
+chapter_id = "D03"
+caption = "A positive-level latch can pass every data transition during the high clock phase, while a positive-edge flip-flop accepts only the value present at each rising edge."
+alt = "Aligned clock, data, latch-output, and flip-flop-output traces show two high clock windows. The latch output follows data changes within each high window and holds during low windows. The flip-flop output changes only after rising edges and ignores data changes between them."
+
+[[circuit]]
+id = "d03-metastability-traces"
+source = "d03-metastability-traces.tex"
+chapter_id = "D03"
+caption = "Illustrative output traces after an aperture violation include ordinary resolution and increasingly late resolution toward either valid state; a fixed receiver deadline can be crossed before some traces settle."
+alt = "Several possible Q voltage traces begin near an unstable middle region after the sampling edge. One reaches valid high quickly. Others remain in the middle longer before reaching valid high or valid low. A vertical receiver deadline shows that some traces are still outside a guaranteed logic band when sampled."
+
+[[circuit]]
+id = "d03-reset-domains"
+source = "d03-reset-domains.tex"
+chapter_id = "D03"
+caption = "One active-low reset source asserts both domain branches, while each destination clock qualifies only its own local deassertion."
+alt = "Two noncrossing rows repeat the same external active-low reset label. In the upper row, reset and clock A enter reset synchronizer A, whose local reset output controls domain A. The lower row repeats the structure for clock and domain B."
+
+[[circuit]]
+id = "d03-reset-synchronizer-cell"
+source = "d03-reset-synchronizer-cell.tex"
+chapter_id = "D03"
+caption = "A two-stage reset-release cell clears both D flip-flops asynchronously and deasserts its local reset only on a destination-clock edge; close release can add variable latency."
+alt = "Two rising-edge D flip-flops have D1 tied to logic one and Q1 connected to D2. Matching RESET n labels connect the active-low asynchronous clear pins to one external net, and one destination-clock bus drives both clock triangles from the left. Q2 is the local active-low reset."
+
+[[circuit]]
+id = "d03-storage-family"
+source = "d03-storage-family.tex"
+chapter_id = "D03"
+caption = "Related storage organizations use conventional AND and pinned SR-latch symbols. Enable gates control SR requests; matching Q and Q bar net labels close the JK feedback paths; input transformations make JK storage implement D or T behavior."
+alt = "Panel a shows S and E entering one conventional AND gate and R and E entering another; their outputs drive labeled S and R pins of an SR latch symbol with Q and Q bar outputs. Panel b uses conventional three-input AND gates to form E J Q bar and E K Q requests, with matching feedback-net labels. Panel c separately maps D or T into JK inputs."
+
+[[circuit]]
+id = "d03-flipflop-mode-chronogram"
+source = "d03-flipflop-mode-chronogram.tex"
+chapter_id = "D03"
+caption = "An edge-triggered JK flip-flop exercises set, hold, reset, and two toggle operations on consecutive rising edges."
+alt = "Aligned clock, J, K, and Q waveforms show five rising edges. J K equals 10 sets Q, 00 holds it, 01 resets it, and two consecutive 11 inputs toggle Q high and then low. Q transitions occur after a small illustrative clock-to-Q delay."
+
+[[circuit]]
+id = "d03-dff-registers"
+source = "d03-dff-registers.tex"
+chapter_id = "D03"
+caption = "Conventional rising-edge D-flip-flop symbols form registers by sharing one clock. Parallel wiring accepts one vector per edge; a serial data chain shifts one old Q value into the next D input."
+alt = "Panel a places four pinned rising-edge D flip-flops in parallel with separate D and Q wires and one common clock bus. Panel b connects each Q output to the next D input from serial input through Q0 to Q3, exposes every Q tap, and keeps the same common clock."
+
+[[circuit]]
+id = "d03-piso-register"
+source = "d03-piso-register.tex"
+chapter_id = "D03"
+caption = "A four-bit PISO register places a conventional 2-to-1 multiplexer before every pinned rising-edge D flip-flop; input 1 loads parallel data and input 0 selects the shift path."
+alt = "Four stages each contain a trapezoidal mux followed by a rising-edge D flip-flop with D, Q, and clock pins. P0 through P3 enter mux inputs marked 1. Serial input and preceding Q outputs enter inputs marked 0. Shared active-high LOAD drives all select pins, one clock bus drives all clock triangles, and Q3 is serial output."
+
+[[circuit]]
+id = "d03-shift-register-chronogram"
+source = "d03-shift-register-chronogram.tex"
+chapter_id = "D03"
+caption = "A four-stage shift register initially at 0000 accepts serial bits 1, 0, 1, and 1 into Q0 on successive rising edges."
+alt = "Aligned clock, serial input, and Q0 through Q3 waveforms show the parallel states 0001, 0010, 0101, and 1011 after four rising edges. Every output changes only after an edge, and each stage receives the previous stage's old value."
+
+[[circuit]]
+id = "d03-counter-structures"
+source = "d03-counter-structures.tex"
+chapter_id = "D03"
+caption = "Ripple and synchronous binary counters use toggle behavior differently. Bubbled falling-edge ripple stages clock one another; synchronous stages share one rising-edge clock while conventional AND gates drive their T inputs."
+alt = "Panel a ties every T input to logic one and chains each Q output into the next bubbled falling-edge clock pin. Panel b sends E directly to T0 and uses conventional two-, three-, and four-input AND gates for T1, T2, and T3. Every synchronous clock triangle connects only to one common clock bus."
+
+[[circuit]]
+id = "d03-counter-transition-chronogram"
+source = "d03-counter-transition-chronogram.tex"
+chapter_id = "D03"
+caption = "The binary transition from 0111 to 1000. Falling-edge ripple stages expose intermediate words as delays accumulate; rising-edge synchronous outputs respond to one common edge within a bounded clock-to-Q spread."
+alt = "The falling-edge ripple panel shows 0111 becoming 0110, then 0100, then 0000, and finally 1000 as Q0, Q1, Q2, and Q3 change in sequence. The rising-edge synchronous panel shows all four outputs beginning their changes after one common clock edge, with a small clock-to-Q spread before 1000 is valid."
+
+[[circuit]]
+id = "d03-ring-johnson-counters"
+source = "d03-ring-johnson-counters.tex"
+chapter_id = "D03"
+caption = "Four-stage shift-register counters use one common clock and differ only at the feedback input. A ring counter returns Q3 to D0; a Johnson counter returns Q3 bar to D0."
+alt = "Panel a shows four rising-edge D flip-flops on one clock. Q0 feeds D1, Q1 feeds D2, Q2 feeds D3, and Q3 feeds back to D0, producing the one-hot ring sequence from seed 0001. Panel b has the same chain but feeds Q3 bar back to D0, producing the eight-state Johnson sequence from 0000. A note requires a separate documented initialization network."
+
+[[circuit]]
 id = "d01-bipolar-logic"
 source = "d01-bipolar-logic.tex"
 chapter_id = "D01"

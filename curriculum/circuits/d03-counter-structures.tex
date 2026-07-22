@@ -1,0 +1,76 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+\usetikzlibrary{calc}
+
+\begin{document}
+\begin{circuitikz}[font=\small,line width=0.9pt]
+  \ctikzset{tripoles/thickness=1,logic ports/thickness=1,
+    flipflops/thickness=1}
+  \node[font=\bfseries] at (7.0,9.0)
+    {(a) Four-bit ripple counter: stage outputs become clocks};
+  \foreach \i/\xx in {0/1.4,1/5.0,2/8.6,3/12.2} {
+    \node[flipflop T,flipflop def={n3=1},scale=0.82] (R\i) at (\xx,6.8) {};
+    \node[above,font=\scriptsize] at (R\i.north) {stage $\i$};
+    \draw (\xx-0.75,8.15) node[above] {logic 1} |- (R\i.pin 1);
+  }
+  \draw ($(R0.pin 3)+(-0.8,0)$) node[left] {$CLK$} -- (R0.pin 3);
+  \foreach \i/\j in {0/1,1/2,2/3} {
+    \coordinate (RJ\i) at ($(R\i.pin 6)+(0.25,0)$);
+    \draw (R\i.pin 6) -- (RJ\i) |- (R\j.pin 3);
+    \fill (RJ\i) circle (1.4pt);
+    \draw (RJ\i) -- ++(0,0.75) node[above] {$Q_{\i}$};
+  }
+  \coordinate (RJ3) at ($(R3.pin 6)+(0.25,0)$);
+  \draw (R3.pin 6) -- (RJ3);
+  \draw (RJ3) -- ++(0,0.75) node[above] {$Q_3$};
+  \node[align=center] at (7.0,4.55)
+    {The clock-input bubbles select falling edges; propagation delay accumulates stage by stage.};
+
+  \draw[densely dashed] (-0.2,3.85) -- (14.2,3.85);
+  \node[font=\bfseries] at (7.0,3.3)
+    {(b) Four-bit synchronous counter: gates drive T inputs, not clocks};
+
+  \foreach \i/\xx in {0/1.4,1/5.0,2/8.6,3/12.2} {
+    \node[flipflop T,scale=0.82] (S\i) at (\xx,0.3) {};
+    \node[below,font=\scriptsize] at (S\i.south) {stage $\i$};
+    \draw (S\i.pin 6) -- ++(0.5,0) node[right] {$Q_{\i}$};
+  }
+
+  \draw ($(S0.pin 1)+(-0.8,0)$) node[left] {$T_0=E$} -- (S0.pin 1);
+
+  \node[and port,number inputs=2,scale=0.9] (G1) at (3.25,2.3) {};
+  \draw ($(G1.in 1)+(-0.9,0)$) node[left] {$E$} -- (G1.in 1);
+  \draw ($(G1.in 2)+(-0.9,0)$) node[left] {$Q_0$} -- (G1.in 2);
+  \coordinate (GT1) at ($(S1.pin 1)+(-0.35,0)$);
+  \draw (G1.out) -- (GT1 |- G1.out) -- (GT1) -- (S1.pin 1);
+  \node[above] at ($(GT1)!0.5!(S1.pin 1)$) {$T_1$};
+
+  \node[and port,number inputs=3,scale=0.95] (G2) at (6.85,2.3) {};
+  \draw ($(G2.in 1)+(-0.9,0)$) node[left] {$E$} -- (G2.in 1);
+  \draw ($(G2.in 2)+(-0.9,0)$) node[left] {$Q_0$} -- (G2.in 2);
+  \draw ($(G2.in 3)+(-0.9,0)$) node[left] {$Q_1$} -- (G2.in 3);
+  \coordinate (GT2) at ($(S2.pin 1)+(-0.35,0)$);
+  \draw (G2.out) -- (GT2 |- G2.out) -- (GT2) -- (S2.pin 1);
+  \node[above] at ($(GT2)!0.5!(S2.pin 1)$) {$T_2$};
+
+  \node[and port,number inputs=4,scale=1.0] (G3) at (10.45,2.3) {};
+  \draw ($(G3.in 1)+(-0.9,0)$) node[left] {$E$} -- (G3.in 1);
+  \draw ($(G3.in 2)+(-0.9,0)$) node[left] {$Q_0$} -- (G3.in 2);
+  \draw ($(G3.in 3)+(-0.9,0)$) node[left] {$Q_1$} -- (G3.in 3);
+  \draw ($(G3.in 4)+(-0.9,0)$) node[left] {$Q_2$} -- (G3.in 4);
+  \coordinate (GT3) at ($(S3.pin 1)+(-0.35,0)$);
+  \draw (G3.out) -- (GT3 |- G3.out) -- (GT3) -- (S3.pin 1);
+  \node[above] at ($(GT3)!0.5!(S3.pin 1)$) {$T_3$};
+
+  \draw (-0.2,-1.75) node[left] {$CLK$} -- (13.2,-1.75);
+  \foreach \i/\xx in {0/1.4,1/5.0,2/8.6,3/12.2} {
+    \coordinate (CC\i) at ($(S\i.pin 3)+(-0.35,0)$);
+    \coordinate (CB\i) at (CC\i |- 0,-1.75);
+    \draw (CB\i) -- (CC\i) -- (S\i.pin 3);
+    \fill (CB\i) circle (1.4pt);
+  }
+  \node[align=center] at (7.0,-2.55)
+    {Matching net labels connect each present-state Q tap to the shown AND-gate inputs.\\
+     All four clock triangles connect only to the one rising-edge clock bus.};
+\end{circuitikz}
+\end{document}

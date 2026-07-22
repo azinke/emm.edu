@@ -1,0 +1,48 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+
+\begin{document}
+\begin{circuitikz}[line width=0.9pt]
+  \ctikzset{logic ports=ieee,tripoles/thickness=1,
+    logic ports/thickness=1,flipflops/thickness=1}
+  \tikzset{circuitwire/.style={line width=0.9pt}}
+  \node[nor port, number inputs=2] (U) at (5.0,4.0) {};
+  \node[nor port, number inputs=2] (L) at (5.0,1.0) {};
+
+  \coordinate (RIN) at ($(U.in 1)+(-2.0,0)$);
+  \coordinate (SIN) at ($(L.in 2)+(-2.0,0)$);
+  % Short horizontal departures and landings keep each angled feedback
+  % conductor clear of the gate outline without producing a sharp long spur.
+  \coordinate (QBRANCH) at ($(U.out)+(0.60,0)$);
+  \coordinate (QBBRANCH) at ($(L.out)+(0.60,0)$);
+  \coordinate (QAPPROACH) at ($(L.in 1)+(-0.40,0)$);
+  \coordinate (QBAPPROACH) at ($(U.in 2)+(-0.40,0)$);
+  \coordinate (QOUT) at ($(U.out)+(3.1,0)$);
+  \coordinate (QBOUT) at ($(L.out)+(3.1,0)$);
+
+  \draw[circuitwire] (RIN)
+    node[ocirc, label={[font=\small]left:{$R$}}] {} -- (U.in 1);
+  \draw[circuitwire] (SIN)
+    node[ocirc, label={[font=\small]left:{$S$}}] {} -- (L.in 2);
+
+  % The outputs feed the opposite NOR inputs.  The second path receives a
+  % white underlay at the crossover so that the crossing is visibly not a
+  % junction, even after the figure is reduced for the printed page.  Draw
+  % the output runs last so that their branch dots remain clean and round.
+  \draw[circuitwire] (QBRANCH) -- (QAPPROACH) -- (L.in 1);
+  \draw[circuitwire,
+    preaction={draw=white,line width=3.2pt}]
+    (QBBRANCH) -- (QBAPPROACH) -- (U.in 2);
+  \draw[circuitwire] (U.out) -- (QBRANCH) -- (QOUT)
+    node[ocirc, label={[font=\small]right:{$Q$}}] {};
+  \draw[circuitwire] (L.out) -- (QBBRANCH) -- (QBOUT)
+    node[ocirc, label={[font=\small]right:{$\overline Q$}}] {};
+  \fill (QBRANCH) circle (1.4pt);
+  \fill (QBBRANCH) circle (1.4pt);
+
+  \node[font=\small, align=center] at (6.8,-1.05)
+    {The small break where the feedback conductors cross denotes no junction.\\
+     $S=R=0$: hold\quad $S=1$: set\quad $R=1$: reset\\
+     $S=R=1$: prohibited for ordinary complementary operation};
+\end{circuitikz}
+\end{document}

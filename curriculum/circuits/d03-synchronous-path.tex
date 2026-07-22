@@ -1,0 +1,44 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+\usetikzlibrary{calc}
+
+\begin{document}
+\begin{circuitikz}[font=\small,line width=0.9pt]
+  \ctikzset{tripoles/thickness=1,logic ports/thickness=1,
+    flipflops/thickness=1}
+  \tikzset{logic/.style={draw,rounded corners=8pt,minimum width=3.1cm,
+    minimum height=2.0cm,align=center}}
+
+  \node[flipflop D,scale=1.0] (LAUNCH) at (2.3,3.5) {};
+  \node[logic] (LOGIC) at (7.0,0 |- LAUNCH.pin 6)
+    {combinational\\logic and route};
+  \node[flipflop D,scale=1.0] (CAPTURE) at (11.8,3.5) {};
+  \node[above] at (LAUNCH.north) {launch register};
+  \node[above] at (CAPTURE.north) {capture register};
+
+  \draw ($(LAUNCH.pin 1)+(-0.9,0)$) node[left] {$D_L$} -- (LAUNCH.pin 1);
+  \draw (LAUNCH.pin 6) -- (LOGIC.west)
+    node[midway,above] {$Q_L$}
+    node[midway,below,align=center] {$t_{pcq,\max}$\\$t_{ccq,\min}$};
+  \draw (LOGIC.east) -- (CAPTURE.pin 1)
+    node[midway,above] {$D_C$}
+    node[midway,below,align=center] {$t_{pd,\max}$\\$t_{cd,\min}$};
+  \draw (CAPTURE.pin 6) -- ++(1.15,0) node[right] {$Q_C$};
+
+  \draw (0.8,0.65) node[left] {clock reference} -- (12.8,0.65);
+  \coordinate (LC) at ($(LAUNCH.pin 3)+(-0.35,0)$);
+  \coordinate (CC) at ($(CAPTURE.pin 3)+(-0.35,0)$);
+  \coordinate (LB) at (LC |- 0,0.65);
+  \coordinate (CB) at (CC |- 0,0.65);
+  \draw (LB) -- (LC) -- (LAUNCH.pin 3);
+  \draw (CB) -- (CC) -- (CAPTURE.pin 3);
+  \fill (LB) circle (1.4pt);
+  \fill (CB) circle (1.4pt);
+  \node[above] at (3.2,0.65) {$\delta_L$};
+  \node[above] at (10.9,0.65) {$\delta_C$};
+
+  \node[align=center] at (7.0,6.2)
+    {Setup follows the latest new data to $D_C$ before the next capture edge;\\
+     hold follows the earliest new data to $D_C$ after the same edge.};
+\end{circuitikz}
+\end{document}

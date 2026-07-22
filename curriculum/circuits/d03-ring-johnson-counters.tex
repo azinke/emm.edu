@@ -1,0 +1,56 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[siunitx]{circuitikz}
+\usetikzlibrary{calc}
+
+\begin{document}
+\begin{circuitikz}[font=\small,line width=0.9pt]
+  \ctikzset{tripoles/thickness=1,logic ports/thickness=1,
+    flipflops/thickness=1}
+  \node[font=\bfseries] at (6.5,9.35)
+    {(a) Four-stage one-hot ring counter};
+  \foreach \i/\xx in {0/1.5,1/4.7,2/7.9,3/11.1} {
+    \node[flipflop D,scale=0.78] (R\i) at (\xx,6.8) {};
+    \node[above,font=\scriptsize] at (R\i.north) {stage $\i$};
+  }
+  \foreach \i/\j in {0/1,1/2,2/3} {
+    \draw (R\i.pin 6) -- (R\j.pin 1)
+      node[midway,above] {$Q_{\i}$};
+  }
+  \draw (R3.pin 6) -- ++(0.45,0) |- (0.2,8.55) |- (R0.pin 1);
+  \node[above] at (6.5,8.55) {$Q_3$ feedback to $D_0$};
+  \draw (0.1,4.45) node[left] {$CLK$} -- (12.0,4.45);
+  \foreach \i/\xx in {0/1.5,1/4.7,2/7.9,3/11.1} {
+    \coordinate (RC\i) at ($(R\i.pin 3)+(-0.30,0)$);
+    \coordinate (RB\i) at (RC\i |- 0,4.45);
+    \draw (RB\i) -- (RC\i) -- (R\i.pin 3);
+    \fill (RB\i) circle (1.4pt);
+  }
+  \node[align=center] at (6.5,3.75)
+    {Initialize $Q_3Q_2Q_1Q_0=0001$: $0001\to0010\to0100\to1000\to0001$.};
+
+  \draw[densely dashed] (-0.15,3.15) -- (13.1,3.15);
+  \node[font=\bfseries] at (6.5,2.6)
+    {(b) Four-stage Johnson (twisted-ring) counter};
+  \foreach \i/\xx in {0/1.5,1/4.7,2/7.9,3/11.1} {
+    \node[flipflop D,scale=0.78] (J\i) at (\xx,0.1) {};
+    \node[above,font=\scriptsize] at (J\i.north) {stage $\i$};
+  }
+  \foreach \i/\j in {0/1,1/2,2/3} {
+    \draw (J\i.pin 6) -- (J\j.pin 1)
+      node[midway,above] {$Q_{\i}$};
+  }
+  \draw (J3.pin 4) -- ++(0.45,0) |- (0.2,1.85) |- (J0.pin 1);
+  \node[above] at (6.5,1.85) {$\overline Q_3$ feedback to $D_0$};
+  \draw (0.1,-2.25) node[left] {$CLK$} -- (12.0,-2.25);
+  \foreach \i/\xx in {0/1.5,1/4.7,2/7.9,3/11.1} {
+    \coordinate (JC\i) at ($(J\i.pin 3)+(-0.30,0)$);
+    \coordinate (JB\i) at (JC\i |- 0,-2.25);
+    \draw (JB\i) -- (JC\i) -- (J\i.pin 3);
+    \fill (JB\i) circle (1.4pt);
+  }
+  \node[align=center] at (6.5,-3.05)
+    {Initialize $0000$: $0000\to0001\to0011\to0111\to1111\to1110\to1100\to1000\to0000$.};
+  \node[align=center] at (6.5,-3.75)
+    {A separate documented load or set/clear network must establish the declared initial word.};
+\end{circuitikz}
+\end{document}

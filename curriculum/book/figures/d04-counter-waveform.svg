@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="430" viewBox="0 0 960 430" role="img" aria-labelledby="title desc">
+  <title id="title">Synchronous counter simulation waveform</title>
+  <desc id="desc">Clock, active-low synchronous reset, enable, count, and maximum flag waveforms. Count changes only after rising clock edges. Reset is sampled low at the first rising edge. Enable is sampled high at later rising edges, advancing a three-bit count from zero through seven. The maximum flag is high only while the count is seven.</desc>
+  <defs>
+    <style>
+      .axis { stroke:#333; stroke-width:1.5; fill:none }
+      .grid { stroke:#bbb; stroke-width:1; stroke-dasharray:4 5 }
+      .sig { stroke:#111; stroke-width:3; fill:none; stroke-linejoin:round }
+      .bus { stroke:#174a7e; stroke-width:3; fill:none }
+      .txt { font:16px sans-serif; fill:#111 }
+      .small { font:14px sans-serif; fill:#333 }
+      .value { font:bold 15px monospace; fill:#174a7e }
+      .edge { stroke:#8b1a1a; stroke-width:1.5; stroke-dasharray:3 4 }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="960" height="430" fill="white"/>
+  <text x="25" y="34" class="txt">signal</text>
+  <text x="132" y="34" class="txt">simulation time →</text>
+
+  <g class="grid">
+    <path d="M160 45V385 M260 45V385 M360 45V385 M460 45V385 M560 45V385 M660 45V385 M760 45V385 M860 45V385"/>
+  </g>
+  <g class="edge">
+    <path d="M210 45V385 M310 45V385 M410 45V385 M510 45V385 M610 45V385 M710 45V385 M810 45V385 M910 45V385"/>
+  </g>
+  <g class="small" text-anchor="middle">
+    <text x="210" y="410">↑0</text><text x="310" y="410">↑1</text>
+    <text x="410" y="410">↑2</text><text x="510" y="410">↑3</text>
+    <text x="610" y="410">↑4</text><text x="710" y="410">↑5</text>
+    <text x="810" y="410">↑6</text><text x="910" y="410">↑7</text>
+  </g>
+
+  <g class="txt" text-anchor="end">
+    <text x="125" y="90">clk</text>
+    <text x="125" y="160">rst_n</text>
+    <text x="125" y="230">en</text>
+    <text x="125" y="305">count_o</text>
+    <text x="125" y="370">max_o</text>
+  </g>
+
+  <path class="sig" d="M160 105H210V65H260V105H310V65H360V105H410V65H460V105H510V65H560V105H610V65H660V105H710V65H760V105H810V65H860V105H910V65H940"/>
+  <path class="sig" d="M160 175H225V145H940"/>
+  <path class="sig" d="M160 245H275V215H940"/>
+
+  <g class="bus">
+    <path d="M160 285H210L222 315H310L322 285H410L422 315H510L522 285H610L622 315H710L722 285H810L822 315H910L922 285H940"/>
+  </g>
+  <g class="value" text-anchor="middle">
+    <text x="185" y="307">U</text><text x="266" y="307">0</text>
+    <text x="366" y="307">1</text><text x="466" y="307">2</text>
+    <text x="566" y="307">3</text><text x="666" y="307">4</text>
+    <text x="766" y="307">5</text><text x="866" y="307">6</text>
+    <text x="931" y="307">7</text>
+  </g>
+  <path class="sig" d="M160 345L210 380M160 380L210 345M210 380H922V345H940"/>
+  <text x="176" y="339" class="value">U</text>
+  <text x="225" y="135" class="small">reset sampled here; count becomes 0 after the edge</text>
+  <text x="485" y="200" class="small">enable sampled high at each rising edge</text>
+</svg>
